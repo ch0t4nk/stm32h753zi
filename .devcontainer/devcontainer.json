@@ -4,6 +4,7 @@
         "dockerfile": "Dockerfile",
         "context": "."
     },
+    "workspaceFolder": "/workspaces/code",
     "customizations": {
         "vscode": {
             "settings": {
@@ -43,27 +44,37 @@
                     "${workspaceFolder}/src/config",
                     "${workspaceFolder}/src/common"
                 ],
-                "doxygen.generic.commentPrefix": "///"
+                "C_Cpp.default.compilerPath": "/usr/bin/arm-none-eabi-gcc",
+                "C_Cpp.default.intelliSenseMode": "gcc-arm",
+                "doxygen.generic.commentPrefix": "///",
+                "git.repositoryScanMaxDepth": 1
             },
             "extensions": [
                 "ms-vscode.cpptools",
+                "ms-vscode.cpptools-extension-pack", 
                 "ms-vscode.cmake-tools",
-                "cortex-debug.cortex-debug",
-                "marus25.cortex-debug",
                 "twxs.cmake",
+                "ms-vscode.vscode-embedded-tools",
+                "marus25.cortex-debug",
+                "stmicroelectronics.stm32-vscode-extension",
                 "cschlosser.doxdocgen",
                 "ms-vscode.vscode-json",
                 "redhat.vscode-yaml",
-                "formulahendry.code-runner",
-                "streetsidesoftware.code-spell-checker"
+                "ms-python.python"
             ]
         }
     },
     "mounts": [
-        "source=${localWorkspaceFolder}/.vscode,target=/workspaces/code/.vscode,type=bind"
+        "source=${localWorkspaceFolder}/.vscode,target=/workspaces/code/.vscode,type=bind,consistency=cached"
     ],
-    "postCreateCommand": "echo 'fs.inotify.max_user_watches=524288' | sudo tee -a /etc/sysctl.conf && echo 'fs.file-max=2097152' | sudo tee -a /etc/sysctl.conf && sudo sysctl -p",
-    "remoteUser": "vscode"
+    "capAdd": ["SYS_PTRACE"],
+    "securityOpt": ["seccomp=unconfined"],
+    "postCreateCommand": [
+        "bash", "-c", 
+        "git config --global --add safe.directory /workspaces/code && git config --global user.name '${localEnv:USER:-DevContainer}' && git config --global user.email '${localEnv:EMAIL:-dev@container.local}' && chown -R root:root /workspaces/code && chmod -R 755 /workspaces/code && echo 'STM32H753ZI workspace setup complete'"
+    ],
+    "remoteUser": "root",
+    "shutdownAction": "stopContainer"
 }
 
 // TODO: See .instructions/devcontainer.md for module-specific configuration details

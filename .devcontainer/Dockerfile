@@ -59,12 +59,6 @@ RUN pip3 install \
     pyyaml \
     jsonschema
 
-# Create a non-root user
-RUN useradd -m -s /bin/bash vscode && \
-    usermod -aG sudo vscode && \
-    echo 'vscode ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
-USER vscode
 WORKDIR /workspaces/code
 
 # Set environment variables for ARM toolchain
