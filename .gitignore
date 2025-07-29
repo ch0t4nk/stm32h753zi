@@ -1,5 +1,10 @@
 /build/
+# VS Code - ignore personal settings but keep workspace config
 .vscode/
+!.vscode/extensions.json
+!.vscode/c_cpp_properties.json
+!.vscode/tasks.json
+!.vscode/launch.json
 *.o
 *.elf
 *.bin

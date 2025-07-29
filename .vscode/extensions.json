@@ -1,0 +1,26 @@
+{
+    "recommendations": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.cmake-tools",
+        "twxs.cmake",
+        "marus25.cortex-debug",
+        "ms-python.python",
+        "ms-python.flake8",
+        "ms-python.isort",
+        "ms-python.black-formatter",
+        "ms-vscode.doxygen-doc-generator",
+        "github.copilot",
+        "github.copilot-chat",
+        "redhat.vscode-yaml",
+        "ms-vscode.json",
+        "gruntfuggly.todo-tree",
+        "wayou.vscode-todo-highlight",
+        "streetsidesoftware.code-spell-checker",
+        "ms-vscode.hexeditor"
+    ],
+    "unwantedRecommendations": [
+        "ms-vscode.vscode-embedded-tools",
+        "stmicroelectronics.stm32-vscode-extension"
+    ]
+}

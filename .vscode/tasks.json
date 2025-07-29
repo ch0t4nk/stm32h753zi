@@ -1,0 +1,115 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build (CMake)",
+      "type": "shell",
+      "command": "cmake -S . -B build && cmake --build build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "Clean Build",
+      "type": "shell",
+      "command": "rm -rf build",
+      "group": "build",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Flash STM32H753ZI",
+      "type": "shell",
+      "command": "openocd -f interface/stlink.cfg -f target/stm32h7x.cfg -c \"program build/stm32h753_ihm02a1.elf verify reset exit\"",
+      "group": "build",
+      "dependsOn": "Build (CMake)",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Run Tests (CTest)",
+      "type": "shell",
+      "command": "cd build && ctest",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "dependsOn": "Build (CMake)",
+      "problemMatcher": []
+    },
+    {
+      "label": "Lint (clang-tidy/cppcheck)",
+      "type": "shell",
+      "command": "clang-tidy --version && cppcheck --version",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Generate Docs (Doxygen)",
+      "type": "shell",
+      "command": "doxygen docs/Doxyfile",
+      "group": "build",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Validate SSOT",
+      "type": "shell",
+      "command": "python3 scripts/validate_ssot.py",
+      "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Format Code",
+      "type": "shell",
+      "command": "find src -name '*.c' -o -name '*.h' | xargs clang-format -i",
+      "group": "build",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    }
+  ]
+}

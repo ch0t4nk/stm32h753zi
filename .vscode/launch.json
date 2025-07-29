@@ -1,0 +1,63 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug STM32H753ZI (OpenOCD)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/stm32h753_ihm02a1.elf",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32h7x.cfg"
+            ],
+            "svdFile": "${workspaceFolder}/00_reference/ST_Assets/stm32h7-svd_2.8/STM32H753.svd",
+            "runToEntryPoint": "main",
+            "showDevDebugOutput": "parsed",
+            "device": "STM32H753ZI",
+            "interface": "swd",
+            "targetId": "0",
+            "swoConfig": {
+                "enabled": true,
+                "cpuFrequency": 480000000,
+                "swoFrequency": 2000000,
+                "source": "probe",
+                "decoders": [
+                    {
+                        "type": "console",
+                        "label": "ITM",
+                        "port": 0
+                    }
+                ]
+            },
+            "preLaunchTask": "Build (CMake)"
+        },
+        {
+            "name": "Debug STM32H753ZI (GDB)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/stm32h753_ihm02a1.elf",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/arm-none-eabi-gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build (CMake)"
+        }
+    ]
+}

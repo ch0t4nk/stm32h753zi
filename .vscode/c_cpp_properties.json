@@ -1,0 +1,55 @@
+{
+    "configurations": [
+        {
+            "name": "STM32H753ZI",
+            "includePath": [
+                "${workspaceFolder}/src/**",
+                "${workspaceFolder}/src/config",
+                "${workspaceFolder}/src/common",
+                "${workspaceFolder}/src/drivers",
+                "${workspaceFolder}/src/controllers",
+                "${workspaceFolder}/src/communication",
+                "${workspaceFolder}/src/safety",
+                "${workspaceFolder}/00_reference/**",
+                "${workspaceFolder}/00_reference/ST_Assets/STM32Cube_FW_H7_V1.12.0/Drivers/STM32H7xx_HAL_Driver/Inc",
+                "${workspaceFolder}/00_reference/ST_Assets/STM32Cube_FW_H7_V1.12.0/Drivers/CMSIS/Device/ST/STM32H7xx/Include",
+                "${workspaceFolder}/00_reference/ST_Assets/STM32Cube_FW_H7_V1.12.0/Drivers/CMSIS/Include"
+            ],
+            "defines": [
+                "STM32H753xx",
+                "USE_HAL_DRIVER",
+                "ARM_MATH_CM7",
+                "HSE_VALUE=25000000",
+                "__CORTEX_M7",
+                "__FPU_PRESENT=1",
+                "__VTOR_PRESENT=1",
+                "__NVIC_PRIO_BITS=4",
+                "__Vendor_SysTickConfig=0"
+            ],
+            "compilerPath": "/usr/bin/arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm",
+            "compilerArgs": [
+                "-mcpu=cortex-m7",
+                "-mthumb",
+                "-mfpu=fpv5-d16",
+                "-mfloat-abi=hard",
+                "-fdata-sections",
+                "-ffunction-sections",
+                "-Wall",
+                "-Wextra",
+                "-Wno-unused-parameter"
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}",
+                    "${workspaceFolder}/src",
+                    "${workspaceFolder}/00_reference"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
+        }
+    ],
+    "version": 4
+}
