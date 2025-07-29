@@ -145,12 +145,20 @@ def validate_config_consistency() -> List[Dict]:
         if motor_match:
             max_motors = int(motor_match.group(1))
             
-            # Check if system state uses the same value
-            if f'MotorState_t motors[{max_motors}]' not in state_config:
+            # Check if system state uses MAX_MOTORS constant (correct approach)
+            if 'MotorState_t motors[MAX_MOTORS]' not in state_config:
                 inconsistencies.append({
-                    'issue': f'MAX_MOTORS defined as {max_motors} but system_state.h uses different array size',
+                    'issue': f'MAX_MOTORS defined as {max_motors} but system_state.h does not use MAX_MOTORS constant',
                     'files': ['src/config/motor_config.h', 'src/common/system_state.h'],
-                    'recommendation': 'Ensure consistent MAX_MOTORS usage'
+                    'recommendation': 'Use MotorState_t motors[MAX_MOTORS] in system_state.h'
+                })
+            
+            # Check if encoder arrays also use MAX_MOTORS constant
+            if 'EncoderState_t encoders[MAX_MOTORS]' not in state_config:
+                inconsistencies.append({
+                    'issue': f'MAX_MOTORS defined as {max_motors} but system_state.h encoders array does not use MAX_MOTORS constant',
+                    'files': ['src/config/motor_config.h', 'src/common/system_state.h'],
+                    'recommendation': 'Use EncoderState_t encoders[MAX_MOTORS] in system_state.h'
                 })
     
     except Exception as e:
