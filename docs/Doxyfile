@@ -1,0 +1,9 @@
+# Doxyfile for Doxygen documentation generation
+# TODO: See `.instructions/Doxyfile.md` for module-specific details.
+PROJECT_NAME           = "stm32h753_ihm02a1"
+OUTPUT_DIRECTORY       = docs/html
+INPUT                  = ../drivers ../middleware ../rtos ../examples
+RECURSIVE              = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+EXTRACT_ALL            = YES

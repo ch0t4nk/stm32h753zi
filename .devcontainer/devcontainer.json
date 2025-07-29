@@ -1,0 +1,69 @@
+{
+    "name": "STM32H753ZI Development Environment with SSOT",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "files.watcherExclude": {
+                    "**/00_reference/**": true,
+                    "**/STM32CubeExpansion*/**": true,
+                    "**/ST_Assets/**": true,
+                    "**/.git/objects/**": true,
+                    "**/.git/subtree-cache/**": true,
+                    "**/node_modules/**": true,
+                    "**/tmp/**": true,
+                    "**/build/**": true,
+                    "**/Debug/**": true,
+                    "**/Release/**": true,
+                    "**/*.o": true,
+                    "**/*.elf": true,
+                    "**/*.bin": true
+                },
+                "search.exclude": {
+                    "**/00_reference/**": true,
+                    "**/STM32CubeExpansion*/**": true,
+                    "**/ST_Assets/**": true,
+                    "**/build/**": true,
+                    "**/Debug/**": true,
+                    "**/Release/**": true
+                },
+                "files.associations": {
+                    "*.h": "c",
+                    "*.c": "c"
+                },
+                "C_Cpp.default.defines": [
+                    "STM32H753xx",
+                    "USE_HAL_DRIVER"
+                ],
+                "C_Cpp.default.includePath": [
+                    "${workspaceFolder}/src/**",
+                    "${workspaceFolder}/src/config",
+                    "${workspaceFolder}/src/common"
+                ],
+                "doxygen.generic.commentPrefix": "///"
+            },
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "cortex-debug.cortex-debug",
+                "marus25.cortex-debug",
+                "twxs.cmake",
+                "cschlosser.doxdocgen",
+                "ms-vscode.vscode-json",
+                "redhat.vscode-yaml",
+                "formulahendry.code-runner",
+                "streetsidesoftware.code-spell-checker"
+            ]
+        }
+    },
+    "mounts": [
+        "source=${localWorkspaceFolder}/.vscode,target=/workspaces/code/.vscode,type=bind"
+    ],
+    "postCreateCommand": "echo 'fs.inotify.max_user_watches=524288' | sudo tee -a /etc/sysctl.conf && echo 'fs.file-max=2097152' | sudo tee -a /etc/sysctl.conf && sudo sysctl -p",
+    "remoteUser": "vscode"
+}
+
+// TODO: See .instructions/devcontainer.md for module-specific configuration details

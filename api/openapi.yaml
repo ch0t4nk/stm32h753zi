@@ -1,0 +1,19 @@
+openapi: 3.0.0
+info:
+  title: STM32H753ZI REST API
+  version: 0.1.0
+paths:
+  /motors:
+    get:
+      summary: Get motor status
+      responses:
+        '200':
+          description: Motor status
+  /metrics:
+    get:
+      summary: Get system metrics
+      responses:
+        '200':
+          description: Metrics
+---
+# TODO: See `.instructions/openapi.yaml.md` for module-specific details.

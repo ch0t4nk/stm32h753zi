@@ -1,0 +1,11 @@
+can_api:
+  version: 0.1.0
+  frames:
+    - id: 0x01
+      name: MotorControl
+      description: Control stepper motors
+    - id: 0x02
+      name: EncoderRead
+      description: Read encoder values
+---
+# TODO: See `.instructions/can_api.yaml.md` for module-specific details.

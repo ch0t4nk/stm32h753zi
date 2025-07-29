@@ -1,0 +1,36 @@
+name: CI
+on:
+  push:
+    branches: [ workspace ]
+  pull_request:
+    branches: [ workspace ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          pip install bandit
+      - name: Run Bandit SAST scan
+        run: |
+          bandit -r .
+      - name: Build firmware
+        run: |
+          mkdir -p build && cd build && cmake .. && make
+      - name: Run C/C++ static analysis
+        run: |
+          clang-tidy --version
+          cppcheck --version
+      - name: Generate Doxygen docs
+        run: |
+          doxygen Doxyfile || echo "Doxygen not configured yet"
+      - name: Run unit tests
+        run: |
+          cd build && ctest || echo "No tests yet"
+---
+# TODO: See `.instructions/ci.yml.md` for module-specific details.

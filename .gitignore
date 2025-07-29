@@ -1,0 +1,8 @@
+/build/
+.vscode/
+*.o
+*.elf
+*.bin
+.env
+# Untracked reference docs
+00_reference/
