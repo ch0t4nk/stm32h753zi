@@ -14,6 +14,7 @@ This project uses a **modular instruction system** located in `.github/instructi
 - **data-types.instructions.md**: Consistent data types and type safety
 - **error-handling.instructions.md**: Error codes, fault recovery, and diagnostics
 - **build-config.instructions.md**: Build configuration and version management
+- **build-system.instructions.md**: CMake toolchain, VS Code setup, and build troubleshooting
 
 ### Motor Control Instructions
 - **l6470-registers.instructions.md**: L6470 stepper driver configuration and control

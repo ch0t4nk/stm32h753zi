@@ -30,6 +30,7 @@ This project uses a **comprehensive modular instruction system** in `.github/ins
 - **data-types.instructions.md**: Consistent data types and type safety
 - **error-handling.instructions.md**: Error codes, fault recovery, and diagnostics
 - **build-config.instructions.md**: Build configuration and version management
+- **build-system.instructions.md**: CMake toolchain, VS Code setup, and build troubleshooting
 
 ### Motor Control Instructions
 - **l6470-registers.instructions.md**: L6470 stepper driver configuration and control
@@ -123,15 +124,24 @@ python3 scripts/link_validator.py
    # STM32CubeMX, ARM GCC, OpenOCD are pre-installed
    ```
 
-2. **Review Modular Instructions**
+2. **Configure Build System**
+   - VS Code: `Ctrl+Shift+P` → `CMake: Select a Kit` → `ARM GCC for STM32H753ZI`
+   - See `build-system.instructions.md` for detailed CMake/toolchain setup
+   - Verify: ARM GCC toolchain and Ninja build system are configured
+
+3. **Review Modular Instructions**
    - Each `.instructions.md` file provides domain-specific guidance
    - Start with `ssot-config.instructions.md` for configuration principles
+   - Reference `build-system.instructions.md` for build troubleshooting
    - Reference `hardware-pins.instructions.md` for STM32H753ZI specifics
 
-3. **Build and Test**
+4. **Build and Test**
    ```bash
+   # Configure CMake with ARM toolchain (first time)
+   cmake -S . -B build -G Ninja -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi-gcc.cmake
+   
    # Build project
-   cmake -S . -B build && cmake --build build
+   cmake --build build
    
    # Run tests
    cd build && ctest

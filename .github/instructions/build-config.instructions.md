@@ -8,12 +8,27 @@ description: "Build configuration and version management for STM32H753ZI stepper
 ## Overview
 This instruction file provides comprehensive guidance for implementing robust build configuration, version management, and compile-time feature selection for the STM32H753ZI stepper motor control project.
 
+**IMPORTANT**: For CMake toolchain setup, VS Code configuration, and build system troubleshooting, see `.github/instructions/build-system.instructions.md`. This file focuses on SSOT build configuration headers.
+
 ## Enhanced Documentation Integration
 **Reference Assets**: This instruction leverages comprehensive build and development documentation:
-- **STM32H7 Build System**: Use `python3 scripts/documentation/search_docs.py concept build` for build system guidance
-- **HAL Configuration**: `00_reference/stm32h753xx_User_Manual_md/` contains STM32H753ZI configuration documentation
-- **Development Tools**: `00_reference/STM32Cube_FW_H7_V1.12.0/` contains build system examples and templates
-- **Compiler Documentation**: STM32CubeIDE and ARM GCC toolchain specifics for STM32H7 optimization
+- **STM32H7 Build System**: Complete build system coverage with ARM GCC toolchain optimization
+- **Copilot-Optimized Build Search**:
+  ```bash
+  # Search build system concepts with semantic targeting
+  python3 scripts/search_enhanced_docs.py concept "build_system" --scope STM32H7
+  
+  # Find compiler optimization patterns
+  python3 scripts/search_enhanced_docs.py concept "compiler_optimization" --scope STM32H7
+  
+  # Search HAL configuration guidance
+  python3 scripts/search_enhanced_docs.py concept "hal_configuration" --scope STM32H7
+  
+  # Find development tools integration
+  python3 scripts/search_enhanced_docs.py concept "development_tools" --scope STM32H7
+  ```
+- **Cross-System Integration**: Links build configuration with SSOT principles and development workflow
+- **Token-Efficient Reference**: Semantic categorization optimized for Copilot assistance with build systems
 
 ## Version Management System
 
