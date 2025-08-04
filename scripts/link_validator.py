@@ -63,9 +63,9 @@ def extract_links(file_path):
                      url.count('<') > 0 or url.count('(') > 0)):
                     continue
                 # Skip URLs that look like code or contain code patterns
-                if (url.startswith('PROTOCOL') or url.startswith('PERIPHERAL') or
-                    url.startswith('FUNCTION_NAME') or url.startswith('KEYWORD') or
-                        'stdint.h' in url or 'stdbool.h' in url or 'stddef.h' in url):
+                if (url.startswith('PROTOCOL') or url.startswith('PERIPHERAL') or  # noqa: E501
+                    url.startswith('FUNCTION_NAME') or url.startswith('KEYWORD') or  # noqa: E501
+                        'stdint.h' in url or 'stdbool.h' in url or 'stddef.h' in url):  # noqa: E501
                     continue
                 links.append((text, url))
 
@@ -120,7 +120,6 @@ def check_internal_link(link_url, file_path, workspace_root):
 
 def find_similar_files(target_path, workspace_root):
     """Find files with similar names"""
-    target_name = target_path.name
     target_stem = target_path.stem
 
     suggestions = []
@@ -195,13 +194,15 @@ def validate_workspace_links(workspace_root, exclude_dirs=None):
             for issue in file_issues:
                 if issue['type'] == 'html_link':
                     print(
-                        f"  🔗 HTML: [{issue['text']}]({issue['url']}) → Suggest: {issue['suggestion']}")
+                        f"  🔗 HTML: [{issue['text']}]({issue['url']}) → "
+                        f"Suggest: {issue['suggestion']}")
                 else:
                     print(
-                        f"  ❌ BROKEN: [{issue['text']}]({issue['url']}) - {issue['status']}")
+                        f"  ❌ BROKEN: [{issue['text']}]({issue['url']}) - "
+                        f"{issue['status']}")
 
     # Summary
-    print(f"\n📊 Link Validation Summary")
+    print("\n📊 Link Validation Summary")
     print("=" * 30)
     print(f"Total links checked: {total_links}")
     print(f"Broken internal links: {broken_links}")
@@ -224,7 +225,8 @@ def main():
             exclude_dirs = ['.git', 'node_modules', '__pycache__']
         else:
             print("Usage: python3 link_validator.py [--include-reference]")
-            print("  --include-reference: Include 00_reference directory in validation")
+            print("  --include-reference: Include 00_reference directory "
+                  "in validation")
             return
     else:
         exclude_dirs = ['.git', 'node_modules', '__pycache__', '00_reference']

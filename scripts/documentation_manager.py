@@ -13,8 +13,6 @@ import time
 from collections import defaultdict
 from pathlib import Path
 
-import yaml
-
 # SSOT Documentation Configuration - matches documentation_config.h
 WORKSPACE_ROOT = Path('/workspaces/code')
 DOC_INDEXES_DIR = WORKSPACE_ROOT / "docs" / "indexes"
@@ -70,7 +68,7 @@ def create_stm32h7_index():
         # Index by peripheral
         for keyword in keywords:
             peripheral_match = re.match(
-                r'^(GPIO|UART|USART|SPI|I2C|ADC|DAC|TIM|DMA|DMAMUX|RCC|PWR|EXTI|NVIC|CRC|RNG|HASH|CRYP|LTDC|DSI|DCMI|ETH|USB|CAN|FDCAN|SAI|DFSDM|MDIOS|SDMMC|FMC|QUADSPI|OCTOSPI|HSEM|WWDG|IWDG|RTC|TAMP|LPTIM|LPUART|SWPMI|OPAMP|COMP|VREFBUF|CORDIC|FMAC)',
+                r'^(GPIO|UART|USART|SPI|I2C|ADC|DAC|TIM|DMA|DMAMUX|RCC|PWR|EXTI|NVIC|CRC|RNG|HASH|CRYP|LTDC|DSI|DCMI|ETH|USB|CAN|FDCAN|SAI|DFSDM|MDIOS|SDMMC|FMC|QUADSPI|OCTOSPI|HSEM|WWDG|IWDG|RTC|TAMP|LPTIM|LPUART|SWPMI|OPAMP|COMP|VREFBUF|CORDIC|FMAC)',  # noqa: E501
                 keyword)
             if peripheral_match:
                 index_data['peripheral_index'][peripheral_match.group(
@@ -115,8 +113,8 @@ def create_stm32h7_index():
     with open(STM32H7_INDEX_PATH, 'w') as f:
         json.dump(dict(index_data), f, indent=2)
 
-    print(
-        f"✅ STM32H7 index created: {total_files} files, {round(total_size / (1024 * 1024), 1)}MB")
+    print(f"✅ STM32H7 index created: {total_files} files, "
+          f"{round(total_size / (1024 * 1024), 1)}MB")
     return True
 
 
@@ -161,7 +159,7 @@ def create_l6470_index():
 
         # L6470 registers
         registers = re.findall(
-            r'\b(ABS_POS|EL_POS|MARK|SPEED|ACC|DEC|MAX_SPEED|MIN_SPEED|KVAL_HOLD|KVAL_RUN|KVAL_ACC|KVAL_DEC|INT_SPEED|ST_SLP|FN_SLP_ACC|FN_SLP_DEC|K_THERM|ADC_OUT|OCD_TH|STALL_TH|FS_SPD|STEP_MODE|ALARM_EN|CONFIG|STATUS)\b',
+            r'\b(ABS_POS|EL_POS|MARK|SPEED|ACC|DEC|MAX_SPEED|MIN_SPEED|KVAL_HOLD|KVAL_RUN|KVAL_ACC|KVAL_DEC|INT_SPEED|ST_SLP|FN_SLP_ACC|FN_SLP_DEC|K_THERM|ADC_OUT|OCD_TH|STALL_TH|FS_SPD|STEP_MODE|ALARM_EN|CONFIG|STATUS)\b',  # noqa: E501
             content)
         for reg in registers:
             index_data['register_index'][reg].append(relative_path)
@@ -173,7 +171,7 @@ def create_l6470_index():
 
         # L6470 commands
         commands = re.findall(
-            r'\b(NOP|SetParam|GetParam|Run|StepClock|Move|GoTo|GoTo_DIR|GoUntil|ReleaseSW|GoHome|GoMark|ResetPos|ResetDevice|SoftStop|HardStop|SoftHiZ|HardHiZ|GetStatus)\b',
+            r'\b(NOP|SetParam|GetParam|Run|StepClock|Move|GoTo|GoTo_DIR|GoUntil|ReleaseSW|GoHome|GoMark|ResetPos|ResetDevice|SoftStop|HardStop|SoftHiZ|HardHiZ|GetStatus)\b',  # noqa: E501
             content)
         for cmd in commands:
             index_data['command_index'][cmd].append(relative_path)
@@ -193,7 +191,7 @@ def create_l6470_index():
         json.dump(dict(index_data), f, indent=2)
 
     print(
-        f"✅ L6470 index created: {total_files} files, {round(total_size / (1024 * 1024), 1)}MB")
+        f"✅ L6470 index created: {total_files} files, {round(total_size / (1024 * 1024), 1)}MB")  # noqa: E501
     return True
 
 
@@ -214,7 +212,7 @@ def extract_keywords_from_file(file_path):
 
     # Extract peripheral names
     peripherals = re.findall(
-        r'\b(GPIO|UART|USART|SPI|I2C|ADC|DAC|TIM|DMA|DMAMUX|RCC|PWR|EXTI|NVIC|CRC|RNG|HASH|CRYP|LTDC|DSI|DCMI|ETH|USB|CAN|FDCAN|SAI|DFSDM|MDIOS|SDMMC|FMC|QUADSPI|OCTOSPI|HSEM|WWDG|IWDG|RTC|TAMP|LPTIM|LPUART|SWPMI|OPAMP|COMP|VREFBUF|CORDIC|FMAC)\b',
+        r'\b(GPIO|UART|USART|SPI|I2C|ADC|DAC|TIM|DMA|DMAMUX|RCC|PWR|EXTI|NVIC|CRC|RNG|HASH|CRYP|LTDC|DSI|DCMI|ETH|USB|CAN|FDCAN|SAI|DFSDM|MDIOS|SDMMC|FMC|QUADSPI|OCTOSPI|HSEM|WWDG|IWDG|RTC|TAMP|LPTIM|LPUART|SWPMI|OPAMP|COMP|VREFBUF|CORDIC|FMAC)\b',  # noqa: E501
         content)
     keywords.update(peripherals)
 
@@ -247,7 +245,7 @@ def search_documentation(search_type, query, scope='all'):
 def search_stm32h7(search_type, query):
     """Search STM32H7 documentation"""
     if not STM32H7_INDEX_PATH.exists():
-        print(f"❌ STM32H7 index not found. Run with --create-indexes first.")
+        print("❌ STM32H7 index not found. Run with --create-indexes first.")
         return []
 
     with open(STM32H7_INDEX_PATH, 'r') as f:
@@ -294,7 +292,7 @@ def search_stm32h7(search_type, query):
                             'type': 'concept',
                             'concept': concept,
                             'size_kb': index['file_metadata'][file]['size_kb'],
-                            'full_path': index['file_metadata'][file]['full_path']
+                            'full_path': index['file_metadata'][file]['full_path']  # noqa: E501
                         })
 
     return results
@@ -303,7 +301,7 @@ def search_stm32h7(search_type, query):
 def search_l6470(search_type, query):
     """Search L6470 documentation"""
     if not L6470_INDEX_PATH.exists():
-        print(f"❌ L6470 index not found. Run with --create-indexes first.")
+        print("❌ L6470 index not found. Run with --create-indexes first.")
         return []
 
     with open(L6470_INDEX_PATH, 'r') as f:
@@ -371,13 +369,13 @@ def display_results(results, query):
         print(f"\n📘 STM32H7 Documentation ({len(stm32h7_results)} files):")
         for result in stm32h7_results:
             print(
-                f"   • {result['file']} ({result['size_kb']}KB) - {result['type']}")
+                f"   • {result['file']} ({result['size_kb']}KB) - {result['type']}")  # noqa: E501
 
     if l6470_results:
         print(f"\n📗 L6470 Documentation ({len(l6470_results)} files):")
         for result in l6470_results:
             print(
-                f"   • {result['file']} ({result['size_kb']}KB) - {result['type']}")
+                f"   • {result['file']} ({result['size_kb']}KB) - {result['type']}")  # noqa: E501
 
 
 def main():

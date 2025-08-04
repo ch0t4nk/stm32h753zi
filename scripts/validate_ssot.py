@@ -27,6 +27,7 @@ DOC_INDEX_L6470_SEARCH = (WORKSPACE_ROOT / "docs" / "indexes" /
 INSTRUCTION_ROOT_DIR = WORKSPACE_ROOT / ".github" / "instructions"
 REFERENCE_ROOT_DIR = WORKSPACE_ROOT / "00_reference"
 
+
 def find_hardcoded_values(file_path: str) -> List[Dict]:
     """Find potential hardcoded values that should be in SSOT."""
     hardcoded_patterns = [
@@ -72,6 +73,7 @@ def find_hardcoded_values(file_path: str) -> List[Dict]:
 
     return violations
 
+
 def validate_ssot_structure() -> List[str]:
     """Validate that SSOT structure exists."""
     required_files = [
@@ -91,6 +93,7 @@ def validate_ssot_structure() -> List[str]:
             missing_files.append(file_path)
 
     return missing_files
+
 
 def check_include_dependencies() -> List[Dict]:
     """Check that source files include appropriate SSOT headers."""
@@ -144,6 +147,7 @@ def check_include_dependencies() -> List[Dict]:
 
     return violations
 
+
 def validate_config_consistency() -> List[Dict]:
     """Validate consistency between configuration files."""
     inconsistencies = []
@@ -193,6 +197,7 @@ def validate_config_consistency() -> List[Dict]:
 
     return inconsistencies
 
+
 def generate_report(violations: List[Dict], missing_files: List[str],
                     include_violations: List[Dict],
                     inconsistencies: List[Dict],
@@ -210,7 +215,8 @@ def generate_report(violations: List[Dict], missing_files: List[str],
         for file in missing_files:
             print(f"   📄 {file}")
         print("\n💡 Run: mkdir -p src/config src/common")
-        print("💡 TODO: See .github/instructions/ssot-config.instructions.md to create missing files")
+        print("💡 TODO: See .github/instructions/"
+              "ssot-config.instructions.md to create missing files")
     else:
         print("✅ SSOT structure complete")
 
@@ -218,24 +224,24 @@ def generate_report(violations: List[Dict], missing_files: List[str],
     if include_docs:
         print("\n📚 Documentation Structure Validation:")
         if doc_structure_errors:
-            print(
-                f"❌ Found {len(doc_structure_errors)} documentation structure issues:")
+            print(f"❌ Found {len(doc_structure_errors)} documentation "
+                  "structure issues:")
             for error in doc_structure_errors:
                 print(f"   📁 {error}")
         else:
             print("✅ Documentation structure is valid")
 
         if instruction_ref_errors:
-            print(
-                f"\n❌ Found {len(instruction_ref_errors)} broken instruction references:")
+            print(f"\n❌ Found {len(instruction_ref_errors)} broken "
+                  "instruction references:")
             for error in instruction_ref_errors:
                 print(f"   🔗 {error}")
         else:
             print("✅ All instruction references are valid")
 
         if doc_path_errors:
-            print(
-                f"\n❌ Found {len(doc_path_errors)} hardcoded documentation paths:")
+            print(f"\n❌ Found {len(doc_path_errors)} hardcoded "
+                  "documentation paths:")
             for error in doc_path_errors:
                 print(f"   📂 {error}")
         else:
@@ -253,13 +259,13 @@ def generate_report(violations: List[Dict], missing_files: List[str],
                 by_file[file] = []
             by_file[file].append(violation)
 
-        for file, file_violations in list(
-                by_file.items())[:5]:  # Show first 5 files
+        # Show first 5 files
+        for file, file_violations in list(by_file.items())[:5]:
             print(f"\n   📁 {file}:")
             # Show first 3 violations per file
             for violation in file_violations[:3]:
-                print(
-                    f"      Line {violation['line']}: {violation['content'][:60]}...")
+                content_preview = violation['content'][:60]
+                print(f"      Line {violation['line']}: {content_preview}...")
                 print(f"      💡 {violation['description']}")
 
         if len(by_file) > 5:
@@ -270,8 +276,8 @@ def generate_report(violations: List[Dict], missing_files: List[str],
 
     # Check include dependencies
     if include_violations:
-        print(
-            f"\n⚠️  Found {len(include_violations)} include dependency issues:")
+        print(f"\n⚠️  Found {len(include_violations)} include dependency "
+              "issues:")
         for violation in include_violations[:5]:  # Show first 5
             print(f"   📁 {violation['file']}")
             print(f"      Issue: {violation['issue']}")
@@ -281,8 +287,8 @@ def generate_report(violations: List[Dict], missing_files: List[str],
 
     # Check configuration consistency
     if inconsistencies:
-        print(
-            f"\n⚠️  Found {len(inconsistencies)} configuration inconsistencies:")
+        print(f"\n⚠️  Found {len(inconsistencies)} configuration "
+              "inconsistencies:")
         for inconsistency in inconsistencies:
             print(f"   🔗 {inconsistency['issue']}")
             print(f"      Files: {', '.join(inconsistency['files'])}")
@@ -291,8 +297,8 @@ def generate_report(violations: List[Dict], missing_files: List[str],
         print("✅ Configuration consistency checks passed")
 
     # Summary and recommendations
-    total_issues = len(violations) + len(missing_files) + \
-        len(include_violations) + len(inconsistencies)
+    total_issues = (len(violations) + len(missing_files) +
+                    len(include_violations) + len(inconsistencies))
 
     print("\n📊 Summary:")
     print(f"   • Missing SSOT files: {len(missing_files)}")
@@ -317,6 +323,7 @@ def generate_report(violations: List[Dict], missing_files: List[str],
         print("   5. Re-run validation: python3 scripts/validate_ssot.py")
 
     print("\n🚀 SSOT validation complete!")
+
 
 def validate_documentation_structure() -> List[str]:
     """Validate documentation structure matches SSOT configuration"""
@@ -350,9 +357,10 @@ def validate_documentation_structure() -> List[str]:
 
     return errors
 
+
 def validate_instruction_references() -> List[str]:
     """Validate that instruction file references in source code are valid
-    Note: Detailed instruction reference management is handled by instruction_manager.py
+    Note: Detailed instruction reference management is handled by instruction_manager.py  # noqa: E501
     """
     errors = []
 
@@ -364,21 +372,22 @@ def validate_instruction_references() -> List[str]:
         try:
             with open(src_file, 'r', encoding='utf-8', errors='ignore') as f:
                 content = f.read()
-        except BaseException:
+        except Exception:
             continue
 
         matches = re.findall(pattern, content)
         for match in matches:
             instruction_file = Path(INSTRUCTION_ROOT_DIR) / match
             if not instruction_file.exists():
-                errors.append(
-                    f"Broken instruction reference in {src_file}: {match}")
+                errors.append(f"Broken instruction reference in "
+                              f"{src_file}: {match}")
 
     if errors:
-        errors.append(
-            "Run 'python3 scripts/instruction_manager.py validate' for detailed analysis")
+        errors.append("Run 'python3 scripts/instruction_manager.py validate' "
+                      "for detailed analysis")
 
     return errors
+
 
 def validate_documentation_paths() -> List[str]:
     """Validate hardcoded documentation paths against SSOT"""
@@ -390,7 +399,7 @@ def validate_documentation_paths() -> List[str]:
 
         hardcoded_patterns = [
             (r'docs/indexes/[^"\']+', 'Should use DOC_INDEX_* constants'),
-            (r'\.github/instructions/[^"\']+', 'Should use INSTRUCTION_* constants'),
+            (r'\.github/instructions/[^"\']+', 'Should use INSTRUCTION_* constants'),  # noqa: E501
             (r'00_reference/[^"\']+', 'Should use REFERENCE_* constants')
         ]
 
@@ -400,18 +409,21 @@ def validate_documentation_paths() -> List[str]:
                 continue
 
             try:
-                with open(script_file, 'r', encoding='utf-8', errors='ignore') as f:
+                with open(script_file, 'r', encoding='utf-8',
+                          errors='ignore') as f:
                     content = f.read()
-            except BaseException:
+            except Exception:
                 continue
 
             for pattern, message in hardcoded_patterns:
                 matches = re.findall(pattern, content)
                 for match in matches:
-                    errors.append(
-                        f"Hardcoded path in {script_file}: {match} - {message}")
+                    msg = (f"Hardcoded path in {script_file}: {match} - "
+                           f"{message}")
+                    errors.append(msg)
 
     return errors
+
 
 def main():
     """Main validation function."""
@@ -460,26 +472,18 @@ def main():
         doc_path_errors = validate_documentation_paths()
 
     # Generate enhanced report
-    generate_report(
-        all_violations,
-        missing_files,
-        include_violations,
-        inconsistencies,
-        doc_structure_errors,
-        instruction_ref_errors,
-        doc_path_errors,
-        args.include_docs)
+    generate_report(all_violations, missing_files, include_violations,
+                    inconsistencies, doc_structure_errors,
+                    instruction_ref_errors, doc_path_errors,
+                    args.include_docs)
 
     # Return exit code based on findings
-    total_issues = (
-        len(all_violations) +
-        len(missing_files) +
-        len(include_violations) +
-        len(inconsistencies) +
-        len(doc_structure_errors) +
-        len(instruction_ref_errors) +
-        len(doc_path_errors))
+    total_issues = (len(all_violations) + len(missing_files) +
+                    len(include_violations) + len(inconsistencies) +
+                    len(doc_structure_errors) + len(instruction_ref_errors) +
+                    len(doc_path_errors))
     return 1 if total_issues > 0 else 0
+
 
 if __name__ == '__main__':
     exit_code = main()

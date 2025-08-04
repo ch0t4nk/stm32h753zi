@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
 """
-Instruction Management Tool
-Consolidated tool for all instruction file reference management
-Combines functionality from fix_instruction_references.py and consolidate_instruction_references.py
-Uses SSOT documentation configuration for all paths
+Enhanced Instruction Manager for STM32H753ZI Project
+Manages comprehensive instruction file system with validation,
+cross-referencing, and metadata tracking.
 """
 
 import argparse
-import os
 import re
-import sys
 from pathlib import Path
 
 # SSOT Documentation Configuration - matches documentation_config.h
@@ -168,7 +165,8 @@ def analyze_references(verbose=False):
             print(f"   ✅ {name} → {path}")
 
     print(
-        f"\n🔗 Total unique references found: {len(set().union(*references.values()))}")
+        f"\n🔗 Total unique references found: "
+        f"{len(set().union(*references.values()))}")
 
     print(f"\n✅ References that can be mapped: {len(mapping)}")
     if verbose:

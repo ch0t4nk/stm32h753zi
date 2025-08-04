@@ -2,11 +2,23 @@
 """
 Enhanced Documentation Search Tool
 Supports both STM32H7 and L6470 documentation search
-Uses SSOT documentation configuration for all paths
+Uses SSOT docutation configuration for all paths
+    print("Search Types:")
+    print("  peripheral <n>  - Search STM32H7 peripherals "
+          "(GPIO, SPI, I2C, etc.)")
+    print("  function <n>    - Search functions in both STM32H7 "
+          "and L6470 docs")
+    print("  register <n>    - Search L6470 registers "
+          "(ABS_POS, SPEED, etc.)")
+    print("  concept <n>     - Search concepts in both documentation sets")("  peripheral <n>  - Search STM32H7 peripherals "  # noqa: E501
+          "(GPIO, SPI, I2C, etc.)")
+    print("  function <n>    - Search functions in both STM32H7 "
+          "and L6470 docs")
+    print("  register <n>    - Search L6470 registers "
+          "(ABS_POS, SPEED, etc.)")
 """
 
 import json
-import os
 import sys
 from pathlib import Path
 
@@ -27,8 +39,9 @@ def load_stm32h7_index():
             return json.load(f)
     except FileNotFoundError:
         print(
-            f"❌ STM32H7 index not found at SSOT path: {DOC_INDEX_STM32H7_FULL}")
-        return None
+            f"❌ STM32H7 index not found at SSOT path: "
+            f"{DOC_INDEX_STM32H7_FULL}")
+        return False
 
 
 def load_l6470_index():
@@ -102,11 +115,13 @@ def format_results(results, search_type, query, doc_type):
     """Format search results for display"""
     if not results:
         print(
-            f"❌ {search_type.title()} '{query}' not found in {doc_type} documentation")
+            f"❌ {search_type.title()} '{query}' not found in {doc_type} "
+            f"documentation")
         return
 
     print(
-        f"✅ Found {len(results)} {doc_type} {search_type} results for '{query}':")
+        f"✅ Found {len(results)} {doc_type} {search_type} results for "
+        f"'{query}':")
     print("=" * 60)
 
     for i, file_path in enumerate(results[:10], 1):  # Limit to top 10
@@ -125,9 +140,9 @@ def show_usage():
     print("Usage: python3 search_enhanced_docs.py <type> <query> [scope]")
     print()
     print("Search Types:")
-    print("  peripheral <name>  - Search STM32H7 peripherals (GPIO, SPI, I2C, etc.)")
-    print("  function <name>    - Search functions in both STM32H7 and L6470 docs")
-    print("  register <name>    - Search L6470 registers (ABS_POS, SPEED, etc.)")
+    print("  peripheral <name>  - Search STM32H7 peripherals (GPIO, SPI, I2C, etc.)")  # noqa: E501
+    print("  function <name>    - Search functions in both STM32H7 and L6470 docs")  # noqa: E501
+    print("  register <name>    - Search L6470 registers (ABS_POS, SPEED, etc.)")  # noqa: E501
     print("  concept <name>     - Search concepts in both documentation sets")
     print()
     print("Scope (optional):")
@@ -166,7 +181,7 @@ def main():
             results = search_stm32h7("peripheral", query, stm32h7_index)
             format_results(results, "peripheral", query, "STM32H7")
         else:
-            print("❌ Peripheral search only available for STM32H7 documentation")
+            print("❌ Peripheral search only available for STM32H7 documentation")  # noqa: E501
 
     elif search_type == "function":
         if scope in ["all", "stm32h7"]:

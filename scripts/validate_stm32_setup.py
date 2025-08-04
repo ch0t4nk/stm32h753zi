@@ -5,7 +5,6 @@ Validates STM32 toolchain, extensions, and configuration setup.
 """
 
 import json
-import os
 import subprocess
 import sys
 from pathlib import Path
@@ -114,9 +113,12 @@ class STM32Validator:
         print("\n📚 Checking Reference Assets...")
 
         assets = {
-            "00_reference/ST_Assets/stm32h7-svd_2.8/STM32H753.svd": "STM32H753 SVD file",
-            "00_reference/STM32Cube_FW_H7_V1.12.0": "STM32H7 HAL documentation",
-            "00_reference/x_cube_spn2_markdown_docs": "L6470 documentation"}
+            "00_reference/ST_Assets/stm32h7-svd_2.8/STM32H753.svd":
+                "STM32H753 SVD file",
+            "00_reference/STM32Cube_FW_H7_V1.12.0":
+                "STM32H7 HAL documentation",
+            "00_reference/x_cube_spn2_markdown_docs": "L6470 documentation"
+        }
 
         for asset_path, description in assets.items():
             full_path = self.workspace_root / asset_path
