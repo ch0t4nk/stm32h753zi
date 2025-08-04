@@ -44,7 +44,7 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "/usr/bin/arm-none-eabi-gdb",
+            "miDebuggerPath": "/usr/bin/gdb-multiarch",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
