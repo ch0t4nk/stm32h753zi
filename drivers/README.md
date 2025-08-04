@@ -5,7 +5,7 @@ This directory contains hardware abstraction layer (HAL) drivers for the STM32H7
 
 ## Enhanced Documentation Integration
 **Reference Assets**: Leverage comprehensive STM32H7 and component documentation:
-- **STM32H7 HAL Documentation**: Use `python3 scripts/documentation/search_docs.py peripheral <PERIPHERAL>` for implementation details
+- **STM32H7 HAL Documentation**: Use `python3 scripts/search_enhanced_docs.py peripheral <PERIPHERAL> stm32h7` for implementation details
 - **Component References**: 
   - L6470 drivers: See `00_reference/x_cube_spn2_markdown_docs/` and `.github/instructions/stm32h7-spi-l6470.instructions.md`
   - AS5600 encoders: See `.github/instructions/stm32h7-i2c-as5600.instructions.md`

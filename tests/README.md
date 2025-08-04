@@ -5,7 +5,7 @@ This directory contains unit and integration tests for the STM32H753ZI stepper m
 
 ## Enhanced Testing Framework Integration
 **Reference Assets**: Leverage comprehensive testing documentation and examples:
-- **STM32H7 Testing**: Use `python3 scripts/documentation/search_docs.py concept testing` for STM32H7-specific testing patterns
+- **STM32H7 Testing**: Use `python3 scripts/search_enhanced_docs.py concept testing stm32h7` for STM32H7-specific testing patterns
 - **Test Examples**: `00_reference/STM32Cube_FW_H7_V1.12.0/Projects/` contains test implementations for STM32H7
 - **HAL Testing**: Test STM32H7 HAL functions with proper error handling and safety validation
 - **Integration Guidance**: Follow `.github/instructions/` files for component integration testing

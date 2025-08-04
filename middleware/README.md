@@ -5,7 +5,7 @@ This directory contains middleware components and simulation interfaces for the 
 
 ## Enhanced Middleware Development
 **Reference Assets**: Leverage comprehensive STM32H7 middleware documentation:
-- **STM32H7 Middleware**: Use `python3 scripts/documentation/search_docs.py concept middleware` for STM32H7 middleware patterns
+- **STM32H7 Middleware**: Use `python3 scripts/search_enhanced_docs.py concept middleware stm32h7` for STM32H7 middleware patterns
 - **Communication Middleware**: See `.github/instructions/comm-protocols.instructions.md` for protocol abstraction guidance
 - **Simulation Support**: `00_reference/STM32Cube_FW_H7_V1.12.0/` contains middleware examples and patterns
 - **Integration Examples**: STM32H7 HAL middleware integration with FreeRTOS, LwIP, and USB

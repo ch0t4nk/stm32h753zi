@@ -5,7 +5,7 @@ This directory contains FreeRTOS integration and task management for the STM32H7
 
 ## Enhanced RTOS Development
 **Reference Assets**: Leverage comprehensive STM32H7 and FreeRTOS documentation:
-- **STM32H7 FreeRTOS**: Use `python3 scripts/documentation/search_docs.py concept RTOS` for STM32H7 FreeRTOS integration
+- **STM32H7 FreeRTOS**: Use `python3 scripts/search_enhanced_docs.py concept RTOS stm32h7` for STM32H7 FreeRTOS integration
 - **FreeRTOS Examples**: `00_reference/STM32Cube_FW_H7_V1.12.0/Middlewares/Third_Party/FreeRTOS/` contains STM32H7-optimized FreeRTOS
 - **Timing Requirements**: See `.github/instructions/time-handling.instructions.md` for real-time constraint management
 - **Safety Integration**: Follow `.github/instructions/safety-systems.instructions.md` for safety-critical task design

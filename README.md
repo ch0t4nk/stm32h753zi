@@ -20,13 +20,14 @@ This project features a **comprehensive documentation integration system**:
 ### Documentation Search Tools
 ```bash
 # Search STM32H7 peripheral documentation
-python3 scripts/documentation/search_docs.py peripheral SPI
+python3 scripts/search_enhanced_docs.py peripheral SPI stm32h7
 
-# Find specific HAL functions
-python3 scripts/documentation/search_docs.py function HAL_SPI_Init
+# Find specific HAL functions and L6470 registers
+python3 scripts/search_enhanced_docs.py function HAL_SPI_Init stm32h7
+python3 scripts/search_enhanced_docs.py register ABS_POS l6470
 
-# Explore programming concepts  
-python3 scripts/documentation/search_docs.py concept DMA
+# Explore programming concepts across all documentation
+python3 scripts/search_enhanced_docs.py concept stepper all
 ```
 
 ## Quickstart
@@ -52,10 +53,6 @@ python3 scripts/documentation/search_docs.py concept DMA
 - **Documentation**: 86MB STM32H7 reference + 2.1MB L6470 documentation  
 - **Testing**: Unity, GoogleTest frameworks
 - **Validation**: SSOT consistency checking, pre-commit hooks
-
-## Build System & Tasks
-- See `CMakeLists.txt` or `Makefile`
-- Example targets: stepper_control, encoder_read, api_demo, can_api_demo
 
 ## Build System & Tasks
 Available VS Code tasks:
@@ -91,8 +88,12 @@ src/
 
 .github/instructions/    # Modular Copilot instruction system
 00_reference/           # STM32H7 + L6470 documentation (READ-ONLY)
-scripts/documentation/  # Documentation search and indexing tools
+scripts/                # Consolidated development tools
+docs/                   # Project documentation and summaries
+tests/                  # Unit and integration tests
 ```
+
+For complete file organization guidelines, see `.github/instructions/file-organization.instructions.md`.
 
 ## Version System
 - **Semantic Versioning**: MAJOR.MINOR.PATCH-PRERELEASE+BUILD
