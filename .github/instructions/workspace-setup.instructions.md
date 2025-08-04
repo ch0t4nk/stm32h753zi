@@ -70,37 +70,48 @@ This workspace runs in a dev container with:
 - **Python Tools**: CAN utilities, documentation generation (Sphinx/Breathe)
 - **SSOT Validation**: Pre-commit hooks, configuration validation scripts
 - **Documentation**: Doxygen with Graphviz for API documentation
-- **Enhanced Search System**: Unified STM32H7 + L6470 documentation search (88.1MB coverage)
+- **Enhanced Search System**: Copilot-optimized unified STM32H7 + L6470 documentation search (88.1MB coverage, 32,128+ keywords)
 
 ## Reference Assets
 
 The `00_reference/` directory contains official ST assets (READ-ONLY):
-- **STM32H7 HAL Documentation**: 86MB, 3,988 markdown files with complete peripheral coverage
-- **L6470 Documentation**: 2.1MB X-CUBE-SPN2 stepper driver documentation (197 files)
+- **STM32H7 HAL Documentation**: 86MB, 3,997 markdown files with complete peripheral coverage and semantic categorization
+- **L6470 Documentation**: 2.1MB X-CUBE-SPN2 stepper driver documentation with 356 searchable keywords
 - **STM32H7 HAL drivers and examples**: Complete implementation examples
 - **X-NUCLEO-IHM02A1 board support package**: Shield-specific guidance
 - **Application examples and datasheets**: Real-world implementation patterns
 
 **Enhanced Documentation Search:**
 ```bash
-# Search STM32H7 peripherals
+# Search STM32H7 peripherals with semantic categorization
 python3 scripts/search_enhanced_docs.py peripheral SPI --scope STM32H7
 
-# Search L6470 functions and registers  
-python3 scripts/search_enhanced_docs.py function L6470_Init --scope L6470
+# Search L6470 functions and registers with token efficiency
+# NOTE: L6470 functions are concatenated - use broad searches
+python3 scripts/search_enhanced_docs.py function L6470 --scope L6470
 python3 scripts/search_enhanced_docs.py register ABS_POS --scope L6470
 
-# Unified search across all documentation
-python3 scripts/search_enhanced_docs.py concept "motor control" --scope all
+# Unified search across all documentation with Copilot optimization
+python3 scripts/search_enhanced_docs.py concept "motor_control" --scope all
+
+# Search specific technical concepts with semantic targeting
+python3 scripts/search_enhanced_docs.py concept "safety_systems" --scope STM32H7
+python3 scripts/search_enhanced_docs.py concept "stepper_configuration" --scope L6470
 
 # Validate workspace links
 python3 scripts/link_validator.py
 ```
 
+**Search Pattern Best Practices:**
+- **STM32H7**: Use exact names (`HAL_GPIO_Init`, `peripheral SPI`)  
+- **L6470**: Use broad patterns (`function L6470`, not `L6470_Init`) - functions are concatenated in index
+- **Cross-platform**: Use concept searches (`concept "motor_control"`) for comprehensive results
+- **Scope**: Case-insensitive (`--scope STM32H7`, `--scope stm32h7`, `--scope L6470`)
+
 **Search Index Locations:**
-- `docs/indexes/STM32H7_FULL_INDEX.json` - Complete STM32H7 documentation index
-- `docs/indexes/L6470_SEARCH_INDEX.json` - Complete L6470 documentation index  
-- `docs/indexes/STM32H7_COPILOT_INDEX.*` - Copilot-optimized quick reference formats
+- `docs/indexes/STM32H7_FULL_INDEX.json` - Complete STM32H7 documentation index (8.9MB, 31,772 keywords)
+- `docs/indexes/L6470_SEARCH_INDEX.json` - Complete L6470 documentation index (356 keywords)
+- `docs/indexes/STM32H7_COPILOT_INDEX.*` - Copilot-optimized quick reference formats (token-efficient)
 
 **IMPORTANT**: Never modify `00_reference/` files. Copy needed code to appropriate `src/` locations.
 

@@ -68,8 +68,8 @@ Use comprehensive documentation search tools for development with **unified STM3
 # Search for peripheral-specific documentation (STM32H7 + L6470)
 python3 scripts/search_enhanced_docs.py peripheral SPI --scope all
 
-# Find function implementation details (L6470 specific)
-python3 scripts/search_enhanced_docs.py function L6470_Init --scope L6470
+# Find L6470 function implementation details (NOTE: functions are concatenated)
+python3 scripts/search_enhanced_docs.py function L6470 --scope L6470
 
 # Find STM32H7 HAL functions
 python3 scripts/search_enhanced_docs.py function HAL_GPIO_Init --scope STM32H7
@@ -95,6 +95,27 @@ python3 scripts/link_validator.py
 - **Scope filtering**: Target specific documentation sets (STM32H7/L6470/all)
 - **Performance**: 7x faster than HTML-based searches (0.03s vs 0.22s)
 - **Coverage**: 88.1MB total documentation, 4,185 files, 32,128+ keywords
+
+**Search Pattern Best Practices:**
+- **STM32H7**: Use exact names (`HAL_GPIO_Init`, `peripheral SPI`)  
+- **L6470**: Use broad patterns (`function L6470`, not `L6470_Init`) - functions are concatenated in index
+- **Cross-platform**: Use concept searches (`concept "motor_control"`) for comprehensive results
+- **Scope**: Case-insensitive (`--scope STM32H7`, `--scope stm32h7`, `--scope L6470`)
+
+**Common Search Patterns:**
+```bash
+# STM32H7 - Use exact function names (work well)
+python3 scripts/search_enhanced_docs.py function HAL_GPIO_Init --scope STM32H7
+python3 scripts/search_enhanced_docs.py peripheral SPI --scope STM32H7
+
+# L6470 - Use broad patterns (functions are concatenated)
+python3 scripts/search_enhanced_docs.py function L6470 --scope L6470    # ✅ CORRECT
+python3 scripts/search_enhanced_docs.py function L6470_Init --scope L6470  # ❌ WILL FAIL
+
+# Cross-platform concept searches (most effective for complex topics)
+python3 scripts/search_enhanced_docs.py concept "stepper configuration" --scope all
+python3 scripts/search_enhanced_docs.py concept "safety systems" --scope all
+```
 
 ## Reference Assets
 The `00_reference/` directory contains ST official assets (READ-ONLY):

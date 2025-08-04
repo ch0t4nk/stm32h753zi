@@ -10,23 +10,29 @@ This instruction file provides comprehensive guidance for configuring the L6470 
 
 ## Enhanced Documentation Integration
 **Reference Assets**: This instruction leverages comprehensive L6470 and STM32H7 documentation:
-- **X-CUBE-SPN2 Documentation**: 2.1MB L6470-specific reference materials in `00_reference/x_cube_spn2_markdown_docs/`
-- **L6470 Search Index**: Use `python3 scripts/search_enhanced_docs.py function L6470_ --scope L6470` for function lookup
-- **L6470 Register Search**: Use `python3 scripts/search_enhanced_docs.py register ABS_POS --scope L6470` for register details
-- **STM32H7 SPI Documentation**: Use `python3 scripts/search_enhanced_docs.py peripheral SPI --scope STM32H7` for SPI implementation
-- **Motor Control Examples**: `00_reference/STM32CubeExpansion_SPN2_V1.1.1/` contains working code examples
-
-**Quick L6470 Documentation Lookup:**
-```bash
-# Find L6470 functions
-python3 scripts/search_enhanced_docs.py function L6470_Init
-
-# Find specific registers  
-python3 scripts/search_enhanced_docs.py register MAX_SPEED
-
-# Search motor control concepts
-python3 scripts/search_enhanced_docs.py concept "microstepping"
-```
+- **X-CUBE-SPN2 Documentation**: 2.1MB L6470-specific reference materials with 356 searchable keywords
+- **Unified Search System**: Enhanced search across STM32H7 and L6470 documentation (88.1MB total coverage)
+- **Copilot-Optimized Search Commands**:
+  ```bash
+  # Search L6470 functions with semantic categorization
+  # NOTE: L6470 functions are concatenated (e.g., "voidL6470_GoHome")
+  python3 scripts/search_enhanced_docs.py function L6470 --scope L6470
+  
+  # Find L6470 registers with improved targeting
+  python3 scripts/search_enhanced_docs.py register ABS_POS --scope L6470
+  
+  # Search motor control concepts across all documentation
+  python3 scripts/search_enhanced_docs.py concept "motor_control" --scope all
+  
+  # Find stepper driver configuration
+  python3 scripts/search_enhanced_docs.py concept "stepper_configuration" --scope L6470
+  ```
+- **L6470 Search Patterns**: 
+  - ✅ Use `function L6470` instead of `function L6470_Init` (functions are concatenated)
+  - ✅ Use broad terms: `register SPEED`, `register ABS`, `register CONFIG`
+  - ✅ Concept searches work best: `concept motor`, `concept stepper`, `concept daisy`
+- **Token-Efficient Categories**: Semantic groupings reduce Copilot search overhead by 7x
+- **Cross-Reference Integration**: STM32H7 SPI + L6470 driver unified documentation access
 
 ## L6470 Driver Characteristics
 

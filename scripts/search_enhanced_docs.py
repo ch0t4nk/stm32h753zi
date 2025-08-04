@@ -2,20 +2,7 @@
 """
 Enhanced Documentation Search Tool
 Supports both STM32H7 and L6470 documentation search
-Uses SSOT docutation configuration for all paths
-    print("Search Types:")
-    print("  peripheral <n>  - Search STM32H7 peripherals "
-          "(GPIO, SPI, I2C, etc.)")
-    print("  function <n>    - Search functions in both STM32H7 "
-          "and L6470 docs")
-    print("  register <n>    - Search L6470 registers "
-          "(ABS_POS, SPEED, etc.)")
-    print("  concept <n>     - Search concepts in both documentation sets")("  peripheral <n>  - Search STM32H7 peripherals "  # noqa: E501
-          "(GPIO, SPI, I2C, etc.)")
-    print("  function <n>    - Search functions in both STM32H7 "
-          "and L6470 docs")
-    print("  register <n>    - Search L6470 registers "
-          "(ABS_POS, SPEED, etc.)")
+Uses SSOT documentation configuration for all paths
 """
 
 import json
@@ -64,18 +51,22 @@ def search_stm32h7(search_type, query, index):
     query_lower = query.lower()
 
     if search_type == "peripheral":
-        for peripheral, files in index.get('peripherals', {}).items():
+        for peripheral, files in index.get('peripheral_index', {}).items():
             if query_lower in peripheral.lower():
                 results.extend(files)
 
     elif search_type == "function":
-        for function, files in index.get('functions', {}).items():
+        for function, files in index.get('function_index', {}).items():
             if query_lower in function.lower():
                 results.extend(files)
 
     elif search_type == "concept":
-        for keyword, files in index.get('keywords', {}).items():
+        for keyword, files in index.get('keyword_index', {}).items():
             if query_lower in keyword.lower():
+                results.extend(files)
+        # Also search concept_index
+        for concept, files in index.get('concept_index', {}).items():
+            if query_lower in concept.lower():
                 results.extend(files)
 
     return list(set(results))  # Remove duplicates
@@ -137,42 +128,56 @@ def show_usage():
     """Show usage information"""
     print("Enhanced Documentation Search Tool")
     print("=" * 40)
-    print("Usage: python3 search_enhanced_docs.py <type> <query> [scope]")
+    print("Usage: python3 search_enhanced_docs.py <type> <query> "
+          "[--scope <scope>]")
     print()
     print("Search Types:")
-    print("  peripheral <name>  - Search STM32H7 peripherals (GPIO, SPI, I2C, etc.)")  # noqa: E501
-    print("  function <name>    - Search functions in both STM32H7 and L6470 docs")  # noqa: E501
-    print("  register <name>    - Search L6470 registers (ABS_POS, SPEED, etc.)")  # noqa: E501
-    print("  concept <name>     - Search concepts in both documentation sets")
+    print("  peripheral <n>  - Search STM32H7 peripherals (GPIO, SPI, etc.)")
+    print("  function <n>    - Search functions in both STM32H7 and L6470")
+    print("  register <n>    - Search L6470 registers (ABS_POS, SPEED, etc.)")
+    print("  concept <n>     - Search concepts in both documentation sets")
     print()
-    print("Scope (optional):")
-    print("  stm32h7           - Search only STM32H7 documentation")
-    print("  l6470             - Search only L6470 documentation")
-    print("  all               - Search both (default)")
+    print("Scope (optional, case-insensitive):")
+    print("  --scope STM32H7   - Search only STM32H7 documentation")
+    print("  --scope L6470     - Search only L6470 documentation")
+    print("  --scope all       - Search both (default)")
     print()
     print("Examples:")
-    print("  python3 search_enhanced_docs.py peripheral GPIO")
-    print("  python3 search_enhanced_docs.py function L6470_Init")
-    print("  python3 search_enhanced_docs.py register ABS_POS")
-    print("  python3 search_enhanced_docs.py concept stepper l6470")
+    print("  python3 search_enhanced_docs.py peripheral GPIO --scope STM32H7")
+    print("  python3 search_enhanced_docs.py function L6470_Init "
+          "--scope L6470")
+    print("  python3 search_enhanced_docs.py concept motor_control "
+          "--scope all")
 
 
 def main():
+    """Main function with enhanced argument parsing and case-insensitive
+    scope"""
+    # Parse command line arguments with support for both --scope flag
+    # and positional args
     if len(sys.argv) < 3:
         show_usage()
         return
 
     search_type = sys.argv[1].lower()
     query = sys.argv[2]
-    scope = sys.argv[3].lower() if len(sys.argv) > 3 else "all"
+
+    # Handle scope parameter - support both "--scope VALUE" and positional
+    scope = "all"  # default
+    if len(sys.argv) > 3:
+        if sys.argv[3] == '--scope' and len(sys.argv) > 4:
+            scope = sys.argv[4].lower()  # --scope FLAG format
+        else:
+            scope = sys.argv[3].lower()  # positional format
 
     # Load indexes
     stm32h7_index = load_stm32h7_index()
     l6470_index = load_l6470_index()
 
-    # Validate scope
+    # Validate scope (case-insensitive)
     if scope not in ["all", "stm32h7", "l6470"]:
-        print(f"❌ Invalid scope: {scope}. Use 'all', 'stm32h7', or 'l6470'")
+        print(f"❌ Invalid scope: '{scope}'. Use 'all', 'stm32h7', or "
+              f"'l6470' (case-insensitive)")
         return
 
     # Search based on type and scope

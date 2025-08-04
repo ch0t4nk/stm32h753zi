@@ -35,7 +35,7 @@ L6470_DOC_ROOT = REFERENCE_DIR / "x_cube_spn2_markdown_docs"
 def create_unified_stm32h7_index():
     """Create unified STM32H7 documentation index from all sources."""
     print("🔍 Creating unified STM32H7 documentation index...")
-    
+
     index = {
         'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
         'description': 'Unified STM32H7 documentation search index',
@@ -47,48 +47,48 @@ def create_unified_stm32h7_index():
         'register_index': defaultdict(list),
         'peripheral_index': defaultdict(list)
     }
-    
+
     total_files = 0
     total_size = 0
-    
+
     for doc_location in STM32H7_DOC_LOCATIONS:
         print(f"   📂 Processing: {doc_location}")
-        
+
         if doc_location == REFERENCE_DIR:
             # Process only .md files in root
             md_files = list(doc_location.glob("*.md"))
         else:
             # Process all .md files recursively in subdirectories
             md_files = list(doc_location.rglob("*.md"))
-        
+
         for md_file in md_files:
             try:
                 content = md_file.read_text(encoding='utf-8', errors='ignore')
                 size_kb = len(content) // 1024
-                
+
                 # Use relative path from workspace root for consistency
                 relative_path = str(md_file.relative_to(WORKSPACE_ROOT))
-                
+
                 # Store file metadata
                 index['file_metadata'][relative_path] = {
                     'size_kb': size_kb,
                     'full_path': str(md_file)
                 }
-                
+
                 # Extract and index different types of keywords
                 _extract_unified_keywords(content, relative_path, index)
-                
+
                 total_files += 1
                 total_size += len(content)
-                
+
             except Exception as e:
                 print(f"   ⚠️ Error processing {md_file}: {e}")
-    
+
     # Save the unified index
     STM32H7_INDEX_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(STM32H7_INDEX_PATH, 'w') as f:
         json.dump(index, f, indent=2)
-    
+
     print(f"✅ Unified STM32H7 index created: {total_files} files, "
           f"{round(total_size / (1024 * 1024), 1)}MB")
     print(f"   📄 Keywords: {len(index['keyword_index'])}")
@@ -100,23 +100,24 @@ def create_unified_stm32h7_index():
 
 
 def create_copilot_optimized_index():
-    """Create a Copilot-optimized quick reference index for token efficiency."""
+    """Create a Copilot-optimized quick reference index for token
+    efficiency."""
     print("🤖 Creating Copilot-optimized reference index...")
-    
+
     if not STM32H7_INDEX_PATH.exists():
         print("❌ Main STM32H7 index not found. Create it first.")
         return False
-    
+
     with open(STM32H7_INDEX_PATH, 'r') as f:
         main_index = json.load(f)
-    
+
     # Create optimized index with most common queries
     copilot_index = {
         'version': '2.0',
         'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
         'description': 'Copilot-optimized STM32H7 + L6470 quick reference',
         'usage': 'Optimized for token efficiency in AI assistance',
-        
+
         # Quick reference by category (most common queries)
         'quick_reference': {
             'motor_control': {
@@ -137,7 +138,8 @@ def create_copilot_optimized_index():
                 'description': 'Safety systems, error handling, MPU',
                 'key_files': [],
                 'peripherals': ['MPU', 'WWDG', 'IWDG'],
-                'concepts': ['memory_protection', 'error_correction', 'hardware_errata']
+                'concepts': ['memory_protection', 'error_correction',
+                             'hardware_errata']
             },
             'architecture': {
                 'description': 'STM32H7 system architecture and performance',
@@ -145,7 +147,7 @@ def create_copilot_optimized_index():
                 'concepts': ['cache', 'TCM', 'AXI', 'performance_tuning']
             }
         },
-        
+
         # Most relevant files by category
         'essential_files': {
             'motor_control': [],
@@ -154,10 +156,10 @@ def create_copilot_optimized_index():
             'architecture': [],
             'hal_reference': []
         },
-        
+
         # Function quick lookup (top 100 most relevant)
         'top_functions': {},
-        
+
         # Common code patterns
         'code_patterns': {
             'l6470_init': 'L6470 initialization sequence',
@@ -167,42 +169,47 @@ def create_copilot_optimized_index():
             'safety_init': 'Safety system initialization'
         }
     }
-    
+
     # Populate essential files for each category
     for category, files in main_index.get('concept_index', {}).items():
         if 'motor' in category or 'stepper' in category:
             copilot_index['essential_files']['motor_control'].extend(files[:3])
-        elif 'communication' in category or 'spi' in category or 'i2c' in category:
+        elif ('communication' in category or 'spi' in category or
+              'i2c' in category):
             copilot_index['essential_files']['communication'].extend(files[:3])
-        elif 'safety' in category or 'protection' in category or 'errata' in category:
+        elif ('safety' in category or 'protection' in category or
+              'errata' in category):
             copilot_index['essential_files']['safety'].extend(files[:3])
         elif 'architecture' in category or 'memory' in category:
             copilot_index['essential_files']['architecture'].extend(files[:3])
         elif 'hal' in category:
             copilot_index['essential_files']['hal_reference'].extend(files[:3])
-    
+
     # Remove duplicates and limit files per category
     for category in copilot_index['essential_files']:
         files = list(set(copilot_index['essential_files'][category]))[:5]
         copilot_index['essential_files'][category] = files
-    
+
     # Top functions (limit to most important)
     function_count = {}
     for func, files in main_index.get('function_index', {}).items():
         function_count[func] = len(files)
-    
+
     # Get top 50 functions by frequency
-    top_functions = sorted(function_count.items(), key=lambda x: x[1], reverse=True)[:50]
+    top_functions = sorted(function_count.items(),
+                           key=lambda x: x[1], reverse=True)[:50]
     for func, count in top_functions:
+        primary_file = (main_index['function_index'][func][0]
+                        if main_index['function_index'][func] else None)
         copilot_index['top_functions'][func] = {
             'file_count': count,
-            'primary_file': main_index['function_index'][func][0] if main_index['function_index'][func] else None
+            'primary_file': primary_file
         }
-    
+
     # Save the optimized index
     copilot_yaml_path = STM32H7_COPILOT_INDEX_YAML
     copilot_json_path = STM32H7_COPILOT_INDEX_JSON
-    
+
     # YAML format for human readability
     try:
         import yaml
@@ -210,17 +217,19 @@ def create_copilot_optimized_index():
             yaml.dump(copilot_index, f, default_flow_style=False, indent=2)
     except ImportError:
         print("   ⚠️ YAML not available, skipping YAML output")
-    
+
     # JSON format for programmatic access
     with open(copilot_json_path, 'w') as f:
         json.dump(copilot_index, f, indent=2)
-    
-    print(f"✅ Copilot-optimized index created")
-    print(f"   📄 Essential files: {sum(len(files) for files in copilot_index['essential_files'].values())}")
+
+    print("✅ Copilot-optimized index created")
+    total_files = sum(len(files) for files in
+                      copilot_index['essential_files'].values())
+    print(f"   📄 Essential files: {total_files}")
     print(f"   ⚙️ Top functions: {len(copilot_index['top_functions'])}")
     print(f"   💾 JSON: {copilot_json_path.name}")
     print(f"   📝 YAML: {copilot_yaml_path.name}")
-    
+
     return True
 
 
@@ -303,114 +312,152 @@ def create_l6470_index():
 
 def _extract_unified_keywords(content, file_path, index):
     """Extract and index all types of keywords optimized for Copilot usage."""
-    
+
     # STM32H7 Peripherals (from original pattern)
     peripherals = re.findall(
         r'\b(GPIO|UART|USART|SPI|I2C|ADC|DAC|TIM|DMA|DMAMUX|RCC|PWR|EXTI|NVIC|CRC|RNG|HASH|CRYP|LTDC|DSI|DCMI|ETH|USB|CAN|FDCAN|SAI|DFSDM|MDIOS|SDMMC|FMC|QUADSPI|OCTOSPI|HSEM|WWDG|IWDG|RTC|TAMP|LPTIM|LPUART|BDMA|MDMA|SWPMI|SPDIFRX|COMP|OPAMP|VREF|TSC|FIREWALL|MPU|FPU|ITM|DWT|SYSTICK)\b',  # noqa: E501
         content)
     for peripheral in peripherals:
         index['peripheral_index'][peripheral].append(file_path)
-    
+
     # L6470 Registers (for L6470 docs or mixed content)
     l6470_registers = re.findall(
         r'\b(ABS_POS|EL_POS|MARK|SPEED|ACC|DEC|MAX_SPEED|MIN_SPEED|KVAL_HOLD|KVAL_RUN|KVAL_ACC|KVAL_DEC|INT_SPEED|ST_SLP|FN_SLP_ACC|FN_SLP_DEC|K_THERM|ADC_OUT|OCD_TH|STALL_TH|FS_SPD|STEP_MODE|ALARM_EN|CONFIG|STATUS)\b',  # noqa: E501
         content)
     for reg in l6470_registers:
         index['register_index'][reg].append(file_path)
-    
+
     # Functions (HAL, LL, L6470)
     functions = re.findall(
         r'\b(HAL_[A-Z_][A-Za-z0-9_]*|LL_[A-Z_][A-Za-z0-9_]*|L6470_[A-Za-z0-9_]+)\b',  # noqa: E501
         content)
     for func in functions:
         index['function_index'][func].append(file_path)
-    
+
     # L6470 Commands
     l6470_commands = re.findall(
         r'\b(NOP|SetParam|GetParam|Run|StepClock|Move|GoTo|GoTo_DIR|GoUntil|ReleaseSW|GoHome|GoMark|ResetPos|ResetDevice|SoftStop|HardStop|SoftHiZ|HardHiZ|GetStatus)\b',  # noqa: E501
         content)
     for cmd in l6470_commands:
         index['function_index'][cmd].append(file_path)
-    
+
     # COPILOT-OPTIMIZED CONCEPT EXTRACTION
     # Group concepts by common Copilot query patterns
-    
+
     # Motor Control & Stepper Motor Concepts
-    if re.search(r'\b(stepper|motor|L6470|IHM02A1|step|microstep|torque|current|position|velocity|acceleration|deceleration)\b', content, re.IGNORECASE):
+    motor_pattern = (r'\b(stepper|motor|L6470|IHM02A1|step|microstep|torque|'
+                     r'current|position|velocity|acceleration|deceleration)\b')
+    if re.search(motor_pattern, content, re.IGNORECASE):
         index['concept_index']['motor_control'].append(file_path)
         index['concept_index']['stepper_motor'].append(file_path)
-    
+
     # Encoder & Feedback Concepts
-    if re.search(r'\b(encoder|AS5600|magnetic|position|feedback|closed.loop|sensor|angle|rotation)\b', content, re.IGNORECASE):
+    encoder_pattern = (r'\b(encoder|AS5600|magnetic|position|feedback|'
+                       r'closed.loop|sensor|angle|rotation)\b')
+    if re.search(encoder_pattern, content, re.IGNORECASE):
         index['concept_index']['encoder_feedback'].append(file_path)
         index['concept_index']['position_sensing'].append(file_path)
-    
+
     # Communication Protocols
-    if re.search(r'\b(SPI|I2C|UART|CAN|FDCAN|communication|protocol|interface|bus|message|frame)\b', content, re.IGNORECASE):
+    comm_pattern = (r'\b(SPI|I2C|UART|CAN|FDCAN|communication|protocol|'
+                    r'interface|bus|message|frame)\b')
+    if re.search(comm_pattern, content, re.IGNORECASE):
         index['concept_index']['communication'].append(file_path)
-    if re.search(r'\b(SPI|MOSI|MISO|SCK|CS|daisy.chain)\b', content, re.IGNORECASE):
+    if re.search(r'\b(SPI|MOSI|MISO|SCK|CS|daisy.chain)\b',
+                 content, re.IGNORECASE):
         index['concept_index']['spi_communication'].append(file_path)
-    if re.search(r'\b(I2C|SCL|SDA|address|slave|master)\b', content, re.IGNORECASE):
+    if re.search(r'\b(I2C|SCL|SDA|address|slave|master)\b',
+                 content, re.IGNORECASE):
         index['concept_index']['i2c_communication'].append(file_path)
-    if re.search(r'\b(CAN|FDCAN|identifier|filter|mailbox|FIFO)\b', content, re.IGNORECASE):
+    if re.search(r'\b(CAN|FDCAN|identifier|filter|mailbox|FIFO)\b',
+                 content, re.IGNORECASE):
         index['concept_index']['can_communication'].append(file_path)
-    if re.search(r'\b(UART|USART|baud|rate|TX|RX|DMA|interrupt)\b', content, re.IGNORECASE):
+    if re.search(r'\b(UART|USART|baud|rate|TX|RX|DMA|interrupt)\b',
+                 content, re.IGNORECASE):
         index['concept_index']['uart_communication'].append(file_path)
-    
+
     # Safety & Error Handling
-    if re.search(r'\b(safety|fault|error|protection|watchdog|MPU|ECC|memory.protection|fail.safe)\b', content, re.IGNORECASE):
+    safety_pattern = (r'\b(safety|fault|error|protection|watchdog|MPU|ECC|'
+                      r'memory.protection|fail.safe)\b')
+    if re.search(safety_pattern, content, re.IGNORECASE):
         index['concept_index']['safety_systems'].append(file_path)
-    if re.search(r'\b(errata|bug|workaround|limitation|silicon|revision)\b', content, re.IGNORECASE):
+    if re.search(r'\b(errata|bug|workaround|limitation|silicon|revision)\b',
+                 content, re.IGNORECASE):
         index['concept_index']['hardware_errata'].append(file_path)
-    if re.search(r'\b(MPU|memory.protection|region|access|privilege)\b', content, re.IGNORECASE):
+    if re.search(r'\b(MPU|memory.protection|region|access|privilege)\b',
+                 content, re.IGNORECASE):
         index['concept_index']['memory_protection'].append(file_path)
-    if re.search(r'\b(ECC|error.correction|single.bit|double.bit|memory.integrity)\b', content, re.IGNORECASE):
+    ecc_pattern = (r'\b(ECC|error.correction|single.bit|double.bit|'
+                   r'memory.integrity)\b')
+    if re.search(ecc_pattern, content, re.IGNORECASE):
         index['concept_index']['error_correction'].append(file_path)
-    
+
     # STM32H7 Architecture & Performance
-    if re.search(r'\b(STM32H7|Cortex.M7|ARM|architecture|cache|TCM|AXI|AHB|performance)\b', content, re.IGNORECASE):
+    arch_pattern = (r'\b(STM32H7|Cortex.M7|ARM|architecture|cache|TCM|AXI|'
+                    r'AHB|performance)\b')
+    if re.search(arch_pattern, content, re.IGNORECASE):
         index['concept_index']['stm32h7_architecture'].append(file_path)
-    if re.search(r'\b(cache|ITCM|DTCM|memory.interface|bus.matrix|performance)\b', content, re.IGNORECASE):
+    mem_pattern = (r'\b(cache|ITCM|DTCM|memory.interface|bus.matrix|'
+                   r'performance)\b')
+    if re.search(mem_pattern, content, re.IGNORECASE):
         index['concept_index']['memory_architecture'].append(file_path)
-    if re.search(r'\b(clock|PLL|prescaler|frequency|HSE|HSI|LSE|LSI)\b', content, re.IGNORECASE):
+    if re.search(r'\b(clock|PLL|prescaler|frequency|HSE|HSI|LSE|LSI)\b',
+                 content, re.IGNORECASE):
         index['concept_index']['clock_configuration'].append(file_path)
-    
+
     # GPIO & Pin Configuration
-    if re.search(r'\b(GPIO|pin|port|alternate.function|EXTI|interrupt)\b', content, re.IGNORECASE):
+    if re.search(r'\b(GPIO|pin|port|alternate.function|EXTI|interrupt)\b',
+                 content, re.IGNORECASE):
         index['concept_index']['gpio_configuration'].append(file_path)
-    
+
     # Timer & PWM
-    if re.search(r'\b(timer|TIM|PWM|capture|compare|encoder.mode|trigger)\b', content, re.IGNORECASE):
+    timer_pattern = (r'\b(timer|TIM|PWM|capture|compare|encoder.mode|'
+                     r'trigger)\b')
+    if re.search(timer_pattern, content, re.IGNORECASE):
         index['concept_index']['timer_pwm'].append(file_path)
-    
+
     # DMA & Data Transfer
-    if re.search(r'\b(DMA|DMAMUX|stream|channel|transfer|memory.to.memory|peripheral.to.memory)\b', content, re.IGNORECASE):
+    dma_pattern = (r'\b(DMA|DMAMUX|stream|channel|transfer|memory.to.memory|'
+                   r'peripheral.to.memory)\b')
+    if re.search(dma_pattern, content, re.IGNORECASE):
         index['concept_index']['dma_transfer'].append(file_path)
-    
+
     # Interrupt & Exception Handling
-    if re.search(r'\b(interrupt|IRQ|NVIC|priority|handler|callback|exception)\b', content, re.IGNORECASE):
+    irq_pattern = (r'\b(interrupt|IRQ|NVIC|priority|handler|callback|'
+                   r'exception)\b')
+    if re.search(irq_pattern, content, re.IGNORECASE):
         index['concept_index']['interrupt_handling'].append(file_path)
-    
+
     # Power Management
-    if re.search(r'\b(power|low.power|sleep|standby|stop|shutdown|wake.up)\b', content, re.IGNORECASE):
+    power_pattern = (r'\b(power|low.power|sleep|standby|stop|shutdown|'
+                     r'wake.up)\b')
+    if re.search(power_pattern, content, re.IGNORECASE):
         index['concept_index']['power_management'].append(file_path)
-    
+
     # Debug & Development
-    if re.search(r'\b(debug|trace|SWD|JTAG|breakpoint|watchpoint|ITM|ETM)\b', content, re.IGNORECASE):
+    debug_pattern = (r'\b(debug|trace|SWD|JTAG|breakpoint|watchpoint|ITM|'
+                     r'ETM)\b')
+    if re.search(debug_pattern, content, re.IGNORECASE):
         index['concept_index']['debug_development'].append(file_path)
-    
+
     # HAL & LL Library Usage
-    if re.search(r'\b(HAL|LL|driver|initialization|configuration|typedef|handle)\b', content, re.IGNORECASE):
+    hal_pattern = (r'\b(HAL|LL|driver|initialization|configuration|typedef|'
+                   r'handle)\b')
+    if re.search(hal_pattern, content, re.IGNORECASE):
         index['concept_index']['hal_ll_usage'].append(file_path)
-    
+
     # Real-time & Timing
-    if re.search(r'\b(real.time|deterministic|latency|jitter|timing|synchronization)\b', content, re.IGNORECASE):
+    rt_pattern = (r'\b(real.time|deterministic|latency|jitter|timing|'
+                  r'synchronization)\b')
+    if re.search(rt_pattern, content, re.IGNORECASE):
         index['concept_index']['realtime_timing'].append(file_path)
-    
+
     # Control Systems
-    if re.search(r'\b(control|PID|feedback|loop|setpoint|plant|controller)\b', content, re.IGNORECASE):
+    ctrl_pattern = (r'\b(control|PID|feedback|loop|setpoint|plant|'
+                    r'controller)\b')
+    if re.search(ctrl_pattern, content, re.IGNORECASE):
         index['concept_index']['control_systems'].append(file_path)
-    
+
     # General keywords (technical terms) - Limited for efficiency
     keywords = re.findall(r'\b[A-Z][A-Z0-9_]{2,}\b', content)
     for keyword in keywords[:25]:  # Reduced from 50 to 25 for efficiency

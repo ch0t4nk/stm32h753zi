@@ -10,12 +10,28 @@ This instruction file provides STM32H753ZI-specific SPI HAL implementation guida
 
 ## Enhanced Documentation Integration
 **Reference Assets**: This instruction leverages comprehensive SPI and L6470 documentation:
-- **STM32H7 SPI Documentation**: Use `python3 scripts/search_enhanced_docs.py peripheral SPI --scope STM32H7` for SPI implementation details
-- **SPI HAL Functions**: Use `python3 scripts/search_enhanced_docs.py function HAL_SPI_Transmit --scope STM32H7` for specific function details
-- **L6470 Functions**: Use `python3 scripts/search_enhanced_docs.py function L6470 --scope L6470` for L6470-specific API
-- **L6470 Reference**: `00_reference/x_cube_spn2_markdown_docs/` contains L6470-specific documentation
-- **SPI Configuration**: `00_reference/stm32h753xx_User_Manual_md/group__SPI__Exported__Functions.md` for complete SPI HAL API
-- **Working Examples**: `00_reference/STM32CubeExpansion_SPN2_V1.1.1/` contains tested L6470 SPI implementations
+- **STM32H7 SPI Documentation**: Complete SPI peripheral coverage with semantic categorization
+- **Copilot-Optimized SPI Search**:
+  ```bash
+  # Search SPI peripheral with token efficiency
+  python3 scripts/search_enhanced_docs.py peripheral SPI --scope STM32H7
+  
+  # Find specific SPI HAL functions
+  python3 scripts/search_enhanced_docs.py function HAL_SPI_Transmit --scope STM32H7
+  
+  # Search SPI daisy-chain concepts across all documentation
+  python3 scripts/search_enhanced_docs.py concept "spi_daisy_chain" --scope all
+  
+  # Find L6470-specific API functions (NOTE: functions are concatenated)
+  python3 scripts/search_enhanced_docs.py function L6470 --scope L6470
+  ```
+- **Search Pattern Guidelines**:
+  - ✅ STM32H7: Use exact function names `HAL_SPI_Init`, `HAL_SPI_Transmit`
+  - ✅ L6470: Use broad patterns `L6470` (functions like `voidL6470_GoHome` are concatenated)
+  - ✅ Concepts: Use semantic terms `spi_daisy_chain`, `motor_control`
+  - ❌ Don't search for `L6470_Init` - it's stored as `voidL6470_Init` in index
+- **Cross-Domain Integration**: Unified STM32H7 SPI + L6470 driver documentation search
+- **Token-Efficient Lookup**: Semantic categorization reduces Copilot search overhead for SPI implementation
 
 ## Integration with Existing Instructions
 - **Extends**: `l6470-registers.instructions.md` (L6470 configuration)
