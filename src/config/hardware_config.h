@@ -7,8 +7,8 @@
  * @note This file contains ALL hardware pin assignments and peripheral configurations.
  *       Never hardcode these values elsewhere - always reference this SSOT.
  * 
- * TODO: See .instructions/hardware-config.md for complete pin mapping documentation
- * TODO: See .instructions/stm32h753zi.md for MCU-specific configuration details
+ * TODO: See .github/instructions/hardware-pins.instructions.md for complete pin mapping documentation
+ * TODO: See .github/instructions/hardware-pins.instructions.md for MCU-specific configuration details
  */
 
 #ifndef HARDWARE_CONFIG_H
@@ -27,7 +27,7 @@
 /* ========================================================================== */
 /* SPI Configuration for L6470 Stepper Drivers (SSOT)                       */
 /* ========================================================================== */
-// TODO: See .instructions/l6470-spi.md for daisy-chain protocol implementation
+// TODO: See .github/instructions/stm32h7-spi-l6470.instructions.md for daisy-chain protocol implementation
 #define MOTOR_SPI_INSTANCE      SPI2
 #define MOTOR_SPI_SCK_PIN       GPIO_PIN_13
 #define MOTOR_SPI_SCK_PORT      GPIOB
@@ -52,7 +52,7 @@
 /* ========================================================================== */
 /* I2C Configuration for AS5600 Magnetic Encoders (SSOT)                    */
 /* ========================================================================== */
-// TODO: See .instructions/as5600-encoder.md for encoder calibration procedures
+// TODO: See .github/instructions/stm32h7-i2c-as5600.instructions.md for encoder calibration procedures
 
 // Encoder 1: Motor 1 Position Feedback
 #define ENCODER1_I2C_INSTANCE   I2C1
@@ -77,7 +77,7 @@
 /* ========================================================================== */
 /* UART Configuration for Virtual COM Port (SSOT)                           */
 /* ========================================================================== */
-// TODO: See .instructions/uart-protocol.md for command protocol specification
+// TODO: See .github/instructions/stm32h7-uart-protocol.instructions.md for command protocol specification
 #define UART_INSTANCE           USART3
 #define UART_TX_PIN             GPIO_PIN_8
 #define UART_TX_PORT            GPIOD
@@ -89,7 +89,7 @@
 /* ========================================================================== */
 /* CAN-FD Configuration for MCU-to-MCU Communication (SSOT)                 */
 /* ========================================================================== */
-// TODO: See .instructions/can-fd.md for message ID allocation and protocol
+// TODO: See .github/instructions/comm-protocols.instructions.md for message ID allocation and protocol
 #define CAN_INSTANCE            FDCAN1
 #define CAN_TX_PIN              GPIO_PIN_1
 #define CAN_TX_PORT             GPIOD
@@ -101,7 +101,7 @@
 /* ========================================================================== */
 /* Ethernet Configuration for Network Connectivity (SSOT)                   */
 /* ========================================================================== */
-// TODO: See .instructions/ethernet-lwip.md for LwIP stack configuration
+// TODO: See .github/instructions/comm-protocols.instructions.md for LwIP stack configuration
 // Note: STM32H753ZI Nucleo has on-board LAN8742 PHY connected via RMII
 
 // RMII Interface Pins
@@ -172,7 +172,7 @@
 /* ========================================================================== */
 /* DMA Configuration for High-Performance Transfers (SSOT)                  */
 /* ========================================================================== */
-// TODO: See .instructions/dma-config.md for efficient peripheral data transfer
+// TODO: See .github/instructions/hardware-pins.instructions.md for efficient peripheral data transfer
 
 // SPI DMA channels for L6470 communication
 #define MOTOR_SPI_DMA_TX_STREAM DMA1_Stream4
@@ -185,7 +185,7 @@
 /* ========================================================================== */
 /* Clock Configuration Parameters (SSOT)                                     */
 /* ========================================================================== */
-// TODO: See .instructions/clock-config.md for system clock tree setup
+// TODO: See .github/instructions/hardware-pins.instructions.md for system clock tree setup
 
 #define HSE_VALUE               25000000UL   // External crystal frequency
 #define LSE_VALUE               32768UL      // LSE crystal for RTC
@@ -197,7 +197,7 @@
 /* ========================================================================== */
 /* Memory Map Configuration (SSOT)                                           */
 /* ========================================================================== */
-// TODO: See .instructions/memory-layout.md for STM32H7 memory organization
+// TODO: See .github/instructions/hardware-pins.instructions.md for STM32H7 memory organization
 
 // STM32H753ZI Memory Layout
 #define FLASH_BASE_ADDR         0x08000000UL

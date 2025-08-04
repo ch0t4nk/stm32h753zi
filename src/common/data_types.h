@@ -7,8 +7,9 @@
  * @note This file contains common data type definitions used throughout the system.
  *       These types ensure consistency and portability across all modules.
  * 
- * TODO: See .instructions/data-types.md for type usage guidelines
- * TODO: See .instructions/portability.md for cross-platform considerations
+ * TODO: See .github/instructions/data-types.instructions.md for type usage guidelines
+ * TODO: See .github/instructions/portability.instructions.md for cross-platform considerations
+ * TODO: See src/config/documentation_config.h for instruction file path definitions
  */
 
 #ifndef DATA_TYPES_H

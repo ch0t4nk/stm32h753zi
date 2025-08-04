@@ -7,8 +7,8 @@
  * @note This file contains ALL safety parameters, thresholds, and watchdog settings.
  *       Never hardcode these values elsewhere - always reference this SSOT.
  * 
- * TODO: See .instructions/safety-config.md for safety system architecture
- * TODO: See .instructions/watchdog.md for watchdog configuration details
+ * TODO: See .github/instructions/safety-systems.instructions.md for safety system architecture
+ * TODO: See .github/instructions/safety-systems.instructions.md for watchdog configuration details
  */
 
 #ifndef SAFETY_CONFIG_H
@@ -19,7 +19,7 @@
 /* ========================================================================== */
 /* Safety System Configuration Overview (SSOT)                               */
 /* ========================================================================== */
-// TODO: See .instructions/safety-architecture.md for fail-safe design principles
+// TODO: See .github/instructions/safety-systems.instructions.md for fail-safe design principles
 
 #define SAFETY_SYSTEM_VERSION   "1.0.0"
 #define SAFETY_CHECK_INTERVAL_MS    10      // Safety checks every 10ms
@@ -29,7 +29,7 @@
 /* ========================================================================== */
 /* Watchdog Timer Configuration (SSOT)                                       */
 /* ========================================================================== */
-// TODO: See .instructions/watchdog.md for IWDG and WWDG configuration details
+// TODO: See .github/instructions/safety-systems.instructions.md for IWDG and WWDG configuration details
 
 // Independent Watchdog (IWDG) Configuration
 #define IWDG_ENABLE                 1       // Enable independent watchdog
@@ -51,7 +51,7 @@
 /* ========================================================================== */
 /* Motor Safety Limits (SSOT)                                                */
 /* ========================================================================== */
-// TODO: See .instructions/motor-safety.md for motor protection implementation
+// TODO: See .github/instructions/safety-systems.instructions.md for motor protection implementation
 
 // Current Protection
 #define MOTOR_OVERCURRENT_THRESHOLD_MA  1200    // Overcurrent fault threshold
@@ -80,7 +80,7 @@
 /* ========================================================================== */
 /* Encoder Safety Configuration (SSOT)                                       */
 /* ========================================================================== */
-// TODO: See .instructions/encoder-safety.md for encoder fault detection
+// TODO: See .github/instructions/safety-systems.instructions.md for encoder fault detection
 
 // Encoder Communication Faults
 #define ENCODER_COMM_TIMEOUT_MS         100     // I2C communication timeout
@@ -102,7 +102,7 @@
 /* ========================================================================== */
 /* Communication Safety (SSOT)                                               */
 /* ========================================================================== */
-// TODO: See .instructions/comm-safety.md for communication fault handling
+// TODO: See .github/instructions/comm-protocols.instructions.md for communication fault handling
 
 // UART Safety Parameters
 #define UART_COMMAND_TIMEOUT_MS         5000    // Maximum time to process command
@@ -124,7 +124,7 @@
 /* ========================================================================== */
 /* System Safety Thresholds (SSOT)                                           */
 /* ========================================================================== */
-// TODO: See .instructions/system-safety.md for overall system protection
+// TODO: See .github/instructions/safety-systems.instructions.md for overall system protection
 
 // Power Supply Monitoring
 #define POWER_SUPPLY_MIN_V              11.0f   // Minimum supply voltage
@@ -146,7 +146,7 @@
 /* ========================================================================== */
 /* Emergency Stop Configuration (SSOT)                                       */
 /* ========================================================================== */
-// TODO: See .instructions/emergency-stop.md for E-stop implementation
+// TODO: See .github/instructions/safety-systems.instructions.md for E-stop implementation
 
 // Emergency Stop Sources
 #define ESTOP_BUTTON_ENABLE             1       // Physical button E-stop
@@ -169,7 +169,7 @@
 /* ========================================================================== */
 /* Safety State Definitions (SSOT)                                           */
 /* ========================================================================== */
-// TODO: See .instructions/safety-states.md for state machine implementation
+// TODO: See .github/instructions/safety-systems.instructions.md for state machine implementation
 
 typedef enum {
     SAFETY_STATE_UNKNOWN = 0,           // Initial/unknown state
@@ -195,7 +195,7 @@ typedef enum {
 /* ========================================================================== */
 /* Fault Classification and Priorities (SSOT)                                */
 /* ========================================================================== */
-// TODO: See .instructions/fault-classification.md for fault handling priorities
+// TODO: See .github/instructions/safety-systems.instructions.md for fault handling priorities
 
 typedef enum {
     SAFETY_FAULT_NONE = 0x00000000,            // No fault
@@ -230,7 +230,7 @@ typedef enum {
 /* ========================================================================== */
 /* Safety Check Configuration (SSOT)                                         */
 /* ========================================================================== */
-// TODO: See .instructions/safety-checks.md for safety check implementation
+// TODO: See .github/instructions/safety-systems.instructions.md for safety check implementation
 
 // Safety Check Enable/Disable Flags
 #define SAFETY_CHECK_MOTOR_CURRENT      1       // Enable motor current monitoring
@@ -250,7 +250,7 @@ typedef enum {
 /* ========================================================================== */
 /* Safety Recovery Configuration (SSOT)                                      */
 /* ========================================================================== */
-// TODO: See .instructions/safety-recovery.md for fault recovery procedures
+// TODO: See .github/instructions/safety-systems.instructions.md for fault recovery procedures
 
 // Recovery Enable/Disable
 #define SAFETY_AUTO_RECOVERY_ENABLE     1       // Enable automatic fault recovery

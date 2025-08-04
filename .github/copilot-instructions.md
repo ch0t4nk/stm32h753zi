@@ -4,209 +4,106 @@
 
 This workspace develops firmware for an **STM32H753ZI Nucleo-144** board controlling stepper motors via **X-NUCLEO-IHM02A1** shield with closed-loop feedback using **AS5600 magnetic encoders**.
 
-## Project Architecture
+## Modular Instruction System
 
-### Hardware Components
-- **STM32H753ZI MCU**: Main controller (ARM Cortex-M7, 480MHz)
-- **X-NUCLEO-IHM02A1**: Dual stepper driver shield (2x L6470 dSPIN ICs)
-- **AS5600 Encoders (2x)**: 12-bit magnetic rotary encoders for feedback
-- **Communication**: UART (USB VCP), CAN-FD, Ethernet (LAN8742 PHY)
+This project uses a **modular instruction system** located in `.github/instructions/` with domain-specific guidance:
 
-### Design Principles
-Follow **SOLID principles** and **Single Source of Truth (SSOT)** strictly:
-- **SRP**: Separate classes for motor control, drivers, encoders, communication
-- **OCP**: Use abstract interfaces for extensibility
-- **LSP**: Ensure all implementations are substitutable
-- **ISP**: Keep interfaces focused and specific
-- **DIP**: Depend on abstractions, not concrete implementations
-- **SSOT**: All configuration, state, and constants centralized in designated files
+### Core System Instructions
+- **ssot-config.instructions.md**: Single Source of Truth configuration management
+- **hardware-pins.instructions.md**: STM32H753ZI pin assignments and peripheral configuration
+- **data-types.instructions.md**: Consistent data types and type safety
+- **error-handling.instructions.md**: Error codes, fault recovery, and diagnostics
+- **build-config.instructions.md**: Build configuration and version management
 
-### Single Source of Truth Requirements
-**CRITICAL**: All configuration must come from centralized sources:
+### Motor Control Instructions
+- **l6470-registers.instructions.md**: L6470 stepper driver configuration and control
+- **safety-systems.instructions.md**: Safety systems, watchdog, and fail-safe mechanisms
+- **time-handling.instructions.md**: Timing systems and control loop management
+- **units-measurements.instructions.md**: Physical units and measurement handling
 
-#### Configuration Headers (SSOT)
-```c
-// TODO: See .instructions/ssot-structure.md for complete organization
-src/config/
-├── hardware_config.h      // Pin definitions, peripheral assignments
-├── comm_config.h          // Protocol parameters, addresses, timeouts
-├── motor_config.h         // L6470 parameters, motion limits
-├── safety_config.h        // Watchdog, fault thresholds
-└── build_config.h         // Version info, build metadata
-```
+### STM32H7 HAL Implementation (Enhanced with Comprehensive Documentation)
+- **stm32h7-gpio-hal.instructions.md**: STM32H7 GPIO HAL with 198 documentation files referenced
+- **stm32h7-spi-l6470.instructions.md**: STM32H7 SPI HAL for L6470 daisy-chain communication  
+- **stm32h7-i2c-as5600.instructions.md**: STM32H7 I2C HAL for AS5600 dual-encoder configuration
+- **stm32h7-uart-protocol.instructions.md**: STM32H7 UART HAL for command interface and debugging
 
-#### State Management (SSOT)
-```c
-// TODO: See .instructions/system-state.md for centralized state design
-// Single authoritative system state - never duplicate!
-typedef struct {
-    MotorState_t motors[2];
-    EncoderState_t encoders[2];
-    CommState_t communication;
-    SafetyState_t safety;
-    uint32_t system_uptime_ms;
-} SystemState_t;
+### Communication Instructions
+- **comm-protocols.instructions.md**: UART, CAN, SPI, I2C, and Ethernet protocols
+- **workspace-setup.instructions.md**: Workspace-level project guidance
 
-extern SystemState_t g_system_state;  // Global SSOT instance
-```
+Each instruction file targets specific source directories and provides comprehensive technical guidance for that domain.
 
-#### Error Handling (SSOT)
-```c
-// TODO: See .instructions/error-codes.md for centralized error management
-typedef enum {
-    SYSTEM_OK = 0x0000,
-    ERROR_MOTOR_BASE = 0x1000,
-    ERROR_ENCODER_BASE = 0x2000,
-    ERROR_COMM_BASE = 0x3000,
-    ERROR_SAFETY_BASE = 0x4000
-} SystemError_t;
-```
+## Critical Design Principles
 
-### Safety Requirements
+### Single Source of Truth (SSOT)
+**CRITICAL**: All configuration must reference centralized SSOT sources:
+- Hardware configurations in `src/config/hardware_config.h`
+- Communication parameters in `src/config/comm_config.h`
+- Motor settings in `src/config/motor_config.h`
+- Safety thresholds in `src/config/safety_config.h`
+- Build metadata in `src/config/build_config.h`
+
+### Safety First
 **CRITICAL**: Always implement fail-safe behavior:
-- Monitor L6470 fault flags via SPI GetStatus commands
-- Implement watchdog timer for software fault recovery
-- Use controlled ramping (acceleration/deceleration profiles)
-- Validate encoder readings for plausibility
-- Stop motors on any communication timeout or fault
+- Monitor L6470 fault flags continuously
+- Implement watchdog timer for fault recovery
+- Validate all inputs and sensor readings
+- Stop motors immediately on any fault condition
+- Use controlled motion profiles to prevent mechanical stress
 
-## Reference Assets Available
+## Reference Assets and Documentation System
+The `00_reference/` directory contains comprehensive ST official documentation:
+- **STM32H7 HAL Documentation**: 86MB, 3,988 markdown files with complete peripheral coverage
+- **X-CUBE-SPN2 L6470 Documentation**: 2.1MB stepper driver specific reference with 197 files
+- **STM32H7 HAL drivers and examples**: Complete implementation examples
+- **X-NUCLEO-IHM02A1 board support package**: Shield-specific guidance
+- **Application examples and datasheets**: Real-world implementation patterns
+
+**IMPORTANT**: Never modify `00_reference/` files. Copy needed code to appropriate `src/` locations.
+
+## Enhanced Documentation Search System
+Use comprehensive documentation search tools for development with **unified STM32H7 + L6470 coverage**:
+
+```bash
+# Search for peripheral-specific documentation (STM32H7 + L6470)
+python3 scripts/search_enhanced_docs.py peripheral SPI --scope all
+
+# Find function implementation details (L6470 specific)
+python3 scripts/search_enhanced_docs.py function L6470_Init --scope L6470
+
+# Find STM32H7 HAL functions
+python3 scripts/search_enhanced_docs.py function HAL_GPIO_Init --scope STM32H7
+
+# Search L6470 registers
+python3 scripts/search_enhanced_docs.py register ABS_POS --scope L6470
+
+# Discover concept-related files across all documentation
+python3 scripts/search_enhanced_docs.py concept "stepper motor" --scope all
+
+# Validate workspace markdown links
+python3 scripts/link_validator.py
+```
+
+**Available Indexes:**
+- `docs/indexes/STM32H7_FULL_INDEX.json` (8.9MB): Complete STM32H7 searchable index with 31,772 keywords
+- `docs/indexes/L6470_SEARCH_INDEX.json` (2.1MB): Complete L6470 documentation index with 356 keywords
+- `docs/indexes/STM32H7_COPILOT_INDEX.yaml` (8KB): Copilot-optimized quick reference  
+- `docs/indexes/STM32H7_COPILOT_INDEX.json` (9.9KB): Programmatic access format
+
+**Search Capabilities:**
+- **Unified search**: Single tool for both STM32H7 and L6470 documentation
+- **Scope filtering**: Target specific documentation sets (STM32H7/L6470/all)
+- **Performance**: 7x faster than HTML-based searches (0.03s vs 0.22s)
+- **Coverage**: 88.1MB total documentation, 4,185 files, 32,128+ keywords
+
+## Reference Assets
 The `00_reference/` directory contains ST official assets (READ-ONLY):
 - STM32H7 HAL drivers and examples
 - X-NUCLEO-IHM02A1 board support package
 - L6470 driver libraries and documentation
 - Application examples and datasheets
 
-**IMPORTANT**: Never modify files in `00_reference/`. Copy needed code to appropriate `src/` locations.
-
-## Code Generation Guidelines
-
-### 1. SSOT File Structure & Naming
-```
-src/
-├── config/                  // SSOT configuration headers
-│   ├── hardware_config.h    // Pin assignments, peripherals
-│   ├── comm_config.h        // Communication parameters
-│   ├── motor_config.h       // Motor/L6470 settings
-│   ├── safety_config.h      // Safety thresholds
-│   └── build_config.h       // Version, build info
-├── common/                  // SSOT common definitions
-│   ├── error_codes.h        // System error definitions
-│   ├── system_state.h       // Central state structure
-│   └── data_types.h         // Common type definitions
-├── drivers/
-│   ├── l6470_driver.h/c     // L6470 stepper driver SPI interface
-│   ├── as5600_encoder.h/c   // AS5600 I2C encoder interface
-│   └── interfaces/
-│       ├── motor_driver_interface.h
-│       └── encoder_interface.h
-├── controllers/
-│   └── stepper_motor_controller.h/c
-├── communication/
-│   ├── uart_handler.h/c     // USART3 for VCP
-│   ├── can_handler.h/c      // FDCAN1 interface
-│   └── ethernet_handler.h/c // LwIP TCP/IP
-└── safety/
-    └── watchdog_manager.h/c
-```
-
-### 2. SSOT Code Generation Rules
-
-**Always reference SSOT - never hardcode values:**
-```c
-// CORRECT - Use SSOT configuration
-#include "config/hardware_config.h"
-HAL_GPIO_WritePin(MOTOR1_CS_PORT, MOTOR1_CS_PIN, GPIO_PIN_SET);
-
-// INCORRECT - Hardcoded values
-HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
-```
-
-**Always validate SSOT data access:**
-```c
-// TODO: See .instructions/ssot-validation.md for data access patterns
-SystemError_t system_state_set_motor_angle(uint8_t motor_id, float angle) {
-    if (motor_id >= MAX_MOTORS) return ERROR_INVALID_PARAMETER;
-    if (angle < MOTOR_MIN_ANGLE || angle > MOTOR_MAX_ANGLE) return ERROR_OUT_OF_RANGE;
-    
-    g_system_state.motors[motor_id].target_angle = angle;
-    return SYSTEM_OK;
-}
-```
-
-### 3. Hardware Configuration (SSOT)
-All pin assignments in `src/config/hardware_config.h`:
-
-```c
-// TODO: See .instructions/hardware-config.md for complete pin definitions
-// SPI Configuration (SSOT)
-#define MOTOR_SPI_INSTANCE      SPI2
-#define MOTOR_SPI_SCK_PIN       GPIO_PIN_13
-#define MOTOR_SPI_SCK_PORT      GPIOB
-#define MOTOR_SPI_MISO_PIN      GPIO_PIN_14
-#define MOTOR_SPI_MISO_PORT     GPIOB
-#define MOTOR_SPI_MOSI_PIN      GPIO_PIN_15
-#define MOTOR_SPI_MOSI_PORT     GPIOB
-#define MOTOR_SPI_CS_PIN        GPIO_PIN_9
-#define MOTOR_SPI_CS_PORT       GPIOA
-
-// I2C Configuration (SSOT)
-#define ENCODER1_I2C_INSTANCE   I2C1
-#define ENCODER1_I2C_SCL_PIN    GPIO_PIN_6
-#define ENCODER1_I2C_SCL_PORT   GPIOB
-#define ENCODER1_I2C_SDA_PIN    GPIO_PIN_7
-#define ENCODER1_I2C_SDA_PORT   GPIOB
-#define ENCODER1_I2C_ADDRESS    0x36
-
-#define ENCODER2_I2C_INSTANCE   I2C2
-#define ENCODER2_I2C_SCL_PIN    GPIO_PIN_10
-#define ENCODER2_I2C_SCL_PORT   GPIOB
-#define ENCODER2_I2C_SDA_PIN    GPIO_PIN_11
-#define ENCODER2_I2C_SDA_PORT   GPIOB
-#define ENCODER2_I2C_ADDRESS    0x36
-```
-
-### 4. Communication Configuration (SSOT)
-All protocol parameters in `src/config/comm_config.h`:
-
-```c
-// TODO: See .instructions/comm-config.md for protocol definitions
-// UART Configuration
-#define UART_INSTANCE           USART3
-#define UART_BAUDRATE           115200
-#define UART_TX_PIN             GPIO_PIN_8
-#define UART_TX_PORT            GPIOD
-#define UART_RX_PIN             GPIO_PIN_9
-#define UART_RX_PORT            GPIOD
-
-// CAN Configuration
-#define CAN_INSTANCE            FDCAN1
-#define CAN_BITRATE_KBPS        500
-#define CAN_TX_PIN              GPIO_PIN_1
-#define CAN_TX_PORT             GPIOD
-#define CAN_RX_PIN              GPIO_PIN_0
-#define CAN_RX_PORT             GPIOD
-
-// CAN Message IDs (SSOT)
-#define CAN_ID_MOTOR1_STATUS    0x101
-#define CAN_ID_MOTOR2_STATUS    0x102
-#define CAN_ID_COMMAND          0x201
-#define CAN_ID_HEARTBEAT        0x001
-
-// Ethernet Configuration
-#define ETH_STATIC_IP           "192.168.1.50"
-#define ETH_NETMASK             "255.255.255.0"
-#define ETH_GATEWAY             "192.168.1.1"
-#define TCP_SERVER_PORT         8000
-```
-
-## When generating code:
-1. **Always reference SSOT files** for all constants and configurations
-2. **Create validation functions** for accessing shared state
-3. **Use TODO comments** referencing appropriate instruction modules
-4. **Document the SSOT source** for each configuration parameter
-5. **Implement thread-safe access** to shared state if using RTOS
-6. **Generate build-time validation** to catch SSOT inconsistencies
+**IMPORTANT**: Never modify `00_reference/` files. Copy needed code to appropriate `src/` locations.
 
 ## Environment Context
 This workspace runs in a dev container with:
@@ -223,4 +120,4 @@ When referencing `00_reference/` assets:
 - **Document** the source of copied/adapted code in SSOT headers
 - **Never** directly include from `00_reference/` in build system
 
-Remember: **Safety first, fail-safe always, SOLID architecture throughout, SSOT for all configuration.**
+Remember: **Safety first, SSOT always, modular design throughout.**

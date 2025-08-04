@@ -7,7 +7,7 @@
  * @note This file contains build-time configuration, version information, and feature flags.
  *       Values are automatically generated during build process where possible.
  * 
- * TODO: See .instructions/build-config.md for automated version generation
+ * TODO: See .github/instructions/build-config.instructions.md for automated version generation
  * TODO: See .instructions/feature-flags.md for conditional compilation setup
  */
 

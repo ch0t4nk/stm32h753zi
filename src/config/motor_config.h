@@ -7,8 +7,8 @@
  * @note This file contains ALL motor parameters, L6470 settings, and motion limits.
  *       Never hardcode these values elsewhere - always reference this SSOT.
  * 
- * TODO: See .instructions/motor-config.md for motor characterization data
- * TODO: See .instructions/l6470-commands.md for register configuration details
+ * TODO: See .github/instructions/l6470-registers.instructions.md for motor characterization data
+ * TODO: See .github/instructions/l6470-registers.instructions.md for register configuration details
  */
 
 #ifndef MOTOR_CONFIG_H
@@ -26,7 +26,7 @@
 /* ========================================================================== */
 /* Motor Physical Parameters (SSOT)                                          */
 /* ========================================================================== */
-// TODO: See .instructions/stepper-motor.md for motor specifications
+// TODO: See .github/instructions/l6470-registers.instructions.md for motor specifications
 
 // Motor electrical characteristics
 #define MOTOR_VOLTAGE_V         12.0f   // Motor supply voltage
@@ -54,7 +54,7 @@
 /* ========================================================================== */
 /* L6470 Driver Register Configuration (SSOT)                                */
 /* ========================================================================== */
-// TODO: See .instructions/l6470-registers.md for detailed register descriptions
+// TODO: See .github/instructions/l6470-registers.instructions.md for detailed register descriptions
 
 // Motion Profile Parameters
 #define L6470_MAX_SPEED         0x041   // Max speed register value (100 RPM equiv)
@@ -98,7 +98,7 @@
 /* ========================================================================== */
 /* L6470 Command Definitions (SSOT)                                          */
 /* ========================================================================== */
-// TODO: See .instructions/l6470-commands.md for command protocol implementation
+// TODO: See .github/instructions/l6470-registers.instructions.md for command protocol implementation
 
 // Movement Commands
 #define L6470_CMD_NOP           0x00    // No operation
@@ -166,7 +166,7 @@
 /* ========================================================================== */
 /* Motion Control Parameters (SSOT)                                          */
 /* ========================================================================== */
-// TODO: See .instructions/motion-control.md for closed-loop tuning parameters
+// TODO: See .github/instructions/l6470-registers.instructions.md for closed-loop tuning parameters
 
 // Control Loop Timing
 #define CONTROL_LOOP_FREQ_HZ    1000    // Control loop frequency
@@ -190,7 +190,7 @@
 /* ========================================================================== */
 /* Motor State Definitions (SSOT)                                            */
 /* ========================================================================== */
-// TODO: See .instructions/motor-states.md for state machine implementation
+// TODO: See .github/instructions/l6470-registers.instructions.md for state machine implementation
 
 typedef enum {
     MOTOR_STATE_UNINITIALIZED = 0,     // Motor not initialized
@@ -216,7 +216,7 @@ typedef enum {
 /* ========================================================================== */
 /* Fault and Error Definitions (SSOT)                                        */
 /* ========================================================================== */
-// TODO: See .instructions/motor-faults.md for fault handling procedures
+// TODO: See .github/instructions/l6470-registers.instructions.md for fault handling procedures
 
 typedef enum {
     MOTOR_FAULT_NONE = 0x0000,         // No fault
@@ -235,7 +235,7 @@ typedef enum {
 /* ========================================================================== */
 /* Motor Performance Monitoring (SSOT)                                       */
 /* ========================================================================== */
-// TODO: See .instructions/motor-monitoring.md for performance tracking
+// TODO: See .github/instructions/l6470-registers.instructions.md for performance tracking
 
 // Performance thresholds
 #define MOTOR_EFFICIENCY_MIN_PCT    80.0f   // Minimum acceptable efficiency

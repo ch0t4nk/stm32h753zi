@@ -7,9 +7,9 @@
  * @note This file contains ALL communication protocol parameters, addresses, and settings.
  *       Never hardcode these values elsewhere - always reference this SSOT.
  * 
- * TODO: See .instructions/comm-config.md for protocol specification details
- * TODO: See .instructions/uart-protocol.md for UART command format
- * TODO: See .instructions/can-fd.md for CAN message definitions
+ * TODO: See .github/instructions/comm-protocols.instructions.md for protocol specification details
+ * TODO: See .github/instructions/stm32h7-uart-protocol.instructions.md for UART command format
+ * TODO: See .github/instructions/comm-protocols.instructions.md for CAN message definitions
  */
 
 #ifndef COMM_CONFIG_H
@@ -20,7 +20,7 @@
 /* ========================================================================== */
 /* UART Communication Configuration (SSOT)                                   */
 /* ========================================================================== */
-// TODO: See .instructions/uart-protocol.md for command protocol implementation
+// TODO: See .github/instructions/stm32h7-uart-protocol.instructions.md for command protocol implementation
 
 // UART Parameters
 #define UART_BAUDRATE           115200
@@ -50,7 +50,7 @@
 /* ========================================================================== */
 /* CAN-FD Communication Configuration (SSOT)                                 */
 /* ========================================================================== */
-// TODO: See .instructions/can-fd.md for message protocol and error handling
+// TODO: See .github/instructions/comm-protocols.instructions.md for message protocol and error handling
 
 // CAN Bit Timing Parameters (500 kbps nominal)
 #define CAN_BITRATE_KBPS        500
@@ -79,7 +79,7 @@
 /* ========================================================================== */
 /* CAN Message ID Allocation (SSOT)                                          */
 /* ========================================================================== */
-// TODO: See .instructions/can-messages.md for message format specification
+// TODO: See .github/instructions/comm-protocols.instructions.md for message format specification
 
 // Base IDs for different message types
 #define CAN_ID_BASE_STATUS      0x100   // Node status messages
@@ -112,7 +112,7 @@
 /* ========================================================================== */
 /* Ethernet/TCP Configuration (SSOT)                                         */
 /* ========================================================================== */
-// TODO: See .instructions/ethernet-lwip.md for LwIP stack parameters
+// TODO: See .github/instructions/comm-protocols.instructions.md for LwIP stack parameters
 
 // Network Configuration
 #define ETH_STATIC_IP           "192.168.1.50"
@@ -141,7 +141,7 @@
 /* ========================================================================== */
 /* I2C Communication Configuration (SSOT)                                    */
 /* ========================================================================== */
-// TODO: See .instructions/i2c-config.md for timing and error handling
+// TODO: See .github/instructions/stm32h7-i2c-as5600.instructions.md for timing and error handling
 
 // I2C Timing Configuration (400 kHz fast mode)
 #define I2C_TIMING_400KHZ       0x40912732  // Calculated for 120MHz APB1
@@ -159,7 +159,7 @@
 /* ========================================================================== */
 /* SPI Communication Configuration (SSOT)                                    */
 /* ========================================================================== */
-// TODO: See .instructions/l6470-spi.md for daisy-chain protocol timing
+// TODO: See .github/instructions/stm32h7-spi-l6470.instructions.md for daisy-chain protocol timing
 
 // SPI Parameters for L6470 Communication
 #define SPI_BAUDRATE_PRESCALER  SPI_BAUDRATEPRESCALER_32  // ~3.75 MHz
@@ -183,7 +183,7 @@
 /* ========================================================================== */
 /* Communication Timing and Synchronization (SSOT)                          */
 /* ========================================================================== */
-// TODO: See .instructions/comm-timing.md for real-time requirements
+// TODO: See .github/instructions/comm-protocols.instructions.md for real-time requirements
 
 // Message Rates (milliseconds between transmissions)
 #define HEARTBEAT_INTERVAL_MS   1000    // CAN heartbeat rate
@@ -199,7 +199,7 @@
 /* ========================================================================== */
 /* Message Format Definitions (SSOT)                                         */
 /* ========================================================================== */
-// TODO: See .instructions/message-format.md for protocol details
+// TODO: See .github/instructions/comm-protocols.instructions.md for protocol details
 
 // JSON Message Templates (for UART/TCP)
 #define JSON_MOTOR_STATUS_FMT   "{\"motor\":%d,\"angle\":%.2f,\"speed\":%.2f,\"status\":%d}"

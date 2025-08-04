@@ -1,18 +1,27 @@
 #!/usr/bin/env python3
 """
 SSOT Validation Script for STM32H753ZI Project
-Validates that configuration is consistent across all files.
+Validates that configuration is consistent across all files including documentation.
 
-TODO: See .instructions/ssot-validation.md for extending validation rules
-TODO: See .instructions/build-validation.md for integration with build system
+TODO: See .github/instructions/ssot-config.instructions.md for SSOT validation rules
+TODO: See .github/instructions/build-validation.instructions.md for build integration
 """
 
 import os
 import re
 import sys
 import json
+import argparse
 from pathlib import Path
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
+
+# SSOT Documentation Configuration - matches documentation_config.h
+WORKSPACE_ROOT = Path('/workspaces/code')
+DOC_INDEXES_DIR = WORKSPACE_ROOT / "docs" / "indexes"
+DOC_INDEX_STM32H7_FULL = WORKSPACE_ROOT / "docs" / "indexes" / "STM32H7_FULL_INDEX.json"
+DOC_INDEX_L6470_SEARCH = WORKSPACE_ROOT / "docs" / "indexes" / "L6470_SEARCH_INDEX.json"
+INSTRUCTION_ROOT_DIR = WORKSPACE_ROOT / ".github" / "instructions"
+REFERENCE_ROOT_DIR = WORKSPACE_ROOT / "00_reference"
 
 def find_hardcoded_values(file_path: str) -> List[Dict]:
     """Find potential hardcoded values that should be in SSOT."""
@@ -167,7 +176,11 @@ def validate_config_consistency() -> List[Dict]:
     return inconsistencies
 
 def generate_report(violations: List[Dict], missing_files: List[str], 
-                   include_violations: List[Dict], inconsistencies: List[Dict]) -> None:
+                   include_violations: List[Dict], inconsistencies: List[Dict],
+                   doc_structure_errors: Optional[List[str]] = None, 
+                   instruction_ref_errors: Optional[List[str]] = None,
+                   doc_path_errors: Optional[List[str]] = None,
+                   include_docs: bool = False) -> None:
     """Generate validation report."""
     print("🔍 SSOT Validation Report for STM32H753ZI Project")
     print("=" * 60)
@@ -178,9 +191,33 @@ def generate_report(violations: List[Dict], missing_files: List[str],
         for file in missing_files:
             print(f"   📄 {file}")
         print(f"\n💡 Run: mkdir -p src/config src/common")
-        print("💡 TODO: See .instructions/ssot-setup.md to create missing files")
+        print("💡 TODO: See .github/instructions/ssot-config.instructions.md to create missing files")
     else:
         print("✅ SSOT structure complete")
+    
+    # Documentation structure validation (if requested)
+    if include_docs:
+        print("\n📚 Documentation Structure Validation:")
+        if doc_structure_errors:
+            print(f"❌ Found {len(doc_structure_errors)} documentation structure issues:")
+            for error in doc_structure_errors:
+                print(f"   📁 {error}")
+        else:
+            print("✅ Documentation structure is valid")
+        
+        if instruction_ref_errors:
+            print(f"\n❌ Found {len(instruction_ref_errors)} broken instruction references:")
+            for error in instruction_ref_errors:
+                print(f"   🔗 {error}")
+        else:
+            print("✅ All instruction references are valid")
+        
+        if doc_path_errors:
+            print(f"\n❌ Found {len(doc_path_errors)} hardcoded documentation paths:")
+            for error in doc_path_errors:
+                print(f"   📂 {error}")
+        else:
+            print("✅ No hardcoded documentation paths found")
     
     # Check for hardcoded values
     if violations:
@@ -252,8 +289,104 @@ def generate_report(violations: List[Dict], missing_files: List[str],
     
     print("\n🚀 SSOT validation complete!")
 
+def validate_documentation_structure() -> List[str]:
+    """Validate documentation structure matches SSOT configuration"""
+    errors = []
+    
+    # Check required directories exist
+    required_dirs = [
+        DOC_INDEXES_DIR,
+        INSTRUCTION_ROOT_DIR,
+        REFERENCE_ROOT_DIR,
+        "docs/design",
+        "docs/requirements"
+    ]
+    
+    for dir_path in required_dirs:
+        if not Path(dir_path).exists():
+            errors.append(f"Missing required documentation directory: {dir_path}")
+    
+    # Check search indexes exist
+    required_indexes = [
+        DOC_INDEX_STM32H7_FULL,
+        DOC_INDEX_L6470_SEARCH,
+        "docs/indexes/STM32H7_COPILOT_INDEX.json",
+        "docs/indexes/STM32H7_COPILOT_INDEX.yaml"
+    ]
+    
+    for index_path in required_indexes:
+        if not Path(index_path).exists():
+            errors.append(f"Missing required search index: {index_path}")
+    
+    return errors
+
+def validate_instruction_references() -> List[str]:
+    """Validate that instruction file references in source code are valid
+    Note: Detailed instruction reference management is handled by instruction_manager.py
+    """
+    errors = []
+    
+    # Basic validation - detailed work delegated to instruction_manager.py
+    pattern = r'\.github/instructions/([^/\s]+\.instructions\.md)'
+    
+    # Quick scan for obviously broken references
+    for src_file in Path('src').rglob('*.[ch]'):
+        try:
+            with open(src_file, 'r', encoding='utf-8', errors='ignore') as f:
+                content = f.read()
+        except:
+            continue
+        
+        matches = re.findall(pattern, content)
+        for match in matches:
+            instruction_file = Path(INSTRUCTION_ROOT_DIR) / match
+            if not instruction_file.exists():
+                errors.append(f"Broken instruction reference in {src_file}: {match}")
+    
+    if errors:
+        errors.append("Run 'python3 scripts/instruction_manager.py validate' for detailed analysis")
+    
+    return errors
+
+def validate_documentation_paths() -> List[str]:
+    """Validate hardcoded documentation paths against SSOT"""
+    errors = []
+    
+    # Check scripts for hardcoded paths that should use SSOT
+    if Path('scripts').exists():
+        script_files = list(Path('scripts').glob('*.py'))
+        
+        hardcoded_patterns = [
+            (r'docs/indexes/[^"\']+', 'Should use DOC_INDEX_* constants'),
+            (r'\.github/instructions/[^"\']+', 'Should use INSTRUCTION_* constants'),
+            (r'00_reference/[^"\']+', 'Should use REFERENCE_* constants')
+        ]
+        
+        for script_file in script_files:
+            # Skip the validation script itself
+            if script_file.name == 'validate_ssot.py':
+                continue
+                
+            try:
+                with open(script_file, 'r', encoding='utf-8', errors='ignore') as f:
+                    content = f.read()
+            except:
+                continue
+            
+            for pattern, message in hardcoded_patterns:
+                matches = re.findall(pattern, content)
+                for match in matches:
+                    errors.append(f"Hardcoded path in {script_file}: {match} - {message}")
+    
+    return errors
+
 def main():
     """Main validation function."""
+    parser = argparse.ArgumentParser(description='Validate SSOT compliance')
+    parser.add_argument('--include-docs', action='store_true', 
+                       help='Include documentation structure validation')
+    args = parser.parse_args()
+    
     if not os.path.exists('src'):
         print("❌ Error: src directory not found. Run from project root.")
         return 1
@@ -282,11 +415,25 @@ def main():
     # Check configuration consistency
     inconsistencies = validate_config_consistency()
     
-    # Generate report
-    generate_report(all_violations, missing_files, include_violations, inconsistencies)
+    # Documentation validations (if requested)
+    doc_structure_errors = []
+    instruction_ref_errors = []
+    doc_path_errors = []
+    
+    if args.include_docs:
+        print("📚 Validating documentation structure...")
+        doc_structure_errors = validate_documentation_structure()
+        instruction_ref_errors = validate_instruction_references()
+        doc_path_errors = validate_documentation_paths()
+    
+    # Generate enhanced report
+    generate_report(all_violations, missing_files, include_violations, inconsistencies,
+                   doc_structure_errors, instruction_ref_errors, doc_path_errors, args.include_docs)
     
     # Return exit code based on findings
-    total_issues = len(all_violations) + len(missing_files) + len(include_violations) + len(inconsistencies)
+    total_issues = (len(all_violations) + len(missing_files) + len(include_violations) + 
+                   len(inconsistencies) + len(doc_structure_errors) + 
+                   len(instruction_ref_errors) + len(doc_path_errors))
     return 1 if total_issues > 0 else 0
 
 if __name__ == '__main__':

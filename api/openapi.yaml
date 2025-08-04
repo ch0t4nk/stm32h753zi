@@ -1,7 +1,8 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
   title: STM32H753ZI REST API
   version: 0.1.0
+  description: REST API for STM32H753ZI stepper motor control system
 paths:
   /motors:
     get:
@@ -9,11 +10,41 @@ paths:
       responses:
         '200':
           description: Motor status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  motor1:
+                    type: object
+                    properties:
+                      position:
+                        type: number
+                      status:
+                        type: string
+                  motor2:
+                    type: object
+                    properties:
+                      position:
+                        type: number
+                      status:
+                        type: string
   /metrics:
     get:
       summary: Get system metrics
       responses:
         '200':
-          description: Metrics
----
-# TODO: See `.instructions/openapi.yaml.md` for module-specific details.
+          description: System metrics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uptime:
+                    type: number
+                  temperature:
+                    type: number
+                  errors:
+                    type: integer
+
+# TODO: See .github/instructions/comm-protocols.instructions.md for API design guidance

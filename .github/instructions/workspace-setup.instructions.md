@@ -1,193 +1,157 @@
 ---
-applyTo:  "*"  
-description: "Workspace-level guidance for STM32H753ZI stepper motor project"
+applyTo: "*"  
+description: "Workspace-level guidance and project overview for STM32H753ZI stepper motor project"
 ---
 
-# Guide to Setting Up a Copilot Pro+ Workspace for an STM32H753ZI Stepper Motor Project
+# STM32H753ZI Stepper Motor Project - Workspace Overview
 
 ## Project Overview
 
-This project uses an **STM32H753ZI Nucleo-144** board as the main controller to drive two stepper motors in closed-loop. The motors are driven by an **X-NUCLEO-IHM02A1** expansion shield, which contains two ST **L6470** stepper driver ICs (dSPIN) controlled via SPI. Each motor’s position is monitored by an **AS5600 magnetic encoder** for feedback. Multiple communication interfaces are implemented for versatility and robust control: the MCU communicates with the driver board over SPI, provides a **virtual COM port** to a host PC via the ST-Link (USB UART), exchanges data with other MCUs over the **CAN bus**, and offers network connectivity through **Ethernet (TCP/IP)**. The coding approach emphasizes safety (preventing motor runaway, handling faults) and good design practices (SOLID principles) to produce reliable and maintainable firmware. 
+This project uses an **STM32H753ZI Nucleo-144** board as the main controller to drive two stepper motors in closed-loop control. The motors are driven by an **X-NUCLEO-IHM02A1** expansion shield containing two ST **L6470** stepper driver ICs controlled via SPI. Each motor's position is monitored by an **AS5600 magnetic encoder** for feedback.
 
-**Key components and their roles are summarized below:**
+**Key Components:**
 
-| Component                      | Role in System                                          |
-| ------------------------------ | ------------------------------------------------------- |
-| **STM32H753ZI MCU (Nucleo-144)** | Main microcontroller running the control firmware and coordinating all peripherals. It provides Arduino Uno and ST morpho connectors for expansion shields. |
-| **X-NUCLEO-IHM02A1 Stepper Driver Shield** | Two-axis stepper motor driver board based on ST L6470 chips. Receives high-level motion commands via SPI to drive the stepper motors (supports microstepping, programmable speed profiles, etc.). Plugs into the Nucleo board’s Arduino headers. |
-| **Stepper Motors (2×)**        | Bipolar stepper motors (with appropriate voltage/current ratings) used for robot actuation. They connect to the shield’s outputs; the L6470 drivers supply up to 7 A peak current per coil. |
-| **AS5600 Magnetic Encoders (2×)** | 12-bit contactless rotary sensors mounted on the motor shafts for closed-loop feedback. Provide absolute angle position (0–360°) via I2C or analog/PWM output. One sensor is used per motor. |
-| **ST-Link V3 (on Nucleo board)** | On-board debugger/programmer. Also acts as a USB **Virtual COM Port** interface, bridging the MCU’s UART to the host PC for serial communication. Allows debugging and sending commands from a PC terminal. |
-| **CAN Bus Interface**          | Used for MCU-to-MCU communication. The STM32H7’s FDCAN peripheral supports standard CAN 2.0 (up to 1 Mbit/s) and CAN-FD (up to 8 Mbit/s data rate, 64-byte frames). (An external CAN transceiver chip is needed to interface the differential CAN High/Low lines.) |
-| **Ethernet PHY (LAN8742) & RJ45** | On-board 10/100 Mbps Ethernet transceiver (the Nucleo-H753ZI has a LAN8742 PHY connected via RMII). Enables network connectivity. The project will run a TCP/IP stack (e.g. LwIP) to support full socket communication. |
-| **Power Supply**               | External supply for the stepper motors (8–45 V DC) is required by the driver shield. The shield’s on-board regulator provides 3.3 V logic power (selectable via jumper) and can also power the Nucleo board if configured. |
+| Component | Role |
+|-----------|------|
+| **STM32H753ZI MCU** | Main controller (ARM Cortex-M7, 480MHz) |
+| **X-NUCLEO-IHM02A1 Shield** | Dual stepper driver (2x L6470 dSPIN ICs) |
+| **Stepper Motors (2×)** | Bipolar stepper motors for actuation |
+| **AS5600 Encoders (2×)** | 12-bit magnetic rotary sensors for feedback |
+| **ST-Link V3** | Debugger + USB Virtual COM Port |
+| **Communication** | UART, CAN-FD, Ethernet (LAN8742 PHY) |
 
----
+## Modular Instruction System
 
-## Safety Considerations
+This project uses a **comprehensive modular instruction system** in `.github/instructions/`:
 
-Designing for safe operation is paramount. The following measures should be included to ensure the system operates safely and fails gracefully in case of problems:
+### Core System Instructions
+- **ssot-config.instructions.md**: Single Source of Truth configuration management
+- **hardware-pins.instructions.md**: STM32H753ZI pin assignments and peripherals
+- **data-types.instructions.md**: Consistent data types and type safety
+- **error-handling.instructions.md**: Error codes, fault recovery, and diagnostics
+- **build-config.instructions.md**: Build configuration and version management
 
-- **Motor Driver Fault Handling:** Continuously monitor the status of the L6470 drivers for fault flags. The X-NUCLEO-IHM02A1 board indicates error conditions (e.g. step loss, over-current, thermal shutdown, under-voltage) via a red LED. In firmware, use the L6470 **GetStatus** SPI command to read any fault bits and respond accordingly (e.g. initiate an emergency motor stop if a driver reports a stall or over-current). The L6470 can automatically shut down outputs on serious faults – ensure to reset and re-enable the driver after a fault is cleared.
+### Motor Control Instructions
+- **l6470-registers.instructions.md**: L6470 stepper driver configuration and control
+- **safety-systems.instructions.md**: Safety systems, watchdog, and fail-safe mechanisms
+- **time-handling.instructions.md**: Timing systems and control loop management
+- **units-measurements.instructions.md**: Physical units and measurement handling
 
-- **Fail-Safe Motor Control:** Implement a **fail-safe design** so that any detected anomaly puts the system into a safe state. For example, if the encoder feedback is lost or indicates an impossible value, or if communication with a motor driver times out, the firmware should halt that motor (e.g. send a HardHiZ command to cut power to the coils). Define safe limits for speed and position; if the control loop error exceeds a threshold (indicating the motor may have slipped or lost steps), stop or slow the motor to prevent uncontrolled behavior.
+### Communication Instructions
+- **comm-protocols.instructions.md**: UART, CAN, SPI, I2C, and Ethernet protocols
 
-- **Watchdog Timer:** Utilize the MCU’s independent **watchdog timer** to recover from software lock-ups or unexpected hangs. The watchdog provides a graceful recovery by resetting the system in case the program becomes unresponsive. Configure a reasonable timeout (taking into account the control loop timing) and periodically “kick” the watchdog in the main loop or heartbeat task. This ensures that if the firmware gets stuck (e.g. due to a bug or EMI disturbance), the system will reset into a known state rather than run away motors. After a watchdog reset, have the firmware verify or re-calibrate the motor positions before resuming normal operation.
+Each instruction file provides comprehensive technical guidance targeting specific source directories.
 
-- **Controlled Ramping and Limits:** When starting or stopping the stepper motors, use the L6470’s built-in motion profiling (acceleration/deceleration) to avoid sudden movements. Sudden starts/stops can cause the motor to skip steps or the mechanism to experience mechanical stress. By configuring acceleration and deceleration parameters in the driver, the motion will be smoother and safer. Also enforce maximum velocity and position limits in software to prevent driving the motor beyond its intended range or speed.
+## Critical Design Philosophy
 
-- **Power and Thermal Safety:** Ensure the motor drivers and motors operate within their voltage and current ratings. The L6470 allows setting current limits; tune these to match the motor’s spec (and use lower current if the full torque is not needed) to avoid overheating. The board can handle up to 7 A peak per motor driver – if the motors draw near this limit, provide cooling or heat sinking as needed. Monitor motor coil temperature indirectly by observing the driver’s thermal warning flags (and consider adding temperature sensors to the motor or driver if needed for critical applications). If an over-temperature condition is detected (driver thermal pre-warning flag), reduce current or duty cycle to cool down.
+### Safety First
+- **Fail-safe design**: Motors stop rather than run uncontrolled
+- **Continuous monitoring**: L6470 fault flags, encoder validation, communication timeouts
+- **Watchdog protection**: Independent watchdog timer for fault recovery
+- **Controlled motion**: Acceleration/deceleration profiles prevent mechanical stress
 
-- **Encoder Reliability Checks:** Because the system is closed-loop, trust in the AS5600 encoders is crucial. Implement plausibility checks on the encoder readings (e.g. ensure the angle change corresponds to commanded steps). The AS5600 outputs 0–4095 for one full rotation; if a read returns a value that jumps wildly or is not updating when the motor is moving, treat it as a fault in the feedback. The AS5600 can be configured to indicate magnet placement quality – use this if available to detect if the magnet distance is out of range. It’s also wise to handle the wrap-around (0/4095 rollover) carefully in software when computing differences. If an encoder failure is detected, stop the motor or revert to open-loop with a warning.
+### SOLID Architecture  
+- **Single Responsibility**: Separate classes for motor control, drivers, encoders, communication
+- **Open/Closed**: Abstract interfaces for extensibility
+- **Liskov Substitution**: Implementations are substitutable
+- **Interface Segregation**: Focused, specific interfaces
+- **Dependency Inversion**: Depend on abstractions, not implementations
 
-- **Communication Safety:** Design robust communication protocols for the UART, CAN, and Ethernet interfaces to prevent malformed or unintended commands from causing unsafe behavior. For example, if controlling the motors from a PC over UART or TCP, implement a simple command checksum or format to validate commands. On CAN bus, use message filtering and perhaps a heartbeat message between MCUs – if a heartbeat is missed, a node can enter a safe state. Also ensure that high-level commands (like “move to position”) are sanity-checked against safe ranges before execution.
+### Single Source of Truth (SSOT)
+Configuration is centralized in `src/config/` - see `ssot-config.instructions.md` for details.
 
-- **Redundancy (if required):** In a high-risk environment, consider redundant sensors or checks. For instance, if feasible, two encoders per axis (or one encoder and one algorithmic step count cross-check) could detect discrepancies in position sensing. While not implemented here by default, the design could accommodate such extensions thanks to the SOLID architecture (e.g. swapping in a different feedback module).
+## Development Environment
 
-By incorporating these safety measures, the system will **fail safely** – motors will stop rather than run uncontrolled in any error scenario, and the firmware will be resilient against common failure modes.
+This workspace runs in a dev container with:
+- **ARM GCC Toolchain**: Cross-compilation for STM32H7
+- **OpenOCD**: On-chip debugging and programming
+- **STM32CubeMX Integration**: HAL configuration and code generation
+- **Testing Frameworks**: Unity and GoogleTest for embedded testing
+- **Python Tools**: CAN utilities, documentation generation (Sphinx/Breathe)
+- **SSOT Validation**: Pre-commit hooks, configuration validation scripts
+- **Documentation**: Doxygen with Graphviz for API documentation
+- **Enhanced Search System**: Unified STM32H7 + L6470 documentation search (88.1MB coverage)
 
-## SOLID Design Principles
+## Reference Assets
 
-Following the **SOLID principles** in the firmware design will make the code more maintainable, extensible, and robust. Below is how each principle applies to this project:
+The `00_reference/` directory contains official ST assets (READ-ONLY):
+- **STM32H7 HAL Documentation**: 86MB, 3,988 markdown files with complete peripheral coverage
+- **L6470 Documentation**: 2.1MB X-CUBE-SPN2 stepper driver documentation (197 files)
+- **STM32H7 HAL drivers and examples**: Complete implementation examples
+- **X-NUCLEO-IHM02A1 board support package**: Shield-specific guidance
+- **Application examples and datasheets**: Real-world implementation patterns
 
-- **Single Responsibility Principle (SRP):** Each software module or class should have *one and only one* reason to change. In this project, separate the responsibilities into distinct classes: e.g., a `StepperMotorController` class to handle motion control logic (like issuing move commands or performing closed-loop PID calculations), a `MotorDriverInterface`/`L6470Driver` class purely for low-level driver SPI communication, an `EncoderInterface`/`AS5600Sensor` class for reading the encoder, and classes for each communication channel (UART handler, CAN interface, etc.). This way, each class focuses on a single task – for instance, the encoder class only deals with I2C reads and angle conversion, and could be changed if a different sensor is used without affecting other parts. High cohesion and clear separation make the code easier to test and safer to modify in the long run.
+**Enhanced Documentation Search:**
+```bash
+# Search STM32H7 peripherals
+python3 scripts/search_enhanced_docs.py peripheral SPI --scope STM32H7
 
-- **Open/Closed Principle (OCP):** The design should be *open for extension but closed for modification*. In practice, this means you can add new functionality or support new hardware without rewriting existing core code. Achieve this by using abstract interfaces and inheritance. For example, define an abstract `MotorDriverInterface` that declares methods like `init()`, `setSpeed()`, `moveToPosition()`, etc. The current implementation (L6470) is one subclass of this. In the future, if you want to support a different stepper driver chip or a different motor type, you can create a new subclass implementing the same interface – the high-level control code can remain unchanged and interact with it polymorphically. Likewise, an `EncoderInterface` allows using a different encoder model easily. By not hard-coding assumptions about specific hardware into the high-level logic, the system can be extended (new drivers, new sensors, additional safety checks, etc.) with minimal changes to existing, tested code.
+# Search L6470 functions and registers  
+python3 scripts/search_enhanced_docs.py function L6470_Init --scope L6470
+python3 scripts/search_enhanced_docs.py register ABS_POS --scope L6470
 
-- **Liskov Substitution Principle (LSP):** *Subtypes must be substitutable for their base type* without breaking the system. Every implementation of `MotorDriverInterface` should behave correctly when used in place of the abstract base – e.g., whether it’s controlling an L6470 or another driver, the methods should accomplish the expected actions. For instance, if a `TestMotorDriver` class (maybe a simulator) implements the interface for testing, the control loop should work with it as if it were a real motor. Adhering to LSP means designing clean interfaces – ensure the abstraction does not rely on specific quirks of one implementation. In this project, methods like `readEncoder()` should return values in consistent units (e.g., degrees or ticks) so that any `EncoderInterface` implementation can be swapped. If all motor drivers follow the same abstract contract (initialize, enable, disable, move, stop, etc.), the higher-level logic (like closed-loop controller) won’t need to know the difference and will not require changes when switching out hardware.
+# Unified search across all documentation
+python3 scripts/search_enhanced_docs.py concept "motor control" --scope all
 
-- **Interface Segregation Principle (ISP):** *Many small, specific interfaces are preferred over one large, general-purpose interface*. Don’t force modules to depend on things they do not use. In this context, keep the interfaces focused: for example, the `EncoderInterface` should maybe only have methods like `getAngle()` or `getVelocity()` – it shouldn’t lump unrelated functionality. The stepper motor driver interface should not include methods that are irrelevant to certain implementations. By segmenting interfaces (and classes) into granular roles, each part of the system can depend only on what it actually needs. The UART communication class, for instance, might implement an interface `HostCommunication` that defines sending and receiving command strings; it wouldn’t concern itself with motor control logic. This segregation improves modularity and testability – e.g., you can unit test the motor control logic by injecting a mock `EncoderInterface` that just returns preset values, without also needing to have a dummy implementation of some unrelated method.
-
-- **Dependency Inversion Principle (DIP):** *Depend on abstractions, not on concrete implementations*. High-level modules (like the closed-loop control algorithm) should not directly depend on low-level hardware details. In practice, this means the `StepperMotorController` class would hold references to the abstract `MotorDriverInterface` and `EncoderInterface` rather than, say, a concrete `L6470Driver` or using HAL SPI calls internally. We **inject** the specific driver and sensor implementations into the controller (for example, via the constructor or an initializer function). This way, the high-level logic doesn’t need to change if we swap out the motor driver or sensor – only the binding at initialization changes to pass a different object. The abstractions (interfaces) should be designed around the *needs of the high-level logic*, not the details of the low-level devices. For instance, the motor driver interface might expose a method `moveToAngle(float angle)` – internally, the L6470 implementation will translate that into steps or microstep commands, whereas a different motor might do something else. The controller doesn’t care about those details. By inverting dependencies in this manner, we also make the code more testable: one can provide a fake driver implementation to simulate motor behavior when running the control algorithm in a test environment. In summary, the overall architecture should be layered such that the **policy** (high-level logic) is separated from the **details** (hardware access), improving flexibility and safety (changes in hardware require minimal code changes, reducing chances of introducing bugs).
-
-Applying these SOLID principles leads to a cleaner project structure. The Copilot workspace can include interface definitions and documentation comments summarizing each of these classes’ responsibilities. This context helps Copilot generate code that aligns with the intended architecture. The resulting codebase will be easier to maintain or extend – for example, adding a second type of actuator or a different sensor would involve creating a new class rather than altering many existing functions.
-
-## Communication Protocols
-
-Robust communication is critical for this project, as multiple interfaces are used in parallel. Each protocol should be configured and handled with reliability in mind. Below are details for each communication channel and how to include them in the workspace setup:
-
-### SPI Communication (STM32 ⇔ Stepper Drivers)
-
-The STM32H7 will communicate with the two L6470 stepper driver ICs over an SPI bus. The X-NUCLEO-IHM02A1 shield uses the Arduino UNO R3 connector pins for SPI – these typically map to the MCU’s SPI2 or SPI3 (depending on the Nucleo board’s configuration for Arduino pins). In the STM32H753ZI Nucleo, the default SPI pins (PA5, PA6, PA7 for SPI1 or PB3, PB4, PB5 for SPI) should be cross-checked with the shield documentation. Ensure the correct SPI instance and pins are enabled in your STM32CubeMX configuration (Copilot can be guided by comments about which pins to use for SPI).
-
-**Daisy-Chain Setup:** The two L6470 drivers are daisy-chained on the same SPI bus. This means all drivers share the SPI clock and MOSI/MISO lines; the drivers’ SDI/SDO are linked in series. When the STM32 sends a command, it shifts through both devices. **Use one chip-select (CS)** line for the entire chain – by default the expansion board ties both L6470 chip selects together, so they act as one SPI slave with twice the shift register length. The SPI transaction needs to send two bytes for each byte of command (one byte per device in the chain). For example, to send a command to both motors simultaneously (or a command to one and NOP to the other), a multi-byte sequence is issued before releasing CS. Copilot can be instructed with comments about this daisy-chain behavior (e.g., “// Note: SPI daisy chain – send 2 bytes (Motor1, Motor2) for each command cycle”).
-
-**SPI Settings:** Configure SPI in **8-bit mode**, at a clock speed supported by the L6470 (the datasheet suggests a fairly high SPI clock is possible – ensure it’s within spec, e.g. a few MHz). The L6470 uses mode 3 (CPOL=1, CPHA=1) – this detail should be included in the prompt or comments to ensure Copilot sets up the SPI with correct mode. Each command to L6470 consists of one command byte followed by argument bytes; many commands have 3-byte arguments (for 24-bit values) that must be sent MSB first. Communicate this format in the workspace (e.g., via comments or a helper function stub) so Copilot knows how to format commands. For instance: *“// L6470 SPI protocol: send command byte, then appropriate number of data bytes; read/write occur simultaneously.”* 
-
-**Driver Initialization:** Part of the SPI communication involves writing to the L6470 configuration registers at startup (e.g., setting acceleration, deceleration, max speed, step mode, current limit, etc.). The code should issue **SetParam** commands to the L6470 over SPI to configure these registers. Typical setup might include: step mode (microstepping setting), MAX_SPEED, FS_SPD (full-step speed threshold), KVAL hold/run (voltage settings for torque), OCD threshold (overcurrent threshold), etc., according to the motor’s requirements. Including an outline of these parameters in the prompt (perhaps as a list of constants or a table of desired values) will help Copilot generate the initialization code. After configuration, bring the drivers out of reset and maybe send a **ReleaseSW** or **HardHiZ** to ensure the motors are in a known state (the L6470 powers up in High-Z by default).
-
-**Robustness:** Because SPI is used for real-time motor control, ensure to check return values where applicable. The L6470’s daisy-chain reply can be read on MISO. For example, when sending a **GetStatus** command to a driver, the status bytes will shift out. The firmware should capture and interpret these. Copilot can be guided by including the structure of the status register (which bits indicate error, busy, etc.) – the status is 16 bits where bits like OCD, thermal warning, step loss, etc., are flagged. Handling these within the SPI ISR or after each transaction (with appropriate locking if using RTOS) is part of safety.
-
-In summary, to set up SPI in the Copilot workspace, include:
-- Definition of the SPI port and pins used (to avoid confusion).
-- Comments on the daisy-chain protocol and needing to send commands for two devices.
-- A list of L6470 commands/regs to configure (maybe a brief explanation for each).
-- Emphasize reading back status periodically over SPI. 
-
-With this info, Copilot can assist in writing an SPI driver class that properly encapsulates the L6470 communication.
-
-### Virtual UART (USB CDC via ST-Link)
-
-For host PC communication and debugging, the project uses the Nucleo’s ST-Link virtual COM port. On the STM32H7 Nucleo, by default **USART3** is connected to the ST-Link V3E which acts as a USB serial bridge. The MCU pins PD8 (USART3_TX) and PD9 (USART3_RX) are wired to the ST-Link, so we will use USART3 for the “virtual UART” channel. Make sure to enable USART3 (e.g., 115200 baud, 8-N-1 by default) in CubeMX and route it to PD8/PD9. In the Copilot prompt or comments, note something like: *“Use USART3 on PD8/PD9 for communication with PC (via ST-Link VCP).”* This way it will generate code using the correct UART instance.
-
-**UART Protocol:** Define a simple text-based protocol for sending commands and receiving feedback over this UART. For example, commands like `SET ANGLE 90\n` or `GET ANGLE\n` or `STOP\n` can be used to control the motors manually from a serial terminal. It’s useful to outline these commands in the documentation (so Copilot can include a command parser in code). For instance, list the expected commands and their formats in a comment block. The output can include telemetry or acknowledgments. 
-
-Since safety is a concern, consider implementing a watchdog or timeout for commands – for example, if no “halt” command is received after a certain time while motors are moving, maybe stop them. This might be overkill for UART, but it’s something to mention as a reminder for robust design.
-
-**DMA/Interrupts:** The UART communication should not bog down the CPU or interfere with control timing. Use interrupts or DMA for receiving data. For instance, you can enable the UART IDLE line detection interrupt to know when a command has arrived (when the line goes idle after characters). Copilot could generate an interrupt handler if it knows one is needed. Indicate in the prompt that “UART will use interrupt-driven reception (IDLE line or RXNE) to parse incoming commands” to nudge it in that direction.
-
-**Virtual COM specifics:** The ST-Link V3 on this board can support very high baud rates for the VCP – up to around 7.3 Mbaud has been measured – though 115200 is adequate for most uses. You can mention this fact to reassure that bandwidth isn’t a bottleneck. For instance: *“// ST-Link V3 VCP supports baud >7 Mbps, but defaulting to 115200 for reliability.”* Also note that no additional hardware is needed for this UART (it’s USB-connected). The user will simply open a serial port on the PC.
-
-By including these notes in the Copilot workspace, the AI can generate a UART handler that fits the project’s needs (e.g., a function to send debug messages, a callback for processing received lines, etc.). 
-
-### CAN Bus (MCU-to-MCU Communication)
-
-The project uses the CAN bus to communicate with other microcontrollers (for example, if multiple MCU-based motor controllers are on a robot). The STM32H753ZI has two FDCAN units that support CAN 2.0A/B and CAN-FD. We will operate it in classic CAN mode unless higher throughput is required. In CubeMX, enable FDCAN1 (connected to pins PD0 = CAN1_RX, PD1 = CAN1_TX on the morpho connector). **Important:** The Nucleo board does *not* have an onboard CAN transceiver, so one must be added externally. Note in the hardware integration which pins to wire to a transceiver (e.g., use an MCP2551 or SN65HVD230 CAN transceiver connecting PD0/PD1 to the CAN H/L lines, with 120 Ω termination at the ends of the CAN network).
-
-**CAN configuration:** Choose an appropriate bit rate (e.g., 500 kbps or 1 Mbps depending on the network). If using CAN-FD, mention the data phase bitrate as well (though if not needed, stick to normal CAN). Provide Copilot with the basic configuration: “500k  nominal bit rate, standard 11-bit IDs” for example. Also outline the CAN message format for this application. You might designate specific CAN message IDs for each type of data: e.g., ID 0x100 for status reports from this controller, ID 0x200 for command messages to this controller, etc. If multiple motor controllers are on the bus, give each an ID base or use the CAN node ID in the arbitration ID. By specifying a small table of message IDs and their purpose in the prompt, Copilot can generate an enum or defines for them.
-
-For instance:
-- 0x101: This MCU’s motor1 status (angle, maybe speed or load).
-- 0x102: This MCU’s motor2 status.
-- 0x201: Command to this MCU to set motor positions.
-- 0x001: heartbeat message (broadcast).
-
-These are just examples – tailor it to your needs. If following a standard like CANopen or a custom protocol, describe that so it’s reflected in code.
-
-**Error handling:** CAN is robust – it has automatic error detection and retransmission. Still, implement callbacks for errors (Bus Off, Error Passive) to perhaps reset the CAN or alert the system. The ST HAL provides interrupts for CAN FIFO message pending and errors. Indicate in comments that you want to handle these: *“// Handle FDCAN interrupts: TX complete, RX message pending, and errors.”* This helps Copilot include the basic structure.
-
-Also, mention using hardware filters. For instance, if this node only needs to receive certain IDs, set up FDCAN filters to accept those and reject others – improving efficiency and safety (ignore unexpected messages). Document which IDs to accept in the filter configuration for clarity (content identification is a key feature of CAN).
-
-**Multi-MCU sync:** If relevant, note that the CAN bus could be used for synchronizing movements between controllers. For example, a “start move” command broadcast to all MCUs ensures they begin motion simultaneously. Including this intention can lead to Copilot generating code to handle simultaneous commands or time synchronization (though the specifics might be complex). At minimum, ensure to mention the need for periodic heartbeat messages – each MCU should transmit a heartbeat and monitor others. In case a heartbeat is missed, the system could enter a safe state (this ties into safety considerations). 
-
-### Ethernet (TCP/IP Networking)
-
-The STM32H7’s built-in Ethernet MAC, together with the on-board LAN8742 PHY, provides a network interface for high-level connectivity. We will use this for full TCP/IP support – for instance, to allow a host PC to send high-level commands or to monitor the system via a network socket or web interface. To set this up, do the following:
-
-**Hardware setup:** The Nucleo-H753ZI’s RJ45 port (CN14) is connected through a LAN8742 PHY to the MCU (RMII interface). In CubeMX, enable the Ethernet peripheral (select RMII) and ensure the PHY address matches (LAN8742 usually at address 0 or 1 on MDIO). Also enable the PHY power if needed (some boards have a PHY Power Enable pin that must be set). The clock configuration should include the 50 MHz reference clock for RMII (on Nucleo boards, the PHY provides this clock to the MCU).
-
-**TCP/IP stack:** Use **LwIP** (Lightweight IP) as the TCP/IP stack (CubeMX can add it as Middleware). In the Copilot workspace, mention enabling LwIP with a static IP (for simplicity) or DHCP if desired. For example: *“Configure LwIP for a static IP 192.168.1.50/24, enable TCP server socket on port 8000.”* This gives Copilot a clear goal to generate the network code. You could instruct it to create a basic TCP server that listens for incoming connections from a host (perhaps to send motor commands or stream encoder data). If a simpler route is preferred, you can plan to use UDP messages for commands, but TCP is usually easier for command/response reliability.
-
-**Buffering and performance:** The STM32H7 has ample RAM, but one must place Ethernet buffers in the correct memory region and account for caching. ST recommends placing the DMA descriptors and Rx/Tx buffers in the D2 domain SRAM (which is accessible by the Ethernet DMA). Make sure your linker script or CubeMX settings do this (CubeMX typically does it automatically for single-core H7 devices). For maximum throughput, you might want to adjust LwIP settings: e.g., set the TCP MSS to 1460 (for Ethernet’s MTU of 1500) and a receive window of at least 2–4× MSS. The ST example suggests TCP_WND = 5840 and TCP_SND_BUF = 5840 for good performance. Communicate these settings to Copilot in a comment block (it might then fill in the `lwipopts.h` accordingly). For instance: 
-
-```c
-/* LwIP tuning: Set MEM_SIZE, PBUF_POOL size, TCP_MSS=1460, TCP_SND_BUF=4*TCP_MSS, TCP_WND=4*TCP_MSS */
+# Validate workspace links
+python3 scripts/link_validator.py
 ```
 
-This ensures that if you intend to send larger data (maybe streaming position logs), the buffers can handle it. Also mention if using RTOS or not – LwIP can run with or without an RTOS. On STM32H7, using FreeRTOS with LwIP is common (for example, one thread for the TCP server). If you plan to use FreeRTOS, note it explicitly so Copilot sets up thread(s) and mutexes properly. If not, you’ll likely use LwIP in callback mode. 
+**Search Index Locations:**
+- `docs/indexes/STM32H7_FULL_INDEX.json` - Complete STM32H7 documentation index
+- `docs/indexes/L6470_SEARCH_INDEX.json` - Complete L6470 documentation index  
+- `docs/indexes/STM32H7_COPILOT_INDEX.*` - Copilot-optimized quick reference formats
 
-**Services:** Decide what service to run on TCP/IP. A simple approach is to run a TCP **command server**: the MCU listens on a socket (say port 23 for Telnet or any port) and processes text commands similar to the UART interface. You could also plan a small web server to display status (the H7 can handle it). Including even a brief mention like “Possibility: a web dashboard on port 80 to show motor status” could prompt Copilot to include an HTTP server (though that might be beyond scope – use only if desired). Otherwise, focus on the command socket. Document an example: e.g., *“Host can connect via TCP and send ASCII commands as with the UART.”* 
+**IMPORTANT**: Never modify `00_reference/` files. Copy needed code to appropriate `src/` locations.
 
-**Safety/robustness:** Networking adds complexity – ensure to handle disconnections gracefully (if the PC client disconnects, the MCU should continue running and be ready for a new connection). Also avoid blocking forever on recv/send – use timeouts or make sure the rest of the control loop still runs. Typically, one would have the main control in one thread and the network interface in another, communicating via thread-safe queues. If using FreeRTOS, outline the threads: e.g., “ControllerThread: manages motors at 1kHz loop; CommThread: handles Ethernet and UART, passes commands to controller via queue.”
+## Quick Start Guide
 
-Summarizing for the Copilot prompt:
-- Note the static IP or DHCP usage.
-- Mention using LwIP and (optionally FreeRTOS).
-- Outline the basic protocol or service (TCP server receiving commands, etc.).
-- Provide any performance tuning parameters.
+1. **Initialize Development Environment**
+   ```bash
+   # The dev container provides all necessary tools
+   # STM32CubeMX, ARM GCC, OpenOCD are pre-installed
+   ```
 
-This will lead to generated code that sets up the network and possibly a skeleton for the server. The full TCP/IP code can be extensive, but Copilot can stub out an initialization and a loop to accept connections and read data, which you can then fill in with command handling (possibly similar to the UART parser).
+2. **Review Modular Instructions**
+   - Each `.instructions.md` file provides domain-specific guidance
+   - Start with `ssot-config.instructions.md` for configuration principles
+   - Reference `hardware-pins.instructions.md` for STM32H753ZI specifics
 
-## Hardware Integration
-
-Setting up the hardware correctly ensures that the software can function as intended. Below are the steps and considerations for integrating the various hardware components of the project. (It’s useful to include these in the project README or comments so that Copilot is aware of the physical setup):
-
-1. **Mount the Stepper Driver Shield:** Attach the X-NUCLEO-IHM02A1 expansion board onto the STM32H753ZI Nucleo. The Arduino-compatible headers on the Nucleo align with the shield’s connectors – ensure all pins are seated correctly. Verify the shield’s jumper settings:
-   - The shield’s logic voltage selection jumper should be set for 3.3 V (the default, since the Nucleo uses 3.3 V I/O).
-   - If you want the shield’s on-board regulator to power the Nucleo, place the jumper accordingly (usually a jumper can connect the regulator output to the Nucleo’s 5V pin). Otherwise, if the Nucleo is powered via USB, you can leave that jumper in default position.
-   - Connect the shield’s designated power input (usually a VIN screw terminal) to your motor power supply (e.g. 12 V DC). Make sure to also connect the ground of that supply to the shield (common ground with the Nucleo board).
-   - Note the **LED indicators** on the shield: two green LEDs indicate power to each L6470, the orange indicates logic power, the yellow indicates when a motor is busy, and the red signals a fault. After powering up, ensure the power LEDs are on. If the red LED turns on, it indicates a fault – possibly from initial conditions – you might need to reset the drivers via software.
-
-2. **Connect Stepper Motors:** Wire the two stepper motors to the shield’s outputs (usually labeled for motor 1 and motor 2, with A+/A-/B+/B- terminals). It’s important to match the motor’s coil pairs to the driver outputs – if the motor datasheet labels coils, connect one coil to A+/A- and the other to B+/B-. If unknown, use a multimeter to identify pairs of wires that belong to the same coil. Tighten the screw terminals to prevent any loose connections. Use wires of adequate gauge for the motor current. Keep these power wires short if possible and twisted as a pair (A with A, B with B) to minimize EMI. Once connected, you can test that the motors hold torque when the driver is enabled (after software init) and that they move as commanded. (Ensure motor shafts can move freely and the robot mechanism is clear to avoid jams on first test.)
-
-3. **Mount and Wire Encoders:** Attach the AS5600 magnetic encoders to the motor shafts. Each AS5600 needs to have a small diametrically magnetized magnet aligned with its center at a short distance (few millimeters). Follow the AS5600 datasheet guidelines for magnet distance and alignment – the magnet typically should be within 1–3 mm of the chip for reliable reading. Many AS5600 breakout boards come with a suitable magnet and mounting options. Secure the magnet to the motor shaft (for example, epoxy a tiny magnet to the end of the shaft or use a 3D-printed holder). Mount the sensor so the magnet’s rotation axis is perpendicular to the sensor chip. 
+3. **Build and Test**
+   ```bash
+   # Build project
+   cmake -S . -B build && cmake --build build
    
-   Wire the AS5600 boards to the Nucleo. The AS5600 has six pins, but you typically use VCC, GND, SCL, SDA (and leave OUT unconnected if using I2C mode). Connect:
-   - VCC of each sensor to 3.3 V (the Nucleo’s 3.3 V rail on Arduino or morpho headers).
-   - GND of each sensor to the common ground.
-   - SCL and SDA lines to the STM32’s I2C pins. The Nucleo-H753ZI doesn’t route I2C to the Arduino A4/A5 by default without some solder bridges. An easier way: use the **ST Zio (morpho) connectors** to access an I2C. For example, I2C1 on PB6/PB7 or I2C2 on PB10/PB11 can be used. You can also use the Arduino D15 (SCL) and D14 (SDA) pins if the board has enabled them for I2C (check SB53/55/62 etc. on the Nucleo). In any case, choose two I2C buses so that each AS5600 can be on a separate bus (since they have the same fixed address 0x36). For instance, AS5600 #1 on I2C1, AS5600 #2 on I2C2. This avoids address conflicts without extra hardware. Alternatively, if using a single I2C bus, you will need an I2C multiplexer or switch because the AS5600 address cannot be changed.
-   - Ensure pull-up resistors (~4.7k) are present on the SCL and SDA lines to 3.3 V. Many breakout boards include I2C pull-ups. If not, you must add them or enable the MCU’s internal pull-ups (the latter might be insufficient for reliable I2C at higher speeds). Mention in your notes if the breakout has pull-ups.
+   # Run tests
+   cd build && ctest
    
-   After wiring, verify that each AS5600 is responding: you can use an I2C scanner code to ensure both sensors ACK on their addresses (you might need to scan bus1 and bus2 separately if you used two buses). Once verified, the final integration step is calibration: use the AS5600’s internal zero-position programming if needed, or handle offset in software. The AS5600 can output an analog voltage or PWM representing angle, but here we use I2C for full 12-bit resolution. If the magnet alignment is off-center, the chip might not report the full range or might have error; try to align it for best results (the AS5600 datasheet discusses an *AGC (Automatic Gain Control)* value you can read to judge signal strength). Copilot can be given a hint to perform an initial calibration routine: e.g., *“// TODO: read raw angle and set that as zero reference.”* This could be done by reading the angle at a known zero position and storing an offset.
+   # Flash to hardware
+   openocd -f interface/stlink.cfg -f target/stm32h7x.cfg 
+           -c "program build/stm32h753_ihm02a1.elf verify reset exit"
+   ```
 
-4. **Install CAN Transceiver:** To use the CAN bus, connect a CAN transceiver module to the MCU. The transceiver converts the MCU’s TX/RX logic signals to the differential CAN High/CAN Low lines. For example, an MCP2551 (for classic CAN at 5V) or an SN65HVD230 (3.3V) can be used. Connect the transceiver’s TXD to PD1 (FDCAN1_TX) and RXD to PD0 (FDCAN1_RX) on the Nucleo morpho connector. Connect the transceiver’s VCC to 3.3 V (if using a 3.3 V transceiver) and GND to common ground. Also connect CAN_H and CAN_L from the transceiver to your CAN bus (twisted pair). If this device is one end of the CAN bus, attach a 120 Ω termination resistor across CAN_H and CAN_L (many transceiver modules have jumpers for termination). If it’s in the middle of a CAN network, ensure termination resistors exist at the two extreme ends only. 
+## Architecture Overview
 
-   After connecting, test the CAN communication with other nodes by sending a test frame. You can use an LED or scope on the transceiver’s TXD/RXD to see activity or use the fact that CAN controllers acknowledge each other’s frames (so if you send and don’t get an ACK, the error counter will increase). Ensure all nodes use the same bit rate and sample point settings. If only two nodes (this and one more) are on the bus, both must be terminated.
+```
+/workspaces/code/
+├── src/                     # Source code and SSOT configuration
+│   ├── config/             # SSOT configuration headers
+│   ├── common/             # SSOT common definitions  
+│   ├── drivers/            # Hardware abstraction layer
+│   ├── controllers/        # Control algorithms and logic
+│   ├── communication/      # Protocol implementations
+│   ├── safety/             # Safety monitoring and response
+│   └── application/        # Main application logic
+├── docs/                   # Documentation and project summaries
+│   ├── indexes/            # Search indexes (STM32H7, L6470)
+│   ├── design/             # Design documentation
+│   └── requirements/       # Requirements and specifications
+├── scripts/                # Development and automation tools
+├── tests/                  # Test code and test fixtures
+├── 00_reference/           # Read-only ST reference materials
+└── [build system files]    # CMake, build artifacts, etc.
+```
 
-5. **Ethernet Connection:** Plug in an Ethernet cable to the Nucleo’s RJ45 port. This will link the board to your network (or directly to a PC). If connecting to a PC directly, you may need a crossover cable or a router with DHCP. For initial setup, connecting the Nucleo to a LAN network with a DHCP server (like a home router) is simplest – it will obtain an IP or use the static IP configured. On the network side, nothing else is needed because the PHY and magnetics are on-board. One LED on the RJ45 should light up indicating link status once connected (green/orange LEDs on the connector). If it doesn’t, check if the PHY is powered (there’s a jumper JP6 and solder bridges on Nucleo for Ethernet – by default these are set for normal operation). With link active, you can proceed to test pings to the board or open a TCP connection once the software is running. Make sure your PC is on the same subnet if using static IP – e.g., set PC IP to 192.168.1.x if the board is 192.168.1.50.
+This modular structure ensures clear separation of concerns while maintaining centralized configuration through the SSOT principle.
 
-6. **Final Checks and Power Up:** With all of the above hardware connected – shield, motors, encoders, CAN, Ethernet, etc. – do a final inspection:
-   - All interconnected grounds (Nucleo ground, motor supply ground, sensor grounds, CAN ground) should be common to avoid ground potential differences.
-   - The motor supply voltage is within range (not exceeding 45 V for the shield, and not too low for the motors to operate).
-   - USB cable is connected to the Nucleo’s ST-Link port for programming and the virtual COM.
-   - If using an external debugger or ST-Link separately, ensure the on-board ST-Link is configured not to interfere (usually not an issue on Nucleo).
-   - No metal debris or risk of short circuits on the boards.
-   
-   When you power on the system (or connect USB, which powers the Nucleo and via it the shield logic if JP5 is set accordingly, plus apply motor VIN), observe LEDs: On Nucleo, the PWR LED and COM LED (flashes during communication) should be on. On the shield, power LEDs as mentioned. Initially, do a simple test like reading the encoders (without moving motors) to confirm I2C works, then maybe commanding a small motion to see that motors respond.
-
-By documenting these hardware steps in the guide and in comments, the Copilot Pro+ environment will have context on how everything is connected. This allows it to generate more accurate code – for example, it will know which I2C instances to use for each encoder, which UART and CAN to initialize, and so on. The end result is a cohesive hardware-software integration where each part in code corresponds to the properly set up physical component.
-
----
-
-By covering the topics above – safety features, SOLID architecture, communication setup for SPI/UART/CAN/Ethernet, and detailed hardware wiring – your Copilot Pro+ workspace prompt will be very comprehensive. This ensures that GitHub Copilot has all the necessary context to assist in generating correct and efficient code for the STM32H7 stepper motor control project. All critical components, interfaces, and design guidelines are now in place **(as reflected by the many inline references to datasheets and manuals used for accuracy)**. With this structured information, you can proceed to let Copilot help write initialization code, drivers, and application logic, knowing it will align with the project requirements and hardware configuration. Good luck with your project, and enjoy safe and smooth closed-loop motor control!
-I'll start working on a structured guide for your Copilot Pro+ workspace setup tailored to your STM32H753ZI project. This will include safety considerations, SOLID principles, communication protocols, and hardware integration. I'll also summarize key components and their roles in the project. This will take me several minutes, so feel free to step away — I’ll keep working in the background. Your guide will be saved in this conversation for easy reference later. Stay tuned!
+Remember: **Safety first, SSOT always, modular design throughout.**

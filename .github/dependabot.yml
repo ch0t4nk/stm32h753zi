@@ -12,5 +12,5 @@ updates:
     directory: "/.devcontainer"
     schedule:
       interval: "weekly"
----
-# TODO: See `.instructions/dependabot.md` for module-specific details.
+
+# TODO: See .github/instructions/build-config.instructions.md for dependency management

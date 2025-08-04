@@ -32,5 +32,5 @@ jobs:
       - name: Run unit tests
         run: |
           cd build && ctest || echo "No tests yet"
----
-# TODO: See `.instructions/ci.yml.md` for module-specific details.
+
+# TODO: See .github/instructions/build-validation.instructions.md for CI/CD guidance

@@ -7,8 +7,8 @@
  * @note This file contains ALL error codes and status definitions used throughout the system.
  *       These codes are used across all communication protocols and must remain consistent.
  * 
- * TODO: See .instructions/error-codes.md for error handling procedures
- * TODO: See .instructions/fault-recovery.md for error recovery implementation
+ * TODO: See .github/instructions/error-handling.instructions.md for error handling procedures
+ * TODO: See .github/instructions/safety-systems.instructions.md for error recovery implementation
  */
 
 #ifndef ERROR_CODES_H
@@ -19,7 +19,7 @@
 /* ========================================================================== */
 /* System Error Code Base Values (SSOT)                                      */
 /* ========================================================================== */
-// TODO: See .instructions/error-classification.md for error severity levels
+// TODO: See .github/instructions/error-handling.instructions.md for error severity levels
 
 #define ERROR_CODE_SUCCESS          0x0000      // Success/OK status
 #define ERROR_CODE_GENERIC_BASE     0x1000      // Generic system errors
@@ -62,7 +62,7 @@ typedef enum {
 /* ========================================================================== */
 /* Motor Control Error Codes (SSOT)                                          */
 /* ========================================================================== */
-// TODO: See .instructions/motor-errors.md for motor fault handling
+// TODO: See .github/instructions/error-handling.instructions.md for motor fault handling
 
 typedef enum {
     // Motor initialization errors
@@ -98,7 +98,7 @@ typedef enum {
 /* ========================================================================== */
 /* Encoder/Sensor Error Codes (SSOT)                                         */
 /* ========================================================================== */
-// TODO: See .instructions/encoder-errors.md for encoder fault detection
+// TODO: See .github/instructions/error-handling.instructions.md for encoder fault detection
 
 typedef enum {
     // Encoder communication errors
@@ -131,7 +131,7 @@ typedef enum {
 /* ========================================================================== */
 /* Communication Error Codes (SSOT)                                          */
 /* ========================================================================== */
-// TODO: See .instructions/comm-errors.md for communication error handling
+// TODO: See .github/instructions/comm-protocols.instructions.md for communication error handling
 
 typedef enum {
     // UART communication errors
@@ -191,7 +191,7 @@ typedef enum {
 /* ========================================================================== */
 /* Safety System Error Codes (SSOT)                                          */
 /* ========================================================================== */
-// TODO: See .instructions/safety-errors.md for safety system implementation
+// TODO: See .github/instructions/safety-systems.instructions.md for safety system implementation
 
 typedef enum {
     // Safety system errors
@@ -228,7 +228,7 @@ typedef enum {
 /* ========================================================================== */
 /* System/Hardware Error Codes (SSOT)                                        */
 /* ========================================================================== */
-// TODO: See .instructions/system-errors.md for system error handling
+// TODO: See .github/instructions/error-handling.instructions.md for system error handling
 
 typedef enum {
     // Hardware errors
