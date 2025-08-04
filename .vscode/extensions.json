@@ -1,29 +1,42 @@
 {
     "recommendations": [
         "ms-vscode.cpptools",
-        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.cpptools-extension-pack", 
         "ms-vscode.cmake-tools",
         "twxs.cmake",
         "marus25.cortex-debug",
         "ms-python.python",
+        "ms-python.black-formatter",
         "ms-python.flake8",
         "ms-python.isort",
-        "ms-python.black-formatter",
-        "ms-vscode.doxygen-doc-generator",
         "github.copilot",
         "github.copilot-chat",
         "redhat.vscode-yaml",
-        "ms-vscode.json",
-        "gruntfuggly.todo-tree",
-        "wayou.vscode-todo-highlight",
-        "streetsidesoftware.code-spell-checker",
         "ms-vscode.hexeditor",
         "stmicroelectronics.stm32-vscode-extension",
         "stmicroelectronics.stm32cube-ide-build-cmake",
         "stmicroelectronics.stm32cube-ide-debug-core",
-        "jeandudey.cortex-debug-dp-stm32h7"
+        "jeandudey.cortex-debug-dp-stm32h7",
+        "cschlosser.doxdocgen",
+        "dan-c-underwood.arm",
+        "mcu-debug.debug-tracker-vscode",
+        "mcu-debug.memory-view", 
+        "mcu-debug.peripheral-viewer",
+        "mcu-debug.rtos-views",
+        "trond-snekvik.gnu-mapfiles",
+        "zixuanwang.linkerscript",
+        "bierner.markdown-mermaid",
+        "donjayamanne.githistory",
+        "github.vscode-github-actions",
+        "gruntfuggly.todo-tree",
+        "streetsidesoftware.code-spell-checker",
+        "ms-vscode.makefile-tools",
+        "ms-vscode.live-server",
+        "yzhang.markdown-all-in-one"
     ],
     "unwantedRecommendations": [
-        "ms-vscode.vscode-embedded-tools"
+        "ms-vscode.vscode-embedded-tools",
+        "ms-azuretools.vscode-docker",
+        "ms-azuretools.vscode-containers"
     ]
 }
