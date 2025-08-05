@@ -1,9 +1,10 @@
 # STM32H753ZI Stepper Motor Control Project
 
-![Version](https://img.shields.io/badge/version-auto-blue)
+![Version](https://img.shields.io/badge/version-v0.2.0-blue)
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 ![Peripheral Init](https://img.shields.io/badge/peripheral%20init-complete-success)
 ![Development](https://img.shields.io/badge/phase-driver%20implementation-blue)
+![Code Quality](https://img.shields.io/badge/code%20quality-lint%20free-success)
 
 ## 🎉 Current Status: Peripheral Initialization Complete!
 
