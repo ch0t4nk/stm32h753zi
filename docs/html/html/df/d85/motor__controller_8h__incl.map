@@ -1,0 +1,10 @@
+<map id="src/controllers/motor_controller.h" name="src/controllers/motor_controller.h">
+<area shape="rect" id="node1" title="Motor Controller API &#45; Integrates L6470 + AS5600 for Closed&#45;Loop Control." alt="" coords="357,5,514,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,95,140,121"/>
+<area shape="rect" id="node3" href="$de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="543,95,714,121"/>
+<area shape="rect" id="node5" title=" " alt="" coords="587,169,670,196"/>
+<area shape="rect" id="node6" href="$d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="352,95,519,121"/>
+<area shape="rect" id="node8" href="$de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="165,95,327,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="445,169,516,196"/>
+<area shape="rect" id="node7" title=" " alt="" coords="346,169,421,196"/>
+</map>

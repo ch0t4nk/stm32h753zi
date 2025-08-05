@@ -1,0 +1,9 @@
+<map id="tests/unit/test_emergency_stop_unity.c" name="tests/unit/test_emergency_stop_unity.c">
+<area shape="rect" id="node1" title="Unity&#45;based Emergency Stop Tests." alt="" coords="174,5,366,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,95,71,121"/>
+<area shape="rect" id="node3" href="$d4/d05/mock__hal_8h.html" title="Mock HAL header for unit testing STM32H7 safety systems." alt="" coords="471,95,568,121"/>
+<area shape="rect" id="node6" href="$de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="95,95,258,121"/>
+<area shape="rect" id="node7" href="$d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="283,95,447,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="329,169,400,196"/>
+<area shape="rect" id="node5" title=" " alt="" coords="478,169,561,196"/>
+</map>

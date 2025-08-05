@@ -1,0 +1,11 @@
+<map id="src/safety/fault_monitor.h" name="src/safety/fault_monitor.h">
+<area shape="rect" id="node1" title="Fault Detection and Monitoring System Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="427,5,617,32"/>
+<area shape="rect" id="node2" href="$d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="5,80,169,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="184,155,255,181"/>
+<area shape="rect" id="node4" href="$d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="682,80,866,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="771,155,905,181"/>
+<area shape="rect" id="node6" href="$d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="245,80,412,107"/>
+<area shape="rect" id="node7" title=" " alt="" coords="481,155,563,181"/>
+<area shape="rect" id="node9" href="$de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="437,80,607,107"/>
+<area shape="rect" id="node8" title=" " alt="" coords="291,155,366,181"/>
+</map>

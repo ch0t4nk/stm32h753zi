@@ -1,0 +1,9 @@
+<map id="src/drivers/as5600" name="src/drivers/as5600">
+<area shape="rect" id="node1" href="dir_5ba219dc5da0eb41d49d61bd6d62a784.html" title="as5600" alt="" coords="27,52,99,100"/>
+<area shape="rect" id="node2" href="dir_7e83d1792d529f4aa7126ac7e0b3b699.html" title="config" alt="" coords="27,244,99,292"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000010_000007.html" title="5" alt="" coords="58,217,67,232"/>
+<area shape="rect" id="node3" href="dir_fdedb0aba14d44ce9d99bc100e026e6a.html" title="common" alt="" coords="62,148,141,196"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000010_000005.html" title="3" alt="" coords="88,121,97,135"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000005_000007.html" title="2" alt="" coords="82,223,92,238"/>
+<area shape="rect" id="clust1" href="dir_c718a368270b13c54d94892d20736f45.html" title="drivers" alt="" coords="16,16,109,111"/>
+</map>

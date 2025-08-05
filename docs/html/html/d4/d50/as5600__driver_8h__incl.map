@@ -1,0 +1,9 @@
+<map id="src/drivers/as5600/as5600_driver.h" name="src/drivers/as5600/as5600_driver.h">
+<area shape="rect" id="node1" title="AS5600 Magnetic Encoder Driver Header." alt="" coords="333,5,475,47"/>
+<area shape="rect" id="node2" href="$d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="5,95,189,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="95,169,230,196"/>
+<area shape="rect" id="node4" href="$de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="264,95,427,121"/>
+<area shape="rect" id="node5" title=" " alt="" coords="429,169,499,196"/>
+<area shape="rect" id="node6" href="$de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="501,95,672,121"/>
+<area shape="rect" id="node7" title=" " alt="" coords="607,169,689,196"/>
+</map>

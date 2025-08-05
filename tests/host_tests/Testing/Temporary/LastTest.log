@@ -1,0 +1,43 @@
+Start testing: Aug 05 12:57 UTC
+----------------------------------------------------------
+1/1 Testing: UnityEmergencyStopTest
+1/1 Test: UnityEmergencyStopTest
+Command: "/workspaces/code/tests/host_tests/test_emergency_stop_unity"
+Directory: /workspaces/code/tests/host_tests
+"UnityEmergencyStopTest" start time: Aug 05 12:57 UTC
+Output:
+----------------------------------------------------------
+🚀 STM32H753ZI Motor Control - Unity Emergency Stop Tests
+========================================================
+/workspaces/code/tests/unit/test_emergency_stop_unity.c:149:test_emergency_stop_initialization:PASS
+/workspaces/code/tests/unit/test_emergency_stop_unity.c:150:test_emergency_stop_activation:PASS
+/workspaces/code/tests/unit/test_emergency_stop_unity.c:151:test_emergency_stop_release:PASS
+/workspaces/code/tests/unit/test_emergency_stop_unity.c:152:test_emergency_stop_debounce_simulation:PASS
+/workspaces/code/tests/unit/test_emergency_stop_unity.c:155:test_motor_position_limits_validation:PASS
+/workspaces/code/tests/unit/test_emergency_stop_unity.c:156:test_motor_speed_limits_validation:PASS
+/workspaces/code/tests/unit/test_emergency_stop_unity.c:157:test_motor_current_limits_validation:PASS
+/workspaces/code/tests/unit/test_emergency_stop_unity.c:160:test_system_configuration_constants:PASS
+/workspaces/code/tests/unit/test_emergency_stop_unity.c:161:test_safety_timing_requirements:PASS
+/workspaces/code/tests/unit/test_emergency_stop_unity.c:162:test_control_loop_timing:PASS
+/workspaces/code/tests/unit/test_emergency_stop_unity.c:165:test_l6470_register_values:PASS
+/workspaces/code/tests/unit/test_emergency_stop_unity.c:166:test_motor_physical_parameters:PASS
+
+-----------------------
+12 Tests 0 Failures 0 Ignored 
+OK
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"UnityEmergencyStopTest" end time: Aug 05 12:57 UTC
+"UnityEmergencyStopTest" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Aug 05 12:57 UTC
+
+emergency-stop =   0.00 sec*proc
+
+safety =   0.00 sec*proc
+
+unity =   0.00 sec*proc
+

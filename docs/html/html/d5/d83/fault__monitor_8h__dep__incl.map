@@ -1,0 +1,13 @@
+<map id="src/safety/fault_monitor.h" name="src/safety/fault_monitor.h">
+<area shape="rect" id="node1" title="Fault Detection and Monitoring System Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="617,5,807,32"/>
+<area shape="rect" id="node2" href="$d9/dfd/system__state_8h.html" title="Central System State &#45; Single Source of Truth (SSOT)" alt="" coords="334,87,541,114"/>
+<area shape="rect" id="node3" href="$d0/dde/motor__controller_8c.html" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="5,169,163,211"/>
+<area shape="rect" id="node7" href="$db/d1a/safety__system_8c.html" title="Safety System Manager Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="733,177,931,203"/>
+<area shape="rect" id="node8" href="$d8/d86/comm__protocol_8c.html" title="Communication Protocol Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="617,80,807,121"/>
+<area shape="rect" id="node9" href="$d3/d16/fault__monitor_8c.html" title="Fault Detection and Monitoring System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="831,87,1019,114"/>
+<area shape="rect" id="node10" href="$d1/d66/test__fault__monitor_8c.html" title="Focused unit tests for fault monitoring system." alt="" coords="1044,80,1193,121"/>
+<area shape="rect" id="node11" href="$de/d22/test__safety__systems_8c.html" title="Unit tests for safety systems using Unity framework." alt="" coords="1217,80,1377,121"/>
+<area shape="rect" id="node4" href="$d8/d75/as5600__driver_8c.html" title="AS5600 Magnetic Encoder Driver Implementation &#45; STM32H7 I2C HAL." alt="" coords="187,169,328,211"/>
+<area shape="rect" id="node5" href="$d1/d41/l6470__driver_8c.html" title="L6470 Stepper Driver Implementation &#45; STM32H7 SPI HAL." alt="" coords="352,169,523,211"/>
+<area shape="rect" id="node6" href="$d3/da2/emergency__stop_8c.html" title="Emergency Stop System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="547,169,709,211"/>
+</map>

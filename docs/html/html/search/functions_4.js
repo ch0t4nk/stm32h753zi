@@ -1,0 +1,7 @@
+var searchData=
+[
+  ['debug_5fuart_5finit_2279',['debug_uart_init',['../d8/d86/comm__protocol_8c.html#a3e3d2a53cb83d6ccedb92b10ad27a746',1,'debug_uart_init(UART_HandleTypeDef *huart):&#160;comm_protocol.c'],['../dc/d81/comm__protocol_8h.html#a3e3d2a53cb83d6ccedb92b10ad27a746',1,'debug_uart_init(UART_HandleTypeDef *huart):&#160;comm_protocol.c']]],
+  ['declare_5fresult_5ftype_2280',['DECLARE_RESULT_TYPE',['../d3/ddc/data__types_8h.html#a17529b786bd820ca60a7b441b3d567a8',1,'DECLARE_RESULT_TYPE(f32, float):&#160;data_types.h'],['../d3/ddc/data__types_8h.html#adc0ed28e281f10f838b1608d3f330d36',1,'DECLARE_RESULT_TYPE(u32, uint32):&#160;data_types.h'],['../d3/ddc/data__types_8h.html#a9797b6cf9fe9092257bc18f8f04c4de0',1,'DECLARE_RESULT_TYPE(angle_deg_t, angle):&#160;data_types.h'],['../d3/ddc/data__types_8h.html#a0c55a8921fcfcb6b680cc15bb6e79be7',1,'DECLARE_RESULT_TYPE(angular_velocity_rpm_t, velocity):&#160;data_types.h']]],
+  ['declare_5fring_5fbuffer_2281',['DECLARE_RING_BUFFER',['../d3/ddc/data__types_8h.html#a593f31fe70f52962d5664c3f62c8989d',1,'DECLARE_RING_BUFFER(f32, float):&#160;data_types.h'],['../d3/ddc/data__types_8h.html#aa77c13516a544e5512e28862d15234b5',1,'DECLARE_RING_BUFFER(u32, uint32):&#160;data_types.h'],['../d3/ddc/data__types_8h.html#a4551fedb1218397d539ad7bdec636b39',1,'DECLARE_RING_BUFFER(timestamp_ms_t, timestamp):&#160;data_types.h']]],
+  ['disable_5fmotor_5fpower_2282',['disable_motor_power',['../d3/da2/emergency__stop_8c.html#aa3a358678886b8fbb8e27720ae285429',1,'emergency_stop.c']]]
+];

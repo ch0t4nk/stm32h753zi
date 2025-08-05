@@ -1,0 +1,13 @@
+<map id="src/safety/emergency_stop.h" name="src/safety/emergency_stop.h">
+<area shape="rect" id="node1" title="Emergency Stop System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="462,5,625,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="48,244,183,271"/>
+<area shape="rect" id="node3" href="$d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="232,169,396,196"/>
+<area shape="rect" id="node4" title=" " alt="" coords="627,244,698,271"/>
+<area shape="rect" id="node5" href="$d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="24,169,208,196"/>
+<area shape="rect" id="node6" href="$de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="1002,169,1173,196"/>
+<area shape="rect" id="node7" title=" " alt="" coords="985,244,1068,271"/>
+<area shape="rect" id="node8" href="$d2/db6/safety__system_8h.html" title="Safety System Manager &#45; STM32H753ZI Stepper Motor Project." alt="" coords="478,95,609,121"/>
+<area shape="rect" id="node9" href="$de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="522,169,685,196"/>
+<area shape="rect" id="node10" href="$d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="760,169,927,196"/>
+<area shape="rect" id="node11" title=" " alt="" coords="806,244,881,271"/>
+</map>

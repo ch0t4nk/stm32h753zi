@@ -1,0 +1,13 @@
+<map id="src/common/system_state.h" name="src/common/system_state.h">
+<area shape="rect" id="node1" title="Central System State &#45; Single Source of Truth (SSOT)" alt="" coords="159,5,366,32"/>
+<area shape="rect" id="node2" href="$de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="25,80,188,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="196,229,267,256"/>
+<area shape="rect" id="node4" href="$d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="68,155,232,181"/>
+<area shape="rect" id="node5" href="$de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="256,155,367,181"/>
+<area shape="rect" id="node6" title=" " alt="" coords="601,229,684,256"/>
+<area shape="rect" id="node7" href="$df/d2b/fault__monitor_8h.html" title="Fault Detection and Monitoring System Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="336,80,503,107"/>
+<area shape="rect" id="node8" href="$d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="685,155,869,181"/>
+<area shape="rect" id="node9" title=" " alt="" coords="715,229,850,256"/>
+<area shape="rect" id="node10" href="$d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="443,155,610,181"/>
+<area shape="rect" id="node11" title=" " alt="" coords="489,229,564,256"/>
+</map>

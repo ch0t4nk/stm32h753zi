@@ -1,0 +1,12 @@
+<map id="tests/mocks/mock_hal.h" name="tests/mocks/mock_hal.h">
+<area shape="rect" id="node1" title="Mock HAL header for unit testing STM32H7 safety systems." alt="" coords="819,5,999,32"/>
+<area shape="rect" id="node2" href="$dd/db9/mock__gpio_8c.html" title="Mock GPIO port instances for testing." alt="" coords="5,87,192,114"/>
+<area shape="rect" id="node3" href="$de/dd5/mock__hal_8c.html" title="Mock implementations for STM32H7 HAL functions for unit testing." alt="" coords="216,87,395,114"/>
+<area shape="rect" id="node4" href="$d5/d21/test__basic__safety_8c.html" title="Basic Safety System Tests &#45; No External Dependencies." alt="" coords="419,80,573,121"/>
+<area shape="rect" id="node5" href="$d0/d0d/test__emergency__stop_8c.html" title="Focused unit tests for emergency stop functionality." alt="" coords="597,80,789,121"/>
+<area shape="rect" id="node6" href="$d7/d27/test__emergency__stop__unity_8c.html" title="Unity&#45;based Emergency Stop Tests." alt="" coords="813,80,1005,121"/>
+<area shape="rect" id="node7" href="$d1/d66/test__fault__monitor_8c.html" title="Focused unit tests for fault monitoring system." alt="" coords="1029,80,1179,121"/>
+<area shape="rect" id="node8" href="$d0/d45/test__safety__gtest_8cpp.html" title="GoogleTest&#45;based unit tests for safety systems (C++ wrapper for C code)" alt="" coords="1203,80,1363,121"/>
+<area shape="rect" id="node9" href="$de/d22/test__safety__systems_8c.html" title="Unit tests for safety systems using Unity framework." alt="" coords="1387,80,1547,121"/>
+<area shape="rect" id="node10" href="$d3/df3/test__watchdog_8c.html" title="Focused unit tests for watchdog management." alt="" coords="1571,87,1765,114"/>
+</map>

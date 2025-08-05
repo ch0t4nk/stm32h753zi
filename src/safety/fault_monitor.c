@@ -12,6 +12,7 @@
  */
 
 #include "fault_monitor.h"
+#include "config/motor_config.h"
 #include "safety_system.h"
 #include <string.h>
 #include <stdlib.h>  // For abs() function

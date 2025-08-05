@@ -13,6 +13,21 @@
 #include <stdio.h>
 
 // =============================================================================
+// MOCK GPIO PORT INSTANCES
+// =============================================================================
+
+#ifdef HOST_TESTING
+// Host testing - provide simple mock instances
+static GPIO_TypeDef mock_gpioa = {0};
+static GPIO_TypeDef mock_gpiob = {0};
+static GPIO_TypeDef mock_gpioc = {0};
+
+GPIO_TypeDef* GPIOA = &mock_gpioa;
+GPIO_TypeDef* GPIOB = &mock_gpiob;
+GPIO_TypeDef* GPIOC = &mock_gpioc;
+#endif
+
+// =============================================================================
 // MOCK STATE VARIABLES
 // =============================================================================
 
@@ -129,6 +144,11 @@ void MockHAL_AdvanceTick(uint32_t increment) {
 void MockHAL_SetEmergencyStopState(bool active) {
     if (!mock_initialized) MockHAL_Init();
     mock_hal_state.emergency_stop_state = active;
+}
+
+bool MockHAL_GetEmergencyStopState(void) {
+    if (!mock_initialized) MockHAL_Init();
+    return mock_hal_state.emergency_stop_state;
 }
 
 void MockHAL_SetFaultPinState(bool active) {

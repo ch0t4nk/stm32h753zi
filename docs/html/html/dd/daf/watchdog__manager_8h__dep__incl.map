@@ -1,0 +1,7 @@
+<map id="src/safety/watchdog_manager.h" name="src/safety/watchdog_manager.h">
+<area shape="rect" id="node1" title="Watchdog Management System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="318,5,471,47"/>
+<area shape="rect" id="node2" href="$db/d1a/safety__system_8c.html" title="Safety System Manager Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="5,102,203,129"/>
+<area shape="rect" id="node3" href="$d2/d94/watchdog__manager_8c.html" title="Watchdog Management System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="227,95,381,136"/>
+<area shape="rect" id="node4" href="$de/d22/test__safety__systems_8c.html" title="Unit tests for safety systems using Unity framework." alt="" coords="405,95,565,136"/>
+<area shape="rect" id="node5" href="$d3/df3/test__watchdog_8c.html" title="Focused unit tests for watchdog management." alt="" coords="590,102,783,129"/>
+</map>

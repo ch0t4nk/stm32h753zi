@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['acceleration_2533',['acceleration',['../da/d7b/structMotorCommand__t.html#ab94d58bba401f883278a84ded7da750e',1,'MotorCommand_t::acceleration()'],['../d3/d29/structmotion__profile__t.html#a489f08ab7fbe29edfe66dd59d7c81bdc',1,'motion_profile_t::acceleration()']]],
+  ['acceleration_5frpm_5fs_2534',['acceleration_rpm_s',['../d0/d57/structMotorStateInfo__t.html#ab19e1a654174fabcb1e330d1c22c80d4',1,'MotorStateInfo_t']]],
+  ['acknowledged_2535',['acknowledged',['../dc/d63/structFaultRecord__t.html#a4a8a7097cf9d7a551aa467c0893b291b',1,'FaultRecord_t']]],
+  ['active_2536',['active',['../dc/d63/structFaultRecord__t.html#a6200f6fee2fb98732b589dc5fa031c4f',1,'FaultRecord_t::active()'],['../d7/dbf/structEmergencyStopState__t.html#a7fd34339b86ccead2fc83314bee405cd',1,'EmergencyStopState_t::active()']]],
+  ['active_5ffaults_2537',['active_faults',['../de/dfa/structSafetyStateInfo__t.html#a0c22670abaf5a14b857ef44b826cbdd2',1,'SafetyStateInfo_t']]],
+  ['active_5fmotor_5ffaults_2538',['active_motor_faults',['../d3/d16/fault__monitor_8c.html#a35af0721b3a698d2d0a115bf5b55d90f',1,'fault_monitor.c']]],
+  ['active_5fnodes_2539',['active_nodes',['../df/d35/structCommunicationState__t.html#aa997d033d6053c43e7b379e49b3b02b6',1,'CommunicationState_t']]],
+  ['active_5fsystem_5ffaults_2540',['active_system_faults',['../d3/d16/fault__monitor_8c.html#a826a5b5465aca130d26b58920c9d5073',1,'fault_monitor.c']]],
+  ['additional_5fdata_2541',['additional_data',['../dc/d63/structFaultRecord__t.html#a21cd35db2b2a2194e93341f9af33b6e6',1,'FaultRecord_t']]],
+  ['address_2542',['address',['../dc/d52/structmemory__block__t.html#ae46753574c771f876d416ea7f747391a',1,'memory_block_t']]],
+  ['agc_5fvalue_2543',['agc_value',['../d2/d34/structEncoderState__t.html#a16a1876df25c9a5a87876e760816f568',1,'EncoderState_t']]],
+  ['alloc_5ftime_2544',['alloc_time',['../dc/d52/structmemory__block__t.html#ad345988675a924584e09d09662a212da',1,'memory_block_t']]],
+  ['allocated_2545',['allocated',['../dc/d52/structmemory__block__t.html#ac931eeb246300e48bf187b8a92185991',1,'memory_block_t']]],
+  ['allocation_5fbitmap_2546',['allocation_bitmap',['../dd/dd5/structmemory__pool__t.html#a711e04b049d1913373aee4262bdfdfa8',1,'memory_pool_t']]],
+  ['alpha_2547',['alpha',['../d0/dff/structlow__pass__filter__t.html#ab7b26d3163eb5106a04f2dd0494fec7d',1,'low_pass_filter_t']]],
+  ['angle_5fdegrees_2548',['angle_degrees',['../d1/d55/structAS5600__HandleTypeDef.html#a7a542e4a6d42635c7c3741bfa55a400f',1,'AS5600_HandleTypeDef::angle_degrees()'],['../da/dd9/structAS5600__EncoderState__t.html#a72060712ddd99159c00a709e404afc6f',1,'AS5600_EncoderState_t::angle_degrees()']]],
+  ['angle_5fjumps_5fdetected_2549',['angle_jumps_detected',['../d2/d34/structEncoderState__t.html#af9e116483af3b324d49041947c04825e',1,'EncoderState_t']]],
+  ['angular_5fvelocity_5frpm_2550',['angular_velocity_rpm',['../d2/d34/structEncoderState__t.html#aff48ae331b03f924cd735a1b89403ded',1,'EncoderState_t']]],
+  ['application_5finitialized_2551',['application_initialized',['../d9/dfd/main__application_8c.html#ae51a2aa6ae50a1e775592e8a2e13d0be',1,'main_application.c']]],
+  ['arbitration_5flost_5fevents_2552',['arbitration_lost_events',['../df/d35/structCommunicationState__t.html#a96e3441e91e26b67b767dfa6ff46aa3e',1,'CommunicationState_t']]],
+  ['as5600_5finitialized_2553',['as5600_initialized',['../d8/d75/as5600__driver_8c.html#aaff936c02550c85c1ddeb0374c55b95d',1,'as5600_driver.c']]],
+  ['ascii_5fcommand_5fbuffer_2554',['ascii_command_buffer',['../d8/d86/comm__protocol_8c.html#a8b7dde65c6815a9d4b5b834be383f9a5',1,'comm_protocol.c']]],
+  ['ascii_5fcommand_5flength_2555',['ascii_command_length',['../d8/d86/comm__protocol_8c.html#a2df10e52e8f31921bf7cf666a4322f3b',1,'comm_protocol.c']]],
+  ['automatic_5freset_2556',['automatic_reset',['../da/d4b/structSafetyConfig__t.html#a1ce49c3669061e89035102bc8c910c54',1,'SafetyConfig_t']]],
+  ['average_5fspeed_5frpm_2557',['average_speed_rpm',['../d0/d57/structMotorStateInfo__t.html#a8a2f8aff74c29bd006e9712288220718',1,'MotorStateInfo_t']]]
+];

@@ -235,6 +235,7 @@
 #define HOMING_SPEED_RPM 10.0f     // Speed for homing moves
 #define CALIBRATION_SAMPLES 100    // Encoder samples for calibration
 #define ENCODER_RESOLUTION_BITS 12 // AS5600 resolution
+#define ENCODER_VALUE_MASK 0x0FFF  // 12-bit encoder value mask (AS5600)
 
 /* ========================================================================== */
 /* Motor State Definitions (SSOT)                                            */

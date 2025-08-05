@@ -1,0 +1,5 @@
+<map id="src/controllers/motor_controller.h" name="src/controllers/motor_controller.h">
+<area shape="rect" id="node1" title="Motor Controller API &#45; Integrates L6470 + AS5600 for Closed&#45;Loop Control." alt="" coords="121,5,278,47"/>
+<area shape="rect" id="node2" href="$d8/d86/comm__protocol_8c.html" title="Communication Protocol Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="5,95,196,136"/>
+<area shape="rect" id="node3" href="$d0/dde/motor__controller_8c.html" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="221,95,378,136"/>
+</map>

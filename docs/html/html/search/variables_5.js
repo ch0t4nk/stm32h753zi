@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['fault_5fcode_2662',['fault_code',['../dc/d63/structFaultRecord__t.html#a3702c2258800c656df78f4d914828602',1,'FaultRecord_t']]],
+  ['fault_5fconfig_2663',['fault_config',['../d3/d16/fault__monitor_8c.html#a0df68579a91f305e9fb79323669e5b53',1,'fault_monitor.c']]],
+  ['fault_5fcount_2664',['fault_count',['../d7/d4b/structL6470__DriverState__t.html#a8417f4b2137ec465c75b2602f46daaf7',1,'L6470_DriverState_t::fault_count()'],['../df/df8/structFaultMonitorConfig__t.html#aa567e9b8cdfeebb906f6fb254a2608c9',1,'FaultMonitorConfig_t::fault_count()'],['../dd/d80/structMotorControlState__t.html#a74585f93ea84f005c9118721a2ca443d',1,'MotorControlState_t::fault_count()'],['../d5/d47/structMotorStatus__t.html#ae7c8a3d218950cbbf4df4a2e80f36839',1,'MotorStatus_t::fault_count()']]],
+  ['fault_5fflags_2665',['fault_flags',['../d0/d57/structMotorStateInfo__t.html#abf6c04b68cdc417fc46c29699663534f',1,'MotorStateInfo_t::fault_flags()'],['../de/d97/structMotorStatusResponse__t.html#aa5345fa81f00557aef1cbf1650b8a7f1',1,'MotorStatusResponse_t::fault_flags()']]],
+  ['fault_5fmonitor_5finitialized_2666',['fault_monitor_initialized',['../d3/d16/fault__monitor_8c.html#a5dccd5ea6096f46506132686cdd9b053',1,'fault_monitor.c']]],
+  ['fault_5fpin_5fstate_2667',['fault_pin_state',['../da/d16/structMockHAL__State__t.html#a416418097193894baeca4cd08941d12f',1,'MockHAL_State_t']]],
+  ['fault_5frecord_5findex_2668',['fault_record_index',['../d3/d16/fault__monitor_8c.html#ab43cd5fa752bbf00d31898f1f68bd5a4',1,'fault_monitor.c']]],
+  ['fault_5frecords_2669',['fault_records',['../d3/d16/fault__monitor_8c.html#afd0c3e5ff65d0972a306eef9f8d863ce',1,'fault_monitor.c']]],
+  ['fault_5ftolerance_2670',['fault_tolerance',['../da/d4b/structSafetyConfig__t.html#aea56f05699b2a4c047f82590eef3a445',1,'SafetyConfig_t']]],
+  ['fdcan_5fhandle_2671',['fdcan_handle',['../d8/d86/comm__protocol_8c.html#a71d5756ebe2665079eb068790265f647',1,'comm_protocol.c']]],
+  ['fdcan_5frx_5fdata_2672',['fdcan_rx_data',['../d8/d86/comm__protocol_8c.html#a2eadf844cf0937ae1be6117345a70c37',1,'comm_protocol.c']]],
+  ['fdcan_5frx_5fheader_2673',['fdcan_rx_header',['../d8/d86/comm__protocol_8c.html#a1a006b631eee5754741c5b3b1294616c',1,'comm_protocol.c']]],
+  ['fdcan_5ftx_5fdata_2674',['fdcan_tx_data',['../d8/d86/comm__protocol_8c.html#a3df023fa9da97dd9f5efec2a9b00197c',1,'comm_protocol.c']]],
+  ['fdcan_5ftx_5fheader_2675',['fdcan_tx_header',['../d8/d86/comm__protocol_8c.html#ad39e4185b435de1d87f8ff0ac119980b',1,'comm_protocol.c']]],
+  ['fdcan_5ftx_5fmailbox_2676',['fdcan_tx_mailbox',['../d8/d86/comm__protocol_8c.html#ae546ae7a9325b723a611736cc9b5f318',1,'comm_protocol.c']]],
+  ['feature_5fflags_2677',['feature_flags',['../df/dd1/structBuildInfo__t.html#af1e6d9010ab0e479ef47d49f3c2e6954',1,'BuildInfo_t']]],
+  ['feedback_5fhandle_2678',['feedback_handle',['../d1/d55/structAS5600__HandleTypeDef.html#aa3640b659e110630d1085688a24d4026',1,'AS5600_HandleTypeDef']]],
+  ['file_2679',['file',['../dc/dec/structErrorInfo__t.html#a31498d16ff22ea62e1cba873be168ba6',1,'ErrorInfo_t::file()'],['../dc/d52/structmemory__block__t.html#a3b6948bd87abc22bd94436210941cd70',1,'memory_block_t::file()']]],
+  ['filtered_5fangle_2680',['filtered_angle',['../d1/d55/structAS5600__HandleTypeDef.html#a37c1793e849c0c95f46edf5793dd9436',1,'AS5600_HandleTypeDef::filtered_angle()'],['../da/dd9/structAS5600__EncoderState__t.html#a3219a9c44f2a5285aaff1975c8ae8334',1,'AS5600_EncoderState_t::filtered_angle()']]],
+  ['filtered_5fangle_5fdeg_2681',['filtered_angle_deg',['../d2/d34/structEncoderState__t.html#a472dd93652a7d938c17c41e4d0a71edc',1,'EncoderState_t']]],
+  ['firmware_5fversion_2682',['firmware_version',['../d4/d68/structSystemState__t.html#aaf2ac384c32cadb399a113f13d355976',1,'SystemState_t']]],
+  ['float_5fvalue_2683',['float_value',['../d1/d7c/unionconfig__parameter__value__t.html#a40fe8d0bd08deb2e6441b65b8af054d6',1,'config_parameter_value_t']]],
+  ['free_5fblocks_2684',['free_blocks',['../dd/dd5/structmemory__pool__t.html#a094f481e5bc2e142d20f397ff807da4d',1,'memory_pool_t']]],
+  ['front_2685',['front',['../d9/d21/structfifo__queue__t.html#a235d030ee802a04f2b47bd10e287289e',1,'fifo_queue_t']]],
+  ['function_2686',['function',['../dc/dec/structErrorInfo__t.html#ac9379a6d8ee160f8e132b04ace63e7b4',1,'ErrorInfo_t::function()'],['../da/d4b/structSafetyConfig__t.html#a9c5ba63a2f36f6fa13c5ed19708c8ffb',1,'SafetyConfig_t::function()']]]
+];

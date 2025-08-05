@@ -173,6 +173,7 @@
 
 // Emergency Stop Timing
 #define ESTOP_REACTION_TIME_MS 10          // Maximum E-stop reaction time
+#define ESTOP_DEBOUNCE_TIME_MS 20          // E-stop button debounce time
 #define ESTOP_MOTOR_STOP_TIME_MS 100       // Time to fully stop motors
 #define ESTOP_RESET_DELAY_MS 5000          // Delay before E-stop can be reset
 #define ESTOP_RESET_CONFIRMATION_TIME 2000 // Time to confirm E-stop reset

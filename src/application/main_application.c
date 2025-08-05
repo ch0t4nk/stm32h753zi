@@ -8,6 +8,10 @@
  */
 
 #include "main_application.h"
+#include "config/hardware_config.h"
+#include "config/comm_config.h"
+#include "config/motor_config.h"
+#include "config/safety_config.h"
 #include "stm32h7xx_hal.h"
 #include <stdio.h>
 

@@ -1,0 +1,11 @@
+<map id="src/application/main.c" name="src/application/main.c">
+<area shape="rect" id="node1" title=" " alt="" coords="451,5,616,32"/>
+<area shape="rect" id="node2" href="$d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="5,80,189,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="95,155,230,181"/>
+<area shape="rect" id="node4" href="$de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="264,80,427,107"/>
+<area shape="rect" id="node6" href="$d3/d88/comm__config_8h.html" title="Communication Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="451,80,615,107"/>
+<area shape="rect" id="node7" href="$d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="639,80,803,107"/>
+<area shape="rect" id="node8" href="$d8/d2b/build__config_8h.html" title="Build Configuration and Version Info &#45; Single Source of Truth (SSOT)" alt="" coords="828,80,983,107"/>
+<area shape="rect" id="node9" title=" " alt="" coords="1007,80,1073,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="591,155,662,181"/>
+</map>

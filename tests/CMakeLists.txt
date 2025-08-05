@@ -110,6 +110,79 @@ add_custom_target(test-summary
     COMMENT "Test configuration summary"
 )
 
+# Basic test without external dependencies
+add_executable(test_basic_safety
+    ${TEST_UNIT_DIR}/test_basic_safety.c
+    ${TEST_MOCKS_DIR}/mock_hal.c
+)
+
+target_include_directories(test_basic_safety PRIVATE
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/src/config
+    ${CMAKE_SOURCE_DIR}/tests
+    ${CMAKE_SOURCE_DIR}/tests/mocks
+)
+
+target_compile_definitions(test_basic_safety PRIVATE
+    MAX_MOTORS=2
+    UNIT_TESTING=1
+    STM32H753xx
+)
+
+# Add basic test to CTest
+add_test(NAME BasicSafetyTest COMMAND test_basic_safety)
+set_tests_properties(BasicSafetyTest PROPERTIES
+    TIMEOUT 10
+    LABELS "basic;safety"
+)
+
+# Unity-based tests using local Unity installation
+if(EXISTS "${CMAKE_SOURCE_DIR}/external/unity/unity.h")
+    message(STATUS "Local Unity testing framework found - enabling Unity tests")
+    
+    # Create Unity library
+    add_library(unity STATIC
+        ${CMAKE_SOURCE_DIR}/external/unity/unity.c
+    )
+    
+    target_include_directories(unity PUBLIC
+        ${CMAKE_SOURCE_DIR}/external/unity
+    )
+    
+    # Unity-based emergency stop test (host compiler for faster testing)
+    add_executable(test_emergency_stop_unity
+        ${TEST_UNIT_DIR}/test_emergency_stop_unity.c
+        ${TEST_MOCKS_DIR}/mock_hal.c
+    )
+    
+    # Use host compiler for tests (not ARM cross-compiler)
+    set_target_properties(test_emergency_stop_unity PROPERTIES
+        C_COMPILER "gcc"
+        COMPILE_FLAGS "-DUNIT_TESTING=1 -DHOST_TESTING=1"
+    )
+    
+    target_include_directories(test_emergency_stop_unity PRIVATE
+        ${CMAKE_SOURCE_DIR}/src
+        ${CMAKE_SOURCE_DIR}/src/config
+        ${CMAKE_SOURCE_DIR}/tests
+        ${CMAKE_SOURCE_DIR}/tests/mocks
+        ${CMAKE_SOURCE_DIR}/external/unity
+    )
+    
+    target_link_libraries(test_emergency_stop_unity unity)
+    
+    # Add Unity test to CTest
+    add_test(NAME UnityEmergencyStopTest COMMAND test_emergency_stop_unity)
+    set_tests_properties(UnityEmergencyStopTest PROPERTIES
+        TIMEOUT 30
+        LABELS "unity;emergency-stop;safety"
+    )
+    
+else()
+    message(WARNING "Local Unity framework not found at external/unity/")
+    message(STATUS "Unity tests disabled - only basic tests available")
+endif()
+
 # Print test configuration
 message(STATUS "=== Test Configuration ===")
 message(STATUS "Unity available: ${UNITY_FOUND}")

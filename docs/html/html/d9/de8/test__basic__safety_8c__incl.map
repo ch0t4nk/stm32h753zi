@@ -1,0 +1,8 @@
+<map id="tests/unit/test_basic_safety.c" name="tests/unit/test_basic_safety.c">
+<area shape="rect" id="node1" title="Basic Safety System Tests &#45; No External Dependencies." alt="" coords="149,5,302,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,95,72,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="129,169,212,196"/>
+<area shape="rect" id="node4" title=" " alt="" coords="243,169,314,196"/>
+<area shape="rect" id="node5" title=" " alt="" coords="328,95,403,121"/>
+<area shape="rect" id="node6" href="$d4/d05/mock__hal_8h.html" title="Mock HAL header for unit testing STM32H7 safety systems." alt="" coords="147,95,303,121"/>
+</map>

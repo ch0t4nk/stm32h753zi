@@ -1,0 +1,1 @@
+gcc -Wall -Wextra -g -DUNIT_TESTING=1 -DHOST_TESTING=1 CMakeFiles/test_emergency_stop_unity.dir/workspaces/code/tests/unit/test_emergency_stop_unity.c.o CMakeFiles/test_emergency_stop_unity.dir/workspaces/code/tests/mocks/mock_hal.c.o -o test_emergency_stop_unity  libunity.a 

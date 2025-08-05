@@ -12,6 +12,7 @@
  */
 
 #include "emergency_stop.h"
+#include "config/hardware_config.h"
 #include "common/system_state.h"
 #include <string.h>
 

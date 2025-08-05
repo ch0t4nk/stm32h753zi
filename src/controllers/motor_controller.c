@@ -325,9 +325,8 @@ SystemError_t motor_controller_update(void) {
             state->target_position_deg, state->current_position_deg);
         
         // Check if movement is complete (within tolerance)
-        const float position_tolerance = 0.5f; // 0.5 degree tolerance
         if (state->state == MOTOR_STATE_RUNNING && 
-            fabsf(state->position_error_deg) < position_tolerance) {
+            fabsf(state->position_error_deg) < POSITION_TOLERANCE_DEG) {
             state->state = MOTOR_STATE_IDLE;
         }
         

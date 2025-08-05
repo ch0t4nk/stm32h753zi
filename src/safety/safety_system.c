@@ -13,6 +13,7 @@
  */
 
 #include "safety_system.h"
+#include "config/motor_config.h"
 #include "emergency_stop.h"
 #include "watchdog_manager.h"
 #include "fault_monitor.h"

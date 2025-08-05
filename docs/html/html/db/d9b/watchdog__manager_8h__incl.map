@@ -1,0 +1,13 @@
+<map id="src/safety/watchdog_manager.h" name="src/safety/watchdog_manager.h">
+<area shape="rect" id="node1" title="Watchdog Management System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="646,5,799,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="969,244,1103,271"/>
+<area shape="rect" id="node3" href="$d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="30,169,194,196"/>
+<area shape="rect" id="node4" title=" " alt="" coords="257,244,327,271"/>
+<area shape="rect" id="node5" href="$de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="699,169,869,196"/>
+<area shape="rect" id="node6" title=" " alt="" coords="681,244,764,271"/>
+<area shape="rect" id="node7" href="$d2/db6/safety__system_8h.html" title="Safety System Manager &#45; STM32H753ZI Stepper Motor Project." alt="" coords="596,95,727,121"/>
+<area shape="rect" id="node8" href="$d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="944,169,1128,196"/>
+<area shape="rect" id="node9" href="$de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="269,169,432,196"/>
+<area shape="rect" id="node10" href="$d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="457,169,623,196"/>
+<area shape="rect" id="node11" title=" " alt="" coords="503,244,577,271"/>
+</map>

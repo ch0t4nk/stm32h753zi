@@ -1,0 +1,13 @@
+<map id="src/application/main_application.c" name="src/application/main_application.c">
+<area shape="rect" id="node1" title="Main Application &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="395,5,550,47"/>
+<area shape="rect" id="node2" href="$dd/d2d/main__application_8h.html" title="Main Application API &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="249,95,395,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,169,140,196"/>
+<area shape="rect" id="node7" href="$d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="41,95,225,121"/>
+<area shape="rect" id="node8" href="$d3/d88/comm__config_8h.html" title="Communication Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="411,169,575,196"/>
+<area shape="rect" id="node9" href="$de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="599,169,762,196"/>
+<area shape="rect" id="node10" href="$d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="561,95,725,121"/>
+<area shape="rect" id="node11" title=" " alt="" coords="750,95,817,121"/>
+<area shape="rect" id="node4" href="$de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="215,169,386,196"/>
+<area shape="rect" id="node6" title=" " alt="" coords="198,244,281,271"/>
+<area shape="rect" id="node5" title=" " alt="" coords="551,244,621,271"/>
+</map>

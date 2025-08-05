@@ -1,0 +1,11 @@
+var searchData=
+[
+  ['hal_5fdelay_2327',['HAL_Delay',['../de/dd5/mock__hal_8c.html#ae63b34eea12780ca2e1100c2402da18e',1,'HAL_Delay(uint32_t Delay):&#160;mock_hal.c'],['../d4/d05/mock__hal_8h.html#ae63b34eea12780ca2e1100c2402da18e',1,'HAL_Delay(uint32_t Delay):&#160;mock_hal.c']]],
+  ['hal_5fgettick_2328',['HAL_GetTick',['../de/dd5/mock__hal_8c.html#af2c4f03d53e997a54e1fd5e80daa55c4',1,'HAL_GetTick(void):&#160;mock_hal.c'],['../d4/d05/mock__hal_8h.html#af2c4f03d53e997a54e1fd5e80daa55c4',1,'HAL_GetTick(void):&#160;mock_hal.c']]],
+  ['hal_5fgpio_5fexti_5fcallback_2329',['HAL_GPIO_EXTI_Callback',['../d3/da2/emergency__stop_8c.html#a0cd91fd3a9608559c2a87a8ba6cba55f',1,'emergency_stop.c']]],
+  ['hal_5fgpio_5freadpin_2330',['HAL_GPIO_ReadPin',['../de/dd5/mock__hal_8c.html#af2b819ea6551319ddd5670db318d2e4e',1,'HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin):&#160;mock_hal.c'],['../d4/d05/mock__hal_8h.html#af2b819ea6551319ddd5670db318d2e4e',1,'HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin):&#160;mock_hal.c']]],
+  ['hal_5fgpio_5fwritepin_2331',['HAL_GPIO_WritePin',['../de/dd5/mock__hal_8c.html#af4b97bdf533a02f51ef696d43b6da5c4',1,'HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState):&#160;mock_hal.c'],['../d4/d05/mock__hal_8h.html#af4b97bdf533a02f51ef696d43b6da5c4',1,'HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState):&#160;mock_hal.c']]],
+  ['hal_5fiwdg_5frefresh_2332',['HAL_IWDG_Refresh',['../de/dd5/mock__hal_8c.html#a7e86236aea6d2f3638397fdf90333e4a',1,'HAL_IWDG_Refresh(IWDG_HandleTypeDef *hiwdg):&#160;mock_hal.c'],['../d4/d05/mock__hal_8h.html#a7e86236aea6d2f3638397fdf90333e4a',1,'HAL_IWDG_Refresh(IWDG_HandleTypeDef *hiwdg):&#160;mock_hal.c']]],
+  ['hal_5fwwdg_5fearlywakeupcallback_2333',['HAL_WWDG_EarlyWakeupCallback',['../d2/d94/watchdog__manager_8c.html#ac939b6f7bd78682d222dacb8909b8788',1,'watchdog_manager.c']]],
+  ['handle_5fsafety_5fviolation_2334',['handle_safety_violation',['../db/d1a/safety__system_8c.html#ab7052b04bcd577a400635ffc0507c46d',1,'handle_safety_violation(MonitorChannel_t channel, float value):&#160;safety_system.c'],['../d2/db6/safety__system_8h.html#ab7052b04bcd577a400635ffc0507c46d',1,'handle_safety_violation(MonitorChannel_t channel, float value):&#160;safety_system.c']]]
+];

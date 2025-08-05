@@ -103,6 +103,7 @@ HAL_StatusTypeDef HAL_IWDG_Refresh(IWDG_HandleTypeDef *hiwdg);
 void MockHAL_SetTick(uint32_t tick);
 void MockHAL_AdvanceTick(uint32_t increment);
 void MockHAL_SetEmergencyStopState(bool active);
+bool MockHAL_GetEmergencyStopState(void);
 void MockHAL_SetFaultPinState(bool active);
 bool MockHAL_WasGPIOWritten(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIO_PinState expected_state);
 uint32_t MockHAL_GetCallCount(void);

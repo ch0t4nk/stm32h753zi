@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['rad_5fs_5fto_5frpm_4033',['RAD_S_TO_RPM',['../d3/ddc/data__types_8h.html#aa9e7bd5feddf025339df1740d018276c',1,'data_types.h']]],
+  ['rad_5fto_5fdeg_4034',['RAD_TO_DEG',['../d3/ddc/data__types_8h.html#a89e47af0449640d4f15191aba5ca24c6',1,'data_types.h']]],
+  ['reconnect_5finterval_5fms_4035',['RECONNECT_INTERVAL_MS',['../d3/d88/comm__config_8h.html#a14445f86300d5faa6a4ebad02e496c09',1,'comm_config.h']]],
+  ['record_5fmotor_5ffault_4036',['RECORD_MOTOR_FAULT',['../df/d2b/fault__monitor_8h.html#aa03dc7e5faf25f3592e43ce97eb77284',1,'fault_monitor.h']]],
+  ['record_5fsystem_5ffault_4037',['RECORD_SYSTEM_FAULT',['../df/d2b/fault__monitor_8h.html#a196a863148f4357cdeeb465484f7aa3e',1,'fault_monitor.h']]],
+  ['recovery_5faction_5fcomm_5frestart_4038',['RECOVERY_ACTION_COMM_RESTART',['../d3/d5c/safety__config_8h.html#af0d8a6ea0c8915c944a1c5d90346c263',1,'safety_config.h']]],
+  ['recovery_5faction_5fencoder_5frecal_4039',['RECOVERY_ACTION_ENCODER_RECAL',['../d3/d5c/safety__config_8h.html#ab5d0c7e379134a413172b9d9d31e0006',1,'safety_config.h']]],
+  ['recovery_5faction_5fmotor_5freset_4040',['RECOVERY_ACTION_MOTOR_RESET',['../d3/d5c/safety__config_8h.html#ac45da88de041e9621e2c1f233ad63c0c',1,'safety_config.h']]],
+  ['recovery_5faction_5fsystem_5freboot_4041',['RECOVERY_ACTION_SYSTEM_REBOOT',['../d3/d5c/safety__config_8h.html#a058238ad0cda557d959bd0cf9477f0cd',1,'safety_config.h']]],
+  ['reference_5fcmsis_5fdir_4042',['REFERENCE_CMSIS_DIR',['../db/de7/documentation__config_8h.html#a2ac56f2bb8d69978b530f1424e21a5c8',1,'documentation_config.h']]],
+  ['reference_5fl6470_5fdir_4043',['REFERENCE_L6470_DIR',['../db/de7/documentation__config_8h.html#a8394b0fcb8ba96cac0226ef7fdb5b9dd',1,'documentation_config.h']]],
+  ['reference_5fnucleo_5fbsp_5fdir_4044',['REFERENCE_NUCLEO_BSP_DIR',['../db/de7/documentation__config_8h.html#a1c11e075b6fc9ffe8c67525ed6a61c74',1,'documentation_config.h']]],
+  ['reference_5froot_5fdir_4045',['REFERENCE_ROOT_DIR',['../db/de7/documentation__config_8h.html#ab64ccf0aaea10126399976fa2cfad0ee',1,'documentation_config.h']]],
+  ['reference_5fst_5fassets_5fdir_4046',['REFERENCE_ST_ASSETS_DIR',['../db/de7/documentation__config_8h.html#a68a9a4140edffcab87f1e4e8fcd07c42',1,'documentation_config.h']]],
+  ['reference_5fstm32h7_5fdir_4047',['REFERENCE_STM32H7_DIR',['../db/de7/documentation__config_8h.html#ae8dc1c6c49e9a0a0afb6bb308523d77b',1,'documentation_config.h']]],
+  ['return_5ferror_4048',['RETURN_ERROR',['../de/d11/error__codes_8h.html#a8fa507f86f37f7f9ac666b74c64036f2',1,'error_codes.h']]],
+  ['rpm_5fto_5frad_5fs_4049',['RPM_TO_RAD_S',['../d3/ddc/data__types_8h.html#ab8a229fce0689edcdc59b9be652e8aee',1,'data_types.h']]]
+];

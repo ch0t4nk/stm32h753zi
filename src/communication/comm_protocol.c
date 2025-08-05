@@ -12,6 +12,8 @@
  */
 
 #include "comm_protocol.h"
+#include "config/comm_config.h"
+#include "config/motor_config.h"
 #include "controllers/motor_controller.h"
 #include "safety/fault_monitor.h"
 #include <string.h>

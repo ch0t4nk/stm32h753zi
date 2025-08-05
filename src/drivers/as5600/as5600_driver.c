@@ -175,7 +175,7 @@ SystemError_t as5600_read_raw_angle(uint8_t encoder_id, uint16_t* raw_angle) {
     result = as5600_i2c_read_16bit(encoder_id, AS5600_REG_RAW_ANGLE_H, raw_angle);
     if (result == SYSTEM_OK) {
         // Mask to 12-bit value
-        *raw_angle &= 0x0FFF;
+        *raw_angle &= ENCODER_VALUE_MASK;
         encoder_state[encoder_id].raw_angle = *raw_angle;
         encoder_state[encoder_id].read_count++;
         encoder_state[encoder_id].last_read_time = HAL_GetTick();
@@ -205,7 +205,7 @@ SystemError_t as5600_read_angle(uint8_t encoder_id, uint16_t* angle) {
     result = as5600_i2c_read_16bit(encoder_id, AS5600_REG_ANGLE_H, angle);
     if (result == SYSTEM_OK) {
         // Mask to 12-bit value
-        *angle &= 0x0FFF;
+        *angle &= ENCODER_VALUE_MASK;
         encoder_state[encoder_id].filtered_angle = *angle;
         encoder_state[encoder_id].read_count++;
         encoder_state[encoder_id].last_read_time = HAL_GetTick();

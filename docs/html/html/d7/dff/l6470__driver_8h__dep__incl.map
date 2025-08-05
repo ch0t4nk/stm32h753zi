@@ -1,0 +1,5 @@
+<map id="src/drivers/l6470/l6470_driver.h" name="src/drivers/l6470/l6470_driver.h">
+<area shape="rect" id="node1" title="L6470 Stepper Driver Header &#45; X&#45;CUBE&#45;SPN2 Based Implementation." alt="" coords="92,5,263,47"/>
+<area shape="rect" id="node2" href="$d0/dde/motor__controller_8c.html" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="5,95,163,136"/>
+<area shape="rect" id="node3" href="$d1/d41/l6470__driver_8c.html" title="L6470 Stepper Driver Implementation &#45; STM32H7 SPI HAL." alt="" coords="187,95,357,136"/>
+</map>
