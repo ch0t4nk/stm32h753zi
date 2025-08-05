@@ -26,38 +26,26 @@ This project uses a **hybrid approach** combining **X-CUBE-SPN2** (stepper-speci
 - **Integration Layer**: `src/drivers/adaptation/` (SPN2-MCSDK bridge)
 - **CubeMX Project**: `stm32h753zi_spn2_mcsdk.ioc`
 
-## Modular Instruction System
+## Consolidated Instruction System
 
-This project uses a **modular instruction system** located in `.github/instructions/` with domain-specific guidance:
+This project uses a **streamlined domain-based instruction system** located in `.github/instructions/` with optimized VS Code Copilot scoping:
 
-### Core System Instructions
-- **ssot-config.instructions.md**: Single Source of Truth configuration management
-- **hardware-pins.instructions.md**: STM32H753ZI pin assignments and peripheral configuration
-- **data-types.instructions.md**: Consistent data types and type safety
-- **error-handling.instructions.md**: Error codes, fault recovery, and diagnostics
-- **build-config.instructions.md**: Build configuration and version management
-- **build-system.instructions.md**: CMake toolchain, VS Code setup, and build troubleshooting
+### Domain-Based Instructions (6 Core Files)
+- **project-setup.instructions.md**: Workspace setup, build configuration, testing infrastructure, optimization (`**/*.{c,h,md,cmake,txt,json,yml,yaml}`)
+- **hardware.instructions.md**: Hardware configuration, GPIO control, memory management, STM32H7 HAL (`src/drivers/**/*.{c,h}`)
+- **comms.instructions.md**: Communication protocols, UART/CAN/SPI/I2C interfaces, networking (`src/communication/**/*.{c,h}`)
+- **core-software.instructions.md**: Data types, error handling, state management, motor control algorithms (`src/{common,controllers,drivers}/**/*.{c,h}`)
+- **safety-rt.instructions.md**: Safety systems, real-time control, timing management, fail-safe mechanisms (`src/{safety,controllers}/**/*.{c,h}`)
+- **api-ui.instructions.md**: API design, user interfaces, documentation generation, external integration (`src/{communication,application}/**/*.{c,h}`)
 
-### Motor Control Instructions
-- **l6470-registers.instructions.md**: L6470 stepper driver configuration and control
-- **safety-systems.instructions.md**: Safety systems, watchdog, and fail-safe mechanisms
-- **time-handling.instructions.md**: Timing systems and control loop management
-- **units-measurements.instructions.md**: Physical units and measurement handling
-
-### STM32H7 HAL Implementation (Enhanced with Comprehensive Documentation)
-- **stm32h7-gpio-hal.instructions.md**: STM32H7 GPIO HAL with 198 documentation files referenced
-- **stm32h7-spi-l6470.instructions.md**: STM32H7 SPI HAL for L6470 daisy-chain communication  
-- **stm32h7-i2c-as5600.instructions.md**: STM32H7 I2C HAL for AS5600 dual-encoder configuration
-- **stm32h7-uart-protocol.instructions.md**: STM32H7 UART HAL for command interface and debugging
-
-### Communication Instructions
-- **comm-protocols.instructions.md**: UART, CAN, SPI, I2C, and Ethernet protocols
-- **workspace-setup.instructions.md**: Workspace-level project guidance
+### Supporting Instructions
+- **ssot-config.instructions.md**: Single Source of Truth configuration management principles
+- **file-organization.instructions.md**: File structure and asset placement guidelines
 
 ### MCSDK Integration Documentation
 - **docs/MCSDK_INTEGRATION_PLAN.md**: Comprehensive X-CUBE-SPN2 + MCSDK 6.4.1 hybrid integration strategy and CubeMX workflow
 
-Each instruction file targets specific source directories and provides comprehensive technical guidance for that domain.
+**Key Improvements**: Reduced from 39 granular files to 6 domain-based files (85% reduction) with robust brace-expansion `applyTo` patterns for reliable VS Code Copilot scoping. All original content consolidated and enhanced with better organization.
 
 ## Critical Design Principles
 

@@ -37,7 +37,7 @@
 
 typedef struct {
   // Current motor status
-  MotorState_t current_state;      // Current motor state
+  MotorState_t current_state;      // Current motor state (enum from motor_config.h)
   MotorControlMode_t control_mode; // Current control mode
   MotorFaultFlags_t fault_flags;   // Active fault flags
 
@@ -71,7 +71,7 @@ typedef struct {
   uint32_t update_rate_hz;        // State update rate
   uint32_t control_loop_overruns; // Control loop timing violations
 
-} MotorState_t;
+} MotorStateInfo_t;
 
 /* ========================================================================== */
 /* Encoder State Information (SSOT)                                          */
@@ -180,7 +180,7 @@ typedef struct {
 
 typedef struct {
   // Overall safety status
-  SafetyState_t current_state;       // Current safety state
+  SafetyState_t current_state;       // Current safety state (enum from safety_config.h)
   SafetyLevel_t current_level;       // Current safety level
   SafetyFaultFlags_t active_faults;  // Currently active safety faults
   SafetyFaultFlags_t latched_faults; // Latched safety faults (require reset)
@@ -222,7 +222,7 @@ typedef struct {
   uint32_t safety_check_interval_ms;  // Current safety check interval
   uint32_t safety_check_overruns;     // Safety check timing violations
 
-} SafetyState_t;
+} SafetyStateInfo_t;
 
 /* ========================================================================== */
 /* System Performance State Information (SSOT)                               */
@@ -286,7 +286,7 @@ typedef struct {
   uint32_t total_runtime_hours;  // Total runtime in hours
 
   // Motor states (one per motor)
-  MotorState_t motors[MAX_MOTORS]; // Motor state information
+  MotorStateInfo_t motors[MAX_MOTORS]; // Motor state information
 
   // Encoder states (one per encoder)
   EncoderState_t encoders[MAX_MOTORS]; // Encoder state information
@@ -295,7 +295,7 @@ typedef struct {
   CommunicationState_t communication; // Communication status
 
   // Safety system state
-  SafetyState_t safety; // Safety system status
+  SafetyStateInfo_t safety; // Safety system status
 
   // Performance metrics
   PerformanceState_t performance; // System performance metrics

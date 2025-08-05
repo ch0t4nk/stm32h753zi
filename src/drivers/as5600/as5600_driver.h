@@ -16,7 +16,10 @@
 
 #include "config/hardware_config.h"
 #include "config/motor_config.h"
+#include "common/error_codes.h"
 #include "stm32h7xx_hal.h"
+#include <stdbool.h>
+#include <stdint.h>
 
 /* ========================================================================== */
 /* AS5600 Configuration (SSOT Integration)                                   */
@@ -232,5 +235,110 @@ HAL_StatusTypeDef AS5600_GetAGC(AS5600_HandleTypeDef *handle,
  */
 HAL_StatusTypeDef AS5600_GetMagnitude(AS5600_HandleTypeDef *handle, 
                                      uint16_t *magnitude);
+
+/* ========================================================================== */
+/* Enhanced API Functions (SSOT-based Implementation)                        */
+/* ========================================================================== */
+
+/**
+ * @brief Initialize AS5600 encoder system
+ * @param hi2c1 I2C handle for encoder 1
+ * @param hi2c2 I2C handle for encoder 2
+ * @return SystemError_t System error code
+ */
+SystemError_t as5600_init(I2C_HandleTypeDef* hi2c1, I2C_HandleTypeDef* hi2c2);
+
+/**
+ * @brief Initialize individual encoder
+ * @param encoder_id Encoder identifier (0 or 1)
+ * @return SystemError_t System error code
+ */
+SystemError_t as5600_init_encoder(uint8_t encoder_id);
+
+/**
+ * @brief Read raw angle from AS5600
+ * @param encoder_id Encoder identifier
+ * @param raw_angle Pointer to store raw angle value (0-4095)
+ * @return SystemError_t System error code
+ */
+SystemError_t as5600_read_raw_angle(uint8_t encoder_id, uint16_t* raw_angle);
+
+/**
+ * @brief Read filtered angle from AS5600
+ * @param encoder_id Encoder identifier
+ * @param angle Pointer to store filtered angle value (0-4095)
+ * @return SystemError_t System error code
+ */
+SystemError_t as5600_read_angle(uint8_t encoder_id, uint16_t* angle);
+
+/**
+ * @brief Read angle in degrees
+ * @param encoder_id Encoder identifier
+ * @param angle_degrees Pointer to store angle in degrees (0.0 to 360.0)
+ * @return SystemError_t System error code
+ */
+SystemError_t as5600_read_angle_degrees(uint8_t encoder_id, float* angle_degrees);
+
+/**
+ * @brief Read magnet magnitude
+ * @param encoder_id Encoder identifier
+ * @param magnitude Pointer to store magnitude value
+ * @return SystemError_t System error code
+ */
+SystemError_t as5600_read_magnitude(uint8_t encoder_id, uint16_t* magnitude);
+
+/**
+ * @brief Read status register
+ * @param encoder_id Encoder identifier
+ * @param status Pointer to store status flags
+ * @return SystemError_t System error code
+ */
+SystemError_t as5600_read_status(uint8_t encoder_id, uint8_t* status);
+
+/**
+ * @brief Get encoder velocity in degrees per second
+ * @param encoder_id Encoder identifier
+ * @param velocity_dps Pointer to store velocity
+ * @return SystemError_t System error code
+ */
+SystemError_t as5600_get_velocity(uint8_t encoder_id, float* velocity_dps);
+
+/**
+ * @brief Check if magnet is properly positioned
+ * @param encoder_id Encoder identifier
+ * @param magnet_ok Pointer to store magnet status
+ * @return SystemError_t System error code
+ */
+SystemError_t as5600_check_magnet(uint8_t encoder_id, bool* magnet_ok);
+
+/**
+ * @brief Calibrate encoder zero position
+ * @param encoder_id Encoder identifier
+ * @param current_angle Current mechanical angle (degrees)
+ * @return SystemError_t System error code
+ */
+SystemError_t as5600_calibrate_zero(uint8_t encoder_id, float current_angle);
+
+/**
+ * @brief Check if AS5600 encoder system is initialized
+ * @return bool true if initialized, false otherwise
+ */
+bool as5600_is_initialized(void);
+
+/**
+ * @brief Get encoder error count
+ * @param encoder_id Encoder identifier
+ * @param error_count Pointer to store error count
+ * @return SystemError_t System error code
+ */
+SystemError_t as5600_get_error_count(uint8_t encoder_id, uint32_t* error_count);
+
+/**
+ * @brief Set encoder zero position reference
+ * @param encoder_id Encoder identifier
+ * @param zero_position_deg Zero position in degrees
+ * @return SystemError_t System error code
+ */
+SystemError_t as5600_set_zero_position(uint8_t encoder_id, float zero_position_deg);
 
 #endif /* AS5600_DRIVER_H */

@@ -50,8 +50,12 @@ add_compile_options(
 
 # Include directories (SSOT configuration)
 include_directories(
+    src
     src/config
     src/common
+    src/drivers
+    src/controllers
+    src/application
     Core/Inc
     drivers/STM32H7xx_HAL_Driver/Inc
     drivers/STM32H7xx_HAL_Driver/Inc/Legacy
@@ -63,6 +67,9 @@ include_directories(
 # Source files
 file(GLOB_RECURSE SOURCES
     "src/common/*.c"
+    "src/drivers/l6470/*.c"
+    "src/drivers/as5600/*.c"  # AS5600 magnetic encoder driver
+    "src/controllers/*.c"     # Motor controller integration layer
     "src/application/*.c"
     "drivers/STM32H7xx_HAL_Driver/Src/*.c"
     "Core/Src/stm32h7xx_hal_msp.c"

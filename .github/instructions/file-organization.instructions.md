@@ -230,9 +230,12 @@ mv build.ninja build/ 2>/dev/null || true
 ## Integration with Existing Instructions
 
 ### Related Instruction Files
-- **ssot-config.instructions.md**: SSOT path management
-- **workspace-setup.instructions.md**: Overall project structure
-- **build-config.instructions.md**: Build system organization
+- **project-setup.instructions.md**: Workspace setup, build system, testing infrastructure, optimization
+- **hardware.instructions.md**: Hardware configuration, GPIO control, memory management, STM32H7 HAL
+- **comms.instructions.md**: Communication protocols, UART/CAN/SPI/I2C interfaces, networking
+- **core-software.instructions.md**: Data types, error handling, state management, motor control algorithms
+- **safety-rt.instructions.md**: Safety systems, real-time control, timing management, fail-safe mechanisms
+- **api-ui.instructions.md**: API design, user interfaces, documentation generation, external integration
 
 ### Cross-References
 - All file paths must follow SSOT configuration

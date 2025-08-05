@@ -18,7 +18,10 @@
 
 #include "config/hardware_config.h"
 #include "config/motor_config.h"
+#include "common/error_codes.h"
 #include "stm32h7xx_hal.h"
+#include <stdbool.h>
+#include <stdint.h>
 
 /* ========================================================================== */
 /* L6470 Driver Configuration (SSOT Integration)                             */
@@ -32,12 +35,12 @@
 
 // X-CUBE-SPN2 Framework Integration
 #if SPN2_FRAMEWORK_ENABLED
-    #include "spn2_l6470_config.h"  // TODO: Create SPN2 integration layer
+    // #include "spn2_l6470_config.h"  // TODO: Create SPN2 integration layer - disabled for build
 #endif
 
 // MCSDK Enhancement Layer Integration  
 #if MCSDK_POSITION_CONTROL
-    #include "mcsdk_position_control.h"  // TODO: Create MCSDK enhancement layer
+    // #include "mcsdk_position_control.h"  // TODO: Create MCSDK enhancement layer - disabled for build
 #endif
 
 /* ========================================================================== */
@@ -95,6 +98,33 @@
 #define L6470_REG_ALARM_EN          0x17
 #define L6470_REG_CONFIG            0x18
 #define L6470_REG_STATUS            0x19
+
+/* ========================================================================== */
+/* L6470 Status Register Bit Definitions (from datasheet)                   */
+/* ========================================================================== */
+
+// Status register bit masks
+#define L6470_STATUS_HIZ            (1 << 0)    // High impedance state
+#define L6470_STATUS_BUSY           (1 << 1)    // Device busy
+#define L6470_STATUS_SW_F           (1 << 2)    // Switch turn-on event
+#define L6470_STATUS_SW_EVN         (1 << 3)    // Switch input status
+#define L6470_STATUS_DIR            (1 << 4)    // Direction (1=forward, 0=reverse)
+#define L6470_STATUS_MOT_STATUS     (0x3 << 5)  // Motor status bits (5-6)
+#define L6470_STATUS_NOTPERF_CMD    (1 << 7)    // Command not performed
+#define L6470_STATUS_WRONG_CMD      (1 << 8)    // Wrong command
+#define L6470_STATUS_UVLO           (1 << 9)    // Undervoltage lockout
+#define L6470_STATUS_TH_WRN         (1 << 10)   // Thermal warning
+#define L6470_STATUS_TH_SD          (1 << 11)   // Thermal shutdown
+#define L6470_STATUS_OCD            (1 << 12)   // Overcurrent detection
+#define L6470_STATUS_STEP_LOSS_A    (1 << 13)   // Stall detection bridge A
+#define L6470_STATUS_STEP_LOSS_B    (1 << 14)   // Stall detection bridge B
+#define L6470_STATUS_SCK_MOD        (1 << 15)   // Step clock mode
+
+// Motor status values (bits 5-6)
+#define L6470_MOT_STATUS_STOPPED    0x00
+#define L6470_MOT_STATUS_ACCEL      0x01
+#define L6470_MOT_STATUS_DECEL      0x02
+#define L6470_MOT_STATUS_CONST_SPD  0x03
 
 /* ========================================================================== */
 /* Driver Data Structures                                                    */
@@ -239,22 +269,106 @@ HAL_StatusTypeDef L6470_EmergencyStop(L6470_HandleTypeDef *handle);
 HAL_StatusTypeDef L6470_GetPosition(L6470_HandleTypeDef *handle, 
                                    uint32_t *position);
 
-/**
- * @brief Get device status
- * @param handle Pointer to L6470 device handle
- * @param status Pointer to store status value
- * @return HAL_StatusTypeDef HAL_OK if successful
- */
-HAL_StatusTypeDef L6470_GetStatus(L6470_HandleTypeDef *handle, 
-                                 uint16_t *status);
+/* ========================================================================== */
+/* Enhanced API Functions (SSOT-based Implementation)                        */
+/* ========================================================================== */
 
 /**
- * @brief Check if motor is busy
- * @param handle Pointer to L6470 device handle
- * @param busy Pointer to store busy flag
- * @return HAL_StatusTypeDef HAL_OK if successful
+ * @brief Initialize L6470 driver system
+ * @param spi_handle Pointer to configured SPI handle
+ * @return SystemError_t System error code
  */
-HAL_StatusTypeDef L6470_IsBusy(L6470_HandleTypeDef *handle, 
-                              bool *busy);
+SystemError_t l6470_init(SPI_HandleTypeDef* spi_handle);
+
+/**
+ * @brief Initialize individual motor configuration
+ * @param motor_id Motor identifier (0-based)
+ * @return SystemError_t System error code
+ */
+SystemError_t l6470_init_motor(uint8_t motor_id);
+
+/**
+ * @brief Reset L6470 device
+ * @param motor_id Motor identifier
+ * @return SystemError_t System error code
+ */
+SystemError_t l6470_reset_device(uint8_t motor_id);
+
+/**
+ * @brief Set L6470 register parameter
+ * @param motor_id Motor identifier
+ * @param register_addr Register address
+ * @param value Parameter value
+ * @return SystemError_t System error code
+ */
+SystemError_t l6470_set_parameter(uint8_t motor_id, uint8_t register_addr, uint32_t value);
+
+/**
+ * @brief Get L6470 register parameter
+ * @param motor_id Motor identifier
+ * @param register_addr Register address
+ * @param value Pointer to store parameter value
+ * @return SystemError_t System error code
+ */
+SystemError_t l6470_get_parameter(uint8_t motor_id, uint8_t register_addr, uint32_t* value);
+
+/**
+ * @brief Get L6470 status register
+ * @param motor_id Motor identifier  
+ * @param status Pointer to store status value
+ * @return SystemError_t System error code
+ */
+SystemError_t l6470_get_status(uint8_t motor_id, uint16_t* status);
+
+/**
+ * @brief Move motor to absolute position
+ * @param motor_id Motor identifier
+ * @param position Target position in steps
+ * @return SystemError_t System error code
+ */
+SystemError_t l6470_move_to_position(uint8_t motor_id, int32_t position);
+
+/**
+ * @brief Stop motor with controlled deceleration
+ * @param motor_id Motor identifier
+ * @return SystemError_t System error code
+ */
+SystemError_t l6470_soft_stop(uint8_t motor_id);
+
+/**
+ * @brief Stop motor immediately (emergency stop)
+ * @param motor_id Motor identifier
+ * @return SystemError_t System error code
+ */
+SystemError_t l6470_hard_stop(uint8_t motor_id);
+
+/**
+ * @brief Set motor to high impedance state
+ * @param motor_id Motor identifier
+ * @return SystemError_t System error code
+ */
+SystemError_t l6470_hard_hiz(uint8_t motor_id);
+
+/**
+ * @brief Check if L6470 driver system is initialized
+ * @return bool true if initialized, false otherwise
+ */
+bool l6470_is_initialized(void);
+
+/**
+ * @brief Run motor at constant velocity
+ * @param motor_id Motor identifier (0 or 1)
+ * @param direction true for forward, false for reverse
+ * @param speed Speed in steps/second
+ * @return SystemError_t - SYSTEM_OK on success, error code on failure
+ */
+SystemError_t l6470_run(uint8_t motor_id, bool direction, float speed);
+
+/**
+ * @brief Reset motor position to zero
+ * @param motor_id Motor identifier (0 or 1)
+ * @return SystemError_t - SYSTEM_OK on success, error code on failure
+ */
+SystemError_t l6470_reset_position(uint8_t motor_id);
 
 #endif /* L6470_DRIVER_H */

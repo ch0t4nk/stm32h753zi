@@ -67,6 +67,13 @@
 #define MOTOR_MAX_ACCEL_RPM_S 50.0f  // Maximum acceleration
 #define MOTOR_MAX_DECEL_RPM_S 100.0f // Maximum deceleration (can be higher)
 
+// Speed conversion constants
+#define MOTOR_MAX_SPEED_DPS (MOTOR_MAX_SPEED_RPM * 6.0f)  // Convert RPM to degrees/second
+#define MOTOR_MIN_SPEED_DPS (MOTOR_MIN_SPEED_RPM * 6.0f)  // Convert RPM to degrees/second
+
+// Control loop timing
+#define MOTOR_CONTROL_LOOP_PERIOD_MS 20  // 50Hz control loop (20ms period)
+
 // Position limits (degrees)
 #define MOTOR_MIN_ANGLE_DEG 0.0f   // Minimum position
 #define MOTOR_MAX_ANGLE_DEG 360.0f // Maximum position (full rotation)
