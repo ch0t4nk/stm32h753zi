@@ -68,9 +68,11 @@ class NucleoBSPConverter:
 
             # Add function details
             next_sibling = func.find_next_sibling()
-            while next_sibling and next_sibling.name not in ["h1", "h2", "h3", "h4"]:
+            while (next_sibling and
+                   next_sibling.name not in ["h1", "h2", "h3", "h4"]):
                 if next_sibling.name == "div" and next_sibling.find("table"):
-                    markdown += self._process_function_table(next_sibling.find("table"))
+                    table = next_sibling.find("table")
+                    markdown += self._process_function_table(table)
                 elif next_sibling.name == "p":
                     text = next_sibling.get_text().strip()
                     if text:
@@ -99,7 +101,8 @@ class NucleoBSPConverter:
         for code in code_blocks:
             code_text = code.get_text().strip()
             if (
-                "BSP_" in code_text or "BUTTON_" in code_text or "LED_" in code_text
+                "BSP_" in code_text or "BUTTON_" in code_text or 
+                "LED_" in code_text
             ) and "(" in code_text:
                 markdown += f"```c\n{code_text}\n```\n\n"
                 # Extract function name for indexing
