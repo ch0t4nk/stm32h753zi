@@ -93,6 +93,10 @@ typedef enum {
     SAFETY_EVENT_POSITION_LIMIT_STOP,  /**< Position limit stop */
     SAFETY_EVENT_TEMPERATURE_WARNING,  /**< Temperature warning */
     SAFETY_EVENT_COMMUNICATION_FAULT,  /**< Communication fault */
+    SAFETY_EVENT_SYSTEM_INIT,          /**< System initialization */
+    SAFETY_EVENT_MOTOR_INIT_BLOCKED,   /**< Motor init blocked by safety */
+    SAFETY_EVENT_FAULT_DETECTED,       /**< Fault detected */
+    SAFETY_EVENT_FAULT_CLEARED,        /**< Fault cleared */
     SAFETY_EVENT_COUNT                 /**< Number of event types */
 } SafetyEvent_t;
 

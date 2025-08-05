@@ -15,7 +15,7 @@
 #define FAULT_MONITOR_H
 
 #include "config/safety_config.h"
-#include "common/system_types.h"
+#include "common/data_types.h"
 #include "stm32h7xx_hal.h"
 #include <stdint.h>
 #include <stdbool.h>

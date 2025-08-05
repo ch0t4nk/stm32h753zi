@@ -165,7 +165,40 @@ typedef enum {
   ERROR_SPI_OVERRUN,                             // 0x4028 - SPI overrun error
   ERROR_SPI_CRC_ERROR,                           // 0x4029 - SPI CRC error
   ERROR_SPI_FRAME_ERROR,                         // 0x402A - SPI frame error
-  ERROR_SPI_TRANSMISSION_FAILED                  // 0x402B - SPI transmission failed
+  ERROR_SPI_TRANSMISSION_FAILED,                 // 0x402B - SPI transmission failed
+
+  // Safety System Error Codes
+  ERROR_SAFETY_SYSTEM_NOT_READY = ERROR_CODE_SAFETY_BASE, // 0x5000 - Safety system not operational
+  ERROR_SAFETY_EMERGENCY_STOP,                   // 0x5001 - Emergency stop activated
+  ERROR_SAFETY_WATCHDOG_TIMEOUT,                 // 0x5002 - Watchdog timeout
+  ERROR_SAFETY_WATCHDOG_WARNING,                 // 0x5003 - Watchdog warning
+  ERROR_SAFETY_WATCHDOG_MISSED,                  // 0x5004 - Watchdog refresh missed
+  ERROR_SAFETY_WATCHDOG_INIT_FAILED,             // 0x5005 - Watchdog initialization failed
+  ERROR_SAFETY_CRITICAL_FAULT,                   // 0x5006 - Critical fault detected
+  ERROR_SAFETY_SELF_TEST_FAILED,                 // 0x5007 - Safety self-test failed
+  ERROR_SAFETY_VIOLATION,                        // 0x5008 - Safety rule violation
+  ERROR_SAFETY_REDUNDANCY_LOST,                  // 0x5009 - Safety redundancy lost
+  ERROR_SAFETY_SENSOR_FAULT,                     // 0x500A - Safety sensor fault
+  ERROR_SAFETY_ACTUATOR_FAULT,                   // 0x500B - Safety actuator fault
+  ERROR_SAFETY_ESTOP_BUTTON_FAULT,               // 0x500C - Emergency stop button fault
+  ERROR_SAFETY_RELAY_FAULT,                      // 0x500D - Safety relay fault
+  ERROR_SAFETY_MONITOR_FAULT,                    // 0x500E - Safety monitor fault
+  ERROR_SAFETY_PARAMETER_INVALID,                // 0x500F - Safety parameter invalid
+
+  // System/Hardware Error Codes  
+  ERROR_SYSTEM_INIT_FAILED = ERROR_CODE_SYSTEM_BASE, // 0x6000 - System initialization failed
+  ERROR_FAULT_NOT_FOUND,                         // 0x6001 - Fault record not found
+  ERROR_COMM_INVALID_MESSAGE,                    // 0x6002 - Invalid communication message
+  ERROR_COMM_MESSAGE_TOO_LARGE,                  // 0x6003 - Message too large
+  ERROR_COMM_UNSUPPORTED_PROTOCOL,               // 0x6004 - Unsupported protocol
+  ERROR_COMM_UNSUPPORTED_COMMAND,                // 0x6005 - Unsupported command
+  ERROR_COMM_INVALID_COMMAND,                    // 0x6006 - Invalid command format
+  ERROR_COMM_CHECKSUM_FAILED,                    // 0x6007 - Message checksum failed
+  ERROR_COMM_BUSY,                               // 0x6008 - Communication busy
+  ERROR_COMM_SEND_FAILED,                        // 0x6009 - Send operation failed
+  ERROR_COMM_DMA_FAILED,                         // 0x600A - DMA operation failed
+  ERROR_COMM_SELF_TEST_FAILED,                   // 0x600B - Communication self-test failed
+  ERROR_COMM_TIMEOUT,                            // 0x600C - Communication timeout
 } SystemError_t;
 
 /* ========================================================================== */

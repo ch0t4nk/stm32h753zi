@@ -19,6 +19,8 @@
 #include "config/safety_config.h"
 #include "common/error_codes.h"
 #include "common/system_state.h"
+#include "safety/safety_system.h"
+#include "safety/fault_monitor.h"
 #include <math.h>
 
 /* ========================================================================== */
@@ -73,6 +75,18 @@ SystemError_t motor_controller_init(SPI_HandleTypeDef* hspi,
         return ERROR_MOTOR_CONFIG_INVALID;
     }
     
+    // SAFETY-CRITICAL: Check safety system is operational before motor init
+    if (!safety_system_is_operational()) {
+        safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 0);
+        return ERROR_SAFETY_SYSTEM_NOT_READY;
+    }
+    
+    // Check for emergency stop condition
+    if (safety_get_emergency_stop_state()) {
+        safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 1);
+        return ERROR_SAFETY_EMERGENCY_STOP;
+    }
+    
     // Store handle references
     motor_spi_handle = hspi;
     encoder_i2c1_handle = hi2c1;
@@ -81,12 +95,16 @@ SystemError_t motor_controller_init(SPI_HandleTypeDef* hspi,
     // Initialize L6470 stepper drivers
     SystemError_t result = l6470_init(hspi);
     if (result != SYSTEM_OK) {
+        fault_monitor_record_system_fault(SYSTEM_FAULT_INIT_ERROR, 
+                                          FAULT_SEVERITY_CRITICAL, result);
         return result;
     }
     
     // Initialize AS5600 encoders
     result = as5600_init(hi2c1, hi2c2);
     if (result != SYSTEM_OK) {
+        fault_monitor_record_system_fault(SYSTEM_FAULT_INIT_ERROR, 
+                                          FAULT_SEVERITY_CRITICAL, result);
         return result;
     }
     
