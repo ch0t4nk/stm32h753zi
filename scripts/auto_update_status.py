@@ -472,16 +472,23 @@ Examples:
         """
     )
     
-    parser.add_argument("--verbose", "-v", action="store_true", 
+    parser.add_argument("--verbose", "-v", action="store_true",
                        help="Enable detailed output")
     parser.add_argument("--dry-run", action="store_true",
                        help="Show changes without writing")
-    parser.add_argument("--source", choices=["manual", "build", "git"], 
+    parser.add_argument("--source",
+                       choices=["manual", "build", "git", "git-commit"],
                        default="manual", help="Update trigger source")
     parser.add_argument("--force", action="store_true",
                        help="Force update even if no changes detected")
     parser.add_argument("--workspace", default="/workspaces/code",
                        help="Workspace root directory")
+
+    # Git hook specific arguments
+    parser.add_argument("--commit-hash",
+                       help="Git commit hash (for git-commit source)")
+    parser.add_argument("--commit-message",
+                       help="Git commit message (for git-commit source)")
     
     args = parser.parse_args()
     
