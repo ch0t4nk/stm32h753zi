@@ -338,8 +338,7 @@ void comm_can_rx_callback(FDCAN_HandleTypeDef* hfdcan);
 /* ========================================================================== */
 
 #define MESSAGE_MAGIC               0xDEADBEEF
-#define MAX_MESSAGE_PAYLOAD         256
-#define UART_RX_BUFFER_SIZE         512
+// MAX_MESSAGE_PAYLOAD and UART_RX_BUFFER_SIZE defined in comm_config.h (SSOT)
 #define UART_TX_BUFFER_SIZE         512
 #define ASCII_COMMAND_MAX_LENGTH    128
 

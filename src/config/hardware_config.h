@@ -229,6 +229,16 @@
 #define VDD_VALUE 3300UL              // VDD voltage in millivolts
 #endif
 
+// Power supply monitoring constants
+#define SUPPLY_VOLTAGE_MIN_MV 10000   // Minimum supply voltage (10V)
+#define SUPPLY_VOLTAGE_MAX_MV 15000   // Maximum supply voltage (15V)
+
+// Temperature monitoring constants
+#define SYSTEM_MAX_TEMP_C 85          // Maximum system temperature
+
+// Position error constants
+#define MAX_POSITION_ERROR_STEPS 100  // Maximum position error in steps
+
 #define SYSTEM_CLOCK_FREQ 480000000UL // System clock frequency
 #define AHB_CLOCK_FREQ 240000000UL    // AHB bus frequency
 #define APB1_CLOCK_FREQ 120000000UL   // APB1 bus frequency

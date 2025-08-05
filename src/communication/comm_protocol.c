@@ -172,22 +172,25 @@ SystemError_t debug_uart_init(UART_HandleTypeDef* huart) {
  * @brief Initialize CAN communication channel
  */
 SystemError_t comm_can_init(FDCAN_HandleTypeDef* hfdcan) {
-    if (!comm_protocol_initialized || hcan == NULL) {
+    if (!comm_protocol_initialized || hfdcan == NULL) {
         return ERROR_NOT_INITIALIZED;
     }
     
     COMM_SAFETY_CHECK();
     
-    // Store CAN handle
-    can_handle = hcan;
+    // Store FDCAN handle
+    fdcan_handle = hfdcan;
     
-    // Configure CAN TX header template
-    can_tx_header.StdId = CAN_MOTOR_BASE_ID;
-    can_tx_header.ExtId = 0;
-    can_tx_header.RTR = CAN_RTR_DATA;
-    can_tx_header.IDE = CAN_ID_STD;
-    can_tx_header.DLC = 8;
-    can_tx_header.TransmitGlobalTime = DISABLE;
+    // Configure FDCAN TX header template
+    fdcan_tx_header.Identifier = CAN_MOTOR_BASE_ID;
+    fdcan_tx_header.IdType = FDCAN_STANDARD_ID;
+    fdcan_tx_header.TxFrameType = FDCAN_DATA_FRAME;
+    fdcan_tx_header.DataLength = FDCAN_DLC_BYTES_8;
+    fdcan_tx_header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+    fdcan_tx_header.BitRateSwitch = FDCAN_BRS_OFF;
+    fdcan_tx_header.FDFormat = FDCAN_CLASSIC_CAN;
+    fdcan_tx_header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+    fdcan_tx_header.MessageMarker = 0;
     
     // Configure channel
     CommChannelConfig_t* channel = &comm_channels[PROTOCOL_CAN_MOTOR];
@@ -196,15 +199,15 @@ SystemError_t comm_can_init(FDCAN_HandleTypeDef* hfdcan) {
     channel->timeout_ms = CAN_TIMEOUT_MS;
     channel->last_activity = HAL_GetTick();
     
-    // Start CAN
-    if (HAL_CAN_Start(hcan) != HAL_OK) {
+    // Start FDCAN
+    if (HAL_FDCAN_Start(hfdcan) != HAL_OK) {
         fault_monitor_record_system_fault(SYSTEM_FAULT_CAN_FAULT, 
                                           FAULT_SEVERITY_CRITICAL, 0);
         return ERROR_COMM_INIT_FAILED;
     }
     
-    // Activate CAN RX notification
-    if (HAL_CAN_ActivateNotification(hcan, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK) {
+    // Activate FDCAN RX notification
+    if (HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0) != HAL_OK) {
         fault_monitor_record_system_fault(SYSTEM_FAULT_CAN_FAULT, 
                                           FAULT_SEVERITY_ERROR, 1);
         return ERROR_COMM_INIT_FAILED;

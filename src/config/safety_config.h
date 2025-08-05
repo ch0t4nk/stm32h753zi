@@ -29,6 +29,10 @@
 #define SAFETY_FAULT_HISTORY_SIZE 32 // Number of fault events to store
 #define SAFETY_ENABLE_REDUNDANCY 1   // Enable redundant safety checks
 
+// Fault monitoring configuration
+#define MAX_FAULT_RECORDS 64         // Maximum fault records to store
+#define FAULT_CHECK_INTERVAL_MS 50   // Fault check interval
+
 /* ========================================================================== */
 /* Watchdog Timer Configuration (SSOT)                                       */
 /* ========================================================================== */

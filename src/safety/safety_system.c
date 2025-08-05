@@ -341,6 +341,17 @@ SystemError_t log_safety_event(SafetyEvent_t event, uint32_t parameter, uint32_t
 }
 
 /**
+ * @brief Log safety event with motor ID
+ */
+void safety_log_event(SafetyEvent_t event, uint8_t motor_id, uint32_t data) {
+    // Combine motor_id and data into a single parameter
+    uint32_t parameter = ((uint32_t)motor_id << 24) | (data & 0x00FFFFFF);
+    
+    // Use existing log function
+    log_safety_event(event, parameter, HAL_GetTick());
+}
+
+/**
  * @brief Handle safety violation with appropriate response
  */
 SystemError_t handle_safety_violation(MonitorChannel_t channel, float value) {

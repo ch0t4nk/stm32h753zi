@@ -188,6 +188,13 @@ typedef enum {
   ERROR_SAFETY_RELAY_FAULT,                      // 0x500D - Safety relay fault
   ERROR_SAFETY_MONITOR_FAULT,                    // 0x500E - Safety monitor fault
   ERROR_SAFETY_PARAMETER_INVALID,                // 0x500F - Safety parameter invalid
+  ERROR_SAFETY_REACTION_TIME,                    // 0x5010 - Safety reaction time exceeded
+  ERROR_SAFETY_INVALID_RESET,                    // 0x5011 - Invalid safety reset attempt
+  ERROR_SAFETY_BUTTON_STILL_PRESSED,             // 0x5012 - Emergency button still pressed
+  ERROR_SAFETY_RESET_TOO_SOON,                   // 0x5013 - Reset attempted too soon
+  ERROR_SAFETY_BUTTON_STUCK,                     // 0x5014 - Emergency button stuck
+  ERROR_SAFETY_EXCESSIVE_ACTIVATIONS,            // 0x5015 - Excessive emergency stop activations
+  ERROR_SAFETY_LIMIT_VIOLATION,                  // 0x5016 - Safety limit violation
 
   // System/Hardware Error Codes  
   ERROR_SYSTEM_INIT_FAILED = ERROR_CODE_SYSTEM_BASE, // 0x6000 - System initialization failed

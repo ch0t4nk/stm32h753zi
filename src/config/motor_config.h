@@ -79,6 +79,12 @@
 #define MOTOR_MAX_ANGLE_DEG 360.0f // Maximum position (full rotation)
 #define MOTOR_HOME_ANGLE_DEG 0.0f  // Home/reference position
 
+// Motor-specific position limits
+#define MOTOR1_MIN_POSITION_DEG -180.0f  // Motor 1 minimum position
+#define MOTOR1_MAX_POSITION_DEG 180.0f   // Motor 1 maximum position
+#define MOTOR2_MIN_POSITION_DEG -90.0f   // Motor 2 minimum position  
+#define MOTOR2_MAX_POSITION_DEG 90.0f    // Motor 2 maximum position
+
 /* ========================================================================== */
 /* L6470 Driver Register Configuration (SSOT)                                */
 /* ========================================================================== */

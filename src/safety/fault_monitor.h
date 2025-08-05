@@ -15,7 +15,9 @@
 #define FAULT_MONITOR_H
 
 #include "config/safety_config.h"
+#include "config/hardware_config.h"  // For voltage/temperature constants
 #include "common/data_types.h"
+#include "common/error_codes.h"  // For SystemError_t
 #include "stm32h7xx_hal.h"
 #include <stdint.h>
 #include <stdbool.h>
@@ -57,8 +59,8 @@ typedef enum {
     // Critical fault mask
     MOTOR_FAULT_CRITICAL_MASK      = 0x000000FF,
     
-    // All faults mask
-    MOTOR_FAULT_ALL_MASK           = 0xFFFFFFFF
+    // All faults mask (cast to avoid enum range warning)
+    MOTOR_FAULT_ALL_MASK           = (int)0xFFFFFFFF
 } MotorFaultType_t;
 
 /**
@@ -82,16 +84,16 @@ typedef enum {
     SYSTEM_FAULT_HEAP_CORRUPTION   = 0x00000200,  ///< Heap corruption
     SYSTEM_FAULT_ASSERT_FAILED     = 0x00000400,  ///< Assertion failure
     SYSTEM_FAULT_RTOS_ERROR        = 0x00000800,  ///< RTOS error
-    
-    // Safety system faults
-    SYSTEM_FAULT_SAFETY_VIOLATION  = 0x00001000,  ///< Safety rule violation
-    SYSTEM_FAULT_REDUNDANCY_LOST   = 0x00002000,  ///< Redundancy system failure
+    SYSTEM_FAULT_INIT_ERROR        = 0x00001000,  ///< Initialization error
+    SYSTEM_FAULT_SELF_TEST         = 0x00002000,  ///< Self-test fault
+    SYSTEM_FAULT_SAFETY_VIOLATION  = 0x00004000,  ///< Safety violation detected
+    SYSTEM_FAULT_REDUNDANCY_LOST   = 0x00008000,  ///< Redundancy system failure
     
     // Critical system fault mask
     SYSTEM_FAULT_CRITICAL_MASK     = 0x0000FFFF,
     
-    // All system faults mask
-    SYSTEM_FAULT_ALL_MASK          = 0xFFFFFFFF
+    // All system faults mask (cast to avoid enum range warning)
+    SYSTEM_FAULT_ALL_MASK          = (int)0xFFFFFFFF
 } SystemFaultType_t;
 
 /**

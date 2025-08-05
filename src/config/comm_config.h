@@ -88,6 +88,8 @@
 
 // CAN Message Configuration
 #define CAN_MAX_MESSAGE_SIZE 64 // CAN-FD max payload
+#define CAN_MOTOR_BASE_ID 0x100  // Base CAN ID for motor commands
+#define CAN_TIMEOUT_MS 1000      // CAN transmission timeout
 #define CAN_TX_FIFO_SIZE 16
 #define CAN_RX_FIFO_SIZE 32
 

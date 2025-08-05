@@ -19,6 +19,7 @@
 #include "config/motor_config.h"
 #include "config/safety_config.h"
 #include "error_codes.h"
+#include "safety/fault_monitor.h"  // For MotorFaultType_t and SystemFaultType_t
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -39,7 +40,7 @@ typedef struct {
   // Current motor status
   MotorState_t current_state;      // Current motor state (enum from motor_config.h)
   MotorControlMode_t control_mode; // Current control mode
-  MotorFaultFlags_t fault_flags;   // Active fault flags
+  MotorFaultType_t fault_flags;   // Active fault flags
 
   // Position information
   float current_angle_deg;  // Current angle in degrees
@@ -386,7 +387,7 @@ SystemError_t system_state_get_motor_current_angle(uint8_t motor_id,
  * @return SystemError_t Error code or SYSTEM_OK
  */
 SystemError_t system_state_set_motor_fault_flags(uint8_t motor_id,
-                                                 MotorFaultFlags_t fault_flags);
+                                                 MotorFaultType_t fault_flags);
 
 /**
  * @brief Clear motor fault flags
@@ -396,7 +397,7 @@ SystemError_t system_state_set_motor_fault_flags(uint8_t motor_id,
  */
 SystemError_t
 system_state_clear_motor_fault_flags(uint8_t motor_id,
-                                     MotorFaultFlags_t fault_flags);
+                                     MotorFaultType_t fault_flags);
 
 /* ========================================================================== */
 /* Encoder State Access Functions (SSOT)                                     */

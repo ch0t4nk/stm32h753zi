@@ -13,6 +13,7 @@
 
 #include "watchdog_manager.h"
 #include <string.h>
+#include <stdlib.h>  // For abs() function
 
 /* ========================================================================== */
 /* Private Variables and State Management                                    */
@@ -190,7 +191,7 @@ SystemError_t watchdog_self_test(void) {
     // Test 1: Verify IWDG configuration
     if (IWDG_ENABLE) {
         // Check if IWDG is properly configured
-        if (hiwdg.Instance != IWDG) {
+        if (hiwdg.Instance != IWDG1) {
             return ERROR_SAFETY_SELF_TEST_FAILED;
         }
         
@@ -316,7 +317,7 @@ uint32_t watchdog_time_until_refresh(void) {
  */
 static SystemError_t initialize_independent_watchdog(void) {
     // Configure IWDG using SSOT parameters
-    hiwdg.Instance = IWDG;
+    hiwdg.Instance = IWDG1;
     hiwdg.Init.Prescaler = IWDG_PRESCALER;
     hiwdg.Init.Reload = IWDG_RELOAD_VALUE;
     hiwdg.Init.Window = IWDG_WINDOW_DISABLE;  // No window restriction

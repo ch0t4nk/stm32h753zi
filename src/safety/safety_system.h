@@ -217,7 +217,7 @@ bool safety_get_emergency_stop_state(void);
  * @param motor_id Motor ID (0xFF for system events)
  * @param data Additional event data
  */
-void safety_log_event(SafetyEventType_t event, uint8_t motor_id, uint32_t data);
+void safety_log_event(SafetyEvent_t event, uint8_t motor_id, uint32_t data);
 
 /**
  * @brief Execute emergency stop sequence

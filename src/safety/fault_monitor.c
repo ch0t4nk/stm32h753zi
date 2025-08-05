@@ -14,6 +14,7 @@
 #include "fault_monitor.h"
 #include "safety_system.h"
 #include <string.h>
+#include <stdlib.h>  // For abs() function
 
 /* ========================================================================== */
 /* Private Variables and State Management                                    */
@@ -728,5 +729,4 @@ static const char* get_fault_description(uint32_t fault_code) {
     }
     
     return "Unknown Fault";
-    }
 }
