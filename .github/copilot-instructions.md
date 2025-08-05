@@ -77,75 +77,90 @@ The `00_reference/` directory contains comprehensive ST official documentation:
 
 **IMPORTANT**: Never modify `00_reference/` files. Copy needed code to appropriate `src/` locations.
 
-## Enhanced Documentation Search System
-Use comprehensive documentation search tools for development with **unified STM32H7 + L6470 + Nucleo BSP coverage**:
+## Semantic Documentation Search System
+**NEW**: Use intelligent semantic search with real AI embeddings for development with **unified STM32H7 + L6470 + Nucleo BSP coverage**:
 
 ```bash
-# Search for peripheral-specific documentation (STM32H7 + L6470)
-python3 scripts/search_enhanced_docs.py peripheral SPI --scope all
+# PRODUCTION SEMANTIC SEARCH (NEW - Preferred)
+# Use virtual environment for proper dependencies
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "GPIO configuration" --scope STM32H7
 
-# Find L6470 function implementation details (NOTE: functions are concatenated)
-python3 scripts/search_enhanced_docs.py function L6470 --scope L6470
+# Semantic search for specific functions with context understanding
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py function "HAL_GPIO_Init" --scope STM32H7
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py function "L6470" --scope L6470
 
-# Find STM32H7 HAL functions
-python3 scripts/search_enhanced_docs.py function HAL_GPIO_Init --scope STM32H7
+# Find peripheral configurations with semantic understanding
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py peripheral "SPI" --scope all
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py peripheral "UART" --scope STM32H7
 
-# Search Nucleo BSP board functions
-python3 scripts/search_enhanced_docs.py function BSP_LED --scope NUCLEO_BSP
-python3 scripts/search_enhanced_docs.py function BSP_PB --scope NUCLEO_BSP
+# Search for register information with context
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py register "ABS_POS" --scope L6470
 
-# Search Nucleo BSP board functions
-python3 scripts/search_enhanced_docs.py function BSP_LED --scope NUCLEO_BSP
-python3 scripts/search_enhanced_docs.py function BSP_PB --scope NUCLEO_BSP
+# Semantic concept discovery across documentation
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "stepper motor control" --scope all
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "board support package" --scope NUCLEO_BSP
 
-# Search L6470 registers
-python3 scripts/search_enhanced_docs.py register ABS_POS --scope L6470
+# Rebuild semantic database after documentation updates
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "test" --rebuild
 
-# Discover concept-related files across all documentation
-python3 scripts/search_enhanced_docs.py concept "stepper motor" --scope all
-python3 scripts/search_enhanced_docs.py concept board_support --scope NUCLEO_BSP
+# LEGACY SEARCH (Archived - Available for reference)
+# python3 scripts/legacy_archive/search_enhanced_docs.py [queries...]
 
 # Validate workspace markdown links
 python3 scripts/link_validator.py
 ```
 
-**Available Indexes:**
+**Semantic Search Database (NEW):**
+- `docs/semantic_vector_db/` (981 documents): ChromaDB with Ollama mxbai-embed-large embeddings
+  * `stm32_hal` collection (763 documents): STM32H7 HAL, Nucleo BSP, reference manuals
+  * `motor_control` collection (218 documents): X-CUBE-SPN2 L6470 stepper driver documentation
+  * `safety_systems`, `project_code`, `instruction_guides` collections (future expansion)
+
+**Legacy Search Indexes (Archived):**
 - `docs/indexes/STM32H7_FULL_INDEX.json` (8.9MB): Complete STM32H7 searchable index with 31,772 keywords
 - `docs/indexes/L6470_SEARCH_INDEX.json` (2.1MB): Complete L6470 documentation index with 356 keywords
 - `docs/indexes/STM32H7xx_Nucleo_BSP_INDEX.json` (1MB): Nucleo-144 BSP functions with 74 keywords
 - `docs/indexes/STM32H7_COPILOT_INDEX.yaml` (8KB): Copilot-optimized quick reference  
 - `docs/indexes/STM32H7_COPILOT_INDEX.json` (9.9KB): Programmatic access format
 
-**Search Capabilities:**
-- **Unified search**: Single tool for STM32H7, L6470, and Nucleo BSP documentation
+**Semantic Search Capabilities (NEW):**
+- **AI-Powered Understanding**: Uses real Ollama embeddings for context-aware search
+- **Intelligent Chunking**: Smart document segmentation with STM32-specific parsing
+- **Multi-Collection Search**: Targeted search across STM32H7/L6470/BSP/project domains
 - **Scope filtering**: Target specific documentation sets (STM32H7/L6470/NUCLEO_BSP/all)
-- **Performance**: 7x faster than HTML-based searches (0.03s vs 0.22s)
-- **Coverage**: 91.1MB total documentation, 4,227 files, 32,200+ keywords
+- **Real embeddings**: 1024-dimensional vectors from Ollama mxbai-embed-large model
+- **Production ready**: Processes 981 documents from real workspace (27 source files)
+
+**Migration Notes:**
+- **New system**: `scripts/stm32_semantic_search.py` (semantic search with AI embeddings)
+- **Legacy system**: `scripts/legacy_archive/search_enhanced_docs.py` (archived keyword search)
+- **Performance**: Semantic understanding vs exact keyword matching
+- **Requirements**: ChromaDB + requests packages in virtual environment
 
 **Search Pattern Best Practices:**
-- **STM32H7**: Use exact names (`HAL_GPIO_Init`, `peripheral SPI`)  
-- **L6470**: Use broad patterns (`function L6470`, not `L6470_Init`) - functions are concatenated in index
-- **NUCLEO_BSP**: Use exact BSP function names (`BSP_LED_Init`, `BSP_PB_Init`)
+- **STM32H7**: Use concept searches (`concept "GPIO configuration"`) for broader results
+- **L6470**: Use function patterns (`function "L6470"`) - driver functions work well semantically  
+- **NUCLEO_BSP**: Use exact BSP function names (`function "BSP_LED_Init"`) for specific functions
 - **Cross-platform**: Use concept searches (`concept "motor_control"`) for comprehensive results
 - **Scope**: Case-insensitive (`--scope STM32H7`, `--scope nucleo_bsp`, `--scope L6470`)
 
 **Common Search Patterns:**
 ```bash
-# STM32H7 - Use exact function names (work well)
-python3 scripts/search_enhanced_docs.py function HAL_GPIO_Init --scope STM32H7
-python3 scripts/search_enhanced_docs.py peripheral SPI --scope STM32H7
+# STM32H7 - Use concept and function searches (semantic understanding)
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "GPIO configuration" --scope STM32H7
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py function "HAL_GPIO_Init" --scope STM32H7
 
-# L6470 - Use broad patterns (functions are concatenated)
-python3 scripts/search_enhanced_docs.py function L6470 --scope L6470    # ✅ CORRECT
-python3 scripts/search_enhanced_docs.py function L6470_Init --scope L6470  # ❌ WILL FAIL
+# L6470 - Use function and concept patterns (semantic context)
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py function "L6470" --scope L6470    # ✅ WORKS
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "stepper driver" --scope L6470
 
-# Nucleo BSP - Use exact BSP function names (work well)
-python3 scripts/search_enhanced_docs.py function BSP_LED_Init --scope NUCLEO_BSP  # ✅ CORRECT
-python3 scripts/search_enhanced_docs.py function BSP_BUTTON --scope NUCLEO_BSP    # ✅ CORRECT
+# Nucleo BSP - Use function names (good semantic matching)
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py function "BSP_LED_Init" --scope NUCLEO_BSP  # ✅ WORKS
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "board support" --scope NUCLEO_BSP
 
 # Cross-platform concept searches (most effective for complex topics)
-python3 scripts/search_enhanced_docs.py concept "stepper configuration" --scope all
-python3 scripts/search_enhanced_docs.py concept "board support" --scope all
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "stepper configuration" --scope all
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "peripheral setup" --scope all
 ```
 
 ## Reference Assets
