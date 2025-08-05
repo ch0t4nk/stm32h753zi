@@ -4,6 +4,16 @@
 
 This workspace develops firmware for an **STM32H753ZI Nucleo-144** board controlling stepper motors via **X-NUCLEO-IHM02A1** shield with closed-loop feedback using **AS5600 magnetic encoders**.
 
+## 📋 Current Project Status
+**IMPORTANT**: Always check `STATUS.md` in the root directory for the most current project state, including:
+- Current development phase and active work items
+- Recent completions and next priorities  
+- Build status and key metrics
+- Technical context and architecture status
+- Quick reference commands and file locations
+
+This status file is updated regularly and provides essential context for new Copilot conversations.
+
 ## X-CUBE-SPN2 + MCSDK Hybrid Integration
 
 This project uses a **hybrid approach** combining **X-CUBE-SPN2** (stepper-specific) with **X-CUBE-MCSDK 6.4.1** (selective enhancements):

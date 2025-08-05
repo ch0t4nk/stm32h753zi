@@ -83,7 +83,7 @@ typedef struct {
     bool settled;             ///< Motor position settled
     bool profile_active;      ///< Motion profile active
     int32_t slave_offset;     ///< Offset from master (master-slave mode)
-} MotorState_t;
+} CoordinatorMotorState_t;    // Renamed to avoid conflict with motor_config.h
 
 /**
  * @brief Synchronization configuration structure
@@ -119,7 +119,8 @@ typedef struct {
  * @brief Multi-motor coordinator main structure
  */
 typedef struct {
-    MotorState_t motor_states[MAX_MOTORS]; ///< Individual motor states
+    CoordinatorMotorState_t
+        motor_states[MAX_MOTORS];          ///< Individual motor states
     SynchronizationConfig_t sync_config;   ///< Synchronization configuration
     LoadSharingConfig_t load_config;       ///< Load sharing configuration
     CoordinatedMotionState_t motion_state; ///< Motion state

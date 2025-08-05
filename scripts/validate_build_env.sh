@@ -69,11 +69,11 @@ if which arm-none-eabi-gcc > /dev/null 2>&1; then
     
     # Check if newlib-nano is available
     echo -n "newlib-nano: "
-    if arm-none-eabi-gcc --print-file-name=libc_nano.a | grep -q "libc_nano.a$"; then
+    if find /usr -name "*nano.specs" 2>/dev/null | grep -q nano.specs; then
+        echo "✅ Available"
+    else
         echo "❌ Not found (specs may fail)"
         EXIT_CODE=1
-    else
-        echo "✅ Available"
     fi
 else
     echo "❌ arm-none-eabi-gcc: Not found"

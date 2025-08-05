@@ -6,6 +6,8 @@
 ![Development](https://img.shields.io/badge/phase-driver%20implementation-blue)
 ![Code Quality](https://img.shields.io/badge/code%20quality-lint%20free-success)
 
+> **📋 Current Project Status**: See [`STATUS.md`](./STATUS.md) for the most up-to-date development progress, current work, and next priorities.
+
 ## 🎉 Current Status: Peripheral Initialization Complete!
 
 **Major Milestone Achieved:** All STM32H753ZI peripheral initialization is complete and validated. The project is now ready for driver implementation phase.
@@ -31,24 +33,27 @@ Advanced stepper motor control firmware for **STM32H753ZI Nucleo-144** with **X-
 
 ## Enhanced Development Experience
 This project features a **comprehensive documentation integration system**:
-- **32,200+ searchable keywords** across STM32H7 peripherals and Nucleo BSP
-- **Modular Copilot instructions** for architecture and HAL implementation
-- **Real-time documentation search** for efficient development
+- **Semantic Search Database**: ChromaDB with Ollama mxbai-embed-large embeddings (981 documents)
+- **AI-Powered Understanding**: Real embeddings for context-aware search across STM32H7/L6470/BSP domains
+- **Consolidated Copilot instructions** with domain-based architecture (6 core files, 85% reduction)
+- **Legacy keyword search** archived in `scripts/legacy_archive/` for reference
 
 ### Documentation Search Tools
 ```bash
-# Search STM32H7 peripheral documentation
-python3 scripts/search_enhanced_docs.py peripheral SPI --scope STM32H7
+# PRODUCTION SEMANTIC SEARCH (NEW - Preferred)
+# Use wrapper script (auto-handles virtual environment)
+./scripts/stm32_search.sh concept "GPIO configuration" --scope STM32H7
+./scripts/stm32_search.sh function "HAL_GPIO_Init" --scope STM32H7  
+./scripts/stm32_search.sh function "L6470" --scope L6470
+./scripts/stm32_search.sh peripheral "SPI" --scope all
 
-# Find specific HAL functions and L6470 registers
-python3 scripts/search_enhanced_docs.py function HAL_SPI_Init --scope STM32H7
-python3 scripts/search_enhanced_docs.py register ABS_POS --scope L6470
+# Alternative: Direct virtual environment usage
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "GPIO configuration" --scope STM32H7
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py function "HAL_SPI_Init" --scope STM32H7
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py register "ABS_POS" --scope L6470
 
-# Search Nucleo BSP board functions
-python3 scripts/search_enhanced_docs.py function BSP_LED --scope NUCLEO_BSP
-
-# Explore programming concepts across all documentation
-python3 scripts/search_enhanced_docs.py concept stepper --scope all
+# Semantic concept discovery across documentation  
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "stepper motor control" --scope all
 ```
 
 ## Quickstart
@@ -153,12 +158,14 @@ For complete file organization guidelines, see `.github/instructions/file-organi
 
 ## Documentation System
 This project features an **enhanced documentation integration system**:
-- **Comprehensive Coverage**: 91.1MB total (STM32H7 + L6470 + Nucleo BSP documentation)
-- **Searchable Indexes**: 32,200+ keywords, 11 peripherals, 12,700+ functions
-- **Two-Tier Instructions**: Architecture principles + HAL implementation guidance
-- **Real-time Search**: Instant peripheral/function/concept lookup across all documentation
+- **Semantic Search Database**: `docs/semantic_vector_db/` (981 documents) with ChromaDB + Ollama embeddings
+  * `stm32_hal` collection (763 documents): STM32H7 HAL, Nucleo BSP, reference manuals  
+  * `motor_control` collection (218 documents): X-CUBE-SPN2 L6470 stepper driver documentation
+- **Legacy Search Indexes**: Archived in `docs/indexes/` (32,200+ keywords for reference)
+- **Consolidated Instructions**: Domain-based instruction system (6 core files, 85% reduction)
+- **Production Search**: AI-powered semantic understanding vs exact keyword matching
 
-See `docs/ENHANCED_INSTRUCTION_SYSTEM.md` for complete documentation system overview.
+See `.github/copilot-instructions.md` for complete semantic search system overview.
 
 ---
 

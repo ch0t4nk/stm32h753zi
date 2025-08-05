@@ -72,10 +72,14 @@
         }
     ],
     // Python configuration for this workspace
-    "python.defaultInterpreterPath": "/usr/bin/python3",
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "python.terminal.activateEnvironment": true,
+    "python.terminal.activateEnvInCurrentTerminal": true,
     "python.analysis.extraPaths": [
-        "${workspaceFolder}/scripts"
+        "${workspaceFolder}/scripts",
+        "${workspaceFolder}/.venv/lib/python3.10/site-packages"
     ],
+    "python.envFile": "${workspaceFolder}/.env",
     // Doxygen configuration for this workspace
     "doxygen.generic.commentPrefix": "///",
     "doxygen.file.fileTemplate": "@file {name}\\n@brief STM32H753ZI Project - {cursor}\\n@author STM32H753ZI Project Team\\n@date {date}\\n",
@@ -89,6 +93,20 @@
     "extensions.autoUpdate": false,
     // Terminal configuration for this workspace
     "terminal.integrated.cwd": "${workspaceFolder}",
+    "terminal.integrated.env.linux": {
+        "VIRTUAL_ENV": "${workspaceFolder}/.venv",
+        "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+    },
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "bash",
+            "args": [
+                "-c",
+                "source ${workspaceFolder}/.venv/bin/activate 2>/dev/null && exec bash || exec bash"
+            ]
+        }
+    },
     // CMake configuration for this workspace
     "cmake.buildDirectory": "${workspaceFolder}/build",
     "cmake.sourceDirectory": "${workspaceFolder}",

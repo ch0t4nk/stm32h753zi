@@ -6,9 +6,16 @@
             "hidden": true,
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build/${presetName}",
-		    "toolchainFile": "${sourceDir}/cmake/gcc-arm-none-eabi.cmake",
-            "cacheVariables": {
-            }
+            "toolchainFile": "${sourceDir}/cmake/gcc-arm-none-eabi.cmake",
+            "cacheVariables": {}
+        },
+        {
+            "name": "default-make",
+            "hidden": true,
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "toolchainFile": "${sourceDir}/cmake/gcc-arm-none-eabi.cmake",
+            "cacheVariables": {}
         },
         {
             "name": "Debug",
@@ -18,8 +25,26 @@
             }
         },
         {
+            "name": "Debug-Make",
+            "inherits": "default-make",
+            "displayName": "Debug (Make)",
+            "description": "Debug build with Make generator (fallback)",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
             "name": "Release",
             "inherits": "default",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "Release-Make",
+            "inherits": "default-make",
+            "displayName": "Release (Make)",
+            "description": "Release build with Make generator (fallback)",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }

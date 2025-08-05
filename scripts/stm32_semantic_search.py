@@ -58,6 +58,7 @@ class OllamaEmbedding:
                 model_names = [m["name"] for m in models]
                 if any(self.model in name for name in model_names):
                     print(f"✅ Ollama connected: {self.model} available")
+                    self.connected = True
                     return True
                 else:
                     print(
@@ -68,11 +69,15 @@ class OllamaEmbedding:
         except Exception as e:
             print(f"⚠️  Ollama connection failed: {e}")
 
-        print("🔄 Falling back to mock embeddings")
+        print("   Using mock embeddings for demonstration")
+        self.connected = False
         return False
 
     def generate_embedding(self, text: str) -> List[float]:
         """Generate real embedding using Ollama API with fallback"""
+        if not hasattr(self, 'connected') or not self.connected:
+            return self._mock_embedding(text)
+            
         try:
             payload = {"model": self.model, "prompt": text}
             response = requests.post(self.api_url, json=payload, timeout=30)
@@ -81,9 +86,11 @@ class OllamaEmbedding:
                 result = response.json()
                 return result.get("embedding", self._mock_embedding(text))
             else:
+                print(f"🔄 Ollama API error {response.status_code}, using mock")
                 return self._mock_embedding(text)
 
-        except Exception:
+        except Exception as e:
+            print(f"🔄 Ollama error: {e}, using mock")
             return self._mock_embedding(text)
 
     def _mock_embedding(self, text: str) -> List[float]:
@@ -113,7 +120,10 @@ class STM32WorkspaceSearcher:
         if not self.vector_db.initialize_database():
             raise RuntimeError("Failed to initialize vector database")
 
-        self.search_engine = STM32SemanticSearch(str(self.db_path))
+        self.search_engine = STM32SemanticSearch(
+            embedding_model="mxbai-embed-large",
+            vector_db_path=str(self.db_path)
+        )
 
         # Check if database needs population
         stats = self.vector_db.get_collection_stats()

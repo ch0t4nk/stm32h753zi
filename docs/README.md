@@ -69,30 +69,31 @@ Welcome to the comprehensive documentation for the STM32H753ZI stepper motor con
 
 ## 🔍 Enhanced Documentation Search
 
-Use the advanced documentation search system for finding specific information:
+Use the production semantic search system for finding specific information:
 
 ```bash
-# Search STM32H7 HAL functions
-python3 scripts/search_enhanced_docs.py function HAL_GPIO_Init --scope STM32H7
+# PRODUCTION SEMANTIC SEARCH (NEW - Preferred)
+# Use wrapper script (recommended - auto-handles virtual environment)
+./scripts/stm32_search.sh concept "GPIO configuration" --scope STM32H7
+./scripts/stm32_search.sh function "HAL_GPIO_Init" --scope STM32H7
+./scripts/stm32_search.sh function "L6470" --scope L6470
+./scripts/stm32_search.sh peripheral "SPI" --scope all
 
-# Find L6470 motor control functions  
-python3 scripts/search_enhanced_docs.py function L6470 --scope L6470
+# Alternative: Direct virtual environment usage
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py function HAL_GPIO_Init --scope STM32H7
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py function L6470 --scope L6470
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "safety systems" --scope all
+/workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "motor control" --scope all
 
-# Search Nucleo BSP functions
-python3 scripts/search_enhanced_docs.py function BSP_LED --scope NUCLEO_BSP
-
-# Find concept-related documentation
-python3 scripts/search_enhanced_docs.py concept "safety systems" --scope all
-
-# Search across all documentation
-python3 scripts/search_enhanced_docs.py concept "motor control" --scope all
+# LEGACY SEARCH (Archived - Available for reference)
+# python3 scripts/legacy_archive/search_enhanced_docs.py [queries...]
 ```
 
 **Search Capabilities**:
-- **91.1MB** total searchable documentation
-- **32,200+** indexed keywords
-- **4,227** documentation files
-- **7x faster** than HTML-based searches
+- **Semantic Database**: ChromaDB with Ollama mxbai-embed-large embeddings (981 documents)
+- **AI-Powered Understanding**: Real embeddings for context-aware search
+- **Multi-Collection Search**: STM32H7/L6470/BSP/project domains
+- **Legacy Indexes**: 32,200+ keywords archived in `docs/indexes/` for reference
 
 ## 📊 System Overview
 

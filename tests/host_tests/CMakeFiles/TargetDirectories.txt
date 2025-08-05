@@ -1,5 +1,0 @@
-/workspaces/code/tests/host_tests/CMakeFiles/unity.dir
-/workspaces/code/tests/host_tests/CMakeFiles/test_emergency_stop_unity.dir
-/workspaces/code/tests/host_tests/CMakeFiles/test.dir
-/workspaces/code/tests/host_tests/CMakeFiles/edit_cache.dir
-/workspaces/code/tests/host_tests/CMakeFiles/rebuild_cache.dir

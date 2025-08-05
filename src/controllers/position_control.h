@@ -235,6 +235,7 @@ extern SystemError_t motor_run(uint8_t motor_id, int8_t direction,
                                uint32_t speed);
 extern SystemError_t motor_stop(uint8_t motor_id);
 extern SystemError_t as5600_read_angle(uint8_t motor_id, uint16_t *angle);
-extern SystemError_t as5600_set_zero_position(uint8_t motor_id);
+extern SystemError_t as5600_set_zero_position(uint8_t encoder_id,
+                                              float zero_position_deg);
 
 #endif // POSITION_CONTROL_H

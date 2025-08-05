@@ -1,161 +1,186 @@
 /**
  * @file fault_monitor.h
- * @brief Fault Detection and Monitoring System Interface - STM32H753ZI Stepper Motor Project
+ * @brief Fault Detection and Monitoring System Interface - STM32H753ZI Stepper
+ * Motor Project
  * @author STM32H753ZI Project Team
  * @date 2025-08-05
- * 
+ *
  * @note Fault monitoring implementation following:
  * - .github/instructions/safety-rt.instructions.md
  * - config/safety_config.h (SSOT)
- * 
- * @warning SAFETY-CRITICAL: Fault detection must respond within safety reaction times
+ *
+ * @warning SAFETY-CRITICAL: Fault detection must respond within safety
+ * reaction times
  */
 
 #ifndef FAULT_MONITOR_H
 #define FAULT_MONITOR_H
 
-#include "config/safety_config.h"
-#include "config/hardware_config.h"  // For voltage/temperature constants
 #include "common/data_types.h"
-#include "common/error_codes.h"  // For SystemError_t
+#include "common/error_codes.h"     // For SystemError_t
+#include "config/hardware_config.h" // For voltage/temperature constants
+#include "config/safety_config.h"
 #include "stm32h7xx_hal.h"
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* Fault Type Definitions                                                    */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 
 /**
  * @brief Motor fault types with severity levels
  */
 typedef enum {
-    MOTOR_FAULT_NONE                = 0x00000000,
-    
+    MOTOR_FAULT_NONE = 0x00000000,
+
     // Critical faults (immediate stop required)
-    MOTOR_FAULT_OVERCURRENT        = 0x00000001,  ///< Motor overcurrent detected
-    MOTOR_FAULT_OVERVOLTAGE        = 0x00000002,  ///< Supply overvoltage
-    MOTOR_FAULT_UNDERVOLTAGE       = 0x00000004,  ///< Supply undervoltage
-    MOTOR_FAULT_OVERTEMPERATURE    = 0x00000008,  ///< Driver overtemperature
-    MOTOR_FAULT_L6470_FLAG         = 0x00000010,  ///< L6470 driver fault flag
-    MOTOR_FAULT_EMERGENCY_STOP     = 0x00000020,  ///< Emergency stop activated
-    MOTOR_FAULT_WATCHDOG_TIMEOUT   = 0x00000040,  ///< System watchdog timeout
-    MOTOR_FAULT_POSITION_ERROR     = 0x00000080,  ///< Position feedback error
-    
+    MOTOR_FAULT_OVERCURRENT = 0x00000001,      ///< Motor overcurrent detected
+    MOTOR_FAULT_OVERVOLTAGE = 0x00000002,      ///< Supply overvoltage
+    MOTOR_FAULT_UNDERVOLTAGE = 0x00000004,     ///< Supply undervoltage
+    MOTOR_FAULT_OVERTEMPERATURE = 0x00000008,  ///< Driver overtemperature
+    MOTOR_FAULT_L6470_FLAG = 0x00000010,       ///< L6470 driver fault flag
+    MOTOR_FAULT_EMERGENCY_STOP = 0x00000020,   ///< Emergency stop activated
+    MOTOR_FAULT_WATCHDOG_TIMEOUT = 0x00000040, ///< System watchdog timeout
+    MOTOR_FAULT_POSITION_ERROR = 0x00000080,   ///< Position feedback error
+    MOTOR_FAULT_MOTION_PROFILE_FAILED =
+        0x00000100, ///< Motion profile execution failed
+    MOTOR_FAULT_SYNCHRONIZATION_ERROR =
+        0x00000200, ///< Motor synchronization error
+
     // Warning faults (degraded operation)
-    MOTOR_FAULT_SPEED_WARNING      = 0x00000100,  ///< Speed approaching limit
-    MOTOR_FAULT_CURRENT_WARNING    = 0x00000200,  ///< Current approaching limit
-    MOTOR_FAULT_TEMP_WARNING       = 0x00000400,  ///< Temperature warning
-    MOTOR_FAULT_VOLTAGE_WARNING    = 0x00000800,  ///< Voltage warning
-    MOTOR_FAULT_ENCODER_WARNING    = 0x00001000,  ///< Encoder signal degraded
-    MOTOR_FAULT_COMM_WARNING       = 0x00002000,  ///< Communication issues
-    
+    MOTOR_FAULT_SPEED_WARNING = 0x00000400,   ///< Speed approaching limit
+    MOTOR_FAULT_CURRENT_WARNING = 0x00000800, ///< Current approaching limit
+    MOTOR_FAULT_TEMP_WARNING = 0x00001000,    ///< Temperature warning
+    MOTOR_FAULT_VOLTAGE_WARNING = 0x00002000, ///< Voltage warning
+    MOTOR_FAULT_ENCODER_WARNING = 0x00004000, ///< Encoder signal degraded
+    MOTOR_FAULT_COMM_WARNING = 0x00008000,    ///< Communication issues
+
     // System faults
-    MOTOR_FAULT_MEMORY_ERROR       = 0x00010000,  ///< Memory corruption
-    MOTOR_FAULT_CONFIG_ERROR       = 0x00020000,  ///< Configuration invalid
-    MOTOR_FAULT_INIT_ERROR         = 0x00040000,  ///< Initialization failed
-    MOTOR_FAULT_SELF_TEST_FAILED   = 0x00080000,  ///< Self-test failure
-    
+    MOTOR_FAULT_MEMORY_ERROR = 0x00010000,     ///< Memory corruption
+    MOTOR_FAULT_CONFIG_ERROR = 0x00020000,     ///< Configuration invalid
+    MOTOR_FAULT_INIT_ERROR = 0x00040000,       ///< Initialization failed
+    MOTOR_FAULT_SELF_TEST_FAILED = 0x00080000, ///< Self-test failure
+
     // Critical fault mask
-    MOTOR_FAULT_CRITICAL_MASK      = 0x000000FF,
-    
+    MOTOR_FAULT_CRITICAL_MASK = 0x000003FF,
+
     // All faults mask (cast to avoid enum range warning)
-    MOTOR_FAULT_ALL_MASK           = (int)0xFFFFFFFF
+    MOTOR_FAULT_ALL_MASK = (int)0xFFFFFFFF
 } MotorFaultType_t;
 
 /**
  * @brief System fault types
  */
 typedef enum {
-    SYSTEM_FAULT_NONE              = 0x00000000,
-    
+    SYSTEM_FAULT_NONE = 0x00000000,
+
     // Hardware faults
-    SYSTEM_FAULT_CLOCK_FAILURE     = 0x00000001,  ///< System clock failure
-    SYSTEM_FAULT_POWER_FAILURE     = 0x00000002,  ///< Power supply failure
-    SYSTEM_FAULT_GPIO_FAULT        = 0x00000004,  ///< GPIO configuration fault
-    SYSTEM_FAULT_SPI_FAULT         = 0x00000008,  ///< SPI communication fault
-    SYSTEM_FAULT_UART_FAULT        = 0x00000010,  ///< UART communication fault
-    SYSTEM_FAULT_CAN_FAULT         = 0x00000020,  ///< CAN communication fault
-    SYSTEM_FAULT_COMM_ERROR        = 0x00000040,  ///< General communication error
-    SYSTEM_FAULT_COMM_TIMEOUT      = 0x00000080,  ///< Communication timeout
-    
+    SYSTEM_FAULT_CLOCK_FAILURE = 0x00000001, ///< System clock failure
+    SYSTEM_FAULT_POWER_FAILURE = 0x00000002, ///< Power supply failure
+    SYSTEM_FAULT_GPIO_FAULT = 0x00000004,    ///< GPIO configuration fault
+    SYSTEM_FAULT_SPI_FAULT = 0x00000008,     ///< SPI communication fault
+    SYSTEM_FAULT_UART_FAULT = 0x00000010,    ///< UART communication fault
+    SYSTEM_FAULT_CAN_FAULT = 0x00000020,     ///< CAN communication fault
+    SYSTEM_FAULT_COMM_ERROR = 0x00000040,    ///< General communication error
+    SYSTEM_FAULT_COMM_TIMEOUT = 0x00000080,  ///< Communication timeout
+
     // Software faults
-    SYSTEM_FAULT_STACK_OVERFLOW    = 0x00000100,  ///< Stack overflow detected
-    SYSTEM_FAULT_HEAP_CORRUPTION   = 0x00000200,  ///< Heap corruption
-    SYSTEM_FAULT_ASSERT_FAILED     = 0x00000400,  ///< Assertion failure
-    SYSTEM_FAULT_RTOS_ERROR        = 0x00000800,  ///< RTOS error
-    SYSTEM_FAULT_INIT_ERROR        = 0x00001000,  ///< Initialization error
-    SYSTEM_FAULT_SELF_TEST         = 0x00002000,  ///< Self-test fault
-    SYSTEM_FAULT_SAFETY_VIOLATION  = 0x00004000,  ///< Safety violation detected
-    SYSTEM_FAULT_REDUNDANCY_LOST   = 0x00008000,  ///< Redundancy system failure
-    
+    SYSTEM_FAULT_STACK_OVERFLOW = 0x00000100,   ///< Stack overflow detected
+    SYSTEM_FAULT_HEAP_CORRUPTION = 0x00000200,  ///< Heap corruption
+    SYSTEM_FAULT_ASSERT_FAILED = 0x00000400,    ///< Assertion failure
+    SYSTEM_FAULT_RTOS_ERROR = 0x00000800,       ///< RTOS error
+    SYSTEM_FAULT_INIT_ERROR = 0x00001000,       ///< Initialization error
+    SYSTEM_FAULT_SELF_TEST = 0x00002000,        ///< Self-test fault
+    SYSTEM_FAULT_SAFETY_VIOLATION = 0x00004000, ///< Safety violation detected
+    SYSTEM_FAULT_REDUNDANCY_LOST = 0x00008000,  ///< Redundancy system failure
+
     // Critical system fault mask
-    SYSTEM_FAULT_CRITICAL_MASK     = 0x0000FFFF,
-    
+    SYSTEM_FAULT_CRITICAL_MASK = 0x0000FFFF,
+
     // All system faults mask (cast to avoid enum range warning)
-    SYSTEM_FAULT_ALL_MASK          = (int)0xFFFFFFFF
+    SYSTEM_FAULT_ALL_MASK = (int)0xFFFFFFFF
 } SystemFaultType_t;
 
 /**
  * @brief Fault severity levels
  */
 typedef enum {
-    FAULT_SEVERITY_INFO            = 0,  ///< Informational only
-    FAULT_SEVERITY_WARNING         = 1,  ///< Warning - monitor closely
-    FAULT_SEVERITY_ERROR           = 2,  ///< Error - action required
-    FAULT_SEVERITY_CRITICAL        = 3   ///< Critical - immediate stop
+    FAULT_SEVERITY_INFO = 0,    ///< Informational only
+    FAULT_SEVERITY_WARNING = 1, ///< Warning - monitor closely
+    FAULT_SEVERITY_ERROR = 2,   ///< Error - action required
+    FAULT_SEVERITY_CRITICAL = 3 ///< Critical - immediate stop
 } FaultSeverity_t;
 
 /**
  * @brief Fault record structure
  */
 typedef struct {
-    uint32_t fault_code;                    ///< Fault type code
-    FaultSeverity_t severity;               ///< Fault severity level
-    uint32_t timestamp;                     ///< Time when fault occurred
-    uint32_t count;                         ///< Number of occurrences
-    uint32_t motor_id;                      ///< Motor ID (if motor-specific)
-    uint32_t additional_data;               ///< Additional fault-specific data
-    bool active;                            ///< Whether fault is currently active
-    bool acknowledged;                      ///< Whether fault has been acknowledged
+    uint32_t fault_code;      ///< Fault type code
+    FaultSeverity_t severity; ///< Fault severity level
+    uint32_t timestamp;       ///< Time when fault occurred
+    uint32_t count;           ///< Number of occurrences
+    uint32_t motor_id;        ///< Motor ID (if motor-specific)
+    uint32_t additional_data; ///< Additional fault-specific data
+    bool active;              ///< Whether fault is currently active
+    bool acknowledged;        ///< Whether fault has been acknowledged
 } FaultRecord_t;
 
 /**
  * @brief Fault monitor configuration
  */
 typedef struct {
-    bool enabled;                           ///< Monitor enabled/disabled
-    uint32_t check_interval_ms;             ///< Monitoring interval
-    uint32_t fault_count;                   ///< Total fault count
-    uint32_t critical_fault_count;          ///< Critical fault count
-    uint32_t last_check_time;               ///< Last monitoring cycle time
-    uint32_t max_fault_records;             ///< Maximum fault records to keep
-    uint32_t current_fault_count;           ///< Current number of active faults
+    bool enabled;                  ///< Monitor enabled/disabled
+    uint32_t check_interval_ms;    ///< Monitoring interval
+    uint32_t fault_count;          ///< Total fault count
+    uint32_t critical_fault_count; ///< Critical fault count
+    uint32_t last_check_time;      ///< Last monitoring cycle time
+    uint32_t max_fault_records;    ///< Maximum fault records to keep
+    uint32_t current_fault_count;  ///< Current number of active faults
 } FaultMonitorConfig_t;
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* L6470 Fault Status Definitions                                            */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 
 /**
  * @brief L6470 status register fault flags
  */
 typedef enum {
-    L6470_FAULT_NONE               = 0x0000,
-    L6470_FAULT_OVERCURRENT_B      = 0x0001,  ///< Bridge B overcurrent
-    L6470_FAULT_OVERCURRENT_A      = 0x0002,  ///< Bridge A overcurrent
-    L6470_FAULT_THERMAL_SHUTDOWN   = 0x0004,  ///< Thermal shutdown
-    L6470_FAULT_THERMAL_WARNING    = 0x0008,  ///< Thermal warning
-    L6470_FAULT_UVLO               = 0x0010,  ///< Undervoltage lockout
-    L6470_FAULT_STALL_DETECTION    = 0x0020,  ///< Stall detection
-    L6470_FAULT_SWITCH_EVENT       = 0x0040,  ///< Switch turn-on event
-    L6470_FAULT_COMMAND_ERROR      = 0x0080,  ///< Wrong command
-    L6470_FAULT_ALL_MASK           = 0x00FF
+    L6470_FAULT_NONE = 0x0000,
+    L6470_FAULT_OVERCURRENT_B = 0x0001,    ///< Bridge B overcurrent
+    L6470_FAULT_OVERCURRENT_A = 0x0002,    ///< Bridge A overcurrent
+    L6470_FAULT_THERMAL_SHUTDOWN = 0x0004, ///< Thermal shutdown
+    L6470_FAULT_THERMAL_WARNING = 0x0008,  ///< Thermal warning
+    L6470_FAULT_UVLO = 0x0010,             ///< Undervoltage lockout
+    L6470_FAULT_STALL_DETECTION = 0x0020,  ///< Stall detection
+    L6470_FAULT_SWITCH_EVENT = 0x0040,     ///< Switch turn-on event
+    L6470_FAULT_COMMAND_ERROR = 0x0080,    ///< Wrong command
+    L6470_FAULT_ALL_MASK = 0x00FF
 } L6470FaultFlags_t;
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
+/* Fault Type Aliases for Legacy Compatibility                              */
+/* ==========================================================================
+ */
+// Aliases for backward compatibility with existing code
+#define FAULT_MOTION_PROFILE_FAILED MOTOR_FAULT_MOTION_PROFILE_FAILED
+#define FAULT_SYNCHRONIZATION_ERROR MOTOR_FAULT_SYNCHRONIZATION_ERROR
+#define FAULT_ENCODER_COMMUNICATION MOTOR_FAULT_ENCODER_WARNING
+#define FAULT_POSITION_ERROR_EXCESSIVE MOTOR_FAULT_POSITION_ERROR
+#define FAULT_CPU_OVERLOAD SYSTEM_FAULT_RTOS_ERROR
+#define FAULT_TIMING_OVERRUN SYSTEM_FAULT_RTOS_ERROR
+
+/* ==========================================================================
+ */
 /* Public Function Prototypes                                                */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 
 /**
  * @brief Initialize fault monitoring system
@@ -177,10 +202,19 @@ SystemError_t fault_monitor_check(void);
  * @param additional_data Optional additional fault data
  * @return System error code
  */
-SystemError_t fault_monitor_record_motor_fault(uint8_t motor_id, 
-                                                MotorFaultType_t fault_type,
-                                                FaultSeverity_t severity,
-                                                uint32_t additional_data);
+SystemError_t fault_monitor_record_motor_fault(uint8_t motor_id,
+                                               MotorFaultType_t fault_type,
+                                               FaultSeverity_t severity,
+                                               uint32_t additional_data);
+
+/**
+ * @brief Report a motor fault (convenience wrapper)
+ * @param motor_id Motor identifier (0-based)
+ * @param fault_type Type of fault detected
+ * @return System error code
+ */
+SystemError_t fault_monitor_report_fault(uint8_t motor_id,
+                                         MotorFaultType_t fault_type);
 
 /**
  * @brief Record a system fault
@@ -190,8 +224,8 @@ SystemError_t fault_monitor_record_motor_fault(uint8_t motor_id,
  * @return System error code
  */
 SystemError_t fault_monitor_record_system_fault(SystemFaultType_t fault_type,
-                                                 FaultSeverity_t severity,
-                                                 uint32_t additional_data);
+                                                FaultSeverity_t severity,
+                                                uint32_t additional_data);
 
 /**
  * @brief Clear a specific fault
@@ -205,7 +239,8 @@ SystemError_t fault_monitor_clear_fault(uint32_t fault_code);
  * @param max_severity Maximum severity to clear (inclusive)
  * @return System error code
  */
-SystemError_t fault_monitor_clear_faults_by_severity(FaultSeverity_t max_severity);
+SystemError_t
+fault_monitor_clear_faults_by_severity(FaultSeverity_t max_severity);
 
 /**
  * @brief Acknowledge a specific fault
@@ -246,7 +281,8 @@ uint32_t fault_monitor_get_system_faults(void);
  * @param fault_record Pointer to fault record structure to fill
  * @return System error code
  */
-SystemError_t fault_monitor_get_fault_record(uint32_t index, FaultRecord_t* fault_record);
+SystemError_t fault_monitor_get_fault_record(uint32_t index,
+                                             FaultRecord_t *fault_record);
 
 /**
  * @brief Get total number of fault records
@@ -273,7 +309,8 @@ L6470FaultFlags_t fault_monitor_check_l6470_status(uint8_t motor_id);
  * @param current_ma Current reading in milliamps
  * @return System error code
  */
-SystemError_t fault_monitor_check_motor_current(uint8_t motor_id, uint32_t current_ma);
+SystemError_t fault_monitor_check_motor_current(uint8_t motor_id,
+                                                uint32_t current_ma);
 
 /**
  * @brief Monitor motor speed levels
@@ -281,7 +318,8 @@ SystemError_t fault_monitor_check_motor_current(uint8_t motor_id, uint32_t curre
  * @param speed_steps_per_sec Speed in steps per second
  * @return System error code
  */
-SystemError_t fault_monitor_check_motor_speed(uint8_t motor_id, uint32_t speed_steps_per_sec);
+SystemError_t fault_monitor_check_motor_speed(uint8_t motor_id,
+                                              uint32_t speed_steps_per_sec);
 
 /**
  * @brief Monitor system voltage levels
@@ -304,9 +342,9 @@ SystemError_t fault_monitor_check_temperature(int32_t temperature_c);
  * @param actual_position Actual encoder position
  * @return System error code
  */
-SystemError_t fault_monitor_check_position_accuracy(uint8_t motor_id, 
-                                                     int32_t expected_position,
-                                                     int32_t actual_position);
+SystemError_t fault_monitor_check_position_accuracy(uint8_t motor_id,
+                                                    int32_t expected_position,
+                                                    int32_t actual_position);
 
 /**
  * @brief Enable/disable fault monitoring
@@ -328,42 +366,48 @@ FaultMonitorConfig_t fault_monitor_get_config(void);
  * @param active_faults Pointer to store active fault count
  * @return System error code
  */
-SystemError_t fault_monitor_get_statistics(uint32_t* total_faults,
-                                            uint32_t* critical_faults,
-                                            uint32_t* active_faults);
+SystemError_t fault_monitor_get_statistics(uint32_t *total_faults,
+                                           uint32_t *critical_faults,
+                                           uint32_t *active_faults);
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* Safety Integration Macros                                                 */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 
 /**
  * @brief Quick fault check macro for critical operations
  */
-#define FAULT_CHECK_CRITICAL() \
-    do { \
-        if (fault_monitor_has_critical_faults()) { \
-            return ERROR_SAFETY_CRITICAL_FAULT; \
-        } \
-    } while(0)
+#define FAULT_CHECK_CRITICAL()                                                \
+    do {                                                                      \
+        if (fault_monitor_has_critical_faults()) {                            \
+            return ERROR_SAFETY_CRITICAL_FAULT;                               \
+        }                                                                     \
+    } while (0)
 
 /**
  * @brief Record motor fault with automatic severity determination
  */
-#define RECORD_MOTOR_FAULT(motor_id, fault_type, data) \
-    do { \
-        FaultSeverity_t severity = ((fault_type) & MOTOR_FAULT_CRITICAL_MASK) ? \
-                                   FAULT_SEVERITY_CRITICAL : FAULT_SEVERITY_ERROR; \
-        fault_monitor_record_motor_fault((motor_id), (fault_type), severity, (data)); \
-    } while(0)
+#define RECORD_MOTOR_FAULT(motor_id, fault_type, data)                        \
+    do {                                                                      \
+        FaultSeverity_t severity = ((fault_type) & MOTOR_FAULT_CRITICAL_MASK) \
+                                       ? FAULT_SEVERITY_CRITICAL              \
+                                       : FAULT_SEVERITY_ERROR;                \
+        fault_monitor_record_motor_fault((motor_id), (fault_type), severity,  \
+                                         (data));                             \
+    } while (0)
 
 /**
  * @brief Record system fault with automatic severity determination
  */
-#define RECORD_SYSTEM_FAULT(fault_type, data) \
-    do { \
-        FaultSeverity_t severity = ((fault_type) & SYSTEM_FAULT_CRITICAL_MASK) ? \
-                                   FAULT_SEVERITY_CRITICAL : FAULT_SEVERITY_ERROR; \
-        fault_monitor_record_system_fault((fault_type), severity, (data)); \
-    } while(0)
+#define RECORD_SYSTEM_FAULT(fault_type, data)                                 \
+    do {                                                                      \
+        FaultSeverity_t severity =                                            \
+            ((fault_type) & SYSTEM_FAULT_CRITICAL_MASK)                       \
+                ? FAULT_SEVERITY_CRITICAL                                     \
+                : FAULT_SEVERITY_ERROR;                                       \
+        fault_monitor_record_system_fault((fault_type), severity, (data));    \
+    } while (0)
 
 #endif /* FAULT_MONITOR_H */

@@ -90,7 +90,7 @@
     {
       "label": "Validate SSOT",
       "type": "shell",
-      "command": "python3 scripts/validate_ssot.py",
+      "command": "${workspaceFolder}/.venv/bin/python scripts/validate_ssot.py",
       "group": "test",
       "options": {
         "cwd": "${workspaceFolder}"
@@ -135,6 +135,146 @@
         "focus": false,
         "panel": "shared"
       }
+    },
+    {
+      "label": "Update STATUS.md",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python scripts/auto_update_status.py --verbose",
+      "group": "build",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Update STATUS.md (Build Triggered)",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python scripts/auto_update_status.py --source build --verbose",
+      "group": "build",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": false,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Update STATUS.md (Preview)",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python scripts/auto_update_status.py --dry-run --verbose",
+      "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Build with Status Update",
+      "type": "shell",
+      "command": "./scripts/fix_cmake.sh",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Build (CMake)",
+        "Update STATUS.md (Build Triggered)"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
+          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": [
+        "$gcc"
+      ]
+    },
+    {
+      "label": "Build with Automated Status (CMake)",
+      "type": "shell",
+      "command": "cmake --build build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "dependsOn": "Build (CMake)",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
+          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": [
+        "$gcc"
+      ]
+    },
+    {
+      "label": "Update Status (CMake Target)",
+      "type": "shell",
+      "command": "cmake --build build --target update-status",
+      "group": "build",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Preview Status Updates (CMake Target)",
+      "type": "shell",
+      "command": "cmake --build build --target update-status-preview",
+      "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": []
     }
   ]
 }

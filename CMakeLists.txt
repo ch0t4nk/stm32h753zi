@@ -51,6 +51,19 @@ option(ENABLE_COVERAGE "Enable code coverage analysis" OFF)
 option(ENABLE_STATIC_ANALYSIS "Enable static analysis tools" OFF)
 option(BUILD_DOCUMENTATION "Build documentation with Doxygen" OFF)
 
+# Find Python3 early for STATUS.md automation and other tools
+# Prefer virtual environment Python for consistency
+find_program(PYTHON3_EXE NAMES 
+    "${CMAKE_SOURCE_DIR}/.venv/bin/python3"
+    "${CMAKE_SOURCE_DIR}/.venv/bin/python"
+    "python3"
+)
+if(PYTHON3_EXE)
+    message(STATUS "python3 found for automation: ${PYTHON3_EXE}")
+else()
+    message(STATUS "Python3 not found - automation features disabled")
+endif()
+
 # Set build type specific flags
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_compile_definitions(DEBUG=1)
@@ -103,6 +116,7 @@ file(GLOB_RECURSE SOURCES
 # Remove template files that are not needed for basic build
 list(FILTER SOURCES EXCLUDE REGEX ".*timebase_rtc.*template.*")
 list(FILTER SOURCES EXCLUDE REGEX ".*hal_msp_template.*")
+list(FILTER SOURCES EXCLUDE REGEX ".*timebase_tim_template.*")
 
 # Use the correct startup file for GCC
 set(STARTUP_FILE "${CMAKE_SOURCE_DIR}/startup_stm32h753xx.s")
@@ -110,9 +124,9 @@ set(STARTUP_FILE "${CMAKE_SOURCE_DIR}/startup_stm32h753xx.s")
 # Create main executable
 add_executable(${PROJECT_NAME} ${SOURCES} ${STARTUP_FILE})
 
-# Set the linker script
+# Set target properties
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    LINK_FLAGS "-T${CMAKE_SOURCE_DIR}/STM32H753XX_FLASH.ld -Wl,--gc-sections -Wl,--print-memory-usage -Wl,-Map=${CMAKE_BINARY_DIR}/${PROJECT_NAME}.map -lc -lm -lnosys"
+    LINK_FLAGS "-Wl,--gc-sections -Wl,--print-memory-usage -Wl,-Map=${CMAKE_BINARY_DIR}/${PROJECT_NAME}.map -lc -lm -lnosys"
 )
 
 # Link libraries
@@ -132,6 +146,35 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${PROJECT_NAME}>
     COMMENT "Binary size information:"
 )
+
+# STATUS.md automation - Phase 2: Post-build status update
+if(PYTHON3_EXE)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/auto_update_status.py --source build
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Updating STATUS.md with build metrics"
+        VERBATIM
+    )
+else()
+    message(STATUS "Python3 not found - STATUS.md automation disabled")
+endif()
+
+# STATUS.md automation target for manual use
+if(PYTHON3_EXE)
+    add_custom_target(update-status
+        COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/auto_update_status.py --verbose
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Manually updating STATUS.md"
+        VERBATIM
+    )
+    
+    add_custom_target(update-status-preview
+        COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/auto_update_status.py --dry-run --verbose
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Preview STATUS.md updates"
+        VERBATIM
+    )
+endif()
 
 # Add subdirectories for examples (optional)
 if(EXISTS "${CMAKE_SOURCE_DIR}/examples/CMakeLists.txt")
@@ -295,8 +338,7 @@ if(CLANG_FORMAT_EXE)
     )
 endif()
 
-# SSOT validation target
-find_program(PYTHON3_EXE NAMES "python3")
+# SSOT validation target - Use pre-found Python
 if(PYTHON3_EXE AND EXISTS "${CMAKE_SOURCE_DIR}/scripts/validate_ssot.py")
     add_custom_target(validate-ssot
         COMMAND ${PYTHON3_EXE} scripts/validate_ssot.py

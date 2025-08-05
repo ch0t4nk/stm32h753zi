@@ -51,6 +51,15 @@
 - **Kept**: Latest backup `code_backup_20250805_004549.ioc`
 - **Rationale**: Maintain recent backup while cleaning clutter
 
+### ✅ Build System Reliability (NEW - COMPLETE)
+- **Created**: `cmake-build-system.instructions.md` - Comprehensive CMake troubleshooting guide
+- **Added**: `scripts/fix_cmake.sh` - Automated recovery script for recurring CMake issues
+- **Added**: `scripts/validate_build_env.sh` - Pre-build environment validation
+- **Enforced**: Virtual environment activation for ALL build operations (no more forgetting!)
+- **Fixed**: Missing tools handling with Make fallback when Ninja unavailable
+- **Integration**: VS Code tasks automatically use fix script with venv enforcement
+- **Status**: ✅ SOLVES THE "20TH TIME CMAKE CONFIG" PROBLEM
+
 ### 3. Documentation Organization ✅
 - **Created**: Archive structure in `docs/archives/`
   - `instruction_consolidation/` - Ready for future instruction documentation
@@ -79,7 +88,7 @@
 
 ### Organized Directories
 ```
-├── .github/instructions/       # 8 consolidated instruction files (85% reduction from 39)
+├── .github/instructions/       # 9 consolidated instruction files (including new cmake-build-system)
 ├── 00_reference/              # 91.1MB reference documentation (READ-ONLY)
 ├── docs/                      # Active documentation + organized archives
 ├── src/                       # Clean source code structure (no test files)
@@ -93,7 +102,7 @@
 
 ### Validated Architecture
 - **6 Domain-Based Instructions**: Covering all development aspects
-- **2 Supporting Instructions**: SSOT and file organization guidance
+- **3 Supporting Instructions**: SSOT, file organization, and CMake build system guidance
 - **VS Code Copilot Integration**: ✅ FULLY VALIDATED
 - **Pattern Coverage**: ✅ All file types properly scoped
 - **Overlapping Guidance**: ✅ Multi-domain files receive combined guidance
@@ -105,11 +114,15 @@
 4. `core-software.instructions.md` - Data types, error handling, motor control
 5. `safety-rt.instructions.md` - Safety systems, real-time control, timing
 6. `api-ui.instructions.md` - API design, UI, documentation generation
+7. `ssot-config.instructions.md` - Single Source of Truth configuration management
+8. `file-organization.instructions.md` - File structure and asset placement
+9. `cmake-build-system.instructions.md` - **NEW** - CMake troubleshooting and build recovery
 
 ## Development Environment Status ✅
 
 ### Ready for STM32H753ZI Development
-- **Build System**: CMake + ARM GCC toolchain configured
+- **Build System**: CMake + ARM GCC toolchain configured with automated recovery scripts
+- **Python Environment**: Virtual environment (`.venv`) automatically activated in VS Code
 - **Hardware Support**: STM32H753ZI + X-NUCLEO-IHM02A1 integration ready
 - **Documentation**: 91.1MB reference docs with enhanced search tools
 - **Testing**: Unity/GoogleTest frameworks + validation scripts
@@ -117,9 +130,18 @@
 
 ### Key Development Assets
 - **SSOT Configuration**: Centralized in `src/config/` headers
-- **Documentation Search**: `scripts/search_enhanced_docs.py` (7x faster)
-- **Build Tasks**: VS Code tasks for build, flash, test, docs generation
+- **Documentation Search**: `scripts/stm32_semantic_search.py` with virtual environment integration
+- **Build Recovery**: `scripts/fix_cmake.sh` with comprehensive troubleshooting
+- **Environment Validation**: `scripts/validate_build_env.sh` with dependency checking
+- **VS Code Python Integration**: Automatic `.venv` activation for all terminals
 - **Safety First**: Validated instruction guidance emphasizes fail-safe design
+
+### Build System Reliability ✅
+- **New Instruction**: `cmake-build-system.instructions.md` - Comprehensive CMake troubleshooting guide
+- **Recovery Script**: `scripts/fix_cmake.sh` - Automated fix for recurring CMake issues
+- **Validation Script**: `scripts/validate_build_env.sh` - Pre-build environment checking
+- **VS Code Integration**: Automatic virtual environment activation prevents dependency issues
+- **Documentation**: Complete troubleshooting guide with fallback procedures
 
 ## Next Development Steps
 

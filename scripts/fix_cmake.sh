@@ -31,23 +31,37 @@ fi
 echo "📦 Checking Python dependencies..."
 if ! python -c "import chromadb, requests" 2>/dev/null; then
     echo "📦 Installing required Python packages..."
-    pip install --quiet chromadb requests
+    pip install --quiet chromadb requests ollama
     echo "✅ Python dependencies installed"
 fi
 
-# 0. Ensure Python virtual environment is available
-echo "🐍 Checking Python virtual environment..."
-if [ ! -d ".venv" ]; then
-    echo "⚠️  Creating Python virtual environment..."
-    python3 -m venv .venv
-    source .venv/bin/activate
-    pip install --upgrade pip
-    pip install chromadb requests ollama
-    echo "✅ Virtual environment created and packages installed"
+# Setup Ollama service and model
+echo "🤖 Checking Ollama service and model setup..."
+if ! pgrep -f "ollama serve" > /dev/null; then
+    echo "🚀 Starting Ollama service..."
+    ollama serve > /dev/null 2>&1 &
+    sleep 3
+    echo "✅ Ollama service started"
 else
-    echo "✅ Virtual environment exists"
-    source .venv/bin/activate
-    echo "✅ Virtual environment activated"
+    echo "✅ Ollama service already running"
+fi
+
+# Check if required model is available
+echo "📥 Checking for mxbai-embed-large model..."
+if ! ollama list | grep -q "mxbai-embed-large"; then
+    echo "⬇️  Downloading mxbai-embed-large model (this may take a few minutes)..."
+    ollama pull mxbai-embed-large
+    echo "✅ Model downloaded successfully"
+else
+    echo "✅ mxbai-embed-large model already available"
+fi
+
+# Test Ollama connection
+echo "🔍 Testing Ollama connection..."
+if curl -s http://localhost:11434/api/tags > /dev/null; then
+    echo "✅ Ollama API accessible"
+else
+    echo "⚠️  Ollama API not accessible - semantic search will use mock embeddings"
 fi
 
 # 1. Verify ARM GCC installation
