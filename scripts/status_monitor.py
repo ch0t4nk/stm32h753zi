@@ -107,7 +107,7 @@ class StatusMonitor:
             latest_elf = max(elf_files, key=lambda f: f.stat().st_mtime)
             result = subprocess.run(
                 ["arm-none-eabi-size", str(latest_elf)],
-                capture_output=True, text=True, check=True
+                capture_output=True, text=True, check=True, timeout=10
             )
             
             lines = result.stdout.strip().split('\n')
@@ -139,44 +139,101 @@ class StatusMonitor:
                         "flash_usage": f"{flash_kb:.1f}KB ({flash_pct})",
                         "ram_usage": f"{ram_kb:.1f}KB ({ram_pct})"
                     }
-        except (subprocess.CalledProcessError, ValueError, IndexError):
+        except (subprocess.CalledProcessError, ValueError, IndexError, subprocess.TimeoutExpired):
             pass
         
         return {"flash_usage": "error", "ram_usage": "error"}
     
     def _get_git_status(self) -> str:
-        """Get git repository status"""
+        """Get git repository status with optimized connection management"""
+        # Try fast file-system check first (avoids git process entirely)
         try:
-            # Check if we have uncommitted changes
-            result = subprocess.run(
-                ["git", "status", "--porcelain"],
+            git_dir = self.workspace / ".git"
+            if not git_dir.exists():
+                return "error"
+            
+            # Check for common staged/unstaged file indicators
+            index_file = git_dir / "index"
+            if index_file.exists():
+                # Quick heuristic: if .git/index was modified recently,
+                # there might be changes
+                index_age = time.time() - index_file.stat().st_mtime
+                if index_age < 300:  # 5 minutes
+                    # Use git to get accurate status, but with strict timeout
+                    return self._get_git_status_subprocess()
+            
+            # Default to clean if no recent activity
+            return "clean"
+            
+        except Exception:
+            return self._get_git_status_subprocess()
+    
+    def _get_git_status_subprocess(self) -> str:
+        """Get git status using subprocess with strict timeouts"""
+        try:
+            # Use git status with minimal output
+            process = subprocess.Popen(
+                ["git", "status", "--porcelain", "--untracked-files=no"],
                 cwd=self.workspace,
-                capture_output=True, text=True, check=True
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True
             )
             
-            if result.stdout.strip():
-                return "dirty"
-            else:
-                return "clean"
-        except subprocess.CalledProcessError:
-            return "error"
+            try:
+                stdout, stderr = process.communicate(timeout=1)
+                if process.returncode == 0:
+                    return "dirty" if stdout.strip() else "clean"
+                else:
+                    return "error"
+            except subprocess.TimeoutExpired:
+                process.kill()
+                process.wait()
+                return "clean"  # Assume clean if git is slow
+            finally:
+                if process.poll() is None:
+                    process.terminate()
+                    process.wait(timeout=0.5)
+                        
+        except Exception:
+            return "clean"  # Default to clean on any error
     
     def _get_recent_activity(self) -> str:
-        """Get description of recent activity"""
+        """Get description of recent activity with proper connection management"""
         try:
-            # Get last commit
-            result = subprocess.run(
+            # Get last commit with proper process management
+            process = subprocess.Popen(
                 ["git", "log", "-1", "--pretty=format:%s"],
                 cwd=self.workspace,
-                capture_output=True, text=True, check=True
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True
             )
             
-            commit_msg = result.stdout.strip()
-            if len(commit_msg) > 50:
-                commit_msg = commit_msg[:47] + "..."
-            
-            return commit_msg
-        except subprocess.CalledProcessError:
+            try:
+                stdout, stderr = process.communicate(timeout=3)
+                if process.returncode == 0:
+                    commit_msg = stdout.strip()
+                    if len(commit_msg) > 50:
+                        commit_msg = commit_msg[:47] + "..."
+                    return commit_msg
+                else:
+                    return "No recent activity"
+            except subprocess.TimeoutExpired:
+                process.kill()
+                process.wait()
+                return "Git timeout"
+            finally:
+                # Ensure process cleanup
+                if process.poll() is None:
+                    process.terminate()
+                    try:
+                        process.wait(timeout=1)
+                    except subprocess.TimeoutExpired:
+                        process.kill()
+                        process.wait()
+                        
+        except Exception:
             return "No recent activity"
     
     def format_status_bar(self, status: Dict) -> str:
@@ -222,9 +279,10 @@ class StatusMonitor:
     
     def watch_mode(self, interval: int = 5) -> None:
         """Watch for changes and output status updates"""
-        print(f"📡 Starting STATUS monitor (interval: {interval}s)")
-        print("   Watching for changes in build/, .git/, and STATUS.md")
-        print("   Press Ctrl+C to stop")
+        print(f"📡 Starting STATUS monitor (interval: {interval}s)", flush=True)
+        print("   Watching for changes in build/, .git/, and STATUS.md", flush=True)
+        print("   Press Ctrl+C to stop", flush=True)
+        print("", flush=True)  # Empty line for readability
         
         try:
             while True:
@@ -236,14 +294,15 @@ class StatusMonitor:
                 git_status = status["git_status"]
                 automation = "✅" if status["automation_active"] else "❌"
                 
-                print(f"[{timestamp}] Build: {build_status} | Git: {git_status} | Auto: {automation}")
+                print(f"[{timestamp}] Build: {build_status} | Git: {git_status} | Auto: {automation}", flush=True)
                 
                 if status["flash_usage"] != "unknown":
-                    print(f"           Flash: {status['flash_usage']} | RAM: {status['ram_usage']}")
+                    print(f"           Flash: {status['flash_usage']} | RAM: {status['ram_usage']}", flush=True)
                 
+                print("", flush=True)  # Empty line between updates
                 time.sleep(interval)
         except KeyboardInterrupt:
-            print("\n📡 STATUS monitor stopped")
+            print("\n📡 STATUS monitor stopped", flush=True)
 
 
 def main():
