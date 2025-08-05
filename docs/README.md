@@ -4,6 +4,27 @@
 
 Welcome to the comprehensive documentation for the STM32H753ZI stepper motor control system with X-NUCLEO-IHM02A1 shield and AS5600 magnetic encoders.
 
+## 🤖 Automated Development Workflow (NEW!)
+
+This project features **comprehensive automation** for enhanced development productivity:
+
+- **✅ Git Hooks**: Automatic STATUS.md updates after every commit with intelligent loop prevention
+- **✅ Real-time Monitoring**: Live build/git status tracking with optimized process management
+- **✅ VS Code Integration**: Enhanced tasks for build+update, preview, and manual triggers
+- **✅ Smart Detection**: Merge commit handling, build context analysis, session continuity
+- **✅ Performance**: <1s git response times, filesystem-first checking, graceful fallbacks
+
+### Automation Quick Start
+```bash
+# STATUS.md automatically updates after every commit
+git commit -m "feat: add new feature"  # ← Triggers automatic documentation updates
+
+# Manual monitoring and control
+/workspaces/code/.venv/bin/python3 scripts/status_monitor.py --status-bar  # VS Code format
+/workspaces/code/.venv/bin/python3 scripts/status_monitor.py --watch       # Real-time monitoring
+cmake --build build --target update-status-preview                         # Preview changes
+```
+
 ## 🚀 Quick Start
 
 ### For Developers

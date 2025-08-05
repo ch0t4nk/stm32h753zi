@@ -357,38 +357,67 @@ jobs:
 
 ## Project Status Management
 
-### Status File Maintenance
-**STATUS.md** in the root directory provides current project context for GitHub Copilot:
+### Status File Maintenance & Automation
+**STATUS.md** in the root directory provides current project context for GitHub Copilot with **comprehensive automation system**:
 
-**Update Frequency Guidelines:**
-- **After major milestones**: Update progress sections and next steps
-- **Weekly**: Review current work items and priorities
-- **On phase transitions**: Update current phase and architecture status
-- **Build changes**: Update build status and metrics
+**🤖 Automated Features (Phase 3 Complete):**
+- **Git Hooks**: Automatic post-commit STATUS.md updates with intelligent loop prevention
+- **Real-time Monitoring**: Live build/git status tracking with optimized process management
+- **VS Code Integration**: Enhanced tasks for manual triggers, previews, and build+update workflows
+- **Smart Detection**: Merge commit handling, build context analysis, performance optimization
+- **Centralized Logging**: All automation events tracked in `logs/status_automation.log`
 
-**Status Structure:**
+**Automation Workflow:**
+```bash
+# Automatic updates (no user action required)
+git commit -m "feat: add new driver"  # ← Triggers STATUS.md update automatically
+
+# Manual monitoring and control
+/workspaces/code/.venv/bin/python3 scripts/status_monitor.py --status-bar  # VS Code format
+/workspaces/code/.venv/bin/python3 scripts/status_monitor.py --json        # JSON format  
+/workspaces/code/.venv/bin/python3 scripts/status_monitor.py --watch       # Real-time monitoring
+
+# VS Code tasks for enhanced control
+cmake --build build --target update-status         # Manual STATUS.md update
+cmake --build build --target update-status-preview # Preview changes without commit
+./scripts/demo_status_integration.sh               # Complete workflow demonstration
+```
+
+**Update Frequency (Automated + Manual):**
+- **Automatic**: After every git commit via post-commit hook
+- **Build Integration**: Real-time build status and memory usage tracking
+- **Manual Override**: For immediate updates or preview before committing
+- **Validation**: Pre-commit hooks ensure SSOT compliance and format checking
+
+**Status Structure (Enhanced):**
 ```markdown
 ## 🔄 Current Work
 - [ ] Task in progress
-- [x] Completed task
+- [x] Completed task  
 - [ ] Upcoming task
 
 ## ⏭️ Next Steps
 1. Immediate priority
 2. Secondary priority
 3. Future consideration
+
+## 📝 Recent Session Context (Last Conversation)
+- **Last Session**: [Auto-generated from git history]
+- **Git State**: [Auto-generated commit reference]
+- **Build Status**: [Auto-generated from build artifacts]
 ```
 
-**Automated Updates:**
-- Build status from CMake results
-- Flash/RAM usage from build output
-- Git commit references for recent work
+**Automated Data Sources:**
+- **Build Status**: CMake results, memory usage from arm-none-eabi-size
+- **Git Context**: Recent commits, branch status, working directory state
+- **Development Metrics**: Flash/RAM usage, build timing, error detection
+- **Session Continuity**: AI conversation handoff context, recent activities
 
-**Manual Maintenance:**
-- Current work focus areas
-- Next phase priorities
-- Technical observations and notes
-- Architecture progress tracking
+**Performance Optimizations:**
+- **Filesystem-first Git Checking**: Avoids subprocess overhead for clean repositories
+- **Strict Timeouts**: 1-2 second git operation limits with graceful fallbacks
+- **Smart Caching**: Recent git index monitoring to optimize status checks
+- **Process Management**: Proper subprocess cleanup to prevent git lock conflicts
 
 ### Copilot Context Integration
 The status file enables GitHub Copilot to:

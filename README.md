@@ -1,37 +1,45 @@
 # STM32H753ZI Stepper Motor Control Project
 
-![Version](https://img.shields.io/badge/version-v0.2.0-blue)
+![Version](https://img.shields.io/badge/version-v0.3.0-blue)
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![Peripheral Init](https://img.shields.io/badge/peripheral%20init-complete-success)
+![Automation](https://img.shields.io/badge/automation-phase%203%20complete-success)
 ![Development](https://img.shields.io/badge/phase-driver%20implementation-blue)
 ![Code Quality](https://img.shields.io/badge/code%20quality-lint%20free-success)
 
-> **📋 Current Project Status**: See [`STATUS.md`](./STATUS.md) for the most up-to-date development progress, current work, and next priorities.
+> **📋 Current Project Status**: See [`STATUS.md`](./STATUS.md) for the most up-to-date development progress, current work, and next priorities. **NEW**: Automated status updates via Git hooks!
 
-## 🎉 Current Status: Peripheral Initialization Complete!
+## 🎉 Latest Achievement: STATUS.md Automation Phase 3 Complete!
 
-**Major Milestone Achieved:** All STM32H753ZI peripheral initialization is complete and validated. The project is now ready for driver implementation phase.
+**Major Milestone Achieved:** Complete automation system with Git hooks, real-time monitoring, and intelligent process management. Development workflow now fully automated for enhanced productivity.
 
 ### ✅ What's Working
+- **🤖 STATUS.md Automation Phase 3**: Git hooks + optimized monitoring system with intelligent loop prevention
 - **Complete peripheral initialization** for SPI2, I2C1, I2C2, TIM2, FDCAN1
-- **CMake build system** with ARM GCC toolchain  
+- **CMake build system** with ARM GCC toolchain and automated status integration
 - **Pin conflict resolution** and CubeMX integration
-- **Development environment** optimized with Python tooling
+- **Development environment** optimized with Python tooling and semantic search
 - **SSOT validation** and spell checker configuration
 
 ### 🚀 Next Phase: Driver Development
-Ready to implement L6470 stepper drivers and AS5600 encoder drivers using the initialized peripheral handles.
+Ready to implement L6470 stepper drivers and AS5600 encoder drivers using the initialized peripheral handles and automated development workflow.
 
 ## Overview
 Advanced stepper motor control firmware for **STM32H753ZI Nucleo-144** with **X-NUCLEO-IHM02A1** shield, featuring:
 - **Dual L6470 stepper drivers** with daisy-chain SPI communication ✅ *Peripheral Ready*
-- **AS5600 magnetic encoders** for closed-loop position feedback ✅ *Peripheral Ready*
+- **AS5600 magnetic encoders** for closed-loop position feedback ✅ *Peripheral Ready*  
 - **Multi-protocol communication**: UART, CAN-FD, Ethernet REST API ✅ *Peripheral Ready*
 - **Comprehensive safety systems** with watchdog and fault recovery 🔄 *Next Phase*
 - **SSOT architecture** with centralized configuration management ✅ *Complete*
 - **Enhanced documentation system** with 86MB STM32H7 reference materials ✅ *Complete*
+- **🤖 Automated Development Workflow** with Git hooks and real-time monitoring ✅ *Complete*
 
-## Enhanced Development Experience
+## 🤖 Enhanced Development Automation (NEW!)
+This project features a **comprehensive automation system**:
+- **Git Hooks**: Automatic STATUS.md updates after every commit with intelligent loop prevention
+- **Real-time Monitoring**: Live build/git status tracking with optimized process management
+- **VS Code Integration**: Enhanced tasks for build+update, preview, and manual triggers
+- **Smart Process Management**: Filesystem-first git checking, strict timeouts, graceful fallbacks
+- **Performance**: Reduced git response times from 5+ seconds to <1 second
 This project features a **comprehensive documentation integration system**:
 - **Semantic Search Database**: ChromaDB with Ollama mxbai-embed-large embeddings (981 documents)
 - **AI-Powered Understanding**: Real embeddings for context-aware search across STM32H7/L6470/BSP domains
@@ -55,6 +63,35 @@ This project features a **comprehensive documentation integration system**:
 # Semantic concept discovery across documentation  
 /workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "stepper motor control" --scope all
 ```
+
+### 🤖 Automated Development Workflow
+The project includes comprehensive automation for enhanced productivity:
+
+```bash
+# STATUS.md automatically updates after every commit via Git hooks
+git commit -m "feat: add new driver"  # ← Triggers automatic STATUS.md update
+
+# Manual status monitoring and updates
+/workspaces/code/.venv/bin/python3 scripts/status_monitor.py --status-bar  # VS Code format
+/workspaces/code/.venv/bin/python3 scripts/status_monitor.py --json        # JSON format
+/workspaces/code/.venv/bin/python3 scripts/status_monitor.py --watch       # Real-time monitoring
+
+# VS Code tasks for enhanced workflow
+cmake --build build --target update-status         # Manual STATUS.md update
+cmake --build build --target update-status-preview # Preview changes
+./scripts/demo_status_integration.sh               # Complete workflow demo
+
+# Validation and testing
+python3 scripts/validate_ssot.py                   # SSOT compliance check
+python3 scripts/link_validator.py                  # Documentation links
+```
+
+**Automation Features:**
+- ✅ **Git Hooks**: Post-commit STATUS.md updates with intelligent loop prevention
+- ✅ **Real-time Monitoring**: Live build/git status with optimized process management  
+- ✅ **VS Code Integration**: Enhanced tasks for manual triggers and previews
+- ✅ **Smart Detection**: Merge commit handling, build context analysis
+- ✅ **Performance**: <1s git response times, filesystem-first checking
 
 ## Quickstart
 
