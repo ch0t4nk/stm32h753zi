@@ -46,8 +46,6 @@ I2C_HandleTypeDef hi2c2;
 SPI_HandleTypeDef hspi2;
 TIM_HandleTypeDef htim2;
 
-COM_InitTypeDef BspCOMInit;
-
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */

@@ -3,18 +3,17 @@
  * SSOT compliance: All configs from src/config/
  */
 
-#include "config/hardware_config.h"
-#include "config/motor_config.h" 
-#include "config/comm_config.h"
-#include "config/safety_config.h"
-#include "config/build_config.h"
+#include "hardware_config.h"
+#include "motor_config.h" 
+#include "comm_config.h"
+#include "safety_config.h"
+#include "build_config.h"
 
 // TODO: See .github/instructions/stm32h7-spi-l6470.instructions.md for L6470 integration
 // TODO: See .github/instructions/stm32h7-i2c-as5600.instructions.md for AS5600 integration
 
 /* HAL Headers */
 #include "stm32h7xx_hal.h"
-#include "drivers/hal/stm32h7xx_hal_conf.h"
 
 /* Driver Headers (to be implemented) */
 // #include "drivers/l6470/l6470_driver.h"
