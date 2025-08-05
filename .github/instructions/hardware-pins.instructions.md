@@ -10,10 +10,25 @@ This instruction file provides comprehensive guidance for configuring the STM32H
 
 ## Enhanced Documentation Integration
 **Reference Assets**: This instruction leverages the comprehensive STM32H7 documentation system:
-- **STM32H7 HAL Documentation**: 86MB, 3,988 files with complete peripheral coverage
-- **Search Tools**: Use `python3 scripts/documentation/search_docs.py peripheral GPIO` for GPIO details
-- **Comprehensive Index**: 31,772 keywords for instant peripheral configuration guidance
-- **Reference Files**: `00_reference/stm32h753xx_User_Manual_md/` contains STM32H753ZI-specific documentation
+- **STM32H7 HAL Documentation**: 86MB, 3,997 files with unified peripheral coverage
+- **STM32H7xx Nucleo BSP Documentation**: 824KB, 42 files with board support package functions
+- **Copilot-Optimized Search**: Use enhanced search with semantic categories
+  ```bash
+  # Search for GPIO peripheral documentation
+  python3 scripts/search_enhanced_docs.py peripheral GPIO --scope STM32H7
+  
+  # Search Nucleo BSP board functions (LEDs, buttons, COM ports)
+  python3 scripts/search_enhanced_docs.py function BSP_LED --scope NUCLEO_BSP
+  python3 scripts/search_enhanced_docs.py function BSP_PB --scope NUCLEO_BSP
+  
+  # Search for hardware configuration concepts
+  python3 scripts/search_enhanced_docs.py concept "pin assignment" --scope STM32H7
+  
+  # Find specific HAL functions
+  python3 scripts/search_enhanced_docs.py function HAL_GPIO_Init --scope STM32H7
+  ```
+- **Unified Index**: 32,200+ keywords across STM32H7 + Nucleo BSP documentation for instant guidance
+- **Reference Files**: Complete coverage from root-level docs (RM0433, OM0253) to HAL implementation details
 
 ## STM32H753ZI Specific Guidelines
 
@@ -29,8 +44,9 @@ This instruction file provides comprehensive guidance for configuring the STM32H
 #### SPI Configuration (Motor Drivers)
 Based on STM32H7xx Nucleo BSP and X-NUCLEO-IHM02A1 shield:
 **Documentation References**: 
-- Use `python3 scripts/documentation/search_docs.py peripheral SPI` for SPI implementation details
-- See `00_reference/stm32h753xx_User_Manual_md/group__SPI__Exported__Functions.md` for HAL functions
+- Use `python3 scripts/search_enhanced_docs.py peripheral SPI --scope STM32H7` for SPI implementation details
+- Search concepts: `python3 scripts/search_enhanced_docs.py concept "SPI configuration" --scope STM32H7`
+- Find HAL functions: `python3 scripts/search_enhanced_docs.py function HAL_SPI_Init --scope STM32H7`
 ```c
 // L6470 Daisy-Chain SPI (SSOT Reference)
 #define MOTOR_SPI_INSTANCE      SPI2          // Arduino D13/D12/D11 compatibility
@@ -49,8 +65,9 @@ Based on STM32H7xx Nucleo BSP and X-NUCLEO-IHM02A1 shield:
 #### I2C Configuration (Encoders)
 AS5600 magnetic encoders require separate I2C buses due to fixed address (0x36):
 **Documentation References**: 
-- Use `python3 scripts/documentation/search_docs.py peripheral I2C` for I2C implementation details
-- See `00_reference/stm32h753xx_User_Manual_md/group__I2C__Exported__Functions.md` for HAL functions
+- Use `python3 scripts/search_enhanced_docs.py peripheral I2C --scope STM32H7` for I2C implementation details
+- Search concepts: `python3 scripts/search_enhanced_docs.py concept "I2C dual bus" --scope STM32H7`
+- Find HAL functions: `python3 scripts/search_enhanced_docs.py function HAL_I2C_Init --scope STM32H7`
 ```c
 // AS5600 Encoder 1 (Motor 1)
 #define ENCODER1_I2C_INSTANCE   I2C1
@@ -71,13 +88,43 @@ AS5600 magnetic encoders require separate I2C buses due to fixed address (0x36):
 #### UART Configuration (Virtual COM Port)
 STM32H753ZI Nucleo has USART3 connected to ST-Link for VCP:
 **Documentation References**: 
-- Use `python3 scripts/documentation/search_docs.py peripheral UART` for UART implementation details
-- See `00_reference/stm32h753xx_User_Manual_md/group__UART__Exported__Functions.md` for HAL functions
+- Use `python3 scripts/search_enhanced_docs.py peripheral UART --scope STM32H7` for UART implementation details
+- Search concepts: `python3 scripts/search_enhanced_docs.py concept "virtual COM port" --scope STM32H7`
+- Find HAL functions: `python3 scripts/search_enhanced_docs.py function HAL_UART_Init --scope STM32H7`
 ```c
 // Virtual COM Port via ST-Link
 #define UART_INSTANCE           USART3
 #define UART_TX_PIN             GPIO_PIN_8    // PD8 - ST-Link VCP TX
 #define UART_RX_PIN             GPIO_PIN_9    // PD9 - ST-Link VCP RX
+```
+
+#### Nucleo BSP Integration (Board Support Package)
+**STM32H7xx Nucleo BSP Documentation**: Use comprehensive BSP function documentation for board-specific features:
+**Documentation References**:
+- Board functions: `python3 scripts/search_enhanced_docs.py function BSP_LED --scope NUCLEO_BSP`
+- Button handling: `python3 scripts/search_enhanced_docs.py function BSP_PB --scope NUCLEO_BSP`
+- COM port setup: `python3 scripts/search_enhanced_docs.py function BSP_COM --scope NUCLEO_BSP`
+- Complete BSP reference: `00_reference/stm32h7xx_nucleo_bsp_md/`
+
+```c
+// Nucleo BSP LED Functions (from BSP documentation)
+#define LED_GREEN              LED1           // LD1 - Green LED
+#define LED_BLUE               LED2           // LD2 - Blue LED  
+#define LED_RED                LED3           // LD3 - Red LED
+
+// Nucleo BSP Button Functions
+#define USER_BUTTON            BUTTON_USER    // Blue user button (PC13)
+
+// BSP Function Integration Examples:
+void nucleo_bsp_init(void) {
+    // Initialize LEDs using BSP functions
+    BSP_LED_Init(LED_GREEN);
+    BSP_LED_Init(LED_BLUE);
+    BSP_LED_Init(LED_RED);
+    
+    // Initialize user button
+    BSP_PB_Init(USER_BUTTON, BUTTON_MODE_GPIO);
+}
 ```
 
 #### CAN Configuration (MCU-to-MCU Communication)

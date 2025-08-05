@@ -13,21 +13,24 @@ Advanced stepper motor control firmware for **STM32H753ZI Nucleo-144** with **X-
 
 ## Enhanced Development Experience
 This project features a **comprehensive documentation integration system**:
-- **31,772 searchable keywords** across STM32H7 peripherals
+- **32,200+ searchable keywords** across STM32H7 peripherals and Nucleo BSP
 - **Modular Copilot instructions** for architecture and HAL implementation
 - **Real-time documentation search** for efficient development
 
 ### Documentation Search Tools
 ```bash
 # Search STM32H7 peripheral documentation
-python3 scripts/search_enhanced_docs.py peripheral SPI stm32h7
+python3 scripts/search_enhanced_docs.py peripheral SPI --scope STM32H7
 
 # Find specific HAL functions and L6470 registers
-python3 scripts/search_enhanced_docs.py function HAL_SPI_Init stm32h7
-python3 scripts/search_enhanced_docs.py register ABS_POS l6470
+python3 scripts/search_enhanced_docs.py function HAL_SPI_Init --scope STM32H7
+python3 scripts/search_enhanced_docs.py register ABS_POS --scope L6470
+
+# Search Nucleo BSP board functions
+python3 scripts/search_enhanced_docs.py function BSP_LED --scope NUCLEO_BSP
 
 # Explore programming concepts across all documentation
-python3 scripts/search_enhanced_docs.py concept stepper all
+python3 scripts/search_enhanced_docs.py concept stepper --scope all
 ```
 
 ## Quickstart
@@ -50,7 +53,7 @@ python3 scripts/search_enhanced_docs.py concept stepper all
 ## Development Environment
 - **Dev Container**: Ubuntu 22.04.5 LTS with complete embedded toolchain
 - **Toolchain**: ARM GCC, OpenOCD, CMake, Doxygen
-- **Documentation**: 86MB STM32H7 reference + 2.1MB L6470 documentation  
+- **Documentation**: 91.1MB comprehensive reference (STM32H7 + L6470 + Nucleo BSP)  
 - **Testing**: Unity, GoogleTest frameworks
 - **Validation**: SSOT consistency checking, pre-commit hooks
 
@@ -87,7 +90,7 @@ src/
 └── application/         # Main application logic
 
 .github/instructions/    # Modular Copilot instruction system
-00_reference/           # STM32H7 + L6470 documentation (READ-ONLY)
+00_reference/           # STM32H7 + L6470 + Nucleo BSP documentation (READ-ONLY)
 scripts/                # Consolidated development tools
 docs/                   # Project documentation and summaries
 tests/                  # Unit and integration tests
@@ -102,10 +105,10 @@ For complete file organization guidelines, see `.github/instructions/file-organi
 
 ## Documentation System
 This project features an **enhanced documentation integration system**:
-- **Comprehensive Coverage**: 86MB STM32H7 + 2.1MB L6470 documentation
-- **Searchable Indexes**: 31,772 keywords, 11 peripherals, 12,704 functions
+- **Comprehensive Coverage**: 91.1MB total (STM32H7 + L6470 + Nucleo BSP documentation)
+- **Searchable Indexes**: 32,200+ keywords, 11 peripherals, 12,700+ functions
 - **Two-Tier Instructions**: Architecture principles + HAL implementation guidance
-- **Real-time Search**: Instant peripheral/function/concept lookup
+- **Real-time Search**: Instant peripheral/function/concept lookup across all documentation
 
 See `docs/ENHANCED_INSTRUCTION_SYSTEM.md` for complete documentation system overview.
 

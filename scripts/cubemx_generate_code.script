@@ -1,0 +1,23 @@
+# STM32CubeMX CLI Code Generation Script
+# This script loads the configured project and generates code only
+
+# Load existing project with all peripheral configurations
+load project from file "/mnt/c/repos/Nucleo-H753ZI Project/code/code.ioc"
+
+# Verify project settings for code generation
+config ProjectManager.ProjectName code
+config ProjectManager.TargetToolchain CMake
+config ProjectManager.KeepUserCode true
+config ProjectManager.DeletePrevious false
+config ProjectManager.MainLocation Core/Src
+config ProjectManager.IncLocation Core/Inc
+config ProjectManager.NoMain false
+
+# Generate code with current configuration
+generate code
+
+# Save the project to preserve any updates
+save project
+
+# Exit CubeMX
+exit

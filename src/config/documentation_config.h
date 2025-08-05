@@ -49,7 +49,9 @@
 #define REFERENCE_ROOT_DIR "00_reference"
 #define REFERENCE_STM32H7_DIR "00_reference/stm32h753xx_User_Manual_md"
 #define REFERENCE_L6470_DIR "00_reference/x_cube_spn2_markdown_docs"
+#define REFERENCE_NUCLEO_BSP_DIR "00_reference/stm32h7xx_nucleo_bsp_md"
 #define REFERENCE_ST_ASSETS_DIR "00_reference/ST_Assets"
+#define REFERENCE_CMSIS_DIR "00_reference/CMSIS_docs"
 
 /* =============================================================================
  * SEARCH INDEX CONFIGURATION
@@ -66,11 +68,15 @@
 /* L6470 Documentation Indexes */
 #define DOC_INDEX_L6470_SEARCH "docs/indexes/L6470_SEARCH_INDEX.json"
 
+/* STM32H7xx Nucleo BSP Documentation Indexes */
+#define DOC_INDEX_NUCLEO_BSP "docs/indexes/STM32H7xx_Nucleo_BSP_INDEX.json"
+
 /* Index Size and Performance Metrics (for validation) */
-#define DOC_INDEX_STM32H7_SIZE_MB 8.9  // Expected size in megabytes
-#define DOC_INDEX_L6470_SIZE_MB 2.1    // Expected size in megabytes
-#define DOC_INDEX_TOTAL_FILES 4185     // Total files in all indexes
-#define DOC_INDEX_TOTAL_KEYWORDS 32128 // Total searchable keywords
+#define DOC_INDEX_STM32H7_SIZE_MB 8.9    // Expected size in megabytes
+#define DOC_INDEX_L6470_SIZE_MB 2.1      // Expected size in megabytes
+#define DOC_INDEX_NUCLEO_BSP_SIZE_MB 1.0 // Expected size in megabytes
+#define DOC_INDEX_TOTAL_FILES 4227       // Total files in all indexes (4185 + 42)
+#define DOC_INDEX_TOTAL_KEYWORDS 32200   // Total searchable keywords (estimated)
 
 /* =============================================================================
  * INSTRUCTION FILE CONFIGURATION

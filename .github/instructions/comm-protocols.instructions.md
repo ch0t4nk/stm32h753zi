@@ -10,10 +10,24 @@ This instruction file provides comprehensive guidance for configuring all commun
 
 ## Enhanced Documentation Integration
 **Reference Assets**: This instruction leverages comprehensive STM32H7 communication documentation:
-- **STM32H7 HAL Documentation**: 86MB with complete peripheral coverage including UART, SPI, I2C, CAN, Ethernet
-- **Search Tools**: Use `python3 scripts/documentation/search_docs.py peripheral <PROTOCOL>` for specific implementation details
-- **Protocol Documentation**: See `00_reference/stm32h753xx_User_Manual_md/group__<PROTOCOL>__Exported__Functions.md` for HAL functions
-- **Communication Examples**: `00_reference/STM32Cube_FW_H7_V1.12.0/Projects/` contains working communication examples
+- **STM32H7 Communication Coverage**: Complete peripheral documentation across 3,997 files with unified indexing
+- **Copilot-Optimized Protocol Search**:
+  ```bash
+  # Search communication protocols with semantic targeting
+  python3 scripts/search_enhanced_docs.py concept "communication_protocols" --scope STM32H7
+  
+  # Find specific peripheral implementations
+  python3 scripts/search_enhanced_docs.py peripheral UART --scope STM32H7
+  python3 scripts/search_enhanced_docs.py peripheral SPI --scope STM32H7
+  python3 scripts/search_enhanced_docs.py peripheral I2C --scope STM32H7
+  python3 scripts/search_enhanced_docs.py peripheral CAN --scope STM32H7
+  
+  # Search protocol-specific concepts
+  python3 scripts/search_enhanced_docs.py concept "uart_protocol" --scope STM32H7
+  python3 scripts/search_enhanced_docs.py concept "spi_daisy_chain" --scope all
+  ```
+- **Cross-Protocol Integration**: Unified search across all communication interfaces and motor control systems
+- **Token-Efficient Documentation**: Semantic categorization reduces Copilot lookup overhead for protocol assistance
 
 ## UART Protocol Specification
 

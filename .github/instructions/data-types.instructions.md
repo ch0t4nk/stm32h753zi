@@ -10,11 +10,23 @@ This instruction file provides comprehensive guidance for implementing consisten
 
 ## Enhanced Documentation Integration
 **Reference Assets**: This instruction leverages comprehensive STM32H7 data type and compiler documentation:
-- **STM32H7 Data Types**: Use `python3 scripts/documentation/search_docs.py concept types` for STM32H7-specific data type guidance
-- **Compiler Support**: ARM GCC and STM32CubeIDE data type optimization for STM32H753ZI
-- **HAL Type Definitions**: `00_reference/stm32h753xx_User_Manual_md/` contains STM32H7 HAL type definitions
-- **Type Safety**: STM32H7 development best practices for embedded type safety
-- **Portable Types**: `00_reference/STM32Cube_FW_H7_V1.12.0/` contains portable type usage examples
+- **STM32H7 Data Types**: Complete data type coverage with ARM Cortex-M7 optimization guidance
+- **Copilot-Optimized Type Search**:
+  ```bash
+  # Search data type concepts with semantic targeting
+  python3 scripts/search_enhanced_docs.py concept "data_types" --scope STM32H7
+  
+  # Find type safety implementation patterns
+  python3 scripts/search_enhanced_docs.py concept "type_safety" --scope STM32H7
+  
+  # Search ARM Cortex-M7 specific optimizations
+  python3 scripts/search_enhanced_docs.py concept "cortex_m7_optimization" --scope STM32H7
+  
+  # Find HAL type definitions
+  python3 scripts/search_enhanced_docs.py concept "hal_types" --scope STM32H7
+  ```
+- **Cross-Domain Integration**: Links data types with motor control, safety systems, and communication protocols
+- **Token-Efficient Reference**: Semantic categorization for efficient Copilot assistance with type definitions
 
 ## Standard Data Types
 

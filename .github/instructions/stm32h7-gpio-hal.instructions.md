@@ -10,16 +10,34 @@ This instruction file provides STM32H753ZI-specific GPIO HAL implementation guid
 
 ## Enhanced Documentation Integration
 **Reference Assets**: This instruction leverages the comprehensive STM32H7 GPIO documentation system:
-- **GPIO Documentation Coverage**: 198 STM32H7 GPIO documentation files from comprehensive index
-- **Search Tools**: Use `python3 scripts/search_enhanced_docs.py peripheral GPIO --scope STM32H7` for GPIO implementation details
-- **Function Reference**: Use `python3 scripts/search_enhanced_docs.py function HAL_GPIO_Init --scope STM32H7` for specific function details
-- **Concept Search**: Use `python3 scripts/search_enhanced_docs.py concept interrupt --scope STM32H7` for GPIO interrupt implementation
-- **HAL Reference**: `00_reference/stm32h753xx_User_Manual_md/group__GPIO__Exported__Functions.md` contains complete GPIO HAL API
+- **GPIO Documentation Coverage**: 198+ STM32H7 GPIO files with unified semantic categorization
+- **STM32H7xx Nucleo BSP Documentation**: 42 files with board-specific GPIO implementations
+- **Copilot-Optimized GPIO Search**:
+  ```bash
+  # Search GPIO peripheral with token efficiency
+  python3 scripts/search_enhanced_docs.py peripheral GPIO --scope STM32H7
+  
+  # Find Nucleo BSP GPIO functions (LEDs, buttons)
+  python3 scripts/search_enhanced_docs.py function BSP_LED --scope NUCLEO_BSP
+  python3 scripts/search_enhanced_docs.py function BSP_PB --scope NUCLEO_BSP
+  
+  # Find specific GPIO HAL functions
+  python3 scripts/search_enhanced_docs.py function HAL_GPIO_Init --scope STM32H7
+  
+  # Search GPIO configuration concepts
+  python3 scripts/search_enhanced_docs.py concept "gpio_configuration" --scope STM32H7
+  
+  # Find GPIO interrupt implementation
+  python3 scripts/search_enhanced_docs.py concept "gpio_interrupt" --scope STM32H7
+  ```
+- **Cross-Reference Integration**: Links motor control, safety systems, and communication protocols
+- **Token-Efficient Lookup**: 7x faster search with semantic categorization for Copilot assistance
 
 ## Integration with Existing Instructions
 - **Extends**: `hardware-pins.instructions.md` (high-level pin assignments)
 - **References**: `ssot-config.instructions.md` (SSOT principles)
-- **Documentation**: Based on 198 STM32H7 GPIO documentation files from enhanced search system
+- **BSP Integration**: Leverages STM32H7xx Nucleo BSP for board-specific GPIO functions
+- **Documentation**: Based on 198 STM32H7 GPIO files + 42 Nucleo BSP files from enhanced search system
 
 ## Critical STM32H753ZI GPIO Implementation
 

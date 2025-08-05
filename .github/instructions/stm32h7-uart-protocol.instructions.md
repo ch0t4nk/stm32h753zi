@@ -10,11 +10,23 @@ This instruction file provides STM32H753ZI-specific UART HAL implementation guid
 
 ## Enhanced Documentation Integration
 **Reference Assets**: This instruction leverages comprehensive UART documentation:
-- **STM32H7 UART Documentation**: Use `python3 scripts/search_enhanced_docs.py peripheral UART --scope STM32H7` for UART implementation details
-- **UART HAL Functions**: Use `python3 scripts/search_enhanced_docs.py function HAL_UART_Transmit_IT --scope STM32H7` for interrupt-based transmission
-- **UART Configuration**: `00_reference/stm32h753xx_User_Manual_md/group__UART__Exported__Functions.md` for complete UART HAL API
-- **ST-Link VCP**: STM32H753ZI Nucleo documentation for Virtual COM Port specifics
-- **UART Examples**: `00_reference/STM32Cube_FW_H7_V1.12.0/Projects/` contains working UART implementations
+- **STM32H7 UART Documentation**: Complete UART peripheral coverage with VCP configuration
+- **Copilot-Optimized UART Search**:
+  ```bash
+  # Search UART peripheral with token efficiency
+  python3 scripts/search_enhanced_docs.py peripheral UART --scope STM32H7
+  
+  # Find UART HAL functions for interrupt-based communication
+  python3 scripts/search_enhanced_docs.py function HAL_UART_Transmit_IT --scope STM32H7
+  
+  # Search UART protocol implementation concepts
+  python3 scripts/search_enhanced_docs.py concept "uart_protocol" --scope STM32H7
+  
+  # Find virtual COM port configuration
+  python3 scripts/search_enhanced_docs.py concept "virtual_com_port" --scope STM32H7
+  ```
+- **Cross-Protocol Integration**: Links UART with communication protocols and command interface systems
+- **Token-Efficient Reference**: Semantic categorization reduces search overhead for protocol implementation
 
 ## Integration with Existing Instructions
 - **Extends**: `comm-protocols.instructions.md` (UART protocol specification)

@@ -10,11 +10,23 @@ This instruction file provides comprehensive guidance for implementing safety sy
 
 ## Enhanced Documentation Integration
 **Reference Assets**: This instruction leverages comprehensive safety and watchdog documentation:
-- **STM32H7 Watchdog Documentation**: Use `python3 scripts/documentation/search_docs.py peripheral IWDG` for watchdog implementation details
-- **Safety Functions**: Use `python3 scripts/documentation/search_docs.py concept safety` for safety system guidance
-- **Fault Detection**: `00_reference/stm32h753xx_User_Manual_md/group__IWDG__Exported__Functions.md` for watchdog HAL API
-- **Industrial Safety**: IEC 61508 functional safety standards and STM32H7 safety-critical applications
-- **Safety Examples**: `00_reference/STM32Cube_FW_H7_V1.12.0/Projects/` contains safety-critical implementation examples
+- **STM32H7 Safety Documentation**: Complete coverage across 3,997 files with semantic safety categorization
+- **Copilot-Optimized Safety Search**:
+  ```bash
+  # Search safety system concepts with token efficiency
+  python3 scripts/search_enhanced_docs.py concept "safety_systems" --scope STM32H7
+  
+  # Find watchdog peripheral documentation
+  python3 scripts/search_enhanced_docs.py peripheral IWDG --scope STM32H7
+  
+  # Search fault detection mechanisms
+  python3 scripts/search_enhanced_docs.py concept "fault_detection" --scope all
+  
+  # Find safety-critical HAL functions
+  python3 scripts/search_enhanced_docs.py function HAL_IWDG_Init --scope STM32H7
+  ```
+- **Industrial Safety Standards**: IEC 61508 functional safety integration with STM32H7 capabilities
+- **Cross-Domain Safety**: Unified search across motor control, communication, and system safety documentation
 
 ## Safety-First Design Principles
 

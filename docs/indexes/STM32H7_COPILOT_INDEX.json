@@ -1,315 +1,296 @@
 {
-  "STM32H7_INSTRUCTION_INDEX": {
-    "version": "1.0",
-    "description": "STM32H753xx HAL Documentation Quick Reference Index",
-    "usage": "Use this index to quickly locate relevant documentation files",
-    "PERIPHERAL_QUICK_REFERENCE": {
-      "GPIO": {
-        "description": "General Purpose Input/Output",
-        "key_files": [
-          "CONVERSION_SUMMARY.md",
-          "annotated.md",
-          "classes.md",
-          "dir_b6dbf78bf682bd3a72db0ea32ce1e49a.md",
-          "dir_bb7431a2b94f378dd2187828019b2ff0.md",
-          "files.md",
-          "functions.md",
-          "functions_0x6d.md",
-          "functions_0x70.md",
-          "functions_0x73.md"
-        ],
-        "file_count": 198
-      },
-      "UART": {
-        "description": "Universal Asynchronous Receiver Transmitter",
-        "key_files": [
-          "CONVERSION_SUMMARY.md",
-          "annotated.md",
-          "classes.md",
-          "dir_b6dbf78bf682bd3a72db0ea32ce1e49a.md",
-          "dir_bb7431a2b94f378dd2187828019b2ff0.md",
-          "files.md",
-          "functions.md",
-          "functions_0x62.md",
-          "functions_0x63.md",
-          "functions_0x64.md"
-        ],
-        "file_count": 161
-      },
-      "SPI": {
-        "description": "Serial Peripheral Interface",
-        "key_files": [
-          "CONVERSION_SUMMARY.md",
-          "annotated.md",
-          "classes.md",
-          "dir_b6dbf78bf682bd3a72db0ea32ce1e49a.md",
-          "dir_bb7431a2b94f378dd2187828019b2ff0.md",
-          "files.md",
-          "functions_0x62.md",
-          "functions_0x63.md",
-          "functions_0x64.md",
-          "functions_0x66.md"
-        ],
-        "file_count": 199
-      },
-      "I2C": {
-        "description": "Inter-Integrated Circuit",
-        "key_files": [
-          "CONVERSION_SUMMARY.md",
-          "annotated.md",
-          "classes.md",
-          "dir_b6dbf78bf682bd3a72db0ea32ce1e49a.md",
-          "dir_bb7431a2b94f378dd2187828019b2ff0.md",
-          "files.md",
-          "functions.md",
-          "functions_0x64.md",
-          "functions_0x67.md",
-          "functions_0x6e.md"
-        ],
-        "file_count": 146
-      },
-      "ADC": {
-        "description": "Analog to Digital Converter",
-        "key_files": [
-          "CONVERSION_SUMMARY.md",
-          "annotated.md",
-          "classes.md",
-          "dir_b6dbf78bf682bd3a72db0ea32ce1e49a.md",
-          "dir_bb7431a2b94f378dd2187828019b2ff0.md",
-          "files.md",
-          "functions.md",
-          "functions_0x63.md",
-          "functions_0x64.md",
-          "functions_0x65.md"
-        ],
-        "file_count": 259
-      },
-      "TIM": {
-        "description": "Timer/Counter",
-        "key_files": [
-          "annotated.md",
-          "classes.md",
-          "dir_b6dbf78bf682bd3a72db0ea32ce1e49a.md",
-          "dir_bb7431a2b94f378dd2187828019b2ff0.md",
-          "files.md",
-          "functions.md",
-          "functions_0x62.md",
-          "functions_0x63.md",
-          "functions_0x64.md",
-          "functions_0x65.md"
-        ],
-        "file_count": 262
-      }
+  "version": "2.0",
+  "timestamp": "2025-08-04 18:31:51",
+  "description": "Copilot-optimized STM32H7 + L6470 quick reference",
+  "usage": "Optimized for token efficiency in AI assistance",
+  "quick_reference": {
+    "motor_control": {
+      "description": "Stepper motor control with L6470 driver",
+      "key_files": [],
+      "peripherals": [
+        "SPI",
+        "GPIO",
+        "TIM"
+      ],
+      "functions": [],
+      "registers": [
+        "ABS_POS",
+        "SPEED",
+        "ACC",
+        "DEC",
+        "CONFIG"
+      ]
     },
-    "FILE_CATEGORIES": {
-      "DOCUMENTATION": {
-        "count": 142,
-        "description": "General documentation files",
-        "sample_files": [
-          "CONVERSION_SUMMARY.md",
-          "annotated.md",
-          "classes.md",
-          "dir_47fe75288a8cd28afd5216aac50f56f7.md",
-          "dirs.md"
-        ]
-      },
-      "ADC_API": {
-        "count": 139,
-        "description": "Analog to Digital Converter functions",
-        "sample_files": [
-          "group__ADC.md",
-          "group__ADCEx.md",
-          "group__ADCEx__Calibration__Mode.md",
-          "group__ADCEx__Dual__Mode__Data__Format.md",
-          "group__ADCEx__Exported__Constants.md"
-        ]
-      },
-      "DMA_API": {
-        "count": 255,
-        "description": "Direct Memory Access functions",
-        "sample_files": [
-          "group__BDMA__LL.md",
-          "group__BDMA__LL__EC__CHANNEL.md",
-          "group__BDMA__LL__EC__CLEAR__FLAG.md",
-          "group__BDMA__LL__EC__CURRENTTARGETMEM.md",
-          "group__BDMA__flag__definitions.md"
-        ]
-      },
-      "OTHER_API": {
-        "count": 1477,
-        "description": "Other peripheral API functions",
-        "sample_files": [
-          "group__BUS__LL.md",
-          "group__BUS__LL__EC__AHB1__GRP1__PERIPH.md",
-          "group__BUS__LL__EC__AHB2__GRP1__PERIPH.md",
-          "group__BUS__LL__EC__AHB3__GRP1__PERIPH.md",
-          "group__Blocking__mode__Polling.md"
-        ]
-      },
-      "TIMER_API": {
-        "count": 457,
-        "description": "Timer/Counter and PWM functions",
-        "sample_files": [
-          "group__CEC__Signal__Free__Time.md",
-          "group__COMP__LL__EC__OUTPUT__BKIN__TIMER.md",
-          "group__DMA2D__TimeOut.md",
-          "group__ETH__Watchdog__Timeout.md",
-          "group__FDCAN__Timeout__Operation.md"
-        ]
-      },
-      "DAC_API": {
-        "count": 62,
-        "description": "Digital to Analog Converter functions",
-        "sample_files": [
-          "group__DAC.md",
-          "group__DACEx.md",
-          "group__DACEx__Exported__Constants.md",
-          "group__DACEx__Exported__Functions.md",
-          "group__DACEx__Exported__Functions__Group2.md"
-        ]
-      },
-      "SPI_API": {
-        "count": 126,
-        "description": "SPI peripheral functions and constants",
-        "sample_files": [
-          "group__DFSDM__Channel__SpiClock.md",
-          "group__QSPI.md",
-          "group__QSPI__AddressMode.md",
-          "group__QSPI__AddressSize.md",
-          "group__QSPI__AlternateBytesMode.md"
-        ]
-      },
-      "GPIO_API": {
-        "count": 41,
-        "description": "GPIO peripheral functions and constants",
-        "sample_files": [
-          "group__EXTI__GPIOSel.md",
-          "group__GPIO.md",
-          "group__GPIOEx.md",
-          "group__GPIOEx__Exported__Constants.md",
-          "group__GPIOEx__Exported__Functions.md"
-        ]
-      },
-      "I2C_API": {
-        "count": 79,
-        "description": "I2C communication functions",
-        "sample_files": [
-          "group__I2C.md",
-          "group__I2CEx.md",
-          "group__I2CEx__Analog__Filter.md",
-          "group__I2CEx__Exported__Constants.md",
-          "group__I2CEx__Exported__Functions.md"
-        ]
-      },
-      "UART_API": {
-        "count": 215,
-        "description": "UART/USART communication functions",
-        "sample_files": [
-          "group__LPUART__LL.md",
-          "group__LPUART__LL__EC__ADDRESS__DETECT.md",
-          "group__LPUART__LL__EC__BINARY__LOGIC.md",
-          "group__LPUART__LL__EC__BITORDER.md",
-          "group__LPUART__LL__EC__CLEAR__FLAG.md"
-        ]
-      },
-      "POWER_API": {
-        "count": 72,
-        "description": "Power management functions",
-        "sample_files": [
-          "group__PWR.md",
-          "group__PWREx.md",
-          "group__PWREx__AVD__EXTI__Line.md",
-          "group__PWREx__AVD__Mode.md",
-          "group__PWREx__AVD__detection__level.md"
-        ]
-      },
-      "CLOCK_API": {
-        "count": 164,
-        "description": "Reset and Clock Control functions",
-        "sample_files": [
-          "group__RCC.md",
-          "group__RCCEx.md",
-          "group__RCCEx__CEC__Clock__Source.md",
-          "group__RCCEx__CLKP__Clock__Source.md",
-          "group__RCCEx__CRS__ErrorLimitDefault.md"
-        ]
-      },
-      "HAL_DRIVER": {
-        "count": 246,
-        "description": "HAL driver documentation",
-        "sample_files": [
-          "stm32h7xx__hal_8c.md",
-          "stm32h7xx__hal_8h.md",
-          "stm32h7xx__hal__adc_8c.md",
-          "stm32h7xx__hal__adc_8h.md",
-          "stm32h7xx__hal__adc__ex_8c.md"
-        ]
-      },
-      "SOURCE_CODE": {
-        "count": 246,
-        "description": "Source code documentation",
-        "sample_files": [
-          "stm32h7xx__hal_8c_source.md",
-          "stm32h7xx__hal_8h_source.md",
-          "stm32h7xx__hal__adc_8c_source.md",
-          "stm32h7xx__hal__adc_8h_source.md",
-          "stm32h7xx__hal__adc__ex_8c_source.md"
-        ]
-      },
-      "STRUCTURE_DEF": {
-        "count": 267,
-        "description": "Structure and type definitions",
-        "sample_files": [
-          "structADC__AnalogWDGConfTypeDef.md",
-          "structADC__ChannelConfTypeDef.md",
-          "structADC__InitTypeDef.md",
-          "structADC__InjectionConfTypeDef.md",
-          "structADC__InjectionConfigTypeDef.md"
-        ]
-      }
+    "communication": {
+      "description": "SPI, I2C, UART, CAN protocols",
+      "key_files": [],
+      "peripherals": [
+        "SPI",
+        "I2C",
+        "UART",
+        "CAN",
+        "FDCAN"
+      ],
+      "functions": [],
+      "concepts": [
+        "daisy_chain",
+        "interrupt",
+        "dma"
+      ]
     },
-    "SEARCH_PATTERNS": {
-      "function_lookup": {
-        "description": "Find files containing specific HAL/LL functions",
-        "pattern": "Search function_index for exact function names",
-        "example": "HAL_GPIO_Init -> find files containing GPIO initialization"
-      },
-      "peripheral_lookup": {
-        "description": "Find all files related to a peripheral",
-        "pattern": "Search peripheral_index for peripheral name",
-        "example": "SPI -> find all SPI-related documentation"
-      },
-      "concept_lookup": {
-        "description": "Find files by embedded programming concepts",
-        "pattern": "Search keyword_index for concepts like interrupt, DMA, etc.",
-        "example": "interrupt -> find all interrupt-related documentation"
-      }
+    "safety": {
+      "description": "Safety systems, error handling, MPU",
+      "key_files": [],
+      "peripherals": [
+        "MPU",
+        "WWDG",
+        "IWDG"
+      ],
+      "concepts": [
+        "memory_protection",
+        "error_correction",
+        "hardware_errata"
+      ]
     },
-    "USAGE_EXAMPLES": {
-      "gpio_configuration": {
-        "query": "Configure GPIO pin as output",
-        "relevant_files": [
-          "group__GPIO__Exported__Functions__Group1.md",
-          "structGPIO__InitTypeDef.md",
-          "group__GPIO__mode__define.md"
-        ]
-      },
-      "uart_communication": {
-        "query": "Setup UART communication",
-        "relevant_files": [
-          "group__UART__Exported__Functions__Group1.md",
-          "structUART__InitTypeDef.md",
-          "group__UART__Exported__Functions__Group2.md"
-        ]
-      },
-      "spi_data_transfer": {
-        "query": "SPI master data transfer",
-        "relevant_files": [
-          "group__SPI__Exported__Functions__Group1.md",
-          "group__SPI__Exported__Functions__Group2.md",
-          "structSPI__InitTypeDef.md"
-        ]
-      }
+    "architecture": {
+      "description": "STM32H7 system architecture and performance",
+      "key_files": [],
+      "concepts": [
+        "cache",
+        "TCM",
+        "AXI",
+        "performance_tuning"
+      ]
     }
+  },
+  "essential_files": {
+    "motor_control": [
+      "00_reference/STM32H72x_73x_74x_75x_system_architecture_overview.md",
+      "00_reference/stm32h753xx_User_Manual_md/group__TIM__LL__EF__Init.md"
+    ],
+    "communication": [
+      "00_reference/AN4908-getting-started-with-usart-Automatic-Baud-Rater-Detection-for-stm32-mcus-stmicroelectronics.md",
+      "00_reference/ES0392-stm32h742xig-stm32h743xig-stm32h750xb-stm32h753xi-device-ERRATA-stmicroelectronics.md",
+      "00_reference/AN4838-introduction-to-Memory-Protection-unit-management-on-stm32-mcus-stmicroelectronics.md"
+    ],
+    "safety": [
+      "00_reference/AN5342--how-to-use-Error-Correction-Code-ECC-management-for-internal-memories-protection-on-stm32-mcus-stmicroelectronics.md",
+      "00_reference/AN4838-introduction-to-Memory-Protection-unit-management-on-stm32-mcus-stmicroelectronics.md"
+    ],
+    "architecture": [
+      "00_reference/AN4838-introduction-to-Memory-Protection-unit-management-on-stm32-mcus-stmicroelectronics.md"
+    ],
+    "hal_reference": [
+      "00_reference/AN4838-introduction-to-Memory-Protection-unit-management-on-stm32-mcus-stmicroelectronics.md"
+    ]
+  },
+  "top_functions": {
+    "HAL_StatusTypeDef": {
+      "file_count": 8528,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__ADCEx__Exported__Functions__Group1.md"
+    },
+    "HAL_ERROR": {
+      "file_count": 2232,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/stm32h7xx__hal_8c_source.md"
+    },
+    "HAL_OK": {
+      "file_count": 2025,
+      "primary_file": "00_reference/AN4908-getting-started-with-usart-Automatic-Baud-Rater-Detection-for-stm32-mcus-stmicroelectronics.md"
+    },
+    "LL_HRTIM_TIMER_A": {
+      "file_count": 635,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__HRTIM__LL__EC__TIMER.md"
+    },
+    "LL_HRTIM_TIMER_B": {
+      "file_count": 631,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__HRTIM__LL__EC__TIMER.md"
+    },
+    "LL_HRTIM_TIMER_C": {
+      "file_count": 631,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__HRTIM__LL__EC__TIMER.md"
+    },
+    "LL_HRTIM_TIMER_D": {
+      "file_count": 631,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__HRTIM__LL__EC__TIMER.md"
+    },
+    "LL_HRTIM_TIMER_E": {
+      "file_count": 631,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__HRTIM__LL__EC__TIMER.md"
+    },
+    "HAL_GetTick": {
+      "file_count": 525,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__HAL__Exported__Functions.md"
+    },
+    "LL_CLKSOURCE": {
+      "file_count": 459,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__RCC__LL__EC__I2Cx.md"
+    },
+    "LL_MDMA_CHANNEL_0": {
+      "file_count": 346,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_MDMA_CHANNEL_1": {
+      "file_count": 346,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_MDMA_CHANNEL_2": {
+      "file_count": 346,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_MDMA_CHANNEL_3": {
+      "file_count": 346,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_MDMA_CHANNEL_4": {
+      "file_count": 346,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_MDMA_CHANNEL_5": {
+      "file_count": 346,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_MDMA_CHANNEL_6": {
+      "file_count": 346,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_MDMA_CHANNEL_7": {
+      "file_count": 346,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_MDMA_CHANNEL_8": {
+      "file_count": 346,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_MDMA_CHANNEL_9": {
+      "file_count": 346,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_MDMA_CHANNEL_10": {
+      "file_count": 346,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_MDMA_CHANNEL_11": {
+      "file_count": 346,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_MDMA_CHANNEL_12": {
+      "file_count": 346,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_MDMA_CHANNEL_13": {
+      "file_count": 346,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_MDMA_CHANNEL_14": {
+      "file_count": 346,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_MDMA_CHANNEL_15": {
+      "file_count": 344,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MDMA__LL__EC__CHANNEL.md"
+    },
+    "HAL_TIMEOUT": {
+      "file_count": 320,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/stm32h7xx__hal_8c_source.md"
+    },
+    "LL_HRTIM_TIMER_MASTER": {
+      "file_count": 290,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__HRTIM__LL__EC__TIMER.md"
+    },
+    "HAL_BUSY": {
+      "file_count": 288,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/stm32h7xx__hal__adc_8c_source.md"
+    },
+    "LL_DMA_STREAM_0": {
+      "file_count": 224,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__DMA__LL__EC__STREAM.md"
+    },
+    "LL_DMA_STREAM_1": {
+      "file_count": 224,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__DMA__LL__EC__STREAM.md"
+    },
+    "LL_DMA_STREAM_2": {
+      "file_count": 224,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__DMA__LL__EC__STREAM.md"
+    },
+    "LL_DMA_STREAM_3": {
+      "file_count": 224,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__DMA__LL__EC__STREAM.md"
+    },
+    "LL_DMA_STREAM_4": {
+      "file_count": 224,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__DMA__LL__EC__STREAM.md"
+    },
+    "LL_DMA_STREAM_5": {
+      "file_count": 224,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__DMA__LL__EC__STREAM.md"
+    },
+    "LL_DMA_STREAM_6": {
+      "file_count": 224,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__DMA__LL__EC__STREAM.md"
+    },
+    "LL_DMA_STREAM_7": {
+      "file_count": 220,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__DMA__LL__EC__STREAM.md"
+    },
+    "HAL_IS_BIT_SET": {
+      "file_count": 206,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/stm32h7xx__hal__adc_8c_source.md"
+    },
+    "HAL_LockTypeDef": {
+      "file_count": 178,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/stm32h7xx__hal__adc_8h_source.md"
+    },
+    "HAL_TIM_CHANNEL_STATE_READY": {
+      "file_count": 175,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__TIM__Exported__Types.md"
+    },
+    "LL_BDMA_CHANNEL_0": {
+      "file_count": 163,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__BDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_BDMA_CHANNEL_1": {
+      "file_count": 162,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__BDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_BDMA_CHANNEL_2": {
+      "file_count": 162,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__BDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_BDMA_CHANNEL_3": {
+      "file_count": 162,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__BDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_BDMA_CHANNEL_4": {
+      "file_count": 162,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__BDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_BDMA_CHANNEL_5": {
+      "file_count": 162,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__BDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_BDMA_CHANNEL_6": {
+      "file_count": 162,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__BDMA__LL__EC__CHANNEL.md"
+    },
+    "LL_BDMA_CHANNEL_7": {
+      "file_count": 159,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__BDMA__LL__EC__CHANNEL.md"
+    },
+    "HAL_MMC_ERROR_NONE": {
+      "file_count": 151,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MMC__Exported__Constansts__Group1.md"
+    },
+    "HAL_MMC_STATE_READY": {
+      "file_count": 142,
+      "primary_file": "00_reference/stm32h753xx_User_Manual_md/group__MMC__Exported__Types__Group1.md"
+    }
+  },
+  "code_patterns": {
+    "l6470_init": "L6470 initialization sequence",
+    "spi_setup": "SPI configuration for L6470",
+    "i2c_encoder": "I2C setup for AS5600 encoder",
+    "gpio_motor": "GPIO configuration for motor control",
+    "safety_init": "Safety system initialization"
   }
 }

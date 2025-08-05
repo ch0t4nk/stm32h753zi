@@ -5,12 +5,14 @@ This directory contains hardware abstraction layer (HAL) drivers for the STM32H7
 
 ## Enhanced Documentation Integration
 **Reference Assets**: Leverage comprehensive STM32H7 and component documentation:
-- **STM32H7 HAL Documentation**: Use `python3 scripts/search_enhanced_docs.py peripheral <PERIPHERAL> stm32h7` for implementation details
+- **STM32H7 HAL Documentation**: Use `python3 scripts/search_enhanced_docs.py peripheral <PERIPHERAL> --scope STM32H7` for implementation details
+- **Nucleo BSP Functions**: Use `python3 scripts/search_enhanced_docs.py function BSP_LED --scope NUCLEO_BSP` for board support
 - **Component References**: 
   - L6470 drivers: See `00_reference/x_cube_spn2_markdown_docs/` and `.github/instructions/stm32h7-spi-l6470.instructions.md`
   - AS5600 encoders: See `.github/instructions/stm32h7-i2c-as5600.instructions.md`
   - GPIO/General: See `.github/instructions/stm32h7-gpio-hal.instructions.md`
 - **HAL Examples**: `00_reference/STM32Cube_FW_H7_V1.12.0/Projects/` contains working driver implementations
+- **BSP Functions**: `00_reference/stm32h7xx_nucleo_bsp_md/` contains Nucleo-144 board support documentation
 
 ## Development Tasks
 - TODO: Add C++ interfaces for L6470, AS5600, CAN, Ethernet using enhanced documentation guidance

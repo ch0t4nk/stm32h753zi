@@ -143,7 +143,10 @@ python3 scripts/fix_instruction_references.py
 # Validate documentation links
 python3 scripts/link_validator.py
 
-# Test enhanced documentation search
+# Test enhanced documentation search with Copilot optimization
+python3 scripts/search_enhanced_docs.py concept "safety_systems" --scope STM32H7
+python3 scripts/search_enhanced_docs.py concept "motor_control" --scope all
+python3 scripts/search_enhanced_docs.py function BSP_LED --scope NUCLEO_BSP
 python3 scripts/search_enhanced_docs.py test --scope all
 ```
 
@@ -206,9 +209,24 @@ python3 scripts/link_validator.py || exit 1
 ### Modifying Documentation Structure
 1. Update `documentation_config.h` first with new paths
 2. Update all tools and scripts that reference changed paths
-3. Regenerate search indexes if reference docs change
+3. Regenerate search indexes if reference docs change (Copilot-optimized)
 4. Validate instruction file references still work
 5. Update workspace setup and copilot instructions
+6. Test semantic categorization for new documentation
+
+### Copilot-Optimized Documentation Workflow
+When adding documentation that affects Copilot assistance:
+```bash
+# Regenerate Copilot-optimized indexes after documentation changes
+python3 scripts/documentation_manager.py index recreate --scope STM32H7
+python3 scripts/documentation_manager.py index recreate --scope L6470
+
+# Test search functionality with semantic categories
+python3 scripts/search_enhanced_docs.py concept "new_concept" --scope all
+
+# Validate token efficiency improvements
+python3 scripts/search_enhanced_docs.py test --scope all
+```
 
 ### Configuration Documentation
 Each SSOT parameter must include:

@@ -10,11 +10,23 @@ This instruction file provides comprehensive guidance for implementing robust er
 
 ## Enhanced Documentation Integration
 **Reference Assets**: This instruction leverages comprehensive error handling and safety documentation:
-- **STM32H7 Error Handling**: Use `python3 scripts/documentation/search_docs.py concept error` for STM32H7 error handling patterns
-- **HAL Error Codes**: `00_reference/stm32h753xx_User_Manual_md/` contains STM32H7 HAL error code definitions
-- **Safety Standards**: IEC 61508 functional safety classification and embedded systems best practices
-- **Fault Recovery**: `00_reference/STM32Cube_FW_H7_V1.12.0/Projects/` contains error handling implementation examples
-- **Diagnostic Tools**: STM32H7 debugging and error reporting capabilities
+- **STM32H7 Error Handling**: Complete error handling coverage with safety-critical implementation patterns
+- **Copilot-Optimized Error Search**:
+  ```bash
+  # Search error handling concepts with semantic targeting
+  python3 scripts/search_enhanced_docs.py concept "error_handling" --scope STM32H7
+  
+  # Find fault detection and recovery patterns
+  python3 scripts/search_enhanced_docs.py concept "fault_detection" --scope all
+  
+  # Search safety system integration
+  python3 scripts/search_enhanced_docs.py concept "safety_systems" --scope STM32H7
+  
+  # Find HAL error code definitions
+  python3 scripts/search_enhanced_docs.py concept "hal_error_codes" --scope STM32H7
+  ```
+- **Cross-System Integration**: Links error handling with motor control, communication, and safety systems
+- **Token-Efficient Reference**: Semantic categorization optimized for Copilot assistance with fault recovery
 
 ## Error Classification System
 

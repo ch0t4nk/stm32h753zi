@@ -3,12 +3,14 @@
  * @brief Motor and L6470 Driver Configuration - Single Source of Truth (SSOT)
  * @author STM32H753ZI Project Team
  * @date 2025-01-29
- * 
- * @note This file contains ALL motor parameters, L6470 settings, and motion limits.
- *       Never hardcode these values elsewhere - always reference this SSOT.
- * 
- * TODO: See .github/instructions/l6470-registers.instructions.md for motor characterization data
- * TODO: See .github/instructions/l6470-registers.instructions.md for register configuration details
+ *
+ * @note This file contains ALL motor parameters, L6470 settings, and motion
+ * limits. Never hardcode these values elsewhere - always reference this SSOT.
+ *
+ * TODO: See .github/instructions/l6470-registers.instructions.md for motor
+ * characterization data
+ * TODO: See .github/instructions/l6470-registers.instructions.md for register
+ * configuration details
  */
 
 #ifndef MOTOR_CONFIG_H
@@ -19,233 +21,258 @@
 /* ========================================================================== */
 /* Motor Count and Identification (SSOT)                                     */
 /* ========================================================================== */
-#define MAX_MOTORS              2       // Two motors in this system
-#define MOTOR_1_ID              0       // First motor identifier
-#define MOTOR_2_ID              1       // Second motor identifier
+#define MAX_MOTORS 2 // Two motors in this system
+#define MOTOR_1_ID 0 // First motor identifier
+#define MOTOR_2_ID 1 // Second motor identifier
+
+/* ========================================================================== */
+/* X-CUBE-SPN2 + MCSDK Motor Control Configuration (SSOT)                    */
+/* ========================================================================== */
+// Primary Framework: X-CUBE-SPN2 for L6470 stepper control
+#define SPN2_FRAMEWORK_ENABLED      1   // Enable X-CUBE-SPN2 framework
+#define SPN2_IHM02A1_BOARD          1   // X-NUCLEO-IHM02A1 board support
+#define SPN2_DUAL_MOTOR_CONFIG      1   // Dual motor configuration
+
+// MCSDK Selective Enhancement Layer
+#define MCSDK_POSITION_CONTROL      1   // Enhanced position control algorithms
+#define MCSDK_MOTION_PROFILING      1   // Advanced motion profiling
+#define MCSDK_SAFETY_MONITORING     1   // Enhanced safety and fault detection
+#define MCSDK_WORKBENCH_SUPPORT     1   // Motor Control Workbench integration
+
+// Integration Layer Configuration
+#define HYBRID_CONTROL_MODE         1   // SPN2 base + MCSDK enhancement
+#define CLOSED_LOOP_FEEDBACK        1   // AS5600 encoder feedback integration
 
 /* ========================================================================== */
 /* Motor Physical Parameters (SSOT)                                          */
 /* ========================================================================== */
-// TODO: See .github/instructions/l6470-registers.instructions.md for motor specifications
+// TODO: See .github/instructions/l6470-registers.instructions.md for motor
+// specifications
 
 // Motor electrical characteristics
-#define MOTOR_VOLTAGE_V         12.0f   // Motor supply voltage
-#define MOTOR_CURRENT_MA        1000    // Motor rated current (mA)
-#define MOTOR_RESISTANCE_OHM    2.8f    // Motor winding resistance
-#define MOTOR_INDUCTANCE_MH     3.2f    // Motor winding inductance
+#define MOTOR_VOLTAGE_V 12.0f     // Motor supply voltage
+#define MOTOR_CURRENT_MA 1000     // Motor rated current (mA)
+#define MOTOR_RESISTANCE_OHM 2.8f // Motor winding resistance
+#define MOTOR_INDUCTANCE_MH 3.2f  // Motor winding inductance
 
-// Motor mechanical characteristics  
-#define MOTOR_STEPS_PER_REV     200     // Full steps per revolution (1.8°/step)
-#define MOTOR_MICROSTEPS        128     // Microstepping setting (1/128)
-#define MOTOR_TOTAL_STEPS       (MOTOR_STEPS_PER_REV * MOTOR_MICROSTEPS)
-#define MOTOR_DEGREES_PER_STEP  (360.0f / MOTOR_TOTAL_STEPS)
+// Motor mechanical characteristics
+#define MOTOR_STEPS_PER_REV 200 // Full steps per revolution (1.8°/step)
+#define MOTOR_MICROSTEPS 128    // Microstepping setting (1/128)
+#define MOTOR_TOTAL_STEPS (MOTOR_STEPS_PER_REV * MOTOR_MICROSTEPS)
+#define MOTOR_DEGREES_PER_STEP (360.0f / MOTOR_TOTAL_STEPS)
 
 // Motor mechanical limits
-#define MOTOR_MAX_SPEED_RPM     100.0f  // Maximum safe speed
-#define MOTOR_MIN_SPEED_RPM     0.1f    // Minimum controllable speed
-#define MOTOR_MAX_ACCEL_RPM_S   50.0f   // Maximum acceleration
-#define MOTOR_MAX_DECEL_RPM_S   100.0f  // Maximum deceleration (can be higher)
+#define MOTOR_MAX_SPEED_RPM 100.0f   // Maximum safe speed
+#define MOTOR_MIN_SPEED_RPM 0.1f     // Minimum controllable speed
+#define MOTOR_MAX_ACCEL_RPM_S 50.0f  // Maximum acceleration
+#define MOTOR_MAX_DECEL_RPM_S 100.0f // Maximum deceleration (can be higher)
 
 // Position limits (degrees)
-#define MOTOR_MIN_ANGLE_DEG     0.0f    // Minimum position
-#define MOTOR_MAX_ANGLE_DEG     360.0f  // Maximum position (full rotation)
-#define MOTOR_HOME_ANGLE_DEG    0.0f    // Home/reference position
+#define MOTOR_MIN_ANGLE_DEG 0.0f   // Minimum position
+#define MOTOR_MAX_ANGLE_DEG 360.0f // Maximum position (full rotation)
+#define MOTOR_HOME_ANGLE_DEG 0.0f  // Home/reference position
 
 /* ========================================================================== */
 /* L6470 Driver Register Configuration (SSOT)                                */
 /* ========================================================================== */
-// TODO: See .github/instructions/l6470-registers.instructions.md for detailed register descriptions
+// TODO: See .github/instructions/l6470-registers.instructions.md for detailed
+// register descriptions
 
 // Motion Profile Parameters
-#define L6470_MAX_SPEED         0x041   // Max speed register value (100 RPM equiv)
-#define L6470_MIN_SPEED         0x000   // Min speed register value  
-#define L6470_ACC               0x08A   // Acceleration register value
-#define L6470_DEC               0x08A   // Deceleration register value
-#define L6470_FS_SPD            0x027   // Full step speed threshold
+#define L6470_MAX_SPEED 0x041 // Max speed register value (100 RPM equiv)
+#define L6470_MIN_SPEED 0x000 // Min speed register value
+#define L6470_ACC 0x08A       // Acceleration register value
+#define L6470_DEC 0x08A       // Deceleration register value
+#define L6470_FS_SPD 0x027    // Full step speed threshold
 
 // Current Control (KVAL registers)
-#define L6470_KVAL_HOLD         0x29    // Holding current (25% of max)
-#define L6470_KVAL_RUN          0x29    // Running current (25% of max)  
-#define L6470_KVAL_ACC          0x29    // Acceleration current (25% of max)
-#define L6470_KVAL_DEC          0x29    // Deceleration current (25% of max)
+#define L6470_KVAL_HOLD 0x29 // Holding current (25% of max)
+#define L6470_KVAL_RUN 0x29  // Running current (25% of max)
+#define L6470_KVAL_ACC 0x29  // Acceleration current (25% of max)
+#define L6470_KVAL_DEC 0x29  // Deceleration current (25% of max)
 
 // Back-EMF Compensation (BEMF parameters)
-#define L6470_INT_SPD           0x0408  // Intersect speed for BEMF
-#define L6470_ST_SLP            0x19    // Start slope for BEMF
-#define L6470_FN_SLP_ACC        0x29    // Final slope acceleration
-#define L6470_FN_SLP_DEC        0x29    // Final slope deceleration
+#define L6470_INT_SPD 0x0408  // Intersect speed for BEMF
+#define L6470_ST_SLP 0x19     // Start slope for BEMF
+#define L6470_FN_SLP_ACC 0x29 // Final slope acceleration
+#define L6470_FN_SLP_DEC 0x29 // Final slope deceleration
 
 // Step Mode Configuration
-#define L6470_STEP_MODE         0x07    // 1/128 microstepping
-#define L6470_SYNC_EN           0x80    // Enable sync output
-#define L6470_SYNC_SEL          0x00    // Sync signal selection
+#define L6470_STEP_MODE 0x07 // 1/128 microstepping
+#define L6470_SYNC_EN 0x80   // Enable sync output
+#define L6470_SYNC_SEL 0x00  // Sync signal selection
 
 // Overcurrent Detection
-#define L6470_OCD_TH            0x0F    // Overcurrent threshold (3A)
-#define L6470_STALL_TH          0x40    // Stall detection threshold
+#define L6470_OCD_TH 0x0F   // Overcurrent threshold (3A)
+#define L6470_STALL_TH 0x40 // Stall detection threshold
 
 // Switching Configuration
-#define L6470_PWM_FREQ          0x00    // PWM frequency (15.6 kHz)
-#define L6470_PWM_MUL           0x00    // PWM multiplier  
-#define L6470_PWM_DIV           0x00    // PWM divisor
+#define L6470_PWM_FREQ 0x00 // PWM frequency (15.6 kHz)
+#define L6470_PWM_MUL 0x00  // PWM multiplier
+#define L6470_PWM_DIV 0x00  // PWM divisor
 
 // Slew Rate and Driver Configuration
-#define L6470_SLEW_RATE         0x0290  // Slew rate configuration
-#define L6470_OC_SD             0x08    // Overcurrent shutdown enable
-#define L6470_POW_SR            0x00    // Power slew rate
-#define L6470_TSW               0x01    // Switching time
+#define L6470_SLEW_RATE 0x0290 // Slew rate configuration
+#define L6470_OC_SD 0x08       // Overcurrent shutdown enable
+#define L6470_POW_SR 0x00      // Power slew rate
+#define L6470_TSW 0x01         // Switching time
 
 /* ========================================================================== */
 /* L6470 Command Definitions (SSOT)                                          */
 /* ========================================================================== */
-// TODO: See .github/instructions/l6470-registers.instructions.md for command protocol implementation
+// TODO: See .github/instructions/l6470-registers.instructions.md for command
+// protocol implementation
 
 // Movement Commands
-#define L6470_CMD_NOP           0x00    // No operation
-#define L6470_CMD_SETPARAM      0x00    // Set parameter (OR with param address)
-#define L6470_CMD_GETPARAM      0x20    // Get parameter (OR with param address)
-#define L6470_CMD_RUN           0x50    // Run with constant speed
-#define L6470_CMD_STEPCLOCK     0x58    // Step clock mode
-#define L6470_CMD_MOVE          0x40    // Move N steps
-#define L6470_CMD_GOTO          0x60    // Go to absolute position
-#define L6470_CMD_GOTO_DIR      0x68    // Go to position with direction
-#define L6470_CMD_GOUNTIL       0x82    // Go until switch/flag
-#define L6470_CMD_RELEASESW     0x92    // Release switch
+#define L6470_CMD_NOP 0x00       // No operation
+#define L6470_CMD_SETPARAM 0x00  // Set parameter (OR with param address)
+#define L6470_CMD_GETPARAM 0x20  // Get parameter (OR with param address)
+#define L6470_CMD_RUN 0x50       // Run with constant speed
+#define L6470_CMD_STEPCLOCK 0x58 // Step clock mode
+#define L6470_CMD_MOVE 0x40      // Move N steps
+#define L6470_CMD_GOTO 0x60      // Go to absolute position
+#define L6470_CMD_GOTO_DIR 0x68  // Go to position with direction
+#define L6470_CMD_GOUNTIL 0x82   // Go until switch/flag
+#define L6470_CMD_RELEASESW 0x92 // Release switch
 
-// Control Commands  
-#define L6470_CMD_HARDSTOP      0xB8    // Immediate stop
-#define L6470_CMD_SOFTSTOP      0xB0    // Soft stop with deceleration
-#define L6470_CMD_HARDHIZ       0xA8    // Immediate high-Z
-#define L6470_CMD_SOFTHIZ       0xA0    // Soft high-Z
+// Control Commands
+#define L6470_CMD_HARDSTOP 0xB8 // Immediate stop
+#define L6470_CMD_SOFTSTOP 0xB0 // Soft stop with deceleration
+#define L6470_CMD_HARDHIZ 0xA8  // Immediate high-Z
+#define L6470_CMD_SOFTHIZ 0xA0  // Soft high-Z
 
 // Status Commands
-#define L6470_CMD_GETSTATUS     0xD0    // Get status and clear flags
-#define L6470_CMD_RESERVED1     0xEB    // Reserved
-#define L6470_CMD_RESERVED2     0xF8    // Reserved
+#define L6470_CMD_GETSTATUS 0xD0 // Get status and clear flags
+#define L6470_CMD_RESERVED1 0xEB // Reserved
+#define L6470_CMD_RESERVED2 0xF8 // Reserved
 
 // Reset Commands
-#define L6470_CMD_RESET_POS     0xD8    // Reset position counter
-#define L6470_CMD_RESET_DEVICE  0xC0    // Reset device
+#define L6470_CMD_RESET_POS 0xD8    // Reset position counter
+#define L6470_CMD_RESET_DEVICE 0xC0 // Reset device
 
 /* ========================================================================== */
 /* L6470 Register Addresses (SSOT)                                           */
 /* ========================================================================== */
 // Motion Control Registers
-#define L6470_REG_ABS_POS       0x01    // Absolute position (22-bit)
-#define L6470_REG_EL_POS        0x02    // Electrical position (9-bit)
-#define L6470_REG_MARK          0x03    // Mark position (22-bit)
-#define L6470_REG_SPEED         0x04    // Current speed (20-bit)
-#define L6470_REG_ACC           0x05    // Acceleration (12-bit)
-#define L6470_REG_DEC           0x06    // Deceleration (12-bit)
-#define L6470_REG_MAX_SPEED     0x07    // Maximum speed (10-bit)
-#define L6470_REG_MIN_SPEED     0x08    // Minimum speed (13-bit)
-#define L6470_REG_FS_SPD        0x15    // Full step speed (10-bit)
+#define L6470_REG_ABS_POS 0x01   // Absolute position (22-bit)
+#define L6470_REG_EL_POS 0x02    // Electrical position (9-bit)
+#define L6470_REG_MARK 0x03      // Mark position (22-bit)
+#define L6470_REG_SPEED 0x04     // Current speed (20-bit)
+#define L6470_REG_ACC 0x05       // Acceleration (12-bit)
+#define L6470_REG_DEC 0x06       // Deceleration (12-bit)
+#define L6470_REG_MAX_SPEED 0x07 // Maximum speed (10-bit)
+#define L6470_REG_MIN_SPEED 0x08 // Minimum speed (13-bit)
+#define L6470_REG_FS_SPD 0x15    // Full step speed (10-bit)
 
 // Current Control Registers
-#define L6470_REG_KVAL_HOLD     0x09    // Holding KVAL
-#define L6470_REG_KVAL_RUN      0x0A    // Running KVAL
-#define L6470_REG_KVAL_ACC      0x0B    // Acceleration starting KVAL
-#define L6470_REG_KVAL_DEC      0x0C    // Deceleration starting KVAL
+#define L6470_REG_KVAL_HOLD 0x09 // Holding KVAL
+#define L6470_REG_KVAL_RUN 0x0A  // Running KVAL
+#define L6470_REG_KVAL_ACC 0x0B  // Acceleration starting KVAL
+#define L6470_REG_KVAL_DEC 0x0C  // Deceleration starting KVAL
 
 // BEMF Registers
-#define L6470_REG_INT_SPD       0x0D    // Intersect speed
-#define L6470_REG_ST_SLP        0x0E    // Start slope
-#define L6470_REG_FN_SLP_ACC    0x0F    // Final slope acceleration
-#define L6470_REG_FN_SLP_DEC    0x10    // Final slope deceleration
+#define L6470_REG_INT_SPD 0x0D    // Intersect speed
+#define L6470_REG_ST_SLP 0x0E     // Start slope
+#define L6470_REG_FN_SLP_ACC 0x0F // Final slope acceleration
+#define L6470_REG_FN_SLP_DEC 0x10 // Final slope deceleration
 
 // Configuration Registers
-#define L6470_REG_K_THERM       0x11    // Thermal compensation factor
-#define L6470_REG_ADC_OUT       0x12    // ADC output
-#define L6470_REG_OCD_TH        0x13    // Overcurrent threshold
-#define L6470_REG_STALL_TH      0x14    // Stall threshold
-#define L6470_REG_STEP_MODE     0x16    // Step mode and sync
-#define L6470_REG_ALARM_EN      0x17    // Alarm enable
-#define L6470_REG_CONFIG        0x18    // IC configuration
-#define L6470_REG_STATUS        0x19    // Status register
+#define L6470_REG_K_THERM 0x11   // Thermal compensation factor
+#define L6470_REG_ADC_OUT 0x12   // ADC output
+#define L6470_REG_OCD_TH 0x13    // Overcurrent threshold
+#define L6470_REG_STALL_TH 0x14  // Stall threshold
+#define L6470_REG_STEP_MODE 0x16 // Step mode and sync
+#define L6470_REG_ALARM_EN 0x17  // Alarm enable
+#define L6470_REG_CONFIG 0x18    // IC configuration
+#define L6470_REG_STATUS 0x19    // Status register
 
 /* ========================================================================== */
 /* Motion Control Parameters (SSOT)                                          */
 /* ========================================================================== */
-// TODO: See .github/instructions/l6470-registers.instructions.md for closed-loop tuning parameters
+// TODO: See .github/instructions/l6470-registers.instructions.md for
+// closed-loop tuning parameters
 
 // Control Loop Timing
-#define CONTROL_LOOP_FREQ_HZ    1000    // Control loop frequency
-#define CONTROL_LOOP_PERIOD_MS  (1000 / CONTROL_LOOP_FREQ_HZ)
+#define CONTROL_LOOP_FREQ_HZ 1000 // Control loop frequency
+#define CONTROL_LOOP_PERIOD_MS (1000 / CONTROL_LOOP_FREQ_HZ)
 
 // Position Control Parameters
-#define POSITION_TOLERANCE_DEG  0.1f    // Acceptable position error
-#define VELOCITY_TOLERANCE_RPM  0.5f    // Acceptable velocity error
-#define SETTLING_TIME_MS        500     // Time to reach target position
+#define POSITION_TOLERANCE_DEG 0.1f // Acceptable position error
+#define VELOCITY_TOLERANCE_RPM 0.5f // Acceptable velocity error
+#define SETTLING_TIME_MS 500        // Time to reach target position
 
 // Safety Limits
-#define MAX_POSITION_ERROR_DEG  5.0f    // Maximum position error before fault
-#define MAX_FOLLOWING_ERROR_DEG 2.0f    // Maximum real-time following error
-#define STALL_DETECTION_TIME_MS 1000    // Time to detect motor stall
+#define MAX_POSITION_ERROR_DEG 5.0f  // Maximum position error before fault
+#define MAX_FOLLOWING_ERROR_DEG 2.0f // Maximum real-time following error
+#define STALL_DETECTION_TIME_MS 1000 // Time to detect motor stall
 
 // Homing and Calibration
-#define HOMING_SPEED_RPM        10.0f   // Speed for homing moves
-#define CALIBRATION_SAMPLES     100     // Encoder samples for calibration
-#define ENCODER_RESOLUTION_BITS 12      // AS5600 resolution
+#define HOMING_SPEED_RPM 10.0f     // Speed for homing moves
+#define CALIBRATION_SAMPLES 100    // Encoder samples for calibration
+#define ENCODER_RESOLUTION_BITS 12 // AS5600 resolution
 
 /* ========================================================================== */
 /* Motor State Definitions (SSOT)                                            */
 /* ========================================================================== */
-// TODO: See .github/instructions/l6470-registers.instructions.md for state machine implementation
+// TODO: See .github/instructions/l6470-registers.instructions.md for state
+// machine implementation
 
 typedef enum {
-    MOTOR_STATE_UNINITIALIZED = 0,     // Motor not initialized
-    MOTOR_STATE_IDLE,                  // Motor stopped and ready
-    MOTOR_STATE_ACCELERATING,          // Motor accelerating to target speed
-    MOTOR_STATE_RUNNING,               // Motor running at constant speed
-    MOTOR_STATE_DECELERATING,          // Motor decelerating to stop
-    MOTOR_STATE_HOMING,                // Motor performing homing sequence
-    MOTOR_STATE_FAULT,                 // Motor in fault state
-    MOTOR_STATE_EMERGENCY_STOP,        // Emergency stop activated
-    MOTOR_STATE_COUNT                  // Number of states (for validation)
+  MOTOR_STATE_UNINITIALIZED = 0, // Motor not initialized
+  MOTOR_STATE_IDLE,              // Motor stopped and ready
+  MOTOR_STATE_ACCELERATING,      // Motor accelerating to target speed
+  MOTOR_STATE_RUNNING,           // Motor running at constant speed
+  MOTOR_STATE_DECELERATING,      // Motor decelerating to stop
+  MOTOR_STATE_HOMING,            // Motor performing homing sequence
+  MOTOR_STATE_FAULT,             // Motor in fault state
+  MOTOR_STATE_EMERGENCY_STOP,    // Emergency stop activated
+  MOTOR_STATE_COUNT              // Number of states (for validation)
 } MotorState_t;
 
 typedef enum {
-    MOTOR_MODE_OPEN_LOOP = 0,          // Open-loop stepper control
-    MOTOR_MODE_CLOSED_LOOP,            // Closed-loop with encoder feedback
-    MOTOR_MODE_TORQUE_CONTROL,         // Torque control mode
-    MOTOR_MODE_SPEED_CONTROL,          // Speed control mode
-    MOTOR_MODE_POSITION_CONTROL,       // Position control mode
-    MOTOR_MODE_COUNT                   // Number of modes
+  MOTOR_MODE_OPEN_LOOP = 0,    // Open-loop stepper control
+  MOTOR_MODE_CLOSED_LOOP,      // Closed-loop with encoder feedback
+  MOTOR_MODE_TORQUE_CONTROL,   // Torque control mode
+  MOTOR_MODE_SPEED_CONTROL,    // Speed control mode
+  MOTOR_MODE_POSITION_CONTROL, // Position control mode
+  MOTOR_MODE_COUNT             // Number of modes
 } MotorControlMode_t;
 
 /* ========================================================================== */
 /* Fault and Error Definitions (SSOT)                                        */
 /* ========================================================================== */
-// TODO: See .github/instructions/l6470-registers.instructions.md for fault handling procedures
+// TODO: See .github/instructions/l6470-registers.instructions.md for fault
+// handling procedures
 
 typedef enum {
-    MOTOR_FAULT_NONE = 0x0000,         // No fault
-    MOTOR_FAULT_OVERCURRENT = 0x0001,   // Motor overcurrent detected
-    MOTOR_FAULT_UNDERVOLTAGE = 0x0002,  // Supply undervoltage
-    MOTOR_FAULT_OVERHEAT = 0x0004,      // Driver overheating
-    MOTOR_FAULT_STALL = 0x0008,         // Motor stall detected
-    MOTOR_FAULT_ENCODER = 0x0010,       // Encoder communication error
-    MOTOR_FAULT_POSITION = 0x0020,      // Position error too large
-    MOTOR_FAULT_SPEED = 0x0040,         // Speed error too large
-    MOTOR_FAULT_EMERGENCY = 0x0080,     // Emergency stop activated
-    MOTOR_FAULT_COMMUNICATION = 0x0100, // Communication fault
-    MOTOR_FAULT_INITIALIZATION = 0x0200 // Initialization failure
+  MOTOR_FAULT_NONE = 0x0000,          // No fault
+  MOTOR_FAULT_OVERCURRENT = 0x0001,   // Motor overcurrent detected
+  MOTOR_FAULT_UNDERVOLTAGE = 0x0002,  // Supply undervoltage
+  MOTOR_FAULT_OVERHEAT = 0x0004,      // Driver overheating
+  MOTOR_FAULT_STALL = 0x0008,         // Motor stall detected
+  MOTOR_FAULT_ENCODER = 0x0010,       // Encoder communication error
+  MOTOR_FAULT_POSITION = 0x0020,      // Position error too large
+  MOTOR_FAULT_SPEED = 0x0040,         // Speed error too large
+  MOTOR_FAULT_EMERGENCY = 0x0080,     // Emergency stop activated
+  MOTOR_FAULT_COMMUNICATION = 0x0100, // Communication fault
+  MOTOR_FAULT_INITIALIZATION = 0x0200 // Initialization failure
 } MotorFaultFlags_t;
 
 /* ========================================================================== */
 /* Motor Performance Monitoring (SSOT)                                       */
 /* ========================================================================== */
-// TODO: See .github/instructions/l6470-registers.instructions.md for performance tracking
+// TODO: See .github/instructions/l6470-registers.instructions.md for
+// performance tracking
 
 // Performance thresholds
-#define MOTOR_EFFICIENCY_MIN_PCT    80.0f   // Minimum acceptable efficiency
-#define MOTOR_TEMP_WARNING_C        70.0f   // Temperature warning threshold
-#define MOTOR_TEMP_FAULT_C          85.0f   // Temperature fault threshold
-#define MOTOR_VIBRATION_MAX_G       2.0f    // Maximum vibration (if sensor available)
+#define MOTOR_EFFICIENCY_MIN_PCT 80.0f // Minimum acceptable efficiency
+#define MOTOR_TEMP_WARNING_C 70.0f     // Temperature warning threshold
+#define MOTOR_TEMP_FAULT_C 85.0f       // Temperature fault threshold
+#define MOTOR_VIBRATION_MAX_G 2.0f // Maximum vibration (if sensor available)
 
 // Statistics collection
-#define STATS_SAMPLE_INTERVAL_MS    100     // Statistics sampling rate
-#define STATS_HISTORY_SAMPLES       600     // 1 minute of history at 100ms rate
+#define STATS_SAMPLE_INTERVAL_MS 100 // Statistics sampling rate
+#define STATS_HISTORY_SAMPLES 600    // 1 minute of history at 100ms rate
 
 #endif /* MOTOR_CONFIG_H */
 

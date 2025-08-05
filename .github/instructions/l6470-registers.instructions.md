@@ -11,7 +11,7 @@ This instruction file provides comprehensive guidance for configuring the L6470 
 ## Enhanced Documentation Integration
 **Reference Assets**: This instruction leverages comprehensive L6470 and STM32H7 documentation:
 - **X-CUBE-SPN2 Documentation**: 2.1MB L6470-specific reference materials with 356 searchable keywords
-- **Unified Search System**: Enhanced search across STM32H7 and L6470 documentation (88.1MB total coverage)
+- **Unified Search System**: Enhanced search across STM32H7, L6470, and Nucleo BSP documentation (91.1MB total coverage)
 - **Copilot-Optimized Search Commands**:
   ```bash
   # Search L6470 functions with semantic categorization

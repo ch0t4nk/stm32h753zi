@@ -1,0 +1,196 @@
+# STM32CubeMX CLI Configuration Script for STM32H753ZI Motor Control
+
+# This script configures all required peripherals for the stepper motor control project
+# Usage: Run this script with STM32CubeMX CLI to programmatically configure peripherals
+
+# Load existing project
+load project from file "code.ioc"
+
+# ============================================================================
+# SPI2 Configuration - L6470 Stepper Drivers (CRITICAL)
+# ============================================================================
+
+# Enable SPI2 peripheral
+config SPI2.Mode SPI_MODE_MASTER
+config SPI2.Direction SPI_DIRECTION_2LINES
+config SPI2.DataSize SPI_DATASIZE_8BIT
+config SPI2.CLKPolarity SPI_POLARITY_HIGH
+config SPI2.CLKPhase SPI_PHASE_2EDGE
+config SPI2.NSS SPI_NSS_SOFT
+config SPI2.BaudRatePrescaler SPI_BAUDRATEPRESCALER_32
+config SPI2.FirstBit SPI_FIRSTBIT_MSB
+config SPI2.TIMode SPI_TIMODE_DISABLE
+config SPI2.CRCCalculation SPI_CRCCALCULATION_DISABLE
+
+# STM32H7-specific SPI2 features
+config SPI2.NSSPMode SPI_NSS_PULSE_DISABLE
+config SPI2.NSSPolarity SPI_NSS_POLARITY_LOW
+config SPI2.FifoThreshold SPI_FIFO_THRESHOLD_01DATA
+config SPI2.MasterSSIdleness SPI_MASTER_SS_IDLENESS_00CYCLE
+config SPI2.MasterInterDataIdleness SPI_MASTER_INTERDATA_IDLENESS_00CYCLE
+config SPI2.MasterReceiverAutoSusp SPI_MASTER_RX_AUTOSUSP_DISABLE
+config SPI2.MasterKeepIOState SPI_MASTER_KEEP_IO_STATE_ENABLE
+config SPI2.IOSwap SPI_IO_SWAP_DISABLE
+
+# SPI2 Pin Configuration
+set PB13.Signal SPI2_SCK
+set PB13.Mode Alternate
+set PB13.Alternate GPIO_AF5_SPI2
+set PB13.Locked true
+
+set PB14.Signal SPI2_MISO  
+set PB14.Mode Alternate
+set PB14.Alternate GPIO_AF5_SPI2
+set PB14.Locked true
+
+set PB15.Signal SPI2_MOSI
+set PB15.Mode Alternate  
+set PB15.Alternate GPIO_AF5_SPI2
+set PB15.Locked true
+
+# SPI2 Chip Select (Software Controlled)
+set PA9.Signal GPIO_Output
+set PA9.GPIO_Label "MOTOR_SPI_CS"
+set PA9.Locked true
+
+# L6470 Control Pins
+set PA10.Signal GPIO_Input
+set PA10.GPIO_Label "MOTOR_FAULT"  
+set PA10.GPIO_PuPd GPIO_PULLUP
+set PA10.Locked true
+
+set PA11.Signal GPIO_Input
+set PA11.GPIO_Label "MOTOR_BUSY"
+set PA11.GPIO_PuPd GPIO_PULLUP
+set PA11.Locked true
+
+# ============================================================================
+# I2C1 Configuration - AS5600 Encoder 1 (CRITICAL)
+# ============================================================================
+
+config I2C1.I2C_Mode I2C_Fast
+config I2C1.I2C_Speed_Mode I2C_Fast  
+config I2C1.I2C_Analog_Filter I2C_ANALOGFILTER_ENABLE
+config I2C1.I2C_Digital_Filter 0
+config I2C1.ClockSpeed 400000
+
+# I2C1 Pin Configuration
+set PB6.Signal I2C1_SCL
+set PB6.Mode Alternate
+set PB6.Alternate GPIO_AF4_I2C1
+set PB6.Locked true
+
+set PB7.Signal I2C1_SDA
+set PB7.Mode Alternate
+set PB7.Alternate GPIO_AF4_I2C1  
+set PB7.Locked true
+
+# ============================================================================
+# I2C2 Configuration - AS5600 Encoder 2 (CRITICAL)
+# ============================================================================
+
+config I2C2.I2C_Mode I2C_Fast
+config I2C2.I2C_Speed_Mode I2C_Fast
+config I2C2.I2C_Analog_Filter I2C_ANALOGFILTER_ENABLE
+config I2C2.I2C_Digital_Filter 0
+config I2C2.ClockSpeed 400000
+
+# I2C2 Pin Configuration  
+set PB10.Signal I2C2_SCL
+set PB10.Mode Alternate
+set PB10.Alternate GPIO_AF4_I2C2
+set PB10.Locked true
+
+set PB11.Signal I2C2_SDA
+set PB11.Mode Alternate
+set PB11.Alternate GPIO_AF4_I2C2
+set PB11.Locked true
+
+# ============================================================================
+# TIM2 Configuration - 1kHz Control Loop Timer (HIGH PRIORITY)
+# ============================================================================
+
+config TIM2.ClockSource TIM_CLOCKSOURCE_INTERNAL
+config TIM2.Prescaler 12000-1
+config TIM2.Period 10-1
+config TIM2.CounterMode TIM_COUNTERMODE_UP
+config TIM2.ClockDivision TIM_CLOCKDIVISION_DIV1
+config TIM2.AutoReloadPreload TIM_AUTORELOAD_PRELOAD_ENABLE
+
+# Enable TIM2 Update Interrupt
+config NVIC.TIM2_IRQn true:1:0:false:false:true:true:true:true
+
+# ============================================================================
+# FDCAN1 Configuration - MCU-to-MCU Communication (HIGH PRIORITY)
+# ============================================================================
+
+config FDCAN1.CalculateTimeQuantum Disabled
+config FDCAN1.CalculateBitRateNominal Disabled
+config FDCAN1.NominalBitRate 500000
+config FDCAN1.NominalSyncJumpWidth 1
+config FDCAN1.DataBitRate 2000000
+config FDCAN1.DataSyncJumpWidth 1
+config FDCAN1.FrameFormat FDCAN_FRAME_FD_BRS
+config FDCAN1.Mode FDCAN_MODE_NORMAL
+config FDCAN1.AutoRetransmission ENABLE
+config FDCAN1.TransmitPause DISABLE
+config FDCAN1.ProtocolException ENABLE
+
+# FDCAN1 Pin Configuration
+set PD0.Signal FDCAN1_RX
+set PD0.Mode Alternate
+set PD0.Alternate GPIO_AF9_FDCAN1
+set PD0.Locked true
+
+set PD1.Signal FDCAN1_TX
+set PD1.Mode Alternate  
+set PD1.Alternate GPIO_AF9_FDCAN1
+set PD1.Locked true
+
+# Enable FDCAN1 Interrupts
+config NVIC.FDCAN1_IT0_IRQn true:1:0:false:false:true:true:true:true
+config NVIC.FDCAN1_IT1_IRQn true:1:0:false:false:true:true:true:true
+
+# ============================================================================
+# Additional GPIO Configuration for Safety and Status
+# ============================================================================
+
+# Additional Status LEDs (resolve pin conflicts)
+set PE1.Signal GPIO_Output
+set PE1.GPIO_Label "STATUS_LED_1"
+set PE1.Locked true
+
+set PC1.Signal GPIO_Output  
+set PC1.GPIO_Label "STATUS_LED_2"
+set PC1.Locked true
+
+# Emergency Stop Input
+set PC2.Signal GPIO_Input
+set PC2.GPIO_Label "EMERGENCY_STOP"
+set PC2.GPIO_PuPd GPIO_PULLUP
+set PC2.GPIO_ModeDefaultEXTI GPIO_MODE_IT_FALLING
+set PC2.Locked true
+
+# Enable Emergency Stop Interrupt
+config NVIC.EXTI2_IRQn true:0:0:false:false:true:true:true:true
+
+# ============================================================================
+# Update IP Count and Validate Configuration
+# ============================================================================
+
+# Update IP count to reflect new peripherals
+config Mcu.IPNb 11
+
+# Set project settings
+config ProjectManager.TargetToolchain CMake
+config ProjectManager.KeepUserCode true
+config ProjectManager.DeletePrevious false
+
+# Generate code  
+generate code
+
+# Save project
+save project
+
+# Exit CubeMX
+exit
