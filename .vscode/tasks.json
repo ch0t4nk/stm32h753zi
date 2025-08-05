@@ -4,13 +4,17 @@
     {
       "label": "Build (CMake)",
       "type": "shell",
-      "command": "cmake -S . -B build && cmake --build build",
+      "command": "./scripts/fix_cmake.sh",
       "group": {
         "kind": "build",
         "isDefault": true
       },
       "options": {
-        "cwd": "${workspaceFolder}"
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
+          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+        }
       },
       "presentation": {
         "echo": true,
@@ -20,7 +24,9 @@
         "showReuseMessage": true,
         "clear": false
       },
-      "problemMatcher": ["$gcc"]
+      "problemMatcher": [
+        "$gcc"
+      ]
     },
     {
       "label": "Clean Build",
@@ -88,6 +94,25 @@
       "group": "test",
       "options": {
         "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Validate Build Environment",
+      "type": "shell",
+      "command": "./scripts/validate_build_env.sh",
+      "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
+          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+        }
       },
       "presentation": {
         "echo": true,

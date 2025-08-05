@@ -18,34 +18,40 @@
 
 #include <stdint.h>
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* Motor Count and Identification (SSOT)                                     */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 #define MAX_MOTORS 2 // Two motors in this system
 #define MOTOR_1_ID 0 // First motor identifier
 #define MOTOR_2_ID 1 // Second motor identifier
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* X-CUBE-SPN2 + MCSDK Motor Control Configuration (SSOT)                    */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // Primary Framework: X-CUBE-SPN2 for L6470 stepper control
-#define SPN2_FRAMEWORK_ENABLED      1   // Enable X-CUBE-SPN2 framework
-#define SPN2_IHM02A1_BOARD          1   // X-NUCLEO-IHM02A1 board support
-#define SPN2_DUAL_MOTOR_CONFIG      1   // Dual motor configuration
+#define SPN2_FRAMEWORK_ENABLED 1 // Enable X-CUBE-SPN2 framework
+#define SPN2_IHM02A1_BOARD 1     // X-NUCLEO-IHM02A1 board support
+#define SPN2_DUAL_MOTOR_CONFIG 1 // Dual motor configuration
 
 // MCSDK Selective Enhancement Layer
-#define MCSDK_POSITION_CONTROL      1   // Enhanced position control algorithms
-#define MCSDK_MOTION_PROFILING      1   // Advanced motion profiling
-#define MCSDK_SAFETY_MONITORING     1   // Enhanced safety and fault detection
-#define MCSDK_WORKBENCH_SUPPORT     1   // Motor Control Workbench integration
+#define MCSDK_POSITION_CONTROL 1  // Enhanced position control algorithms
+#define MCSDK_MOTION_PROFILING 1  // Advanced motion profiling
+#define MCSDK_SAFETY_MONITORING 1 // Enhanced safety and fault detection
+#define MCSDK_WORKBENCH_SUPPORT 1 // Motor Control Workbench integration
 
 // Integration Layer Configuration
-#define HYBRID_CONTROL_MODE         1   // SPN2 base + MCSDK enhancement
-#define CLOSED_LOOP_FEEDBACK        1   // AS5600 encoder feedback integration
+#define HYBRID_CONTROL_MODE 1  // SPN2 base + MCSDK enhancement
+#define CLOSED_LOOP_FEEDBACK 1 // AS5600 encoder feedback integration
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* Motor Physical Parameters (SSOT)                                          */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // TODO: See .github/instructions/l6470-registers.instructions.md for motor
 // specifications
 
@@ -68,11 +74,13 @@
 #define MOTOR_MAX_DECEL_RPM_S 100.0f // Maximum deceleration (can be higher)
 
 // Speed conversion constants
-#define MOTOR_MAX_SPEED_DPS (MOTOR_MAX_SPEED_RPM * 6.0f)  // Convert RPM to degrees/second
-#define MOTOR_MIN_SPEED_DPS (MOTOR_MIN_SPEED_RPM * 6.0f)  // Convert RPM to degrees/second
+#define MOTOR_MAX_SPEED_DPS                                                   \
+    (MOTOR_MAX_SPEED_RPM * 6.0f) // Convert RPM to degrees/second
+#define MOTOR_MIN_SPEED_DPS                                                   \
+    (MOTOR_MIN_SPEED_RPM * 6.0f) // Convert RPM to degrees/second
 
 // Control loop timing
-#define MOTOR_CONTROL_LOOP_PERIOD_MS 20  // 50Hz control loop (20ms period)
+#define MOTOR_CONTROL_LOOP_PERIOD_MS 20 // 50Hz control loop (20ms period)
 
 // Position limits (degrees)
 #define MOTOR_MIN_ANGLE_DEG 0.0f   // Minimum position
@@ -80,14 +88,16 @@
 #define MOTOR_HOME_ANGLE_DEG 0.0f  // Home/reference position
 
 // Motor-specific position limits
-#define MOTOR1_MIN_POSITION_DEG -180.0f  // Motor 1 minimum position
-#define MOTOR1_MAX_POSITION_DEG 180.0f   // Motor 1 maximum position
-#define MOTOR2_MIN_POSITION_DEG -90.0f   // Motor 2 minimum position  
-#define MOTOR2_MAX_POSITION_DEG 90.0f    // Motor 2 maximum position
+#define MOTOR1_MIN_POSITION_DEG -180.0f // Motor 1 minimum position
+#define MOTOR1_MAX_POSITION_DEG 180.0f  // Motor 1 maximum position
+#define MOTOR2_MIN_POSITION_DEG -90.0f  // Motor 2 minimum position
+#define MOTOR2_MAX_POSITION_DEG 90.0f   // Motor 2 maximum position
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* L6470 Driver Register Configuration (SSOT)                                */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // TODO: See .github/instructions/l6470-registers.instructions.md for detailed
 // register descriptions
 
@@ -130,21 +140,31 @@
 #define L6470_POW_SR 0x00      // Power slew rate
 #define L6470_TSW 0x01         // Switching time
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* Motor Limits and Safety Parameters (SSOT)                                 */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // Physical and safety limits
-#define MOTOR_MAX_POSITION_STEPS    (200 * 16 * 360)  // 200 steps/rev * 16 microsteps * 360°
-#define MOTOR_MAX_SPEED_STEPS_PER_SEC  3200           // Maximum speed in steps/sec
-#define MOTOR_MAX_CURRENT_MA        1000              // Maximum current in milliamps
-// NOTE: MOTOR_CURRENT_MA defined above as 1000mA - using that value for normal operation
+#define MOTOR_MAX_POSITION_STEPS                                              \
+    (200 * 16 * 360) // 200 steps/rev * 16 microsteps * 360°
+#define MOTOR_MAX_SPEED_STEPS_PER_SEC 3200 // Maximum speed in steps/sec
+#define MOTOR_MAX_CURRENT_MA 1000          // Maximum current in milliamps
+// NOTE: MOTOR_CURRENT_MA defined above as 1000mA - using that value for normal
+// operation
+
+// Motor control aliases for motion profile compatibility
+#define MOTOR_MAX_SPEED MOTOR_MAX_SPEED_STEPS_PER_SEC // Alias for steps/sec
+#define MOTOR_MAX_ACCELERATION 1600 // Maximum acceleration in steps/sec²
 
 // Motor 1 acceleration (from SSOT - for communication protocol compatibility)
-#define MOTOR1_ACCELERATION         L6470_ACC         // Use L6470 register value
+#define MOTOR1_ACCELERATION L6470_ACC // Use L6470 register value
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* L6470 Command Definitions (SSOT)                                          */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // TODO: See .github/instructions/l6470-registers.instructions.md for command
 // protocol implementation
 
@@ -175,9 +195,11 @@
 #define L6470_CMD_RESET_POS 0xD8    // Reset position counter
 #define L6470_CMD_RESET_DEVICE 0xC0 // Reset device
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* L6470 Register Addresses (SSOT)                                           */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // Motion Control Registers
 #define L6470_REG_ABS_POS 0x01   // Absolute position (22-bit)
 #define L6470_REG_EL_POS 0x02    // Electrical position (9-bit)
@@ -211,9 +233,11 @@
 #define L6470_REG_CONFIG 0x18    // IC configuration
 #define L6470_REG_STATUS 0x19    // Status register
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* Motion Control Parameters (SSOT)                                          */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // TODO: See .github/instructions/l6470-registers.instructions.md for
 // closed-loop tuning parameters
 
@@ -237,47 +261,53 @@
 #define ENCODER_RESOLUTION_BITS 12 // AS5600 resolution
 #define ENCODER_VALUE_MASK 0x0FFF  // 12-bit encoder value mask (AS5600)
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* Motor State Definitions (SSOT)                                            */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // TODO: See .github/instructions/l6470-registers.instructions.md for state
 // machine implementation
 
 typedef enum {
-  MOTOR_STATE_UNINITIALIZED = 0, // Motor not initialized
-  MOTOR_STATE_IDLE,              // Motor stopped and ready
-  MOTOR_STATE_ACCELERATING,      // Motor accelerating to target speed
-  MOTOR_STATE_RUNNING,           // Motor running at constant speed
-  MOTOR_STATE_DECELERATING,      // Motor decelerating to stop
-  MOTOR_STATE_HOMING,            // Motor performing homing sequence
-  MOTOR_STATE_FAULT,             // Motor in fault state
-  MOTOR_STATE_EMERGENCY_STOP,    // Emergency stop activated
-  MOTOR_STATE_COUNT              // Number of states (for validation)
+    MOTOR_STATE_UNINITIALIZED = 0, // Motor not initialized
+    MOTOR_STATE_IDLE,              // Motor stopped and ready
+    MOTOR_STATE_ACCELERATING,      // Motor accelerating to target speed
+    MOTOR_STATE_RUNNING,           // Motor running at constant speed
+    MOTOR_STATE_DECELERATING,      // Motor decelerating to stop
+    MOTOR_STATE_HOMING,            // Motor performing homing sequence
+    MOTOR_STATE_FAULT,             // Motor in fault state
+    MOTOR_STATE_EMERGENCY_STOP,    // Emergency stop activated
+    MOTOR_STATE_COUNT              // Number of states (for validation)
 } MotorState_t;
 
 typedef enum {
-  MOTOR_MODE_OPEN_LOOP = 0,    // Open-loop stepper control
-  MOTOR_MODE_CLOSED_LOOP,      // Closed-loop with encoder feedback
-  MOTOR_MODE_TORQUE_CONTROL,   // Torque control mode
-  MOTOR_MODE_SPEED_CONTROL,    // Speed control mode
-  MOTOR_MODE_POSITION_CONTROL, // Position control mode
-  MOTOR_MODE_COUNT             // Number of modes
+    MOTOR_MODE_OPEN_LOOP = 0,    // Open-loop stepper control
+    MOTOR_MODE_CLOSED_LOOP,      // Closed-loop with encoder feedback
+    MOTOR_MODE_TORQUE_CONTROL,   // Torque control mode
+    MOTOR_MODE_SPEED_CONTROL,    // Speed control mode
+    MOTOR_MODE_POSITION_CONTROL, // Position control mode
+    MOTOR_MODE_COUNT             // Number of modes
 } MotorControlMode_t;
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* Fault and Error Definitions (SSOT)                                        */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // TODO: See .github/instructions/l6470-registers.instructions.md for fault
 // handling procedures
-// 
+//
 // NOTE: Motor fault definitions moved to src/safety/fault_monitor.h for SSOT
 // Use MotorFaultType_t from fault_monitor.h instead of local definitions
 //
 // #include "safety/fault_monitor.h" to access motor fault enumerations
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* Motor Performance Monitoring (SSOT)                                       */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // TODO: See .github/instructions/l6470-registers.instructions.md for
 // performance tracking
 
