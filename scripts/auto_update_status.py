@@ -3,24 +3,8 @@
 STATUS.md Automation System - Phase 1 Implementation
 
 Automated updater for project status tracking and GitHub Copilot context.
-Analyzes build results                else:
-                    # Fallback if arm-none-eabi-size parsing failed
-                    flash_used_pct = (size_bytes / (2 * 1024 * 1024)) * 100
-                    flash_free_pct = 100 - flash_used_pct
-                    
-                    content = re.sub(
-                        r'\*\*Build Status\*\*:\s*.*',
-                        f'**Build Status**: ✅ Passing ({size_kb:.1f}KB ELF file, unable to parse memory sections)',
-                        content
-                    )
-                    
-                    content = re.sub(
-                        r'- \*\*Flash Usage\*\*:\s*.*',
-                        f'- **Flash Usage**: Unable to determine (ELF file: {size_kb:.1f}KB)',
-                        content
-                    )
-                    
-                    self.log(f"Build metrics: {size_kb:.1f}KB ELF file (memory parsing failed)", "WARNING")nd code changes to maintain current STATUS.md.
+Analyzes build results, git commits, and code changes to maintain current
+STATUS.md.
 
 Usage:
     python3 scripts/auto_update_status.py [options]
@@ -36,26 +20,28 @@ Author: STM32H753ZI Development Team
 Date: August 5, 2025
 """
 
-import json
+import argparse
 import re
 import subprocess
 import sys
-import argparse
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
+
 
 class StatusUpdater:
     """Core STATUS.md automation engine"""
     
-    def __init__(self, workspace_root: str = "/workspaces/code", verbose: bool = False):
+    def __init__(self, workspace_root: str = "/workspaces/code",
+                 verbose: bool = False):
         self.workspace = Path(workspace_root).resolve()
         self.status_file = self.workspace / "STATUS.md"
         self.verbose = verbose
         self.changes_made = False
         
         if not self.status_file.exists():
-            raise FileNotFoundError(f"STATUS.md not found at {self.status_file}")
+            raise FileNotFoundError(
+                f"STATUS.md not found at {self.status_file}")
     
     def log(self, message: str, level: str = "INFO") -> None:
         """Log message if verbose mode enabled"""
@@ -70,7 +56,8 @@ class StatusUpdater:
         except Exception as e:
             raise RuntimeError(f"Failed to read STATUS.md: {e}")
     
-    def write_status_content(self, content: str, dry_run: bool = False) -> None:
+    def write_status_content(self, content: str,
+                             dry_run: bool = False) -> None:
         """Write updated content to STATUS.md"""
         if dry_run:
             self.log("DRY RUN: Would update STATUS.md")
@@ -121,13 +108,14 @@ class StatusUpdater:
             if elf_path:
                 size_bytes = elf_path.stat().st_size
                 size_kb = size_bytes / 1024
-                flash_percent = (size_bytes / (2 * 1024 * 1024)) * 100  # 2MB flash
+                flash_percent = (size_bytes / (2 * 1024 * 1024)) * 100
                 
                 # Extract memory usage from size output if available
                 try:
                     result = subprocess.run(
                         ["arm-none-eabi-size", str(elf_path)],
-                        capture_output=True, text=True, cwd=self.workspace
+                        capture_output=True, text=True, cwd=self.workspace,
+                        check=False
                     )
                     
                     if result.returncode == 0 and result.stdout:
@@ -144,14 +132,18 @@ class StatusUpdater:
                                 flash_used = text_size + data_size
                                 ram_used = data_size + bss_size
                                 
+                                flash_pct = (flash_used / 
+                                             (2 * 1024 * 1024)) * 100
+                                ram_pct = (ram_used / 
+                                          (1 * 1024 * 1024)) * 100
                                 metrics.update({
                                     "text_kb": text_size / 1024,
                                     "data_kb": data_size / 1024,
                                     "bss_kb": bss_size / 1024,
                                     "flash_used_kb": flash_used / 1024,
                                     "ram_used_kb": ram_used / 1024,
-                                    "flash_percent": (flash_used / (2 * 1024 * 1024)) * 100,
-                                    "ram_percent": (ram_used / (1 * 1024 * 1024)) * 100
+                                    "flash_percent": flash_pct,
+                                    "ram_percent": ram_pct
                                 })
                         
                 except Exception as e:
@@ -246,7 +238,7 @@ class StatusUpdater:
         
         try:
             result = subprocess.run(
-                ["git", "log", f"--oneline", f"-{count}"],
+                ["git", "log", "--oneline", f"-{count}"],
                 capture_output=True, text=True, cwd=self.workspace
             )
             
