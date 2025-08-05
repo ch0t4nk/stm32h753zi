@@ -3,7 +3,7 @@
     "build": {
         "dockerfile": "Dockerfile",
         "context": "."
-    },
+     },
     "workspaceFolder": "/workspaces/code",
     "customizations": {
         "vscode": {
@@ -51,7 +51,7 @@
             },
             "extensions": [
                 "ms-vscode.cpptools",
-                "ms-vscode.cpptools-extension-pack", 
+                "ms-vscode.cpptools-extension-pack",
                 "ms-vscode.cmake-tools",
                 "twxs.cmake",
                 "ms-vscode.vscode-embedded-tools",
@@ -67,14 +67,18 @@
     "mounts": [
         "source=${localWorkspaceFolder}/.vscode,target=/workspaces/code/.vscode,type=bind,consistency=cached"
     ],
-    "capAdd": ["SYS_PTRACE"],
-    "securityOpt": ["seccomp=unconfined"],
+    "capAdd": [
+        "SYS_PTRACE"
+    ],
+    "securityOpt": [
+        "seccomp=unconfined"
+    ],
     "postCreateCommand": [
-        "bash", "-c", 
+        "bash",
+        "-c",
         "git config --global --add safe.directory /workspaces/code && git config --global user.name '${localEnv:USER:-DevContainer}' && git config --global user.email '${localEnv:EMAIL:-dev@container.local}' && chown -R root:root /workspaces/code && chmod -R 755 /workspaces/code && echo 'STM32H753ZI workspace setup complete'"
     ],
     "remoteUser": "root",
     "shutdownAction": "stopContainer"
 }
-
 // TODO: See .instructions/devcontainer.md for module-specific configuration details

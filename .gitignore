@@ -5,9 +5,49 @@
 !.vscode/c_cpp_properties.json
 !.vscode/tasks.json
 !.vscode/launch.json
+!.vscode/settings.json
 *.o
 *.elf
 *.bin
 .env
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Development artifacts
+*.tmp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+tests/host_tests/CMakeCache.txt
+tests/host_tests/CMakeFiles/
+tests/host_tests/*.cmake
+tests/host_tests/Makefile
+tests/host_tests/Testing/
+tests/host_tests/*.a
+
+# Temporary development files
+scripts/*demo*.py
+scripts/test_*.py
+scripts/semantic_search_backup*.py
+scripts/semantic_search_fixed*.py
+scripts/fix_ollama.py
+scripts/embedding_test_results.json
+vector_db/
+
 # Untracked reference docs
 00_reference/

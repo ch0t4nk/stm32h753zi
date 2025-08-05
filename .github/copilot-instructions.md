@@ -82,6 +82,15 @@ The `00_reference/` directory contains comprehensive ST official documentation:
 
 ```bash
 # PRODUCTION SEMANTIC SEARCH (NEW - Preferred)
+
+# Recommended: Use wrapper script (auto-handles virtual environment)
+./scripts/stm32_search.sh concept "GPIO configuration" --scope STM32H7
+./scripts/stm32_search.sh function "HAL_GPIO_Init" --scope STM32H7  
+./scripts/stm32_search.sh function "L6470" --scope L6470
+./scripts/stm32_search.sh peripheral "SPI" --scope all
+./scripts/stm32_search.sh concept "stepper motor control" --scope all
+
+# Alternative: Direct virtual environment usage
 # Use virtual environment for proper dependencies
 /workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "GPIO configuration" --scope STM32H7
 
@@ -130,6 +139,7 @@ python3 scripts/link_validator.py
 - **Scope filtering**: Target specific documentation sets (STM32H7/L6470/NUCLEO_BSP/all)
 - **Real embeddings**: 1024-dimensional vectors from Ollama mxbai-embed-large model
 - **Production ready**: Processes 981 documents from real workspace (27 source files)
+- **GPU Acceleration**: CUDA 12.1 support with automatic GPU detection
 
 **Migration Notes:**
 - **New system**: `scripts/stm32_semantic_search.py` (semantic search with AI embeddings)

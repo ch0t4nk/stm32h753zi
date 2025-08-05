@@ -1,3 +1,4 @@
+# Use standard Ubuntu base image
 FROM ubuntu:22.04
 
 # Avoid prompts from apt
@@ -58,6 +59,9 @@ RUN pip3 install \
     jinja2 \
     pyyaml \
     jsonschema
+
+# Install Ollama (CPU version for container compatibility)
+RUN curl -fsSL https://ollama.com/install.sh | sh
 
 WORKDIR /workspaces/code
 
