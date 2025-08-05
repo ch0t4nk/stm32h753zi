@@ -44,6 +44,7 @@ typedef struct {
     uint32_t error_count;
     bool magnet_detected;
     bool calibrated;
+    uint16_t zero_offset;           // Zero offset for calibration
 } AS5600_EncoderState_t;
 
 static AS5600_EncoderState_t encoder_state[AS5600_MAX_ENCODERS] = {0};
@@ -376,6 +377,7 @@ SystemError_t as5600_calibrate_zero(uint8_t encoder_id, float current_angle) {
     // Write zero position to AS5600 (requires PROG pin low - not implemented)
     // For now, just store in state for software compensation
     encoder_state[encoder_id].calibrated = true;
+    encoder_state[encoder_id].zero_offset = zero_position; // Use the calculated value
     
     return SYSTEM_OK;
 }
@@ -443,6 +445,15 @@ static SystemError_t as5600_i2c_read_register(uint8_t encoder_id, uint8_t reg_ad
  * @param data Data to write
  * @return System error code
  */
+/**
+ * @brief Write register to AS5600 encoder (Future use - requires PROG pin)
+ * @param encoder_id Encoder identifier (0 or 1)
+ * @param reg_addr Register address
+ * @param data Data to write
+ * @return System error code
+ * @note Currently unused - reserved for future OTP programming features
+ */
+__attribute__((unused))
 static SystemError_t as5600_i2c_write_register(uint8_t encoder_id, uint8_t reg_addr, uint8_t data) {
     AS5600_EncoderState_t* state = &encoder_state[encoder_id];
     

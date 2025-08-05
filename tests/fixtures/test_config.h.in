@@ -1,0 +1,41 @@
+/**
+ * @file test_config.h.in
+ * @brief Test configuration template for CMake substitution
+ * @author STM32H753ZI Motor Control Project
+ * @date 2024
+ */
+
+#ifndef TEST_CONFIG_H
+#define TEST_CONFIG_H
+
+// Test framework configuration
+#define TEST_FRAMEWORK_UNITY 1
+#define TEST_FRAMEWORK_GOOGLETEST 0
+
+// Project version for tests
+#define TEST_PROJECT_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
+#define TEST_PROJECT_VERSION_MINOR @PROJECT_VERSION_MINOR@
+#define TEST_PROJECT_VERSION_PATCH @PROJECT_VERSION_PATCH@
+
+// Test timing configuration (faster for simulation)
+#define TEST_EMERGENCY_STOP_DEBOUNCE_MS 5     // Reduced from 50ms
+#define TEST_WATCHDOG_TIMEOUT_MS 100          // Reduced from 1000ms
+#define TEST_FAULT_RECOVERY_TIME_MS 20        // Reduced from 200ms
+
+// Test safety thresholds
+#define TEST_MAX_RESPONSE_TIME_MS 10
+#define TEST_MAX_FAULT_RECOVERY_TIME_MS 50
+
+// Test hardware simulation
+#define TEST_MOCK_HAL_ENABLED 1
+#define TEST_HARDWARE_SIMULATION 1
+
+// Test coverage configuration
+#define TEST_COVERAGE_ENABLED @ENABLE_COVERAGE@
+#define TEST_STATIC_ANALYSIS_ENABLED @ENABLE_STATIC_ANALYSIS@
+
+// Source directory for test reference
+#define TEST_SOURCE_DIR "@CMAKE_SOURCE_DIR@"
+#define TEST_BINARY_DIR "@CMAKE_BINARY_DIR@"
+
+#endif // TEST_CONFIG_H

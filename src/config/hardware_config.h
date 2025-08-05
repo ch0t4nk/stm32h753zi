@@ -216,8 +216,19 @@
 // TODO: See .github/instructions/hardware-pins.instructions.md for system clock
 // tree setup
 
-#define HSE_VALUE 25000000UL          // External crystal frequency
+// Protect against redefinition warnings - only define if not already defined
+#ifndef HSE_VALUE
+#define HSE_VALUE 8000000UL           // External crystal frequency (8MHz on Nucleo-144)
+#endif
+
+#ifndef LSE_VALUE
 #define LSE_VALUE 32768UL             // LSE crystal for RTC
+#endif
+
+#ifndef VDD_VALUE
+#define VDD_VALUE 3300UL              // VDD voltage in millivolts
+#endif
+
 #define SYSTEM_CLOCK_FREQ 480000000UL // System clock frequency
 #define AHB_CLOCK_FREQ 240000000UL    // AHB bus frequency
 #define APB1_CLOCK_FREQ 120000000UL   // APB1 bus frequency

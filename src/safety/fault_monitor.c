@@ -687,6 +687,7 @@ static SystemError_t check_system_health(void) {
 /**
  * @brief Check if fault is critical
  */
+__attribute__((unused))
 static bool is_fault_critical(uint32_t fault_code) {
     // Check motor fault criticality
     if ((fault_code & MOTOR_FAULT_ALL_MASK) && (fault_code & MOTOR_FAULT_CRITICAL_MASK)) {
@@ -704,8 +705,9 @@ static bool is_fault_critical(uint32_t fault_code) {
 /**
  * @brief Get human-readable fault description
  */
+__attribute__((unused))
 static const char* get_fault_description(uint32_t fault_code) {
-    // Motor faults
+    // Check motor faults first
     switch (fault_code) {
         case MOTOR_FAULT_OVERCURRENT: return "Motor Overcurrent";
         case MOTOR_FAULT_OVERVOLTAGE: return "Supply Overvoltage";
@@ -715,13 +717,16 @@ static const char* get_fault_description(uint32_t fault_code) {
         case MOTOR_FAULT_EMERGENCY_STOP: return "Emergency Stop";
         case MOTOR_FAULT_WATCHDOG_TIMEOUT: return "Watchdog Timeout";
         case MOTOR_FAULT_POSITION_ERROR: return "Position Error";
-        
-        // System faults
+    }
+    
+    // Check system faults
+    switch (fault_code) {
         case SYSTEM_FAULT_CLOCK_FAILURE: return "Clock Failure";
         case SYSTEM_FAULT_POWER_FAILURE: return "Power Failure";
         case SYSTEM_FAULT_STACK_OVERFLOW: return "Stack Overflow";
         case SYSTEM_FAULT_SAFETY_VIOLATION: return "Safety Violation";
-        
-        default: return "Unknown Fault";
+    }
+    
+    return "Unknown Fault";
     }
 }

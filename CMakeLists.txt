@@ -16,9 +16,6 @@ add_compile_definitions(
     STM32H753xx
     USE_HAL_DRIVER
     ARM_MATH_CM7
-    HSE_VALUE=8000000
-    LSE_VALUE=32768
-    VDD_VALUE=3300
     PREFETCH_ENABLE=1
     INSTRUCTION_CACHE_ENABLE=1
     DATA_CACHE_ENABLE=1
@@ -48,6 +45,28 @@ add_compile_options(
     -ggdb
 )
 
+# Enable testing and add additional options for analysis builds
+option(ENABLE_TESTING "Enable unit testing" ON)
+option(ENABLE_COVERAGE "Enable code coverage analysis" OFF)
+option(ENABLE_STATIC_ANALYSIS "Enable static analysis tools" OFF)
+option(BUILD_DOCUMENTATION "Build documentation with Doxygen" OFF)
+
+# Set build type specific flags
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_compile_definitions(DEBUG=1)
+    add_compile_options(-DDEBUG)
+elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_compile_definitions(NDEBUG=1)
+    add_compile_options(-O2 -flto)
+    set_property(TARGET ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+endif()
+
+# Code coverage flags
+if(ENABLE_COVERAGE)
+    add_compile_options(--coverage -fprofile-arcs -ftest-coverage)
+    add_link_options(--coverage)
+endif()
+
 # Include directories (SSOT configuration)
 include_directories(
     src
@@ -55,6 +74,8 @@ include_directories(
     src/common
     src/drivers
     src/controllers
+    src/safety
+    src/communication
     src/application
     Core/Inc
     drivers/STM32H7xx_HAL_Driver/Inc
@@ -68,8 +89,10 @@ include_directories(
 file(GLOB_RECURSE SOURCES
     "src/common/*.c"
     "src/drivers/l6470/*.c"
-    "src/drivers/as5600/*.c"  # AS5600 magnetic encoder driver
-    "src/controllers/*.c"     # Motor controller integration layer
+    "src/drivers/as5600/*.c"     # AS5600 magnetic encoder driver
+    "src/controllers/*.c"        # Motor controller integration layer
+    "src/safety/*.c"             # Safety systems (emergency stop, watchdog, fault monitoring)
+    "src/communication/*.c"      # Communication protocols (UART, CAN)
     "src/application/*.c"
     "drivers/STM32H7xx_HAL_Driver/Src/*.c"
     "Core/Src/stm32h7xx_hal_msp.c"
@@ -115,8 +138,220 @@ if(EXISTS "${CMAKE_SOURCE_DIR}/examples/CMakeLists.txt")
     add_subdirectory(examples)
 endif()
 
-# Add tests (optional)
-if(EXISTS "${CMAKE_SOURCE_DIR}/tests/CMakeLists.txt")
+# ============================================================================
+# TESTING AND ANALYSIS FRAMEWORK
+# ============================================================================
+
+# Testing framework setup
+if(ENABLE_TESTING)
     enable_testing()
-    add_subdirectory(tests)
+    include(CTest)
+    
+    # Add tests directory if it exists
+    if(EXISTS "${CMAKE_SOURCE_DIR}/tests/CMakeLists.txt")
+        add_subdirectory(tests)
+    endif()
+    
+    # Create Unity-based unit tests for safety systems
+    find_package(PkgConfig QUIET)
+    if(PkgConfig_FOUND)
+        pkg_check_modules(UNITY unity)
+        if(UNITY_FOUND)
+            # Add Unity unit tests
+            add_executable(test_safety_systems
+                tests/unit/test_safety_systems.c
+                tests/unit/test_emergency_stop.c
+                tests/unit/test_watchdog.c
+                tests/unit/test_fault_monitor.c
+                src/safety/safety_system.c
+                src/safety/emergency_stop.c
+                src/safety/watchdog_manager.c
+                src/safety/fault_monitor.c
+                tests/mocks/mock_hal.c
+            )
+            target_include_directories(test_safety_systems PRIVATE
+                ${UNITY_INCLUDE_DIRS}
+                src
+                src/config
+                src/safety
+                tests/mocks
+            )
+            target_link_libraries(test_safety_systems ${UNITY_LIBRARIES})
+            add_test(NAME SafetySystemsTests COMMAND test_safety_systems)
+        endif()
+    endif()
 endif()
+
+# Static Analysis Tools
+if(ENABLE_STATIC_ANALYSIS)
+    # Find clang-tidy
+    find_program(CLANG_TIDY_EXE NAMES "clang-tidy")
+    if(CLANG_TIDY_EXE)
+        set(CLANG_TIDY_COMMAND 
+            ${CLANG_TIDY_EXE}
+            -checks=*,-modernize-*,-fuchsia-*,-google-*,-zircon-*,-readability-magic-numbers,-cppcoreguidelines-avoid-magic-numbers
+            -header-filter=.*
+            -format-style=file
+        )
+        
+        # Apply clang-tidy to main target
+        set_target_properties(${PROJECT_NAME} PROPERTIES
+            CXX_CLANG_TIDY "${CLANG_TIDY_COMMAND}"
+            C_CLANG_TIDY "${CLANG_TIDY_COMMAND}"
+        )
+        
+        # Create standalone static analysis target
+        add_custom_target(static-analysis
+            COMMAND ${CLANG_TIDY_EXE} 
+            -checks=*,-modernize-*,-fuchsia-*,-google-*,-zircon-*,-readability-magic-numbers,-cppcoreguidelines-avoid-magic-numbers
+            -header-filter=.*
+            src/safety/*.c src/controllers/*.c src/communication/*.c src/drivers/*/*.c
+            --
+            -Isrc -Isrc/config -Isrc/common -Isrc/drivers -Isrc/controllers -Isrc/safety -Isrc/communication
+            COMMENT "Running clang-tidy static analysis"
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        )
+    endif()
+    
+    # Find cppcheck
+    find_program(CPPCHECK_EXE NAMES "cppcheck")
+    if(CPPCHECK_EXE)
+        add_custom_target(cppcheck
+            COMMAND ${CPPCHECK_EXE}
+            --enable=all
+            --std=c11
+            --platform=unix32
+            --check-config
+            --suppressions-list=${CMAKE_SOURCE_DIR}/.cppcheck-suppressions
+            --xml
+            --xml-version=2
+            --output-file=${CMAKE_BINARY_DIR}/cppcheck-report.xml
+            src/
+            COMMENT "Running cppcheck static analysis"
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        )
+    endif()
+endif()
+
+# Code Coverage Analysis
+if(ENABLE_COVERAGE)
+    find_program(GCOV_EXE NAMES "gcov")
+    find_program(LCOV_EXE NAMES "lcov")
+    find_program(GENHTML_EXE NAMES "genhtml")
+    
+    if(GCOV_EXE AND LCOV_EXE AND GENHTML_EXE)
+        # Add coverage target
+        add_custom_target(coverage
+            COMMAND ${LCOV_EXE} --directory . --capture --output-file coverage.info
+            COMMAND ${LCOV_EXE} --remove coverage.info '/usr/*' --output-file coverage.info
+            COMMAND ${LCOV_EXE} --remove coverage.info '*/tests/*' --output-file coverage.info
+            COMMAND ${LCOV_EXE} --remove coverage.info '*/00_reference/*' --output-file coverage.info
+            COMMAND ${GENHTML_EXE} coverage.info --output-directory coverage_html
+            COMMENT "Generating code coverage report"
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        )
+        
+        # Coverage must run after tests
+        if(TARGET test_safety_systems)
+            add_dependencies(coverage test_safety_systems)
+        endif()
+    endif()
+endif()
+
+# Documentation Generation
+if(BUILD_DOCUMENTATION)
+    find_package(Doxygen)
+    if(DOXYGEN_FOUND)
+        # Set Doxygen configuration
+        set(DOXYGEN_IN ${CMAKE_SOURCE_DIR}/docs/Doxyfile.in)
+        set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/docs/Doxyfile)
+        
+        # Check if Doxyfile.in exists, otherwise use existing Doxyfile
+        if(EXISTS ${DOXYGEN_IN})
+            configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+        else()
+            set(DOXYGEN_OUT ${CMAKE_SOURCE_DIR}/docs/Doxyfile)
+        endif()
+        
+        add_custom_target(docs
+            COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+            COMMENT "Generating API documentation with Doxygen"
+        )
+    endif()
+endif()
+
+# ============================================================================
+# UTILITY TARGETS
+# ============================================================================
+
+# Format code target
+find_program(CLANG_FORMAT_EXE NAMES "clang-format")
+if(CLANG_FORMAT_EXE)
+    add_custom_target(format
+        COMMAND find src -name '*.c' -o -name '*.h' | xargs ${CLANG_FORMAT_EXE} -i
+        COMMENT "Formatting source code with clang-format"
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    )
+endif()
+
+# SSOT validation target
+find_program(PYTHON3_EXE NAMES "python3")
+if(PYTHON3_EXE AND EXISTS "${CMAKE_SOURCE_DIR}/scripts/validate_ssot.py")
+    add_custom_target(validate-ssot
+        COMMAND ${PYTHON3_EXE} scripts/validate_ssot.py
+        COMMENT "Validating SSOT configuration"
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    )
+endif()
+
+# Combined analysis target
+add_custom_target(analyze
+    COMMENT "Running all analysis tools"
+)
+
+if(TARGET static-analysis)
+    add_dependencies(analyze static-analysis)
+endif()
+if(TARGET cppcheck)
+    add_dependencies(analyze cppcheck)
+endif()
+if(TARGET validate-ssot)
+    add_dependencies(analyze validate-ssot)
+endif()
+
+# All target for comprehensive build
+add_custom_target(all-enhanced
+    DEPENDS ${PROJECT_NAME}
+    COMMENT "Building project with all enhancements"
+)
+
+if(TARGET analyze)
+    add_dependencies(all-enhanced analyze)
+endif()
+if(BUILD_DOCUMENTATION AND TARGET docs)
+    add_dependencies(all-enhanced docs)
+endif()
+
+# Print configuration summary
+message(STATUS "=== STM32H753ZI Motor Control Project Configuration ===")
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "Testing enabled: ${ENABLE_TESTING}")
+message(STATUS "Coverage enabled: ${ENABLE_COVERAGE}")
+message(STATUS "Static analysis enabled: ${ENABLE_STATIC_ANALYSIS}")
+message(STATUS "Documentation enabled: ${BUILD_DOCUMENTATION}")
+if(CLANG_TIDY_EXE)
+    message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
+endif()
+if(CPPCHECK_EXE)
+    message(STATUS "cppcheck found: ${CPPCHECK_EXE}")
+endif()
+if(PYTHON3_EXE)
+    message(STATUS "python3 found: ${PYTHON3_EXE}")
+endif()
+message(STATUS "=======================================================")
+
+# Safety-critical project warnings
+message(WARNING "This is a safety-critical motor control system.")
+message(WARNING "Always run comprehensive tests before deployment.")
+message(WARNING "Validate all safety systems before connecting hardware.")

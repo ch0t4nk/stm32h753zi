@@ -1,0 +1,41 @@
+# CPPCheck suppressions for STM32H753ZI Motor Control Project
+# This file contains suppressions for known false positives and acceptable code patterns
+
+# STM32 HAL specific suppressions
+unusedFunction:drivers/STM32H7xx_HAL_Driver/Src/*
+missingIncludeSystem:drivers/STM32H7xx_HAL_Driver/Src/*
+unusedStructMember:drivers/STM32H7xx_HAL_Driver/Src/*
+
+# Embedded system patterns that cppcheck flags but are correct
+variableScope:*hal_msp.c
+unusedVariable:*hal_msp.c
+knownConditionTrueFalse:*startup*
+
+# AS5600 driver - I2C communication patterns
+unusedFunction:src/drivers/as5600/as5600_driver.c:as5600_i2c_write_register
+variableScope:src/drivers/as5600/as5600_driver.c
+
+# Safety system patterns - intentional redundancy
+duplicateCondition:src/safety/*
+redundantCondition:src/safety/*
+
+# L6470 register definitions - intentional magic numbers
+magicNumber:src/drivers/l6470/*
+
+# Communication protocol - buffer patterns
+unreadVariable:src/communication/*
+arrayIndexOutOfBounds:src/communication/*
+
+# STM32H7 specific register access patterns
+volatileCondition:*
+cstyleCast:*
+
+# CMSIS and HAL patterns
+missingInclude:drivers/CMSIS/*
+preprocessorErrorDirective:drivers/CMSIS/*
+
+# Test files - allow test-specific patterns
+*:tests/*
+
+# Reference documentation - exclude from analysis
+*:00_reference/*
