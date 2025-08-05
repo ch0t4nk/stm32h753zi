@@ -11,6 +11,21 @@
 *.bin
 .env
 
+# Large files and installers - should not be tracked
+*.exe
+*.msi
+*.dmg
+*.iso
+*.tar.gz
+*.zip
+00_reference/ST_Assets/
+.vscode/browse.vc.db*
+
+# Legacy search indexes - replaced by semantic search
+docs/indexes/STM32H7_FULL_INDEX.json
+docs/indexes/L6470_SEARCH_INDEX.json
+docs/indexes/STM32H7xx_Nucleo_BSP_INDEX.json
+
 # Python cache files
 __pycache__/
 *.pyc
