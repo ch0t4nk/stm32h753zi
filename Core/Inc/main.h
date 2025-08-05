@@ -59,7 +59,9 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define HSE_VALUE 25000000
+#ifndef HSE_VALUE
+#define HSE_VALUE 8000000  // 8MHz for STM32H753ZI Nucleo-144
+#endif
 
 /* USER CODE BEGIN Private defines */
 

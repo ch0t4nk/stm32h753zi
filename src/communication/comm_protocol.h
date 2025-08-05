@@ -160,10 +160,10 @@ SystemError_t comm_uart_init(UART_HandleTypeDef* huart, CommProtocol_t protocol)
 
 /**
  * @brief Initialize CAN communication channel
- * @param hcan CAN handle
+ * @param hfdcan FDCAN handle (STM32H7 uses FDCAN not classic CAN)
  * @return System error code
  */
-SystemError_t comm_can_init(CAN_HandleTypeDef* hcan);
+SystemError_t comm_can_init(FDCAN_HandleTypeDef* hfdcan);
 
 /**
  * @brief Process received message
@@ -301,7 +301,7 @@ SystemError_t comm_can_send_motor_command(uint8_t motor_id, const MotorCommand_t
  * @brief Process received CAN message
  * @param hcan CAN handle
  */
-void comm_can_rx_callback(CAN_HandleTypeDef* hcan);
+void comm_can_rx_callback(FDCAN_HandleTypeDef* hfdcan);
 
 /* ========================================================================== */
 /* Safety Integration Macros                                                 */

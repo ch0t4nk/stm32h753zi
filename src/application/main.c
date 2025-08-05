@@ -14,6 +14,11 @@
 
 /* HAL Headers */
 #include "stm32h7xx_hal.h"
+#include "main.h"
+
+/* Function prototypes */
+void Error_Handler(void);
+void SystemClock_Config(void);
 
 /* Driver Headers (to be implemented) */
 // #include "drivers/l6470/l6470_driver.h"

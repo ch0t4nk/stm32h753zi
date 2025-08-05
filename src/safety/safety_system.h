@@ -200,6 +200,26 @@ SystemError_t safety_system_init(void);
 SystemError_t safety_system_task(void);
 
 /**
+ * @brief Check if safety system is operational
+ * @return bool True if operational, false otherwise
+ */
+bool safety_system_is_operational(void);
+
+/**
+ * @brief Get emergency stop state
+ * @return bool True if emergency stop is active
+ */
+bool safety_get_emergency_stop_state(void);
+
+/**
+ * @brief Log safety event
+ * @param event Event type
+ * @param motor_id Motor ID (0xFF for system events)
+ * @param data Additional event data
+ */
+void safety_log_event(SafetyEventType_t event, uint8_t motor_id, uint32_t data);
+
+/**
  * @brief Execute emergency stop sequence
  * @param source Source of emergency stop trigger
  * @return SystemError_t Success or error code

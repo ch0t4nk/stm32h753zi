@@ -125,6 +125,18 @@
 #define L6470_TSW 0x01         // Switching time
 
 /* ========================================================================== */
+/* Motor Limits and Safety Parameters (SSOT)                                 */
+/* ========================================================================== */
+// Physical and safety limits
+#define MOTOR_MAX_POSITION_STEPS    (200 * 16 * 360)  // 200 steps/rev * 16 microsteps * 360°
+#define MOTOR_MAX_SPEED_STEPS_PER_SEC  3200           // Maximum speed in steps/sec
+#define MOTOR_MAX_CURRENT_MA        1000              // Maximum current in milliamps
+// NOTE: MOTOR_CURRENT_MA defined above as 1000mA - using that value for normal operation
+
+// Motor 1 acceleration (from SSOT - for communication protocol compatibility)
+#define MOTOR1_ACCELERATION         L6470_ACC         // Use L6470 register value
+
+/* ========================================================================== */
 /* L6470 Command Definitions (SSOT)                                          */
 /* ========================================================================== */
 // TODO: See .github/instructions/l6470-registers.instructions.md for command
@@ -250,20 +262,11 @@ typedef enum {
 /* ========================================================================== */
 // TODO: See .github/instructions/l6470-registers.instructions.md for fault
 // handling procedures
-
-typedef enum {
-  MOTOR_FAULT_NONE = 0x0000,          // No fault
-  MOTOR_FAULT_OVERCURRENT = 0x0001,   // Motor overcurrent detected
-  MOTOR_FAULT_UNDERVOLTAGE = 0x0002,  // Supply undervoltage
-  MOTOR_FAULT_OVERHEAT = 0x0004,      // Driver overheating
-  MOTOR_FAULT_STALL = 0x0008,         // Motor stall detected
-  MOTOR_FAULT_ENCODER = 0x0010,       // Encoder communication error
-  MOTOR_FAULT_POSITION = 0x0020,      // Position error too large
-  MOTOR_FAULT_SPEED = 0x0040,         // Speed error too large
-  MOTOR_FAULT_EMERGENCY = 0x0080,     // Emergency stop activated
-  MOTOR_FAULT_COMMUNICATION = 0x0100, // Communication fault
-  MOTOR_FAULT_INITIALIZATION = 0x0200 // Initialization failure
-} MotorFaultFlags_t;
+// 
+// NOTE: Motor fault definitions moved to src/safety/fault_monitor.h for SSOT
+// Use MotorFaultType_t from fault_monitor.h instead of local definitions
+//
+// #include "safety/fault_monitor.h" to access motor fault enumerations
 
 /* ========================================================================== */
 /* Motor Performance Monitoring (SSOT)                                       */

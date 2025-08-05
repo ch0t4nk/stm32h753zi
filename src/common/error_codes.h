@@ -87,7 +87,10 @@ typedef enum {
   ERROR_MOTOR_INVALID_ACCELERATION,                // 0x2013 - Invalid acceleration parameter
   ERROR_MOTOR_MOVE_ABORTED,                        // 0x2014 - Motor move aborted
   ERROR_MOTOR_INVALID_ID,                          // 0x2015 - Invalid motor ID
-  ERROR_MOTOR_UNDERVOLTAGE,                        // 0x2016 - Motor supply undervoltage
+  ERROR_MOTOR_POSITION_LIMIT,                      // 0x2016 - Motor position limit exceeded
+  ERROR_MOTOR_SPEED_LIMIT,                         // 0x2017 - Motor speed limit exceeded
+  ERROR_MOTOR_PARAMETER_INVALID,                   // 0x2018 - Invalid motor parameter
+  ERROR_MOTOR_UNDERVOLTAGE,                        // 0x2019 - Motor supply undervoltage
   ERROR_MOTOR_POSITION_OUT_OF_RANGE,               // 0x2017 - Position parameter out of range
   ERROR_MOTOR_NOT_ENABLED,                         // 0x2018 - Motor not enabled
   ERROR_MOTOR_PROFILE_ERROR,                       // 0x2019 - Motion profile error
@@ -140,8 +143,9 @@ typedef enum {
   ERROR_CAN_INVALID_ID,                          // 0x400F - Invalid CAN message ID
   ERROR_CAN_FILTER_FAILED,                       // 0x4010 - CAN filter configuration failed
   ERROR_CAN_HEARTBEAT_TIMEOUT,                   // 0x4011 - CAN heartbeat timeout
-  ERROR_ETH_INIT_FAILED,                         // 0x4012 - Ethernet initialization failed
-  ERROR_ETH_LINK_DOWN,                           // 0x4013 - Ethernet link down
+  ERROR_COMM_INIT_FAILED,                       // 0x4012 - Communication initialization failed
+  ERROR_ETH_INIT_FAILED,                         // 0x4013 - Ethernet initialization failed
+  ERROR_ETH_LINK_DOWN,                           // 0x4014 - Ethernet link down
   ERROR_ETH_NO_IP,                               // 0x4014 - No IP address assigned
   ERROR_ETH_SOCKET_FAILED,                       // 0x4015 - Socket creation failed
   ERROR_ETH_BIND_FAILED,                         // 0x4016 - Socket bind failed

@@ -22,6 +22,15 @@
 #include <stdint.h>
 
 /* ========================================================================== */
+/* Protocol Message Configuration (SSOT)                                     */
+/* ========================================================================== */
+// Message payload sizes
+#define MAX_MESSAGE_PAYLOAD 128       // Maximum message payload size
+#ifndef MAX_ETH_PAYLOAD
+#define MAX_ETH_PAYLOAD 1500          // Maximum Ethernet payload (avoid HAL conflict)
+#endif
+
+/* ========================================================================== */
 /* UART Communication Configuration (SSOT)                                   */
 /* ========================================================================== */
 // TODO: See .github/instructions/stm32h7-uart-protocol.instructions.md for
@@ -44,6 +53,11 @@
 #define UART_TX_TIMEOUT_MS 100
 #define UART_RX_TIMEOUT_MS 1000
 #define UART_CMD_TIMEOUT_MS 5000
+#define UART_TIMEOUT_MS 1000          // Generic UART timeout
+#define DEBUG_UART_BAUDRATE 115200    // Debug UART baudrate
+
+// Protocol Timeouts
+#define COMM_DEFAULT_TIMEOUT_MS 5000  // Default communication timeout
 
 // UART Command Delimiters
 #define UART_CMD_START_CHAR '{'

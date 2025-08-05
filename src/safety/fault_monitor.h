@@ -74,6 +74,8 @@ typedef enum {
     SYSTEM_FAULT_SPI_FAULT         = 0x00000008,  ///< SPI communication fault
     SYSTEM_FAULT_UART_FAULT        = 0x00000010,  ///< UART communication fault
     SYSTEM_FAULT_CAN_FAULT         = 0x00000020,  ///< CAN communication fault
+    SYSTEM_FAULT_COMM_ERROR        = 0x00000040,  ///< General communication error
+    SYSTEM_FAULT_COMM_TIMEOUT      = 0x00000080,  ///< Communication timeout
     
     // Software faults
     SYSTEM_FAULT_STACK_OVERFLOW    = 0x00000100,  ///< Stack overflow detected

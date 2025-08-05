@@ -36,12 +36,12 @@ static volatile bool uart_tx_complete = true;
 static uint32_t uart_rx_length = 0;
 
 // CAN communication state
-static CAN_HandleTypeDef* can_handle = NULL;
-static CAN_TxHeaderTypeDef can_tx_header = {0};
-static CAN_RxHeaderTypeDef can_rx_header = {0};
-static uint8_t can_tx_data[8] = {0};
-static uint8_t can_rx_data[8] = {0};
-static uint32_t can_tx_mailbox = 0;
+static FDCAN_HandleTypeDef* fdcan_handle = NULL;
+static FDCAN_TxHeaderTypeDef fdcan_tx_header = {0};
+static FDCAN_RxHeaderTypeDef fdcan_rx_header = {0};
+static uint8_t fdcan_tx_data[8] = {0};
+static uint8_t fdcan_rx_data[8] = {0};
+static uint32_t fdcan_tx_mailbox = 0;
 
 // Message processing
 static char ascii_command_buffer[ASCII_COMMAND_MAX_LENGTH] = {0};
@@ -171,7 +171,7 @@ SystemError_t debug_uart_init(UART_HandleTypeDef* huart) {
 /**
  * @brief Initialize CAN communication channel
  */
-SystemError_t comm_can_init(CAN_HandleTypeDef* hcan) {
+SystemError_t comm_can_init(FDCAN_HandleTypeDef* hfdcan) {
     if (!comm_protocol_initialized || hcan == NULL) {
         return ERROR_NOT_INITIALIZED;
     }
@@ -528,11 +528,12 @@ static SystemError_t process_motor_command(const MotorCommand_t* command) {
             result = motor_controller_emergency_stop(command->motor_id);
             break;
             
-        case MOTOR_CMD_MOVE_ABSOLUTE:
+        case MOTOR_CMD_MOVE_ABSOLUTE: {
             // Convert steps to degrees for motor controller
             float target_deg = MOTOR_CONTROLLER_STEPS_TO_DEGREES(command->data.move.position_steps);
             result = motor_controller_move_to_position(command->motor_id, target_deg);
             break;
+        }
             
         case MOTOR_CMD_HOME:
             result = motor_controller_home_motor(command->motor_id);
