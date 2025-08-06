@@ -11,8 +11,12 @@ from pathlib import Path
 
 # SSOT Documentation Configuration - matches documentation_config.h
 WORKSPACE_ROOT = Path("/workspaces/code")
-DOC_INDEX_STM32H7_FULL = WORKSPACE_ROOT / "docs" / "indexes" / "STM32H7_FULL_INDEX.json"
-DOC_INDEX_L6470_SEARCH = WORKSPACE_ROOT / "docs" / "indexes" / "L6470_SEARCH_INDEX.json"
+DOC_INDEX_STM32H7_FULL = (
+    WORKSPACE_ROOT / "docs" / "indexes" / "STM32H7_FULL_INDEX.json"
+)
+DOC_INDEX_L6470_SEARCH = (
+    WORKSPACE_ROOT / "docs" / "indexes" / "L6470_SEARCH_INDEX.json"
+)
 DOC_INDEX_NUCLEO_BSP = (
     WORKSPACE_ROOT / "docs" / "indexes" / "STM32H7xx_Nucleo_BSP_INDEX.json"
 )
@@ -27,7 +31,10 @@ def load_stm32h7_index():
         with open(DOC_INDEX_STM32H7_FULL, "r") as f:
             return json.load(f)
     except FileNotFoundError:
-        print(f"❌ STM32H7 index not found at SSOT path: " f"{DOC_INDEX_STM32H7_FULL}")
+        print(
+            f"❌ STM32H7 index not found at SSOT path: "
+            f"{DOC_INDEX_STM32H7_FULL}"
+        )
         return False
 
 
@@ -37,7 +44,9 @@ def load_l6470_index():
         with open(DOC_INDEX_L6470_SEARCH, "r") as f:
             return json.load(f)
     except (FileNotFoundError, IOError):
-        print(f"❌ L6470 index not found at SSOT path: {DOC_INDEX_L6470_SEARCH}")
+        print(
+            f"❌ L6470 index not found at SSOT path: {DOC_INDEX_L6470_SEARCH}"
+        )
         return None
 
 
@@ -47,7 +56,9 @@ def load_nucleo_bsp_index():
         with open(DOC_INDEX_NUCLEO_BSP, "r") as f:
             return json.load(f)
     except (FileNotFoundError, IOError):
-        print(f"❌ Nucleo BSP index not found at SSOT path: {DOC_INDEX_NUCLEO_BSP}")
+        print(
+            f"❌ Nucleo BSP index not found at SSOT path: {DOC_INDEX_NUCLEO_BSP}"
+        )
         return None
 
 
@@ -146,7 +157,9 @@ def search_nucleo_bsp(search_type, query, index):
                 if isinstance(files, list):
                     results.extend(files)
 
-    return list(set(filter(None, results)))  # Remove duplicates and empty strings
+    return list(
+        set(filter(None, results))
+    )  # Remove duplicates and empty strings
 
 
 def format_results(results, search_type, query, doc_type):
@@ -159,7 +172,8 @@ def format_results(results, search_type, query, doc_type):
         return
 
     print(
-        f"✅ Found {len(results)} {doc_type} {search_type} results for " f"'{query}':"
+        f"✅ Found {len(results)} {doc_type} {search_type} results for "
+        f"'{query}':"
     )
     print("=" * 60)
 
@@ -176,7 +190,10 @@ def show_usage():
     """Show usage information"""
     print("Enhanced Documentation Search Tool")
     print("=" * 40)
-    print("Usage: python3 search_enhanced_docs.py <type> <query> " "[--scope <scope>]")
+    print(
+        "Usage: python3 search_enhanced_docs.py <type> <query> "
+        "[--scope <scope>]"
+    )
     print()
     print("Search Types:")
     print("  peripheral <n>  - Search STM32H7 peripherals (GPIO, SPI, etc.)")
@@ -191,8 +208,14 @@ def show_usage():
     print()
     print("Examples:")
     print("  python3 search_enhanced_docs.py peripheral GPIO --scope STM32H7")
-    print("  python3 search_enhanced_docs.py function L6470_Init " "--scope L6470")
-    print("  python3 search_enhanced_docs.py concept motor_control " "--scope all")
+    print(
+        "  python3 search_enhanced_docs.py function L6470_Init "
+        "--scope L6470"
+    )
+    print(
+        "  python3 search_enhanced_docs.py concept motor_control "
+        "--scope all"
+    )
 
 
 def main():

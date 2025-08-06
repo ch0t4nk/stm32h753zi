@@ -87,7 +87,7 @@ def create_main_application():
  */
 
 #include "config/hardware_config.h"
-#include "config/motor_config.h" 
+#include "config/motor_config.h"
 #include "config/comm_config.h"
 #include "config/safety_config.h"
 #include "config/build_config.h"
@@ -110,22 +110,22 @@ def create_main_application():
 void SystemClock_Config(void) {
     RCC_OscInitTypeDef RCC_OscInitStruct = {0};
     RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-    
+
     /* Configure main PLL from SSOT config */
     RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
     RCC_OscInitStruct.HSEState = RCC_HSE_ON;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-    
+
     /* TODO: Use SSOT clock configuration from hardware_config.h */
     RCC_OscInitStruct.PLL.PLLM = 4;      // To be moved to SSOT
-    RCC_OscInitStruct.PLL.PLLN = 240;    // To be moved to SSOT  
+    RCC_OscInitStruct.PLL.PLLN = 240;    // To be moved to SSOT
     RCC_OscInitStruct.PLL.PLLP = 2;      // To be moved to SSOT
-    
+
     if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
         Error_Handler();
     }
-    
+
     /* Configure clock domains from SSOT */
     RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK |
                                   RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2 |
@@ -133,13 +133,13 @@ void SystemClock_Config(void) {
     RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
     RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
     RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV2;
-    
+
     /* TODO: Use SSOT APB clock divisions from hardware_config.h */
     RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV2;
     RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV2;
     RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2;
     RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
-    
+
     if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK) {
         Error_Handler();
     }
@@ -164,17 +164,17 @@ void Error_Handler(void) {
 int main(void) {
     /* Initialize HAL */
     HAL_Init();
-    
+
     /* Configure system clock from SSOT */
     SystemClock_Config();
-    
+
     /* TODO: Initialize peripherals following instruction files:
      * - SPI1 for L6470 (stm32h7-spi-l6470.instructions.md)
-     * - I2C1/I2C2 for AS5600 (stm32h7-i2c-as5600.instructions.md)  
+     * - I2C1/I2C2 for AS5600 (stm32h7-i2c-as5600.instructions.md)
      * - UART3 for debug (stm32h7-uart-protocol.instructions.md)
      * - Safety systems (safety-systems.instructions.md)
      */
-    
+
     /* Main control loop */
     while (1) {
         /* TODO: Implement stepper control loop */
@@ -209,10 +209,14 @@ def copy_reference_assets():
 
         # Copy key include files
         if (hal_source / "Inc").exists():
-            shutil.copytree(hal_source / "Inc", hal_dest / "Inc", dirs_exist_ok=True)
+            shutil.copytree(
+                hal_source / "Inc", hal_dest / "Inc", dirs_exist_ok=True
+            )
             print("✅ Copied HAL include files")
     else:
-        print("⚠️  HAL drivers not found in reference - will need manual download")
+        print(
+            "⚠️  HAL drivers not found in reference - will need manual download"
+        )
 
     if cmsis_source.exists():
         print(f"✅ Found CMSIS at: {cmsis_source}")
@@ -264,7 +268,9 @@ def update_cmake_integration():
         print("   - src/drivers/as5600")
         print("   - src/application")
     else:
-        print("ℹ️  No CMakeLists.txt found - following build-system.instructions.md")
+        print(
+            "ℹ️  No CMakeLists.txt found - following build-system.instructions.md"
+        )
 
 
 def main():
@@ -296,7 +302,9 @@ def main():
     print("\n🎯 Next steps:")
     print("1. Review generated src/application/main.c")
     print("2. Follow stm32h7-spi-l6470.instructions.md for L6470 integration")
-    print("3. Follow stm32h7-i2c-as5600.instructions.md for AS5600 integration")
+    print(
+        "3. Follow stm32h7-i2c-as5600.instructions.md for AS5600 integration"
+    )
     print("4. Update SSOT configs in src/config/ as needed")
     print("5. Build using existing CMake system")
 

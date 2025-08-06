@@ -21,13 +21,16 @@ class STM32Validator:
         """Run a command and return success status."""
         try:
             result = subprocess.run(
-                cmd, shell=True, capture_output=True, text=True)
+                cmd, shell=True, capture_output=True, text=True
+            )
             if result.returncode == 0:
                 self.successes.append(f"✅ {description}: {cmd}")
                 return True, result.stdout
             else:
                 self.errors.append(
-                    f"❌ {description}: {cmd} (Exit code: {result.returncode})")
+                    f"❌ {description}: {cmd} "
+                    f"(Exit code: {result.returncode})"
+                )
                 return False, result.stderr
         except Exception as e:
             self.errors.append(f"❌ {description}: {cmd} (Exception: {e})")
@@ -39,21 +42,24 @@ class STM32Validator:
 
         # Check ARM GCC
         success, output = self.run_command(
-            "arm-none-eabi-gcc --version", "ARM GCC Compiler")
+            "arm-none-eabi-gcc --version", "ARM GCC Compiler"
+        )
         if success:
-            version = output.split('\n')[0]
+            version = output.split("\n")[0]
             print(f"   Found: {version}")
 
         # Check GDB
         success, output = self.run_command(
-            "gdb-multiarch --version", "GDB Multiarch Debugger")
+            "gdb-multiarch --version", "GDB Multiarch Debugger"
+        )
         if success:
-            version = output.split('\n')[0]
+            version = output.split("\n")[0]
             print(f"   Found: {version}")
 
         # Check OpenOCD
         success, output = self.run_command(
-            "openocd --version 2>&1 | head -1", "OpenOCD")
+            "openocd --version 2>&1 | head -1", "OpenOCD"
+        )
         if success:
             print(f"   Found: {output.strip()}")
 
@@ -66,24 +72,26 @@ class STM32Validator:
             "stmicroelectronics.stm32cube-ide-build-cmake",
             "stmicroelectronics.stm32cube-ide-debug-core",
             "jeandudey.cortex-debug-dp-stm32h7",
-            "marus25.cortex-debug"
+            "marus25.cortex-debug",
         ]
 
         # Read extensions.json
         extensions_file = self.workspace_root / ".vscode" / "extensions.json"
         if extensions_file.exists():
-            with open(extensions_file) as f:
+            with open(extensions_file, encoding="utf-8") as f:
                 extensions_config = json.load(f)
                 recommended = extensions_config.get("recommendations", [])
 
                 for ext in required_extensions:
                     if ext in recommended:
                         self.successes.append(
-                            f"✅ Extension recommended: {ext}")
+                            f"✅ Extension recommended: {ext}"
+                        )
                         print(f"   ✅ {ext}")
                     else:
                         self.warnings.append(
-                            f"⚠️ Extension not in recommendations: {ext}")
+                            f"⚠️ Extension not in recommendations: {ext}"
+                        )
                         print(f"   ⚠️ {ext}")
         else:
             self.errors.append("❌ .vscode/extensions.json not found")
@@ -96,7 +104,7 @@ class STM32Validator:
             ".vscode/settings.json": "Workspace settings",
             ".vscode/launch.json": "Debug launch configuration",
             ".vscode/tasks.json": "Build tasks configuration",
-            "CMakeLists.txt": "CMake build configuration"
+            "CMakeLists.txt": "CMake build configuration",
         }
 
         for file_path, description in config_files.items():
@@ -113,11 +121,13 @@ class STM32Validator:
         print("\n📚 Checking Reference Assets...")
 
         assets = {
-            "00_reference/ST_Assets/stm32h7-svd_2.8/STM32H753.svd":
-                "STM32H753 SVD file",
-            "00_reference/STM32Cube_FW_H7_V1.12.0":
-                "STM32H7 HAL documentation",
-            "00_reference/x_cube_spn2_markdown_docs": "L6470 documentation"
+            "00_reference/ST_Assets/stm32h7-svd_2.8/STM32H753.svd": (
+                "STM32H753 SVD file"
+            ),
+            "00_reference/STM32Cube_FW_H7_V1.12.0": (
+                "STM32H7 HAL documentation"
+            ),
+            "00_reference/x_cube_spn2_markdown_docs": "L6470 documentation",
         }
 
         for asset_path, description in assets.items():
@@ -127,7 +137,8 @@ class STM32Validator:
                 print(f"   ✅ {asset_path}")
             else:
                 self.warnings.append(
-                    f"⚠️ {description}: {asset_path} not found")
+                    f"⚠️ {description}: {asset_path} not found"
+                )
                 print(f"   ⚠️ {asset_path}")
 
     def check_workspace_settings(self):
@@ -136,14 +147,14 @@ class STM32Validator:
 
         settings_file = self.workspace_root / ".vscode" / "settings.json"
         if settings_file.exists():
-            with open(settings_file) as f:
+            with open(settings_file, encoding="utf-8") as f:
                 settings = json.load(f)
 
                 required_settings = {
                     "C_Cpp.default.defines": "STM32 preprocessor defines",
                     "cortex-debug.openocdPath": "OpenOCD path for debugging",
                     "stm32cube.cubeMXPath": "STM32CubeMX path",
-                    "stm32cube.svdPath": "SVD files path"
+                    "stm32cube.svdPath": "SVD files path",
                 }
 
                 for setting, description in required_settings.items():
@@ -152,7 +163,8 @@ class STM32Validator:
                         print(f"   ✅ {setting}")
                     else:
                         self.warnings.append(
-                            f"⚠️ {description}: {setting} not configured")
+                            f"⚠️ {description}: {setting} not configured"
+                        )
                         print(f"   ⚠️ {setting}")
 
     def run_validation(self):

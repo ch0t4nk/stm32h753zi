@@ -5,21 +5,19 @@ Replaces legacy search_enhanced_docs.py with semantic search capabilities
 Integrates with existing workspace documentation
 """
 
-import os
+from semantic_search import STM32SemanticSearch, SearchResult
+from chunk_stm32_docs import STM32DocumentChunker
+from init_vector_db import STM32VectorDatabase, CollectionType
 import sys
-import json
 import argparse
 import requests
 from pathlib import Path
-from typing import List, Dict, Optional, Union
+from typing import List, Dict, Optional
 
 # Add scripts directory to path
 sys.path.insert(0, str(Path(__file__).parent))
 
 # Import our semantic search modules
-from init_vector_db import STM32VectorDatabase, CollectionType
-from chunk_stm32_docs import STM32DocumentChunker
-from semantic_search import STM32SemanticSearch, SearchResult
 
 # SSOT Documentation Configuration
 WORKSPACE_ROOT = Path("/workspaces/code")
@@ -75,9 +73,9 @@ class OllamaEmbedding:
 
     def generate_embedding(self, text: str) -> List[float]:
         """Generate real embedding using Ollama API with fallback"""
-        if not hasattr(self, 'connected') or not self.connected:
+        if not hasattr(self, "connected") or not self.connected:
             return self._mock_embedding(text)
-            
+
         try:
             payload = {"model": self.model, "prompt": text}
             response = requests.post(self.api_url, json=payload, timeout=30)
@@ -86,7 +84,9 @@ class OllamaEmbedding:
                 result = response.json()
                 return result.get("embedding", self._mock_embedding(text))
             else:
-                print(f"🔄 Ollama API error {response.status_code}, using mock")
+                print(
+                    f"🔄 Ollama API error {response.status_code}, using mock"
+                )
                 return self._mock_embedding(text)
 
         except Exception as e:
@@ -122,7 +122,7 @@ class STM32WorkspaceSearcher:
 
         self.search_engine = STM32SemanticSearch(
             embedding_model="mxbai-embed-large",
-            vector_db_path=str(self.db_path)
+            vector_db_path=str(self.db_path),
         )
 
         # Check if database needs population

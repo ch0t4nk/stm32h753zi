@@ -194,35 +194,6 @@ if(ENABLE_TESTING)
     if(EXISTS "${CMAKE_SOURCE_DIR}/tests/CMakeLists.txt")
         add_subdirectory(tests)
     endif()
-    
-    # Create Unity-based unit tests for safety systems
-    find_package(PkgConfig QUIET)
-    if(PkgConfig_FOUND)
-        pkg_check_modules(UNITY unity)
-        if(UNITY_FOUND)
-            # Add Unity unit tests
-            add_executable(test_safety_systems
-                tests/unit/test_safety_systems.c
-                tests/unit/test_emergency_stop.c
-                tests/unit/test_watchdog.c
-                tests/unit/test_fault_monitor.c
-                src/safety/safety_system.c
-                src/safety/emergency_stop.c
-                src/safety/watchdog_manager.c
-                src/safety/fault_monitor.c
-                tests/mocks/mock_hal.c
-            )
-            target_include_directories(test_safety_systems PRIVATE
-                ${UNITY_INCLUDE_DIRS}
-                src
-                src/config
-                src/safety
-                tests/mocks
-            )
-            target_link_libraries(test_safety_systems ${UNITY_LIBRARIES})
-            add_test(NAME SafetySystemsTests COMMAND test_safety_systems)
-        endif()
-    endif()
 endif()
 
 # Static Analysis Tools

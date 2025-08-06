@@ -4,10 +4,7 @@ Semantic Search Query Interface for STM32 Documentation
 Provides intelligent search capabilities across STM32 documentation corpus
 """
 
-import os
-import time
 import ollama
-import json
 from typing import List, Dict, Any, Optional, Union
 from dataclasses import dataclass
 from pathlib import Path

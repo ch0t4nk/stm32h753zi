@@ -4,15 +4,18 @@ Create search index for STM32H7xx Nucleo BSP documentation
 """
 
 import json
-import os
 from pathlib import Path
 
 
 def create_nucleo_bsp_index():
     """Create search index for Nucleo BSP documentation"""
 
-    bsp_docs_dir = Path("/workspaces/code/00_reference/stm32h7xx_nucleo_bsp_md")
-    index_file = Path("/workspaces/code/docs/indexes/STM32H7xx_Nucleo_BSP_INDEX.json")
+    bsp_docs_dir = Path(
+        "/workspaces/code/00_reference/stm32h7xx_nucleo_bsp_md"
+    )
+    index_file = Path(
+        "/workspaces/code/docs/indexes/STM32H7xx_Nucleo_BSP_INDEX.json"
+    )
 
     print(f"🔍 Creating Nucleo BSP search index...")
     print(f"📁 Source: {bsp_docs_dir}")
@@ -90,15 +93,25 @@ def create_nucleo_bsp_index():
     # Add concept mappings
     index["concepts"] = {
         "board_support": list(index["files"].keys()),
-        "nucleo_144": [f for f in index["files"].keys() if "nucleo" in f.lower()],
-        "bsp_drivers": [f for f in index["files"].keys() if "bsp" in f.lower()],
-        "led_control": [f for f in index["files"].keys() if "led" in f.lower()],
-        "button_control": [f for f in index["files"].keys() if "button" in f.lower()],
+        "nucleo_144": [
+            f for f in index["files"].keys() if "nucleo" in f.lower()
+        ],
+        "bsp_drivers": [
+            f for f in index["files"].keys() if "bsp" in f.lower()
+        ],
+        "led_control": [
+            f for f in index["files"].keys() if "led" in f.lower()
+        ],
+        "button_control": [
+            f for f in index["files"].keys() if "button" in f.lower()
+        ],
     }
 
     # Update metadata
     index["metadata"]["total_files"] = len(index["files"])
-    index["metadata"]["keywords_count"] = len(functions_found) + len(constants_found)
+    index["metadata"]["keywords_count"] = len(functions_found) + len(
+        constants_found
+    )
 
     # Save index
     with open(index_file, "w", encoding="utf-8") as f:

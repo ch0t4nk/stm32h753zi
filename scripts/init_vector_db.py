@@ -9,7 +9,7 @@ import json
 import time
 from typing import List, Dict, Any, Optional
 from pathlib import Path
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from enum import Enum
 
 

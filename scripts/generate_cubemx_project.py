@@ -25,7 +25,7 @@ project toolchain Makefile
 
 # Clock configuration
 clock HCLK 480
-clock APB1 120  
+clock APB1 120
 clock APB2 120
 clock APB4 120
 
@@ -39,7 +39,7 @@ param SPI1 NSS Software
 mode I2C1 I2C
 param I2C1 ClockSpeed 400000
 
-# I2C2 configuration (for AS5600 encoder 2) 
+# I2C2 configuration (for AS5600 encoder 2)
 mode I2C2 I2C
 param I2C2 ClockSpeed 400000
 
@@ -54,13 +54,13 @@ param USART3 StopBits UART_STOPBITS_1
 mode FDCAN1 Activate
 param FDCAN1 NominalBitRate 1000000
 
-# ETH configuration  
+# ETH configuration
 mode ETH RMII
 param ETH PHY_Address 0
 
 # GPIO configuration for LEDs (board support)
 mode PB0 Output  # LED_GREEN
-mode PB7 Output  # LED_BLUE  
+mode PB7 Output  # LED_BLUE
 mode PB14 Output # LED_RED
 
 # GPIO configuration for User Button
@@ -103,7 +103,9 @@ def run_cubemx_cli():
             break
 
     if not cubemx_exe:
-        print("❌ STM32CubeMX not found. Please install or use manual approach.")
+        print(
+            "❌ STM32CubeMX not found. Please install or use manual approach."
+        )
         print("📝 Script created at:", script_path)
         print("💡 You can run this script manually in STM32CubeMX CLI mode")
         return False

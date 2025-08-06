@@ -4,7 +4,6 @@ STM32H7xx Nucleo BSP Documentation Converter
 Converts HTML documentation to markdown for enhanced search integration
 """
 
-import os
 import re
 import json
 from pathlib import Path
@@ -68,8 +67,12 @@ class NucleoBSPConverter:
 
             # Add function details
             next_sibling = func.find_next_sibling()
-            while (next_sibling and
-                   next_sibling.name not in ["h1", "h2", "h3", "h4"]):
+            while next_sibling and next_sibling.name not in [
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+            ]:
                 if next_sibling.name == "div" and next_sibling.find("table"):
                     table = next_sibling.find("table")
                     markdown += self._process_function_table(table)
@@ -101,8 +104,9 @@ class NucleoBSPConverter:
         for code in code_blocks:
             code_text = code.get_text().strip()
             if (
-                "BSP_" in code_text or "BUTTON_" in code_text or 
-                "LED_" in code_text
+                "BSP_" in code_text
+                or "BUTTON_" in code_text
+                or "LED_" in code_text
             ) and "(" in code_text:
                 markdown += f"```c\n{code_text}\n```\n\n"
                 # Extract function name for indexing
@@ -123,7 +127,9 @@ class NucleoBSPConverter:
 
         # Check if this is a parameters table
         headers = table.find_all("th")
-        if headers and any("parameter" in h.get_text().lower() for h in headers):
+        if headers and any(
+            "parameter" in h.get_text().lower() for h in headers
+        ):
             markdown += "| Parameter | Description |\n"
             markdown += "|-----------|-------------|\n"
 
@@ -152,11 +158,15 @@ class NucleoBSPConverter:
         headers = header_row.find_all(["th", "td"])
         if headers:
             markdown += (
-                "| " + " | ".join(h.get_text().strip() for h in headers) + " |\n"
+                "| "
+                + " | ".join(h.get_text().strip() for h in headers)
+                + " |\n"
             )
             markdown += (
                 "|"
-                + "|".join(["-" * max(3, len(h.get_text().strip())) for h in headers])
+                + "|".join(
+                    ["-" * max(3, len(h.get_text().strip())) for h in headers]
+                )
                 + "|\n"
             )
 
@@ -165,7 +175,9 @@ class NucleoBSPConverter:
             cells = row.find_all("td")
             if cells:
                 markdown += (
-                    "| " + " | ".join(c.get_text().strip() for c in cells) + " |\n"
+                    "| "
+                    + " | ".join(c.get_text().strip() for c in cells)
+                    + " |\n"
                 )
 
         markdown += "\n"
@@ -200,7 +212,9 @@ class NucleoBSPConverter:
             try:
                 print(f"🔄 Converting: {html_file.name}")
 
-                markdown_content, title = self.convert_html_to_markdown(html_file)
+                markdown_content, title = self.convert_html_to_markdown(
+                    html_file
+                )
 
                 if markdown_content:
                     # Create output filename
@@ -229,8 +243,12 @@ class NucleoBSPConverter:
                 conversion_summary["conversion_errors"].append(error_msg)
 
         # Update summary with found functions and constants
-        conversion_summary["functions_found"] = sorted(list(self.functions_found))
-        conversion_summary["constants_found"] = sorted(list(self.constants_found))
+        conversion_summary["functions_found"] = sorted(
+            list(self.functions_found)
+        )
+        conversion_summary["constants_found"] = sorted(
+            list(self.constants_found)
+        )
 
         # Save conversion summary
         summary_file = self.output_dir / "conversion_summary.json"
@@ -291,7 +309,7 @@ def main():
     # Create converter and run conversion
     converter = NucleoBSPConverter(args.source, args.output)
     summary = converter.convert_all()
-    metadata = converter.create_index_metadata()
+    converter.create_index_metadata()
 
     print(f"\n🎯 Next steps:")
     print(f"1. Update src/config/documentation_config.h with new paths")

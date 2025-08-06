@@ -358,3 +358,96 @@
 [2025-08-05 23:43:24] POST-COMMIT: STATUS.md automation completed successfully
 [2025-08-05 23:43:24] POST-COMMIT: No STATUS.md changes needed
 [2025-08-05 23:43:24] POST-COMMIT: === Post-commit hook completed ===
+[2025-08-05 23:55:16] PRE-COMMIT: === Pre-commit validation started ===
+[2025-08-05 23:55:16] PRE-COMMIT: Relevant files changed, running SSOT validation...
+🔍 Starting SSOT validation...
+🔍 SSOT Validation Report for STM32H753ZI Project
+============================================================
+✅ SSOT structure complete
+
+⚠️  Found 230 potential SSOT violations:
+
+   📁 src/application/main.c:
+      Line 93: * - SPI1 for L6470 (stm32h7-spi-l6470.instructions.md)...
+      💡 SPI instances should be in hardware_config.h
+      Line 94: * - I2C1/I2C2 for AS5600 (stm32h7-i2c-as5600.instructions.md...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/application/main_application.c:
+      Line 23: extern SPI_HandleTypeDef hspi2;    // SPI2 for L6470 drivers...
+      💡 SPI instances should be in hardware_config.h
+      Line 24: extern I2C_HandleTypeDef hi2c1;    // I2C1 for encoder 0...
+      💡 I2C instances should be in hardware_config.h
+      Line 25: extern I2C_HandleTypeDef hi2c2;    // I2C2 for encoder 1...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/communication/comm_protocol.c:
+      Line 103: safety_log_event(SAFETY_EVENT_SYSTEM_INIT, 0xFF, (uint32_t)S...
+      💡 Hex addresses should be in config headers
+      Line 608: uint16_t crc = 0xFFFF;...
+      💡 Hex addresses should be in config headers
+      Line 616: crc = (crc >> 1) ^ 0xA001;...
+      💡 Hex addresses should be in config headers
+
+   📁 src/controllers/motor_controller.c:
+      Line 80: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 0);...
+      💡 Hex addresses should be in config headers
+      Line 86: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 1);...
+      💡 Hex addresses should be in config headers
+
+   📁 src/controllers/real_time_control.c:
+      Line 314: htim_control_loop.Init.Period = 1000 - 1; // 1ms period...
+      💡 Time values should use timestamp_ms_t type
+      Line 529: position_control_update(motor_id, 1); // 1ms time step...
+      💡 Time values should use timestamp_ms_t type
+      Line 543: motion_profile_update(motor_id, 1); // 1ms time step...
+      💡 Time values should use timestamp_ms_t type
+
+   ... and 9 more files with violations
+✅ Include dependencies look correct
+
+⚠️  Found 1 configuration inconsistencies:
+   🔗 MAX_MOTORS defined as 2 but system_state.h does not use MAX_MOTORS constant
+      Files: src/config/motor_config.h, src/common/system_state.h
+      💡 Use MotorState_t motors[MAX_MOTORS] in system_state.h
+
+📊 Summary:
+   • Missing SSOT files: 0
+   • Hardcoded value violations: 230
+   • Include dependency issues: 0
+   • Configuration inconsistencies: 1
+   • Total issues found: 231
+
+🔧 Action required: 231 issues need attention.
+
+💡 Next steps:
+   2. Replace hardcoded values with SSOT references
+   4. Fix configuration inconsistencies
+   5. Re-run validation: python3 scripts/validate_ssot.py
+
+🚀 SSOT validation complete!
+[2025-08-05 23:55:16] PRE-COMMIT: SSOT validation passed
+[2025-08-05 23:55:16] PRE-COMMIT: === Pre-commit validation completed ===
+[2025-08-05 23:55:16] POST-COMMIT: === Post-commit hook triggered ===
+[2025-08-05 23:55:16] POST-COMMIT: Processing commit: f98c584 - docs: Update all documentation to reflect Phase 3 automation completion
+[2025-08-05 23:55:17] POST-COMMIT: Running STATUS.md automation...
+[23:55:17] INFO: Starting STATUS.md update (source: git-commit)
+[23:55:17] INFO: Updating timestamp
+[23:55:17] INFO: Analyzing last 5 commits
+[23:55:17] INFO: Commit analysis: 5 commits categorized
+[23:55:17] INFO: Analyzing source code status
+[23:55:17] INFO: Code analysis: 80 TODOs, 2 drivers checked
+[23:55:17] INFO: Updating architecture status
+[23:55:17] INFO: Format validation passed
+[23:55:17] INFO: No changes detected
+
+📊 Update Summary:
+  Source: git-commit
+  Changes Made: No
+  Build Status: Skipped
+  Commits Analyzed: 5
+  TODOs Found: 80
+ℹ️  No updates needed
+[2025-08-05 23:55:17] POST-COMMIT: STATUS.md automation completed successfully
+[2025-08-05 23:55:17] POST-COMMIT: No STATUS.md changes needed
+[2025-08-05 23:55:17] POST-COMMIT: === Post-commit hook completed ===

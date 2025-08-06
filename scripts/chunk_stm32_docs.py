@@ -5,9 +5,7 @@ Implements smart chunking strategies for different document types
 """
 
 import re
-import json
-from typing import List, Dict, Any, Tuple
-from pathlib import Path
+from typing import List, Dict, Any
 from dataclasses import dataclass
 from enum import Enum
 
@@ -130,7 +128,6 @@ class STM32DocumentChunker:
             # No HAL functions found, use general chunking
             return self.chunk_general(content, config)
 
-        current_pos = 0
         chunk_index = 0
 
         for i, match in enumerate(function_matches):
@@ -482,27 +479,27 @@ def main():
     # Test with sample STM32 content
     sample_content = """
     # HAL_GPIO_Init Function
-    
+
     HAL_GPIO_Init function initializes GPIO peripheral with specified configuration.
-    
+
     ## Function Signature
     ```c
     HAL_StatusTypeDef HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)
     ```
-    
+
     ## Parameters
     - GPIOx: GPIO peripheral base address
     - GPIO_Init: Pointer to GPIO initialization structure
-    
+
     ## Example Usage
     ```c
     GPIO_InitTypeDef GPIO_InitStruct = {0};
-    
+
     GPIO_InitStruct.Pin = GPIO_PIN_0;
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    
+
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
     ```
     """
