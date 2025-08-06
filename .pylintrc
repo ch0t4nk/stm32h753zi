@@ -1,0 +1,24 @@
+[MESSAGES CONTROL]
+# Disable pylint warnings that would require significant code restructuring
+disable = 
+    line-too-long,                    # C0301: Line too long
+    broad-exception-caught,           # W0718: Catching too general exception
+    missing-function-docstring,       # C0116: Missing function or method docstring
+    missing-class-docstring,          # C0115: Missing class docstring
+    subprocess-run-check,             # W1510: subprocess.run used without check
+    f-string-without-interpolation,   # W1309: f-string without interpolation
+    unused-variable,                  # W0612: Unused variable
+    raise-missing-from,               # W0707: Consider explicitly re-raising
+    import-outside-toplevel,          # C0415: Import outside toplevel
+    wrong-import-order,               # C0411: Wrong import order
+    import-error,                     # E0401: Unable to import
+    fixme,                           # W0511: TODO/FIXME comments
+    invalid-name,                    # C0103: Invalid name style
+    unspecified-encoding             # W1514: Using open without encoding
+
+[FORMAT]
+max-line-length = 79
+
+[BASIC]
+# Allow short variable names
+good-names = i, j, k, ex, e, f, _

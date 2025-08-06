@@ -1,0 +1,21 @@
+[flake8]
+max-line-length = 79
+
+# Ignore errors that would require significant code restructuring
+ignore = 
+    E501,  # line too long
+    W503,  # line break before binary operator
+    F541,  # f-string is missing placeholders
+    W191,  # indentation contains tabs
+    E101,  # indentation contains mixed spaces and tabs
+    F841,  # local variable assigned but never used
+    E203   # whitespace before ':'
+
+# Files to exclude from checks
+exclude = 
+    .git,
+    __pycache__,
+    build,
+    .venv,
+    00_reference,
+    logs

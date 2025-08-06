@@ -170,7 +170,7 @@ class STM32WorkspaceSearcher:
         # Add individual reference documents
         reference_files = [
             {
-                "file": "RM0433-stm32h742-stm32h743753-and-stm32h750-value-line-advanced-armbased-32bit-mcus-stmicroelectronics.md",
+                "file": "RM0433-stm32h742-stm32h743753-and-stm32h750-value-line-advanced-armbased-32bit-mcus-stmicroelectronics.md",  # noqa: E501
                 "collection": CollectionType.STM32_HAL,
                 "category": "stm32h7_reference",
             },

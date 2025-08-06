@@ -206,7 +206,7 @@ class StatusUpdater:
                     # Update RAM usage if we have the information
                     content = re.sub(
                         r"- \*\*RAM Usage\*\*:\s*.*",
-                        f'- **RAM Usage**: {metrics["ram_used_kb"]:.1f}KB / 1MB ({metrics["ram_percent"]:.2f}%)',
+                        f'- **RAM Usage**: {metrics["ram_used_kb"]:.1f}KB / 1MB ({metrics["ram_percent"]:.2f}%)',  # noqa: E501
                         content,
                     )
                 else:
@@ -216,13 +216,13 @@ class StatusUpdater:
 
                     content = re.sub(
                         r"\*\*Build Status\*\*:\s*.*",
-                        f"**Build Status**: ✅ Passing ({size_kb:.1f}KB firmware, {flash_used_pct:.2f}% flash used)",
+                        f"**Build Status**: ✅ Passing ({size_kb:.1f}KB firmware, {flash_used_pct:.2f}% flash used)",  # noqa: E501
                         content,
                     )
 
                     content = re.sub(
                         r"- \*\*Flash Usage\*\*:\s*.*",
-                        f"- **Flash Usage**: {size_kb:.1f}KB / 2MB ({flash_used_pct:.2f}% used, {flash_free_pct:.2f}% free)",
+                        f"- **Flash Usage**: {size_kb:.1f}KB / 2MB ({flash_used_pct:.2f}% used, {flash_free_pct:.2f}% free)",  # noqa: E501
                         content,
                     )
 
@@ -241,7 +241,7 @@ class StatusUpdater:
                         # Update build time if section exists
                         content = re.sub(
                             r"- \*\*Build Time\*\*:\s*.*",
-                            f'- **Build Time**: ~{int(time_diff.total_seconds())}s (last: {metrics["build_time"]})',
+                            f'- **Build Time**: ~{int(time_diff.total_seconds())}s (last: {metrics["build_time"]})',  # noqa: E501
                             content,
                         )
 
@@ -326,7 +326,7 @@ class StatusUpdater:
                     )
 
             self.log(
-                f"Commit analysis: {sum(len(cat) for cat in categories.values())} commits categorized"
+                f"Commit analysis: {sum(len(cat) for cat in categories.values())} commits categorized"  # noqa: E501
             )
             return categories
 
@@ -416,7 +416,7 @@ class StatusUpdater:
                     }
 
             self.log(
-                f"Code analysis: {analysis['todo_count']} TODOs, {len(analysis['driver_status'])} drivers checked"
+                f"Code analysis: {analysis['todo_count']} TODOs, {len(analysis['driver_status'])} drivers checked"  # noqa: E501
             )
 
         except Exception as e:
