@@ -23,7 +23,9 @@ extern "C" {
 /* Includes                                                                   */
 /* ========================================================================== */
 
+#ifndef UNITY_TESTING
 #include "stm32h7xx_hal.h"
+#endif
 #include "config/safety_config.h"
 #include "config/hardware_config.h"
 #include "config/motor_config.h"

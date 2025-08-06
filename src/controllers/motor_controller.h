@@ -22,7 +22,9 @@ extern "C" {
 /* Includes                                                                   */
 /* ========================================================================== */
 
+#ifndef UNITY_TESTING
 #include "stm32h7xx_hal.h"
+#endif
 #include "common/error_codes.h"
 #include "common/data_types.h"
 #include "config/motor_config.h"

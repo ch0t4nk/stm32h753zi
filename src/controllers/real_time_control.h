@@ -13,7 +13,9 @@
 
 #include "common/data_types.h"
 #include "common/error_codes.h"
+#ifndef UNITY_TESTING
 #include "stm32h7xx_hal.h"
+#endif
 #include <stdbool.h>
 #include <stdint.h>
 

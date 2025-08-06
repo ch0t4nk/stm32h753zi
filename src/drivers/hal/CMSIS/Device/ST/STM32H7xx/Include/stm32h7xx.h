@@ -280,7 +280,9 @@ typedef enum
   */
 
 #if defined (USE_HAL_DRIVER)
- #include "stm32h7xx_hal.h"
+ #ifndef UNITY_TESTING
+#include "stm32h7xx_hal.h"
+#endif
 #endif /* USE_HAL_DRIVER */
 
 

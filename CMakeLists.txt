@@ -98,6 +98,38 @@ include_directories(
     00_reference/stm32h7xx_nucleo_bsp_md
 )
 
+# Auto-generated register headers from schemas
+add_custom_command(
+    OUTPUT ${CMAKE_SOURCE_DIR}/src/config/l6470_registers_generated.h
+           ${CMAKE_SOURCE_DIR}/src/config/l6470_registers_generated.c
+    COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/generate_register_headers.py 
+            ${CMAKE_SOURCE_DIR}/schemas/l6470_registers.yaml --validation
+    DEPENDS ${CMAKE_SOURCE_DIR}/schemas/l6470_registers.yaml
+            ${CMAKE_SOURCE_DIR}/scripts/generate_register_headers.py
+    COMMENT "Generating L6470 register headers from schema"
+    VERBATIM
+)
+
+add_custom_command(
+    OUTPUT ${CMAKE_SOURCE_DIR}/src/config/as5600_registers_generated.h
+           ${CMAKE_SOURCE_DIR}/src/config/as5600_registers_generated.c
+    COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/generate_register_headers.py 
+            ${CMAKE_SOURCE_DIR}/schemas/as5600_registers.yaml --validation
+    DEPENDS ${CMAKE_SOURCE_DIR}/schemas/as5600_registers.yaml
+            ${CMAKE_SOURCE_DIR}/scripts/generate_register_headers.py
+    COMMENT "Generating AS5600 register headers from schema"
+    VERBATIM
+)
+
+# Create target for schema generation
+add_custom_target(generate_schemas
+    DEPENDS ${CMAKE_SOURCE_DIR}/src/config/l6470_registers_generated.h
+            ${CMAKE_SOURCE_DIR}/src/config/l6470_registers_generated.c
+            ${CMAKE_SOURCE_DIR}/src/config/as5600_registers_generated.h
+            ${CMAKE_SOURCE_DIR}/src/config/as5600_registers_generated.c
+    COMMENT "Generating all register schema headers"
+)
+
 # Source files
 file(GLOB_RECURSE SOURCES
     "src/common/*.c"
@@ -107,6 +139,8 @@ file(GLOB_RECURSE SOURCES
     "src/safety/*.c"             # Safety systems (emergency stop, watchdog, fault monitoring)
     "src/communication/*.c"      # Communication protocols (UART, CAN)
     "src/application/*.c"
+    "src/simulation/*.c"         # Motor/encoder simulation framework
+    "src/config/*_generated.c"   # Auto-generated register validation
     "drivers/STM32H7xx_HAL_Driver/Src/*.c"
     "Core/Src/stm32h7xx_hal_msp.c"
     "Core/Src/stm32h7xx_it.c"

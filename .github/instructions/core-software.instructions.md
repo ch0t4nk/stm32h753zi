@@ -1,12 +1,95 @@
 ---
-applyTo: "src/{common,controllers,drivers}/**/*.{c,h}"
-description: "Core software architecture, data types, error handling, state management, and motor control algorithms for STM32H753ZI stepper motor project"
+applyTo: "src/{common,controllers,drivers,hal_abstraction}/**/*.{c,h}"
+description: "Core software architecture, data types, error handling, state management, motor control algorithms, and HAL abstraction for STM32H753ZI stepper motor project"
 ---
 
 # Core Software Instructions
 
 ## Overview
-This instruction file provides comprehensive guidance for core software architecture in the STM32H753ZI stepper motor control system, including data types, error handling, state management, motor control algorithms, and driver implementations.
+This instruction file provides comprehensive guidance for core software architecture in the STM32H753ZI stepper motor control system, including HAL abstraction, data types, error handling, state management, motor control algorithms, and driver implementations.
+
+## Hardware Abstraction Layer (HAL) Guidelines
+
+### HAL Abstraction Usage
+**CRITICAL**: All hardware access must go through the HAL abstraction layer for platform independence and testability.
+
+```c
+// ✅ CORRECT - Use HAL abstraction
+#include "hal_abstraction.h"
+
+SystemError_t motor_control_function(void) {
+    // Platform-independent GPIO control
+    SystemError_t result = HAL_Abstraction_GPIO_WritePin(
+        MOTOR1_CS_PORT, MOTOR1_CS_PIN, HAL_GPIO_PIN_SET);
+    
+    if (result != SYSTEM_OK) {
+        return result;
+    }
+    
+    // Platform-independent SPI transaction
+    HAL_SPI_Transaction_t transaction = {
+        .tx_data = command_buffer,
+        .tx_size = sizeof(command_buffer),
+        .rx_data = response_buffer,
+        .rx_size = sizeof(response_buffer),
+        .timeout_ms = SPI_TIMEOUT_MS
+    };
+    
+    return HAL_Abstraction_SPI_Transaction(SPI_MOTOR_BUS, &transaction);
+}
+```
+
+```c
+// ❌ INCORRECT - Direct HAL usage bypasses abstraction
+#include "stm32h7xx_hal.h"
+
+void bad_motor_function(void) {
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);  // Not testable!
+    HAL_SPI_Transmit(&hspi2, data, size, timeout);       // Platform-specific!
+}
+```
+
+### HAL Abstraction Architecture
+```c
+// HAL abstraction provides clean, testable interfaces
+typedef enum {
+    HAL_GPIO_PIN_RESET = 0,
+    HAL_GPIO_PIN_SET = 1
+} HAL_GPIO_State_t;
+
+typedef struct {
+    uint8_t* tx_data;
+    uint16_t tx_size;
+    uint8_t* rx_data;
+    uint16_t rx_size;
+    uint32_t timeout_ms;
+} HAL_SPI_Transaction_t;
+
+// Platform-independent function signatures
+SystemError_t HAL_Abstraction_GPIO_WritePin(uint32_t port, uint32_t pin, HAL_GPIO_State_t state);
+SystemError_t HAL_Abstraction_SPI_Transaction(uint32_t spi_instance, HAL_SPI_Transaction_t* transaction);
+uint32_t HAL_Abstraction_GetTick(void);
+```
+
+### Testing with HAL Abstraction
+```c
+// Hardware-independent unit testing
+#ifdef UNITY_TESTING
+#include "hal_abstraction_mock.h"
+
+void test_motor_initialization(void) {
+    // Configure mock behavior
+    MockHAL_SetGPIOState(MOTOR1_CS_PORT, MOTOR1_CS_PIN, HAL_GPIO_PIN_SET);
+    
+    // Test the actual function
+    SystemError_t result = motor_init();
+    TEST_ASSERT_EQUAL(SYSTEM_OK, result);
+    
+    // Verify expected hardware interactions
+    TEST_ASSERT_TRUE(MockHAL_WasGPIOPinSet(MOTOR1_CS_PORT, MOTOR1_CS_PIN));
+}
+#endif
+```
 
 ## Data Types and Type Safety
 

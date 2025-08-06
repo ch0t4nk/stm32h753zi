@@ -3,12 +3,13 @@
  * @brief Emergency Stop System - STM32H753ZI Stepper Motor Project
  * @author STM32H753ZI Project Team
  * @date 2025-08-05
- * 
+ *
  * @note Emergency stop implementation following:
  * - .github/instructions/safety-rt.instructions.md
  * - config/safety_config.h (SSOT)
- * 
- * @warning SAFETY-CRITICAL: This system must respond within ESTOP_REACTION_TIME_MS
+ *
+ * @warning SAFETY-CRITICAL: This system must respond within
+ * ESTOP_REACTION_TIME_MS
  */
 
 #ifndef EMERGENCY_STOP_H
@@ -18,40 +19,50 @@
 extern "C" {
 #endif
 
-/* ========================================================================== */
-/* Includes                                                                   */
-/* ========================================================================== */
+/* ==========================================================================
+ */
+/* Includes */
+/* ==========================================================================
+ */
 
+#ifndef UNITY_TESTING
+#ifndef UNITY_TESTING
 #include "stm32h7xx_hal.h"
-#include "config/safety_config.h"
-#include "config/hardware_config.h"
+#endif
+#endif
 #include "common/error_codes.h"
+#include "config/hardware_config.h"
+#include "config/safety_config.h"
 #include "safety_system.h"
 #include <stdbool.h>
 #include <stdint.h>
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* Emergency Stop Hardware Configuration                                     */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 
 // Emergency stop button configuration (using SSOT hardware config)
-#define ESTOP_BUTTON_PORT       GPIOC
-#define ESTOP_BUTTON_PIN        GPIO_PIN_13  // User button on Nucleo-144
-#define ESTOP_BUTTON_EXTI_IRQn  EXTI15_10_IRQn
+#define ESTOP_BUTTON_PORT GPIOC
+#define ESTOP_BUTTON_PIN GPIO_PIN_13 // User button on Nucleo-144
+#define ESTOP_BUTTON_EXTI_IRQn EXTI15_10_IRQn
 
 // Safety relay outputs (if external safety relays are used)
-#define SAFETY_RELAY1_PORT      GPIOB
-#define SAFETY_RELAY1_PIN       GPIO_PIN_0
-#define SAFETY_RELAY2_PORT      GPIOB
-#define SAFETY_RELAY2_PIN       GPIO_PIN_1
+#define SAFETY_RELAY1_PORT GPIOB
+#define SAFETY_RELAY1_PIN GPIO_PIN_0
+#define SAFETY_RELAY2_PORT GPIOB
+#define SAFETY_RELAY2_PIN GPIO_PIN_1
 
 // Emergency stop LED indicator
-#define ESTOP_LED_PORT          GPIOB
-#define ESTOP_LED_PIN           GPIO_PIN_14   // Red LED
+#define ESTOP_LED_PORT GPIOB
+#define ESTOP_LED_PIN GPIO_PIN_14 // Red LED
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* Emergency Stop API Functions                                              */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 
 /**
  * @brief Initialize emergency stop system

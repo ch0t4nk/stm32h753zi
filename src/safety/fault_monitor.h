@@ -20,7 +20,9 @@
 #include "common/error_codes.h"     // For SystemError_t
 #include "config/hardware_config.h" // For voltage/temperature constants
 #include "config/safety_config.h"
+#ifndef UNITY_TESTING
 #include "stm32h7xx_hal.h"
+#endif
 #include <stdbool.h>
 #include <stdint.h>
 

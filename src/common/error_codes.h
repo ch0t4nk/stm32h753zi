@@ -29,6 +29,7 @@
 // severity levels
 
 #define ERROR_CODE_SUCCESS 0x0000      // Success/OK status
+#define ERROR_CODE_BASE 0x1000         // Base for error codes
 #define ERROR_CODE_GENERIC_BASE 0x1000 // Generic system errors
 #define ERROR_CODE_MOTOR_BASE 0x2000   // Motor control errors
 #define ERROR_CODE_ENCODER_BASE 0x3000 // Encoder/sensor errors
@@ -228,6 +229,15 @@ typedef enum {
     ERROR_COMM_DMA_FAILED,           // 0x600A - DMA operation failed
     ERROR_COMM_SELF_TEST_FAILED,     // 0x600B - Communication self-test failed
     ERROR_COMM_TIMEOUT,              // 0x600C - Communication timeout
+
+    // 0x7000 range: System and Hardware Faults
+    ERROR_SYSTEM_FAULT =
+        ERROR_CODE_BASE | 0x7000, // 0x7000 - General system fault
+    ERROR_HARDWARE_FAULT,         // 0x7001 - Hardware fault detected
+    ERROR_POWER_SUPPLY_FAULT,     // 0x7002 - Power supply fault
+    ERROR_TEMPERATURE_FAULT,      // 0x7003 - Temperature out of range
+    ERROR_VOLTAGE_FAULT,          // 0x7004 - Voltage out of range
+    ERROR_CLOCK_FAULT,            // 0x7005 - System clock fault
 } SystemError_t;
 
 /* ==========================================================================

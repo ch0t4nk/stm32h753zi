@@ -8,22 +8,43 @@
 #ifndef MOCK_HAL_H
 #define MOCK_HAL_H
 
-#include <stdint.h>
+#ifdef UNITY_TESTING
+// Only use mock HAL during testing
+
 #include <stdbool.h>
+#include <stdint.h>
+
+// Prevent real HAL inclusion by defining HAL guard
+#define __STM32H7xx_HAL_H
+#define __STM32H7xx_HAL_DEF_H
+#define __STM32H7xx_HAL_GPIO_H
+#define __STM32H7xx_HAL_IWDG_H
 
 // =============================================================================
 // MOCK TYPE DEFINITIONS
-// =============================================================================
+// ==============================================================================
 
 // Mock GPIO types
+typedef struct {
+    uint32_t Pin;
+    uint32_t Mode;
+    uint32_t Pull;
+    uint32_t Speed;
+    uint32_t Alternate;
+} GPIO_InitTypeDef;
+
 typedef struct {
     uint32_t dummy; // Placeholder for actual GPIO register structure
 } GPIO_TypeDef;
 
-typedef enum {
-    GPIO_PIN_RESET = 0,
-    GPIO_PIN_SET = 1
-} GPIO_PinState;
+typedef enum { GPIO_PIN_RESET = 0, GPIO_PIN_SET = 1 } GPIO_PinState;
+
+// Mock SysTick
+typedef struct {
+    volatile uint32_t VAL; // Current Value Register
+} SysTick_Type;
+
+extern SysTick_Type *SysTick;
 
 // Mock HAL status
 typedef enum {
@@ -39,21 +60,21 @@ typedef struct {
 } IWDG_HandleTypeDef;
 
 // GPIO pin definitions for testing
-#define GPIO_PIN_0  ((uint16_t)0x0001)
-#define GPIO_PIN_1  ((uint16_t)0x0002)
-#define GPIO_PIN_2  ((uint16_t)0x0004)
-#define GPIO_PIN_3  ((uint16_t)0x0008)
-#define GPIO_PIN_4  ((uint16_t)0x0010)
-#define GPIO_PIN_5  ((uint16_t)0x0020)
-#define GPIO_PIN_6  ((uint16_t)0x0040)
-#define GPIO_PIN_7  ((uint16_t)0x0080)
-#define GPIO_PIN_8  ((uint16_t)0x0100)
-#define GPIO_PIN_9  ((uint16_t)0x0200)
+#define GPIO_PIN_0 ((uint16_t)0x0001)
+#define GPIO_PIN_1 ((uint16_t)0x0002)
+#define GPIO_PIN_2 ((uint16_t)0x0004)
+#define GPIO_PIN_3 ((uint16_t)0x0008)
+#define GPIO_PIN_4 ((uint16_t)0x0010)
+#define GPIO_PIN_5 ((uint16_t)0x0020)
+#define GPIO_PIN_6 ((uint16_t)0x0040)
+#define GPIO_PIN_7 ((uint16_t)0x0080)
+#define GPIO_PIN_8 ((uint16_t)0x0100)
+#define GPIO_PIN_9 ((uint16_t)0x0200)
 
 // Mock GPIO port instances
-extern GPIO_TypeDef* GPIOA;
-extern GPIO_TypeDef* GPIOB;
-extern GPIO_TypeDef* GPIOC;
+extern GPIO_TypeDef *GPIOA;
+extern GPIO_TypeDef *GPIOB;
+extern GPIO_TypeDef *GPIOC;
 
 // =============================================================================
 // MOCK STATE TRACKING
@@ -62,7 +83,7 @@ extern GPIO_TypeDef* GPIOC;
 #define MAX_GPIO_STATES 32
 
 typedef struct {
-    GPIO_TypeDef* port;
+    GPIO_TypeDef *port;
     uint16_t pin;
     GPIO_PinState state;
     uint32_t timestamp;
@@ -86,11 +107,13 @@ typedef struct {
 // Mock initialization and control
 void MockHAL_Init(void);
 void MockHAL_Reset(void);
-MockHAL_State_t* MockHAL_GetState(void);
+MockHAL_State_t *MockHAL_GetState(void);
 
 // Mock GPIO functions
-void HAL_GPIO_WritePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState);
-GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init);
+void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,
+                       GPIO_PinState PinState);
+GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
 
 // Mock timer functions
 uint32_t HAL_GetTick(void);
@@ -105,9 +128,11 @@ void MockHAL_AdvanceTick(uint32_t increment);
 void MockHAL_SetEmergencyStopState(bool active);
 bool MockHAL_GetEmergencyStopState(void);
 void MockHAL_SetFaultPinState(bool active);
-bool MockHAL_WasGPIOWritten(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIO_PinState expected_state);
+bool MockHAL_WasGPIOWritten(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,
+                            GPIO_PinState expected_state);
 uint32_t MockHAL_GetCallCount(void);
 uint32_t MockHAL_GetWatchdogRefreshCount(void);
 void MockHAL_PrintState(void);
 
+#endif // UNITY_TESTING
 #endif // MOCK_HAL_H

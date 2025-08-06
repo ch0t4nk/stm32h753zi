@@ -1,0 +1,492 @@
+# L6470 Stepper Driver Register Schema
+# Auto-generates C headers and Python validation
+# Based on X-CUBE-SPN2 and L6470 datasheet
+
+metadata:
+  chip: "L6470"
+  version: "1.0"
+  datasheet: "Rev 9 - February 2012"
+  framework: "X-CUBE-SPN2"
+  auto_generated_header: "src/config/l6470_registers_generated.h"
+
+# Register definitions with validation parameters
+registers:
+  # Position registers (22-bit)
+  ABS_POS:
+    address: 0x01
+    size_bytes: 3
+    mask: 0x3FFFFF
+    type: "position"
+    units: "steps"
+    description: "Current motor absolute position"
+    access: "read_write"
+    default: 0x000000
+
+  EL_POS:
+    address: 0x02
+    size_bytes: 2
+    mask: 0x01FF
+    type: "position"
+    units: "microsteps"
+    description: "Current motor electrical position"
+    access: "read_write"
+    default: 0x0000
+
+  MARK:
+    address: 0x03
+    size_bytes: 3
+    mask: 0x3FFFFF
+    type: "position"
+    units: "steps"
+    description: "Mark position register"
+    access: "read_write"
+    default: 0x000000
+
+  # Speed registers
+  SPEED:
+    address: 0x04
+    size_bytes: 3
+    mask: 0x0FFFFF
+    type: "speed"
+    units: "step/tick"
+    description: "Current motor speed"
+    access: "read_only"
+    conversion: "speed_steps_per_sec = value * 250e-9 * 2^28"
+
+  # Motion profile registers
+  ACC:
+    address: 0x05
+    size_bytes: 2
+    mask: 0x0FFF
+    type: "acceleration"
+    units: "step/tick²"
+    description: "Acceleration rate"
+    access: "read_write"
+    default: 0x08A
+    valid_range: [0x001, 0xFFF]
+    conversion: "acc_steps_per_sec2 = value * 250e-9^2 * 2^40"
+
+  DEC:
+    address: 0x06
+    size_bytes: 2
+    mask: 0x0FFF
+    type: "acceleration"
+    units: "step/tick²"
+    description: "Deceleration rate"
+    access: "read_write"
+    default: 0x08A
+    valid_range: [0x001, 0xFFF]
+    conversion: "dec_steps_per_sec2 = value * 250e-9^2 * 2^40"
+
+  MAX_SPEED:
+    address: 0x07
+    size_bytes: 2
+    mask: 0x03FF
+    type: "speed"
+    units: "step/tick"
+    description: "Maximum speed"
+    access: "read_write"
+    default: 0x041
+    valid_range: [0x000, 0x3FF]
+    conversion: "max_speed_steps_per_sec = value * 250e-9 * 2^18"
+
+  MIN_SPEED:
+    address: 0x08
+    size_bytes: 2
+    mask: 0x0FFF
+    type: "speed"
+    units: "step/tick"
+    description: "Minimum speed"
+    access: "read_write"
+    default: 0x000
+    valid_range: [0x000, 0xFFF]
+    conversion: "min_speed_steps_per_sec = value * 250e-9 * 2^24"
+
+  # Current control registers (KVAL)
+  KVAL_HOLD:
+    address: 0x09
+    size_bytes: 1
+    mask: 0xFF
+    type: "current"
+    units: "DAC_steps"
+    description: "Holding KVAL"
+    access: "read_write"
+    default: 0x29
+    valid_range: [0x00, 0xFF]
+
+  KVAL_RUN:
+    address: 0x0A
+    size_bytes: 1
+    mask: 0xFF
+    type: "current"
+    units: "DAC_steps"
+    description: "Running KVAL"
+    access: "read_write"
+    default: 0x29
+    valid_range: [0x00, 0xFF]
+
+  KVAL_ACC:
+    address: 0x0B
+    size_bytes: 1
+    mask: 0xFF
+    type: "current"
+    units: "DAC_steps"
+    description: "Acceleration KVAL"
+    access: "read_write"
+    default: 0x29
+    valid_range: [0x00, 0xFF]
+
+  KVAL_DEC:
+    address: 0x0C
+    size_bytes: 1
+    mask: 0xFF
+    type: "current"
+    units: "DAC_steps"
+    description: "Deceleration KVAL"
+    access: "read_write"
+    default: 0x29
+    valid_range: [0x00, 0xFF]
+
+  # Advanced speed registers
+  INT_SPD:
+    address: 0x0D
+    size_bytes: 2
+    mask: 0x3FFF
+    type: "speed"
+    units: "step/tick"
+    description: "Intersect speed"
+    access: "read_write"
+    default: 0x0408
+    valid_range: [0x000, 0x3FFF]
+
+  FS_SPD:
+    address: 0x15
+    size_bytes: 2
+    mask: 0x3FF
+    type: "speed"
+    units: "step/tick"
+    description: "Full step speed"
+    access: "read_write"
+    default: 0x027
+    valid_range: [0x000, 0x3FF]
+
+  # Protection registers
+  OCD_TH:
+    address: 0x13
+    size_bytes: 1
+    mask: 0x1F
+    type: "current"
+    units: "mA"
+    description: "Overcurrent detection threshold"
+    access: "read_write"
+    default: 0x08
+    valid_range: [0x00, 0x1F]
+    conversion: "threshold_mA = (value + 1) * 375"
+
+  STALL_TH:
+    address: 0x14
+    size_bytes: 1
+    mask: 0x7F
+    type: "current"
+    units: "mA"
+    description: "Stall detection threshold"
+    access: "read_write"
+    default: 0x40
+    valid_range: [0x00, 0x7F]
+    conversion: "threshold_mA = (value + 1) * 31.25"
+
+  # Configuration registers
+  STEP_MODE:
+    address: 0x16
+    size_bytes: 1
+    mask: 0xFF
+    type: "configuration"
+    description: "Step mode and sync configuration"
+    access: "read_write"
+    default: 0x07
+    fields:
+      STEP_SEL:
+        bits: [0, 2]
+        values:
+          0: "Full step"
+          1: "Half step"
+          2: "1/4 step"
+          3: "1/8 step"
+          4: "1/16 step"
+          5: "1/32 step"
+          6: "1/64 step"
+          7: "1/128 step"
+      SYNC_SEL:
+        bits: [4, 6]
+        values:
+          0: "1/2 FS_SPD"
+          1: "FS_SPD"
+          2: "2*FS_SPD"
+          3: "4*FS_SPD"
+          4: "8*FS_SPD"
+          5: "16*FS_SPD"
+          6: "32*FS_SPD"
+          7: "64*FS_SPD"
+      SYNC_EN:
+        bits: [7, 7]
+        values:
+          0: "Sync disabled"
+          1: "Sync enabled"
+
+  ALARM_EN:
+    address: 0x17
+    size_bytes: 1
+    mask: 0xFF
+    type: "configuration"
+    description: "Alarm enable register"
+    access: "read_write"
+    default: 0xFF
+    fields:
+      OVERCURRENT:
+        bits: [0, 0]
+      THERMAL_SHUTDOWN:
+        bits: [1, 1]
+      THERMAL_WARNING:
+        bits: [2, 2]
+      UVLO:
+        bits: [3, 3]
+      STALL_A:
+        bits: [4, 4]
+      STALL_B:
+        bits: [5, 5]
+      SWITCH:
+        bits: [6, 6]
+      WRONG_CMD:
+        bits: [7, 7]
+
+  CONFIG:
+    address: 0x18
+    size_bytes: 2
+    mask: 0xFFFF
+    type: "configuration"
+    description: "Device configuration register"
+    access: "read_write"
+    default: 0x2E88
+    fields:
+      OSC_SEL:
+        bits: [0, 2]
+        description: "Oscillator selection"
+      EXT_CLK:
+        bits: [3, 3]
+        description: "External clock enable"
+      SW_MODE:
+        bits: [4, 4]
+        description: "Switch mode"
+      EN_VSCOMP:
+        bits: [5, 5]
+        description: "Enable voltage compensation"
+      OC_SD:
+        bits: [7, 7]
+        description: "Overcurrent shutdown"
+      POW_SR:
+        bits: [8, 9]
+        description: "Power slew rate"
+      F_PWM_DEC:
+        bits: [10, 12]
+        description: "PWM frequency decimal"
+      F_PWM_INT:
+        bits: [13, 15]
+        description: "PWM frequency integer"
+
+  # Status register (read-only)
+  STATUS:
+    address: 0x19
+    size_bytes: 2
+    mask: 0xFFFF
+    type: "status"
+    description: "Device status register"
+    access: "read_only"
+    fields:
+      HIZ:
+        bits: [0, 0]
+        description: "High impedance state"
+      BUSY:
+        bits: [1, 1]
+        description: "Device busy"
+      SW_F:
+        bits: [2, 2]
+        description: "Switch turn-on event"
+      SW_EVN:
+        bits: [3, 3]
+        description: "Switch input status"
+      DIR:
+        bits: [4, 4]
+        description: "Direction (1=forward, 0=reverse)"
+      MOT_STATUS:
+        bits: [5, 6]
+        description: "Motor status"
+        values:
+          0: "Stopped"
+          1: "Acceleration"
+          2: "Deceleration"
+          3: "Constant speed"
+      NOTPERF_CMD:
+        bits: [7, 7]
+        description: "Command not performed"
+      WRONG_CMD:
+        bits: [8, 8]
+        description: "Wrong command"
+      UVLO:
+        bits: [9, 9]
+        description: "Undervoltage lockout"
+      TH_WRN:
+        bits: [10, 10]
+        description: "Thermal warning"
+      TH_SD:
+        bits: [11, 11]
+        description: "Thermal shutdown"
+      OCD:
+        bits: [12, 12]
+        description: "Overcurrent detection"
+      STEP_LOSS_A:
+        bits: [13, 13]
+        description: "Stall detection bridge A"
+      STEP_LOSS_B:
+        bits: [14, 14]
+        description: "Stall detection bridge B"
+      SCK_MOD:
+        bits: [15, 15]
+        description: "Step clock mode"
+
+# Command definitions
+commands:
+  NOP:
+    opcode: 0x00
+    description: "No operation"
+    parameters: 0
+
+  SET_PARAM:
+    opcode: 0x00 # OR with register address
+    description: "Set parameter"
+    parameters: "variable"
+
+  GET_PARAM:
+    opcode: 0x20 # OR with register address
+    description: "Get parameter"
+    parameters: 0
+
+  RUN:
+    opcode: 0x50 # OR with direction bit
+    description: "Run at given speed"
+    parameters: 3
+
+  STEP_CLOCK:
+    opcode: 0x58 # OR with direction bit
+    description: "Step clock mode"
+    parameters: 0
+
+  MOVE:
+    opcode: 0x40 # OR with direction bit
+    description: "Move N steps"
+    parameters: 3
+
+  GOTO:
+    opcode: 0x60
+    description: "Go to absolute position"
+    parameters: 3
+
+  GOTO_DIR:
+    opcode: 0x68 # OR with direction bit
+    description: "Go to position via direction"
+    parameters: 3
+
+  GO_UNTIL:
+    opcode: 0x82 # OR with action and direction
+    description: "Go until switch"
+    parameters: 3
+
+  RELEASE_SW:
+    opcode: 0x92 # OR with action and direction
+    description: "Release switch"
+    parameters: 0
+
+  GO_HOME:
+    opcode: 0x70
+    description: "Go to home position"
+    parameters: 0
+
+  GO_MARK:
+    opcode: 0x78
+    description: "Go to mark position"
+    parameters: 0
+
+  RESET_POS:
+    opcode: 0xD8
+    description: "Reset position to zero"
+    parameters: 0
+
+  RESET_DEVICE:
+    opcode: 0xC0
+    description: "Reset device"
+    parameters: 0
+
+  SOFT_STOP:
+    opcode: 0xB0
+    description: "Soft stop"
+    parameters: 0
+
+  HARD_STOP:
+    opcode: 0xB8
+    description: "Hard stop"
+    parameters: 0
+
+  SOFT_HIZ:
+    opcode: 0xA0
+    description: "Soft HiZ"
+    parameters: 0
+
+  HARD_HIZ:
+    opcode: 0xA8
+    description: "Hard HiZ"
+    parameters: 0
+
+  GET_STATUS:
+    opcode: 0xD0
+    description: "Get status and clear flags"
+    parameters: 0
+
+# Safety validation rules
+validation:
+  critical_registers:
+    - "OCD_TH"
+    - "STALL_TH"
+    - "MAX_SPEED"
+    - "CONFIG"
+
+  power_on_sequence:
+    1: "Verify supply voltage within range"
+    2: "Configure CONFIG register"
+    3: "Set protection thresholds (OCD_TH, STALL_TH)"
+    4: "Configure motion parameters"
+    5: "Enable operation"
+
+  safe_defaults:
+    OCD_TH: 0x08 # ~3A threshold
+    STALL_TH: 0x40 # ~2A threshold
+    MAX_SPEED: 0x041 # Conservative speed
+    KVAL_RUN: 0x29 # Moderate current
+
+# Test patterns for validation
+test_patterns:
+  register_read_write:
+    - register: "ABS_POS"
+      test_values: [0x000000, 0x3FFFFF, 0x100000]
+    - register: "MAX_SPEED"
+      test_values: [0x000, 0x3FF, 0x041]
+
+  boundary_tests:
+    - register: "OCD_TH"
+      valid: [0x00, 0x1F]
+      invalid: [0x20, 0xFF]
+
+  configuration_sequences:
+    - name: "Safe startup"
+      steps:
+        1: { register: "CONFIG", value: 0x2E88 }
+        2: { register: "OCD_TH", value: 0x08 }
+        3: { register: "MAX_SPEED", value: 0x041 }

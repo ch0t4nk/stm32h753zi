@@ -1,0 +1,1 @@
+gcc -Wall -Wextra -g -DUNIT_TESTING=1 -DHOST_TESTING=1 CMakeFiles/test_hal_abstraction_basic.dir/test_hal_abstraction_basic.c.o CMakeFiles/test_hal_abstraction_basic.dir/workspaces/code/src/hal_abstraction/hal_abstraction_mock.c.o -o test_hal_abstraction_basic  libunity.a 

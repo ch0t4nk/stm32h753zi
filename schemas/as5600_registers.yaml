@@ -1,0 +1,389 @@
+# AS5600 Magnetic Encoder Register Schema
+# Auto-generates C headers and Python validation
+# Based on AS5600 datasheet Rev 1.21
+
+metadata:
+  chip: "AS5600"
+  version: "1.0"
+  datasheet: "Rev 1.21"
+  i2c_address: 0x36
+  auto_generated_header: "src/config/as5600_registers_generated.h"
+
+# Register definitions with validation parameters
+registers:
+  # Configuration registers (One-Time Programmable)
+  ZMCO:
+    address: 0x00
+    size_bytes: 1
+    mask: 0x03
+    type: "configuration"
+    description: "Programming count register (OTP)"
+    access: "read_only"
+    valid_range: [0x00, 0x03]
+    note: "Shows number of times ANGLE register has been burned"
+
+  ZPOS_H:
+    address: 0x01
+    size_bytes: 1
+    mask: 0x0F
+    type: "configuration"
+    description: "Zero position MSB (OTP)"
+    access: "read_write"
+    default: 0x00
+
+  ZPOS_L:
+    address: 0x02
+    size_bytes: 1
+    mask: 0xFF
+    type: "configuration"
+    description: "Zero position LSB (OTP)"
+    access: "read_write"
+    default: 0x00
+    combined_register: "ZPOS"
+    combined_bits: 12
+
+  MPOS_H:
+    address: 0x03
+    size_bytes: 1
+    mask: 0x0F
+    type: "configuration"
+    description: "Maximum position MSB (OTP)"
+    access: "read_write"
+    default: 0x0F
+
+  MPOS_L:
+    address: 0x04
+    size_bytes: 1
+    mask: 0xFF
+    type: "configuration"
+    description: "Maximum position LSB (OTP)"
+    access: "read_write"
+    default: 0xFF
+    combined_register: "MPOS"
+    combined_bits: 12
+
+  MANG_H:
+    address: 0x05
+    size_bytes: 1
+    mask: 0x0F
+    type: "configuration"
+    description: "Maximum angle MSB (OTP)"
+    access: "read_write"
+    default: 0x0F
+
+  MANG_L:
+    address: 0x06
+    size_bytes: 1
+    mask: 0xFF
+    type: "configuration"
+    description: "Maximum angle LSB (OTP)"
+    access: "read_write"
+    default: 0xFF
+    combined_register: "MANG"
+    combined_bits: 12
+
+  CONF_H:
+    address: 0x07
+    size_bytes: 1
+    mask: 0xFF
+    type: "configuration"
+    description: "Configuration MSB (OTP)"
+    access: "read_write"
+    default: 0x00
+    fields:
+      PM:
+        bits: [0, 1]
+        description: "Power Mode"
+        values:
+          0: "NOM (Normal)"
+          1: "LPM1 (Low Power 1)"
+          2: "LPM2 (Low Power 2)"
+          3: "LPM3 (Low Power 3)"
+      HYST:
+        bits: [2, 3]
+        description: "Hysteresis"
+        values:
+          0: "OFF"
+          1: "1 LSB"
+          2: "2 LSBs"
+          3: "3 LSBs"
+      OUTS:
+        bits: [4, 5]
+        description: "Output Stage"
+        values:
+          0: "Analog (full range)"
+          1: "Analog (reduced range)"
+          2: "Digital PWM"
+          3: "Reserved"
+      PWMF:
+        bits: [6, 7]
+        description: "PWM Frequency"
+        values:
+          0: "115 Hz"
+          1: "230 Hz"
+          2: "460 Hz"
+          3: "920 Hz"
+
+  CONF_L:
+    address: 0x08
+    size_bytes: 1
+    mask: 0xFF
+    type: "configuration"
+    description: "Configuration LSB (OTP)"
+    access: "read_write"
+    default: 0x00
+    fields:
+      SF:
+        bits: [0, 1]
+        description: "Slow Filter"
+        values:
+          0: "16x"
+          1: "8x"
+          2: "4x"
+          3: "2x"
+      FTH:
+        bits: [2, 4]
+        description: "Fast Filter Threshold"
+        values:
+          0: "Slow filter only"
+          1: "6 LSBs"
+          2: "7 LSBs"
+          3: "9 LSBs"
+          4: "18 LSBs"
+          5: "21 LSBs"
+          6: "24 LSBs"
+          7: "10 LSBs"
+      WD:
+        bits: [5, 5]
+        description: "Watchdog Timer"
+        values:
+          0: "OFF"
+          1: "ON"
+
+  # Output registers (volatile)
+  RAW_ANGLE_H:
+    address: 0x0C
+    size_bytes: 1
+    mask: 0x0F
+    type: "angle"
+    units: "LSB"
+    description: "Raw angle MSB (unfiltered)"
+    access: "read_only"
+    resolution: 12
+
+  RAW_ANGLE_L:
+    address: 0x0D
+    size_bytes: 1
+    mask: 0xFF
+    type: "angle"
+    units: "LSB"
+    description: "Raw angle LSB (unfiltered)"
+    access: "read_only"
+    combined_register: "RAW_ANGLE"
+    combined_bits: 12
+    conversion: "angle_degrees = (value / 4096.0) * 360.0"
+
+  ANGLE_H:
+    address: 0x0E
+    size_bytes: 1
+    mask: 0x0F
+    type: "angle"
+    units: "LSB"
+    description: "Filtered angle MSB"
+    access: "read_only"
+    resolution: 12
+
+  ANGLE_L:
+    address: 0x0F
+    size_bytes: 1
+    mask: 0xFF
+    type: "angle"
+    units: "LSB"
+    description: "Filtered angle LSB"
+    access: "read_only"
+    combined_register: "ANGLE"
+    combined_bits: 12
+    conversion: "angle_degrees = (value / 4096.0) * 360.0"
+    note: "Primary angle output with filtering applied"
+
+  # Status and diagnostic registers
+  STATUS:
+    address: 0x0B
+    size_bytes: 1
+    mask: 0x38
+    type: "status"
+    description: "Status register"
+    access: "read_only"
+    fields:
+      MH:
+        bits: [3, 3]
+        description: "Magnet too strong"
+      ML:
+        bits: [4, 4]
+        description: "Magnet too weak"
+      MD:
+        bits: [5, 5]
+        description: "Magnet detected"
+
+  AGC:
+    address: 0x1A
+    size_bytes: 1
+    mask: 0xFF
+    type: "diagnostic"
+    description: "Automatic Gain Control"
+    access: "read_only"
+    valid_range: [0x00, 0xFF]
+    note: "Optimal range: 128 ± 32"
+
+  MAGNITUDE_H:
+    address: 0x1B
+    size_bytes: 1
+    mask: 0x0F
+    type: "diagnostic"
+    description: "Magnitude MSB"
+    access: "read_only"
+
+  MAGNITUDE_L:
+    address: 0x1C
+    size_bytes: 1
+    mask: 0xFF
+    type: "diagnostic"
+    description: "Magnitude LSB"
+    access: "read_only"
+    combined_register: "MAGNITUDE"
+    combined_bits: 12
+    note: "Indicates magnetic field strength"
+
+  # Programming register
+  BURN:
+    address: 0xFF
+    size_bytes: 1
+    mask: 0xFF
+    type: "programming"
+    description: "Burn command register"
+    access: "write_only"
+    values:
+      0x80: "Burn angle"
+      0x40: "Burn settings"
+    warning: "PERMANENT PROGRAMMING - Use with extreme caution"
+
+# I2C Communication parameters
+i2c:
+  address_7bit: 0x36
+  address_8bit: 0x6C # For HAL functions
+  max_frequency: 1000000 # 1 MHz
+  timeout_ms: 100
+
+# Combined register definitions for 12-bit values
+combined_registers:
+  ZPOS:
+    high_reg: "ZPOS_H"
+    low_reg: "ZPOS_L"
+    total_bits: 12
+    description: "Zero position (0-4095)"
+
+  MPOS:
+    high_reg: "MPOS_H"
+    low_reg: "MPOS_L"
+    total_bits: 12
+    description: "Maximum position (0-4095)"
+
+  MANG:
+    high_reg: "MANG_H"
+    low_reg: "MANG_L"
+    total_bits: 12
+    description: "Maximum angle (0-4095)"
+
+  RAW_ANGLE:
+    high_reg: "RAW_ANGLE_H"
+    low_reg: "RAW_ANGLE_L"
+    total_bits: 12
+    description: "Raw angle reading (0-4095)"
+
+  ANGLE:
+    high_reg: "ANGLE_H"
+    low_reg: "ANGLE_L"
+    total_bits: 12
+    description: "Filtered angle reading (0-4095)"
+    primary: true
+
+  MAGNITUDE:
+    high_reg: "MAGNITUDE_H"
+    low_reg: "MAGNITUDE_L"
+    total_bits: 12
+    description: "Magnitude reading (0-4095)"
+
+# Safety validation rules
+validation:
+  critical_checks:
+    - "Magnet detection (STATUS.MD = 1)"
+    - "AGC in valid range (96-160)"
+    - "No magnet strength warnings (STATUS.MH/ML = 0)"
+
+  magnet_health:
+    agc_optimal_min: 96
+    agc_optimal_max: 160
+    agc_warning_min: 64
+    agc_warning_max: 192
+    magnitude_min: 1000
+    magnitude_max: 3000
+
+  power_on_sequence:
+    1: "Wait 2ms after power-on"
+    2: "Check STATUS register for magnet detection"
+    3: "Verify AGC in acceptable range"
+    4: "Read initial angle for baseline"
+    5: "Monitor for magnet warnings during operation"
+
+  operational_limits:
+    max_read_frequency: 1000 # Hz
+    angle_stability_threshold: 5 # LSBs
+    communication_timeout: 100 # ms
+
+# Test patterns for validation
+test_patterns:
+  basic_communication:
+    - register: "STATUS"
+      expected_mask: 0x38
+      test: "Read status and verify communication"
+
+  magnet_detection:
+    - register: "STATUS"
+      required_bits: [5] # MD bit must be 1
+      test: "Verify magnet is detected"
+
+  angle_reading:
+    - register: "ANGLE"
+      test: "Read angle and verify 12-bit range"
+      valid_range: [0x000, 0xFFF]
+
+  agc_validation:
+    - register: "AGC"
+      test: "Check automatic gain control"
+      optimal_range: [96, 160]
+      warning_range: [64, 192]
+
+  configuration_test:
+    - registers: ["CONF_H", "CONF_L"]
+      test: "Verify configuration accessibility"
+      note: "OTP registers - read carefully"
+
+# Simulation parameters for testing
+simulation:
+  angle_patterns:
+    linear: "0 to 360 degrees at constant rate"
+    sinusoidal: "Oscillating motion pattern"
+    step: "Discrete position changes"
+    noisy: "Angle with added noise for filter testing"
+
+  fault_injection:
+    magnet_too_weak: "STATUS.ML = 1, AGC > 200"
+    magnet_too_strong: "STATUS.MH = 1, AGC < 50"
+    no_magnet: "STATUS.MD = 0, MAGNITUDE = 0"
+    communication_failure: "I2C timeout/NACK simulation"
+
+# Default safe configuration
+safe_defaults:
+  CONF_H: 0x00 # Normal power, no hysteresis, analog output, 115Hz PWM
+  CONF_L: 0x00 # 16x slow filter, fast filter off, watchdog off
+  polling_rate: 100 # Hz - safe for continuous monitoring

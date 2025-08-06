@@ -1,0 +1,5 @@
+/workspaces/code/tests/host_tests/build/CMakeFiles/unity.dir
+/workspaces/code/tests/host_tests/build/CMakeFiles/test_hal_abstraction_basic_corrected.dir
+/workspaces/code/tests/host_tests/build/CMakeFiles/test.dir
+/workspaces/code/tests/host_tests/build/CMakeFiles/edit_cache.dir
+/workspaces/code/tests/host_tests/build/CMakeFiles/rebuild_cache.dir

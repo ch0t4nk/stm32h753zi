@@ -35,17 +35,28 @@ This workspace runs in a dev container with:
 src/
 ├── config/                 # SSOT configuration headers ONLY
 ├── common/                 # Common definitions and utilities
-├── drivers/                # Hardware abstraction layer
+├── hal_abstraction/        # Hardware Abstraction Layer (HAL)
+│   ├── hal_abstraction.h   # Platform-independent HAL interface
+│   ├── hal_abstraction_stm32h7.c  # STM32H7 implementation
+│   └── hal_abstraction_mock.c     # Mock implementation for testing
+├── drivers/                # Hardware-specific drivers
 ├── controllers/            # Control algorithms
 ├── communication/          # Protocol implementations
-├── safety/                 # Safety systems
+├── safety/                 # Safety systems (with HAL abstraction)
 └── application/            # Main application logic
 ```
 
 ### SSOT Configuration Management
 - **NEVER** hardcode hardware constants in implementation files
 - **ALWAYS** include the appropriate SSOT header from `src/config/`
+- **USE HAL ABSTRACTION**: All hardware access must go through `hal_abstraction.h` interface
 - **VALIDATE** all configuration parameters at compile time where possible
+
+**HAL Abstraction Layer Benefits:**
+- **Platform Independence**: Code compiles for multiple targets (STM32H7, mocks, future platforms)
+- **Hardware-Independent Testing**: Unit tests run without actual hardware using mock implementations
+- **Clean Architecture**: Application code isolated from hardware-specific details
+- **Easy Debugging**: Mock layer enables controlled fault injection and state monitoring
 
 ## Build Configuration and System
 
@@ -150,9 +161,50 @@ tests/
 - **Hardware-in-Loop**: Testing with actual STM32H753ZI hardware
 
 ### Mock Objects and Stubs
+**HAL Abstraction Mock Testing:**
+```c
+// Example using HAL abstraction for testable code
+#include "hal_abstraction.h"
+
+SystemError_t motor_controller_test_function(void) {
+    // This code works with both real hardware and mocks
+    SystemError_t result = HAL_Abstraction_GPIO_WritePin(
+        MOTOR1_CS_PORT, MOTOR1_CS_PIN, HAL_GPIO_PIN_SET);
+    
+    if (result != SYSTEM_OK) {
+        return result;
+    }
+    
+    // SPI transaction using abstraction
+    HAL_SPI_Transaction_t transaction = {
+        .tx_data = command_buffer,
+        .tx_size = sizeof(command_buffer),
+        .rx_data = response_buffer,
+        .rx_size = sizeof(response_buffer),
+        .timeout_ms = 100
+    };
+    
+    return HAL_Abstraction_SPI_Transaction(SPI_MOTOR_BUS, &transaction);
+}
+
+// Test using mock implementation
+void test_motor_controller_with_mocks(void) {
+    // Configure mock behavior
+    MockHAL_SetGPIOState(MOTOR1_CS_PORT, MOTOR1_CS_PIN, HAL_GPIO_PIN_SET);
+    MockHAL_SetSPIResponse(SPI_MOTOR_BUS, expected_response, sizeof(expected_response));
+    
+    // Test the function - runs without hardware
+    SystemError_t result = motor_controller_test_function();
+    TEST_ASSERT_EQUAL(SYSTEM_OK, result);
+    
+    // Verify mock interactions
+    TEST_ASSERT_TRUE(MockHAL_WasGPIOPinSet(MOTOR1_CS_PORT, MOTOR1_CS_PIN));
+}
+```
+
 **HAL Mocking for Unit Tests:**
 ```c
-// Mock HAL functions for testing
+// Legacy example - prefer HAL abstraction above
 HAL_StatusTypeDef HAL_SPI_Transmit_Mock(SPI_HandleTypeDef *hspi, 
                                        uint8_t *pData, 
                                        uint16_t Size, 

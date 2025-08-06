@@ -17,7 +17,9 @@
 #include "config/hardware_config.h"
 #include "config/motor_config.h"
 #include "common/error_codes.h"
+#ifndef UNITY_TESTING
 #include "stm32h7xx_hal.h"
+#endif
 #include <stdbool.h>
 #include <stdint.h>
 

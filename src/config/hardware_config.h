@@ -17,7 +17,9 @@
 #ifndef HARDWARE_CONFIG_H
 #define HARDWARE_CONFIG_H
 
+#ifndef UNITY_TESTING
 #include "stm32h7xx_hal.h"
+#endif
 
 /* ========================================================================== */
 /* MCU Configuration (SSOT)                                                  */

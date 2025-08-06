@@ -18,7 +18,9 @@
 #include "config/safety_config.h"
 #include "common/data_types.h"
 #include "safety/safety_system.h"
+#ifndef UNITY_TESTING
 #include "stm32h7xx_hal.h"
+#endif
 #include <stdint.h>
 #include <stdbool.h>
 

@@ -3,29 +3,54 @@
  * @brief Unit tests for safety systems using Unity framework
  * @author STM32H753ZI Motor Control Project
  * @date 2024
- * 
+ *
  * Comprehensive unit tests for safety-critical systems including:
  * - Emergency stop functionality
  * - Watchdog management
  * - Fault monitoring
  * - Safety state management
+ *
+ * @note Now uses HAL Abstraction Layer for clean testing
  */
 
-#include <unity.h>
-#include "mock_hal.h"
-#include "safety_system.h"
 #include "emergency_stop.h"
-#include "watchdog_manager.h"
 #include "fault_monitor.h"
+#include "hal_abstraction/hal_abstraction.h"
+#include "safety_system.h"
+#include "test_api_stubs.h" // TODO: Remove when APIs are properly implemented
+#include "watchdog_manager.h"
+#include <unity.h>
+
+// GPIO pin definitions for testing
+#define GPIO_PIN_0 (1U << 0)
+#define GPIO_PIN_1 (1U << 1)
+#define GPIO_PIN_13 (1U << 13)
+#define GPIO_PIN_14 (1U << 14)
+
+// Forward declaration of mock state structure
+typedef struct MockHAL_State_t MockHAL_State_t;
+
+// Mock control functions (defined in hal_abstraction_mock.c)
+extern void HAL_Abstraction_Mock_Reset(void);
+extern MockHAL_State_t *HAL_Abstraction_Mock_GetState(void);
+extern void HAL_Abstraction_Mock_SetGPIOState(HAL_GPIO_Port_t port,
+                                              uint32_t pin,
+                                              HAL_GPIO_State_t state);
+extern void HAL_Abstraction_Mock_AdvanceTick(uint32_t increment);
+extern void HAL_Abstraction_Mock_InjectSPIFailure(bool enable);
+extern void HAL_Abstraction_Mock_InjectI2CFailure(bool enable);
 
 // =============================================================================
 // TEST SETUP AND TEARDOWN
 // =============================================================================
 
 void setUp(void) {
-    // Reset mock HAL state before each test
-    MockHAL_Reset();
-    
+    // Reset HAL abstraction mock state before each test
+    HAL_Abstraction_Mock_Reset();
+
+    // Initialize HAL abstraction layer
+    HAL_Abstraction_Init();
+
     // Initialize safety systems in test mode
     safety_system_init();
     emergency_stop_init();
@@ -35,7 +60,7 @@ void setUp(void) {
 
 void tearDown(void) {
     // Clean up after each test
-    MockHAL_Reset();
+    HAL_Abstraction_Mock_Reset();
 }
 
 // =============================================================================
@@ -45,52 +70,56 @@ void tearDown(void) {
 void test_emergency_stop_initialization(void) {
     SystemError_t result = emergency_stop_init();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
-    
+
     EmergencyStopState_t state = emergency_stop_get_state();
     TEST_ASSERT_EQUAL(EMERGENCY_STOP_ARMED, state);
 }
 
 void test_emergency_stop_activation(void) {
-    // Simulate emergency stop button press
-    MockHAL_SetEmergencyStopState(true);
-    
+    // Simulate emergency stop button press using HAL abstraction
+    HAL_Abstraction_Mock_SetGPIOState(HAL_GPIO_PORT_C, GPIO_PIN_13,
+                                      HAL_GPIO_STATE_RESET);
+
     // Process emergency stop
     emergency_stop_process();
-    
+
     // Verify emergency stop is triggered
     EmergencyStopState_t state = emergency_stop_get_state();
     TEST_ASSERT_EQUAL(EMERGENCY_STOP_TRIGGERED, state);
-    
+
     // Verify safety actions were taken
     TEST_ASSERT_TRUE(emergency_stop_is_active());
 }
 
 void test_emergency_stop_timing_requirement(void) {
-    uint32_t start_time = HAL_GetTick();
-    
+    uint32_t start_time = HAL_Abstraction_GetTick();
+
     // Trigger emergency stop
-    MockHAL_SetEmergencyStopState(true);
+    HAL_Abstraction_Mock_SetGPIOState(HAL_GPIO_PORT_C, GPIO_PIN_13,
+                                      HAL_GPIO_STATE_RESET);
     emergency_stop_process();
-    
-    uint32_t response_time = HAL_GetTick() - start_time;
-    
+
+    uint32_t response_time = HAL_Abstraction_GetTick() - start_time;
+
     // Verify response time is under 10ms (SIL-3 requirement)
     TEST_ASSERT_LESS_THAN(10, response_time);
 }
 
 void test_emergency_stop_reset_sequence(void) {
     // Trigger emergency stop
-    MockHAL_SetEmergencyStopState(true);
+    HAL_Abstraction_Mock_SetGPIOState(HAL_GPIO_PORT_C, GPIO_PIN_13,
+                                      HAL_GPIO_STATE_RESET);
     emergency_stop_process();
     TEST_ASSERT_EQUAL(EMERGENCY_STOP_TRIGGERED, emergency_stop_get_state());
-    
+
     // Release emergency stop
-    MockHAL_SetEmergencyStopState(false);
-    
+    HAL_Abstraction_Mock_SetGPIOState(HAL_GPIO_PORT_C, GPIO_PIN_13,
+                                      HAL_GPIO_STATE_SET);
+
     // Attempt reset (should require manual reset)
     SystemError_t result = emergency_stop_reset();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
-    
+
     // Verify state transitions to reset pending
     EmergencyStopState_t state = emergency_stop_get_state();
     TEST_ASSERT_EQUAL(EMERGENCY_STOP_RESET_PENDING, state);
@@ -103,30 +132,32 @@ void test_emergency_stop_reset_sequence(void) {
 void test_watchdog_initialization(void) {
     SystemError_t result = watchdog_init();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
-    
+
     WatchdogState_t state = watchdog_get_state();
     TEST_ASSERT_EQUAL(WATCHDOG_ACTIVE, state);
 }
 
 void test_watchdog_refresh_normal_operation(void) {
-    uint32_t initial_count = MockHAL_GetWatchdogRefreshCount();
-    
+    uint32_t initial_count =
+        HAL_Abstraction_Mock_GetState()->watchdog_refresh_count;
+
     // Refresh watchdog
     SystemError_t result = watchdog_refresh();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
-    
+
     // Verify HAL refresh was called
-    uint32_t final_count = MockHAL_GetWatchdogRefreshCount();
+    uint32_t final_count =
+        HAL_Abstraction_Mock_GetState()->watchdog_refresh_count;
     TEST_ASSERT_EQUAL(initial_count + 1, final_count);
 }
 
 void test_watchdog_timeout_detection(void) {
     // Advance time beyond watchdog timeout
-    MockHAL_AdvanceTick(WATCHDOG_TIMEOUT_MS + 100);
-    
+    HAL_Abstraction_Mock_AdvanceTick(5000 + 100); // 5s timeout + margin
+
     // Process watchdog
     watchdog_process();
-    
+
     // Verify timeout was detected
     WatchdogState_t state = watchdog_get_state();
     TEST_ASSERT_EQUAL(WATCHDOG_TIMEOUT, state);
@@ -134,14 +165,14 @@ void test_watchdog_timeout_detection(void) {
 
 void test_watchdog_fault_recovery(void) {
     // Simulate watchdog timeout
-    MockHAL_AdvanceTick(WATCHDOG_TIMEOUT_MS + 100);
+    HAL_Abstraction_Mock_AdvanceTick(5000 + 100); // 5s timeout + margin
     watchdog_process();
     TEST_ASSERT_EQUAL(WATCHDOG_TIMEOUT, watchdog_get_state());
-    
+
     // Perform recovery
     SystemError_t result = watchdog_recover();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
-    
+
     // Verify recovery
     WatchdogState_t state = watchdog_get_state();
     TEST_ASSERT_EQUAL(WATCHDOG_ACTIVE, state);
@@ -154,7 +185,7 @@ void test_watchdog_fault_recovery(void) {
 void test_fault_monitor_initialization(void) {
     SystemError_t result = fault_monitor_init();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
-    
+
     FaultState_t state = fault_monitor_get_state();
     TEST_ASSERT_EQUAL(FAULT_STATE_NORMAL, state);
 }
@@ -162,14 +193,14 @@ void test_fault_monitor_initialization(void) {
 void test_fault_detection_l6470_fault(void) {
     // Simulate L6470 fault pin activation
     MockHAL_SetFaultPinState(true);
-    
+
     // Process fault monitoring
     fault_monitor_process();
-    
+
     // Verify fault was detected
     FaultState_t state = fault_monitor_get_state();
     TEST_ASSERT_EQUAL(FAULT_STATE_L6470_FAULT, state);
-    
+
     // Verify fault is reported as critical
     TEST_ASSERT_TRUE(fault_monitor_is_critical_fault());
 }
@@ -178,11 +209,11 @@ void test_fault_logging(void) {
     // Trigger a fault
     MockHAL_SetFaultPinState(true);
     fault_monitor_process();
-    
+
     // Verify fault was logged
     uint32_t fault_count = fault_monitor_get_fault_count();
     TEST_ASSERT_GREATER_THAN(0, fault_count);
-    
+
     // Verify fault details
     FaultInfo_t fault_info;
     SystemError_t result = fault_monitor_get_last_fault(&fault_info);
@@ -195,14 +226,14 @@ void test_fault_recovery_sequence(void) {
     MockHAL_SetFaultPinState(true);
     fault_monitor_process();
     TEST_ASSERT_EQUAL(FAULT_STATE_L6470_FAULT, fault_monitor_get_state());
-    
+
     // Clear fault condition
     MockHAL_SetFaultPinState(false);
-    
+
     // Attempt recovery
     SystemError_t result = fault_monitor_clear_fault();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
-    
+
     // Verify normal state restored
     FaultState_t state = fault_monitor_get_state();
     TEST_ASSERT_EQUAL(FAULT_STATE_NORMAL, state);
@@ -215,7 +246,7 @@ void test_fault_recovery_sequence(void) {
 void test_safety_system_initialization(void) {
     SystemError_t result = safety_system_init();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
-    
+
     SafetyState_t state = safety_system_get_state();
     TEST_ASSERT_EQUAL(SAFETY_STATE_SAFE, state);
 }
@@ -223,14 +254,14 @@ void test_safety_system_initialization(void) {
 void test_safety_system_emergency_response(void) {
     // Trigger emergency stop
     MockHAL_SetEmergencyStopState(true);
-    
+
     // Process safety system
     safety_system_process();
-    
+
     // Verify safety state transitions to emergency
     SafetyState_t state = safety_system_get_state();
     TEST_ASSERT_EQUAL(SAFETY_STATE_EMERGENCY, state);
-    
+
     // Verify all motors are stopped
     TEST_ASSERT_TRUE(safety_system_are_motors_stopped());
 }
@@ -238,10 +269,10 @@ void test_safety_system_emergency_response(void) {
 void test_safety_system_fault_response(void) {
     // Trigger L6470 fault
     MockHAL_SetFaultPinState(true);
-    
+
     // Process safety system
     safety_system_process();
-    
+
     // Verify safety state transitions to fault
     SafetyState_t state = safety_system_get_state();
     TEST_ASSERT_EQUAL(SAFETY_STATE_FAULT, state);
@@ -250,14 +281,14 @@ void test_safety_system_fault_response(void) {
 void test_safety_system_degraded_operation(void) {
     // Simulate non-critical fault
     safety_system_set_degraded_mode(true);
-    
+
     // Process safety system
     safety_system_process();
-    
+
     // Verify degraded state
     SafetyState_t state = safety_system_get_state();
     TEST_ASSERT_EQUAL(SAFETY_STATE_DEGRADED, state);
-    
+
     // Verify limited operations are allowed
     TEST_ASSERT_FALSE(safety_system_are_motors_stopped());
     TEST_ASSERT_TRUE(safety_system_is_degraded());
@@ -269,26 +300,26 @@ void test_safety_system_degraded_operation(void) {
 
 void test_safety_system_response_time(void) {
     uint32_t start_time = HAL_GetTick();
-    
+
     // Trigger emergency condition
     MockHAL_SetEmergencyStopState(true);
     safety_system_process();
-    
+
     uint32_t response_time = HAL_GetTick() - start_time;
-    
+
     // Verify response time meets safety requirements
     TEST_ASSERT_LESS_THAN(10, response_time); // <10ms for SIL-3
 }
 
 void test_safety_system_periodic_processing(void) {
     uint32_t initial_call_count = MockHAL_GetCallCount();
-    
+
     // Simulate periodic processing for 100ms
     for (int i = 0; i < 10; i++) {
         MockHAL_AdvanceTick(10);
         safety_system_process();
     }
-    
+
     // Verify processing occurred
     uint32_t final_call_count = MockHAL_GetCallCount();
     TEST_ASSERT_GREATER_THAN(initial_call_count, final_call_count);
@@ -300,34 +331,34 @@ void test_safety_system_periodic_processing(void) {
 
 int main(void) {
     UNITY_BEGIN();
-    
+
     // Emergency stop tests
     RUN_TEST(test_emergency_stop_initialization);
     RUN_TEST(test_emergency_stop_activation);
     RUN_TEST(test_emergency_stop_timing_requirement);
     RUN_TEST(test_emergency_stop_reset_sequence);
-    
+
     // Watchdog tests
     RUN_TEST(test_watchdog_initialization);
     RUN_TEST(test_watchdog_refresh_normal_operation);
     RUN_TEST(test_watchdog_timeout_detection);
     RUN_TEST(test_watchdog_fault_recovery);
-    
+
     // Fault monitor tests
     RUN_TEST(test_fault_monitor_initialization);
     RUN_TEST(test_fault_detection_l6470_fault);
     RUN_TEST(test_fault_logging);
     RUN_TEST(test_fault_recovery_sequence);
-    
+
     // Integrated safety system tests
     RUN_TEST(test_safety_system_initialization);
     RUN_TEST(test_safety_system_emergency_response);
     RUN_TEST(test_safety_system_fault_response);
     RUN_TEST(test_safety_system_degraded_operation);
-    
+
     // Performance tests
     RUN_TEST(test_safety_system_response_time);
     RUN_TEST(test_safety_system_periodic_processing);
-    
+
     return UNITY_END();
 }
