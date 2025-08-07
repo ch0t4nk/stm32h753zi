@@ -103,6 +103,20 @@ add_test_if_exists(test_emergency_stop_unity
     ${TEST_MOCKS_DIR}/mock_hal.c
 )
 
+# Phase 1.3 Dynamic Motor Tuning Tests
+add_test_if_exists(test_optimization_telemetry
+    ${TEST_UNIT_DIR}/test_optimization_telemetry.c
+    ${TEST_MOCKS_DIR}/mock_hal_abstraction.c
+    ${CMAKE_SOURCE_DIR}/src/telemetry/optimization_telemetry.c
+)
+
+add_test_if_exists(test_motor_characterization
+    ${TEST_UNIT_DIR}/test_motor_characterization.c
+    ${TEST_MOCKS_DIR}/mock_hal_abstraction.c
+    ${CMAKE_SOURCE_DIR}/src/controllers/motor_characterization.c
+    ${CMAKE_SOURCE_DIR}/src/telemetry/optimization_telemetry.c
+)
+
 # Enable CTest framework
 enable_testing()
 

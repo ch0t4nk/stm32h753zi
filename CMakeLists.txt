@@ -143,11 +143,12 @@ file(GLOB_RECURSE SOURCES
     "src/hal_abstraction/hal_abstraction_stm32h7.c"    # HAL abstraction STM32H7 implementation
     "src/drivers/l6470/*.c"
     "src/drivers/as5600/*.c"     # AS5600 magnetic encoder driver
-    "src/controllers/*.c"        # Motor controller integration layer
+    "src/controllers/*.c"        # Motor controller integration layer + characterization
     "src/safety/*.c"             # Safety systems (emergency stop, watchdog, fault monitoring)
     "src/communication/*.c"      # Communication protocols (UART, CAN)
     "src/application/main_application.c"  # Main application logic (exclude duplicate main.c)
     "src/rtos/*.c"               # RTOS task implementations for Phase 5A
+    "src/telemetry/*.c"          # Optimization telemetry for motor characterization
     # "src/simulation/*.c"         # Motor/encoder simulation framework - TEMPORARILY DISABLED for safety integration
     "drivers/STM32H7xx_HAL_Driver/Src/*.c"
     "drivers/BSP/STM32H7xx_Nucleo/*.c"  # Nucleo board support package
