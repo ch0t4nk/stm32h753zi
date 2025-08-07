@@ -38,7 +38,8 @@
 
 ### ✅ Added - STM32CubeMX Integration
 - **Complete peripheral initialization** for all required peripherals (SPI2, I2C1, I2C2, TIM2, FDCAN1)
-- **CubeMX programmatic configuration generator** (`scripts/cubemx_config_generator.py`)
+### Added
+- **CubeMX programmatic configuration generator** (archived: `archive/development_scripts/cubemx_workflow/cubemx_config_generator.py`)
 - **Pin conflict resolution** automation in Python tooling  
 - **Manual peripheral setup** with proper MSP functions and GPIO configuration
 - **Backup and validation systems** for .ioc file management

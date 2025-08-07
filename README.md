@@ -58,7 +58,7 @@ This project features a **comprehensive documentation integration system**:
 - **Semantic Search Database**: ChromaDB with Ollama mxbai-embed-large embeddings (981 documents)
 - **AI-Powered Understanding**: Real embeddings for context-aware search across STM32H7/L6470/BSP domains
 - **Consolidated Copilot instructions** with domain-based architecture (6 core files, 85% reduction)
-- **Legacy keyword search** archived in `scripts/legacy_archive/` for reference
+- **Legacy keyword search** archived in `archive/development_artifacts/legacy_archive/` for reference
 
 ### Documentation Search Tools
 ```bash

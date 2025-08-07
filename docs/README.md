@@ -111,7 +111,7 @@ Use the production semantic search system for finding specific information:
 /workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "motor control" --scope all
 
 # LEGACY SEARCH (Archived - Available for reference)
-# python3 scripts/legacy_archive/search_enhanced_docs.py [queries...]
+# python3 archive/development_artifacts/legacy_archive/search_enhanced_docs.py [queries...]
 ```
 
 **Search Capabilities**:

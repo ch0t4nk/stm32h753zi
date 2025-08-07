@@ -130,7 +130,7 @@ The `00_reference/` directory contains comprehensive ST official documentation:
 /workspaces/code/.venv/bin/python scripts/stm32_semantic_search.py concept "test" --rebuild
 
 # LEGACY SEARCH (Archived - Available for reference)
-# python3 scripts/legacy_archive/search_enhanced_docs.py [queries...]
+# python3 archive/development_artifacts/legacy_archive/search_enhanced_docs.py [queries...]
 
 # Validate workspace markdown links
 python3 scripts/link_validator.py
@@ -160,7 +160,7 @@ python3 scripts/link_validator.py
 
 **Migration Notes:**
 - **New system**: `scripts/stm32_semantic_search.py` (semantic search with AI embeddings)
-- **Legacy system**: `scripts/legacy_archive/search_enhanced_docs.py` (archived keyword search)
+- **Legacy system**: `archive/development_artifacts/legacy_archive/search_enhanced_docs.py` (archived keyword search)
 - **Performance**: Semantic understanding vs exact keyword matching
 - **Requirements**: ChromaDB + requests packages in virtual environment
 
