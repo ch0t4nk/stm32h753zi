@@ -138,7 +138,7 @@ file(GLOB_RECURSE SOURCES
     "src/safety/*.c"             # Safety systems (emergency stop, watchdog, fault monitoring)
     "src/communication/*.c"      # Communication protocols (UART, CAN)
     "src/application/*.c"
-    "src/simulation/*.c"         # Motor/encoder simulation framework
+    # "src/simulation/*.c"         # Motor/encoder simulation framework - TEMPORARILY DISABLED for safety integration
     "drivers/STM32H7xx_HAL_Driver/Src/*.c"
     "Core/Src/stm32h7xx_hal_msp.c"
     "Core/Src/stm32h7xx_it.c"

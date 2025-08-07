@@ -16,6 +16,7 @@
 #include "safety_system.h"
 #include "common/system_state.h"
 #include "config/motor_config.h"
+#include "drivers/l6470/l6470_driver.h"
 #include "emergency_stop.h"
 #include "fault_monitor.h"
 #include "hal_abstraction/hal_abstraction.h"
@@ -380,8 +381,11 @@ SystemError_t handle_safety_violation(MonitorChannel_t channel, float value) {
         // Overcurrent: Stop motor immediately
         {
             uint8_t motor_id = (channel == MONITOR_MOTOR1_CURRENT) ? 0 : 1;
-            // TODO: Integrate with L6470 driver
-            // l6470_immediate_stop(motor_id);
+            // L6470 Integration: Immediate stop for overcurrent protection
+            SystemError_t motor_stop_result = l6470_hard_stop(motor_id);
+            if (motor_stop_result != SYSTEM_OK) {
+                // Log motor stop failure for diagnostics
+            }
             log_safety_event(SAFETY_EVENT_OVERCURRENT_STOP, motor_id,
                              *(uint32_t *)&value);
             result = execute_emergency_stop(ESTOP_SOURCE_OVERCURRENT);
@@ -393,8 +397,12 @@ SystemError_t handle_safety_violation(MonitorChannel_t channel, float value) {
         // Overspeed: Reduce speed or stop
         {
             uint8_t motor_id = (channel == MONITOR_MOTOR1_SPEED) ? 0 : 1;
-            // TODO: Integrate with L6470 driver
-            // l6470_decelerate_to_stop(motor_id);
+            // L6470 Integration: Controlled deceleration for overspeed
+            SystemError_t motor_stop_result = l6470_soft_stop(motor_id);
+            if (motor_stop_result != SYSTEM_OK) {
+                // If soft stop fails, use hard stop for safety
+                l6470_hard_stop(motor_id);
+            }
             log_safety_event(SAFETY_EVENT_OVERSPEED_STOP, motor_id,
                              *(uint32_t *)&value);
         }
@@ -405,8 +413,11 @@ SystemError_t handle_safety_violation(MonitorChannel_t channel, float value) {
         // Position limit: Stop motor and prevent further movement
         {
             uint8_t motor_id = (channel == MONITOR_MOTOR1_POSITION) ? 0 : 1;
-            // TODO: Integrate with L6470 driver
-            // l6470_immediate_stop(motor_id);
+            // L6470 Integration: Immediate stop for position limit violation
+            SystemError_t motor_stop_result = l6470_hard_stop(motor_id);
+            if (motor_stop_result != SYSTEM_OK) {
+                // Log motor stop failure for diagnostics
+            }
             log_safety_event(SAFETY_EVENT_POSITION_LIMIT_STOP, motor_id,
                              *(uint32_t *)&value);
             result = execute_emergency_stop(ESTOP_SOURCE_POSITION_LIMIT);

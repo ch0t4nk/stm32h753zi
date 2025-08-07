@@ -354,4 +354,20 @@ SystemError_t as5600_get_error_count(uint8_t encoder_id,
 SystemError_t as5600_set_zero_position(uint8_t encoder_id,
                                        float zero_position_deg);
 
+/* ==========================================================================
+ */
+/* Simulation Compatibility Macros                                          */
+/* ==========================================================================
+ */
+
+// Register address compatibility for simulation
+#define AS5600_REG_STATUS CHIP_STATUS_ADDR
+#define AS5600_REG_RAW_ANGLE_H CHIP_RAW_ANGLE_H_ADDR
+#define AS5600_REG_RAW_ANGLE_L CHIP_RAW_ANGLE_L_ADDR
+#define AS5600_REG_ANGLE_H CHIP_ANGLE_H_ADDR
+#define AS5600_REG_ANGLE_L CHIP_ANGLE_L_ADDR
+#define AS5600_REG_AGC CHIP_AGC_ADDR
+#define AS5600_REG_MAGNITUDE_H CHIP_MAGNITUDE_H_ADDR
+#define AS5600_REG_MAGNITUDE_L CHIP_MAGNITUDE_L_ADDR
+
 #endif /* AS5600_DRIVER_H */

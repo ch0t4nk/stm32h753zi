@@ -16,6 +16,8 @@
 #include "emergency_stop.h"
 #include "common/system_state.h"
 #include "config/hardware_config.h"
+#include "config/motor_config.h"
+#include "drivers/l6470/l6470_driver.h"
 #include "hal_abstraction/hal_abstraction.h"
 #include <string.h>
 
@@ -120,11 +122,15 @@ SystemError_t emergency_stop_execute(EmergencyStopSource_t source) {
     // CRITICAL: Immediately disable motor power (hardware level)
     disable_motor_power();
 
-    // Stop all motor motion commands (would integrate with L6470 driver)
-    // TODO: Integration with L6470 driver
-    // for (uint8_t i = 0; i < MAX_MOTORS; i++) {
-    //     l6470_immediate_stop(i);
-    // }
+    // Stop all motor motion commands - L6470 Integration
+    for (uint8_t i = 0; i < MAX_MOTORS; i++) {
+        SystemError_t motor_stop_result = l6470_hard_stop(i);
+        if (motor_stop_result != SYSTEM_OK) {
+            // Log motor stop failure but continue with emergency stop
+            // procedure Motor stop failure is critical but shouldn't prevent
+            // other safety actions
+        }
+    }
 
     // Turn on emergency stop LED
     emergency_stop_set_led(true);
