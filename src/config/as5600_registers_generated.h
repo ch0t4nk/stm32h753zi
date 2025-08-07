@@ -2,7 +2,7 @@
  * @file as5600_registers_generated.h
  * @brief AS5600 Register Definitions - Auto-Generated from Schema
  * @version 1.0
- * @date 2025-08-07 04:42:30
+ * @date 2025-08-07 05:09:26
  *
  * ⚠️  WARNING: AUTO-GENERATED FILE - DO NOT EDIT MANUALLY
  * This file is generated from YAML schema definitions.
