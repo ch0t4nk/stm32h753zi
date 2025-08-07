@@ -58,6 +58,7 @@ This project uses a **streamlined domain-based instruction system** located in `
 ### Supporting Instructions
 - **ssot-config.instructions.md**: Single Source of Truth configuration management principles
 - **status-maintenance.instructions.md**: STATUS.md maintenance rules, format requirements, and context preservation (`STATUS.md`)
+- **feature-management.instructions.md**: Feature creation, management, and tracking guidelines (`features/feature_registry.json,scripts/feature_tracker.py,docs/FEATURE_TRACKING_SYSTEM.md`)
 - **file-organization.instructions.md**: File structure and asset placement guidelines
 
 ### MCSDK Integration Documentation
