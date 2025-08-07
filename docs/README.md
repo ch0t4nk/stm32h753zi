@@ -115,9 +115,9 @@ Use the production semantic search system for finding specific information:
 ```
 
 **Search Capabilities**:
-- **Semantic Database**: ChromaDB with Ollama mxbai-embed-large embeddings (981 documents)
-- **AI-Powered Understanding**: Real embeddings for context-aware search
-- **Multi-Collection Search**: STM32H7/L6470/BSP/project domains
+- **Semantic Database**: ChromaDB with Instructor-XL embeddings (77,938 documents across 10 collections)
+- **AI-Powered Understanding**: GPU-accelerated semantic search with 100% validation success (151.9ms avg)
+- **Multi-Collection Search**: STM32H7/L6470/BSP/project domains with comprehensive coverage
 - **Legacy Indexes**: 32,200+ keywords archived in `docs/indexes/` for reference
 
 ## 📊 System Overview

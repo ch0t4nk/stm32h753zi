@@ -55,8 +55,8 @@ This project features a **comprehensive automation system**:
 - **Smart Process Management**: Filesystem-first git checking, strict timeouts, graceful fallbacks
 - **Performance**: Reduced git response times from 5+ seconds to <1 second
 This project features a **comprehensive documentation integration system**:
-- **Semantic Search Database**: ChromaDB with Ollama mxbai-embed-large embeddings (981 documents)
-- **AI-Powered Understanding**: Real embeddings for context-aware search across STM32H7/L6470/BSP domains
+- **Semantic Search Database**: ChromaDB with Instructor-XL embeddings (77,938 documents across 10 collections)
+- **AI-Powered Understanding**: GPU-accelerated semantic search with 100% validation success rate (151.9ms avg response)
 - **Consolidated Copilot instructions** with domain-based architecture (6 core files, 85% reduction)
 - **Legacy keyword search** archived in `archive/development_artifacts/legacy_archive/` for reference
 

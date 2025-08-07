@@ -137,10 +137,15 @@ python3 scripts/link_validator.py
 ```
 
 **Semantic Search Database (NEW):**
-- `docs/semantic_vector_db/` (981 documents): ChromaDB with Ollama mxbai-embed-large embeddings
-  * `stm32_hal` collection (763 documents): STM32H7 HAL, Nucleo BSP, reference manuals
-  * `motor_control` collection (218 documents): X-CUBE-SPN2 L6470 stepper driver documentation
-  * `safety_systems`, `project_code`, `instruction_guides` collections (future expansion)
+- `docs/semantic_vector_db/` (77,938 documents): ChromaDB with Instructor-XL embeddings across 10 collections
+  * `stm32_hal` collection (55,884 documents): STM32H7 HAL, peripheral drivers, reference manuals
+  * `project_source` collection (15,868 documents): Project source code, headers, implementation files
+  * `build_system` collection (3,006 documents): CMake, build configuration, toolchain setup
+  * `motor_control` collection (1,311 documents): X-CUBE-SPN2 L6470 stepper driver documentation
+  * `documentation` collection (1,062 documents): Project documentation, reports, design documents
+  * `instructions` collection (643 documents): Development instruction files and guidelines
+  * `scripts` collection (113 documents): Automation scripts, tools, utilities
+  * `validation`, `config`, `apis` collections: Testing, configuration, and API definitions
 
 **Legacy Search Indexes (Archived):**
 - `docs/indexes/STM32H7_FULL_INDEX.json` (8.9MB): Complete STM32H7 searchable index with 31,772 keywords
@@ -150,13 +155,13 @@ python3 scripts/link_validator.py
 - `docs/indexes/STM32H7_COPILOT_INDEX.json` (9.9KB): Programmatic access format
 
 **Semantic Search Capabilities (NEW):**
-- **AI-Powered Understanding**: Uses real Ollama embeddings for context-aware search
+- **AI-Powered Understanding**: Uses Instructor-XL embeddings for context-aware search
 - **Intelligent Chunking**: Smart document segmentation with STM32-specific parsing
 - **Multi-Collection Search**: Targeted search across STM32H7/L6470/BSP/project domains
 - **Scope filtering**: Target specific documentation sets (STM32H7/L6470/NUCLEO_BSP/all)
-- **Real embeddings**: 1024-dimensional vectors from Ollama mxbai-embed-large model
-- **Production ready**: Processes 981 documents from real workspace (27 source files)
-- **GPU Acceleration**: CUDA 12.1 support with automatic GPU detection
+- **Real embeddings**: 768-dimensional vectors from Instructor-XL model
+- **Production ready**: Processes 77,938 documents across 10 collections (1.53GB database)
+- **GPU Acceleration**: RTX 4080 SUPER with 100% validation success rate (151.9ms avg response)
 
 **Migration Notes:**
 - **New system**: `scripts/stm32_semantic_search.py` (semantic search with AI embeddings)

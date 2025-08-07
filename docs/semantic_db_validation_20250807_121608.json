@@ -1,0 +1,449 @@
+{
+  "validation_timestamp": "2025-08-07T12:15:47.703863",
+  "database_stats": {
+    "timestamp": "2025-08-07T12:15:47.703893",
+    "collections": {
+      "instruction_guides": {
+        "document_count": 643,
+        "description": "Modernized development instructions and coding guidelines",
+        "status": "active"
+      },
+      "project_source": {
+        "document_count": 15868,
+        "description": "Production source code: HAL abstraction, drivers, controllers, safety",
+        "status": "active"
+      },
+      "workspace_config": {
+        "document_count": 8,
+        "description": "VS Code configuration, dev container, workspace settings",
+        "status": "active"
+      },
+      "motor_control": {
+        "document_count": 1311,
+        "description": "L6470 stepper driver, X-CUBE-SPN2 documentation",
+        "status": "active"
+      },
+      "api_specifications": {
+        "document_count": 3,
+        "description": "REST API, CAN protocol, interface specifications",
+        "status": "active"
+      },
+      "validation_programs": {
+        "document_count": 40,
+        "description": "Phase 4A/4B/4C validation executables and test reports",
+        "status": "active"
+      },
+      "build_system": {
+        "document_count": 3006,
+        "description": "CMake configuration, build scripts, toolchain setup",
+        "status": "active"
+      },
+      "automation_scripts": {
+        "document_count": 113,
+        "description": "Python automation, build scripts, validation tools",
+        "status": "active"
+      },
+      "project_documentation": {
+        "document_count": 1062,
+        "description": "Analysis reports, design docs, completion reports",
+        "status": "active"
+      },
+      "stm32_hal": {
+        "document_count": 55884,
+        "description": "STM32H7 HAL, Nucleo BSP, reference documentation",
+        "status": "active"
+      }
+    },
+    "total_documents": 77938,
+    "database_size_mb": 1530.877052307129
+  },
+  "search_tests": {
+    "stm32_hal": {
+      "GPIO pin configuration": {
+        "response_time_ms": 3989.6116256713867,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "## Overview\n\nGPIO pin available on the platform.\n"
+        ]
+      },
+      "HAL_GPIO_Init function": {
+        "response_time_ms": 74.19872283935547,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "### HAL_GPIO_Init\n**Parameters:**\n| Parameter | Description |\n|-----------|-------------|\n| GPIOx | where x can be (A..K) to select the GPIO peripheral |\n| GPIO_Init | pointer to a GPIO_InitTypeDef structure |\n\n**Return Values:**\n| Parameter | Description |\n|-----------|-------------|\n| None |  |\n```\n"
+        ]
+      },
+      "SPI master setup": {
+        "response_time_ms": 55.29451370239258,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "##  Defines  \n  \n---  \n\\#define | [LL\\_SPI\\_MODE\\_MASTER](group__SPI__LL__EC__MODE.md#gacae9e52c17a514c98ad870b0037e72eb) \\(SPI\\_CFG2\\_MASTER\\)  \n\\#define | [LL\\_SPI\\_MODE\\_SLAVE](group__SPI__LL__EC__MODE.md#gaf90928e0a3915633dc3b6ffbd680f615) \\(0x00000000UL\\)  \n  \n* * *\n\n## Define Documentation"
+        ]
+      },
+      "UART communication": {
+        "response_time_ms": 87.23568916320801,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "## Overview\n\nUART Transmit/Receive functions. More...\n"
+        ]
+      },
+      "Timer PWM configuration": {
+        "response_time_ms": 63.59529495239258,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "## Overview\n\nTimer Complementary PWM functions. More...\n"
+        ]
+      }
+    },
+    "motor_control": {
+      "L6470 stepper driver": {
+        "response_time_ms": 46.36573791503906,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "## Overview\n\nTools to manage the L6470 Stepper Motor Driver. More...\n"
+        ]
+      },
+      "motor position control": {
+        "response_time_ms": 63.429832458496094,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "### enum eL6470_AppCmdId_t\n\nThe L6470 Application Commands Identifiers.\n\nEnumerator  \n---  \nL6470\\_NOP\\_ID |  Nothing.   \nL6470\\_SETPARAM\\_ID |  Writes VALUE in PARAM register.   \nL6470\\_GETPARAM\\_ID |  Returns the stored value in PARAM register.   \nL6470\\_RUN\\_ID |  Sets the target speed and the motor direction.   \nL6470\\_STEPCLOCK\\_ID |  Puts the device into Step-clock mode and imposes DIR direction.   \nL6470\\_MOVE\\_ID |  Makes N\\_STEP \\(micro\\)steps in DIR direction \\(Not performable when motor is running\\)   \nL6470\\_GOTO\\_ID |  Brings motor into ABS\\_POS position \\(minimum path\\)   \nL6470\\_GOTODIR\\_ID |  Brings motor into ABS\\_POS position forcing DIR direction.   \nL6470\\_GOUNTIL\\_ID |  Performs a motion in DIR direction with speed SPD until SW is closed, the ACT action is executed then a SoftStop takes place.   \nL6470\\_RELEASESW\\_ID |  Performs a motion in DIR direction at minimum speed until the SW is released \\(open\\), the ACT action is executed then a HardStop takes place.   \nL6470\\_GOHOME\\_ID |  Brings the motor into HOME position.   \nL6470\\_GOMARK\\_ID |  Brings the motor into MARK position.   \nL6470\\_RESETPOS\\_ID |  Resets the ABS\\_POS register \\(set HOME position\\)   \nL6470\\_RESETDEVICE\\_ID |  Device is reset to power-up conditions.   \nL6470\\_SOFTSTOP\\_ID |  Stops motor with a deceleration phase.   \nL6470\\_HARDSTOP\\_ID |  Stops motor immediately.   \nL6470\\_SOFTHIZ\\_ID |  Puts the bridges into high impedance status after a deceleration phase.   \nL6470\\_HARDHIZ\\_ID |  Puts the bridges into high impedance status immediately.   \nL6470\\_GETSTATUS\\_ID |  Returns the STATUS register value.   \n  \nDefinition at line [100](microstepping__motor_8h_source.md#l00100) of file [microstepping\\_motor.h](microstepping__motor_8h_source.md).\n"
+        ]
+      },
+      "stepper acceleration": {
+        "response_time_ms": 39.69740867614746,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "### \\- a -\n\n  * ACCELERATION\\_F : [microstepping\\_motor.h](group___stepper_motor_exported_types.md#gga1d34c803d141791b967a2f81146419efadd7458172d406fe2183eb5987a2f521f)\n\n\n"
+        ]
+      },
+      "L6470_SetParam": {
+        "response_time_ms": 79.40316200256348,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "### eL6470_RegId_t L6470_RegId, uint32_t Value\n\nSetParam command sets the register value equal to a new value.\n\n**Parameters:**\n\n| Parameter | Description |\n|-----------|-------------|\n| L6470_RegId | The identifier of the L6470 register to be addressed. |\n| Value | The new value. |\n\n\nParameters\n     L6470\\_Id| The identifier of the L6470 target inside the daisy chain.   \n---|---  \nL6470\\_RegId| The identifier of the L6470 register to be addressed.   \nValue| The new value.   \n  \nDefinition at line [839](_l6470_8c_source.md#l00839) of file [L6470.c](_l6470_8c_source.md).\n"
+        ]
+      },
+      "microstepping mode": {
+        "response_time_ms": 43.00689697265625,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "### \\- c -\n\n  * CONSTANTSPEED\\_F : [microstepping\\_motor.h](group___stepper_motor_exported_types.md#gga1d34c803d141791b967a2f81146419efa3d0d4b16c28b012f9775dce01ffe73a3)"
+        ]
+      }
+    },
+    "project_source": {
+      "HAL abstraction layer": {
+        "response_time_ms": 56.84065818786621,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "#endif\n\n#endif /* HAL_ABSTRACTION_H */\n"
+        ]
+      },
+      "error handling": {
+        "response_time_ms": 49.072265625,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "\n/**\n * @brief Error Handler\n * @note Follows safety-systems.instructions.md with integrated emergency stop\n */\nvoid Error_Handler(void) {\n    /* Critical error - attempt emergency stop if possible */\n    if (main_application_is_initialized()) {\n        main_application_emergency_stop();\n    }\n\n    /* TODO: Implement complete safety shutdown following safety_config.h */\n    __disable_irq();\n    while (1) {\n        /* Emergency stop - all motors halt, system in safe state */\n    }\n}"
+        ]
+      },
+      "motor controller": {
+        "response_time_ms": 90.13080596923828,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "        state->current_position_deg; // Set target to current position\n\n    return SYSTEM_OK;\n}\n\n/**\n * @brief Disable motor control\n * @param motor_id Motor identifier\n * @return System error code\n */\nSystemError_t motor_controller_disable_motor(uint8_t motor_id) {\n    SystemError_t result = motor_controller_validate_motor_id(motor_id);\n    if (result != SYSTEM_OK) {\n        return result;\n    }\n\n    // Stop motor and set to high impedance\n    result = l6470_hard_hiz(motor_id);\n    if (result != SYSTEM_OK) {\n        return result;\n    }\n\n    MotorControlState_t *state = &motor_control_state[motor_id];\n    state->enabled = false;\n    state->state = MOTOR_STATE_IDLE;\n\n    return SYSTEM_OK;\n}"
+        ]
+      },
+      "safety systems": {
+        "response_time_ms": 59.363365173339844,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "#endif\n\n#endif /* SAFETY_SYSTEM_H */\n"
+        ]
+      },
+      "peripheral drivers": {
+        "response_time_ms": 66.55168533325195,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "/**\n  ******************************************************************************\n  * @file    stm32h7xx_ll_bus.h\n  * @author  MCD Application Team\n  * @brief   Header file of BUS LL module.\n\n  @verbatim\n                      ##### RCC Limitations #####\n  ==============================================================================\n    [..]\n      A delay between an RCC peripheral clock enable and the effective peripheral\n      enabling should be taken into account in order to manage the peripheral read/write\n      from/to registers.\n      (+) This delay depends on the peripheral mapping.\n        (++) AHB & APB peripherals, 1 dummy read is necessary\n\n    [..]\n      Workarounds:\n      (#) For AHB & APB peripherals, a dummy read to the peripheral register has been\n          inserted in each LL_{BUS}_GRP{x}_EnableClock() function.\n\n  @endverbatim\n  ******************************************************************************\n  * @attention\n  *\n  * Copyright (c) 2017 STMicroelectronics.\n  * All rights reserved.\n  *\n  * This software is licensed under terms that can be found in the LICENSE file in\n  * the root directory of this software component.\n  * If no LICENSE file comes with this software, it is provided AS-IS.\n  ******************************************************************************\n  */\n\n/* Define to prevent recursive inclusion -------------------------------------*/\n#ifndef STM32H7xx_LL_BUS_H\n#define STM32H7xx_LL_BUS_H\n\n#ifdef __cplusplus\nextern \"C\" {\n#endif\n\n/* Includes ------------------------------------------------------------------*/\n#include \"stm32h7xx.h\"\n\n/** @addtogroup STM32H7xx_LL_Driver\n  * @{\n  */\n\n#if defined(RCC)"
+        ]
+      }
+    },
+    "instruction_guides": {
+      "coding guidelines": {
+        "response_time_ms": 47.00613021850586,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "## Code Generation Rules\n"
+        ]
+      },
+      "SSOT configuration": {
+        "response_time_ms": 45.40061950683594,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "# SSOT Configuration Management Instructions\n"
+        ]
+      },
+      "build system": {
+        "response_time_ms": 47.52326011657715,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "## Build System Components\n"
+        ]
+      },
+      "development workflow": {
+        "response_time_ms": 65.15693664550781,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "## \ud83d\ude80 Integration with Development Workflow\n"
+        ]
+      },
+      "architecture patterns": {
+        "response_time_ms": 43.27535629272461,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "## Task Architecture Design\n"
+        ]
+      }
+    },
+    "project_documentation": {
+      "project analysis": {
+        "response_time_ms": 77.33631134033203,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "## \ud83c\udfc6 PROJECT ACHIEVEMENTS\n"
+        ]
+      },
+      "completion report": {
+        "response_time_ms": 62.57295608520508,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "## \ud83c\udfc6 PROJECT ACHIEVEMENTS\n"
+        ]
+      },
+      "technical documentation": {
+        "response_time_ms": 59.77606773376465,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "## \ud83d\udcda COMPREHENSIVE DOCUMENTATION\n"
+        ]
+      },
+      "design decisions": {
+        "response_time_ms": 111.16266250610352,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "## \ud83d\udd27 Technical Considerations\n"
+        ]
+      },
+      "system architecture": {
+        "response_time_ms": 74.01323318481445,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "## System Architecture\n"
+        ]
+      }
+    },
+    "build_system": {
+      "CMake configuration": {
+        "response_time_ms": 39.298295974731445,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "# CMAKE_CONFIGURATION_TYPES defined (but note that it can be defined if set by\n"
+        ]
+      },
+      "compiler settings": {
+        "response_time_ms": 81.19487762451172,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "# Some default GCC settings\n"
+        ]
+      },
+      "toolchain setup": {
+        "response_time_ms": 40.02070426940918,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "# STARM_TOOLCHAIN_CONFIG allows you to choose the toolchain configuration.\n"
+        ]
+      },
+      "build targets": {
+        "response_time_ms": 66.18666648864746,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "#      targets.\n"
+        ]
+      },
+      "linker script": {
+        "response_time_ms": 94.53177452087402,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "# and linker commands needed.\n"
+        ]
+      }
+    },
+    "automation_scripts": {
+      "build automation": {
+        "response_time_ms": 48.40254783630371,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "# Check build tools\necho \"\ud83d\udccb Build Tools:\"\ncheck_command \"cmake\" \"cmake\" || EXIT_CODE=1\ncheck_command \"ninja\" \"ninja-build\" || EXIT_CODE=1\ncheck_command \"make\" \"build-essential\" || EXIT_CODE=1\n\necho \"\"\n"
+        ]
+      },
+      "validation tools": {
+        "response_time_ms": 97.56946563720703,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "# - Configuration value range validation\n"
+        ]
+      },
+      "semantic search": {
+        "response_time_ms": 45.1960563659668,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "# Import our semantic search modules\n"
+        ]
+      },
+      "status update": {
+        "response_time_ms": 105.68547248840332,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "# Check if required model is available\necho \"\ud83d\udce5 Checking for mxbai-embed-large model...\"\nif ! ollama list | grep -q \"mxbai-embed-large\"; then\n    echo \"\u2b07\ufe0f  Downloading mxbai-embed-large model (this may take a few minutes)...\"\n    ollama pull mxbai-embed-large\n    echo \"\u2705 Model downloaded successfully\"\nelse\n    echo \"\u2705 mxbai-embed-large model already available\"\nfi\n"
+        ]
+      },
+      "Python scripts": {
+        "response_time_ms": 95.8414077758789,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "# This file makes the scripts directory a Python package\n\n"
+        ]
+      }
+    },
+    "api_specifications": {
+      "REST API": {
+        "response_time_ms": 80.54184913635254,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "# TODO: See .github/instructions/comm-protocols.instructions.md for API design guidance\n"
+        ]
+      },
+      "CAN protocol": {
+        "response_time_ms": 44.127464294433594,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "can_api:\n  version: 1.0.0\n  title: \"STM32H753ZI Motor Control CAN API\"\n  description: \"Production-ready CAN bus communication interface for dual stepper motor control system\"\n\n  system_info:\n    platform: \"STM32H753ZI Nucleo-144\"\n    shield: \"X-NUCLEO-IHM02A1\"\n    motors: \"Dual L6470 stepper drivers\"\n    encoders: \"AS5600 magnetic encoders\"\n    status: \"PRODUCTION READY\"\n\n  frames:\n    - id: 0x01\n      name: MotorControl\n      description: \"Control stepper motors with position/velocity commands\"\n      data_length: 8\n      frequency: \"10Hz typical, 100Hz max\"\n\n    - id: 0x02\n      name: EncoderRead\n      description: \"Read absolute position from AS5600 encoders\"\n      data_length: 4\n      frequency: \"Real-time on request\"\n\n    - id: 0x03\n      name: SafetyStatus\n      description: \"Emergency stop and fault reporting\"\n      data_length: 2\n      frequency: \"Immediate on fault\"\n\n    - id: 0x04\n      name: SystemHealth\n      description: \"Periodic system health and diagnostics\"\n      data_length: 6\n      frequency: \"1Hz continuous\"\n\n  documentation:\n    reference: \"See .github/instructions/comms.instructions.md for CAN protocol details\"\n    api_spec: \"api/openapi.yaml\"\n    safety_guide: \".github/instructions/safety-rt.instructions.md\"\n"
+        ]
+      },
+      "interface definition": {
+        "response_time_ms": 73.46701622009277,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "# TODO: See .github/instructions/comm-protocols.instructions.md for API design guidance\n"
+        ]
+      },
+      "API endpoints": {
+        "response_time_ms": 38.80453109741211,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "# TODO: See .github/instructions/comm-protocols.instructions.md for API design guidance\n"
+        ]
+      },
+      "protocol specification": {
+        "response_time_ms": 98.63066673278809,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "# TODO: See .github/instructions/comm-protocols.instructions.md for API design guidance\n"
+        ]
+      }
+    },
+    "workspace_config": {
+      "VS Code settings": {
+        "response_time_ms": 71.39301300048828,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "{\n    // STM32H753ZI Workspace-Specific Settings\n    \"C_Cpp.default.defines\": [\n        \"STM32H753xx\",\n        \"USE_HAL_DRIVER\",\n        \"ARM_MATH_CM7\",\n        \"HSE_VALUE=25000000\",\n        \"STM32H753ZI\",\n        \"NUCLEO_H753ZI\",\n        \"X_NUCLEO_IHM02A1\"\n    ],\n    \"C_Cpp.default.includePath\": [\n        \"${workspaceFolder}/src/**\",\n        \"${workspaceFolder}/src/config\",\n        \"${workspaceFolder}/src/common\",\n        \"${workspaceFolder}/00_reference/**\",\n        \"${workspaceFolder}/00_reference/STM32Cube_FW_H7_V1.12.0/Drivers/STM32H7xx_HAL_Driver/Inc\",\n        \"${workspaceFolder}/00_reference/STM32Cube_FW_H7_V1.12.0/Drivers/CMSIS/Device/ST/STM32H7xx/Include\",\n        \"${workspaceFolder}/00_reference/STM32Cube_FW_H7_V1.12.0/Drivers/CMSIS/Include\"\n    ],\n    \"C_Cpp.default.compilerPath\": \"/usr/bin/arm-none-eabi-gcc\",\n    \"C_Cpp.default.intelliSenseMode\": \"gcc-arm\",\n    \"C_Cpp.default.cStandard\": \"c11\",\n    \"C_Cpp.default.cppStandard\": \"c++17\",\n    \"C_Cpp.workspaceParsingPriority\": \"high\",\n    \"C_Cpp.enhancedColorization\": \"enabled\",\n    \"C_Cpp.errorSquiggles\": \"enabled\",\n    // Performance optimizations for large workspace\n    \"C_Cpp.intelliSenseEngine\": \"default\",\n    \"C_Cpp.intelliSenseEngineFallback\": \"enabled\",\n    \"C_Cpp.workspaceSymbols\": \"Just My Code\",\n    \"C_Cpp.exclusionPolicy\": \"checkFolders\",\n    \"C_Cpp.files.exclude\": {\n        \"00_reference/CMSIS_docs/**\": true,\n        \"00_reference/ST_Assets/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Projects/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Utilities/**\": true,\n        \"**/node_modules\": true,\n        \"**/.git\": true,\n        \"**/.DS_Store\": true,\n        \"**/Thumbs.db\": true\n    },\n    \"C_Cpp.clang_format_style\": \"{ BasedOnStyle: LLVM, IndentWidth: 4, TabWidth: 4, UseTab: Never, ColumnLimit: 79, AllowShortFunctionsOnASingleLine: None }\",\n    \"editor.formatOnSave\": true,\n    // File associations for this workspace\n    \"files.associations\": {\n        \"*.h\": \"c\",\n        \"*.c\": \"c\",\n        \"*.inc\": \"c\"\n    },\n    // Cortex-Debug configuration for this workspace\n    \"cortex-debug.openocdPath\": \"/usr/bin/openocd\",\n    \"cortex-debug.armToolchainPath\": \"/usr/bin\",\n    \"cortex-debug.gdbPath\": \"/usr/bin/gdb-multiarch\",\n    \"cortex-debug.registerUseNaturalFormat\": false,\n    \"cortex-debug.variableUseNaturalFormat\": false,\n    \"cortex-debug.showRTOS\": true,\n    // STM32 extension configuration for this workspace\n    \"stm32-for-vscode.openOCDPath\": \"/usr/bin/openocd\",\n    \"stm32-for-vscode.armToolchainPath\": \"/usr/bin\",\n    // STM32Cube extension configuration\n    \"stm32cube.cubeMXPath\": \"C:\\\\STMicroelectronics\\\\STM32Cube\\\\STM32CubeMX\\\\STM32CubeMX.exe\",\n    \"stm32cube.openocdPath\": \"/usr/bin/openocd\",\n    \"stm32cube.cubeIDELauncherPath\": \"\",\n    \"stm32cube.svdPath\": \"${workspaceFolder}/00_reference/ST_Assets/stm32h7-svd_2.8\",\n    \"stm32cube.targetConfigurations\": [\n        {\n            \"name\": \"STM32H753ZI\",\n            \"device\": \"STM32H753ZI\",\n            \"board\": \"NUCLEO-H753ZI\",\n            \"svdFile\": \"${workspaceFolder}/00_reference/ST_Assets/stm32h7-svd_2.8/STM32H753.svd\"\n        }\n    ],\n    // Python configuration for this workspace\n    \"python.defaultInterpreterPath\": \"${workspaceFolder}/.venv/bin/python\",\n    \"python.terminal.activateEnvironment\": true,\n    \"python.terminal.activateEnvInCurrentTerminal\": true,\n    \"python.analysis.extraPaths\": [\n        \"${workspaceFolder}/scripts\",\n        \"${workspaceFolder}/.venv/lib/python3.10/site-packages\"\n    ],\n    \"python.envFile\": \"${workspaceFolder}/.env\",\n    // Doxygen configuration for this workspace\n    \"doxygen.generic.commentPrefix\": \"///\",\n    \"doxygen.file.fileTemplate\": \"@file {name}\\\\n@brief STM32H753ZI Project - {cursor}\\\\n@author STM32H753ZI Project Team\\\\n@date {date}\\\\n\",\n    // Git configuration for this workspace\n    \"git.repositoryScanMaxDepth\": 1,\n    \"git.enableSmartCommit\": true,\n    \"git.confirmSync\": false,\n    // Performance settings\n    \"typescript.surveys.enabled\": false,\n    \"extensions.autoCheckUpdates\": false,\n    \"extensions.autoUpdate\": false,\n    // Terminal configuration for this workspace\n    \"terminal.integrated.cwd\": \"${workspaceFolder}\",\n    \"terminal.integrated.env.linux\": {\n        \"VIRTUAL_ENV\": \"${workspaceFolder}/.venv\",\n        \"PATH\": \"${workspaceFolder}/.venv/bin:${env:PATH}\"\n    },\n    \"terminal.integrated.defaultProfile.linux\": \"bash\",\n    \"terminal.integrated.profiles.linux\": {\n        \"bash\": {\n            \"path\": \"bash\",\n            \"args\": [\n                \"-c\",\n                \"source ${workspaceFolder}/.venv/bin/activate 2>/dev/null && exec bash || exec bash\"\n            ]\n        }\n    },\n    // CMake configuration for this workspace\n    \"cmake.buildDirectory\": \"${workspaceFolder}/build\",\n    \"cmake.sourceDirectory\": \"${workspaceFolder}\",\n    \"cmake.generator\": \"Ninja\",\n    \"cmake.configureOnOpen\": false,\n    \"cmake.configureOnEdit\": false,\n    \"cmake.defaultVariants\": {\n        \"buildType\": {\n            \"default\": \"Debug\",\n            \"description\": \"The build type\"\n        }\n    },\n    \"cmake.ctestDefaultArgs\": [\n        \"--output-on-failure\"\n    ],\n    \"C_Cpp.default.configurationProvider\": \"ms-vscode.cmake-tools\",\n    // Workspace performance optimizations\n    \"files.exclude\": {\n        \"00_reference/CMSIS_docs/**\": true,\n        \"00_reference/ST_Assets/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Projects/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Utilities/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Middlewares/**\": true,\n        \"**/node_modules\": true,\n        \"**/.git\": true,\n        \"**/.DS_Store\": true,\n        \"**/Thumbs.db\": true,\n        \"build/**\": true,\n        \"**/*.o\": true,\n        \"**/*.elf\": true,\n        \"**/*.map\": true,\n        \"**/*.lst\": true\n    },\n    \"search.exclude\": {\n        \"00_reference/CMSIS_docs/**\": true,\n        \"00_reference/ST_Assets/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Projects/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Utilities/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Middlewares/**\": true,\n        \"build/**\": true,\n        \"docs/semantic_vector_db/**\": true\n    },\n    \"files.watcherExclude\": {\n        \"00_reference/**\": true,\n        \"build/**\": true,\n        \"docs/semantic_vector_db/**\": true,\n        \"**/node_modules/**\": true,\n        \"**/.git/**\": true\n    },\n    // Todo Tree configuration for STM32 project\n    \"todo-tree.regex.regex\": \"((//|#|<!--|;|/\\\\*|^)\\\\s*($TAGS)|^\\\\s*- \\\\[ \\\\])\",\n    \"todo-tree.general.tags\": [\n        \"TODO\",\n        \"FIXME\",\n        \"BUG\",\n        \"HACK\",\n        \"XXX\",\n        \"NOTE\",\n        \"INFO\"\n    ],\n    \"todo-tree.highlights.defaultHighlight\": {\n        \"foreground\": \"#FFFFFF\",\n        \"background\": \"#FFA500\",\n        \"icon\": \"alert\",\n        \"rulerColour\": \"#FFA500\",\n        \"type\": \"tag\"\n    },\n    // Code Spell Checker configuration for embedded project\n    \"cSpell.words\": [\n        \"STM32H753ZI\",\n        \"STM32H753xx\",\n        \"NUCLEO\",\n        \"IHM02A1\",\n        \"L6470\",\n        \"AS5600\",\n        \"HAL\",\n        \"GPIO\",\n        \"SPI\",\n        \"I2C\",\n        \"UART\",\n        \"CAN\",\n        \"FD\",\n        \"DMA\",\n        \"NVIC\",\n        \"RCC\",\n        \"CMSIS\",\n        \"dSPIN\",\n        \"microstepping\",\n        \"stepper\",\n        \"encoder\",\n        \"magnetic\",\n        \"Cortex\",\n        \"OpenOCD\",\n        \"STLink\",\n        \"GDB\",\n        \"SVD\",\n        \"SSOT\",\n        \"watchdog\",\n        \"MCU\",\n        \"PHY\",\n        \"LAN8742\",\n        \"Ethernet\",\n        \"LwIP\",\n        \"FreeRTOS\",\n        \"ITM\",\n        \"SWO\",\n        // STM32CubeMX and peripheral terms\n        \"FDCAN\",\n        \"EXTI\",\n        \"LPTIM\",\n        \"LPUART\",\n        \"LTDC\",\n        \"QSPI\",\n        \"SDMMC\",\n        \"SPDIFRX\",\n        \"SWPMI\",\n        \"HRTIM\",\n        \"DFSDM\",\n        \"DFSDMAC\",\n        \"SYSCLK\",\n        \"HCLK\",\n        \"PLLCLK\",\n        \"PLLSOURCE\",\n        \"SYSCLKSOURCE\",\n        \"PLLFRACN\",\n        \"HPRE\",\n        \"PPRE\",\n        \"CPRE\",\n        \"CKPER\",\n        \"DIVM\",\n        \"DIVN\",\n        \"DIVP\",\n        \"DIVQ\",\n        \"DIVR\",\n        \"MEMORYMAP\",\n        \"LQFP\",\n        \"Systick\",\n        \"PRIORITYGROUP\",\n        \"Xplorer\",\n        \"pinconfig\",\n        \"functionlistsort\",\n        \"MSP\",\n        \"BSP\",\n        // STM32 technical terms\n        \"DATASIZE\",\n        \"BAUDRATEPRESCALER\",\n        \"FIRSTBIT\",\n        \"TIMODE\",\n        \"CRCCALCULATION\",\n        \"NSSP\",\n        \"INTERDATA\",\n        \"Susp\",\n        \"AUTOSUSP\",\n        \"MOSI\",\n        \"MISO\",\n        \"PULLUP\",\n        \"ANALOGFILTER\",\n        \"CLOCKSOURCE\",\n        \"COUNTERMODE\",\n        \"CLOCKDIVISION\",\n        \"CPHA\",\n        \"CPOL\",\n        \"kbps\",\n        \"Mbps\"\n    ],\n    \"cSpell.customDictionaries\": {\n        \"stm32-project-dictionary\": {\n            \"name\": \"STM32 Project Dictionary\",\n            \"path\": \"${workspaceFolder}/.vscode/cspell.txt\",\n            \"addWords\": true,\n            \"scope\": \"workspace\"\n        }\n    },\n    \"cSpell.ignorePaths\": [\n        \"build/**\",\n        \"00_reference/**\",\n        \"**/*.ioc\"\n    ],\n    \"cSpell.enabledFileTypes\": {\n        \"c\": true,\n        \"cpp\": true,\n        \"h\": true,\n        \"hpp\": true,\n        \"cmake\": true,\n        \"markdown\": true,\n        \"yaml\": true,\n        \"json\": true\n    },\n    // Python configuration enhancements (uses pyproject.toml for formatting settings)\n    \"python.linting.enabled\": true,\n    \"python.linting.flake8Enabled\": true,\n    \"python.linting.pylintEnabled\": true,\n    \"python.linting.flake8Args\": [\n        \"--config=${workspaceFolder}/.flake8\"\n    ],\n    \"python.linting.pylintArgs\": [\n        \"--rcfile=${workspaceFolder}/.pylintrc\"\n    ],\n    \"python.formatting.provider\": \"black\",\n    // Makefile Tools configuration\n    \"makefile.extensionOutputFolder\": \"./.vscode\",\n    \"makefile.configureOnOpen\": false,\n    // Markdown configuration\n    \"markdown.extension.toc.updateOnSave\": true,\n    \"markdown.extension.preview.autoShowPreviewToSide\": false,\n    // CMake path configuration - use standard cmake in container\n    \"cmake.cmakePath\": \"/usr/bin/cmake\",\n    \"cmake.configureArgs\": [\n        \"-DCMAKE_TOOLCHAIN_FILE=${workspaceFolder}/cmake/arm-none-eabi-gcc.cmake\"\n    ]\n}"
+        ]
+      },
+      "development environment": {
+        "response_time_ms": 52.65402793884277,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "[\n  {\n    \"name\": \"ARM GCC for STM32H753ZI\",\n    \"description\": \"ARM Embedded GCC toolchain for STM32H7 development\",\n    \"compilers\": {\n      \"C\": \"/usr/bin/arm-none-eabi-gcc\",\n      \"CXX\": \"/usr/bin/arm-none-eabi-g++\"\n    },\n    \"toolchainFile\": \"/workspaces/code/cmake/arm-none-eabi-gcc.cmake\",\n    \"preferredGenerator\": {\n      \"name\": \"Ninja\"\n    },\n    \"environmentVariables\": {\n      \"CMAKE_BUILD_TYPE\": \"Debug\",\n      \"ARM_TOOLCHAIN_DIR\": \"/usr/bin\"\n    }\n  },\n  {\n    \"name\": \"ARM GCC Release\",\n    \"description\": \"ARM Embedded GCC toolchain for STM32H7 (Release build)\",\n    \"compilers\": {\n      \"C\": \"/usr/bin/arm-none-eabi-gcc\",\n      \"CXX\": \"/usr/bin/arm-none-eabi-g++\"\n    },\n    \"toolchainFile\": \"/workspaces/code/cmake/arm-none-eabi-gcc.cmake\",\n    \"preferredGenerator\": {\n      \"name\": \"Ninja\"\n    },\n    \"environmentVariables\": {\n      \"CMAKE_BUILD_TYPE\": \"Release\",\n      \"ARM_TOOLCHAIN_DIR\": \"/usr/bin\"\n    }\n  }\n]"
+        ]
+      },
+      "workspace configuration": {
+        "response_time_ms": 76.89857482910156,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "{\n    // STM32H753ZI Workspace-Specific Settings\n    \"C_Cpp.default.defines\": [\n        \"STM32H753xx\",\n        \"USE_HAL_DRIVER\",\n        \"ARM_MATH_CM7\",\n        \"HSE_VALUE=25000000\",\n        \"STM32H753ZI\",\n        \"NUCLEO_H753ZI\",\n        \"X_NUCLEO_IHM02A1\"\n    ],\n    \"C_Cpp.default.includePath\": [\n        \"${workspaceFolder}/src/**\",\n        \"${workspaceFolder}/src/config\",\n        \"${workspaceFolder}/src/common\",\n        \"${workspaceFolder}/00_reference/**\",\n        \"${workspaceFolder}/00_reference/STM32Cube_FW_H7_V1.12.0/Drivers/STM32H7xx_HAL_Driver/Inc\",\n        \"${workspaceFolder}/00_reference/STM32Cube_FW_H7_V1.12.0/Drivers/CMSIS/Device/ST/STM32H7xx/Include\",\n        \"${workspaceFolder}/00_reference/STM32Cube_FW_H7_V1.12.0/Drivers/CMSIS/Include\"\n    ],\n    \"C_Cpp.default.compilerPath\": \"/usr/bin/arm-none-eabi-gcc\",\n    \"C_Cpp.default.intelliSenseMode\": \"gcc-arm\",\n    \"C_Cpp.default.cStandard\": \"c11\",\n    \"C_Cpp.default.cppStandard\": \"c++17\",\n    \"C_Cpp.workspaceParsingPriority\": \"high\",\n    \"C_Cpp.enhancedColorization\": \"enabled\",\n    \"C_Cpp.errorSquiggles\": \"enabled\",\n    // Performance optimizations for large workspace\n    \"C_Cpp.intelliSenseEngine\": \"default\",\n    \"C_Cpp.intelliSenseEngineFallback\": \"enabled\",\n    \"C_Cpp.workspaceSymbols\": \"Just My Code\",\n    \"C_Cpp.exclusionPolicy\": \"checkFolders\",\n    \"C_Cpp.files.exclude\": {\n        \"00_reference/CMSIS_docs/**\": true,\n        \"00_reference/ST_Assets/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Projects/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Utilities/**\": true,\n        \"**/node_modules\": true,\n        \"**/.git\": true,\n        \"**/.DS_Store\": true,\n        \"**/Thumbs.db\": true\n    },\n    \"C_Cpp.clang_format_style\": \"{ BasedOnStyle: LLVM, IndentWidth: 4, TabWidth: 4, UseTab: Never, ColumnLimit: 79, AllowShortFunctionsOnASingleLine: None }\",\n    \"editor.formatOnSave\": true,\n    // File associations for this workspace\n    \"files.associations\": {\n        \"*.h\": \"c\",\n        \"*.c\": \"c\",\n        \"*.inc\": \"c\"\n    },\n    // Cortex-Debug configuration for this workspace\n    \"cortex-debug.openocdPath\": \"/usr/bin/openocd\",\n    \"cortex-debug.armToolchainPath\": \"/usr/bin\",\n    \"cortex-debug.gdbPath\": \"/usr/bin/gdb-multiarch\",\n    \"cortex-debug.registerUseNaturalFormat\": false,\n    \"cortex-debug.variableUseNaturalFormat\": false,\n    \"cortex-debug.showRTOS\": true,\n    // STM32 extension configuration for this workspace\n    \"stm32-for-vscode.openOCDPath\": \"/usr/bin/openocd\",\n    \"stm32-for-vscode.armToolchainPath\": \"/usr/bin\",\n    // STM32Cube extension configuration\n    \"stm32cube.cubeMXPath\": \"C:\\\\STMicroelectronics\\\\STM32Cube\\\\STM32CubeMX\\\\STM32CubeMX.exe\",\n    \"stm32cube.openocdPath\": \"/usr/bin/openocd\",\n    \"stm32cube.cubeIDELauncherPath\": \"\",\n    \"stm32cube.svdPath\": \"${workspaceFolder}/00_reference/ST_Assets/stm32h7-svd_2.8\",\n    \"stm32cube.targetConfigurations\": [\n        {\n            \"name\": \"STM32H753ZI\",\n            \"device\": \"STM32H753ZI\",\n            \"board\": \"NUCLEO-H753ZI\",\n            \"svdFile\": \"${workspaceFolder}/00_reference/ST_Assets/stm32h7-svd_2.8/STM32H753.svd\"\n        }\n    ],\n    // Python configuration for this workspace\n    \"python.defaultInterpreterPath\": \"${workspaceFolder}/.venv/bin/python\",\n    \"python.terminal.activateEnvironment\": true,\n    \"python.terminal.activateEnvInCurrentTerminal\": true,\n    \"python.analysis.extraPaths\": [\n        \"${workspaceFolder}/scripts\",\n        \"${workspaceFolder}/.venv/lib/python3.10/site-packages\"\n    ],\n    \"python.envFile\": \"${workspaceFolder}/.env\",\n    // Doxygen configuration for this workspace\n    \"doxygen.generic.commentPrefix\": \"///\",\n    \"doxygen.file.fileTemplate\": \"@file {name}\\\\n@brief STM32H753ZI Project - {cursor}\\\\n@author STM32H753ZI Project Team\\\\n@date {date}\\\\n\",\n    // Git configuration for this workspace\n    \"git.repositoryScanMaxDepth\": 1,\n    \"git.enableSmartCommit\": true,\n    \"git.confirmSync\": false,\n    // Performance settings\n    \"typescript.surveys.enabled\": false,\n    \"extensions.autoCheckUpdates\": false,\n    \"extensions.autoUpdate\": false,\n    // Terminal configuration for this workspace\n    \"terminal.integrated.cwd\": \"${workspaceFolder}\",\n    \"terminal.integrated.env.linux\": {\n        \"VIRTUAL_ENV\": \"${workspaceFolder}/.venv\",\n        \"PATH\": \"${workspaceFolder}/.venv/bin:${env:PATH}\"\n    },\n    \"terminal.integrated.defaultProfile.linux\": \"bash\",\n    \"terminal.integrated.profiles.linux\": {\n        \"bash\": {\n            \"path\": \"bash\",\n            \"args\": [\n                \"-c\",\n                \"source ${workspaceFolder}/.venv/bin/activate 2>/dev/null && exec bash || exec bash\"\n            ]\n        }\n    },\n    // CMake configuration for this workspace\n    \"cmake.buildDirectory\": \"${workspaceFolder}/build\",\n    \"cmake.sourceDirectory\": \"${workspaceFolder}\",\n    \"cmake.generator\": \"Ninja\",\n    \"cmake.configureOnOpen\": false,\n    \"cmake.configureOnEdit\": false,\n    \"cmake.defaultVariants\": {\n        \"buildType\": {\n            \"default\": \"Debug\",\n            \"description\": \"The build type\"\n        }\n    },\n    \"cmake.ctestDefaultArgs\": [\n        \"--output-on-failure\"\n    ],\n    \"C_Cpp.default.configurationProvider\": \"ms-vscode.cmake-tools\",\n    // Workspace performance optimizations\n    \"files.exclude\": {\n        \"00_reference/CMSIS_docs/**\": true,\n        \"00_reference/ST_Assets/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Projects/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Utilities/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Middlewares/**\": true,\n        \"**/node_modules\": true,\n        \"**/.git\": true,\n        \"**/.DS_Store\": true,\n        \"**/Thumbs.db\": true,\n        \"build/**\": true,\n        \"**/*.o\": true,\n        \"**/*.elf\": true,\n        \"**/*.map\": true,\n        \"**/*.lst\": true\n    },\n    \"search.exclude\": {\n        \"00_reference/CMSIS_docs/**\": true,\n        \"00_reference/ST_Assets/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Projects/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Utilities/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Middlewares/**\": true,\n        \"build/**\": true,\n        \"docs/semantic_vector_db/**\": true\n    },\n    \"files.watcherExclude\": {\n        \"00_reference/**\": true,\n        \"build/**\": true,\n        \"docs/semantic_vector_db/**\": true,\n        \"**/node_modules/**\": true,\n        \"**/.git/**\": true\n    },\n    // Todo Tree configuration for STM32 project\n    \"todo-tree.regex.regex\": \"((//|#|<!--|;|/\\\\*|^)\\\\s*($TAGS)|^\\\\s*- \\\\[ \\\\])\",\n    \"todo-tree.general.tags\": [\n        \"TODO\",\n        \"FIXME\",\n        \"BUG\",\n        \"HACK\",\n        \"XXX\",\n        \"NOTE\",\n        \"INFO\"\n    ],\n    \"todo-tree.highlights.defaultHighlight\": {\n        \"foreground\": \"#FFFFFF\",\n        \"background\": \"#FFA500\",\n        \"icon\": \"alert\",\n        \"rulerColour\": \"#FFA500\",\n        \"type\": \"tag\"\n    },\n    // Code Spell Checker configuration for embedded project\n    \"cSpell.words\": [\n        \"STM32H753ZI\",\n        \"STM32H753xx\",\n        \"NUCLEO\",\n        \"IHM02A1\",\n        \"L6470\",\n        \"AS5600\",\n        \"HAL\",\n        \"GPIO\",\n        \"SPI\",\n        \"I2C\",\n        \"UART\",\n        \"CAN\",\n        \"FD\",\n        \"DMA\",\n        \"NVIC\",\n        \"RCC\",\n        \"CMSIS\",\n        \"dSPIN\",\n        \"microstepping\",\n        \"stepper\",\n        \"encoder\",\n        \"magnetic\",\n        \"Cortex\",\n        \"OpenOCD\",\n        \"STLink\",\n        \"GDB\",\n        \"SVD\",\n        \"SSOT\",\n        \"watchdog\",\n        \"MCU\",\n        \"PHY\",\n        \"LAN8742\",\n        \"Ethernet\",\n        \"LwIP\",\n        \"FreeRTOS\",\n        \"ITM\",\n        \"SWO\",\n        // STM32CubeMX and peripheral terms\n        \"FDCAN\",\n        \"EXTI\",\n        \"LPTIM\",\n        \"LPUART\",\n        \"LTDC\",\n        \"QSPI\",\n        \"SDMMC\",\n        \"SPDIFRX\",\n        \"SWPMI\",\n        \"HRTIM\",\n        \"DFSDM\",\n        \"DFSDMAC\",\n        \"SYSCLK\",\n        \"HCLK\",\n        \"PLLCLK\",\n        \"PLLSOURCE\",\n        \"SYSCLKSOURCE\",\n        \"PLLFRACN\",\n        \"HPRE\",\n        \"PPRE\",\n        \"CPRE\",\n        \"CKPER\",\n        \"DIVM\",\n        \"DIVN\",\n        \"DIVP\",\n        \"DIVQ\",\n        \"DIVR\",\n        \"MEMORYMAP\",\n        \"LQFP\",\n        \"Systick\",\n        \"PRIORITYGROUP\",\n        \"Xplorer\",\n        \"pinconfig\",\n        \"functionlistsort\",\n        \"MSP\",\n        \"BSP\",\n        // STM32 technical terms\n        \"DATASIZE\",\n        \"BAUDRATEPRESCALER\",\n        \"FIRSTBIT\",\n        \"TIMODE\",\n        \"CRCCALCULATION\",\n        \"NSSP\",\n        \"INTERDATA\",\n        \"Susp\",\n        \"AUTOSUSP\",\n        \"MOSI\",\n        \"MISO\",\n        \"PULLUP\",\n        \"ANALOGFILTER\",\n        \"CLOCKSOURCE\",\n        \"COUNTERMODE\",\n        \"CLOCKDIVISION\",\n        \"CPHA\",\n        \"CPOL\",\n        \"kbps\",\n        \"Mbps\"\n    ],\n    \"cSpell.customDictionaries\": {\n        \"stm32-project-dictionary\": {\n            \"name\": \"STM32 Project Dictionary\",\n            \"path\": \"${workspaceFolder}/.vscode/cspell.txt\",\n            \"addWords\": true,\n            \"scope\": \"workspace\"\n        }\n    },\n    \"cSpell.ignorePaths\": [\n        \"build/**\",\n        \"00_reference/**\",\n        \"**/*.ioc\"\n    ],\n    \"cSpell.enabledFileTypes\": {\n        \"c\": true,\n        \"cpp\": true,\n        \"h\": true,\n        \"hpp\": true,\n        \"cmake\": true,\n        \"markdown\": true,\n        \"yaml\": true,\n        \"json\": true\n    },\n    // Python configuration enhancements (uses pyproject.toml for formatting settings)\n    \"python.linting.enabled\": true,\n    \"python.linting.flake8Enabled\": true,\n    \"python.linting.pylintEnabled\": true,\n    \"python.linting.flake8Args\": [\n        \"--config=${workspaceFolder}/.flake8\"\n    ],\n    \"python.linting.pylintArgs\": [\n        \"--rcfile=${workspaceFolder}/.pylintrc\"\n    ],\n    \"python.formatting.provider\": \"black\",\n    // Makefile Tools configuration\n    \"makefile.extensionOutputFolder\": \"./.vscode\",\n    \"makefile.configureOnOpen\": false,\n    // Markdown configuration\n    \"markdown.extension.toc.updateOnSave\": true,\n    \"markdown.extension.preview.autoShowPreviewToSide\": false,\n    // CMake path configuration - use standard cmake in container\n    \"cmake.cmakePath\": \"/usr/bin/cmake\",\n    \"cmake.configureArgs\": [\n        \"-DCMAKE_TOOLCHAIN_FILE=${workspaceFolder}/cmake/arm-none-eabi-gcc.cmake\"\n    ]\n}"
+        ]
+      },
+      "editor setup": {
+        "response_time_ms": 46.311378479003906,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "{\n    // STM32H753ZI Workspace-Specific Settings\n    \"C_Cpp.default.defines\": [\n        \"STM32H753xx\",\n        \"USE_HAL_DRIVER\",\n        \"ARM_MATH_CM7\",\n        \"HSE_VALUE=25000000\",\n        \"STM32H753ZI\",\n        \"NUCLEO_H753ZI\",\n        \"X_NUCLEO_IHM02A1\"\n    ],\n    \"C_Cpp.default.includePath\": [\n        \"${workspaceFolder}/src/**\",\n        \"${workspaceFolder}/src/config\",\n        \"${workspaceFolder}/src/common\",\n        \"${workspaceFolder}/00_reference/**\",\n        \"${workspaceFolder}/00_reference/STM32Cube_FW_H7_V1.12.0/Drivers/STM32H7xx_HAL_Driver/Inc\",\n        \"${workspaceFolder}/00_reference/STM32Cube_FW_H7_V1.12.0/Drivers/CMSIS/Device/ST/STM32H7xx/Include\",\n        \"${workspaceFolder}/00_reference/STM32Cube_FW_H7_V1.12.0/Drivers/CMSIS/Include\"\n    ],\n    \"C_Cpp.default.compilerPath\": \"/usr/bin/arm-none-eabi-gcc\",\n    \"C_Cpp.default.intelliSenseMode\": \"gcc-arm\",\n    \"C_Cpp.default.cStandard\": \"c11\",\n    \"C_Cpp.default.cppStandard\": \"c++17\",\n    \"C_Cpp.workspaceParsingPriority\": \"high\",\n    \"C_Cpp.enhancedColorization\": \"enabled\",\n    \"C_Cpp.errorSquiggles\": \"enabled\",\n    // Performance optimizations for large workspace\n    \"C_Cpp.intelliSenseEngine\": \"default\",\n    \"C_Cpp.intelliSenseEngineFallback\": \"enabled\",\n    \"C_Cpp.workspaceSymbols\": \"Just My Code\",\n    \"C_Cpp.exclusionPolicy\": \"checkFolders\",\n    \"C_Cpp.files.exclude\": {\n        \"00_reference/CMSIS_docs/**\": true,\n        \"00_reference/ST_Assets/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Projects/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Utilities/**\": true,\n        \"**/node_modules\": true,\n        \"**/.git\": true,\n        \"**/.DS_Store\": true,\n        \"**/Thumbs.db\": true\n    },\n    \"C_Cpp.clang_format_style\": \"{ BasedOnStyle: LLVM, IndentWidth: 4, TabWidth: 4, UseTab: Never, ColumnLimit: 79, AllowShortFunctionsOnASingleLine: None }\",\n    \"editor.formatOnSave\": true,\n    // File associations for this workspace\n    \"files.associations\": {\n        \"*.h\": \"c\",\n        \"*.c\": \"c\",\n        \"*.inc\": \"c\"\n    },\n    // Cortex-Debug configuration for this workspace\n    \"cortex-debug.openocdPath\": \"/usr/bin/openocd\",\n    \"cortex-debug.armToolchainPath\": \"/usr/bin\",\n    \"cortex-debug.gdbPath\": \"/usr/bin/gdb-multiarch\",\n    \"cortex-debug.registerUseNaturalFormat\": false,\n    \"cortex-debug.variableUseNaturalFormat\": false,\n    \"cortex-debug.showRTOS\": true,\n    // STM32 extension configuration for this workspace\n    \"stm32-for-vscode.openOCDPath\": \"/usr/bin/openocd\",\n    \"stm32-for-vscode.armToolchainPath\": \"/usr/bin\",\n    // STM32Cube extension configuration\n    \"stm32cube.cubeMXPath\": \"C:\\\\STMicroelectronics\\\\STM32Cube\\\\STM32CubeMX\\\\STM32CubeMX.exe\",\n    \"stm32cube.openocdPath\": \"/usr/bin/openocd\",\n    \"stm32cube.cubeIDELauncherPath\": \"\",\n    \"stm32cube.svdPath\": \"${workspaceFolder}/00_reference/ST_Assets/stm32h7-svd_2.8\",\n    \"stm32cube.targetConfigurations\": [\n        {\n            \"name\": \"STM32H753ZI\",\n            \"device\": \"STM32H753ZI\",\n            \"board\": \"NUCLEO-H753ZI\",\n            \"svdFile\": \"${workspaceFolder}/00_reference/ST_Assets/stm32h7-svd_2.8/STM32H753.svd\"\n        }\n    ],\n    // Python configuration for this workspace\n    \"python.defaultInterpreterPath\": \"${workspaceFolder}/.venv/bin/python\",\n    \"python.terminal.activateEnvironment\": true,\n    \"python.terminal.activateEnvInCurrentTerminal\": true,\n    \"python.analysis.extraPaths\": [\n        \"${workspaceFolder}/scripts\",\n        \"${workspaceFolder}/.venv/lib/python3.10/site-packages\"\n    ],\n    \"python.envFile\": \"${workspaceFolder}/.env\",\n    // Doxygen configuration for this workspace\n    \"doxygen.generic.commentPrefix\": \"///\",\n    \"doxygen.file.fileTemplate\": \"@file {name}\\\\n@brief STM32H753ZI Project - {cursor}\\\\n@author STM32H753ZI Project Team\\\\n@date {date}\\\\n\",\n    // Git configuration for this workspace\n    \"git.repositoryScanMaxDepth\": 1,\n    \"git.enableSmartCommit\": true,\n    \"git.confirmSync\": false,\n    // Performance settings\n    \"typescript.surveys.enabled\": false,\n    \"extensions.autoCheckUpdates\": false,\n    \"extensions.autoUpdate\": false,\n    // Terminal configuration for this workspace\n    \"terminal.integrated.cwd\": \"${workspaceFolder}\",\n    \"terminal.integrated.env.linux\": {\n        \"VIRTUAL_ENV\": \"${workspaceFolder}/.venv\",\n        \"PATH\": \"${workspaceFolder}/.venv/bin:${env:PATH}\"\n    },\n    \"terminal.integrated.defaultProfile.linux\": \"bash\",\n    \"terminal.integrated.profiles.linux\": {\n        \"bash\": {\n            \"path\": \"bash\",\n            \"args\": [\n                \"-c\",\n                \"source ${workspaceFolder}/.venv/bin/activate 2>/dev/null && exec bash || exec bash\"\n            ]\n        }\n    },\n    // CMake configuration for this workspace\n    \"cmake.buildDirectory\": \"${workspaceFolder}/build\",\n    \"cmake.sourceDirectory\": \"${workspaceFolder}\",\n    \"cmake.generator\": \"Ninja\",\n    \"cmake.configureOnOpen\": false,\n    \"cmake.configureOnEdit\": false,\n    \"cmake.defaultVariants\": {\n        \"buildType\": {\n            \"default\": \"Debug\",\n            \"description\": \"The build type\"\n        }\n    },\n    \"cmake.ctestDefaultArgs\": [\n        \"--output-on-failure\"\n    ],\n    \"C_Cpp.default.configurationProvider\": \"ms-vscode.cmake-tools\",\n    // Workspace performance optimizations\n    \"files.exclude\": {\n        \"00_reference/CMSIS_docs/**\": true,\n        \"00_reference/ST_Assets/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Projects/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Utilities/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Middlewares/**\": true,\n        \"**/node_modules\": true,\n        \"**/.git\": true,\n        \"**/.DS_Store\": true,\n        \"**/Thumbs.db\": true,\n        \"build/**\": true,\n        \"**/*.o\": true,\n        \"**/*.elf\": true,\n        \"**/*.map\": true,\n        \"**/*.lst\": true\n    },\n    \"search.exclude\": {\n        \"00_reference/CMSIS_docs/**\": true,\n        \"00_reference/ST_Assets/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Projects/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Utilities/**\": true,\n        \"00_reference/STM32Cube_FW_H7_V1.12.0/Middlewares/**\": true,\n        \"build/**\": true,\n        \"docs/semantic_vector_db/**\": true\n    },\n    \"files.watcherExclude\": {\n        \"00_reference/**\": true,\n        \"build/**\": true,\n        \"docs/semantic_vector_db/**\": true,\n        \"**/node_modules/**\": true,\n        \"**/.git/**\": true\n    },\n    // Todo Tree configuration for STM32 project\n    \"todo-tree.regex.regex\": \"((//|#|<!--|;|/\\\\*|^)\\\\s*($TAGS)|^\\\\s*- \\\\[ \\\\])\",\n    \"todo-tree.general.tags\": [\n        \"TODO\",\n        \"FIXME\",\n        \"BUG\",\n        \"HACK\",\n        \"XXX\",\n        \"NOTE\",\n        \"INFO\"\n    ],\n    \"todo-tree.highlights.defaultHighlight\": {\n        \"foreground\": \"#FFFFFF\",\n        \"background\": \"#FFA500\",\n        \"icon\": \"alert\",\n        \"rulerColour\": \"#FFA500\",\n        \"type\": \"tag\"\n    },\n    // Code Spell Checker configuration for embedded project\n    \"cSpell.words\": [\n        \"STM32H753ZI\",\n        \"STM32H753xx\",\n        \"NUCLEO\",\n        \"IHM02A1\",\n        \"L6470\",\n        \"AS5600\",\n        \"HAL\",\n        \"GPIO\",\n        \"SPI\",\n        \"I2C\",\n        \"UART\",\n        \"CAN\",\n        \"FD\",\n        \"DMA\",\n        \"NVIC\",\n        \"RCC\",\n        \"CMSIS\",\n        \"dSPIN\",\n        \"microstepping\",\n        \"stepper\",\n        \"encoder\",\n        \"magnetic\",\n        \"Cortex\",\n        \"OpenOCD\",\n        \"STLink\",\n        \"GDB\",\n        \"SVD\",\n        \"SSOT\",\n        \"watchdog\",\n        \"MCU\",\n        \"PHY\",\n        \"LAN8742\",\n        \"Ethernet\",\n        \"LwIP\",\n        \"FreeRTOS\",\n        \"ITM\",\n        \"SWO\",\n        // STM32CubeMX and peripheral terms\n        \"FDCAN\",\n        \"EXTI\",\n        \"LPTIM\",\n        \"LPUART\",\n        \"LTDC\",\n        \"QSPI\",\n        \"SDMMC\",\n        \"SPDIFRX\",\n        \"SWPMI\",\n        \"HRTIM\",\n        \"DFSDM\",\n        \"DFSDMAC\",\n        \"SYSCLK\",\n        \"HCLK\",\n        \"PLLCLK\",\n        \"PLLSOURCE\",\n        \"SYSCLKSOURCE\",\n        \"PLLFRACN\",\n        \"HPRE\",\n        \"PPRE\",\n        \"CPRE\",\n        \"CKPER\",\n        \"DIVM\",\n        \"DIVN\",\n        \"DIVP\",\n        \"DIVQ\",\n        \"DIVR\",\n        \"MEMORYMAP\",\n        \"LQFP\",\n        \"Systick\",\n        \"PRIORITYGROUP\",\n        \"Xplorer\",\n        \"pinconfig\",\n        \"functionlistsort\",\n        \"MSP\",\n        \"BSP\",\n        // STM32 technical terms\n        \"DATASIZE\",\n        \"BAUDRATEPRESCALER\",\n        \"FIRSTBIT\",\n        \"TIMODE\",\n        \"CRCCALCULATION\",\n        \"NSSP\",\n        \"INTERDATA\",\n        \"Susp\",\n        \"AUTOSUSP\",\n        \"MOSI\",\n        \"MISO\",\n        \"PULLUP\",\n        \"ANALOGFILTER\",\n        \"CLOCKSOURCE\",\n        \"COUNTERMODE\",\n        \"CLOCKDIVISION\",\n        \"CPHA\",\n        \"CPOL\",\n        \"kbps\",\n        \"Mbps\"\n    ],\n    \"cSpell.customDictionaries\": {\n        \"stm32-project-dictionary\": {\n            \"name\": \"STM32 Project Dictionary\",\n            \"path\": \"${workspaceFolder}/.vscode/cspell.txt\",\n            \"addWords\": true,\n            \"scope\": \"workspace\"\n        }\n    },\n    \"cSpell.ignorePaths\": [\n        \"build/**\",\n        \"00_reference/**\",\n        \"**/*.ioc\"\n    ],\n    \"cSpell.enabledFileTypes\": {\n        \"c\": true,\n        \"cpp\": true,\n        \"h\": true,\n        \"hpp\": true,\n        \"cmake\": true,\n        \"markdown\": true,\n        \"yaml\": true,\n        \"json\": true\n    },\n    // Python configuration enhancements (uses pyproject.toml for formatting settings)\n    \"python.linting.enabled\": true,\n    \"python.linting.flake8Enabled\": true,\n    \"python.linting.pylintEnabled\": true,\n    \"python.linting.flake8Args\": [\n        \"--config=${workspaceFolder}/.flake8\"\n    ],\n    \"python.linting.pylintArgs\": [\n        \"--rcfile=${workspaceFolder}/.pylintrc\"\n    ],\n    \"python.formatting.provider\": \"black\",\n    // Makefile Tools configuration\n    \"makefile.extensionOutputFolder\": \"./.vscode\",\n    \"makefile.configureOnOpen\": false,\n    // Markdown configuration\n    \"markdown.extension.toc.updateOnSave\": true,\n    \"markdown.extension.preview.autoShowPreviewToSide\": false,\n    // CMake path configuration - use standard cmake in container\n    \"cmake.cmakePath\": \"/usr/bin/cmake\",\n    \"cmake.configureArgs\": [\n        \"-DCMAKE_TOOLCHAIN_FILE=${workspaceFolder}/cmake/arm-none-eabi-gcc.cmake\"\n    ]\n}"
+        ]
+      },
+      "development tools": {
+        "response_time_ms": 42.34480857849121,
+        "results_found": 3,
+        "status": "success",
+        "sample_results": [
+          "{\n    \"recommendations\": [\n        \"ms-vscode.cpptools\",\n        \"ms-vscode.cpptools-extension-pack\", \n        \"ms-vscode.cmake-tools\",\n        \"twxs.cmake\",\n        \"marus25.cortex-debug\",\n        \"ms-python.python\",\n        \"ms-python.black-formatter\",\n        \"ms-python.flake8\",\n        \"ms-python.isort\",\n        \"github.copilot\",\n        \"github.copilot-chat\",\n        \"redhat.vscode-yaml\",\n        \"ms-vscode.hexeditor\",\n        \"stmicroelectronics.stm32-vscode-extension\",\n        \"stmicroelectronics.stm32cube-ide-build-cmake\",\n        \"stmicroelectronics.stm32cube-ide-debug-core\",\n        \"jeandudey.cortex-debug-dp-stm32h7\",\n        \"cschlosser.doxdocgen\",\n        \"dan-c-underwood.arm\",\n        \"mcu-debug.debug-tracker-vscode\",\n        \"mcu-debug.memory-view\", \n        \"mcu-debug.peripheral-viewer\",\n        \"mcu-debug.rtos-views\",\n        \"trond-snekvik.gnu-mapfiles\",\n        \"zixuanwang.linkerscript\",\n        \"bierner.markdown-mermaid\",\n        \"donjayamanne.githistory\",\n        \"github.vscode-github-actions\",\n        \"gruntfuggly.todo-tree\",\n        \"streetsidesoftware.code-spell-checker\",\n        \"ms-vscode.makefile-tools\",\n        \"ms-vscode.live-server\",\n        \"yzhang.markdown-all-in-one\"\n    ],\n    \"unwantedRecommendations\": [\n        \"ms-vscode.vscode-embedded-tools\",\n        \"ms-azuretools.vscode-docker\",\n        \"ms-azuretools.vscode-containers\"\n    ]\n}\n"
+        ]
+      }
+    }
+  },
+  "performance_summary": {
+    "average_response_time_ms": 151.91381772359213,
+    "fastest_response_ms": 38.80453109741211,
+    "slowest_response_ms": 3989.6116256713867,
+    "total_results_found": 135,
+    "successful_tests": 45,
+    "failed_tests": 0,
+    "success_rate": 100.0
+  }
+}

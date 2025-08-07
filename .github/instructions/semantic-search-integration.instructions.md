@@ -9,29 +9,34 @@ description: "Semantic search system integration and documentation management fo
 ## Overview
 This instruction file provides comprehensive guidance for using and maintaining the semantic search system integrated into the STM32H753ZI stepper motor control project. The system enables AI-powered documentation search across all project assets using real embeddings.
 
-**PROJECT STATUS**: ✅ **PRODUCTION READY** - Semantic search system fully operational with 981 documents indexed using ChromaDB + Ollama embeddings.
+**PROJECT STATUS**: ✅ **PRODUCTION READY** - Semantic search system fully operational with 77,938 documents indexed across 10 collections using ChromaDB + Instructor-XL embeddings.
 
 ## 🔍 Semantic Search Architecture
 
 ### 🤖 AI-Powered Documentation Search
 **Intelligent search with real embeddings across all project documentation:**
 
-- **AI Understanding**: Uses Ollama mxbai-embed-large embeddings for context-aware search
+- **AI Understanding**: Uses Instructor-XL embeddings for context-aware search
 - **Multi-Collection Database**: ChromaDB with organized document collections
-- **Production Scale**: Processes 981 documents from real workspace (27 source files)
-- **GPU Acceleration**: CUDA 12.1 support with automatic GPU detection
-- **Integration Ready**: Available via scripts and Python API
+- **Production Scale**: Processes 77,938 documents across 10 collections (1.53GB database)
+- **GPU Acceleration**: RTX 4080 SUPER with automatic GPU detection
+- **Validation**: 100% search success rate (45/45 tests passed, 151.9ms average response)
 
 ### 📚 Database Collections
 **Organized documentation in semantic vector database (`docs/semantic_vector_db/`):**
 
 ```bash
-# Collection Structure (981 total documents)
-stm32_hal      # 763 documents: STM32H7 HAL, Nucleo BSP, reference manuals
-motor_control  # 218 documents: X-CUBE-SPN2 L6470 stepper driver documentation
-safety_systems # Future: Safety system specific documentation
-project_code   # Future: Source code semantic analysis
-instruction_guides # Future: Instruction file semantic search
+# Collection Structure (77,938 total documents across 10 collections)
+stm32_hal      # 55,884 documents: STM32H7 HAL, peripheral drivers, reference manuals  
+project_source # 15,868 documents: Project source code, headers, implementation files
+build_system   # 3,006 documents: CMake, build configuration, toolchain setup
+motor_control  # 1,311 documents: X-CUBE-SPN2 L6470 stepper driver documentation
+documentation  # 1,062 documents: Project documentation, reports, design documents
+instructions   # 643 documents: Development instruction files and guidelines
+scripts        # 113 documents: Automation scripts, tools, utilities
+validation     # 40 documents: Test programs, validation frameworks
+config         # 8 documents: Configuration files, SSOT headers
+apis           # 3 documents: API specifications, interface definitions
 ```
 
 ### 🎯 Search Capabilities
