@@ -1323,3 +1323,501 @@ RuntimeError: Format validation failed
 [2025-08-07 04:58:46] POST-COMMIT: === Post-commit hook triggered ===
 [2025-08-07 04:58:46] POST-COMMIT: Processing commit: 8c8afe9 - ✅ L6470 Emergency Stop Integration Complete - Phase 1 Step 1
 [2025-08-07 04:58:46] POST-COMMIT: STATUS.md was modified in this commit, skipping automation to prevent loops
+[2025-08-07 05:10:57] PRE-COMMIT: === Pre-commit validation started ===
+[2025-08-07 05:10:58] PRE-COMMIT: Relevant files changed, running SSOT validation...
+🔍 Starting SSOT validation...
+🔍 SSOT Validation Report for STM32H753ZI Project
+============================================================
+✅ SSOT structure complete
+
+⚠️  Found 278 potential SSOT violations:
+
+   📁 src/application/main.c:
+      Line 96: * - SPI1 for L6470 (stm32h7-spi-l6470.instructions.md)...
+      💡 SPI instances should be in hardware_config.h
+      Line 97: * - I2C1/I2C2 for AS5600 (stm32h7-i2c-as5600.instructions.md...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/application/main_application.c:
+      Line 25: extern SPI_HandleTypeDef hspi2;   // SPI2 for L6470 drivers...
+      💡 SPI instances should be in hardware_config.h
+      Line 26: extern I2C_HandleTypeDef hi2c1;   // I2C1 for encoder 0...
+      💡 I2C instances should be in hardware_config.h
+      Line 27: extern I2C_HandleTypeDef hi2c2;   // I2C2 for encoder 1...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/communication/comm_protocol.c:
+      Line 114: safety_log_event(SAFETY_EVENT_SYSTEM_INIT, 0xFF, (uint32_t)S...
+      💡 Hex addresses should be in config headers
+      Line 646: uint16_t crc = 0xFFFF;...
+      💡 Hex addresses should be in config headers
+      Line 654: crc = (crc >> 1) ^ 0xA001;...
+      💡 Hex addresses should be in config headers
+
+   📁 src/controllers/motor_controller.c:
+      Line 89: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 0);...
+      💡 Hex addresses should be in config headers
+      Line 95: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 1);...
+      💡 Hex addresses should be in config headers
+
+   📁 src/controllers/real_time_control.c:
+      Line 315: htim_control_loop.Init.Period = 1000 - 1; // 1ms period...
+      💡 Time values should use timestamp_ms_t type
+      Line 530: position_control_update(motor_id, 1); // 1ms time step...
+      💡 Time values should use timestamp_ms_t type
+      Line 544: motion_profile_update(motor_id, 1); // 1ms time step...
+      💡 Time values should use timestamp_ms_t type
+
+   ... and 17 more files with violations
+
+⚠️  Found 7 include dependency issues:
+   📁 src/hal_abstraction/hal_abstraction_mock.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/hal_abstraction/hal_abstraction_stm32h7.c
+      Issue: Uses motor constants but does not include motor_config.h
+      💡 Add #include "config/motor_config.h"
+   📁 src/safety/emergency_stop_abstracted.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/safety/l6470_fault_monitor.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/safety/l6470_fault_monitor.c
+      Issue: Uses motor constants but does not include motor_config.h
+      💡 Add #include "config/motor_config.h"
+
+⚠️  Found 1 configuration inconsistencies:
+   🔗 MAX_MOTORS defined as 2 but system_state.h does not use MAX_MOTORS constant
+      Files: src/config/motor_config.h, src/common/system_state.h
+      💡 Use MotorState_t motors[MAX_MOTORS] in system_state.h
+
+📊 Summary:
+   • Missing SSOT files: 0
+   • Hardcoded value violations: 278
+   • Include dependency issues: 7
+   • Configuration inconsistencies: 1
+   • Total issues found: 286
+
+🔧 Action required: 286 issues need attention.
+
+💡 Next steps:
+   2. Replace hardcoded values with SSOT references
+   3. Add missing SSOT header includes
+   4. Fix configuration inconsistencies
+   5. Re-run validation: python3 scripts/validate_ssot.py
+
+🚀 SSOT validation complete!
+[2025-08-07 05:10:58] PRE-COMMIT: SSOT validation passed
+[2025-08-07 05:10:58] PRE-COMMIT: STATUS.md is being committed, validating format...
+[2025-08-07 05:10:58] PRE-COMMIT: STATUS.md format validation completed
+[2025-08-07 05:10:58] PRE-COMMIT: === Pre-commit validation completed ===
+[2025-08-07 05:10:58] POST-COMMIT: === Post-commit hook triggered ===
+[2025-08-07 05:10:58] POST-COMMIT: Processing commit: 2755d80 - feat: Complete L6470 hardware fault monitoring implementation
+[2025-08-07 05:10:58] POST-COMMIT: STATUS.md was modified in this commit, skipping automation to prevent loops
+[2025-08-07 05:15:00] PRE-COMMIT: === Pre-commit validation started ===
+[2025-08-07 05:15:00] PRE-COMMIT: Relevant files changed, running SSOT validation...
+🔍 Starting SSOT validation...
+🔍 SSOT Validation Report for STM32H753ZI Project
+============================================================
+✅ SSOT structure complete
+
+⚠️  Found 278 potential SSOT violations:
+
+   📁 src/application/main.c:
+      Line 96: * - SPI1 for L6470 (stm32h7-spi-l6470.instructions.md)...
+      💡 SPI instances should be in hardware_config.h
+      Line 97: * - I2C1/I2C2 for AS5600 (stm32h7-i2c-as5600.instructions.md...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/application/main_application.c:
+      Line 25: extern SPI_HandleTypeDef hspi2;   // SPI2 for L6470 drivers...
+      💡 SPI instances should be in hardware_config.h
+      Line 26: extern I2C_HandleTypeDef hi2c1;   // I2C1 for encoder 0...
+      💡 I2C instances should be in hardware_config.h
+      Line 27: extern I2C_HandleTypeDef hi2c2;   // I2C2 for encoder 1...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/communication/comm_protocol.c:
+      Line 114: safety_log_event(SAFETY_EVENT_SYSTEM_INIT, 0xFF, (uint32_t)S...
+      💡 Hex addresses should be in config headers
+      Line 646: uint16_t crc = 0xFFFF;...
+      💡 Hex addresses should be in config headers
+      Line 654: crc = (crc >> 1) ^ 0xA001;...
+      💡 Hex addresses should be in config headers
+
+   📁 src/controllers/motor_controller.c:
+      Line 89: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 0);...
+      💡 Hex addresses should be in config headers
+      Line 95: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 1);...
+      💡 Hex addresses should be in config headers
+
+   📁 src/controllers/real_time_control.c:
+      Line 315: htim_control_loop.Init.Period = 1000 - 1; // 1ms period...
+      💡 Time values should use timestamp_ms_t type
+      Line 530: position_control_update(motor_id, 1); // 1ms time step...
+      💡 Time values should use timestamp_ms_t type
+      Line 544: motion_profile_update(motor_id, 1); // 1ms time step...
+      💡 Time values should use timestamp_ms_t type
+
+   ... and 17 more files with violations
+
+⚠️  Found 7 include dependency issues:
+   📁 src/hal_abstraction/hal_abstraction_mock.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/hal_abstraction/hal_abstraction_stm32h7.c
+      Issue: Uses motor constants but does not include motor_config.h
+      💡 Add #include "config/motor_config.h"
+   📁 src/safety/emergency_stop_abstracted.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/safety/l6470_fault_monitor.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/safety/l6470_fault_monitor.c
+      Issue: Uses motor constants but does not include motor_config.h
+      💡 Add #include "config/motor_config.h"
+
+⚠️  Found 1 configuration inconsistencies:
+   🔗 MAX_MOTORS defined as 2 but system_state.h does not use MAX_MOTORS constant
+      Files: src/config/motor_config.h, src/common/system_state.h
+      💡 Use MotorState_t motors[MAX_MOTORS] in system_state.h
+
+📊 Summary:
+   • Missing SSOT files: 0
+   • Hardcoded value violations: 278
+   • Include dependency issues: 7
+   • Configuration inconsistencies: 1
+   • Total issues found: 286
+
+🔧 Action required: 286 issues need attention.
+
+💡 Next steps:
+   2. Replace hardcoded values with SSOT references
+   3. Add missing SSOT header includes
+   4. Fix configuration inconsistencies
+   5. Re-run validation: python3 scripts/validate_ssot.py
+
+🚀 SSOT validation complete!
+[2025-08-07 05:15:00] PRE-COMMIT: SSOT validation passed
+[2025-08-07 05:15:00] PRE-COMMIT: STATUS.md is being committed, validating format...
+[2025-08-07 05:15:00] PRE-COMMIT: STATUS.md format validation completed
+[2025-08-07 05:15:00] PRE-COMMIT: === Pre-commit validation completed ===
+[2025-08-07 05:15:00] POST-COMMIT: === Post-commit hook triggered ===
+[2025-08-07 05:15:00] POST-COMMIT: Processing commit: adf9aa5 - docs: Update STATUS.md with Phase 1 Step 2 completion
+[2025-08-07 05:15:00] POST-COMMIT: STATUS.md was modified in this commit, skipping automation to prevent loops
+[2025-08-07 05:20:37] PRE-COMMIT: === Pre-commit validation started ===
+[2025-08-07 05:20:37] PRE-COMMIT: No relevant files changed, skipping SSOT validation
+[2025-08-07 05:20:37] PRE-COMMIT: === Pre-commit validation completed ===
+[2025-08-07 05:35:29] PRE-COMMIT: === Pre-commit validation started ===
+[2025-08-07 05:35:29] PRE-COMMIT: Relevant files changed, running SSOT validation...
+🔍 Starting SSOT validation...
+🔍 SSOT Validation Report for STM32H753ZI Project
+============================================================
+✅ SSOT structure complete
+
+⚠️  Found 278 potential SSOT violations:
+
+   📁 src/application/main.c:
+      Line 103: * - SPI1 for L6470 (stm32h7-spi-l6470.instructions.md)...
+      💡 SPI instances should be in hardware_config.h
+      Line 104: * - I2C1/I2C2 for AS5600 (stm32h7-i2c-as5600.instructions.md...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/application/main_application.c:
+      Line 28: extern SPI_HandleTypeDef hspi2;   // SPI2 for L6470 drivers...
+      💡 SPI instances should be in hardware_config.h
+      Line 29: extern I2C_HandleTypeDef hi2c1;   // I2C1 for encoder 0...
+      💡 I2C instances should be in hardware_config.h
+      Line 30: extern I2C_HandleTypeDef hi2c2;   // I2C2 for encoder 1...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/communication/comm_protocol.c:
+      Line 114: safety_log_event(SAFETY_EVENT_SYSTEM_INIT, 0xFF, (uint32_t)S...
+      💡 Hex addresses should be in config headers
+      Line 646: uint16_t crc = 0xFFFF;...
+      💡 Hex addresses should be in config headers
+      Line 654: crc = (crc >> 1) ^ 0xA001;...
+      💡 Hex addresses should be in config headers
+
+   📁 src/controllers/motor_controller.c:
+      Line 89: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 0);...
+      💡 Hex addresses should be in config headers
+      Line 95: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 1);...
+      💡 Hex addresses should be in config headers
+
+   📁 src/controllers/real_time_control.c:
+      Line 315: htim_control_loop.Init.Period = 1000 - 1; // 1ms period...
+      💡 Time values should use timestamp_ms_t type
+      Line 530: position_control_update(motor_id, 1); // 1ms time step...
+      💡 Time values should use timestamp_ms_t type
+      Line 544: motion_profile_update(motor_id, 1); // 1ms time step...
+      💡 Time values should use timestamp_ms_t type
+
+   ... and 17 more files with violations
+
+⚠️  Found 7 include dependency issues:
+   📁 src/hal_abstraction/hal_abstraction_mock.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/hal_abstraction/hal_abstraction_stm32h7.c
+      Issue: Uses motor constants but does not include motor_config.h
+      💡 Add #include "config/motor_config.h"
+   📁 src/safety/emergency_stop_abstracted.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/safety/l6470_fault_monitor.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/safety/l6470_fault_monitor.c
+      Issue: Uses motor constants but does not include motor_config.h
+      💡 Add #include "config/motor_config.h"
+
+⚠️  Found 1 configuration inconsistencies:
+   🔗 MAX_MOTORS defined as 2 but system_state.h does not use MAX_MOTORS constant
+      Files: src/config/motor_config.h, src/common/system_state.h
+      💡 Use MotorState_t motors[MAX_MOTORS] in system_state.h
+
+📊 Summary:
+   • Missing SSOT files: 0
+   • Hardcoded value violations: 278
+   • Include dependency issues: 7
+   • Configuration inconsistencies: 1
+   • Total issues found: 286
+
+🔧 Action required: 286 issues need attention.
+
+💡 Next steps:
+   2. Replace hardcoded values with SSOT references
+   3. Add missing SSOT header includes
+   4. Fix configuration inconsistencies
+   5. Re-run validation: python3 scripts/validate_ssot.py
+
+🚀 SSOT validation complete!
+[2025-08-07 05:35:30] PRE-COMMIT: SSOT validation passed
+[2025-08-07 05:35:30] PRE-COMMIT: === Pre-commit validation completed ===
+[2025-08-07 05:35:30] POST-COMMIT: === Post-commit hook triggered ===
+[2025-08-07 05:35:30] POST-COMMIT: Processing commit: e4774e9 - feat: complete Phase 1 Step 3 - Watchdog Integration
+[2025-08-07 05:35:30] POST-COMMIT: Running STATUS.md automation...
+[05:35:30] INFO: Starting STATUS.md update (source: git-commit)
+[05:35:30] INFO: Updating timestamp
+[05:35:30] INFO: Analyzing last 5 commits
+[05:35:30] INFO: Commit analysis: 5 commits categorized
+[05:35:30] INFO: Analyzing source code status
+[05:35:31] INFO: Code analysis: 75 TODOs, 2 drivers checked
+[05:35:31] INFO: Updating architecture status
+[05:35:31] INFO: Format validation passed
+[05:35:31] INFO: No changes detected
+
+📊 Update Summary:
+  Source: git-commit
+  Changes Made: No
+  Build Status: Skipped
+  Commits Analyzed: 5
+  TODOs Found: 75
+ℹ️  No updates needed
+[2025-08-07 05:35:31] POST-COMMIT: STATUS.md automation completed successfully
+[2025-08-07 05:35:31] POST-COMMIT: STATUS.md was updated, staging and committing changes
+[2025-08-07 05:35:32] POST-COMMIT: === Post-commit hook triggered ===
+[2025-08-07 05:35:32] POST-COMMIT: === Post-commit hook triggered ===
+[2025-08-07 05:35:32] POST-COMMIT: Processing commit: f00f9dd - 📊 Auto-update STATUS.md from commit e4774e9
+[2025-08-07 05:35:32] POST-COMMIT: Processing commit: f00f9dd - 📊 Auto-update STATUS.md from commit e4774e9
+[2025-08-07 05:35:32] POST-COMMIT: STATUS.md was modified in this commit, skipping automation to prevent loops
+[2025-08-07 05:35:32] POST-COMMIT: STATUS.md was modified in this commit, skipping automation to prevent loops
+[main f00f9dd] 📊 Auto-update STATUS.md from commit e4774e9
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+[2025-08-07 05:35:32] POST-COMMIT: STATUS.md auto-commit completed
+[2025-08-07 05:35:32] POST-COMMIT: === Post-commit hook completed ===
+[2025-08-07 05:37:12] PRE-COMMIT: === Pre-commit validation started ===
+[2025-08-07 05:37:12] PRE-COMMIT: Relevant files changed, running SSOT validation...
+🔍 Starting SSOT validation...
+🔍 SSOT Validation Report for STM32H753ZI Project
+============================================================
+✅ SSOT structure complete
+
+⚠️  Found 278 potential SSOT violations:
+
+   📁 src/application/main.c:
+      Line 103: * - SPI1 for L6470 (stm32h7-spi-l6470.instructions.md)...
+      💡 SPI instances should be in hardware_config.h
+      Line 104: * - I2C1/I2C2 for AS5600 (stm32h7-i2c-as5600.instructions.md...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/application/main_application.c:
+      Line 28: extern SPI_HandleTypeDef hspi2;   // SPI2 for L6470 drivers...
+      💡 SPI instances should be in hardware_config.h
+      Line 29: extern I2C_HandleTypeDef hi2c1;   // I2C1 for encoder 0...
+      💡 I2C instances should be in hardware_config.h
+      Line 30: extern I2C_HandleTypeDef hi2c2;   // I2C2 for encoder 1...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/communication/comm_protocol.c:
+      Line 114: safety_log_event(SAFETY_EVENT_SYSTEM_INIT, 0xFF, (uint32_t)S...
+      💡 Hex addresses should be in config headers
+      Line 646: uint16_t crc = 0xFFFF;...
+      💡 Hex addresses should be in config headers
+      Line 654: crc = (crc >> 1) ^ 0xA001;...
+      💡 Hex addresses should be in config headers
+
+   📁 src/controllers/motor_controller.c:
+      Line 89: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 0);...
+      💡 Hex addresses should be in config headers
+      Line 95: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 1);...
+      💡 Hex addresses should be in config headers
+
+   📁 src/controllers/real_time_control.c:
+      Line 315: htim_control_loop.Init.Period = 1000 - 1; // 1ms period...
+      💡 Time values should use timestamp_ms_t type
+      Line 530: position_control_update(motor_id, 1); // 1ms time step...
+      💡 Time values should use timestamp_ms_t type
+      Line 544: motion_profile_update(motor_id, 1); // 1ms time step...
+      💡 Time values should use timestamp_ms_t type
+
+   ... and 17 more files with violations
+
+⚠️  Found 7 include dependency issues:
+   📁 src/hal_abstraction/hal_abstraction_mock.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/hal_abstraction/hal_abstraction_stm32h7.c
+      Issue: Uses motor constants but does not include motor_config.h
+      💡 Add #include "config/motor_config.h"
+   📁 src/safety/emergency_stop_abstracted.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/safety/l6470_fault_monitor.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/safety/l6470_fault_monitor.c
+      Issue: Uses motor constants but does not include motor_config.h
+      💡 Add #include "config/motor_config.h"
+
+⚠️  Found 1 configuration inconsistencies:
+   🔗 MAX_MOTORS defined as 2 but system_state.h does not use MAX_MOTORS constant
+      Files: src/config/motor_config.h, src/common/system_state.h
+      💡 Use MotorState_t motors[MAX_MOTORS] in system_state.h
+
+📊 Summary:
+   • Missing SSOT files: 0
+   • Hardcoded value violations: 278
+   • Include dependency issues: 7
+   • Configuration inconsistencies: 1
+   • Total issues found: 286
+
+🔧 Action required: 286 issues need attention.
+
+💡 Next steps:
+   2. Replace hardcoded values with SSOT references
+   3. Add missing SSOT header includes
+   4. Fix configuration inconsistencies
+   5. Re-run validation: python3 scripts/validate_ssot.py
+
+🚀 SSOT validation complete!
+[2025-08-07 05:37:13] PRE-COMMIT: SSOT validation passed
+[2025-08-07 05:37:13] PRE-COMMIT: STATUS.md is being committed, validating format...
+[2025-08-07 05:37:13] PRE-COMMIT: STATUS.md format validation completed
+[2025-08-07 05:37:13] PRE-COMMIT: === Pre-commit validation completed ===
+[2025-08-07 05:37:13] POST-COMMIT: === Post-commit hook triggered ===
+[2025-08-07 05:37:13] POST-COMMIT: Processing commit: 90cedc8 - docs: update STATUS.md for Phase 1 completion
+[2025-08-07 05:37:13] POST-COMMIT: STATUS.md was modified in this commit, skipping automation to prevent loops
+[2025-08-07 06:38:30] PRE-COMMIT: === Pre-commit validation started ===
+[2025-08-07 06:38:30] PRE-COMMIT: Relevant files changed, running SSOT validation...
+🔍 Starting SSOT validation...
+🔍 SSOT Validation Report for STM32H753ZI Project
+============================================================
+✅ SSOT structure complete
+
+⚠️  Found 277 potential SSOT violations:
+
+   📁 src/application/main.c:
+      Line 103: * - SPI1 for L6470 (stm32h7-spi-l6470.instructions.md)...
+      💡 SPI instances should be in hardware_config.h
+      Line 104: * - I2C1/I2C2 for AS5600 (stm32h7-i2c-as5600.instructions.md...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/application/main_application.c:
+      Line 28: extern SPI_HandleTypeDef hspi2;   // SPI2 for L6470 drivers...
+      💡 SPI instances should be in hardware_config.h
+      Line 29: extern I2C_HandleTypeDef hi2c1;   // I2C1 for encoder 0...
+      💡 I2C instances should be in hardware_config.h
+      Line 30: extern I2C_HandleTypeDef hi2c2;   // I2C2 for encoder 1...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/communication/comm_protocol.c:
+      Line 114: safety_log_event(SAFETY_EVENT_SYSTEM_INIT, 0xFF, (uint32_t)S...
+      💡 Hex addresses should be in config headers
+      Line 646: uint16_t crc = 0xFFFF;...
+      💡 Hex addresses should be in config headers
+      Line 654: crc = (crc >> 1) ^ 0xA001;...
+      💡 Hex addresses should be in config headers
+
+   📁 src/controllers/motor_controller.c:
+      Line 89: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 0);...
+      💡 Hex addresses should be in config headers
+      Line 95: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 1);...
+      💡 Hex addresses should be in config headers
+
+   📁 src/controllers/real_time_control.c:
+      Line 315: htim_control_loop.Init.Period = 1000 - 1; // 1ms period...
+      💡 Time values should use timestamp_ms_t type
+      Line 530: position_control_update(motor_id, 1); // 1ms time step...
+      💡 Time values should use timestamp_ms_t type
+      Line 544: motion_profile_update(motor_id, 1); // 1ms time step...
+      💡 Time values should use timestamp_ms_t type
+
+   ... and 16 more files with violations
+
+⚠️  Found 5 include dependency issues:
+   📁 src/hal_abstraction/hal_abstraction_mock.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/hal_abstraction/hal_abstraction_stm32h7.c
+      Issue: Uses motor constants but does not include motor_config.h
+      💡 Add #include "config/motor_config.h"
+   📁 src/safety/emergency_stop_abstracted.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/safety/l6470_fault_monitor.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/safety/l6470_fault_monitor.c
+      Issue: Uses motor constants but does not include motor_config.h
+      💡 Add #include "config/motor_config.h"
+
+⚠️  Found 1 configuration inconsistencies:
+   🔗 MAX_MOTORS defined as 2 but system_state.h does not use MAX_MOTORS constant
+      Files: src/config/motor_config.h, src/common/system_state.h
+      💡 Use MotorState_t motors[MAX_MOTORS] in system_state.h
+
+📊 Summary:
+   • Missing SSOT files: 0
+   • Hardcoded value violations: 277
+   • Include dependency issues: 5
+   • Configuration inconsistencies: 1
+   • Total issues found: 283
+
+🔧 Action required: 283 issues need attention.
+
+💡 Next steps:
+   2. Replace hardcoded values with SSOT references
+   3. Add missing SSOT header includes
+   4. Fix configuration inconsistencies
+   5. Re-run validation: python3 scripts/validate_ssot.py
+
+🚀 SSOT validation complete!
+[2025-08-07 06:38:30] PRE-COMMIT: SSOT validation passed
+[2025-08-07 06:38:31] PRE-COMMIT: STATUS.md is being committed, validating format...
+[2025-08-07 06:38:31] PRE-COMMIT: WARNING: Missing required section: 🔧 Setup Summary
+[2025-08-07 06:38:31] PRE-COMMIT: WARNING: Missing required section: ✅ Progress So Far
+[2025-08-07 06:38:31] PRE-COMMIT: WARNING: Missing required section: 🔄 Current Work
+[2025-08-07 06:38:31] PRE-COMMIT: WARNING: Missing required section: ⏭️ Next Steps
+[2025-08-07 06:38:31] PRE-COMMIT: WARNING: Missing required section: 🧠 Notes & Observations
+[2025-08-07 06:38:31] PRE-COMMIT: WARNING: Missing required section: 📊 Key Metrics
+[2025-08-07 06:38:31] PRE-COMMIT: WARNING: Missing required section: 🎯 Architecture Status
+[2025-08-07 06:38:31] PRE-COMMIT: WARNING: Missing required section: 🔗 Quick References
+[2025-08-07 06:38:31] PRE-COMMIT: STATUS.md format validation completed
+[2025-08-07 06:38:31] PRE-COMMIT: === Pre-commit validation completed ===
+[2025-08-07 06:38:31] POST-COMMIT: === Post-commit hook triggered ===
+[2025-08-07 06:38:31] POST-COMMIT: Processing commit: c64c825 - feat: Update STATUS.md to reflect project completion
+[2025-08-07 06:38:31] POST-COMMIT: STATUS.md was modified in this commit, skipping automation to prevent loops
