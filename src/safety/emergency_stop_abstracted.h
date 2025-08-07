@@ -76,7 +76,7 @@ typedef enum {
 // Emergency stop button configuration (using HAL abstraction)
 #define ESTOP_BUTTON_PORT HAL_GPIO_PORT_C
 #define ESTOP_BUTTON_PIN (1U << 13) // GPIO_PIN_13 equivalent
-#define ESTOP_BUTTON_TRIGGER_TYPE GPIO_MODE_IT_FALLING
+#define ESTOP_BUTTON_TRIGGER_TYPE HAL_GPIO_MODE_IT_FALLING
 
 // Safety relay outputs (if external safety relays are used)
 #define SAFETY_RELAY1_PORT HAL_GPIO_PORT_B

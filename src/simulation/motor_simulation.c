@@ -7,6 +7,7 @@
  */
 
 #include "motor_simulation.h"
+#include "config/motor_config.h"
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
@@ -568,7 +569,7 @@ static void l6470_sim_update_status_register(uint8_t motor_id) {
     L6470_SimState_t *motor = &g_simulation.motors[motor_id];
 
     // Update motion status bits
-    motor->status_register &= ~L6470_STATUS_MOT_STATUS;
+    motor->status_register &= ~L6470_STATUS_MOT_STATUS_Msk;
     switch (motor->motion_state) {
     case SIM_MOTOR_STOPPED:
         motor->status_register |= (0 << 5);

@@ -12,6 +12,7 @@
 #include "common/error_codes.h"
 #include "config/safety_config.h"
 #include "hal_abstraction/hal_abstraction.h"
+#include "mock_hal_abstraction.h"
 #include "safety/emergency_stop_abstracted.h"
 #include "unity.h"
 #include <string.h>
@@ -424,7 +425,7 @@ void test_hal_abstraction_spi_operations(void) {
 
     HAL_SPI_Transaction_t transaction = {.tx_data = tx_data,
                                          .rx_data = rx_data,
-                                         .size = sizeof(tx_data),
+                                         .data_size = sizeof(tx_data),
                                          .timeout_ms = 1000};
 
     SystemError_t result =
@@ -439,17 +440,16 @@ void test_hal_abstraction_spi_operations(void) {
 void test_hal_abstraction_i2c_operations(void) {
     // Test I2C transaction through abstraction
     uint8_t tx_data[] = {0xAA, 0xBB};
-    uint8_t rx_data[2];
 
     HAL_I2C_Transaction_t transaction = {.device_address = 0x50,
-                                         .tx_data = tx_data,
-                                         .tx_size = sizeof(tx_data),
-                                         .rx_data = rx_data,
-                                         .rx_size = sizeof(rx_data),
+                                         .register_address = 0x00,
+                                         .data = tx_data,
+                                         .data_size = sizeof(tx_data),
+                                         .use_register_address = true,
                                          .timeout_ms = 1000};
 
     SystemError_t result =
-        HAL_Abstraction_I2C_TransmitReceive(HAL_I2C_1, &transaction);
+        HAL_Abstraction_I2C_MemWrite(HAL_I2C_1, &transaction);
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
 
     // Verify mock recorded the transaction

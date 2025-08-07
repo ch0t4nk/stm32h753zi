@@ -11,6 +11,7 @@
 #include "multi_motor_coordinator.h"
 #include "config/motor_config.h"
 #include "config/safety_config.h"
+#include "hal_abstraction/hal_abstraction.h"
 #include "motion_profile.h"
 #include "position_control.h"
 #include "safety/fault_monitor.h"
@@ -196,7 +197,7 @@ multi_motor_coordinated_move(CoordinatedMoveCommand_t *move_cmd) {
 
     if (result == SYSTEM_OK) {
         coordinator.motion_state.active = true;
-        coordinator.motion_state.start_time = HAL_GetTick();
+        coordinator.motion_state.start_time = HAL_Abstraction_GetTick();
     }
 
     return result;

@@ -12,6 +12,7 @@
 #include "config/motor_config.h"
 #include "config/safety_config.h"
 #include "drivers/as5600/as5600_driver.h"
+#include "hal_abstraction/hal_abstraction.h"
 #include "motion_profile.h"
 #include "safety/fault_monitor.h"
 #include <math.h>
@@ -486,13 +487,13 @@ static SystemError_t perform_limit_switch_homing(uint8_t motor_id,
     }
 
     // Wait for limit switch activation (would need actual hardware interface)
-    uint32_t timeout = HAL_GetTick() + config->timeout_ms;
+    uint32_t timeout = HAL_Abstraction_GetTick() + config->timeout_ms;
     bool switch_found = false;
 
-    while (HAL_GetTick() < timeout && !switch_found) {
+    while (HAL_Abstraction_GetTick() < timeout && !switch_found) {
         // Check limit switch state (placeholder)
         switch_found = check_limit_switch(motor_id);
-        HAL_Delay(10);
+        HAL_Abstraction_Delay(10);
     }
 
     if (!switch_found) {
@@ -511,7 +512,7 @@ static SystemError_t perform_limit_switch_homing(uint8_t motor_id,
     }
 
     // Wait for switch to deactivate
-    HAL_Delay(config->backoff_distance);
+    HAL_Abstraction_Delay(config->backoff_distance);
     motor_stop(motor_id);
 
     return SYSTEM_OK;

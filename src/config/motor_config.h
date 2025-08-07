@@ -108,6 +108,14 @@
 #define L6470_DEC 0x08A       // Deceleration register value
 #define L6470_FS_SPD 0x027    // Full step speed threshold
 
+// L6470 Safe Default Values (for simulation and initialization)
+#define L6470_SAFE_DEFAULT_ACC L6470_ACC // Safe default acceleration
+#define L6470_SAFE_DEFAULT_DEC L6470_DEC // Safe default deceleration
+#define L6470_SAFE_DEFAULT_MAX_SPEED L6470_MAX_SPEED // Safe default max speed
+#define L6470_SAFE_DEFAULT_OCD_TH 0x8 // Safe overcurrent threshold
+#define L6470_SAFE_DEFAULT_KVAL_RUN                                           \
+    L6470_KVAL_RUN // Safe default running current
+
 // Current Control (KVAL registers)
 #define L6470_KVAL_HOLD 0x29 // Holding current (25% of max)
 #define L6470_KVAL_RUN 0x29  // Running current (25% of max)

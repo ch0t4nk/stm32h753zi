@@ -674,3 +674,92 @@
 [2025-08-06 17:04:43] POST-COMMIT: STATUS.md automation completed successfully
 [2025-08-06 17:04:43] POST-COMMIT: No STATUS.md changes needed
 [2025-08-06 17:04:43] POST-COMMIT: === Post-commit hook completed ===
+[2025-08-06 21:08:35] PRE-COMMIT: === Pre-commit validation started ===
+[2025-08-06 21:08:36] PRE-COMMIT: Relevant files changed, running SSOT validation...
+🔍 Starting SSOT validation...
+🔍 SSOT Validation Report for STM32H753ZI Project
+============================================================
+✅ SSOT structure complete
+
+⚠️  Found 260 potential SSOT violations:
+
+   📁 src/application/main.c:
+      Line 93: * - SPI1 for L6470 (stm32h7-spi-l6470.instructions.md)...
+      💡 SPI instances should be in hardware_config.h
+      Line 94: * - I2C1/I2C2 for AS5600 (stm32h7-i2c-as5600.instructions.md...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/application/main_application.c:
+      Line 23: extern SPI_HandleTypeDef hspi2;    // SPI2 for L6470 drivers...
+      💡 SPI instances should be in hardware_config.h
+      Line 24: extern I2C_HandleTypeDef hi2c1;    // I2C1 for encoder 0...
+      💡 I2C instances should be in hardware_config.h
+      Line 25: extern I2C_HandleTypeDef hi2c2;    // I2C2 for encoder 1...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/communication/comm_protocol.c:
+      Line 103: safety_log_event(SAFETY_EVENT_SYSTEM_INIT, 0xFF, (uint32_t)S...
+      💡 Hex addresses should be in config headers
+      Line 608: uint16_t crc = 0xFFFF;...
+      💡 Hex addresses should be in config headers
+      Line 616: crc = (crc >> 1) ^ 0xA001;...
+      💡 Hex addresses should be in config headers
+
+   📁 src/controllers/motor_controller.c:
+      Line 80: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 0);...
+      💡 Hex addresses should be in config headers
+      Line 86: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 1);...
+      💡 Hex addresses should be in config headers
+
+   📁 src/controllers/real_time_control.c:
+      Line 314: htim_control_loop.Init.Period = 1000 - 1; // 1ms period...
+      💡 Time values should use timestamp_ms_t type
+      Line 529: position_control_update(motor_id, 1); // 1ms time step...
+      💡 Time values should use timestamp_ms_t type
+      Line 543: motion_profile_update(motor_id, 1); // 1ms time step...
+      💡 Time values should use timestamp_ms_t type
+
+   ... and 14 more files with violations
+
+⚠️  Found 4 include dependency issues:
+   📁 src/hal_abstraction/hal_abstraction_mock.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/hal_abstraction/hal_abstraction_stm32h7.c
+      Issue: Uses motor constants but does not include motor_config.h
+      💡 Add #include "config/motor_config.h"
+   📁 src/safety/emergency_stop_abstracted.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/simulation/motor_simulation.c
+      Issue: Uses motor constants but does not include motor_config.h
+      💡 Add #include "config/motor_config.h"
+
+⚠️  Found 1 configuration inconsistencies:
+   🔗 MAX_MOTORS defined as 2 but system_state.h does not use MAX_MOTORS constant
+      Files: src/config/motor_config.h, src/common/system_state.h
+      💡 Use MotorState_t motors[MAX_MOTORS] in system_state.h
+
+📊 Summary:
+   • Missing SSOT files: 0
+   • Hardcoded value violations: 260
+   • Include dependency issues: 4
+   • Configuration inconsistencies: 1
+   • Total issues found: 265
+
+🔧 Action required: 265 issues need attention.
+
+💡 Next steps:
+   2. Replace hardcoded values with SSOT references
+   3. Add missing SSOT header includes
+   4. Fix configuration inconsistencies
+   5. Re-run validation: python3 scripts/validate_ssot.py
+
+🚀 SSOT validation complete!
+[2025-08-06 21:08:36] PRE-COMMIT: SSOT validation passed
+[2025-08-06 21:08:37] PRE-COMMIT: STATUS.md is being committed, validating format...
+[2025-08-06 21:08:37] PRE-COMMIT: STATUS.md format validation completed
+[2025-08-06 21:08:37] PRE-COMMIT: === Pre-commit validation completed ===
+[2025-08-06 21:08:37] POST-COMMIT: === Post-commit hook triggered ===
+[2025-08-06 21:08:37] POST-COMMIT: Processing commit: 092a0ed - feat: Complete HAL abstraction layer implementation
+[2025-08-06 21:08:37] POST-COMMIT: STATUS.md was modified in this commit, skipping automation to prevent loops

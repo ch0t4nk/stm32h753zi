@@ -11,6 +11,7 @@
 #include "real_time_control.h"
 #include "config/motor_config.h"
 #include "config/safety_config.h"
+#include "hal_abstraction/hal_abstraction.h"
 #include "motion_profile.h"
 #include "multi_motor_coordinator.h"
 #include "position_control.h"
@@ -48,7 +49,7 @@ SystemError_t rt_control_init(void) {
     }
 
     // Initialize timing statistics
-    rt_control_system.timing.system_start_time = HAL_GetTick();
+    rt_control_system.timing.system_start_time = HAL_Abstraction_GetTick();
     rt_control_system.timing.total_cycles = 0;
     rt_control_system.timing.max_jitter_us = 0;
     rt_control_system.timing.overrun_count = 0;
@@ -103,7 +104,7 @@ SystemError_t rt_control_start(void) {
     }
 
     rt_control_system.system_state = RT_SYSTEM_RUNNING;
-    rt_control_system.timing.system_start_time = HAL_GetTick();
+    rt_control_system.timing.system_start_time = HAL_Abstraction_GetTick();
 
     return SYSTEM_OK;
 }
@@ -211,7 +212,7 @@ SystemError_t rt_control_get_status(RTSystemStatus_t *status) {
 
     status->system_state = rt_control_system.system_state;
     status->uptime_ms =
-        HAL_GetTick() - rt_control_system.timing.system_start_time;
+        HAL_Abstraction_GetTick() - rt_control_system.timing.system_start_time;
     status->total_cycles = rt_control_system.timing.total_cycles;
     status->overrun_count = rt_control_system.timing.overrun_count;
     status->max_jitter_us = rt_control_system.timing.max_jitter_us;

@@ -238,6 +238,9 @@ typedef enum {
     ERROR_TEMPERATURE_FAULT,      // 0x7003 - Temperature out of range
     ERROR_VOLTAGE_FAULT,          // 0x7004 - Voltage out of range
     ERROR_CLOCK_FAULT,            // 0x7005 - System clock fault
+    ERROR_HARDWARE_FAILURE,       // 0x7006 - Hardware failure
+    ERROR_UNKNOWN,                // 0x7007 - Unknown error
+    ERROR_GPIO_WRITE_FAILED,      // 0x7008 - GPIO write operation failed
 } SystemError_t;
 
 /* ==========================================================================

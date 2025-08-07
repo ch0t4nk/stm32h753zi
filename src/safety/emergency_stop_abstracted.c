@@ -297,9 +297,9 @@ static SystemError_t estop_init_hardware(void) {
 
     // Configure emergency stop button as input with pull-up
     HAL_GPIO_Config_t button_config = {.pin = ESTOP_BUTTON_PIN,
-                                       .mode = GPIO_MODE_INPUT,
-                                       .pull = GPIO_PULLUP,
-                                       .speed = GPIO_SPEED_FREQ_LOW,
+                                       .mode = HAL_GPIO_MODE_INPUT,
+                                       .pull = HAL_GPIO_PULLUP,
+                                       .speed = HAL_GPIO_SPEED_FREQ_LOW,
                                        .alternate = 0};
 
     result = HAL_Abstraction_GPIO_Init(ESTOP_BUTTON_PORT, &button_config);
@@ -315,9 +315,9 @@ static SystemError_t estop_init_hardware(void) {
 
     // Configure LED as output
     HAL_GPIO_Config_t led_config = {.pin = ESTOP_LED_PIN,
-                                    .mode = GPIO_MODE_OUTPUT_PP,
-                                    .pull = GPIO_NOPULL,
-                                    .speed = GPIO_SPEED_FREQ_LOW,
+                                    .mode = HAL_GPIO_MODE_OUTPUT_PP,
+                                    .pull = HAL_GPIO_NOPULL,
+                                    .speed = HAL_GPIO_SPEED_FREQ_LOW,
                                     .alternate = 0};
 
     result = HAL_Abstraction_GPIO_Init(ESTOP_LED_PORT, &led_config);
@@ -326,9 +326,9 @@ static SystemError_t estop_init_hardware(void) {
 
     // Configure safety relays as outputs
     HAL_GPIO_Config_t relay_config = {.pin = SAFETY_RELAY1_PIN,
-                                      .mode = GPIO_MODE_OUTPUT_PP,
-                                      .pull = GPIO_NOPULL,
-                                      .speed = GPIO_SPEED_FREQ_LOW,
+                                      .mode = HAL_GPIO_MODE_OUTPUT_PP,
+                                      .pull = HAL_GPIO_NOPULL,
+                                      .speed = HAL_GPIO_SPEED_FREQ_LOW,
                                       .alternate = 0};
 
     result = HAL_Abstraction_GPIO_Init(SAFETY_RELAY1_PORT, &relay_config);

@@ -12,7 +12,7 @@
 #include "common/error_codes.h"
 #include "config/motor_config.h"
 #include "config/safety_config.h"
-#include "stm32h7xx_hal.h"
+#include "hal_abstraction/hal_abstraction.h"
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
@@ -325,7 +325,7 @@ SystemError_t motion_profile_start(uint8_t motor_id,
     profile_active[motor_id] = true;
 
     // Record start time
-    active_profiles[motor_id].start_time_ms = HAL_GetTick();
+    active_profiles[motor_id].start_time_ms = HAL_Abstraction_GetTick();
 
     return SYSTEM_OK;
 }
@@ -375,7 +375,7 @@ SystemError_t motion_profile_get_status(uint8_t motor_id,
     }
 
     MotionProfile_t *profile = &active_profiles[motor_id];
-    uint32_t current_time = HAL_GetTick();
+    uint32_t current_time = HAL_Abstraction_GetTick();
     uint32_t elapsed_time = current_time - profile->start_time_ms;
 
     status->is_active = true;
@@ -438,7 +438,7 @@ SystemError_t motion_profile_synchronize(uint8_t *motor_ids,
     }
 
     // Start all profiles simultaneously
-    uint32_t sync_start_time = HAL_GetTick();
+    uint32_t sync_start_time = HAL_Abstraction_GetTick();
     for (uint8_t i = 0; i < motor_count; i++) {
         profiles[i].start_time_ms = sync_start_time;
         motion_profile_start(motor_ids[i], &profiles[i]);

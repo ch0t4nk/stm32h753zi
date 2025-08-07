@@ -454,7 +454,7 @@ HAL_Abstraction_SPI_TransmitReceive(HAL_SPI_Instance_t instance,
         return ERROR_HARDWARE_FAULT;
     }
 
-    MockSPI_t *spi = &mock_hal_state.spi_instances[instance];
+    MockSPI_Internal_t *spi = &mock_hal_state.spi_instances[instance];
 
     // Record transaction details
     if (transaction->tx_data &&
@@ -491,7 +491,7 @@ SystemError_t HAL_Abstraction_SPI_Transmit(HAL_SPI_Instance_t instance,
         return ERROR_HARDWARE_FAULT;
     }
 
-    MockSPI_t *spi = &mock_hal_state.spi_instances[instance];
+    MockSPI_Internal_t *spi = &mock_hal_state.spi_instances[instance];
 
     if (data_size <= sizeof(spi->last_tx_data)) {
         memcpy(spi->last_tx_data, tx_data, data_size);
@@ -514,7 +514,7 @@ SystemError_t HAL_Abstraction_SPI_Receive(HAL_SPI_Instance_t instance,
         return ERROR_HARDWARE_FAULT;
     }
 
-    MockSPI_t *spi = &mock_hal_state.spi_instances[instance];
+    MockSPI_Internal_t *spi = &mock_hal_state.spi_instances[instance];
 
     // Fill with test pattern
     for (uint16_t i = 0; i < data_size; i++) {
@@ -557,7 +557,7 @@ HAL_Abstraction_I2C_MemWrite(HAL_I2C_Instance_t instance,
         return ERROR_HARDWARE_FAULT;
     }
 
-    MockI2C_t *i2c = &mock_hal_state.i2c_instances[instance];
+    MockI2C_Internal_t *i2c = &mock_hal_state.i2c_instances[instance];
 
     i2c->last_device_address = transaction->device_address;
     i2c->last_register_address = transaction->register_address;
@@ -584,7 +584,7 @@ HAL_Abstraction_I2C_MemRead(HAL_I2C_Instance_t instance,
         return ERROR_HARDWARE_FAULT;
     }
 
-    MockI2C_t *i2c = &mock_hal_state.i2c_instances[instance];
+    MockI2C_Internal_t *i2c = &mock_hal_state.i2c_instances[instance];
 
     i2c->last_device_address = transaction->device_address;
     i2c->last_register_address = transaction->register_address;
@@ -624,7 +624,7 @@ SystemError_t HAL_Abstraction_I2C_Transmit(HAL_I2C_Instance_t instance,
         return ERROR_HARDWARE_FAULT;
     }
 
-    MockI2C_t *i2c = &mock_hal_state.i2c_instances[instance];
+    MockI2C_Internal_t *i2c = &mock_hal_state.i2c_instances[instance];
 
     i2c->last_device_address = device_address;
 
@@ -650,7 +650,7 @@ SystemError_t HAL_Abstraction_I2C_Receive(HAL_I2C_Instance_t instance,
         return ERROR_HARDWARE_FAULT;
     }
 
-    MockI2C_t *i2c = &mock_hal_state.i2c_instances[instance];
+    MockI2C_Internal_t *i2c = &mock_hal_state.i2c_instances[instance];
 
     i2c->last_device_address = device_address;
 
@@ -683,7 +683,7 @@ HAL_Abstraction_I2C_TransmitReceive(HAL_I2C_Instance_t instance,
         return ERROR_HARDWARE_FAULT;
     }
 
-    MockI2C_t *i2c = &mock_hal_state.i2c_instances[instance];
+    MockI2C_Internal_t *i2c = &mock_hal_state.i2c_instances[instance];
 
     i2c->last_device_address = transaction->device_address;
     i2c->last_register_address = transaction->register_address;
@@ -731,7 +731,7 @@ SystemError_t HAL_Abstraction_Timer_Init(HAL_Timer_Instance_t instance,
         return ERROR_HARDWARE_FAULT;
     }
 
-    MockTimer_t *timer = &mock_hal_state.timer_instances[instance];
+    MockTimer_Internal_t *timer = &mock_hal_state.timer_instances[instance];
     timer->initialized = true;
     timer->config = *config;
     timer->counter_value = 0;
@@ -748,7 +748,7 @@ SystemError_t HAL_Abstraction_Timer_Start(HAL_Timer_Instance_t instance) {
         return ERROR_HARDWARE_FAULT;
     }
 
-    MockTimer_t *timer = &mock_hal_state.timer_instances[instance];
+    MockTimer_Internal_t *timer = &mock_hal_state.timer_instances[instance];
     timer->running = true;
 
     return SYSTEM_OK;
@@ -759,7 +759,7 @@ SystemError_t HAL_Abstraction_Timer_Stop(HAL_Timer_Instance_t instance) {
         return ERROR_INVALID_PARAMETER;
     }
 
-    MockTimer_t *timer = &mock_hal_state.timer_instances[instance];
+    MockTimer_Internal_t *timer = &mock_hal_state.timer_instances[instance];
     timer->running = false;
 
     return SYSTEM_OK;
@@ -771,7 +771,7 @@ SystemError_t HAL_Abstraction_Timer_GetCounter(HAL_Timer_Instance_t instance,
         return ERROR_NULL_POINTER;
     }
 
-    MockTimer_t *timer = &mock_hal_state.timer_instances[instance];
+    MockTimer_Internal_t *timer = &mock_hal_state.timer_instances[instance];
     *counter = timer->counter_value;
 
     return SYSTEM_OK;

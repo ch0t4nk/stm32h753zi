@@ -48,6 +48,37 @@ typedef enum {
 } HAL_GPIO_State_t;
 
 /**
+ * @brief GPIO pin mode constants (platform-independent)
+ */
+#define HAL_GPIO_MODE_INPUT 0x00000000U
+#define HAL_GPIO_MODE_OUTPUT_PP 0x00000001U
+#define HAL_GPIO_MODE_OUTPUT_OD 0x00000011U
+#define HAL_GPIO_MODE_AF_PP 0x00000002U
+#define HAL_GPIO_MODE_AF_OD 0x00000012U
+#define HAL_GPIO_MODE_ANALOG 0x00000003U
+#define HAL_GPIO_MODE_IT_RISING 0x10110000U
+#define HAL_GPIO_MODE_IT_FALLING 0x10210000U
+#define HAL_GPIO_MODE_IT_RISING_FALLING 0x10310000U
+#define HAL_GPIO_MODE_EVT_RISING 0x10120000U
+#define HAL_GPIO_MODE_EVT_FALLING 0x10220000U
+#define HAL_GPIO_MODE_EVT_RISING_FALLING 0x10320000U
+
+/**
+ * @brief GPIO pull-up/pull-down constants (platform-independent)
+ */
+#define HAL_GPIO_NOPULL 0x00000000U
+#define HAL_GPIO_PULLUP 0x00000001U
+#define HAL_GPIO_PULLDOWN 0x00000002U
+
+/**
+ * @brief GPIO speed constants (platform-independent)
+ */
+#define HAL_GPIO_SPEED_FREQ_LOW 0x00000000U
+#define HAL_GPIO_SPEED_FREQ_MEDIUM 0x00000001U
+#define HAL_GPIO_SPEED_FREQ_HIGH 0x00000002U
+#define HAL_GPIO_SPEED_FREQ_VERY_HIGH 0x00000003U
+
+/**
  * @brief GPIO pin configuration structure
  */
 typedef struct {

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 
 # STM32H753ZI Motor Control Project
-project(stm32h753_ihm02a1 
+project(stm32h753_ihm02a1
     VERSION 1.0.0
     DESCRIPTION "STM32H753ZI stepper motor control with L6470 drivers and AS5600 encoders"
     LANGUAGES C ASM
@@ -90,6 +90,7 @@ include_directories(
     src/safety
     src/communication
     src/application
+    src/hal_abstraction
     Core/Inc
     drivers/STM32H7xx_HAL_Driver/Inc
     drivers/STM32H7xx_HAL_Driver/Inc/Legacy
@@ -133,6 +134,7 @@ add_custom_target(generate_schemas
 # Source files
 file(GLOB_RECURSE SOURCES
     "src/common/*.c"
+    "src/hal_abstraction/hal_abstraction_stm32h7.c"    # HAL abstraction STM32H7 implementation
     "src/drivers/l6470/*.c"
     "src/drivers/as5600/*.c"     # AS5600 magnetic encoder driver
     "src/controllers/*.c"        # Motor controller integration layer
@@ -151,6 +153,9 @@ file(GLOB_RECURSE SOURCES
 list(FILTER SOURCES EXCLUDE REGEX ".*timebase_rtc.*template.*")
 list(FILTER SOURCES EXCLUDE REGEX ".*hal_msp_template.*")
 list(FILTER SOURCES EXCLUDE REGEX ".*timebase_tim_template.*")
+
+# Exclude legacy files in favor of HAL abstraction versions
+list(FILTER SOURCES EXCLUDE REGEX ".*emergency_stop\\.c$")  # Use emergency_stop_abstracted.c instead
 
 # Use the correct startup file for GCC
 set(STARTUP_FILE "${CMAKE_SOURCE_DIR}/startup_stm32h753xx.s")

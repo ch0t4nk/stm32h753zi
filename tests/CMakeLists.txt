@@ -83,7 +83,8 @@ endfunction()
 # HAL Abstracted Safety Tests (modern approach)
 add_test_if_exists(test_safety_systems_hal_abstracted
     ${TEST_UNIT_DIR}/test_safety_systems_hal_abstracted.c
-    ${TEST_MOCKS_DIR}/mock_hal.c
+    ${TEST_MOCKS_DIR}/mock_hal_abstraction.c
+    ${CMAKE_SOURCE_DIR}/src/safety/emergency_stop_abstracted.c
 )
 
 # Legacy tests (conditionally add if they exist)
