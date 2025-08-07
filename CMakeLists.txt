@@ -19,6 +19,7 @@ add_compile_definitions(
     PREFETCH_ENABLE=1
     INSTRUCTION_CACHE_ENABLE=1
     DATA_CACHE_ENABLE=1
+    SIMULATION_MODE=1
 )
 
 # Compiler flags for STM32H753ZI (Cortex-M7)
@@ -102,22 +103,20 @@ include_directories(
 # Auto-generated register headers from schemas
 add_custom_command(
     OUTPUT ${CMAKE_SOURCE_DIR}/src/config/l6470_registers_generated.h
-           ${CMAKE_SOURCE_DIR}/src/config/l6470_registers_generated.c
-    COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/generate_register_headers.py 
-            ${CMAKE_SOURCE_DIR}/schemas/l6470_registers.yaml --validation
+    COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/schema_generator.py 
+            ${CMAKE_SOURCE_DIR}/schemas/l6470_registers.yaml
     DEPENDS ${CMAKE_SOURCE_DIR}/schemas/l6470_registers.yaml
-            ${CMAKE_SOURCE_DIR}/scripts/generate_register_headers.py
+            ${CMAKE_SOURCE_DIR}/scripts/schema_generator.py
     COMMENT "Generating L6470 register headers from schema"
     VERBATIM
 )
 
 add_custom_command(
     OUTPUT ${CMAKE_SOURCE_DIR}/src/config/as5600_registers_generated.h
-           ${CMAKE_SOURCE_DIR}/src/config/as5600_registers_generated.c
-    COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/generate_register_headers.py 
-            ${CMAKE_SOURCE_DIR}/schemas/as5600_registers.yaml --validation
+    COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/schema_generator.py 
+            ${CMAKE_SOURCE_DIR}/schemas/as5600_registers.yaml
     DEPENDS ${CMAKE_SOURCE_DIR}/schemas/as5600_registers.yaml
-            ${CMAKE_SOURCE_DIR}/scripts/generate_register_headers.py
+            ${CMAKE_SOURCE_DIR}/scripts/schema_generator.py
     COMMENT "Generating AS5600 register headers from schema"
     VERBATIM
 )
@@ -125,9 +124,7 @@ add_custom_command(
 # Create target for schema generation
 add_custom_target(generate_schemas
     DEPENDS ${CMAKE_SOURCE_DIR}/src/config/l6470_registers_generated.h
-            ${CMAKE_SOURCE_DIR}/src/config/l6470_registers_generated.c
             ${CMAKE_SOURCE_DIR}/src/config/as5600_registers_generated.h
-            ${CMAKE_SOURCE_DIR}/src/config/as5600_registers_generated.c
     COMMENT "Generating all register schema headers"
 )
 
@@ -142,7 +139,6 @@ file(GLOB_RECURSE SOURCES
     "src/communication/*.c"      # Communication protocols (UART, CAN)
     "src/application/*.c"
     "src/simulation/*.c"         # Motor/encoder simulation framework
-    "src/config/*_generated.c"   # Auto-generated register validation
     "drivers/STM32H7xx_HAL_Driver/Src/*.c"
     "Core/Src/stm32h7xx_hal_msp.c"
     "Core/Src/stm32h7xx_it.c"
@@ -156,6 +152,7 @@ list(FILTER SOURCES EXCLUDE REGEX ".*timebase_tim_template.*")
 
 # Exclude legacy files in favor of HAL abstraction versions
 list(FILTER SOURCES EXCLUDE REGEX ".*emergency_stop\\.c$")  # Use emergency_stop_abstracted.c instead
+list(FILTER SOURCES EXCLUDE REGEX ".*hardware_simulation\\.c$")  # Use motor_simulation.c instead (newer simulation framework)
 
 # Use the correct startup file for GCC
 set(STARTUP_FILE "${CMAKE_SOURCE_DIR}/startup_stm32h753xx.s")

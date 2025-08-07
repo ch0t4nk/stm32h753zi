@@ -15,8 +15,10 @@
 #include "common/system_state.h"
 #include "config/comm_config.h"
 #include "config/hardware_config.h"
+#include "config/l6470_registers_generated.h"
 #include "config/motor_config.h"
 #include "hal_abstraction/hal_abstraction.h"
+#include "simulation/hardware_simulation.h"
 #include <string.h>
 
 /* ==========================================================================
@@ -34,6 +36,7 @@ typedef struct {
     uint32_t last_command_time;
     uint32_t fault_count;
     MotorState_t current_state;
+    bool simulation_mode; // Added for simulation framework integration
 } L6470_DriverState_t;
 
 static L6470_DriverState_t driver_state[L6470_MAX_DEVICES] = {0};
@@ -79,6 +82,20 @@ static SystemError_t l6470_validate_motor_id(uint8_t motor_id);
  * @return System error code
  */
 SystemError_t l6470_init(void) {
+    // Initialize simulation framework if enabled
+#if SIMULATION_ENABLED
+    simulation_error_t sim_result = simulation_init(
+        "schemas/l6470_registers.yaml", "schemas/as5600_registers.yaml");
+    if (sim_result == SIM_OK) {
+        // Enable simulation mode for all motors
+        for (uint8_t i = 0; i < L6470_MAX_DEVICES; i++) {
+            driver_state[i].simulation_mode = true;
+        }
+        l6470_initialized = true;
+        return SYSTEM_OK; // Skip hardware initialization in simulation mode
+    }
+#endif
+
     // Initialize SPI instance for motor control
     SystemError_t spi_result = HAL_Abstraction_SPI_Init(HAL_SPI_INSTANCE_2);
     if (spi_result != SYSTEM_OK) {
@@ -98,6 +115,7 @@ SystemError_t l6470_init(void) {
         if (result != SYSTEM_OK) {
             return result;
         }
+        driver_state[motor_id].simulation_mode = false; // Real hardware mode
     }
 
     l6470_initialized = true;
@@ -201,6 +219,26 @@ SystemError_t l6470_reset_device(uint8_t motor_id) {
         return result;
     }
 
+#if SIMULATION_ENABLED
+    // Use simulation for device reset if enabled
+    if (driver_state[motor_id].simulation_mode) {
+        simulation_error_t sim_result =
+            l6470_sim_send_command(L6470_CMD_RESET_DEVICE, 0);
+        if (sim_result != SIM_OK) {
+            return ERROR_MOTOR_COMMUNICATION_FAILED;
+        }
+
+        // Wait for reset completion (per datasheet)
+        HAL_Abstraction_Delay(1);
+
+        // Clear driver state
+        driver_state[motor_id].is_initialized = false;
+        driver_state[motor_id].fault_count = 0;
+
+        return SYSTEM_OK;
+    }
+#endif
+
     // Send RESET_DEVICE command
     result = l6470_send_single_command(motor_id, L6470_CMD_RESET_DEVICE, 0);
     if (result != SYSTEM_OK) {
@@ -230,6 +268,17 @@ SystemError_t l6470_set_parameter(uint8_t motor_id, uint8_t register_addr,
     if (result != SYSTEM_OK) {
         return result;
     }
+
+#if SIMULATION_ENABLED
+    // Use simulation for parameter write if enabled
+    if (driver_state[motor_id].simulation_mode) {
+        // Convert SystemError_t to simulation_error_t if needed
+        simulation_error_t sim_result =
+            l6470_sim_write_register(register_addr, value);
+        return (sim_result == SIM_OK) ? SYSTEM_OK
+                                      : ERROR_MOTOR_COMMUNICATION_FAILED;
+    }
+#endif
 
     // Determine parameter size based on register
     uint8_t param_bytes = 3; // Default to 3 bytes, adjust per register
@@ -278,6 +327,16 @@ SystemError_t l6470_get_parameter(uint8_t motor_id, uint8_t register_addr,
     if (result != SYSTEM_OK) {
         return result;
     }
+
+#if SIMULATION_ENABLED
+    // Use simulation for parameter read if enabled
+    if (driver_state[motor_id].simulation_mode) {
+        simulation_error_t sim_result =
+            l6470_sim_read_register(register_addr, value);
+        return (sim_result == SIM_OK) ? SYSTEM_OK
+                                      : ERROR_MOTOR_COMMUNICATION_FAILED;
+    }
+#endif
 
     uint8_t command = L6470_CMD_GET_PARAM | register_addr;
 
@@ -336,6 +395,20 @@ SystemError_t l6470_get_status(uint8_t motor_id, uint16_t *status) {
     if (result != SYSTEM_OK) {
         return result;
     }
+
+#if SIMULATION_ENABLED
+    // Use simulation for status read if enabled
+    if (driver_state[motor_id].simulation_mode) {
+        uint32_t status_value = 0;
+        simulation_error_t sim_result =
+            l6470_sim_read_register(L6470_REG_STATUS, &status_value);
+        if (sim_result == SIM_OK) {
+            *status = (uint16_t)(status_value & 0xFFFF);
+            return SYSTEM_OK;
+        }
+        return ERROR_MOTOR_COMMUNICATION_FAILED;
+    }
+#endif
 
     uint8_t tx_data[2] = {L6470_CMD_GET_STATUS, 0x00};
     uint8_t rx_data[2] = {0};
@@ -407,6 +480,21 @@ SystemError_t l6470_move_to_position(uint8_t motor_id, int32_t position) {
         return ERROR_MOTOR_POSITION_OUT_OF_RANGE;
     }
 
+#if SIMULATION_ENABLED
+    // Use simulation for movement if enabled
+    if (driver_state[motor_id].simulation_mode) {
+        simulation_error_t sim_result =
+            l6470_sim_send_command(L6470_CMD_GOTO, position);
+        if (sim_result == SIM_OK) {
+            driver_state[motor_id].current_state = MOTOR_STATE_RUNNING;
+            driver_state[motor_id].last_command_time =
+                HAL_Abstraction_GetTick();
+            return SYSTEM_OK;
+        }
+        return ERROR_MOTOR_COMMUNICATION_FAILED;
+    }
+#endif
+
     uint8_t command = L6470_CMD_GOTO;
     uint32_t abs_position = (uint32_t)position & 0x3FFFFF; // 22-bit position
 
@@ -430,6 +518,21 @@ SystemError_t l6470_soft_stop(uint8_t motor_id) {
         return result;
     }
 
+#if SIMULATION_ENABLED
+    // Use simulation for stop command if enabled
+    if (driver_state[motor_id].simulation_mode) {
+        simulation_error_t sim_result =
+            l6470_sim_send_command(L6470_CMD_SOFT_STOP, 0);
+        if (sim_result == SIM_OK) {
+            driver_state[motor_id].current_state = MOTOR_STATE_DECELERATING;
+            driver_state[motor_id].last_command_time =
+                HAL_Abstraction_GetTick();
+            return SYSTEM_OK;
+        }
+        return ERROR_MOTOR_COMMUNICATION_FAILED;
+    }
+#endif
+
     result = l6470_send_single_command(motor_id, L6470_CMD_SOFT_STOP, 0);
     if (result == SYSTEM_OK) {
         driver_state[motor_id].current_state = MOTOR_STATE_DECELERATING;
@@ -450,6 +553,21 @@ SystemError_t l6470_hard_stop(uint8_t motor_id) {
         return result;
     }
 
+#if SIMULATION_ENABLED
+    // Use simulation for emergency stop if enabled
+    if (driver_state[motor_id].simulation_mode) {
+        simulation_error_t sim_result =
+            l6470_sim_send_command(L6470_CMD_HARD_STOP, 0);
+        if (sim_result == SIM_OK) {
+            driver_state[motor_id].current_state = MOTOR_STATE_EMERGENCY_STOP;
+            driver_state[motor_id].last_command_time =
+                HAL_Abstraction_GetTick();
+            return SYSTEM_OK;
+        }
+        return ERROR_MOTOR_COMMUNICATION_FAILED;
+    }
+#endif
+
     result = l6470_send_single_command(motor_id, L6470_CMD_HARD_STOP, 0);
     if (result == SYSTEM_OK) {
         driver_state[motor_id].current_state = MOTOR_STATE_EMERGENCY_STOP;
@@ -469,6 +587,21 @@ SystemError_t l6470_hard_hiz(uint8_t motor_id) {
     if (result != SYSTEM_OK) {
         return result;
     }
+
+#if SIMULATION_ENABLED
+    // Use simulation for high impedance command if enabled
+    if (driver_state[motor_id].simulation_mode) {
+        simulation_error_t sim_result =
+            l6470_sim_send_command(L6470_CMD_HARD_HIZ, 0);
+        if (sim_result == SIM_OK) {
+            driver_state[motor_id].current_state = MOTOR_STATE_IDLE;
+            driver_state[motor_id].last_command_time =
+                HAL_Abstraction_GetTick();
+            return SYSTEM_OK;
+        }
+        return ERROR_MOTOR_COMMUNICATION_FAILED;
+    }
+#endif
 
     result = l6470_send_single_command(motor_id, L6470_CMD_HARD_HIZ, 0);
     if (result == SYSTEM_OK) {
@@ -709,6 +842,27 @@ SystemError_t l6470_run(uint8_t motor_id, bool direction, float speed) {
         return ERROR_MOTOR_INIT_FAILED;
     }
 
+#if SIMULATION_ENABLED
+    // Use simulation for run command if enabled
+    if (driver_state[motor_id].simulation_mode) {
+        // Convert speed to L6470 format
+        uint32_t l6470_speed = (uint32_t)(speed / 4000000.0f * 0x10000000UL);
+        if (l6470_speed > 0x3FF) {
+            l6470_speed = 0x3FF;
+        }
+
+        uint8_t command = L6470_CMD_RUN;
+        if (direction) {
+            command |= 0x01; // Forward direction
+        }
+
+        simulation_error_t sim_result =
+            l6470_sim_send_command(command, l6470_speed);
+        return (sim_result == SIM_OK) ? SYSTEM_OK
+                                      : ERROR_MOTOR_COMMUNICATION_FAILED;
+    }
+#endif
+
     // Convert speed to L6470 format (step/tick)
     // L6470 uses 250ns ticks, so steps/second = steps/tick * 4000000
     uint32_t l6470_speed = (uint32_t)(speed / 4000000.0f * 0x10000000UL);
@@ -749,6 +903,16 @@ SystemError_t l6470_reset_position(uint8_t motor_id) {
     if (!l6470_initialized) {
         return ERROR_MOTOR_INIT_FAILED;
     }
+
+#if SIMULATION_ENABLED
+    // Use simulation for position reset if enabled
+    if (driver_state[motor_id].simulation_mode) {
+        simulation_error_t sim_result =
+            l6470_sim_send_command(L6470_CMD_RESET_POS, 0);
+        return (sim_result == SIM_OK) ? SYSTEM_OK
+                                      : ERROR_MOTOR_COMMUNICATION_FAILED;
+    }
+#endif
 
     // Send RESET_POS command
     if (motor_id == 0) {

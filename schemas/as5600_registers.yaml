@@ -30,6 +30,7 @@ registers:
     description: "Zero position MSB (OTP)"
     access: "read_write"
     default: 0x00
+    valid_range: [0x00, 0x0F]
 
   ZPOS_L:
     address: 0x02
@@ -39,6 +40,7 @@ registers:
     description: "Zero position LSB (OTP)"
     access: "read_write"
     default: 0x00
+    valid_range: [0x00, 0xFF]
     combined_register: "ZPOS"
     combined_bits: 12
 
@@ -50,6 +52,7 @@ registers:
     description: "Maximum position MSB (OTP)"
     access: "read_write"
     default: 0x0F
+    valid_range: [0x00, 0x0F]
 
   MPOS_L:
     address: 0x04
@@ -59,6 +62,7 @@ registers:
     description: "Maximum position LSB (OTP)"
     access: "read_write"
     default: 0xFF
+    valid_range: [0x00, 0xFF]
     combined_register: "MPOS"
     combined_bits: 12
 
@@ -70,6 +74,7 @@ registers:
     description: "Maximum angle MSB (OTP)"
     access: "read_write"
     default: 0x0F
+    valid_range: [0x00, 0x0F]
 
   MANG_L:
     address: 0x06
@@ -79,6 +84,7 @@ registers:
     description: "Maximum angle LSB (OTP)"
     access: "read_write"
     default: 0xFF
+    valid_range: [0x00, 0xFF]
     combined_register: "MANG"
     combined_bits: 12
 
@@ -315,6 +321,12 @@ combined_registers:
 
 # Safety validation rules
 validation:
+  critical_registers:
+    - "STATUS"
+    - "AGC"
+    - "CONF_H"
+    - "CONF_L"
+
   critical_checks:
     - "Magnet detection (STATUS.MD = 1)"
     - "AGC in valid range (96-160)"
@@ -339,6 +351,16 @@ validation:
     max_read_frequency: 1000 # Hz
     angle_stability_threshold: 5 # LSBs
     communication_timeout: 100 # ms
+
+  safe_defaults:
+    CONF_H: 0x00 # Normal power, no hysteresis, analog output, 115Hz PWM
+    CONF_L: 0x00 # 16x slow filter, fast filter off, watchdog off
+    ZPOS_H: 0x00
+    ZPOS_L: 0x00
+    MPOS_H: 0x0F
+    MPOS_L: 0xFF
+    MANG_H: 0x0F
+    MANG_L: 0xFF
 
 # Test patterns for validation
 test_patterns:
@@ -386,4 +408,10 @@ simulation:
 safe_defaults:
   CONF_H: 0x00 # Normal power, no hysteresis, analog output, 115Hz PWM
   CONF_L: 0x00 # 16x slow filter, fast filter off, watchdog off
+  ZPOS_H: 0x00 # Default zero position
+  ZPOS_L: 0x00
+  MPOS_H: 0x0F # Full range maximum position
+  MPOS_L: 0xFF
+  MANG_H: 0x0F # Full range maximum angle
+  MANG_L: 0xFF
   polling_rate: 100 # Hz - safe for continuous monitoring

@@ -623,5 +623,5 @@ static void l6470_sim_update_status_register(uint8_t motor_id) {
 static bool l6470_sim_validate_register_write(uint8_t reg_addr,
                                               uint32_t value) {
     // Use generated validation function
-    return l6470_validate_register(reg_addr, value);
+    return l6470_validate_register_value(reg_addr, value);
 }

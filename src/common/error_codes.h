@@ -105,6 +105,7 @@ typedef enum {
     ERROR_MOTOR_NOT_ENABLED,            // 0x201C - Motor not enabled
     ERROR_MOTOR_PROFILE_ERROR,          // 0x201D - Motion profile error
     ERROR_MOTOR_SEQUENCE_ERROR,         // 0x201E - Motor sequence error
+    ERROR_MOTOR_COMMUNICATION_FAILED,   // 0x201F - Motor communication failed
 
     // Encoder/Sensor Error Codes - integrated into SystemError_t
     ERROR_ENCODER_INIT_FAILED =

@@ -13,10 +13,12 @@
 #include "as5600_driver.h"
 #include "common/error_codes.h"
 #include "common/system_state.h"
+#include "config/as5600_registers_generated.h"
 #include "config/comm_config.h"
 #include "config/hardware_config.h"
 #include "config/motor_config.h"
 #include "hal_abstraction/hal_abstraction.h"
+#include "simulation/motor_simulation.h"
 #include <math.h>
 #include <string.h>
 
@@ -48,6 +50,7 @@ typedef struct {
     bool magnet_detected;
     bool calibrated;
     uint16_t zero_offset; // Zero offset for calibration
+    bool simulation_mode; // Added for simulation framework integration
 } AS5600_EncoderState_t;
 
 static AS5600_EncoderState_t encoder_state[AS5600_MAX_ENCODERS] = {0};
@@ -124,6 +127,13 @@ SystemError_t as5600_init_encoder(uint8_t encoder_id) {
         (encoder_id == 0) ? HAL_I2C_INSTANCE_1 : HAL_I2C_INSTANCE_2;
     state->i2c_address = AS5600_I2C_ADDRESS_8BIT;
     state->last_read_time = HAL_Abstraction_GetTick();
+
+#if SIMULATION_ENABLED
+    // Check if we're in simulation mode
+    state->simulation_mode = motor_simulation_is_active();
+#else
+    state->simulation_mode = false;
+#endif
 
     // Test I2C communication by reading status register
     uint8_t status;
@@ -436,6 +446,17 @@ SystemError_t as5600_set_zero_position(uint8_t encoder_id,
  */
 
 /**
+ * @brief Convert simulation bool result to system error
+ * @param sim_success Simulation function success (true/false)
+ * @return Corresponding system error code
+ */
+#if SIMULATION_ENABLED
+static SystemError_t as5600_simulation_bool_to_system_error(bool sim_success) {
+    return sim_success ? SYSTEM_OK : ERROR_ENCODER_COMMUNICATION;
+}
+#endif
+
+/**
  * @brief Read single register from AS5600
  * @param encoder_id Encoder identifier
  * @param reg_addr Register address
@@ -445,6 +466,14 @@ SystemError_t as5600_set_zero_position(uint8_t encoder_id,
 static SystemError_t
 as5600_i2c_read_register(uint8_t encoder_id, uint8_t reg_addr, uint8_t *data) {
     AS5600_EncoderState_t *state = &encoder_state[encoder_id];
+
+#if SIMULATION_ENABLED
+    if (state->simulation_mode) {
+        // Use simulation backend
+        bool sim_result = as5600_sim_read_register(encoder_id, reg_addr, data);
+        return as5600_simulation_bool_to_system_error(sim_result);
+    }
+#endif
 
     HAL_I2C_Transaction_t transaction = {.device_address = state->i2c_address,
                                          .register_address = reg_addr,
@@ -483,6 +512,15 @@ __attribute__((unused)) static SystemError_t
 as5600_i2c_write_register(uint8_t encoder_id, uint8_t reg_addr, uint8_t data) {
     AS5600_EncoderState_t *state = &encoder_state[encoder_id];
 
+#if SIMULATION_ENABLED
+    if (state->simulation_mode) {
+        // AS5600 write operations are rarely used in simulation
+        // For now, just return success for simulation compatibility
+        // TODO: Implement proper AS5600 write simulation if needed
+        return SYSTEM_OK;
+    }
+#endif
+
     HAL_I2C_Transaction_t transaction = {.device_address = state->i2c_address,
                                          .register_address = reg_addr,
                                          .data = &data,
@@ -511,8 +549,35 @@ as5600_i2c_write_register(uint8_t encoder_id, uint8_t reg_addr, uint8_t data) {
 static SystemError_t as5600_i2c_read_16bit(uint8_t encoder_id,
                                            uint8_t reg_addr_high,
                                            uint16_t *value) {
-    uint8_t data[2];
     AS5600_EncoderState_t *state = &encoder_state[encoder_id];
+
+#if SIMULATION_ENABLED
+    if (state->simulation_mode) {
+        // Use simulation backend for 16-bit reads
+        uint8_t high_byte, low_byte;
+        bool sim_result;
+
+        // Read high byte
+        sim_result =
+            as5600_sim_read_register(encoder_id, reg_addr_high, &high_byte);
+        if (!sim_result) {
+            return ERROR_ENCODER_COMMUNICATION;
+        }
+
+        // Read low byte
+        sim_result =
+            as5600_sim_read_register(encoder_id, reg_addr_high + 1, &low_byte);
+        if (!sim_result) {
+            return ERROR_ENCODER_COMMUNICATION;
+        }
+
+        // Combine high and low bytes (MSB first)
+        *value = ((uint16_t)high_byte << 8) | low_byte;
+        return SYSTEM_OK;
+    }
+#endif
+
+    uint8_t data[2];
 
     HAL_I2C_Transaction_t transaction = {.device_address = state->i2c_address,
                                          .register_address = reg_addr_high,
