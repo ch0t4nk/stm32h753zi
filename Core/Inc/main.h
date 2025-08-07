@@ -29,6 +29,7 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h7xx_hal.h"
 
+#include "stm32h7xx_nucleo.h"
 #include <stdio.h>
 
 /* Private includes ----------------------------------------------------------*/
@@ -59,9 +60,7 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#ifndef HSE_VALUE
-#define HSE_VALUE 8000000  // 8MHz for STM32H753ZI Nucleo-144
-#endif
+#define HSE_VALUE 25000000
 
 /* USER CODE BEGIN Private defines */
 

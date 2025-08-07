@@ -98,6 +98,13 @@ include_directories(
     drivers/CMSIS/Device/ST/STM32H7xx/Include
     drivers/CMSIS/Include
     00_reference/stm32h7xx_nucleo_bsp_md
+    middleware/FreeRTOS/Source/include
+    middleware/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1
+)
+
+# Add FreeRTOS compile definitions
+add_compile_definitions(
+    USE_FREERTOS=1
 )
 
 # Auto-generated register headers from schemas
@@ -143,7 +150,17 @@ file(GLOB_RECURSE SOURCES
     "Core/Src/stm32h7xx_hal_msp.c"
     "Core/Src/stm32h7xx_it.c"
     "Core/Src/system_stm32h7xx.c"
+    "Core/Src/main.c"            # STM32CubeMX generated main file
 )
+
+# Add FreeRTOS source files when using RTOS
+file(GLOB FREERTOS_SOURCES
+    "middleware/FreeRTOS/Source/*.c"
+    "middleware/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/*.c"
+    "middleware/FreeRTOS/Source/portable/MemMang/heap_4.c"
+)
+
+list(APPEND SOURCES ${FREERTOS_SOURCES})
 
 # Remove template files that are not needed for basic build
 list(FILTER SOURCES EXCLUDE REGEX ".*timebase_rtc.*template.*")
