@@ -1,11 +1,41 @@
 can_api:
-  version: 0.1.0
+  version: 1.0.0
+  title: "STM32H753ZI Motor Control CAN API"
+  description: "Production-ready CAN bus communication interface for dual stepper motor control system"
+
+  system_info:
+    platform: "STM32H753ZI Nucleo-144"
+    shield: "X-NUCLEO-IHM02A1"
+    motors: "Dual L6470 stepper drivers"
+    encoders: "AS5600 magnetic encoders"
+    status: "PRODUCTION READY"
+
   frames:
     - id: 0x01
       name: MotorControl
-      description: Control stepper motors
+      description: "Control stepper motors with position/velocity commands"
+      data_length: 8
+      frequency: "10Hz typical, 100Hz max"
+
     - id: 0x02
       name: EncoderRead
-      description: Read encoder values
----
-# TODO: See `.instructions/can_api.yaml.md` for module-specific details.
+      description: "Read absolute position from AS5600 encoders"
+      data_length: 4
+      frequency: "Real-time on request"
+
+    - id: 0x03
+      name: SafetyStatus
+      description: "Emergency stop and fault reporting"
+      data_length: 2
+      frequency: "Immediate on fault"
+
+    - id: 0x04
+      name: SystemHealth
+      description: "Periodic system health and diagnostics"
+      data_length: 6
+      frequency: "1Hz continuous"
+
+  documentation:
+    reference: "See .github/instructions/comms.instructions.md for CAN protocol details"
+    api_spec: "api/openapi.yaml"
+    safety_guide: ".github/instructions/safety-rt.instructions.md"

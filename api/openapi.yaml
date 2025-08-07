@@ -4,18 +4,18 @@ info:
   version: 1.0.0
   description: |
     **PRODUCTION-READY REST API** for STM32H753ZI stepper motor control system
-    
+
     **Project Status**: ✅ COMPLETE - All systems validated and operational
     **Hardware**: STM32H753ZI + X-NUCLEO-IHM02A1 + AS5600 encoders
     **Safety**: <1ms emergency stop response with comprehensive fault monitoring
-    
+
     This API provides complete control and monitoring for the dual L6470 stepper motor
     system with AS5600 magnetic encoder feedback and safety systems.
-  
+
   contact:
     name: STM32H753ZI Motor Control API
     url: https://github.com/ch0t4nk/stm32h753zi
-  
+
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
@@ -24,7 +24,7 @@ paths:
     get:
       summary: Get motor status
       responses:
-        '200':
+        "200":
           description: Motor status
           content:
             application/json:
@@ -49,7 +49,7 @@ paths:
     get:
       summary: Get system metrics
       responses:
-        '200':
+        "200":
           description: System metrics
           content:
             application/json:
@@ -62,5 +62,4 @@ paths:
                     type: number
                   errors:
                     type: integer
-
 # TODO: See .github/instructions/comm-protocols.instructions.md for API design guidance
