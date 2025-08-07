@@ -3,7 +3,7 @@
     "build": {
         "dockerfile": "Dockerfile",
         "context": "."
-     },
+    },
     "workspaceFolder": "/workspaces/code",
     "customizations": {
         "vscode": {
@@ -72,6 +72,9 @@
     ],
     "securityOpt": [
         "seccomp=unconfined"
+    ],
+    "runArgs": [
+        "--gpus=all"
     ],
     "postCreateCommand": [
         "bash",

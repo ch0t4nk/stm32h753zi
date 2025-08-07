@@ -8,17 +8,142 @@ description: "Project setup, build configuration, testing, and optimization guid
 ## Overview
 This instruction file provides comprehensive guidance for project setup, build configuration, testing infrastructure, and optimization for the STM32H753ZI stepper motor control project.
 
+**MAJOR UPDATES**: This project now includes advanced automation, semantic search, HAL abstraction testing, and FreeRTOS integration roadmap (Phase 5). All examples use our mature architecture.
+
+## Modern Project Features (2025 Update)
+
+### 🤖 STATUS Automation System
+**Automated Project Context for AI Assistance:**
+- **Auto-updating STATUS.md**: Git hooks automatically update project status after commits
+- **Real-time monitoring**: Build status, memory usage, git state tracking
+- **AI-friendly context**: GitHub Copilot gets current project state automatically
+- **Performance optimized**: 1-2 second git operations with graceful fallbacks
+
+```bash
+# Automation is already active - STATUS.md updates automatically after commits
+# Manual control available:
+/workspaces/code/.venv/bin/python3 scripts/auto_update_status.py --verbose
+/workspaces/code/.venv/bin/python3 scripts/status_monitor.py --status-bar  # VS Code format
+
+# VS Code tasks for enhanced control:
+cmake --build build --target update-status         # Manual STATUS.md update
+cmake --build build --target update-status-preview # Preview changes
+./scripts/demo_status_integration.sh               # Full demo
+```
+
+### 🔍 Semantic Search Engine
+**Professional Documentation Search:**
+- **Intelligent search**: Natural language queries across all documentation
+- **Multi-modal**: Searches code, markdown, reference manuals, API specs
+- **Context-aware**: Understands project-specific terminology
+- **Integration-ready**: Available via scripts and Python API
+
+```bash
+# Search across entire project knowledge base
+/workspaces/code/.venv/bin/python3 scripts/semantic_search.py "motor control PID tuning"
+/workspaces/code/.venv/bin/python3 scripts/semantic_search.py "L6470 SPI communication error"
+/workspaces/code/.venv/bin/python3 scripts/semantic_search.py "FreeRTOS task priority configuration"
+```
+
+### 🧪 HAL Abstraction Testing Framework
+**Hardware-Independent Development:**
+- **Mock hardware**: All drivers work without actual hardware
+- **Clean testing**: Unit tests run on host machine using mock HAL
+- **Professional architecture**: Application code isolated from hardware
+- **Copilot compatible**: All examples work with our actual codebase
+
+```c
+// ✅ CORRECT - Using HAL abstraction (testable, professional)
+#include "hal_abstraction.h"
+
+SystemError_t motor_init(void) {
+    SystemError_t result = HAL_Abstraction_GPIO_Write(MOTOR_ENABLE_PORT, 
+                                                      MOTOR_ENABLE_PIN, 
+                                                      HAL_GPIO_STATE_SET);
+    return result;
+}
+
+// ❌ INCORRECT - Direct HAL (not testable, outdated pattern)
+#include "stm32h7xx_hal.h"
+void bad_motor_init(void) {
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);  // Hard to test!
+}
+```
+
+### 🔄 Dual Build System
+**ARM Firmware + Host Testing:**
+- **ARM build**: `build/` - STM32H753ZI firmware with arm-none-eabi-gcc
+- **Host build**: `build_host_tests/` - Unit tests with native gcc/ninja
+- **Parallel development**: Test algorithms on host, deploy to ARM
+- **CI/CD ready**: Both builds validated automatically
+
+```bash
+# ARM firmware build (for STM32H753ZI)
+cmake --preset=default
+cmake --build build
+
+# Host testing build (for development machine)
+cmake --preset=host-tests  
+cmake --build build_host_tests
+cd build_host_tests && ctest
+```
+
 ## Workspace Setup and Project Structure
 
 ### Development Environment
-This workspace runs in a dev container with:
-- **ARM GCC Toolchain**: Cross-compilation for STM32H7
+This workspace runs in a **pre-configured dev container** with:
+- **ARM GCC Toolchain**: Cross-compilation for STM32H7 (arm-none-eabi-gcc 10.3.1+)
 - **OpenOCD**: On-chip debugging and programming
 - **STM32CubeMX Integration**: HAL configuration and code generation
-- **Testing Frameworks**: Unity and GoogleTest for embedded testing
-- **Python Tools**: CAN utilities, documentation generation (Sphinx/Breathe)
+- **Testing Frameworks**: Unity for embedded testing, GoogleTest for host tests
+- **Python Environment**: CAN utilities, semantic search, STATUS automation (.venv)
 - **SSOT Validation**: Pre-commit hooks, configuration validation scripts
 - **Documentation**: Doxygen with Graphviz for API documentation
+- **Code Quality**: clang-format, clang-tidy, cppcheck pre-installed
+
+### Core Toolchain Verification
+**All tools pre-installed and ready:**
+```bash
+# ARM Cross-compilation toolchain
+arm-none-eabi-gcc --version     # ARM GCC 10.3.1+
+arm-none-eabi-gdb --version     # ARM GDB debugger
+
+# STM32 Development tools  
+openocd --version               # OpenOCD for programming/debugging
+st-flash --version              # ST-Link utilities
+
+# Code quality and analysis
+clang-format --version          # Code formatting (Google style)
+clang-tidy --version           # Static analysis
+cppcheck --version             # Additional linting
+doxygen --version              # Documentation generation
+
+# Modern Python environment (/.venv)
+python3 --version              # Python 3.11+ for automation
+/workspaces/code/.venv/bin/python3 -m pip list | grep -E "(semantic|status)"  # Our custom tools
+```
+
+### VS Code Task Integration
+**One-Click Development with Professional Tasks:**
+```bash
+# Primary development tasks (Ctrl+Shift+P → "Tasks: Run Task")
+"Build (CMake)"                    # Main ARM firmware build
+"Run Tests (CTest)"               # Host-based unit tests  
+"STATUS: Build + Update"          # Build + auto-update STATUS.md
+"Flash STM32H753ZI"              # Program to hardware
+"Generate Docs (Doxygen)"        # API documentation
+
+# Development quality tasks  
+"Format Code"                     # clang-format all source
+"Lint (clang-tidy/cppcheck)"     # Static analysis
+"Validate SSOT"                  # Config consistency check
+"Validate Build Environment"      # Toolchain verification
+
+# STATUS automation tasks
+"STATUS: Preview Changes"         # Dry-run status updates
+"STATUS: Force Full Update"      # Complete regeneration
+"STATUS: Quick Update"           # Fast manual update
+```
 
 ### File Organization Rules
 **Root Directory - MINIMAL CONTENT ONLY**

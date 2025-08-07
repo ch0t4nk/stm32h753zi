@@ -8,6 +8,28 @@ description: "Communication protocols, UART/CAN/SPI/I2C interfaces, and networki
 ## Overview
 This instruction file provides comprehensive guidance for communication protocol implementation in the STM32H753ZI stepper motor control system, including UART command interface, CAN-FD networking, SPI motor control, I2C sensor communication, and Ethernet connectivity.
 
+**CRITICAL**: All communication implementations must use the HAL Abstraction Layer for:
+- **Hardware-Independent Testing**: Code runs without actual hardware using mocks
+- **Clean Architecture**: Application logic isolated from hardware specifics  
+- **Professional Standards**: Consistent with modern embedded design patterns
+- **Copilot Compatibility**: All examples work with our project's actual architecture
+
+```c
+// ✅ CORRECT - Use HAL abstraction
+#include "hal_abstraction.h"
+
+SystemError_t send_motor_command(const uint8_t* data, size_t length) {
+    return HAL_Abstraction_UART_Transmit(DEBUG_UART_INSTANCE, data, length, UART_TIMEOUT_MS);
+}
+
+// ❌ INCORRECT - Direct HAL usage bypasses our architecture
+#include "stm32h7xx_hal.h"
+
+void bad_uart_function(void) {
+    HAL_UART_Transmit(&huart3, data, length, timeout);  // Not testable!
+}
+```
+
 ## Protocol Architecture
 
 ### Communication Layer Structure
@@ -60,37 +82,43 @@ typedef struct {
 
 ### STM32H7 UART HAL Configuration
 
-**Debug UART Setup (ST-Link VCP):**
+**Debug UART Setup (ST-Link VCP) - Using HAL Abstraction:**
 ```c
 /**
- * @brief Initialize debug UART for command interface
+ * @brief Initialize debug UART for command interface using HAL abstraction
  * @return SystemError_t Success or error code
  */
 SystemError_t debug_uart_init(void) {
-    UART_HandleTypeDef* huart = &huart3;  // USART3 for ST-Link VCP
-    
-    // Configure UART parameters
-    huart->Instance = USART3;
-    huart->Init.BaudRate = DEBUG_UART_BAUDRATE;  // From SSOT config
-    huart->Init.WordLength = UART_WORDLENGTH_8B;
-    huart->Init.StopBits = UART_STOPBITS_1;
-    huart->Init.Parity = UART_PARITY_NONE;
-    huart->Init.Mode = UART_MODE_TX_RX;
-    huart->Init.HwFlowCtl = UART_HWCONTROL_NONE;
-    huart->Init.OverSampling = UART_OVERSAMPLING_16;
-    huart->Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-    huart->AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-    
-    if (HAL_UART_Init(huart) != HAL_OK) {
+    // Initialize UART through HAL abstraction layer
+    // This enables hardware-independent testing and clean architecture
+    SystemError_t result = HAL_Abstraction_UART_Init(DEBUG_UART_INSTANCE);
+    if (result != SYSTEM_OK) {
+        LOG_ERROR(ERROR_COMM_INIT_FAILED, 0);
         return ERROR_COMM_INIT_FAILED;
     }
     
-    // Enable UART interrupts for RX
-    HAL_NVIC_SetPriority(USART3_IRQn, UART_RX_INTERRUPT_PRIORITY, 0);
-    HAL_NVIC_EnableIRQ(USART3_IRQn);
+    // Configure UART parameters through abstraction
+    HAL_UART_Config_t uart_config = {
+        .baudrate = DEBUG_UART_BAUDRATE,  // From SSOT config
+        .word_length = HAL_UART_WORDLENGTH_8B,
+        .stop_bits = HAL_UART_STOPBITS_1,
+        .parity = HAL_UART_PARITY_NONE,
+        .flow_control = HAL_UART_HWCONTROL_NONE,
+        .mode = HAL_UART_MODE_TX_RX
+    };
     
-    // Start DMA reception
-    if (HAL_UART_Receive_DMA(huart, uart_rx_buffer, UART_RX_BUFFER_SIZE) != HAL_OK) {
+    result = HAL_Abstraction_UART_Configure(DEBUG_UART_INSTANCE, &uart_config);
+    if (result != SYSTEM_OK) {
+        LOG_ERROR(ERROR_COMM_CONFIG_FAILED, 0);
+        return ERROR_COMM_CONFIG_FAILED;
+    }
+    
+    // Enable DMA reception through abstraction
+    result = HAL_Abstraction_UART_StartDMAReceive(DEBUG_UART_INSTANCE, 
+                                                  uart_rx_buffer, 
+                                                  UART_RX_BUFFER_SIZE);
+    if (result != SYSTEM_OK) {
+        LOG_ERROR(ERROR_COMM_DMA_FAILED, 0);
         return ERROR_COMM_DMA_FAILED;
     }
     
@@ -424,49 +452,45 @@ SystemError_t can_send_motor_command(uint8_t motor_id, uint8_t command,
 }
 ```
 
-## SPI L6470 Communication
+## SPI L6470 Communication - Using HAL Abstraction
 
 ### L6470 SPI Protocol
 ```c
 /**
- * @brief Initialize SPI for L6470 daisy-chain communication
+ * @brief Initialize SPI for L6470 daisy-chain communication using HAL abstraction
  * @return SystemError_t Success or error code
  */
 SystemError_t l6470_spi_init(void) {
-    SPI_HandleTypeDef* hspi = &hspi2;
-    
-    hspi->Instance = SPI2;
-    hspi->Init.Mode = SPI_MODE_MASTER;
-    hspi->Init.Direction = SPI_DIRECTION_2LINES;
-    hspi->Init.DataSize = SPI_DATASIZE_8BIT;
-    hspi->Init.CLKPolarity = SPI_POLARITY_HIGH;
-    hspi->Init.CLKPhase = SPI_PHASE_2EDGE;
-    hspi->Init.NSS = SPI_NSS_SOFT;
-    hspi->Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;  // ~3.75 MHz at 120 MHz APB
-    hspi->Init.FirstBit = SPI_FIRSTBIT_MSB;
-    hspi->Init.TIMode = SPI_TIMODE_DISABLE;
-    hspi->Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-    hspi->Init.CRCPolynomial = 0x0;
-    hspi->Init.NSSPMode = SPI_NSS_PULSE_DISABLE;
-    hspi->Init.NSSPolarity = SPI_NSS_POLARITY_LOW;
-    hspi->Init.FifoThreshold = SPI_FIFO_THRESHOLD_01DATA;
-    hspi->Init.TxCRCInitializationPattern = SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN;
-    hspi->Init.RxCRCInitializationPattern = SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN;
-    hspi->Init.MasterSSIdleness = SPI_MASTER_SS_IDLENESS_00CYCLE;
-    hspi->Init.MasterInterDataIdleness = SPI_MASTER_INTERDATA_IDLENESS_00CYCLE;
-    hspi->Init.MasterReceiverAutoSusp = SPI_MASTER_RX_AUTOSUSP_DISABLE;
-    hspi->Init.MasterKeepIOState = SPI_MASTER_KEEP_IO_STATE_DISABLE;
-    hspi->Init.IOSwap = SPI_IO_SWAP_DISABLE;
-    
-    if (HAL_SPI_Init(hspi) != HAL_OK) {
+    // Initialize SPI through HAL abstraction for testability
+    SystemError_t result = HAL_Abstraction_SPI_Init(L6470_SPI_INSTANCE);
+    if (result != SYSTEM_OK) {
+        LOG_ERROR(ERROR_COMM_INIT_FAILED, 0);
         return ERROR_COMM_INIT_FAILED;
+    }
+    
+    // Configure SPI parameters through abstraction
+    HAL_SPI_Config_t spi_config = {
+        .mode = HAL_SPI_MODE_MASTER,
+        .direction = HAL_SPI_DIRECTION_2LINES,
+        .data_size = HAL_SPI_DATASIZE_8BIT,
+        .clk_polarity = HAL_SPI_POLARITY_HIGH,
+        .clk_phase = HAL_SPI_PHASE_2EDGE,
+        .nss = HAL_SPI_NSS_SOFT,
+        .prescaler = HAL_SPI_BAUDRATEPRESCALER_32,  // ~3.75 MHz at 120 MHz APB
+        .first_bit = HAL_SPI_FIRSTBIT_MSB
+    };
+    
+    result = HAL_Abstraction_SPI_Configure(L6470_SPI_INSTANCE, &spi_config);
+    if (result != SYSTEM_OK) {
+        LOG_ERROR(ERROR_COMM_CONFIG_FAILED, 0);
+        return ERROR_COMM_CONFIG_FAILED;
     }
     
     return SYSTEM_OK;
 }
 
 /**
- * @brief Send command to L6470 via SPI daisy-chain
+ * @brief Send command to L6470 via SPI daisy-chain using HAL abstraction
  * @param motor_id Motor identifier (0 or 1)
  * @param command L6470 command byte
  * @param data Command data (if applicable)
@@ -498,18 +522,30 @@ SystemError_t l6470_spi_send_command(uint8_t motor_id, uint8_t command,
         tx_buffer[cmd_index + 1 + i] = data[i];
     }
     
-    // Assert CS (active low)
-    HAL_GPIO_WritePin(L6470_SPI_CS_PORT, L6470_SPI_CS_PIN, GPIO_PIN_RESET);
+    // Perform SPI transaction through HAL abstraction
+    HAL_SPI_Transaction_t transaction = {
+        .tx_data = tx_buffer,
+        .rx_data = rx_buffer,
+        .data_size = buffer_size,
+        .timeout_ms = SPI_TIMEOUT_MS
+    };
     
-    // Transmit command
-    HAL_StatusTypeDef spi_result = HAL_SPI_TransmitReceive(&hspi2, tx_buffer, 
-                                                          rx_buffer, buffer_size, 
-                                                          SPI_TIMEOUT_MS);
+    // Assert CS through abstraction
+    SystemError_t result = HAL_Abstraction_GPIO_Write(L6470_SPI_CS_PORT, 
+                                                      L6470_SPI_CS_PIN, 
+                                                      HAL_GPIO_STATE_RESET);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
     
-    // Deassert CS
-    HAL_GPIO_WritePin(L6470_SPI_CS_PORT, L6470_SPI_CS_PIN, GPIO_PIN_SET);
+    // Transmit command through abstraction
+    result = HAL_Abstraction_SPI_TransmitReceive(L6470_SPI_INSTANCE, &transaction);
     
-    if (spi_result != HAL_OK) {
+    // Deassert CS through abstraction
+    HAL_Abstraction_GPIO_Write(L6470_SPI_CS_PORT, L6470_SPI_CS_PIN, HAL_GPIO_STATE_SET);
+    
+    if (result != SYSTEM_OK) {
+        LOG_ERROR(ERROR_COMM_SPI_FAILED, 0);
         return ERROR_COMM_SPI_FAILED;
     }
     
@@ -523,39 +559,44 @@ SystemError_t l6470_spi_send_command(uint8_t motor_id, uint8_t command,
 }
 ```
 
-## I2C AS5600 Communication
+## I2C AS5600 Communication - Using HAL Abstraction
 
 ### AS5600 I2C Protocol
 ```c
 /**
- * @brief Initialize I2C for AS5600 encoder communication
- * @param i2c_instance I2C instance (I2C1 or I2C2)
+ * @brief Initialize I2C for AS5600 encoder communication using HAL abstraction
+ * @param encoder_id Encoder identifier (0 or 1)
  * @return SystemError_t Success or error code
  */
-SystemError_t as5600_i2c_init(I2C_TypeDef* i2c_instance) {
-    I2C_HandleTypeDef* hi2c = (i2c_instance == I2C1) ? &hi2c1 : &hi2c2;
+SystemError_t as5600_i2c_init(uint8_t encoder_id) {
+    if (encoder_id >= MAX_ENCODERS) {
+        return ERROR_ENCODER_INVALID_ID;
+    }
     
-    hi2c->Instance = i2c_instance;
-    hi2c->Init.Timing = I2C_TIMING_400KHZ;           // 400 kHz fast mode
-    hi2c->Init.OwnAddress1 = 0;
-    hi2c->Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-    hi2c->Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-    hi2c->Init.OwnAddress2 = 0;
-    hi2c->Init.OwnAddress2Masks = I2C_OA2_NOMASK;
-    hi2c->Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-    hi2c->Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+    // Map encoder ID to I2C instance through abstraction
+    HAL_I2C_Instance_t i2c_instance = (encoder_id == 0) ? HAL_I2C_INSTANCE_1 : HAL_I2C_INSTANCE_2;
     
-    if (HAL_I2C_Init(hi2c) != HAL_OK) {
+    // Initialize I2C through HAL abstraction
+    SystemError_t result = HAL_Abstraction_I2C_Init(i2c_instance);
+    if (result != SYSTEM_OK) {
+        LOG_ERROR(ERROR_COMM_INIT_FAILED, encoder_id);
         return ERROR_COMM_INIT_FAILED;
     }
     
-    // Configure analog filter
-    if (HAL_I2CEx_ConfigAnalogFilter(hi2c, I2C_ANALOGFILTER_ENABLE) != HAL_OK) {
-        return ERROR_COMM_CONFIG_FAILED;
-    }
+    // Configure I2C parameters through abstraction
+    HAL_I2C_Config_t i2c_config = {
+        .timing = HAL_I2C_TIMING_400KHZ,     // 400 kHz fast mode
+        .addressing_mode = HAL_I2C_ADDRESSINGMODE_7BIT,
+        .dual_address_mode = HAL_I2C_DUALADDRESS_DISABLE,
+        .general_call_mode = HAL_I2C_GENERALCALL_DISABLE,
+        .no_stretch_mode = HAL_I2C_NOSTRETCH_DISABLE,
+        .analog_filter = HAL_I2C_ANALOGFILTER_ENABLE,
+        .digital_filter = 0
+    };
     
-    // Configure digital filter
-    if (HAL_I2CEx_ConfigDigitalFilter(hi2c, 0) != HAL_OK) {
+    result = HAL_Abstraction_I2C_Configure(i2c_instance, &i2c_config);
+    if (result != SYSTEM_OK) {
+        LOG_ERROR(ERROR_COMM_CONFIG_FAILED, encoder_id);
         return ERROR_COMM_CONFIG_FAILED;
     }
     
@@ -563,7 +604,7 @@ SystemError_t as5600_i2c_init(I2C_TypeDef* i2c_instance) {
 }
 
 /**
- * @brief Read AS5600 register via I2C
+ * @brief Read AS5600 register via I2C using HAL abstraction
  * @param encoder_id Encoder identifier (0 or 1)
  * @param reg_addr Register address
  * @param data Pointer to data buffer
@@ -580,24 +621,30 @@ SystemError_t as5600_i2c_read_register(uint8_t encoder_id, uint8_t reg_addr,
         return ERROR_NULL_POINTER;
     }
     
-    I2C_HandleTypeDef* hi2c = (encoder_id == 0) ? &hi2c1 : &hi2c2;
+    // Map encoder ID to I2C instance
+    HAL_I2C_Instance_t i2c_instance = (encoder_id == 0) ? HAL_I2C_INSTANCE_1 : HAL_I2C_INSTANCE_2;
     
-    // Write register address, then read data
-    HAL_StatusTypeDef result = HAL_I2C_Mem_Read(hi2c, AS5600_I2C_ADDRESS << 1, 
-                                               reg_addr, I2C_MEMADD_SIZE_8BIT,
-                                               data, data_length, I2C_TIMEOUT_MS);
+    // Perform I2C memory read through abstraction
+    HAL_I2C_Transaction_t transaction = {
+        .device_address = AS5600_I2C_ADDRESS,
+        .register_address = reg_addr,
+        .data = data,
+        .data_size = data_length,
+        .timeout_ms = I2C_TIMEOUT_MS,
+        .use_register_address = true
+    };
     
-    if (result == HAL_TIMEOUT) {
-        return ERROR_COMM_TIMEOUT;
-    } else if (result != HAL_OK) {
-        return ERROR_COMM_I2C_FAILED;
+    SystemError_t result = HAL_Abstraction_I2C_MemRead(i2c_instance, &transaction);
+    if (result != SYSTEM_OK) {
+        LOG_ERROR(result, encoder_id);
+        return result;
     }
     
     return SYSTEM_OK;
 }
 
 /**
- * @brief Write AS5600 register via I2C
+ * @brief Write AS5600 register via I2C using HAL abstraction
  * @param encoder_id Encoder identifier (0 or 1)
  * @param reg_addr Register address
  * @param data Pointer to data buffer
@@ -614,17 +661,23 @@ SystemError_t as5600_i2c_write_register(uint8_t encoder_id, uint8_t reg_addr,
         return ERROR_NULL_POINTER;
     }
     
-    I2C_HandleTypeDef* hi2c = (encoder_id == 0) ? &hi2c1 : &hi2c2;
+    // Map encoder ID to I2C instance
+    HAL_I2C_Instance_t i2c_instance = (encoder_id == 0) ? HAL_I2C_INSTANCE_1 : HAL_I2C_INSTANCE_2;
     
-    HAL_StatusTypeDef result = HAL_I2C_Mem_Write(hi2c, AS5600_I2C_ADDRESS << 1,
-                                                reg_addr, I2C_MEMADD_SIZE_8BIT,
-                                                (uint8_t*)data, data_length, 
-                                                I2C_TIMEOUT_MS);
+    // Perform I2C memory write through abstraction
+    HAL_I2C_Transaction_t transaction = {
+        .device_address = AS5600_I2C_ADDRESS,
+        .register_address = reg_addr,
+        .data = (uint8_t*)data,  // Cast away const for abstraction API
+        .data_size = data_length,
+        .timeout_ms = I2C_TIMEOUT_MS,
+        .use_register_address = true
+    };
     
-    if (result == HAL_TIMEOUT) {
-        return ERROR_COMM_TIMEOUT;
-    } else if (result != HAL_OK) {
-        return ERROR_COMM_I2C_FAILED;
+    SystemError_t result = HAL_Abstraction_I2C_MemWrite(i2c_instance, &transaction);
+    if (result != SYSTEM_OK) {
+        LOG_ERROR(result, encoder_id);
+        return result;
     }
     
     return SYSTEM_OK;

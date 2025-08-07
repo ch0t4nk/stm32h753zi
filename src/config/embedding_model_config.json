@@ -1,0 +1,107 @@
+{
+  "last_updated": "2025-08-07T10:40:05.325847",
+  "hardware": {
+    "gpu_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 4080 SUPER",
+    "gpu_memory_gb": 15.99169921875,
+    "cpu_cores": 32,
+    "total_memory_gb": 31.261531829833984,
+    "cuda_version": "detected"
+  },
+  "models": {
+    "instructor_xl_gpu": {
+      "name": "Instructor-XL (GPU)",
+      "type": "instructor",
+      "model_id": "hkunlp/instructor-xl",
+      "dimensions": 768,
+      "device": "cuda",
+      "available": true,
+      "description": "High-quality instruction-tuned embeddings with GPU acceleration",
+      "instruction_template": "Represent the {domain} document for finding {task}:",
+      "performance": null,
+      "domain_optimizations": {
+        "stm32_hal": {
+          "batch_size": 25,
+          "instruction": "Represent the STM32 HAL documentation for finding peripheral configuration and driver functions:"
+        },
+        "motor_control": {
+          "batch_size": 30,
+          "instruction": "Represent the stepper motor control documentation for finding L6470 driver functions:"
+        },
+        "project_source": {
+          "batch_size": 20,
+          "instruction": "Represent the embedded C source code for finding HAL abstraction functions:"
+        }
+      }
+    },
+    "instructor_xl_cpu": {
+      "name": "Instructor-XL (CPU)",
+      "type": "instructor",
+      "model_id": "hkunlp/instructor-xl",
+      "dimensions": 768,
+      "device": "cpu",
+      "available": true,
+      "description": "High-quality instruction-tuned embeddings on CPU",
+      "instruction_template": "Represent the {domain} document for finding {task}:",
+      "performance": null,
+      "domain_optimizations": {
+        "stm32_hal": {
+          "batch_size": 8,
+          "instruction": "Represent the STM32 HAL documentation for finding peripheral configuration:"
+        },
+        "motor_control": {
+          "batch_size": 10,
+          "instruction": "Represent the stepper motor control documentation for finding L6470 functions:"
+        },
+        "project_source": {
+          "batch_size": 6,
+          "instruction": "Represent the embedded C source code for finding functions:"
+        }
+      }
+    },
+    "nomic_embed_text": {
+      "name": "nomic-embed-text",
+      "type": "ollama",
+      "model_id": "nomic-embed-text",
+      "dimensions": 768,
+      "device": "ollama",
+      "available": true,
+      "description": "Smaller Ollama embedding model for fast inference",
+      "instruction_template": null,
+      "performance": null,
+      "domain_optimizations": {
+        "stm32_hal": {
+          "batch_size": 20
+        },
+        "motor_control": {
+          "batch_size": 25
+        },
+        "project_source": {
+          "batch_size": 15
+        }
+      }
+    },
+    "mxbai_embed_large": {
+      "name": "mxbai-embed-large",
+      "type": "ollama",
+      "model_id": "mxbai-embed-large",
+      "dimensions": 1024,
+      "device": "ollama",
+      "available": true,
+      "description": "Ollama-hosted embedding model optimized for retrieval",
+      "instruction_template": null,
+      "performance": null,
+      "domain_optimizations": {
+        "stm32_hal": {
+          "batch_size": 15
+        },
+        "motor_control": {
+          "batch_size": 18
+        },
+        "project_source": {
+          "batch_size": 12
+        }
+      }
+    }
+  }
+}

@@ -312,8 +312,9 @@
     // Markdown configuration
     "markdown.extension.toc.updateOnSave": true,
     "markdown.extension.preview.autoShowPreviewToSide": false,
-    "cmake.cmakePath": "cube-cmake",
+    // CMake path configuration - use standard cmake in container
+    "cmake.cmakePath": "/usr/bin/cmake",
     "cmake.configureArgs": [
-        "-DCMAKE_COMMAND=cube-cmake"
+        "-DCMAKE_TOOLCHAIN_FILE=${workspaceFolder}/cmake/arm-none-eabi-gcc.cmake"
     ]
 }

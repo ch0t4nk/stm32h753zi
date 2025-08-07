@@ -8,25 +8,34 @@ description: "Core software architecture, data types, error handling, state mana
 ## Overview
 This instruction file provides comprehensive guidance for core software architecture in the STM32H753ZI stepper motor control system, including HAL abstraction, data types, error handling, state management, motor control algorithms, and driver implementations.
 
+**MAJOR UPDATES**: This project uses a mature HAL abstraction layer for platform independence, comprehensive error handling with SSOT configuration, and professional embedded architecture patterns enabling hardware-free testing.
+
 ## Hardware Abstraction Layer (HAL) Guidelines
 
-### HAL Abstraction Usage
+### 🎯 HAL Abstraction Architecture
 **CRITICAL**: All hardware access must go through the HAL abstraction layer for platform independence and testability.
 
+**Benefits of HAL Abstraction:**
+- **Platform Independence**: Code compiles for STM32H7, mocks, and future platforms
+- **Hardware-Free Testing**: Unit tests run without actual hardware using mock implementations  
+- **Clean Architecture**: Application code isolated from hardware-specific details
+- **Easy Debugging**: Mock layer enables controlled fault injection and state monitoring
+
 ```c
-// ✅ CORRECT - Use HAL abstraction
+// ✅ CORRECT - Use HAL abstraction (modern pattern)
 #include "hal_abstraction.h"
+#include "config/hardware_config.h"
 
 SystemError_t motor_control_function(void) {
-    // Platform-independent GPIO control
-    SystemError_t result = HAL_Abstraction_GPIO_WritePin(
-        MOTOR1_CS_PORT, MOTOR1_CS_PIN, HAL_GPIO_PIN_SET);
+    // Platform-independent GPIO control using SSOT configuration
+    SystemError_t result = HAL_Abstraction_GPIO_Write(
+        MOTOR1_CS_PORT, MOTOR1_CS_PIN, HAL_GPIO_STATE_SET);
     
     if (result != SYSTEM_OK) {
         return result;
     }
     
-    // Platform-independent SPI transaction
+    // Platform-independent SPI transaction with proper error handling
     HAL_SPI_Transaction_t transaction = {
         .tx_data = command_buffer,
         .tx_size = sizeof(command_buffer),
@@ -40,12 +49,64 @@ SystemError_t motor_control_function(void) {
 ```
 
 ```c
-// ❌ INCORRECT - Direct HAL usage bypasses abstraction
+// ❌ INCORRECT - Direct HAL usage bypasses abstraction (outdated pattern)
 #include "stm32h7xx_hal.h"
 
 void bad_motor_function(void) {
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);  // Not testable!
     HAL_SPI_Transmit(&hspi2, data, size, timeout);       // Platform-specific!
+}
+```
+
+### 🧪 HAL Abstraction Testing Integration
+**Testing Pattern for Hardware-Independent Development:**
+
+```c
+// Example: Testable motor initialization using HAL abstraction
+#include "hal_abstraction.h"
+#include "config/motor_config.h"
+
+SystemError_t motor_driver_init(motor_id_t motor_id) {
+    // Validate motor ID using SSOT configuration
+    if (motor_id >= MAX_MOTORS) {
+        return SYSTEM_ERROR_MOTOR_INVALID_ID;
+    }
+    
+    // Initialize CS pin using HAL abstraction
+    SystemError_t result = HAL_Abstraction_GPIO_Write(
+        motor_cs_ports[motor_id], 
+        motor_cs_pins[motor_id], 
+        HAL_GPIO_STATE_SET
+    );
+    
+    if (result != SYSTEM_OK) {
+        return SYSTEM_ERROR_GPIO_INIT_FAILED;
+    }
+    
+    // Configure SPI for motor communication
+    HAL_SPI_Config_t spi_config = {
+        .mode = HAL_SPI_MODE_MASTER,
+        .data_width = HAL_SPI_DATA_WIDTH_8BIT,
+        .clock_polarity = HAL_SPI_CPOL_HIGH,
+        .clock_phase = HAL_SPI_CPHA_2EDGE,
+        .baudrate_prescaler = SPI_BAUDRATE_PRESCALER_16
+    };
+    
+    return HAL_Abstraction_SPI_Init(SPI_MOTOR_BUS, &spi_config);
+}
+
+// Unit test using mock HAL - runs without hardware
+void test_motor_driver_init(void) {
+    // Setup mock expectations
+    MockHAL_ExpectGPIOWrite(MOTOR1_CS_PORT, MOTOR1_CS_PIN, HAL_GPIO_STATE_SET, SYSTEM_OK);
+    MockHAL_ExpectSPIInit(SPI_MOTOR_BUS, SYSTEM_OK);
+    
+    // Test the function
+    SystemError_t result = motor_driver_init(MOTOR_1);
+    
+    // Verify results
+    TEST_ASSERT_EQUAL(SYSTEM_OK, result);
+    TEST_ASSERT_TRUE(MockHAL_AllExpectationsMet());
 }
 ```
 
@@ -323,44 +384,144 @@ typedef enum {
 } SystemError_t;
 ```
 
-### Error Handling Framework
+### 🛡️ Error Handling Framework
+**Comprehensive SystemError_t-based error management with SSOT configuration:**
+
 ```c
-// Error context structure for debugging
+// Include our comprehensive error system
+#include "common/error_codes.h"
+#include "config/safety_config.h"
+
+// Error context structure for debugging (enhanced)
 typedef struct {
-    SystemError_t error_code;          // Error code
+    SystemError_t error_code;          // Error code from comprehensive enum
     const char* file;                  // Source file where error occurred
     uint32_t line;                     // Line number in source file
     const char* function;              // Function name where error occurred
-    timestamp_t timestamp;            // When error occurred
+    timestamp_t timestamp;            // When error occurred (microsecond precision)
     uint32_t additional_info;         // Context-specific information
+    motor_id_t motor_id;              // Motor ID if motor-related error
+    uint8_t retry_count;              // Number of retry attempts
 } ErrorContext_t;
 
-// Error logging function
-void log_error(SystemError_t error_code, const char* file, uint32_t line, 
-              const char* function, uint32_t additional_info);
+// Professional error handling with HAL abstraction integration
+SystemError_t motor_driver_safe_operation(motor_id_t motor_id, uint32_t command) {
+    // Validate parameters using SSOT configuration
+    if (motor_id >= MAX_MOTORS) {
+        LOG_ERROR(SYSTEM_ERROR_MOTOR_INVALID_ID, motor_id);
+        return SYSTEM_ERROR_MOTOR_INVALID_ID;
+    }
+    
+    // Perform operation using HAL abstraction with error checking
+    HAL_SPI_Transaction_t transaction = {
+        .tx_data = &command,
+        .tx_size = sizeof(command),
+        .rx_data = response_buffer,
+        .rx_size = sizeof(response_buffer),
+        .timeout_ms = SPI_TIMEOUT_MS
+    };
+    
+    SystemError_t result = HAL_Abstraction_SPI_Transaction(SPI_MOTOR_BUS, &transaction);
+    if (result != SYSTEM_OK) {
+        LOG_ERROR(result, command);
+        
+        // Implement intelligent retry logic
+        if (result == SYSTEM_ERROR_SPI_TIMEOUT) {
+            return handle_spi_timeout_error(motor_id);
+        }
+        
+        return result;
+    }
+    
+    // Validate response data
+    if (!validate_motor_response(response_buffer, sizeof(response_buffer))) {
+        LOG_ERROR(SYSTEM_ERROR_MOTOR_INVALID_RESPONSE, command);
+        return SYSTEM_ERROR_MOTOR_INVALID_RESPONSE;
+    }
+    
+    return SYSTEM_OK;
+}
 
-// Error logging macro for automatic context capture
+// Enhanced error logging with circular buffer
+#define ERROR_LOG_SIZE 64
+static ErrorContext_t error_log_buffer[ERROR_LOG_SIZE];
+static volatile uint32_t error_log_index = 0;
+static volatile uint32_t error_log_count = 0;
+
+// Error logging macro for automatic context capture (enhanced)
 #define LOG_ERROR(error_code, additional_info) \
-    log_error((error_code), __FILE__, __LINE__, __func__, (additional_info))
+    log_error_enhanced((error_code), __FILE__, __LINE__, __func__, (additional_info))
 
-// Error checking macro with logging
-#define CHECK_ERROR(expression, error_code) \
+// Enhanced error checking with HAL abstraction integration
+#define CHECK_HAL_RESULT(hal_call, error_code) \
     do { \
-        if (!(expression)) { \
-            LOG_ERROR((error_code), 0); \
+        SystemError_t _result = (hal_call); \
+        if (_result != SYSTEM_OK) { \
+            LOG_ERROR((error_code), _result); \
             return (error_code); \
         } \
     } while(0)
 
-// Error checking macro with cleanup
-#define CHECK_ERROR_CLEANUP(expression, error_code, cleanup_code) \
+// Error checking with safety system integration
+#define CHECK_SAFETY_CRITICAL(expression, error_code) \
     do { \
         if (!(expression)) { \
             LOG_ERROR((error_code), 0); \
-            cleanup_code; \
+            safety_trigger_emergency_stop(); \
             return (error_code); \
         } \
     } while(0)
+```
+
+**Modern Error Recovery Patterns:**
+```c
+// Intelligent error recovery with retry logic
+SystemError_t motor_command_with_retry(motor_id_t motor_id, uint32_t command) {
+    const uint8_t MAX_RETRIES = 3;
+    uint8_t retry_count = 0;
+    
+    while (retry_count < MAX_RETRIES) {
+        SystemError_t result = motor_driver_safe_operation(motor_id, command);
+        
+        if (result == SYSTEM_OK) {
+            return SYSTEM_OK;
+        }
+        
+        // Categorize error and decide retry strategy
+        switch (result) {
+            case SYSTEM_ERROR_SPI_TIMEOUT:
+            case SYSTEM_ERROR_SPI_BUSY:
+                // Recoverable errors - retry after delay
+                HAL_Abstraction_Delay_ms(RETRY_DELAY_MS);
+                retry_count++;
+                break;
+                
+            case SYSTEM_ERROR_MOTOR_INVALID_ID:
+            case SYSTEM_ERROR_MOTOR_NOT_INITIALIZED:
+                // Non-recoverable parameter errors
+                return result;
+                
+            case SYSTEM_ERROR_SAFETY_CRITICAL:
+                // Safety-critical errors - immediate abort
+                safety_trigger_emergency_stop();
+                return result;
+                
+            default:
+                // Unknown error - single retry then abort
+                if (retry_count == 0) {
+                    retry_count++;
+                } else {
+                    return result;
+                }
+                break;
+        }
+    }
+    
+    // All retries exhausted
+    LOG_ERROR(SYSTEM_ERROR_MAX_RETRIES_EXCEEDED, command);
+    return SYSTEM_ERROR_MAX_RETRIES_EXCEEDED;
+}
+```
 
 /**
  * @brief Initialize error handling system
@@ -625,44 +786,62 @@ bool is_valid_state_transition(SystemState_t current_state, SystemState_t new_st
 }
 ```
 
-## Motor Control Algorithms
+## 🎛️ Motor Control Algorithms
 
-### Position Control Algorithm
+### 🎯 Modern Position Control with HAL Abstraction
+**Professional motor control using HAL abstraction and comprehensive error handling:**
+
 ```c
+#include "hal_abstraction.h"
+#include "config/motor_config.h"
+#include "common/error_codes.h"
+
 /**
- * @brief PID position control algorithm
+ * @brief Enhanced PID position control with HAL abstraction
  * @param motor_id Motor identifier
- * @param target_position Target position in degrees
- * @param current_position Current position in degrees
+ * @param target_position Target position in degrees  
  * @param dt Time step in seconds
- * @return float Control output (speed command in RPM)
+ * @return SystemError_t Success or error code
  */
-float pid_position_control(uint8_t motor_id, float target_position, 
-                          float current_position, float dt) {
+SystemError_t pid_position_control_update(motor_id_t motor_id, float target_position, float dt) {
+    // Validate motor ID using SSOT configuration
+    if (motor_id >= MAX_MOTORS) {
+        return SYSTEM_ERROR_MOTOR_INVALID_ID;
+    }
+    
+    // Read current position using HAL abstraction
+    float current_position;
+    SystemError_t encoder_result = HAL_Abstraction_Encoder_ReadPosition(
+        motor_encoder_buses[motor_id], 
+        &current_position
+    );
+    
+    if (encoder_result != SYSTEM_OK) {
+        LOG_ERROR(SYSTEM_ERROR_ENCODER_READ_FAILED, motor_id);
+        return encoder_result;
+    }
+    
+    // Get motor control parameters from SSOT
+    const PositionControlParams_t* params = &motor_pid_params[motor_id];
     static float integral[MAX_MOTORS] = {0};
     static float previous_error[MAX_MOTORS] = {0};
     
-    PositionControlParams_t* params = &position_control_params[motor_id];
-    
-    // Calculate position error
+    // Calculate position error with wraparound handling
     float error = target_position - current_position;
-    
-    // Handle angle wraparound if needed
     if (error > 180.0f) {
         error -= 360.0f;
     } else if (error < -180.0f) {
         error += 360.0f;
     }
     
-    // Check deadband
+    // Apply deadband from SSOT configuration
     if (fabsf(error) < params->deadband) {
         error = 0.0f;
     }
     
-    // Proportional term
+    // PID calculation with anti-windup
     float proportional = params->kp * error;
     
-    // Integral term with anti-windup
     integral[motor_id] += error * dt;
     if (integral[motor_id] > params->integral_limit) {
         integral[motor_id] = params->integral_limit;
@@ -671,37 +850,161 @@ float pid_position_control(uint8_t motor_id, float target_position,
     }
     float integral_term = params->ki * integral[motor_id];
     
-    // Derivative term
     float derivative = (error - previous_error[motor_id]) / dt;
     float derivative_term = params->kd * derivative;
     
-    // Calculate total output
     float output = proportional + integral_term + derivative_term;
     
-    // Apply output limits
+    // Apply output limits from SSOT configuration
     if (output > params->output_limit) {
         output = params->output_limit;
     } else if (output < -params->output_limit) {
         output = -params->output_limit;
     }
     
-    // Update previous error for next iteration
-    previous_error[motor_id] = error;
+    // Send speed command to motor using HAL abstraction
+    SystemError_t motor_result = HAL_Abstraction_Motor_SetSpeed(motor_id, output);
+    if (motor_result != SYSTEM_OK) {
+        LOG_ERROR(SYSTEM_ERROR_MOTOR_COMMAND_FAILED, motor_id);
+        return motor_result;
+    }
     
-    return output;  // Speed command in RPM
+    previous_error[motor_id] = error;
+    return SYSTEM_OK;
 }
 ```
 
-### Motion Profile Generation
+### 🚀 Motion Profile Generation with Safety Integration
+**Smooth motion profiles with safety monitoring:**
+
 ```c
+typedef struct {
+    float position;        // Current position command
+    float velocity;        // Current velocity command  
+    float acceleration;    // Current acceleration command
+    bool profile_complete; // Motion profile finished
+    uint32_t elapsed_time; // Time since profile start
+} MotionProfileOutput_t;
+
 /**
- * @brief Generate trapezoidal motion profile
- * @param profile Motion profile parameters
+ * @brief Generate safe trapezoidal motion profile
+ * @param motor_id Motor identifier
  * @param start_position Starting position in degrees
  * @param end_position Target position in degrees
- * @param current_time Current time in motion
- * @param motion_output Output structure for position/velocity/acceleration
+ * @param current_time Current time in motion (milliseconds)
+ * @param output Output structure for position/velocity/acceleration
  * @return SystemError_t Success or error code
+ */
+SystemError_t generate_motion_profile(motor_id_t motor_id, 
+                                    float start_position, 
+                                    float end_position,
+                                    uint32_t current_time,
+                                    MotionProfileOutput_t* output) {
+    // Validate parameters
+    if (motor_id >= MAX_MOTORS || output == NULL) {
+        return SYSTEM_ERROR_INVALID_PARAMETER;
+    }
+    
+    // Check safety limits using SSOT configuration
+    if (fabsf(end_position) > MOTOR_MAX_POSITION_DEGREES) {
+        LOG_ERROR(SYSTEM_ERROR_POSITION_LIMIT_EXCEEDED, motor_id);
+        return SYSTEM_ERROR_POSITION_LIMIT_EXCEEDED;
+    }
+    
+    // Get motion profile parameters from SSOT
+    const MotionProfile_t* profile = &motor_motion_profiles[motor_id];
+    
+    float distance = end_position - start_position;
+    float max_speed = profile->max_speed;
+    float acceleration = profile->acceleration;
+    float deceleration = profile->deceleration;
+    
+    // Calculate motion timing
+    float accel_time = max_speed / acceleration;
+    float decel_time = max_speed / deceleration;
+    float accel_distance = 0.5f * acceleration * accel_time * accel_time;
+    float decel_distance = 0.5f * deceleration * decel_time * decel_time;
+    
+    float time_sec = current_time / 1000.0f;
+    
+    // Determine motion phase and calculate output
+    if (fabsf(distance) <= (accel_distance + decel_distance)) {
+        // Triangular profile (short move)
+        return generate_triangular_profile(motor_id, start_position, end_position, 
+                                         time_sec, profile, output);
+    } else {
+        // Trapezoidal profile (long move)
+        return generate_trapezoidal_profile(motor_id, start_position, end_position,
+                                          time_sec, profile, output);
+    }
+}
+
+/**
+ * @brief Execute motion profile with real-time safety monitoring
+ * @param motor_id Motor identifier
+ * @param target_position Target position in degrees
+ * @return SystemError_t Success or error code
+ */
+SystemError_t execute_safe_motion(motor_id_t motor_id, float target_position) {
+    static MotionProfileOutput_t profile_output[MAX_MOTORS];
+    static uint32_t motion_start_time[MAX_MOTORS] = {0};
+    static float motion_start_position[MAX_MOTORS] = {0};
+    static bool motion_active[MAX_MOTORS] = {false};
+    
+    // Get current position using HAL abstraction
+    float current_position;
+    SystemError_t result = HAL_Abstraction_Encoder_ReadPosition(
+        motor_encoder_buses[motor_id], &current_position);
+    
+    if (result != SYSTEM_OK) {
+        return result;
+    }
+    
+    // Start new motion if not active
+    if (!motion_active[motor_id]) {
+        motion_start_time[motor_id] = HAL_Abstraction_GetTick();
+        motion_start_position[motor_id] = current_position;
+        motion_active[motor_id] = true;
+    }
+    
+    // Generate current motion profile point
+    uint32_t elapsed_time = HAL_Abstraction_GetTick() - motion_start_time[motor_id];
+    result = generate_motion_profile(motor_id, 
+                                   motion_start_position[motor_id],
+                                   target_position,
+                                   elapsed_time,
+                                   &profile_output[motor_id]);
+    
+    if (result != SYSTEM_OK) {
+        motion_active[motor_id] = false;
+        return result;
+    }
+    
+    // Safety check: Verify profile output is within limits
+    if (fabsf(profile_output[motor_id].velocity) > MOTOR_MAX_SPEED_RPM) {
+        LOG_ERROR(SYSTEM_ERROR_SPEED_LIMIT_EXCEEDED, motor_id);
+        motion_active[motor_id] = false;
+        return SYSTEM_ERROR_SPEED_LIMIT_EXCEEDED;
+    }
+    
+    // Execute position control with profile setpoint
+    result = pid_position_control_update(motor_id, 
+                                       profile_output[motor_id].position, 
+                                       CONTROL_LOOP_PERIOD_SEC);
+    
+    if (result != SYSTEM_OK) {
+        motion_active[motor_id] = false;
+        return result;
+    }
+    
+    // Check if motion is complete
+    if (profile_output[motor_id].profile_complete) {
+        motion_active[motor_id] = false;
+    }
+    
+    return SYSTEM_OK;
+}
+```
  */
 SystemError_t generate_motion_profile(const MotionProfile_t* profile,
                                     float start_position, float end_position,

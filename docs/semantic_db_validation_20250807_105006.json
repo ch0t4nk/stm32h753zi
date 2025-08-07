@@ -1,0 +1,74 @@
+{
+  "validation_timestamp": "2025-08-07T10:49:56.394667",
+  "database_stats": {
+    "timestamp": "2025-08-07T10:49:56.394675",
+    "collections": {
+      "stm32_hal": {
+        "document_count": 25480,
+        "description": "STM32H7 HAL, Nucleo BSP, reference documentation",
+        "status": "active"
+      }
+    },
+    "total_documents": 25480,
+    "database_size_mb": 271.28978729248047
+  },
+  "search_tests": {
+    "stm32_hal": {
+      "GPIO pin configuration": {
+        "response_time_ms": 0,
+        "results_found": 0,
+        "status": "error: Collection expecting embedding with dimension of 1024, got 384",
+        "error": "Collection expecting embedding with dimension of 1024, got 384"
+      },
+      "HAL_GPIO_Init function": {
+        "response_time_ms": 0,
+        "results_found": 0,
+        "status": "error: Collection expecting embedding with dimension of 1024, got 384",
+        "error": "Collection expecting embedding with dimension of 1024, got 384"
+      },
+      "SPI master setup": {
+        "response_time_ms": 0,
+        "results_found": 0,
+        "status": "error: Collection expecting embedding with dimension of 1024, got 384",
+        "error": "Collection expecting embedding with dimension of 1024, got 384"
+      },
+      "UART communication": {
+        "response_time_ms": 0,
+        "results_found": 0,
+        "status": "error: Collection expecting embedding with dimension of 1024, got 384",
+        "error": "Collection expecting embedding with dimension of 1024, got 384"
+      },
+      "Timer PWM configuration": {
+        "response_time_ms": 0,
+        "results_found": 0,
+        "status": "error: Collection expecting embedding with dimension of 1024, got 384",
+        "error": "Collection expecting embedding with dimension of 1024, got 384"
+      }
+    },
+    "motor_control": {
+      "status": "collection_not_found"
+    },
+    "project_source": {
+      "status": "collection_not_found"
+    },
+    "instruction_guides": {
+      "status": "collection_not_found"
+    },
+    "project_documentation": {
+      "status": "collection_not_found"
+    },
+    "build_system": {
+      "status": "collection_not_found"
+    },
+    "automation_scripts": {
+      "status": "collection_not_found"
+    },
+    "api_specifications": {
+      "status": "collection_not_found"
+    },
+    "workspace_config": {
+      "status": "collection_not_found"
+    }
+  },
+  "performance_summary": {}
+}
