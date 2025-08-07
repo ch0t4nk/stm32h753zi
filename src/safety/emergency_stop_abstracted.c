@@ -199,6 +199,11 @@ bool emergency_stop_is_button_pressed(void) {
     return pressed;
 }
 
+bool is_emergency_stop_pressed(void) {
+    // Alias for compatibility with safety_system.c
+    return emergency_stop_is_button_pressed();
+}
+
 void emergency_stop_interrupt_handler(void) {
     // Record interrupt time for debouncing
     estop_context.last_button_time = HAL_Abstraction_GetTick();

@@ -1,6 +1,7 @@
 /* STM32H753ZI Stepper Motor Control - Main Application
  * Generated following file-organization.instructions.md
  * SSOT compliance: All configs from src/config/
+ * Phase 1 Step 3: Watchdog Integration - COMPLETE
  */
 
 #include "config/build_config.h"
@@ -17,6 +18,7 @@
 /* HAL Headers */
 #include "hal_abstraction/hal_abstraction.h"
 #include "main.h"
+#include "main_application.h"
 #include "stm32h7xx_hal.h"
 
 /* Function prototypes */
@@ -71,19 +73,24 @@ void SystemClock_Config(void) {
 
 /**
  * @brief Error Handler
- * @note Follows safety-systems.instructions.md
+ * @note Follows safety-systems.instructions.md with integrated emergency stop
  */
 void Error_Handler(void) {
-    /* TODO: Implement safety shutdown following safety_config.h */
+    /* Critical error - attempt emergency stop if possible */
+    if (main_application_is_initialized()) {
+        main_application_emergency_stop();
+    }
+
+    /* TODO: Implement complete safety shutdown following safety_config.h */
     __disable_irq();
     while (1) {
-        /* Emergency stop - all motors halt */
+        /* Emergency stop - all motors halt, system in safe state */
     }
 }
 
 /**
  * @brief Main function
- * @note Entry point following our project architecture
+ * @note Entry point with integrated safety system and watchdog
  */
 int main(void) {
     /* Initialize HAL */
@@ -99,9 +106,35 @@ int main(void) {
      * - Safety systems (safety-systems.instructions.md)
      */
 
-    /* Main control loop */
+    /* Initialize main application (includes safety system and watchdog) */
+    SystemError_t init_result = main_application_init();
+    if (init_result != SYSTEM_OK) {
+        /* Critical initialization failure - enter error state */
+        Error_Handler();
+    }
+
+    /* Run self-test to validate safety systems */
+    SystemError_t test_result = main_application_self_test();
+    if (test_result != SYSTEM_OK) {
+        /* Self-test failure - enter error state */
+        Error_Handler();
+    }
+
+    /* Main control loop with integrated safety and watchdog management */
     while (1) {
-        /* TODO: Implement stepper control loop */
-        HAL_Abstraction_Delay(1);
+        SystemError_t run_result = main_application_run();
+        if (run_result != SYSTEM_OK) {
+            /* Handle application errors */
+            if (run_result == ERROR_SAFETY_EMERGENCY_STOP) {
+                /* Emergency stop is active - continue monitoring */
+                continue;
+            } else if (run_result == ERROR_SAFETY_WATCHDOG_WARNING) {
+                /* Watchdog warning - continue but monitor closely */
+                continue;
+            } else {
+                /* Critical error - enter error state */
+                Error_Handler();
+            }
+        }
     }
 }
