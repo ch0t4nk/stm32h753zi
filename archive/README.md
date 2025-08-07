@@ -19,6 +19,7 @@ This directory contains archived materials from the STM32H753ZI stepper motor co
 ### 🔧 Development Artifacts (`development_artifacts/`)
 - `HARDWARE_EVALUATION_SUMMARY.md` - Hardware evaluation and assessment
 - `HARDWARE_READINESS_ASSESSMENT.md` - Hardware connection readiness evaluation
+- `STRATEGIC_REVIEW_EXECUTIVE_SUMMARY.md` - Strategic review and project assessment (archived 2025-08-07)
 - `legacy_archive/` - Legacy documentation search tools superseded by semantic search
   - `search_enhanced_docs.py` - Keyword-based search (replaced by semantic AI search)
 

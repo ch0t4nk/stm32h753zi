@@ -45,6 +45,7 @@
 #endif
 
 #include <stdio.h>
+#include <string.h> // For memset, memcpy
 
 /* ==========================================================================
  */
@@ -542,7 +543,7 @@ SystemError_t rtos_tasks_init(void) {
     if (!motor_command_queue || !can_message_queue || !uart_message_queue ||
         !telemetry_queue || !safety_event_queue) {
         printf("RTOS Tasks: ERROR - Failed to create queues\r\n");
-        return ERROR_INSUFFICIENT_RESOURCES;
+        return ERROR_MEMORY_ALLOCATION;
     }
 
     // Create software timers
@@ -553,7 +554,7 @@ SystemError_t rtos_tasks_init(void) {
 
     if (!watchdog_timer) {
         printf("RTOS Tasks: ERROR - Failed to create watchdog timer\r\n");
-        return ERROR_INSUFFICIENT_RESOURCES;
+        return ERROR_MEMORY_ALLOCATION;
     }
 
     printf("RTOS Tasks: All resources created successfully\r\n");
@@ -580,7 +581,7 @@ SystemError_t rtos_tasks_start(void) {
 
     if (result != pdPASS) {
         printf("RTOS Tasks: ERROR - Failed to create Motor Control Task\r\n");
-        return ERROR_INSUFFICIENT_RESOURCES;
+        return ERROR_MEMORY_ALLOCATION;
     }
 
     // Create Safety Monitor Task (Priority 4 - HIGHEST)
@@ -590,7 +591,7 @@ SystemError_t rtos_tasks_start(void) {
 
     if (result != pdPASS) {
         printf("RTOS Tasks: ERROR - Failed to create Safety Monitor Task\r\n");
-        return ERROR_INSUFFICIENT_RESOURCES;
+        return ERROR_MEMORY_ALLOCATION;
     }
 
     // Create CAN Communication Task (Priority 2)
@@ -600,7 +601,7 @@ SystemError_t rtos_tasks_start(void) {
     if (result != pdPASS) {
         printf(
             "RTOS Tasks: ERROR - Failed to create CAN Communication Task\r\n");
-        return ERROR_INSUFFICIENT_RESOURCES;
+        return ERROR_MEMORY_ALLOCATION;
     }
 
     // Create UART Communication Task (Priority 1)
@@ -611,7 +612,7 @@ SystemError_t rtos_tasks_start(void) {
     if (result != pdPASS) {
         printf("RTOS Tasks: ERROR - Failed to create UART Communication "
                "Task\r\n");
-        return ERROR_INSUFFICIENT_RESOURCES;
+        return ERROR_MEMORY_ALLOCATION;
     }
 
     // Create Telemetry Task (Priority 1)
@@ -621,7 +622,7 @@ SystemError_t rtos_tasks_start(void) {
 
     if (result != pdPASS) {
         printf("RTOS Tasks: ERROR - Failed to create Telemetry Task\r\n");
-        return ERROR_INSUFFICIENT_RESOURCES;
+        return ERROR_MEMORY_ALLOCATION;
     }
 
     // Start software timers
@@ -647,6 +648,36 @@ SystemError_t rtos_tasks_start(void) {
     printf("  Telemetry: Priority %d, Stack %d words, Period %d ms\r\n",
            TELEMETRY_TASK_PRIORITY, TELEMETRY_TASK_STACK_SIZE,
            TELEMETRY_PERIOD_MS);
+
+    // Initialize Phase 2D advanced components
+    printf("RTOS Tasks: Initializing Phase 2D advanced integration...\r\n");
+
+    SystemError_t phase2d_result;
+
+    phase2d_result = init_event_groups();
+    if (phase2d_result != SYSTEM_OK) {
+        printf("RTOS Tasks: ERROR - Phase 2D event groups initialization "
+               "failed\r\n");
+        return phase2d_result;
+    }
+
+    phase2d_result = init_memory_pools();
+    if (phase2d_result != SYSTEM_OK) {
+        printf("RTOS Tasks: ERROR - Phase 2D memory pools initialization "
+               "failed\r\n");
+        return phase2d_result;
+    }
+
+    phase2d_result = init_task_utilities();
+    if (phase2d_result != SYSTEM_OK) {
+        printf("RTOS Tasks: ERROR - Phase 2D task utilities initialization "
+               "failed\r\n");
+        return phase2d_result;
+    }
+
+    printf("RTOS Tasks: Phase 2D advanced integration complete!\r\n");
+    printf("RTOS Tasks: Event groups, memory pools, and task utilities "
+           "operational\r\n");
 
     return SYSTEM_OK;
 }
@@ -711,7 +742,7 @@ SystemError_t rtos_send_motor_command(const MotorCommand_t *command,
         return SYSTEM_OK;
     }
 
-    return ERROR_BUSY;
+    return ERROR_QUEUE_FULL;
 }
 
 /**
@@ -730,7 +761,7 @@ SystemError_t rtos_send_safety_event(const SafetyEvent_t *event,
         return SYSTEM_OK;
     }
 
-    return ERROR_BUSY;
+    return ERROR_QUEUE_FULL;
 }
 
 /**
@@ -749,5 +780,438 @@ SystemError_t rtos_send_telemetry(const TelemetryData_t *data,
         return SYSTEM_OK;
     }
 
-    return ERROR_BUSY;
+    return ERROR_QUEUE_FULL;
+}
+
+/* ==========================================================================
+ */
+/* Phase 2D: Advanced Integration - Event Groups Implementation            */
+/* ==========================================================================
+ */
+
+// Event Group Handles (defined in header as extern)
+EventGroupHandle_t system_event_group = NULL;
+EventGroupHandle_t comm_event_group = NULL;
+EventGroupHandle_t motion_event_group = NULL;
+
+/**
+ * @brief Initialize event groups for Phase 2D advanced integration
+ */
+static SystemError_t init_event_groups(void) {
+    printf("RTOS Tasks: Initializing event groups...\r\n");
+
+    system_event_group = xEventGroupCreate();
+    comm_event_group = xEventGroupCreate();
+    motion_event_group = xEventGroupCreate();
+
+    if (!system_event_group || !comm_event_group || !motion_event_group) {
+        printf("RTOS Tasks: ERROR - Failed to create event groups\r\n");
+        return ERROR_MEMORY_ALLOCATION;
+    }
+
+    printf("RTOS Tasks: Event groups initialized successfully\r\n");
+    return SYSTEM_OK;
+}
+
+/**
+ * @brief Wait for system startup completion
+ */
+SystemError_t rtos_wait_system_startup(uint32_t timeout_ms) {
+    if (!system_event_group) {
+        return ERROR_NOT_INITIALIZED;
+    }
+
+    EventBits_t required_events =
+        SYSTEM_EVENT_MOTORS_INITIALIZED | SYSTEM_EVENT_SAFETY_CHECKS_PASSED |
+        SYSTEM_EVENT_COMM_READY | SYSTEM_EVENT_SENSORS_CALIBRATED;
+
+    EventBits_t result =
+        xEventGroupWaitBits(system_event_group, required_events, pdFALSE,
+                            pdTRUE, pdMS_TO_TICKS(timeout_ms));
+
+    if ((result & required_events) == required_events) {
+        // Set startup complete event
+        xEventGroupSetBits(system_event_group, SYSTEM_EVENT_STARTUP_COMPLETE);
+        return SYSTEM_OK;
+    }
+
+    return ERROR_TIMEOUT;
+}
+
+/**
+ * @brief Signal emergency stop to all tasks
+ */
+SystemError_t rtos_signal_emergency_stop(void) {
+    if (!system_event_group) {
+        return ERROR_NOT_INITIALIZED;
+    }
+
+    xEventGroupSetBits(system_event_group, SYSTEM_EVENT_EMERGENCY_STOP);
+    printf("RTOS Tasks: Emergency stop event signaled to all tasks\r\n");
+    return SYSTEM_OK;
+}
+
+/**
+ * @brief Wait for coordinated motion completion
+ */
+SystemError_t rtos_wait_motion_complete(uint32_t motors, uint32_t timeout_ms) {
+    if (!motion_event_group) {
+        return ERROR_NOT_INITIALIZED;
+    }
+
+    EventBits_t required_events = 0;
+
+    if (motors & (1 << 0)) { // Motor 1
+        required_events |= MOTION_EVENT_MOTOR1_TARGET_REACHED;
+    }
+    if (motors & (1 << 1)) { // Motor 2
+        required_events |= MOTION_EVENT_MOTOR2_TARGET_REACHED;
+    }
+
+    EventBits_t result =
+        xEventGroupWaitBits(motion_event_group, required_events, pdTRUE,
+                            pdTRUE, pdMS_TO_TICKS(timeout_ms));
+
+    if ((result & required_events) == required_events) {
+        xEventGroupSetBits(motion_event_group, MOTION_EVENT_MOTION_COMPLETE);
+        return SYSTEM_OK;
+    }
+
+    return ERROR_TIMEOUT;
+}
+
+/* ==========================================================================
+ */
+/* Phase 2D: Advanced Integration - Memory Pools Implementation            */
+/* ==========================================================================
+ */
+
+// Memory Pool Handles (defined in header as extern)
+osMemoryPoolId_t small_memory_pool = NULL;
+osMemoryPoolId_t medium_memory_pool = NULL;
+osMemoryPoolId_t large_memory_pool = NULL;
+
+// Memory pool storage areas (statically allocated)
+static uint8_t small_pool_storage[MEMORY_POOL_SMALL_TOTAL_SIZE]
+    __attribute__((aligned(4)));
+static uint8_t medium_pool_storage[MEMORY_POOL_MEDIUM_TOTAL_SIZE]
+    __attribute__((aligned(4)));
+static uint8_t large_pool_storage[MEMORY_POOL_LARGE_TOTAL_SIZE]
+    __attribute__((aligned(4)));
+
+/**
+ * @brief Initialize memory pools for Phase 2D advanced integration
+ */
+static SystemError_t init_memory_pools(void) {
+    printf("RTOS Tasks: Initializing memory pools...\r\n");
+
+    const osMemoryPoolAttr_t small_pool_attr = {
+        .name = "SmallPool",
+        .attr_bits = 0U,
+        .cb_mem = NULL,
+        .cb_size = 0U,
+        .mp_mem = small_pool_storage,
+        .mp_size = sizeof(small_pool_storage)};
+
+    const osMemoryPoolAttr_t medium_pool_attr = {
+        .name = "MediumPool",
+        .attr_bits = 0U,
+        .cb_mem = NULL,
+        .cb_size = 0U,
+        .mp_mem = medium_pool_storage,
+        .mp_size = sizeof(medium_pool_storage)};
+
+    const osMemoryPoolAttr_t large_pool_attr = {
+        .name = "LargePool",
+        .attr_bits = 0U,
+        .cb_mem = NULL,
+        .cb_size = 0U,
+        .mp_mem = large_pool_storage,
+        .mp_size = sizeof(large_pool_storage)};
+
+    small_memory_pool =
+        osMemoryPoolNew(MEMORY_POOL_SMALL_BLOCK_COUNT,
+                        MEMORY_POOL_SMALL_BLOCK_SIZE, &small_pool_attr);
+
+    medium_memory_pool =
+        osMemoryPoolNew(MEMORY_POOL_MEDIUM_BLOCK_COUNT,
+                        MEMORY_POOL_MEDIUM_BLOCK_SIZE, &medium_pool_attr);
+
+    large_memory_pool =
+        osMemoryPoolNew(MEMORY_POOL_LARGE_BLOCK_COUNT,
+                        MEMORY_POOL_LARGE_BLOCK_SIZE, &large_pool_attr);
+
+    if (!small_memory_pool || !medium_memory_pool || !large_memory_pool) {
+        printf("RTOS Tasks: ERROR - Failed to create memory pools\r\n");
+        return ERROR_MEMORY_ALLOCATION;
+    }
+
+    printf("RTOS Tasks: Memory pools initialized - Small: %d blocks, Medium: "
+           "%d blocks, Large: %d blocks\r\n",
+           MEMORY_POOL_SMALL_BLOCK_COUNT, MEMORY_POOL_MEDIUM_BLOCK_COUNT,
+           MEMORY_POOL_LARGE_BLOCK_COUNT);
+    return SYSTEM_OK;
+}
+
+/**
+ * @brief Allocate memory from appropriate pool
+ */
+void *rtos_memory_alloc(size_t size, uint32_t timeout_ms) {
+    osMemoryPoolId_t pool = NULL;
+
+    // Select appropriate pool based on size
+    if (size <= MEMORY_POOL_SMALL_BLOCK_SIZE) {
+        pool = small_memory_pool;
+    } else if (size <= MEMORY_POOL_MEDIUM_BLOCK_SIZE) {
+        pool = medium_memory_pool;
+    } else if (size <= MEMORY_POOL_LARGE_BLOCK_SIZE) {
+        pool = large_memory_pool;
+    } else {
+        // Size too large for any pool
+        return NULL;
+    }
+
+    if (!pool) {
+        return NULL;
+    }
+
+    return osMemoryPoolAlloc(pool, timeout_ms);
+}
+
+/**
+ * @brief Free memory back to appropriate pool
+ */
+SystemError_t rtos_memory_free(void *ptr, size_t size) {
+    if (!ptr) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    osMemoryPoolId_t pool = NULL;
+
+    // Select appropriate pool based on size
+    if (size <= MEMORY_POOL_SMALL_BLOCK_SIZE) {
+        pool = small_memory_pool;
+    } else if (size <= MEMORY_POOL_MEDIUM_BLOCK_SIZE) {
+        pool = medium_memory_pool;
+    } else if (size <= MEMORY_POOL_LARGE_BLOCK_SIZE) {
+        pool = large_memory_pool;
+    } else {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    if (!pool) {
+        return ERROR_NOT_INITIALIZED;
+    }
+
+    osStatus_t status = osMemoryPoolFree(pool, ptr);
+    return (status == osOK) ? SYSTEM_OK : ERROR_INVALID_PARAMETER;
+}
+
+/**
+ * @brief Get memory pool usage statistics
+ */
+SystemError_t rtos_get_memory_stats(MemoryPoolStats_t *stats) {
+    if (!stats) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    if (!small_memory_pool || !medium_memory_pool || !large_memory_pool) {
+        return ERROR_NOT_INITIALIZED;
+    }
+
+    // Small pool stats
+    stats->small_pool.total_blocks = MEMORY_POOL_SMALL_BLOCK_COUNT;
+    stats->small_pool.available_blocks =
+        osMemoryPoolGetSpace(small_memory_pool);
+
+    // Medium pool stats
+    stats->medium_pool.total_blocks = MEMORY_POOL_MEDIUM_BLOCK_COUNT;
+    stats->medium_pool.available_blocks =
+        osMemoryPoolGetSpace(medium_memory_pool);
+
+    // Large pool stats
+    stats->large_pool.total_blocks = MEMORY_POOL_LARGE_BLOCK_COUNT;
+    stats->large_pool.available_blocks =
+        osMemoryPoolGetSpace(large_memory_pool);
+
+    return SYSTEM_OK;
+}
+
+/* ==========================================================================
+ */
+/* Phase 2D: Advanced Integration - Task Utilities Implementation          */
+/* ==========================================================================
+ */
+
+// Task performance tracking variables
+static TaskPerformanceStats_t task_performance[5] = {0}; // 5 tasks
+static uint32_t last_idle_time = 0;
+static uint32_t system_start_time = 0;
+
+/**
+ * @brief Initialize task utilities for Phase 2D advanced integration
+ */
+static SystemError_t init_task_utilities(void) {
+    printf("RTOS Tasks: Initializing task utilities...\r\n");
+
+    system_start_time = xTaskGetTickCount();
+    last_idle_time = 0;
+
+    // Initialize performance tracking structures
+    memset(task_performance, 0, sizeof(task_performance));
+
+    printf("RTOS Tasks: Task utilities initialized\r\n");
+    return SYSTEM_OK;
+}
+
+/**
+ * @brief Get comprehensive system performance statistics
+ */
+SystemError_t rtos_get_system_performance(SystemPerformanceStats_t *stats) {
+    if (!stats) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    // Get heap information
+    stats->free_heap_size = xPortGetFreeHeapSize();
+    stats->minimum_free_heap = xPortGetMinimumEverFreeHeapSize();
+
+    // Calculate system CPU usage
+    stats->system_cpu_usage = rtos_calculate_cpu_usage();
+
+    // Get memory pool statistics
+    SystemError_t result =
+        rtos_get_memory_stats((MemoryPoolStats_t *)&stats->small_pool);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
+
+    // Get task-specific performance data
+    TaskStatus_t *task_status_array;
+    UBaseType_t task_count = uxTaskGetNumberOfTasks();
+
+    task_status_array = pvPortMalloc(task_count * sizeof(TaskStatus_t));
+    if (task_status_array != NULL) {
+        uxTaskGetSystemState(task_status_array, task_count, NULL);
+
+        // Map task performance data to our structure
+        for (UBaseType_t i = 0; i < task_count && i < 5; i++) {
+            task_performance[i].stack_high_water_mark =
+                task_status_array[i].usStackHighWaterMark;
+            task_performance[i].execution_count++;
+        }
+
+        // Copy to stats structure
+        memcpy(&stats->motor_task, &task_performance[0],
+               sizeof(TaskPerformanceStats_t));
+        memcpy(&stats->safety_task, &task_performance[1],
+               sizeof(TaskPerformanceStats_t));
+        memcpy(&stats->can_task, &task_performance[2],
+               sizeof(TaskPerformanceStats_t));
+        memcpy(&stats->uart_task, &task_performance[3],
+               sizeof(TaskPerformanceStats_t));
+        memcpy(&stats->telemetry_task, &task_performance[4],
+               sizeof(TaskPerformanceStats_t));
+
+        vPortFree(task_status_array);
+    }
+
+    return SYSTEM_OK;
+}
+
+/**
+ * @brief Monitor stack usage for all tasks
+ */
+SystemError_t rtos_monitor_stack_usage(void) {
+    TaskStatus_t *task_status_array;
+    UBaseType_t task_count = uxTaskGetNumberOfTasks();
+    SystemError_t result = SYSTEM_OK;
+
+    task_status_array = pvPortMalloc(task_count * sizeof(TaskStatus_t));
+    if (task_status_array == NULL) {
+        return ERROR_MEMORY_ALLOCATION;
+    }
+
+    uxTaskGetSystemState(task_status_array, task_count, NULL);
+
+    for (UBaseType_t i = 0; i < task_count; i++) {
+        uint32_t stack_usage_percent =
+            ((task_status_array[i].usStackHighWaterMark * 100) /
+             (task_status_array[i].usStackHighWaterMark +
+              (task_status_array[i].uxCurrentPriority * 256))); // Approximate
+
+        if (stack_usage_percent > STACK_MONITOR_CRITICAL_THRESHOLD) {
+            printf("RTOS Tasks: CRITICAL - Task %s stack usage: %lu%%\r\n",
+                   task_status_array[i].pcTaskName, stack_usage_percent);
+            result = ERROR_STACK_OVERFLOW;
+        } else if (stack_usage_percent > STACK_MONITOR_WARNING_THRESHOLD) {
+            printf("RTOS Tasks: WARNING - Task %s stack usage: %lu%%\r\n",
+                   task_status_array[i].pcTaskName, stack_usage_percent);
+        }
+    }
+
+    vPortFree(task_status_array);
+    return result;
+}
+
+/**
+ * @brief Calculate system CPU usage
+ */
+uint32_t rtos_calculate_cpu_usage(void) {
+    uint32_t current_time = xTaskGetTickCount();
+    uint32_t elapsed_time = current_time - system_start_time;
+
+    if (elapsed_time == 0) {
+        return 0;
+    }
+
+    // Simplified CPU usage calculation
+    // In a real implementation, this would use more sophisticated timing
+    uint32_t estimated_idle_time = elapsed_time / 10; // Assume 10% overhead
+    uint32_t cpu_usage = 100 - ((estimated_idle_time * 100) / elapsed_time);
+
+    return (cpu_usage > 100) ? 100 : cpu_usage;
+}
+
+/* ==========================================================================
+ */
+/* Phase 2D: Updated Initialization Function                               */
+/* ==========================================================================
+ */
+
+/**
+ * @brief Updated rtos_tasks_init to include Phase 2D components
+ */
+SystemError_t rtos_tasks_init_phase2d(void) {
+    SystemError_t result;
+
+    // Initialize base RTOS system first
+    result = rtos_tasks_init();
+    if (result != SYSTEM_OK) {
+        return result;
+    }
+
+    // Initialize Phase 2D advanced components
+    printf("RTOS Tasks: Initializing Phase 2D advanced integration...\r\n");
+
+    result = init_event_groups();
+    if (result != SYSTEM_OK) {
+        return result;
+    }
+
+    result = init_memory_pools();
+    if (result != SYSTEM_OK) {
+        return result;
+    }
+
+    result = init_task_utilities();
+    if (result != SYSTEM_OK) {
+        return result;
+    }
+
+    printf("RTOS Tasks: Phase 2D advanced integration complete!\r\n");
+    printf("RTOS Tasks: Event groups, memory pools, and task utilities "
+           "operational\r\n");
+
+    return SYSTEM_OK;
 }
