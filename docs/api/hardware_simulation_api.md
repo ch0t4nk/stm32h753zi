@@ -1,9 +1,53 @@
-# Hardware Simulation API Reference
+# Hardware Simulation API Reference - ARM_CM7 Testing Framework
 
 ## Overview
-The Hardware Simulation API provides comprehensive hardware abstraction simulation for the STM32H753ZI project. This API enables testing of peripheral interactions, GPIO operations, and system-level behavior without physical hardware.
+The Hardware Simulation API provides comprehensive hardware abstraction simulation for the STM32H753ZI project with ARM_CM7 production firmware characteristics. This API enables testing of peripheral interactions, GPIO operations, and system-level behavior without physical hardware, maintaining ARM_CM7 timing accuracy and performance modeling.
 
-## Core Hardware Simulation
+**System Status**: ✅ **Phase 1 Complete** - ARM_CM7 Hardware Simulation Framework  
+**Purpose**: 🧪 **Peripheral Testing**, ⚡ **GPIO Simulation**, 🔄 **System-Level Validation**  
+**Performance**: 📊 **ARM_CM7 Timing Accuracy**, 🎯 **Real Hardware Modeling**, 🛡️ **Fault Simulation**  
+**Integration**: 🔧 **HAL Abstraction Compatible**, 📋 **SSOT Configuration**, 🚀 **Phase 2 FreeRTOS Ready**
+
+---
+
+## 🎯 **Hardware Simulation Architecture** (ARM_CM7 Compatible)
+
+### **Peripheral Simulation Overview**
+```mermaid
+graph TB
+    subgraph "ARM_CM7 Application Layer"
+        APP_HW["Hardware-Dependent Code<br/>📡 SPI/I2C operations<br/>📍 GPIO control<br/>⏱️ Timer operations"]
+    end
+    
+    subgraph "HAL Abstraction Layer"
+        HAL_IF["HAL Interface<br/>🔄 Platform independent<br/>🧪 Mock/Real switching<br/>📊 Performance matching"]
+    end
+    
+    subgraph "Hardware Simulation Engine (ARM_CM7 Modeling)"
+        SPI_SIM["SPI Simulation<br/>📡 1MHz timing model<br/>🎯 L6470 behavior<br/>🛡️ Fault injection"]
+        
+        I2C_SIM["I2C Simulation<br/>📡 400kHz timing model<br/>🧲 AS5600 behavior<br/>📊 Address handling"]
+        
+        GPIO_SIM["GPIO Simulation<br/>📍 Pin state tracking<br/>⚡ Interrupt simulation<br/>🔄 Real-time response"]
+        
+        TIMER_SIM["Timer Simulation<br/>⏱️ ARM_CM7 timing accuracy<br/>🎯 PWM generation<br/>📊 Performance monitoring"]
+    end
+    
+    subgraph "Test Integration"
+        UNIT_HW["Hardware Unit Tests<br/>🧪 Peripheral validation<br/>⚡ GPIO testing<br/>📊 Timing verification"]
+    end
+    
+    APP_HW --> HAL_IF
+    HAL_IF --> SPI_SIM
+    HAL_IF --> I2C_SIM
+    HAL_IF --> GPIO_SIM
+    HAL_IF --> TIMER_SIM
+    UNIT_HW --> HAL_IF
+```
+
+---
+
+## 🔧 **Core Hardware Simulation** (ARM_CM7 Performance Modeling)
 
 ### Initialization and Control
 

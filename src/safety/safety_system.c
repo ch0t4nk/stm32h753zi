@@ -38,7 +38,7 @@ static SafetyMonitor_t safety_monitors[MONITOR_COUNT];
 // Safety event log (circular buffer)
 #define SAFETY_EVENT_LOG_SIZE 64
 typedef struct {
-    SafetyEvent_t event;
+    SafetyEventType_t event;
     uint32_t parameter;
     uint32_t timestamp;
     uint32_t sequence_number;
@@ -338,7 +338,7 @@ SafetyStatistics_t get_safety_statistics(void) {
 /**
  * @brief Log safety event
  */
-SystemError_t log_safety_event(SafetyEvent_t event, uint32_t parameter,
+SystemError_t log_safety_event(SafetyEventType_t event, uint32_t parameter,
                                uint32_t timestamp) {
     if (!safety_system_initialized) {
         return ERROR_NOT_INITIALIZED;
@@ -361,7 +361,8 @@ SystemError_t log_safety_event(SafetyEvent_t event, uint32_t parameter,
 /**
  * @brief Log safety event with motor ID
  */
-void safety_log_event(SafetyEvent_t event, uint8_t motor_id, uint32_t data) {
+void safety_log_event(SafetyEventType_t event, uint8_t motor_id,
+                      uint32_t data) {
     // Combine motor_id and data into a single parameter
     uint32_t parameter = ((uint32_t)motor_id << 24) | (data & 0x00FFFFFF);
 

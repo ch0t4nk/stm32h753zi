@@ -925,3 +925,53 @@ SystemError_t l6470_reset_position(uint8_t motor_id) {
                                         L6470_CMD_RESET_POS, 0x00);
     }
 }
+
+/* ==========================================================================
+ */
+/* Simulation Function Stubs (ARM Build Compatibility)                      */
+/* ==========================================================================
+ */
+
+#if SIMULATION_ENABLED
+/**
+ * @brief Simulation stub for L6470 command sending
+ * @param command L6470 command to simulate
+ * @param parameter Command parameter
+ * @return simulation_error_t Always returns SIM_OK for ARM builds
+ */
+simulation_error_t l6470_sim_send_command(uint8_t command,
+                                          uint32_t parameter) {
+    // Stub implementation for ARM firmware builds
+    (void)command; // Suppress unused parameter warnings
+    (void)parameter;
+    return SIM_OK;
+}
+
+/**
+ * @brief Simulation stub for L6470 register writing
+ * @param reg_addr Register address
+ * @param value Value to write
+ * @return simulation_error_t Always returns SIM_OK for ARM builds
+ */
+simulation_error_t l6470_sim_write_register(uint8_t reg_addr, uint32_t value) {
+    // Stub implementation for ARM firmware builds
+    (void)reg_addr; // Suppress unused parameter warnings
+    (void)value;
+    return SIM_OK;
+}
+
+/**
+ * @brief Simulation stub for L6470 register reading
+ * @param reg_addr Register address
+ * @param value Pointer to store read value
+ * @return simulation_error_t Always returns SIM_OK for ARM builds
+ */
+simulation_error_t l6470_sim_read_register(uint8_t reg_addr, uint32_t *value) {
+    // Stub implementation for ARM firmware builds
+    (void)reg_addr; // Suppress unused parameter warnings
+    if (value != NULL) {
+        *value = 0x00; // Return default value for ARM builds
+    }
+    return SIM_OK;
+}
+#endif /* SIMULATION_ENABLED */

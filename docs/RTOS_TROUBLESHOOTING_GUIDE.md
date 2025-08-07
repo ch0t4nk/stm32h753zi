@@ -1,42 +1,105 @@
-# FreeRTOS Troubleshooting Guide
+# FreeRTOS Troubleshooting Guide - ARM_CM7 Production
 
 ## 🚨 **Common Issues and Solutions**
 
-This guide provides solutions for common FreeRTOS issues in the STM32H753ZI stepper motor control system.
+This guide provides solutions for common FreeRTOS issues in the STM32H753ZI stepper motor control system with ARM_CM7 production firmware and Phase 2 implementation guidance.
 
-**Last Updated**: August 07, 2025  
-**Scope**: STM32H753ZI with FreeRTOS v10.x and CMSIS-RTOS v2 API
+**Last Updated**: January 07, 2025  
+**Scope**: STM32H753ZI with FreeRTOS v10.x and CMSIS-RTOS v2 API  
+**System Status**: ✅ **Phase 1 Complete** - 50.5KB ARM_CM7 Firmware Operational  
+**Migration Context**: 🚀 **Phase 2 Implementation** - 4-Week Custom Task Integration
 
 ---
 
-## ⚠️ **Build and Compilation Issues**
+## 🔄 **Phase 2 Migration Issues**
+
+### **Issue: Task Migration Planning**
+**Context**: Migrating from 50.5KB bare-metal to FreeRTOS tasks
+**Challenge**: Preserving existing functionality while adding RTOS benefits
+
+**Solution Strategy**:
+```mermaid
+graph TB
+    subgraph "Current Bare Metal (Phase 1 ✅)"
+        MAIN_APP["main_application_run()<br/>✅ 50.5KB working<br/>✅ Real-time control<br/>✅ Safety systems"]
+        SAFETY_SYS["safety_system_task()<br/>✅ Emergency stop<br/>✅ Fault detection<br/>✅ Monitoring"]
+    end
+    
+    subgraph "Phase 2 Migration Strategy"
+        TASK_WRAP["Task Wrapper Approach<br/>1. Keep existing functions<br/>2. Wrap in RTOS tasks<br/>3. Add inter-task communication"]
+        INCREMENTAL["Incremental Migration<br/>Week 1: Safety Monitor<br/>Week 2: Motor Control<br/>Week 3: Communication"]
+    end
+    
+    MAIN_APP --> TASK_WRAP
+    SAFETY_SYS --> TASK_WRAP
+    TASK_WRAP --> INCREMENTAL
+```
+
+**Implementation Steps**:
+1. **Week 1**: Wrap `safety_system_task()` in Safety Monitor Task (Priority 4)
+2. **Week 2**: Extract motor control from `main_application_run()` → Motor Control Task (Priority 3)
+3. **Week 3**: Add CAN/UART communication tasks with queue-based messaging
+4. **Week 4**: Performance optimization and hardware validation
+
+### **Issue: Memory Constraints with RTOS**
+**Context**: Adding 8KB FreeRTOS heap to 50.5KB firmware
+**Challenge**: Staying within STM32H753ZI memory limits
+
+**Solution - ARM_CM7 Memory Layout**:
+```c
+// Current ARM_CM7 memory usage (Phase 1)
+FLASH Usage:    50.5KB / 2048KB (2.41%)   ✅ Excellent headroom
+DTCMRAM Usage:  65.6KB / 128KB  (25.74%)  ✅ Good availability
+
+// Phase 2 target with FreeRTOS
+FLASH Target:    60KB / 2048KB  (2.93%)   ✅ Still excellent
+DTCMRAM Target:  80KB / 128KB   (62.5%)   ✅ Well within limits
+FreeRTOS Heap:   8KB             (6.25%)  ✅ Configurable
+Task Stacks:     6KB total       (4.69%)  ✅ Optimized sizes
+```
+
+**Memory Monitoring Commands**:
+```bash
+# Check current ARM_CM7 memory usage
+arm-none-eabi-size build/stm32h753_ihm02a1.elf
+
+# Monitor during Phase 2 implementation
+arm-none-eabi-nm --size-sort build/stm32h753_ihm02a1.elf | head -20
+```
+
+---
+
+## ⚠️ **Build and Compilation Issues - ARM_CM7 Context**
 
 ### **Issue: FreeRTOS Headers Not Found**
 ```
 error: FreeRTOS.h: No such file or directory
 ```
 
-**Solution**:
-1. **Check CubeMX Configuration**:
+**ARM_CM7 Production Solution**:
+1. **Check CubeMX Configuration** (Phase 2 setup):
    ```bash
    # Verify FreeRTOS is enabled in code.ioc
    grep "FREERTOS" code.ioc
-   # Should show: Mcu.IP2=FREERTOS
+   # Should show: Mcu.IP2=FREERTOS when Phase 2 is active
    ```
 
-2. **Regenerate Code**:
+2. **Regenerate Code with ARM_CM7 Settings**:
    - Open `code.ioc` in STM32CubeMX
    - Go to Middleware → FreeRTOS
-   - Ensure "Enabled" is checked
+   - Set Interface: CMSIS_V2
+   - Configure for ARM Cortex-M7
+   - Ensure heap size matches SSOT: 8KB
    - Regenerate code
 
-3. **Check Include Paths**:
+3. **Check ARM_CM7 Include Paths**:
    ```cmake
-   # In CMakeLists.txt, ensure FreeRTOS includes are present
+   # In CMakeLists.txt, ensure ARM_CM7 FreeRTOS includes
    target_include_directories(${PROJECT_NAME} PRIVATE
-       Core/Inc
-       Middlewares/Third_Party/FreeRTOS/Source/include
-       Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
+       Core/Inc                                                    # FreeRTOSConfig.h
+       Middlewares/Third_Party/FreeRTOS/Source/include            # FreeRTOS core
+       Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2      # CMSIS-RTOS v2
+       Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1  # ARM_CM7 port
    )
    ```
 
@@ -45,8 +108,8 @@ error: FreeRTOS.h: No such file or directory
 error: 'MOTOR_CONTROL_TASK_PRIORITY' undeclared
 ```
 
-**Solution**:
-1. **Include SSOT Header**:
+**ARM_CM7 Production Solution**:
+1. **Include ARM_CM7 SSOT Header**:
    ```c
    #include "config/freertos_config_ssot.h"
    ```

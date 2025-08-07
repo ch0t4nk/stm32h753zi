@@ -97,9 +97,11 @@ include_directories(
     drivers/STM32H7xx_HAL_Driver/Inc/Legacy
     drivers/CMSIS/Device/ST/STM32H7xx/Include
     drivers/CMSIS/Include
+    drivers/BSP/STM32H7xx_Nucleo
     00_reference/stm32h7xx_nucleo_bsp_md
-    middleware/FreeRTOS/Source/include
-    middleware/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1
+    Middlewares/Third_Party/FreeRTOS/Source/include
+    Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1
+    Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
 )
 
 # Add FreeRTOS compile definitions
@@ -144,9 +146,11 @@ file(GLOB_RECURSE SOURCES
     "src/controllers/*.c"        # Motor controller integration layer
     "src/safety/*.c"             # Safety systems (emergency stop, watchdog, fault monitoring)
     "src/communication/*.c"      # Communication protocols (UART, CAN)
-    "src/application/*.c"
+    "src/application/main_application.c"  # Main application logic (exclude duplicate main.c)
+    "src/rtos/*.c"               # RTOS task implementations for Phase 5A
     # "src/simulation/*.c"         # Motor/encoder simulation framework - TEMPORARILY DISABLED for safety integration
     "drivers/STM32H7xx_HAL_Driver/Src/*.c"
+    "drivers/BSP/STM32H7xx_Nucleo/*.c"  # Nucleo board support package
     "Core/Src/stm32h7xx_hal_msp.c"
     "Core/Src/stm32h7xx_it.c"
     "Core/Src/system_stm32h7xx.c"
@@ -155,9 +159,10 @@ file(GLOB_RECURSE SOURCES
 
 # Add FreeRTOS source files when using RTOS
 file(GLOB FREERTOS_SOURCES
-    "middleware/FreeRTOS/Source/*.c"
-    "middleware/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/*.c"
-    "middleware/FreeRTOS/Source/portable/MemMang/heap_4.c"
+    "Middlewares/Third_Party/FreeRTOS/Source/*.c"
+    "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/*.c"
+    "Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c"
+    "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c"
 )
 
 list(APPEND SOURCES ${FREERTOS_SOURCES})

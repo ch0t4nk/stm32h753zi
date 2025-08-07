@@ -17,6 +17,7 @@
 #include "position_control.h"
 #include "safety/fault_monitor.h"
 #include "stm32h7xx_hal.h"
+#include "stm32h7xx_hal_tim.h"
 #include <string.h>
 
 // Real-time control system state

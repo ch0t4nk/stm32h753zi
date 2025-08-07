@@ -1,9 +1,50 @@
-# Motor Simulation API Reference
+# Motor Simulation API Reference - ARM_CM7 Testing Framework
 
 ## Overview
-The Motor Simulation API provides comprehensive stepper motor simulation capabilities for the STM32H753ZI project. This API enables hardware-free development and testing by simulating L6470 stepper motor drivers and their physical behavior.
+The Motor Simulation API provides comprehensive stepper motor simulation capabilities for the STM32H753ZI project with ARM_CM7 production firmware characteristics. This API enables hardware-free development and testing by simulating L6470 stepper motor drivers and their physical behavior with ARM_CM7 timing accuracy and real-world physics modeling.
 
-## Core Simulation Functions
+**System Status**: ✅ **Phase 1 Complete** - ARM_CM7 Motor Simulation Framework  
+**Purpose**: 🔄 **Stepper Motor Modeling**, ⚡ **L6470 Behavior Simulation**, 🎯 **Physics-Based Testing**  
+**Performance**: 📊 **ARM_CM7 Timing Model**, 🔄 **Real-time Simulation**, 🛡️ **Comprehensive Fault Testing**  
+**Integration**: 🔧 **HAL Abstraction Compatible**, 📋 **SSOT Physics Parameters**, 🚀 **Phase 2 FreeRTOS Ready**
+
+---
+
+## 🎯 **Motor Simulation Architecture** (ARM_CM7 Physics Modeling)
+
+### **Stepper Motor Simulation Overview**
+```mermaid
+graph TB
+    subgraph "ARM_CM7 Motor Control Application"
+        MOTOR_APP["Motor Control Logic<br/>📋 Movement commands<br/>🎯 Position control<br/>⚡ Speed management"]
+    end
+    
+    subgraph "L6470 Driver Simulation (ARM_CM7 Timing)"
+        L6470_SIM["L6470 Driver Model<br/>📡 SPI command processing<br/>⚙️ Register simulation<br/>🛡️ Fault generation"]
+    end
+    
+    subgraph "Physics Simulation Engine"
+        MOTOR_PHYSICS["Stepper Motor Physics<br/>🔄 NEMA 17 characteristics<br/>⚡ Acceleration profiles<br/>🎯 Load simulation"]
+        
+        MECHANICAL_SIM["Mechanical System<br/>🔧 Inertia modeling<br/>🛡️ Stall detection<br/>📊 Torque calculation"]
+        
+        ENCODER_SIM["Position Feedback<br/>🧲 AS5600 simulation<br/>📊 Closed-loop testing<br/>🎯 0.1° accuracy"]
+    end
+    
+    subgraph "Test Framework Integration"
+        MOTION_TESTS["Motion Testing<br/>🧪 Movement validation<br/>📊 Performance analysis<br/>⚡ Timing verification"]
+    end
+    
+    MOTOR_APP --> L6470_SIM
+    L6470_SIM --> MOTOR_PHYSICS
+    MOTOR_PHYSICS --> MECHANICAL_SIM
+    MOTOR_PHYSICS --> ENCODER_SIM
+    MOTION_TESTS --> L6470_SIM
+```
+
+---
+
+## 🔧 **Core Simulation Functions** (ARM_CM7 Performance Modeling)
 
 ### Initialization and Control
 

@@ -2,65 +2,116 @@
 
 ## 📋 Overview
 
-**Document Version**: 1.0  
-**Date**: August 07, 2025  
+**Document Version**: 2.0 - ARM_CM7 Production Ready  
+**Date**: January 07, 2025  
 **Project**: STM32H753ZI Stepper Motor Control System  
 **RTOS**: FreeRTOS v10.x with CMSIS-RTOS v2 API  
-**Status**: Phase 1 Complete - Production Ready RTOS Infrastructure
+**Status**: ✅ **Phase 1 Complete** - 50.5KB ARM_CM7 Firmware Operational  
+**Next Phase**: 🚀 **Phase 2 Implementation** - 4-Week Custom Task Migration
 
-This document provides comprehensive documentation for the FreeRTOS real-time operating system implementation in the STM32H753ZI stepper motor control project.
+This document provides comprehensive documentation for the FreeRTOS real-time operating system implementation in the STM32H753ZI stepper motor control project with current ARM_CM7 production metrics.
 
 ---
 
-## 🎯 **RTOS Architecture Overview**
+## 🎯 **RTOS Architecture Overview - ARM_CM7 Production System**
 
-### **System Architecture**
+### **Current System Status** (Phase 1 Complete)
+```mermaid
+graph TB
+    subgraph "ARM_CM7 Production Firmware (50.5KB)"
+        BARE_METAL["Current Bare Metal System<br/>✅ FLASH: 50.5KB (2.41%)<br/>✅ DTCMRAM: 65.6KB (25.74%)<br/>✅ Real-time: <1ms emergency stop"]
+    end
+    
+    subgraph "Phase 2 Target: FreeRTOS Integration"
+        RTOS_KERNEL["FreeRTOS Kernel v10.x<br/>CMSIS-RTOS v2 API<br/>Preemptive Scheduler<br/>8KB Heap Management"]
+        
+        TASK_LAYER["Task Architecture<br/>Safety Monitor (Priority 4)<br/>Motor Control (Priority 3)<br/>CAN/UART Comm (Priority 2/1)"]
+        
+        IPC_LAYER["Inter-Task Communication<br/>Message queues<br/>Mutexes for hardware<br/>Binary semaphores"]
+    end
+    
+    subgraph "HAL Abstraction (Maintained)"
+        HAL_ABSTRACT["HAL Abstraction Layer<br/>✅ Platform independent<br/>✅ Mock testing ready<br/>✅ Thread-safe design"]
+    end
+    
+    BARE_METAL -.->|Phase 2 Migration| RTOS_KERNEL
+    RTOS_KERNEL --> TASK_LAYER
+    TASK_LAYER --> IPC_LAYER
+    
+    HAL_ABSTRACT -.->|Unchanged| RTOS_KERNEL
 ```
-STM32H753ZI RTOS Architecture
-├── FreeRTOS Kernel (v10.x)
+
+### **System Architecture** (ARM_CM7 Optimized)
+```
+STM32H753ZI ARM_CM7 RTOS Architecture (Phase 2 Target)
+├── FreeRTOS Kernel (v10.x) - ARM_CM7 Optimized
 │   ├── CMSIS-RTOS v2 API Layer
 │   ├── Preemptive Scheduler with 5 Priority Levels
-│   ├── Heap_4 Memory Management (8KB)
-│   └── 1kHz System Tick (1ms precision)
-├── Application Tasks
-│   ├── Safety Monitor Task (Priority 4 - Highest)
-│   ├── Motor Control Task (Priority 3 - High)
-│   ├── Communication Task (Priority 2 - Medium)
-│   ├── Telemetry Task (Priority 1 - Low)
-│   └── Default Task (Priority 24 - System)
-├── Inter-Task Communication
-│   ├── Queues for Data Exchange
-│   ├── Semaphores for Synchronization
-│   ├── Mutexes for Resource Protection
-│   └── Timers for Periodic Operations
-└── Hardware Integration
-    ├── HAL Abstraction Layer
-    ├── NVIC Interrupt Management
-    └── STM32H7 Peripheral Integration
+│   ├── Heap_4 Memory Management (8KB configurable)
+│   ├── 1kHz System Tick (1ms precision timing)
+│   └── ARM Cortex-M7 Port with FPU support
+├── Application Tasks (Custom Migration)
+│   ├── Safety Monitor Task (Priority 4 - Highest, 1.5KB stack)
+│   ├── Motor Control Task (Priority 3 - High, 2KB stack)
+│   ├── CAN Communication Task (Priority 2 - Medium, 1KB stack)
+│   ├── UART Communication Task (Priority 1 - Low, 1KB stack)
+│   └── Idle Task (Priority 0 - System, 512 bytes stack)
+├── Inter-Task Communication (Production Ready)
+│   ├── Motor Command Queue (8 entries, blocking)
+│   ├── Safety Event Queue (4 entries, high priority)
+│   ├── CAN Message Queue (16 entries, protocol handling)
+│   ├── SPI/I2C Mutexes (hardware protection)
+│   └── Binary Semaphores (ISR-to-task signaling)
+├── Hardware Integration (HAL Abstraction)
+│   ├── Thread-Safe HAL Abstraction Layer
+│   ├── STM32H7 NVIC Interrupt Management
+│   ├── ARM_CM7 Cache Management (I-Cache/D-Cache)
+│   └── DTCM/ITCM Memory Optimization
+└── Memory Layout (ARM_CM7 Specific)
+    ├── FLASH: 2MB total (50.5KB used = 2.41%)
+    ├── DTCMRAM: 128KB total (65.6KB used = 25.74%)
+    ├── FreeRTOS Heap: 8KB (configurable)
+    └── Task Stacks: 6KB total (4 tasks + idle)
 ```
 
-### **Task Hierarchy and Priorities**
+### **Task Hierarchy and Priorities** (ARM_CM7 Production Configuration)
 ```c
-Priority Level | Task Name         | Stack Size | Period    | Function
----------------|-------------------|------------|-----------|------------------
-4 (Highest)    | Safety Monitor    | 1.5KB      | 2ms       | Critical safety oversight
-3 (High)       | Motor Control     | 2KB        | 1ms       | Real-time motor control
-2 (Medium)     | Communication     | 1KB        | 10ms      | CAN/UART protocols
-1 (Low)        | Telemetry         | 1KB        | 100ms     | Status broadcasting
-0 (Idle)       | Idle Task         | 128 words  | As needed | System housekeeping
-24 (System)    | Default Task      | 128 words  | 1ms       | CubeMX generated
+Priority Level | Task Name         | Stack Size | Period    | Current Status        | Function
+---------------|-------------------|------------|-----------|----------------------|------------------
+4 (Highest)    | Safety Monitor    | 1.5KB      | 2ms       | ✅ Code Ready       | Critical safety oversight
+3 (High)       | Motor Control     | 2KB        | 1ms       | ✅ Code Ready       | Real-time motor control  
+2 (Medium)     | CAN Communication | 1KB        | 20ms      | ✅ Protocol Ready   | CAN bus messaging
+1 (Low)        | UART Telemetry    | 1KB        | 50ms      | ✅ Debug Ready      | Status/debug output
+0 (Idle)       | FreeRTOS Idle     | 512 bytes  | As needed | 🔄 System Default   | Memory/power management
 ```
 
 ---
 
-## 🔧 **Configuration Management (SSOT)**
+## 🔧 **SSOT Configuration Architecture - ARM_CM7 Production Ready**
 
-### **Single Source of Truth (SSOT) Architecture**
+### **Configuration File Structure** (Production Implementation)
+```mermaid
+graph TB
+    subgraph "SSOT Configuration System"
+        FREERTOS_SSOT["freertos_config_ssot.h<br/>📄 218 lines<br/>Core RTOS parameters<br/>ARM_CM7 optimized"]
+        RESOURCES_SSOT["rtos_resources_config.h<br/>📄 241 lines<br/>Task handles & queues<br/>Resource management"]
+        BUILD_CONFIG["build_config.h<br/>📄 Existing SSOT<br/>Build metadata<br/>Version control"]
+    end
+    
+    subgraph "Generated Configuration"
+        FREERTOS_CONFIG["FreeRTOSConfig.h<br/>📍 Core/Inc/<br/>CubeMX generated<br/>SSOT references"]
+        TASK_DEFINITIONS["Task definitions<br/>📍 Core/Src/freertos.c<br/>CubeMX generated<br/>SSOT parameters"]
+    end
+    
+    FREERTOS_SSOT --> FREERTOS_CONFIG
+    RESOURCES_SSOT --> TASK_DEFINITIONS
+    BUILD_CONFIG --> FREERTOS_CONFIG
+```
 
 All RTOS configuration is centralized in SSOT headers to ensure consistency and prevent configuration drift:
 
-#### **`src/config/freertos_config_ssot.h`**
-Primary RTOS configuration with comprehensive parameters:
+#### **`src/config/freertos_config_ssot.h`** (ARM_CM7 Production Parameters)
+Primary RTOS configuration with ARM_CM7 optimization and production-ready parameters:
 
 ```c
 // Core Configuration

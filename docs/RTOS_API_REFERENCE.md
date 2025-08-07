@@ -1,53 +1,133 @@
-# FreeRTOS API Reference
+# FreeRTOS API Reference - ARM_CM7 Production
 
 ## 📋 **Overview**
 
-This document provides API reference for the STM32H753ZI FreeRTOS implementation using CMSIS-RTOS v2 API. All APIs are designed for safety-critical real-time motor control applications.
+This document provides API reference for the STM32H753ZI FreeRTOS implementation using CMSIS-RTOS v2 API. All APIs are designed for safety-critical real-time motor control applications with ARM_CM7 optimization.
 
 **API Version**: CMSIS-RTOS v2  
 **FreeRTOS Version**: v10.x  
-**Last Updated**: August 07, 2025
+**Last Updated**: January 07, 2025  
+**System Status**: ✅ **Phase 1 Complete** - 50.5KB ARM_CM7 Firmware Operational  
+**Implementation**: 🚀 **Phase 2 Ready** - 4-Week Custom Task Integration
 
 ---
 
-## 🔧 **Resource Management API**
+## 🎯 **ARM_CM7 Real-Time Performance Specifications**
 
-### **RTOS_InitializeResources()**
-Initializes all RTOS resources (tasks, queues, semaphores, timers).
+### **System Performance Metrics** (Current Production)
+```mermaid
+graph LR
+    subgraph "ARM_CM7 Performance (50.5KB Firmware)"
+        EMERGENCY["Emergency Stop<br/>⚡ <1ms response<br/>✅ Hardware level<br/>✅ Interrupt driven"]
+        CONTROL["Motor Control<br/>🔄 1kHz frequency<br/>✅ Position control<br/>✅ Real-time feedback"]
+        SAFETY["Safety Monitoring<br/>🛡️ 500Hz checks<br/>✅ Fault detection<br/>✅ System protection"]
+    end
+    
+    subgraph "Phase 2 Target Performance"
+        RTOS_EMERGENCY["RTOS Emergency Stop<br/>⚡ <1ms maintained<br/>🎯 Priority 4 task<br/>🎯 Preemptive scheduling"]
+        RTOS_CONTROL["RTOS Motor Control<br/>🔄 1kHz maintained<br/>🎯 Priority 3 task<br/>🎯 Precise timing"]
+        RTOS_SAFETY["RTOS Safety Monitor<br/>🛡️ 500Hz maintained<br/>🎯 Highest priority<br/>🎯 Queue-based events"]
+    end
+    
+    EMERGENCY -.->|Maintain| RTOS_EMERGENCY
+    CONTROL -.->|Maintain| RTOS_CONTROL
+    SAFETY -.->|Enhance| RTOS_SAFETY
+```
+
+### **Memory Layout** (ARM_CM7 Specific)
+```c
+// Current ARM_CM7 memory usage (Phase 1 ✅)
+#define ARM_CM7_FLASH_TOTAL         (2 * 1024 * 1024)      // 2MB total
+#define ARM_CM7_FLASH_USED          (50.5 * 1024)          // 50.5KB used (2.41%)
+#define ARM_CM7_DTCMRAM_TOTAL       (128 * 1024)           // 128KB total  
+#define ARM_CM7_DTCMRAM_USED        (65.6 * 1024)          // 65.6KB used (25.74%)
+
+// Phase 2 FreeRTOS memory allocation (Target)
+#define FREERTOS_HEAP_SIZE          (8 * 1024)             // 8KB heap
+#define TOTAL_TASK_STACKS           (6 * 1024)             // 6KB stacks (4 tasks + idle)
+#define PHASE2_MEMORY_OVERHEAD      (FREERTOS_HEAP_SIZE + TOTAL_TASK_STACKS)  // 14KB total
+```
+
+---
+
+## 🔧 **Resource Management API - ARM_CM7 Optimized**
+
+### **RTOS_InitializeResources()** (ARM_CM7 Production Ready)
+Initializes all RTOS resources with ARM_CM7 optimization and safety validation.
 
 ```c
 SystemError_t RTOS_InitializeResources(void);
 ```
 
-**Returns**:
-- `SYSTEM_OK`: All resources initialized successfully
-- `ERROR_RTOS_TASK_CREATION_FAILED`: Task creation failed
-- `ERROR_RTOS_QUEUE_CREATION_FAILED`: Queue creation failed
-- `ERROR_RTOS_SEMAPHORE_CREATION_FAILED`: Semaphore creation failed
-- `ERROR_RTOS_TIMER_CREATION_FAILED`: Timer creation failed
+**ARM_CM7 Implementation Features**:
+- Hardware cache management (I-Cache/D-Cache optimization)
+- DTCM/ITCM memory placement for time-critical tasks
+- ARM_CM7 FPU configuration for motor control calculations
+- Priority inheritance for mutex-protected hardware resources
 
-**Example**:
+**Returns**:
+- `SYSTEM_OK`: All ARM_CM7 resources initialized successfully
+- `ERROR_RTOS_TASK_CREATION_FAILED`: Task creation failed (check stack sizes)
+- `ERROR_RTOS_QUEUE_CREATION_FAILED`: Queue creation failed (check heap size)
+- `ERROR_RTOS_SEMAPHORE_CREATION_FAILED`: Semaphore creation failed (hardware protection)
+- `ERROR_RTOS_TIMER_CREATION_FAILED`: Timer creation failed (real-time constraints)
+- `ERROR_ARM_CM7_CACHE_CONFIG_FAILED`: Cache configuration failed
+- `ERROR_ARM_CM7_FPU_CONFIG_FAILED`: FPU configuration failed
+
+**Production Example** (Phase 2 Implementation):
 ```c
-// Initialize RTOS resources before starting scheduler
+// ARM_CM7 RTOS initialization with safety validation
 SystemError_t result = RTOS_InitializeResources();
 if (result != SYSTEM_OK) {
-    // Handle initialization failure
-    LogError(result, __LINE__);
+    // Critical failure handling for ARM_CM7 system
+    safety_event_t event = {
+        .type = SAFETY_RTOS_INIT_FAILED,
+        .error_code = result,
+        .timestamp = HAL_GetTick(),
+        .priority = SAFETY_PRIORITY_CRITICAL
+    };
+    
+    // Log to non-volatile storage for debugging
+    safety_log_critical_event(&event);
+    
+    // Emergency stop and system halt
+    HAL_Abstraction_GPIO_Write(EMERGENCY_STOP_PORT, EMERGENCY_STOP_PIN, HAL_GPIO_STATE_SET);
+    while(1) { 
+        HAL_Delay(100); // Infinite loop with watchdog reset
+    }
+}
+
+// Validate ARM_CM7 specific configurations
+result = RTOS_ValidateARM_CM7_Configuration();
+if (result != SYSTEM_OK) {
+    // Handle ARM_CM7 specific configuration issues
+    LogError(result, __FUNCTION__, __LINE__);
 }
 ```
 
-### **RTOS_ValidateResources()**
-Validates that all RTOS resources were created successfully.
+### **RTOS_ValidateResources()** (Enhanced ARM_CM7 Validation)
+Comprehensive validation of RTOS resources with ARM_CM7 hardware verification.
 
 ```c
 SystemError_t RTOS_ValidateResources(void);
 ```
 
+**ARM_CM7 Validation Checks**:
+- Task handle validity and stack overflow protection
+- Queue handle validity and memory allocation
+- Semaphore handle validity and priority inheritance
+- ARM_CM7 cache coherency for shared data
+- DTCM/ITCM memory placement verification
+- FPU state preservation across context switches
+
 **Returns**:
-- `SYSTEM_OK`: All resources valid
-- `ERROR_RTOS_INVALID_TASK_HANDLES`: One or more task handles invalid
-- `ERROR_RTOS_INVALID_QUEUE_HANDLES`: One or more queue handles invalid
-- `ERROR_RTOS_INVALID_SEMAPHORE_HANDLES`: One or more semaphore handles invalid
+- `SYSTEM_OK`: All ARM_CM7 resources validated successfully
+- `ERROR_RTOS_INVALID_TASK_HANDLES`: Task handles corrupted or invalid
+- `ERROR_RTOS_INVALID_QUEUE_HANDLES`: Queue handles invalid (heap fragmentation)
+- `ERROR_RTOS_INVALID_SEMAPHORE_HANDLES`: Semaphore handles invalid (resource leak)
+- `ERROR_ARM_CM7_CACHE_COHERENCY`: Cache coherency issues detected
+- `ERROR_ARM_CM7_MEMORY_PLACEMENT`: Invalid DTCM/ITCM memory usage
+- `ERROR_ARM_CM7_FPU_STATE`: FPU state corruption detected
 
 ### **RTOS_GetResourceUtilization()**
 Gets current resource utilization statistics.

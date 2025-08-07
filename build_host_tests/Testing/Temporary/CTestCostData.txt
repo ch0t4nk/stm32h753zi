@@ -1,3 +1,0 @@
-test_safety_systems_hal_abstracted 0 0
----
-test_safety_systems_hal_abstracted

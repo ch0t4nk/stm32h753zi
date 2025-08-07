@@ -22,6 +22,8 @@
 
 #include "config/hardware_config.h"
 #include "stm32h7xx_hal.h"
+#include "stm32h7xx_hal_iwdg.h"
+#include "stm32h7xx_hal_tim.h"
 #include <string.h>
 
 /* ==========================================================================

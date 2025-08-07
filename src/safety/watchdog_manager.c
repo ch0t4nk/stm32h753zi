@@ -14,6 +14,8 @@
 
 #include "watchdog_manager.h"
 #include "hal_abstraction/hal_abstraction.h"
+#include "stm32h7xx_hal_iwdg.h"
+#include "stm32h7xx_hal_wwdg.h"
 #include <stdlib.h> // For abs() function
 #include <string.h>
 
@@ -298,7 +300,8 @@ bool watchdog_refresh_due(void) {
         return false;
     }
 
-    uint32_t elapsed = HAL_Abstraction_GetTick() - watchdog_config.last_refresh;
+    uint32_t elapsed =
+        HAL_Abstraction_GetTick() - watchdog_config.last_refresh;
     return (elapsed >= WATCHDOG_KICK_INTERVAL_MS);
 }
 
@@ -310,7 +313,8 @@ uint32_t watchdog_time_until_refresh(void) {
         return UINT32_MAX;
     }
 
-    uint32_t elapsed = HAL_Abstraction_GetTick() - watchdog_config.last_refresh;
+    uint32_t elapsed =
+        HAL_Abstraction_GetTick() - watchdog_config.last_refresh;
 
     if (elapsed >= WATCHDOG_KICK_INTERVAL_MS) {
         return 0; // Refresh is overdue
