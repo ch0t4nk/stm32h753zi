@@ -26,6 +26,9 @@ docs/indexes/STM32H7_FULL_INDEX.json
 docs/indexes/L6470_SEARCH_INDEX.json
 docs/indexes/STM32H7xx_Nucleo_BSP_INDEX.json
 
+# Semantic vector database - too large for git (1.53GB)
+docs/semantic_vector_db/
+
 # Python cache files
 __pycache__/
 *.pyc
