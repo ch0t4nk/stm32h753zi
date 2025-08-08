@@ -1,12 +1,26 @@
 ---
-applyTo: "**/CMakeLists.txt,**/*.cmake,**/CMakePresets.json,.vscode/cmake-kits.json"
-description: "STM32H753ZI CMake build system configuration, troubleshooting, and rapid setup guide"
+applyTo: "**/CMakeLists.txt,**/*.cmake,**/CMakePresets.json,.vscode/cmake-kits.json,**/fix_cmake.sh,**/run_host_tests.sh"
+description: "STM32H753ZI build system configuration including ARM firmware and host testing compilation"
 ---
 
-# CMake Build System Instructions
+# Build System Instructions
 
 ## Overview
-This instruction file provides the definitive guide for setting up, troubleshooting, and maintaining the CMake build system for the STM32H753ZI stepper motor control project. Use this to avoid repeated configuration issues.
+This instruction file provides comprehensive guidance for the dual build system architecture that enables both ARM firmware compilation and host testing. This system prevents wasted effort exploring toolchain issues by establishing clear separation between compilation targets.
+
+## Dual Build Architecture
+
+### ARM Firmware Compilation (Primary Target)
+**Purpose**: Build actual STM32H753ZI firmware for hardware deployment  
+**Toolchain**: ARM GCC cross-compiler (`arm-none-eabi-gcc`)  
+**Configuration**: CMakePresets.json with ARM-specific settings  
+**Build Directory**: `build/` (primary build artifacts)
+
+### Host Testing Compilation (Secondary Target)  
+**Purpose**: Build drivers and logic for local testing with mocks  
+**Toolchain**: Local GCC (`gcc`, system compiler)  
+**Configuration**: Separate `host_tests/CMakeLists.txt`  
+**Build Directory**: `build_host_tests/` (isolated test artifacts)
 
 ## Root Cause Analysis of Recurring Issues
 

@@ -34,10 +34,18 @@ This directory contains archived materials from the STM32H753ZI stepper motor co
 - `PHASE_1_3_VALIDATION_REPORT.json` - Phase 1.3 validation results (archived 2025-08-07)
 - `semantic_db_validation_*.json` - Semantic database validation results (archived 2025-08-07)
 - `semantic_db_validation_*.md` - Semantic database validation reports (archived 2025-08-07)
+- **Instruction System Archive (archived 2025-08-08)**:
+  - `rtos.instructions.md` - RTOS implementation guidance (superseded - FreeRTOS complete)
+  - `rtos-integration.instructions.md` - RTOS integration strategy (superseded - FreeRTOS complete)
+  - `advanced-rtos.instructions.md` - Advanced RTOS features (superseded - FreeRTOS complete)
+  - `dual-build-system.instructions.md` - Dual build guidance (merged into cmake-build-system.instructions.md)
+  - `semantic-search-integration.instructions.md` - Semantic search implementation (superseded - system complete)
+  - `workspace-cleanup.instructions.md` - Workspace cleanup methodology (superseded - cleanup complete)
+  - `phase3-advanced.instructions.md` - Phase 3 planning (superseded by feature tracking system)
 - `legacy_archive/` - Legacy documentation search tools superseded by semantic search
   - `search_enhanced_docs.py` - Keyword-based search (replaced by semantic AI search)
 
-**Status**: ✅ **Archived** - Development complete, hardware ready for deployment, all reports superseded by **Feature Tracking System**
+**Status**: ✅ **Archived** - Development complete, hardware ready for deployment, all reports superseded by **Feature Tracking System** and production-ready instruction set
 
 ### 📚 Outdated Documentation (`outdated_docs/`)
 - `CMAKE_KIT_SETUP.md` - CMake kit configuration guide

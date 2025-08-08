@@ -36,10 +36,12 @@ The automation system ensures all documentation (including these instructions) r
 - [`api-ui.instructions.md`](./api-ui.instructions.md) - API design, user interfaces, documentation generation, external integration
   - **Scope**: `src/{communication,application}/**/*.{c,h}`
 
-### Supporting Instructions
+### Supporting Instructions (6 Files)
 - [`ssot-config.instructions.md`](./ssot-config.instructions.md) - Single Source of Truth configuration management principles
+- [`status-maintenance.instructions.md`](./status-maintenance.instructions.md) - STATUS.md maintenance rules, format requirements, and context preservation (`STATUS.md`)
+- [`feature-management.instructions.md`](./feature-management.instructions.md) - Feature creation, management, and tracking guidelines (`features/feature_registry.json,scripts/feature_tracker.py,docs/FEATURE_TRACKING_SYSTEM.md`)
 - [`file-organization.instructions.md`](./file-organization.instructions.md) - File structure and asset placement guidelines
-- [`cmake-build-system.instructions.md`](./cmake-build-system.instructions.md) - CMake build system configuration and troubleshooting
+- [`cmake-build-system.instructions.md`](./cmake-build-system.instructions.md) - Build system configuration including ARM firmware and host testing compilation
 
 ### Architecture Overview
 The consolidated system provides:
@@ -47,6 +49,7 @@ The consolidated system provides:
 - **VS Code Copilot scoping** with reliable brace-expansion patterns
 - **Comprehensive coverage** of all original instruction content
 - **Reduced complexity** while maintaining full functionality
+- **Production focus** with archived legacy/implementation-specific content
 
 ## 🎯 Usage Guidelines
 
@@ -91,4 +94,4 @@ When adding new functionality:
 
 ---
 
-**Key Improvements**: Reduced from 39 granular files to 6 domain-based files (85% reduction) with robust brace-expansion `applyTo` patterns for reliable VS Code Copilot scoping. All original content consolidated and enhanced with better organization.
+**Key Improvements**: Reduced from 19 instruction files to 12 production-focused files (37% reduction) with archived legacy content. Eliminated redundant RTOS instructions (FreeRTOS complete), merged build system guidance, and removed implementation-specific instructions. All original content consolidated and enhanced with better organization focused on ongoing development needs.

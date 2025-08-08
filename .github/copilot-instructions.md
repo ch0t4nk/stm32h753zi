@@ -55,16 +55,17 @@ This project uses a **streamlined domain-based instruction system** located in `
 - **safety-rt.instructions.md**: Safety systems, real-time control, timing management, fail-safe mechanisms (`src/{safety,controllers}/**/*.{c,h}`)
 - **api-ui.instructions.md**: API design, user interfaces, documentation generation, external integration (`src/{communication,application}/**/*.{c,h}`)
 
-### Supporting Instructions
+### Supporting Instructions (6 Files)
 - **ssot-config.instructions.md**: Single Source of Truth configuration management principles
 - **status-maintenance.instructions.md**: STATUS.md maintenance rules, format requirements, and context preservation (`STATUS.md`)
 - **feature-management.instructions.md**: Feature creation, management, and tracking guidelines (`features/feature_registry.json,scripts/feature_tracker.py,docs/FEATURE_TRACKING_SYSTEM.md`)
 - **file-organization.instructions.md**: File structure and asset placement guidelines
+- **cmake-build-system.instructions.md**: Build system configuration including ARM firmware and host testing compilation (`**/CMakeLists.txt,**/*.cmake,**/CMakePresets.json,.vscode/cmake-kits.json,**/fix_cmake.sh,**/run_host_tests.sh`)
 
 ### MCSDK Integration Documentation
 - **docs/MCSDK_INTEGRATION_PLAN.md**: Comprehensive X-CUBE-SPN2 + MCSDK 6.4.1 hybrid integration strategy and CubeMX workflow
 
-**Key Improvements**: Reduced from 39 granular files to 6 domain-based files (85% reduction) with robust brace-expansion `applyTo` patterns for reliable VS Code Copilot scoping. All original content consolidated and enhanced with better organization.
+**Key Improvements**: Reduced from 19 instruction files to 12 production-focused files (37% reduction) with archived legacy content. Eliminated redundant RTOS instructions (FreeRTOS complete), merged build system guidance, and removed implementation-specific instructions for maintainable, production-ready development guidance.
 
 ## Critical Design Principles
 
