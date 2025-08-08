@@ -90,79 +90,21 @@ cmake --build build --target update-status-preview                         # Pre
 ## 📖 **Documentation Categories**
 
 ### 🛡️ **Safety Documentation**
-```mermaid
-graph TD
-    SAFETY_ROOT["Safety Documentation"]
-    SAFETY_ROOT --> SYSTEMS["Safety Systems Guide<br/>Emergency stop, fault detection<br/>watchdog implementation"]
-    SAFETY_ROOT --> VALIDATION["Safety Validation Procedures<br/>Comprehensive testing protocols<br/>Production validation"]
-    SAFETY_ROOT --> EMERGENCY["Emergency Stop Testing<br/>Response time validation<br/><1ms requirements"]
-    
-    SYSTEMS --> MULTI_LAYER["Multi-layer Protection<br/>Hardware + Software<br/>Fault isolation"]
-    VALIDATION --> TESTS["15+ Fault Conditions<br/>Real-time analysis<br/>Graduated response"]
-    EMERGENCY --> TIMING["Performance Metrics<br/>Hardware: <100ms<br/>Software: <1ms"]
-```
-
 - **[Safety Systems Guide](guides/safety_systems.md)** - Emergency stop, fault detection, watchdog
 - **[Safety Validation Procedures](validation/safety_validation.md)** - Comprehensive safety testing
 - **[Emergency Stop Testing](testing/emergency_stop_testing.md)** - Response time validation
 
 ### ⚙️ **Technical Guides**
-```mermaid
-graph LR
-    TECH_GUIDES["Technical Documentation"]
-    
-    subgraph "Motor Control"
-        MOTOR["Motor Control Guide<br/>Dual L6470 drivers<br/>Closed-loop control"]
-        PROFILES["Motion Profiling<br/>Trapezoidal profiles<br/>1kHz control loop"]
-    end
-    
-    subgraph "Communication"
-        COMM["Communication Protocols<br/>UART/CAN/SPI/I2C<br/>Multi-protocol support"]
-        INTERFACES["Interface Design<br/>Real-time commands<br/>Telemetry data"]
-    end
-    
-    subgraph "Hardware"
-        HW["Hardware Configuration<br/>STM32H753ZI + Shield<br/>AS5600 encoders"]
-        SETUP["Physical Setup<br/>Pin assignments<br/>Peripheral config"]
-    end
-    
-    TECH_GUIDES --> MOTOR
-    TECH_GUIDES --> COMM
-    TECH_GUIDES --> HW
-    
-    MOTOR --> PROFILES
-    COMM --> INTERFACES
-    HW --> SETUP
-```
-
 - **[Motor Control Developer Guide](guides/motor_control.md)** - L6470 stepper motor control with AS5600 feedback
 - **[Communication Protocols](guides/communication.md)** - UART, CAN, SPI interfaces with real-time performance
 - **[Hardware Configuration](guides/hardware_setup.md)** - STM32H753ZI and shield setup with SSOT configuration
+- **[FreeRTOS Guides](guides/)** - Complete RTOS documentation suite
+  - **[RTOS API Reference](guides/RTOS_API_REFERENCE.md)** - FreeRTOS API documentation
+  - **[RTOS Quick Reference](guides/RTOS_QUICK_REFERENCE.md)** - Common RTOS patterns
+  - **[RTOS Troubleshooting](guides/RTOS_TROUBLESHOOTING_GUIDE.md)** - Debug and optimization
+  - **[Advanced RTOS Features](guides/ADVANCED_RTOS_FEATURES_COMPREHENSIVE_GUIDE.md)** - Advanced capabilities
 
 ### 🔧 **API Documentation**
-```mermaid
-graph TB
-    API_DOCS["API Documentation"]
-    
-    subgraph "Generated Documentation"
-        DOXYGEN["Doxygen API Reference<br/>Complete function docs<br/>Module organization"]
-        MODULES["Module Index<br/>Functional grouping<br/>Cross-references"]
-        FILES["File Index<br/>Source documentation<br/>Header interfaces"]
-    end
-    
-    subgraph "Manual Documentation"
-        OVERVIEW["API Overview<br/>Architecture design<br/>Usage patterns"]
-        EXAMPLES["Code Examples<br/>Integration patterns<br/>Best practices"]
-    end
-    
-    API_DOCS --> DOXYGEN
-    API_DOCS --> OVERVIEW
-    
-    DOXYGEN --> MODULES
-    DOXYGEN --> FILES
-    OVERVIEW --> EXAMPLES
-```
-
 - **[Generated API Reference](html/html/index.html)** - Complete Doxygen documentation
 - **[Module Index](html/html/modules.html)** - Organized by functional modules
 - **[File Index](html/html/files.html)** - Source file documentation
@@ -170,41 +112,19 @@ graph TB
 
 ### 📋 **Requirements & Design**
 - **[System Requirements](requirements/system_requirements.md)** - Functional and safety requirements
-- **[Architecture Design](design/system_architecture.md)** - Overall system design
-- **[Safety Requirements](requirements/safety_requirements.md)** - Safety-critical requirements
+- **[Architecture Design](design/architecture.md)** - Overall system design
+- **[Status Automation Design](design/STATUS_AUTOMATION_DESIGN.md)** - STATUS.md automation architecture
+- **[Semantic Search Design](design/SEMANTIC_SEARCH_ENGINE_DESIGN.md)** - Documentation search system
 
 ### 🧪 **Testing & Validation**
-```mermaid
-graph LR
-    TESTING["Testing Framework"]
-    
-    subgraph "Unit Testing"
-        UNITY["Unity Framework<br/>Hardware-free testing<br/>Mock implementations"]
-        HOST["Host Testing<br/>Native compilation<br/>Fast iteration"]
-    end
-    
-    subgraph "Integration Testing"
-        FREERTOS["FreeRTOS Testing<br/>Task communication<br/>Real-time validation"]
-        HARDWARE["Hardware Testing<br/>STM32H753ZI<br/>Production validation"]
-    end
-    
-    subgraph "Performance Testing"
-        TIMING["Timing Validation<br/>Real-time requirements<br/>Deadline monitoring"]
-        LOAD["Load Testing<br/>CPU utilization<br/>Memory analysis"]
-    end
-    
-    TESTING --> UNITY
-    TESTING --> FREERTOS
-    TESTING --> TIMING
-    
-    UNITY --> HOST
-    FREERTOS --> HARDWARE
-    TIMING --> LOAD
-```
-
 - **[Testing Strategy](testing/testing_strategy.md)** - Overall testing approach with HAL abstraction
 - **[Unit Testing Guide](testing/unit_testing.md)** - Unity C testing framework with mocks
 - **[Integration Testing](testing/integration_testing.md)** - System-level testing with FreeRTOS
+- **[Validation Reports](validation/)** - System analysis and compliance reports
+  - **[GPU Acceleration Setup](validation/GPU_ACCELERATION_SETUP.md)** - Development environment optimization
+  - **[SSOT Compliance](validation/SSOT_COMPLIANCE_CORRECTION.md)** - Configuration management validation
+  - **[Codebase Analysis](validation/CODEBASE_ANALYSIS_REPORT.md)** - Code quality and metrics
+  - **[Changelog Automation](validation/CHANGELOG_AUTOMATION.md)** - Documentation automation
 
 ## 🎯 **Key Features**
 
