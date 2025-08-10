@@ -36,10 +36,11 @@ The automation system ensures all documentation (including these instructions) r
 - [`api-ui.instructions.md`](./api-ui.instructions.md) - API design, user interfaces, documentation generation, external integration
   - **Scope**: `src/{communication,application}/**/*.{c,h}`
 
-### Supporting Instructions (6 Files)
+### Supporting Instructions (7 Files)
 - [`ssot-config.instructions.md`](./ssot-config.instructions.md) - Single Source of Truth configuration management principles
 - [`status-maintenance.instructions.md`](./status-maintenance.instructions.md) - STATUS.md maintenance rules, format requirements, and context preservation (`STATUS.md`)
 - [`feature-management.instructions.md`](./feature-management.instructions.md) - Feature creation, management, and tracking guidelines (`features/feature_registry.json,scripts/feature_tracker.py,docs/FEATURE_TRACKING_SYSTEM.md`)
+- [`development-workflow.instructions.md`](./development-workflow.instructions.md) - **CRITICAL** development workflow ensuring feature tracking and STATUS.md integration for Copilot context (`**/*.{c,h,md,json,py,sh,yml,yaml}`)
 - [`file-organization.instructions.md`](./file-organization.instructions.md) - File structure and asset placement guidelines
 - [`cmake-build-system.instructions.md`](./cmake-build-system.instructions.md) - Build system configuration including ARM firmware and host testing compilation
 
@@ -57,11 +58,13 @@ The consolidated system provides:
 
 ### For Developers
 - Reference these domain-based instructions for comprehensive guidance
+- **ALWAYS** follow the development workflow in [`development-workflow.instructions.md`](./development-workflow.instructions.md) to ensure proper feature tracking and STATUS.md integration
 - Follow the SSOT principle - all configuration should be centralized
 - Use appropriate instruction file based on the domain you're working in
 
 ### For GitHub Copilot
 - Each instruction file provides domain-specific context for code generation
+- **CRITICAL**: The development workflow ensures feature tracking updates are reflected in STATUS.md for accurate Copilot context
 - Follow safety-first principles outlined in safety-rt.instructions.md
 - Always reference SSOT configuration headers as defined in ssot-config.instructions.md
 - Use robust brace-expansion patterns for reliable VS Code scoping
