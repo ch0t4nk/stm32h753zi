@@ -19,6 +19,32 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* ==========================================================================
+ */
+/* Forward Declarations for Static Functions                                 */
+/* ==========================================================================
+ */
+
+static SystemError_t read_encoder_position(uint8_t motor_id,
+                                           int32_t *position);
+static void apply_position_filter(PositionControl_t *ctrl);
+static void calculate_velocity(PositionControl_t *ctrl, uint32_t dt_ms);
+static float calculate_pid_output(PositionControl_t *ctrl, uint32_t dt_ms);
+static float calculate_feedforward_output(PositionControl_t *ctrl,
+                                          uint32_t target_velocity,
+                                          uint32_t dt_ms);
+static float apply_output_limits(PositionControl_t *ctrl, float output);
+static SystemError_t send_motor_command(uint8_t motor_id, float output);
+static void update_control_history(PositionControl_t *ctrl);
+static SystemError_t
+perform_limit_switch_homing(uint8_t motor_id, HomingConfig_t *homing_config);
+static SystemError_t
+perform_encoder_index_homing(uint8_t motor_id, HomingConfig_t *homing_config);
+static SystemError_t
+perform_current_position_homing(uint8_t motor_id,
+                                HomingConfig_t *homing_config);
+static bool check_limit_switch(uint8_t motor_id);
+
 // Position control state for each motor
 static PositionControl_t position_controllers[MAX_MOTORS];
 static bool controller_initialized[MAX_MOTORS] = {false};

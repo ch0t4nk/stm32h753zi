@@ -348,6 +348,16 @@ void *rtos_memory_alloc(size_t size, uint32_t timeout_ms);
 SystemError_t rtos_memory_free(void *ptr, size_t size);
 
 /**
+ * @brief Memory pool statistics structure
+ */
+typedef struct {
+    uint32_t total_blocks;        // Total blocks in pool
+    uint32_t available_blocks;    // Currently available blocks
+    uint32_t peak_usage;          // Peak allocation count
+    uint32_t allocation_failures; // Number of failed allocations
+} MemoryPoolStats_t;
+
+/**
  * @brief Get memory pool usage statistics
  *
  * Retrieves current allocation status for all memory pools
@@ -374,16 +384,6 @@ typedef struct {
     uint32_t max_execution_time_us; // Maximum execution time (microseconds)
     uint32_t avg_execution_time_us; // Average execution time (microseconds)
 } TaskPerformanceStats_t;
-
-/**
- * @brief Memory pool statistics structure
- */
-typedef struct {
-    uint32_t total_blocks;        // Total blocks in pool
-    uint32_t available_blocks;    // Currently available blocks
-    uint32_t peak_usage;          // Peak allocation count
-    uint32_t allocation_failures; // Number of failed allocations
-} MemoryPoolStats_t;
 
 /**
  * @brief System performance monitoring structure

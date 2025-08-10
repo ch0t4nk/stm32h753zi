@@ -207,27 +207,8 @@ bool position_control_is_homed(uint8_t motor_id);
 bool position_control_is_settled(uint8_t motor_id);
 int32_t position_control_get_position_error(uint8_t motor_id);
 
-// Internal functions (declared for testing)
-static SystemError_t read_encoder_position(uint8_t motor_id,
-                                           int32_t *position);
-static void apply_position_filter(PositionControl_t *ctrl);
-static void calculate_velocity(PositionControl_t *ctrl, uint32_t dt_ms);
-static float calculate_pid_output(PositionControl_t *ctrl, uint32_t dt_ms);
-static float calculate_feedforward_output(PositionControl_t *ctrl,
-                                          uint32_t target_velocity,
-                                          uint32_t dt_ms);
-static float apply_output_limits(PositionControl_t *ctrl, float output);
-static SystemError_t send_motor_command(uint8_t motor_id, float output);
-static void update_control_history(PositionControl_t *ctrl);
-
-// Homing internal functions
-static SystemError_t perform_limit_switch_homing(uint8_t motor_id,
-                                                 HomingConfig_t *config);
-static SystemError_t perform_encoder_index_homing(uint8_t motor_id,
-                                                  HomingConfig_t *config);
-static SystemError_t perform_current_position_homing(uint8_t motor_id,
-                                                     HomingConfig_t *config);
-static bool check_limit_switch(uint8_t motor_id);
+// Internal functions are implemented in position_control.c
+// (Static functions should not be declared in headers)
 
 // External dependencies that need to be implemented
 extern SystemError_t motor_set_velocity(uint8_t motor_id, int32_t velocity);

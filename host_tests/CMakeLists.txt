@@ -11,7 +11,7 @@ set(CMAKE_BUILD_TYPE Debug)
 
 # Host-specific compiler flags
 set(CMAKE_C_FLAGS 
-    "-Wall -Wextra -Wpedantic -g -O0 -DSIMULATION_ENABLED=1 -DTEST_MODE=1 -DHOST_TESTING=1 -DUNITY_TESTING=1 -DSTM32H753xx -DUSE_HAL_DRIVER"
+    "-Wall -Wextra -Wpedantic -g -O0 -DSIMULATION_ENABLED=1 -DTEST_MODE=1 -DHOST_TESTING=1 -DUNITY_TESTING=1 -DSTM32H753xx -DUSE_HAL_DRIVER -DHOST_TEST_BUILD=1"
 )
 
 # Use local Unity testing framework

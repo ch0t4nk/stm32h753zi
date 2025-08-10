@@ -715,4 +715,126 @@ SystemError_t HAL_Abstraction_ConfigureCommunicationHardware(void) {
     return result;
 }
 
+/* ==========================================================================
+ */
+/* Driver Abstraction Implementation (FTR-013)                              */
+/* ==========================================================================
+ */
+
+/**
+ * @brief AS5600 Encoder Driver Implementation
+ *
+ * Real hardware implementation that calls actual AS5600 driver functions.
+ * These functions bridge the HAL abstraction to concrete driver
+ * implementations.
+ */
+
+SystemError_t HAL_Abstraction_AS5600_Init(uint8_t encoder_id) {
+    // TODO: Implement AS5600 initialization through actual driver (FTR-013)
+    // Should call as5600_init_encoder(encoder_id) when driver interface is
+    // ready
+    (void)encoder_id; // Suppress unused parameter warning
+
+    // Stub implementation - return success for now
+    // Real implementation will call: return as5600_init_encoder(encoder_id);
+    return SYSTEM_OK;
+}
+
+SystemError_t HAL_Abstraction_AS5600_ReadAngle(uint8_t encoder_id,
+                                               float *angle_degrees) {
+    // TODO: Implement AS5600 angle reading through actual driver (FTR-013)
+    // Should call as5600_read_angle_degrees(encoder_id, angle_degrees)
+    (void)encoder_id; // Suppress unused parameter warning
+
+    if (angle_degrees == NULL) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    // Stub implementation - return mock data for now
+    *angle_degrees = 0.0f;
+    // Real implementation will call: return
+    // as5600_read_angle_degrees(encoder_id, angle_degrees);
+    return SYSTEM_OK;
+}
+
+SystemError_t HAL_Abstraction_AS5600_CheckMagnet(uint8_t encoder_id,
+                                                 bool *magnet_detected) {
+    // TODO: Implement AS5600 magnet detection through actual driver (FTR-013)
+    (void)encoder_id; // Suppress unused parameter warning
+
+    if (magnet_detected == NULL) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    // Stub implementation - return magnet detected for now
+    *magnet_detected = true;
+    // Real implementation will read AS5600 status register and check magnet
+    // bits
+    return SYSTEM_OK;
+}
+
+/**
+ * @brief L6470 Motor Driver Implementation
+ *
+ * Real hardware implementation that calls actual L6470 driver functions.
+ * These functions bridge the HAL abstraction to concrete driver
+ * implementations.
+ */
+
+SystemError_t HAL_Abstraction_L6470_Init(uint8_t motor_id) {
+    // TODO: Implement L6470 initialization through actual driver (FTR-013)
+    // Should call l6470_init() or equivalent driver function
+    (void)motor_id; // Suppress unused parameter warning
+
+    // Stub implementation - return success for now
+    // Real implementation will call appropriate L6470 driver init function
+    return SYSTEM_OK;
+}
+
+SystemError_t HAL_Abstraction_L6470_GetStatus(uint8_t motor_id,
+                                              uint32_t *status) {
+    // TODO: Implement L6470 status reading through actual driver (FTR-013)
+    // Should call l6470_get_status(motor_id, status)
+    (void)motor_id; // Suppress unused parameter warning
+
+    if (status == NULL) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    // Stub implementation - return normal status for now
+    *status = 0x7E83; // Normal operation status
+    // Real implementation will call: return l6470_get_status(motor_id,
+    // status);
+    return SYSTEM_OK;
+}
+
+SystemError_t HAL_Abstraction_L6470_GetParameter(uint8_t motor_id,
+                                                 uint8_t param,
+                                                 uint32_t *value) {
+    // TODO: Implement L6470 parameter reading through actual driver (FTR-013)
+    // Should call l6470_get_parameter(motor_id, param, value)
+    (void)motor_id; // Suppress unused parameter warning
+    (void)param;    // Suppress unused parameter warning
+
+    if (value == NULL) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    // Stub implementation - return default value for now
+    *value = 0;
+    // Real implementation will call: return l6470_get_parameter(motor_id,
+    // param, value);
+    return SYSTEM_OK;
+}
+
+SystemError_t HAL_Abstraction_L6470_HardStop(uint8_t motor_id) {
+    // TODO: Implement L6470 hard stop through actual driver (FTR-013)
+    // Should call l6470_hard_stop(motor_id)
+    (void)motor_id; // Suppress unused parameter warning
+
+    // Stub implementation - return success for now
+    // Real implementation will call: return l6470_hard_stop(motor_id);
+    return SYSTEM_OK;
+}
+
 #endif /* !UNITY_TESTING */

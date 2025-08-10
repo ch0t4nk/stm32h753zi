@@ -10,10 +10,10 @@
  *
  * TODO: See .github/instructions/comm-protocols.instructions.md for protocol
  * specification details
- * TODO: See .github/instructions/stm32h7-uart-protocol.instructions.md for UART
- * command format
- * TODO: See .github/instructions/comm-protocols.instructions.md for CAN message
- * definitions
+ * TODO: See .github/instructions/stm32h7-uart-protocol.instructions.md for
+ * UART command format
+ * TODO: See .github/instructions/comm-protocols.instructions.md for CAN
+ * message definitions
  */
 
 #ifndef COMM_CONFIG_H
@@ -21,18 +21,21 @@
 
 #include <stdint.h>
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* Protocol Message Configuration (SSOT)                                     */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // Message payload sizes
-#define MAX_MESSAGE_PAYLOAD 128       // Maximum message payload size
-#ifndef MAX_ETH_PAYLOAD
-#define MAX_ETH_PAYLOAD 1500          // Maximum Ethernet payload (avoid HAL conflict)
-#endif
+#define MAX_MESSAGE_PAYLOAD 128 // Maximum message payload size
+// Note: MAX_ETH_PAYLOAD may be defined by HAL Legacy - use different name
+#define COMM_MAX_ETH_PAYLOAD 1500 // Maximum Ethernet payload for our protocol
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* UART Communication Configuration (SSOT)                                   */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // TODO: See .github/instructions/stm32h7-uart-protocol.instructions.md for
 // command protocol implementation
 
@@ -53,11 +56,11 @@
 #define UART_TX_TIMEOUT_MS 100
 #define UART_RX_TIMEOUT_MS 1000
 #define UART_CMD_TIMEOUT_MS 5000
-#define UART_TIMEOUT_MS 1000          // Generic UART timeout
-#define DEBUG_UART_BAUDRATE 115200    // Debug UART baudrate
+#define UART_TIMEOUT_MS 1000       // Generic UART timeout
+#define DEBUG_UART_BAUDRATE 115200 // Debug UART baudrate
 
 // Protocol Timeouts
-#define COMM_DEFAULT_TIMEOUT_MS 5000  // Default communication timeout
+#define COMM_DEFAULT_TIMEOUT_MS 5000 // Default communication timeout
 
 // UART Command Delimiters
 #define UART_CMD_START_CHAR '{'
@@ -66,9 +69,11 @@
 #define UART_RESPONSE_OK "OK"
 #define UART_RESPONSE_ERROR "ERROR"
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* CAN-FD Communication Configuration (SSOT)                                 */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // TODO: See .github/instructions/comm-protocols.instructions.md for message
 // protocol and error handling
 
@@ -88,8 +93,8 @@
 
 // CAN Message Configuration
 #define CAN_MAX_MESSAGE_SIZE 64 // CAN-FD max payload
-#define CAN_MOTOR_BASE_ID 0x100  // Base CAN ID for motor commands
-#define CAN_TIMEOUT_MS 1000      // CAN transmission timeout
+#define CAN_MOTOR_BASE_ID 0x100 // Base CAN ID for motor commands
+#define CAN_TIMEOUT_MS 1000     // CAN transmission timeout
 #define CAN_TX_FIFO_SIZE 16
 #define CAN_RX_FIFO_SIZE 32
 
@@ -98,9 +103,11 @@
 #define CAN_BROADCAST_ID 0x00 // Broadcast messages
 #define CAN_MAX_NODES 16      // Maximum nodes on bus
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* CAN Message ID Allocation (SSOT)                                          */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // TODO: See .github/instructions/comm-protocols.instructions.md for message
 // format specification
 
@@ -132,9 +139,11 @@
 #define CAN_FILTER_COUNT 8
 #define CAN_FILTER_FIFO 0
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* Ethernet/TCP Configuration (SSOT)                                         */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // TODO: See .github/instructions/comm-protocols.instructions.md for LwIP stack
 // parameters
 
@@ -143,8 +152,7 @@
 #define ETH_NETMASK "255.255.255.0"
 #define ETH_GATEWAY "192.168.1.1"
 #define ETH_DNS_SERVER "8.8.8.8"
-#define ETH_MAC_ADDR                                                           \
-  { 0x02, 0x00, 0x00, 0x12, 0x34, 0x56 }
+#define ETH_MAC_ADDR {0x02, 0x00, 0x00, 0x12, 0x34, 0x56}
 
 // TCP Server Configuration
 #define TCP_SERVER_PORT 8000
@@ -163,9 +171,11 @@
 #define HTTP_MAX_URI_LENGTH 256
 #define HTTP_MAX_HEADER_LENGTH 512
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* I2C Communication Configuration (SSOT)                                    */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // TODO: See .github/instructions/stm32h7-i2c-as5600.instructions.md for timing
 // and error handling
 
@@ -182,9 +192,11 @@
 #define I2C_ADDR_AS5600 0x36 // Magnetic encoder
 #define I2C_ADDR_EEPROM 0x50 // Optional calibration storage
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* SPI Communication Configuration (SSOT)                                    */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // TODO: See .github/instructions/stm32h7-spi-l6470.instructions.md for
 // daisy-chain protocol timing
 
@@ -207,9 +219,11 @@
 #define L6470_CHAIN_LENGTH 2   // Two motors in daisy chain
 #define L6470_NOP_COMMAND 0x00 // No-operation command
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* Communication Timing and Synchronization (SSOT)                          */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // TODO: See .github/instructions/comm-protocols.instructions.md for real-time
 // requirements
 
@@ -224,15 +238,17 @@
 #define LINK_TIMEOUT_MS 10000       // Link failure detection
 #define RECONNECT_INTERVAL_MS 30000 // Auto-reconnect attempt rate
 
-/* ========================================================================== */
+/* ==========================================================================
+ */
 /* Message Format Definitions (SSOT)                                         */
-/* ========================================================================== */
+/* ==========================================================================
+ */
 // TODO: See .github/instructions/comm-protocols.instructions.md for protocol
 // details
 
 // JSON Message Templates (for UART/TCP)
-#define JSON_MOTOR_STATUS_FMT                                                  \
-  "{\"motor\":%d,\"angle\":%.2f,\"speed\":%.2f,\"status\":%d}"
+#define JSON_MOTOR_STATUS_FMT                                                 \
+    "{\"motor\":%d,\"angle\":%.2f,\"speed\":%.2f,\"status\":%d}"
 #define JSON_COMMAND_FMT "{\"cmd\":\"%s\",\"motor\":%d,\"value\":%.2f}"
 #define JSON_ERROR_FMT "{\"error\":%d,\"msg\":\"%s\",\"timestamp\":%lu}"
 

@@ -46,10 +46,10 @@ static uint32_t uart_rx_length = 0;
 // CAN communication state
 static FDCAN_HandleTypeDef *fdcan_handle = NULL;
 static FDCAN_TxHeaderTypeDef fdcan_tx_header = {0};
-static FDCAN_RxHeaderTypeDef fdcan_rx_header = {0};
-static uint8_t fdcan_tx_data[8] = {0};
-static uint8_t fdcan_rx_data[8] = {0};
-static uint32_t fdcan_tx_mailbox = 0;
+static FDCAN_RxHeaderTypeDef __attribute__((unused)) fdcan_rx_header = {0};
+static uint8_t __attribute__((unused)) fdcan_tx_data[8] = {0};
+static uint8_t __attribute__((unused)) fdcan_rx_data[8] = {0};
+static uint32_t __attribute__((unused)) fdcan_tx_mailbox = 0;
 
 // Message processing
 static char ascii_command_buffer[ASCII_COMMAND_MAX_LENGTH] = {0};

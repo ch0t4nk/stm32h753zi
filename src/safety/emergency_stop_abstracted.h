@@ -73,20 +73,12 @@ typedef enum {
 /* ==========================================================================
  */
 
-// Emergency stop button configuration (using HAL abstraction)
-#define ESTOP_BUTTON_PORT HAL_GPIO_PORT_C
-#define ESTOP_BUTTON_PIN (1U << 13) // GPIO_PIN_13 equivalent
+// Emergency stop hardware configuration (from SSOT hardware_config.h)
+// Note: Pin definitions are in hardware_config.h following SSOT principles
 #define ESTOP_BUTTON_TRIGGER_TYPE HAL_GPIO_MODE_IT_FALLING
 
-// Safety relay outputs (if external safety relays are used)
-#define SAFETY_RELAY1_PORT HAL_GPIO_PORT_B
-#define SAFETY_RELAY1_PIN (1U << 0) // GPIO_PIN_0 equivalent
-#define SAFETY_RELAY2_PORT HAL_GPIO_PORT_B
-#define SAFETY_RELAY2_PIN (1U << 1) // GPIO_PIN_1 equivalent
-
-// Emergency stop LED indicator
-#define ESTOP_LED_PORT HAL_GPIO_PORT_B
-#define ESTOP_LED_PIN (1U << 14) // GPIO_PIN_14 equivalent
+// Emergency stop LED indicator uses LED_RED from SSOT hardware_config.h
+// ESTOP_LED_PORT and ESTOP_LED_PIN are defined in hardware_config.h
 
 /* ==========================================================================
  */

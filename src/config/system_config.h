@@ -87,12 +87,6 @@ extern "C" {
 // System Timing Configuration
 //==============================================================================
 
-/// Main control loop frequency in Hz
-#define CONTROL_LOOP_FREQ_HZ 1000U
-
-/// Control loop period in milliseconds
-#define CONTROL_LOOP_PERIOD_MS (1000U / CONTROL_LOOP_FREQ_HZ)
-
 /// Watchdog timeout in milliseconds
 #define SYSTEM_WATCHDOG_TIMEOUT_MS 5000U
 

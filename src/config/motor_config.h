@@ -73,6 +73,10 @@
 #define MOTOR_MAX_ACCEL_RPM_S 50.0f  // Maximum acceleration
 #define MOTOR_MAX_DECEL_RPM_S 100.0f // Maximum deceleration (can be higher)
 
+// Motor current limits (for compatibility with optimization system)
+#define MOTOR_MAX_CURRENT_A (MOTOR_CURRENT_MA / 1000.0f) // Convert mA to A
+#define MOTOR_MAX_TEMPERATURE_C 85.0f // Maximum motor temperature
+
 // Speed conversion constants
 #define MOTOR_MAX_SPEED_DPS                                                   \
     (MOTOR_MAX_SPEED_RPM * 6.0f) // Convert RPM to degrees/second
@@ -121,6 +125,18 @@
 #define L6470_KVAL_RUN 0x29  // Running current (25% of max)
 #define L6470_KVAL_ACC 0x29  // Acceleration current (25% of max)
 #define L6470_KVAL_DEC 0x29  // Deceleration current (25% of max)
+
+// KVAL Default Values (for motor characterization compatibility)
+#define MOTOR1_KVAL_HOLD_DEFAULT L6470_KVAL_HOLD
+#define MOTOR1_KVAL_RUN_DEFAULT L6470_KVAL_RUN
+#define MOTOR1_KVAL_ACC_DEFAULT L6470_KVAL_ACC
+#define MOTOR1_KVAL_DEC_DEFAULT L6470_KVAL_DEC
+
+// Motion Profile Default Values (for motor characterization compatibility)
+#define MOTOR1_ACCELERATION_DEFAULT L6470_ACC
+#define MOTOR1_DECELERATION_DEFAULT L6470_DEC
+#define MOTOR1_MAX_SPEED_DEFAULT L6470_MAX_SPEED
+#define MOTOR1_MIN_SPEED_DEFAULT L6470_MIN_SPEED
 
 // Back-EMF Compensation (BEMF parameters)
 #define L6470_INT_SPD 0x0408  // Intersect speed for BEMF

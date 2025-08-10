@@ -853,4 +853,132 @@ SystemError_t HAL_Abstraction_ConfigureCommunicationHardware(void) {
     return SYSTEM_OK;
 }
 
+/* ==========================================================================
+ */
+/* Driver Abstraction Mock Implementation (FTR-013)                         */
+/* ==========================================================================
+ */
+
+/**
+ * @brief AS5600 Encoder Driver Mock Implementation
+ *
+ * Mock implementation for unit testing that provides controllable behavior
+ * without requiring actual AS5600 hardware.
+ */
+
+SystemError_t HAL_Abstraction_AS5600_Init(uint8_t encoder_id) {
+    // Mock implementation - just validate parameters and track calls
+    if (encoder_id >= 2) { // Assuming max 2 encoders
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    // Could add call tracking here if needed for test verification
+    return SYSTEM_OK;
+}
+
+SystemError_t HAL_Abstraction_AS5600_ReadAngle(uint8_t encoder_id,
+                                               float *angle_degrees) {
+    // Mock implementation - provide predictable test data
+    if (encoder_id >= 2) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    if (angle_degrees == NULL) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    // Return mock angle data for testing
+    // Test can override this by setting up mock state if needed
+    *angle_degrees =
+        45.0f + (encoder_id * 90.0f); // Different values per encoder
+    return SYSTEM_OK;
+}
+
+SystemError_t HAL_Abstraction_AS5600_CheckMagnet(uint8_t encoder_id,
+                                                 bool *magnet_detected) {
+    // Mock implementation - return magnet detected for testing
+    if (encoder_id >= 2) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    if (magnet_detected == NULL) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    // Mock: assume magnet is always detected for testing
+    *magnet_detected = true;
+    return SYSTEM_OK;
+}
+
+/**
+ * @brief L6470 Motor Driver Mock Implementation
+ *
+ * Mock implementation for unit testing that provides controllable behavior
+ * without requiring actual L6470 hardware.
+ */
+
+SystemError_t HAL_Abstraction_L6470_Init(uint8_t motor_id) {
+    // Mock implementation - just validate parameters
+    if (motor_id >= 2) { // Assuming max 2 motors
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    // Could add initialization tracking here if needed for test verification
+    return SYSTEM_OK;
+}
+
+SystemError_t HAL_Abstraction_L6470_GetStatus(uint8_t motor_id,
+                                              uint32_t *status) {
+    // Mock implementation - provide predictable test data
+    if (motor_id >= 2) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    if (status == NULL) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    // Return mock status (normal operation)
+    *status = 0x7E83; // Normal L6470 status value for testing
+    return SYSTEM_OK;
+}
+
+SystemError_t HAL_Abstraction_L6470_GetParameter(uint8_t motor_id,
+                                                 uint8_t param,
+                                                 uint32_t *value) {
+    // Mock implementation - provide predictable test data
+    if (motor_id >= 2) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    if (value == NULL) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    // Return mock parameter value based on parameter requested
+    switch (param) {
+    case 0x09:                            // ABS_POS register
+        *value = 1000 + (motor_id * 500); // Different position per motor
+        break;
+    case 0x11:           // STATUS register
+        *value = 0x7E83; // Normal status
+        break;
+    default:
+        *value = 0; // Default value for unknown parameters
+        break;
+    }
+
+    return SYSTEM_OK;
+}
+
+SystemError_t HAL_Abstraction_L6470_HardStop(uint8_t motor_id) {
+    // Mock implementation - just validate parameters
+    if (motor_id >= 2) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    // Mock: hard stop always succeeds in test environment
+    return SYSTEM_OK;
+}
+
 #endif /* UNITY_TESTING */

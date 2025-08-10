@@ -17,6 +17,28 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* ==========================================================================
+ */
+/* Forward Declarations for Static Functions                                 */
+/* ==========================================================================
+ */
+
+static SystemError_t execute_trapezoidal_profile(MotionProfile_t *profile,
+                                                 uint32_t elapsed_time_ms,
+                                                 int32_t *target_pos,
+                                                 uint32_t *target_vel);
+
+static SystemError_t execute_scurve_profile(MotionProfile_t *profile,
+                                            uint32_t elapsed_time_ms,
+                                            int32_t *target_pos,
+                                            uint32_t *target_vel);
+
+/* ==========================================================================
+ */
+/* Global Variables                                                          */
+/* ==========================================================================
+ */
+
 // Motion profile storage
 static MotionProfile_t active_profiles[MAX_MOTORS];
 static bool profile_active[MAX_MOTORS] = {false};
@@ -139,7 +161,7 @@ SystemError_t motion_profile_generate_scurve(MotionProfile_t *profile,
     profile->jerk_time_ms = jerk_time;
     profile->current_phase = PROFILE_PHASE_JERK_ACCEL;
 
-    int32_t total_distance = abs(end_pos - start_pos);
+    // Calculate direction for motion
     profile->direction = (end_pos > start_pos) ? 1 : -1;
 
     // Calculate jerk value

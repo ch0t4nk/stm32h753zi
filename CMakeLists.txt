@@ -20,6 +20,7 @@ add_compile_definitions(
     INSTRUCTION_CACHE_ENABLE=1
     DATA_CACHE_ENABLE=1
     SIMULATION_MODE=1
+    FIRMWARE_BUILD=1
 )
 
 # Compiler flags for STM32H753ZI (Cortex-M7)
@@ -91,6 +92,7 @@ include_directories(
     src/safety
     src/communication
     src/application
+    src/optimization
     src/hal_abstraction
     Core/Inc
     drivers/STM32H7xx_HAL_Driver/Inc
@@ -149,6 +151,7 @@ file(GLOB_RECURSE SOURCES
     "src/application/main_application.c"  # Main application logic (exclude duplicate main.c)
     "src/rtos/*.c"               # RTOS task implementations for Phase 5A
     "src/telemetry/*.c"          # Optimization telemetry for motor characterization
+    "src/optimization/*.c"       # Motor efficiency optimization algorithms (FTR-009)
     # "src/simulation/*.c"         # Motor/encoder simulation framework - TEMPORARILY DISABLED for safety integration
     "drivers/STM32H7xx_HAL_Driver/Src/*.c"
     "drivers/BSP/STM32H7xx_Nucleo/*.c"  # Nucleo board support package

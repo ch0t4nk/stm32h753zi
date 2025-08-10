@@ -1,440 +1,481 @@
 {
-    "metadata": {
-        "version": "1.0.0",
-        "last_updated": "2025-08-07T23:10:00Z",
-        "total_features": 12,
-        "completed_features": 8,
-        "in_progress_features": 2,
-        "planned_features": 2
+  "metadata": {
+    "version": "1.0.0",
+    "last_updated": "2025-08-10T16:46:01.224468Z",
+    "total_features": 13,
+    "completed_features": 9,
+    "in_progress_features": 0,
+    "planned_features": 4
+  },
+  "categories": {
+    "telemetry": "Real-time data collection and monitoring systems",
+    "motor_control": "Motor control algorithms and coordination",
+    "safety": "Safety systems and emergency procedures",
+    "communication": "Inter-system communication protocols",
+    "rtos": "Real-time operating system integration",
+    "testing": "Testing infrastructure and validation",
+    "optimization": "Performance optimization and efficiency",
+    "integration": "Hardware-software integration"
+  },
+  "phases": {
+    "1.1": "Foundation Architecture",
+    "1.2": "Core Implementation",
+    "1.3": "Advanced Features",
+    "1.4": "Hardware Integration",
+    "2.0": "FreeRTOS Task Migration",
+    "3.0": "Advanced Capabilities"
+  },
+  "features": {
+    "FTR-001": {
+      "id": "FTR-001",
+      "name": "Optimization Telemetry System",
+      "status": "COMPLETE",
+      "phase": "1.3",
+      "priority": "HIGH",
+      "category": "telemetry",
+      "description": "Real-time telemetry collection infrastructure for performance optimization with 1kHz data collection capability",
+      "acceptance_criteria": [
+        "Telemetry data collection at 1kHz frequency",
+        "Integration with FreeRTOS scheduler",
+        "Memory-efficient data structures",
+        "Unit test coverage >90%"
+      ],
+      "implementation_files": [
+        "src/telemetry/optimization_telemetry.h",
+        "src/telemetry/optimization_telemetry.c"
+      ],
+      "test_files": [
+        "tests/unit/test_optimization_telemetry.c"
+      ],
+      "documentation": [
+        "docs/PHASE_1_3_COMPLETE.md"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "FTR-005",
+        "FTR-009"
+      ],
+      "blockers": [],
+      "completion_date": "2025-08-07",
+      "effort_estimate_hours": 8,
+      "effort_actual_hours": 6,
+      "commits": [
+        "feat: Complete Phase 1.3 + STATUS.md instruction system + Phase 1.4 comprehensive plan"
+      ]
     },
-    "categories": {
-        "telemetry": "Real-time data collection and monitoring systems",
-        "motor_control": "Motor control algorithms and coordination",
-        "safety": "Safety systems and emergency procedures",
-        "communication": "Inter-system communication protocols",
-        "rtos": "Real-time operating system integration",
-        "testing": "Testing infrastructure and validation",
-        "optimization": "Performance optimization and efficiency",
-        "integration": "Hardware-software integration"
+    "FTR-002": {
+      "id": "FTR-002",
+      "name": "Motor Characterization Module",
+      "status": "COMPLETE",
+      "phase": "1.3",
+      "priority": "HIGH",
+      "category": "motor_control",
+      "description": "Advanced motor characterization algorithms for dynamic parameter identification and optimization",
+      "acceptance_criteria": [
+        "Real-time motor parameter identification",
+        "Load characterization algorithms",
+        "Performance metric calculation",
+        "Integration with optimization telemetry"
+      ],
+      "implementation_files": [
+        "src/controllers/motor_characterization.h",
+        "src/controllers/motor_characterization.c"
+      ],
+      "test_files": [
+        "tests/unit/test_motor_characterization.c"
+      ],
+      "documentation": [
+        "docs/PHASE_1_3_COMPLETE.md"
+      ],
+      "dependencies": [
+        "FTR-001"
+      ],
+      "dependents": [
+        "FTR-009"
+      ],
+      "blockers": [],
+      "completion_date": "2025-08-07",
+      "effort_estimate_hours": 12,
+      "effort_actual_hours": 10,
+      "commits": [
+        "feat: Complete Phase 1.3 + STATUS.md instruction system + Phase 1.4 comprehensive plan"
+      ]
     },
-    "phases": {
-        "1.1": "Foundation Architecture",
-        "1.2": "Core Implementation",
-        "1.3": "Advanced Features",
-        "1.4": "Hardware Integration",
-        "2.0": "FreeRTOS Task Migration",
-        "3.0": "Advanced Capabilities"
+    "FTR-003": {
+      "id": "FTR-003",
+      "name": "Dual-Build System",
+      "status": "COMPLETE",
+      "phase": "1.2",
+      "priority": "CRITICAL",
+      "category": "testing",
+      "description": "Comprehensive dual-build system supporting both ARM firmware compilation and host-based unit testing",
+      "acceptance_criteria": [
+        "ARM firmware builds successfully with CMake",
+        "Host-based unit tests execute on development machine",
+        "HAL abstraction layer for cross-platform testing",
+        "Automated test execution via scripts"
+      ],
+      "implementation_files": [
+        "CMakeLists.txt",
+        "host_tests/CMakeLists.txt",
+        "src/hal_abstraction/hal_abstraction.h",
+        "src/hal_abstraction/hal_abstraction_stm32h7.c",
+        "src/hal_abstraction/hal_abstraction_mock.c"
+      ],
+      "test_files": [
+        "tests/unit/test_phase1_3_validation.c",
+        "tests/unit/test_safety_systems_hal_abstracted.c"
+      ],
+      "documentation": [
+        ".github/instructions/dual-build-system.instructions.md"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "FTR-001",
+        "FTR-002",
+        "FTR-004"
+      ],
+      "blockers": [],
+      "completion_date": "2025-08-06",
+      "effort_estimate_hours": 16,
+      "effort_actual_hours": 14,
+      "commits": []
     },
-    "features": {
-        "FTR-001": {
-            "id": "FTR-001",
-            "name": "Optimization Telemetry System",
-            "status": "COMPLETE",
-            "phase": "1.3",
-            "priority": "HIGH",
-            "category": "telemetry",
-            "description": "Real-time telemetry collection infrastructure for performance optimization with 1kHz data collection capability",
-            "acceptance_criteria": [
-                "Telemetry data collection at 1kHz frequency",
-                "Integration with FreeRTOS scheduler",
-                "Memory-efficient data structures",
-                "Unit test coverage >90%"
-            ],
-            "implementation_files": [
-                "src/telemetry/optimization_telemetry.h",
-                "src/telemetry/optimization_telemetry.c"
-            ],
-            "test_files": [
-                "tests/unit/test_optimization_telemetry.c"
-            ],
-            "documentation": [
-                "docs/PHASE_1_3_COMPLETE.md"
-            ],
-            "dependencies": [],
-            "dependents": [
-                "FTR-005",
-                "FTR-009"
-            ],
-            "blockers": [],
-            "completion_date": "2025-08-07",
-            "effort_estimate_hours": 8,
-            "effort_actual_hours": 6,
-            "commits": [
-                "feat: Complete Phase 1.3 + STATUS.md instruction system + Phase 1.4 comprehensive plan"
-            ]
-        },
-        "FTR-002": {
-            "id": "FTR-002",
-            "name": "Motor Characterization Module",
-            "status": "COMPLETE",
-            "phase": "1.3",
-            "priority": "HIGH",
-            "category": "motor_control",
-            "description": "Advanced motor characterization algorithms for dynamic parameter identification and optimization",
-            "acceptance_criteria": [
-                "Real-time motor parameter identification",
-                "Load characterization algorithms",
-                "Performance metric calculation",
-                "Integration with optimization telemetry"
-            ],
-            "implementation_files": [
-                "src/controllers/motor_characterization.h",
-                "src/controllers/motor_characterization.c"
-            ],
-            "test_files": [
-                "tests/unit/test_motor_characterization.c"
-            ],
-            "documentation": [
-                "docs/PHASE_1_3_COMPLETE.md"
-            ],
-            "dependencies": [
-                "FTR-001"
-            ],
-            "dependents": [
-                "FTR-009"
-            ],
-            "blockers": [],
-            "completion_date": "2025-08-07",
-            "effort_estimate_hours": 12,
-            "effort_actual_hours": 10,
-            "commits": [
-                "feat: Complete Phase 1.3 + STATUS.md instruction system + Phase 1.4 comprehensive plan"
-            ]
-        },
-        "FTR-003": {
-            "id": "FTR-003",
-            "name": "Dual-Build System",
-            "status": "COMPLETE",
-            "phase": "1.2",
-            "priority": "CRITICAL",
-            "category": "testing",
-            "description": "Comprehensive dual-build system supporting both ARM firmware compilation and host-based unit testing",
-            "acceptance_criteria": [
-                "ARM firmware builds successfully with CMake",
-                "Host-based unit tests execute on development machine",
-                "HAL abstraction layer for cross-platform testing",
-                "Automated test execution via scripts"
-            ],
-            "implementation_files": [
-                "CMakeLists.txt",
-                "host_tests/CMakeLists.txt",
-                "src/hal_abstraction/hal_abstraction.h",
-                "src/hal_abstraction/hal_abstraction_stm32h7.c",
-                "src/hal_abstraction/hal_abstraction_mock.c"
-            ],
-            "test_files": [
-                "tests/unit/test_phase1_3_validation.c",
-                "tests/unit/test_safety_systems_hal_abstracted.c"
-            ],
-            "documentation": [
-                ".github/instructions/dual-build-system.instructions.md"
-            ],
-            "dependencies": [],
-            "dependents": [
-                "FTR-001",
-                "FTR-002",
-                "FTR-004"
-            ],
-            "blockers": [],
-            "completion_date": "2025-08-06",
-            "effort_estimate_hours": 16,
-            "effort_actual_hours": 14,
-            "commits": []
-        },
-        "FTR-004": {
-            "id": "FTR-004",
-            "name": "Safety System with HAL Abstraction",
-            "status": "COMPLETE",
-            "phase": "1.2",
-            "priority": "CRITICAL",
-            "category": "safety",
-            "description": "Emergency stop and safety monitoring systems with hardware abstraction for testing",
-            "acceptance_criteria": [
-                "Emergency stop response <1ms",
-                "HAL abstraction for cross-platform testing",
-                "Fault detection and recovery mechanisms",
-                "Safety system validation on both ARM and host"
-            ],
-            "implementation_files": [
-                "src/safety/emergency_stop_abstracted.c",
-                "src/safety/emergency_stop_abstracted.h"
-            ],
-            "test_files": [
-                "tests/unit/test_safety_systems_hal_abstracted.c"
-            ],
-            "documentation": [
-                ".github/instructions/safety-rt.instructions.md"
-            ],
-            "dependencies": [
-                "FTR-003"
-            ],
-            "dependents": [
-                "FTR-005",
-                "FTR-008"
-            ],
-            "blockers": [],
-            "completion_date": "2025-08-06",
-            "effort_estimate_hours": 10,
-            "effort_actual_hours": 8,
-            "commits": []
-        },
-        "FTR-005": {
-            "id": "FTR-005",
-            "name": "FreeRTOS Task Architecture",
-            "status": "COMPLETE",
-            "phase": "2.0",
-            "priority": "HIGH",
-            "category": "rtos",
-            "description": "Complete FreeRTOS integration with motor control, safety monitoring, and communication tasks",
-            "acceptance_criteria": [
-                "Motor control task at 1kHz deterministic timing",
-                "Safety monitor task at 500Hz",
-                "Inter-task communication via queues and semaphores",
-                "Task performance monitoring"
-            ],
-            "implementation_files": [
-                "src/rtos/motor_control_task.c",
-                "src/rtos/safety_monitor_task.c",
-                "src/rtos/communication_tasks.c",
-                "Core/Src/freertos.c"
-            ],
-            "test_files": [
-                "tests/integration/test_task_communication.c"
-            ],
-            "documentation": [
-                "docs/PHASE2_CUSTOM_TASK_IMPLEMENTATION_PLAN.md"
-            ],
-            "dependencies": [
-                "FTR-001",
-                "FTR-004"
-            ],
-            "dependents": [
-                "FTR-008"
-            ],
-            "blockers": [],
-            "completion_date": "2025-08-05",
-            "effort_estimate_hours": 24,
-            "effort_actual_hours": 20,
-            "commits": []
-        },
-        "FTR-006": {
-            "id": "FTR-006",
-            "name": "STATUS.md Instruction System",
-            "status": "COMPLETE",
-            "phase": "1.4",
-            "priority": "MEDIUM",
-            "category": "documentation",
-            "description": "Comprehensive STATUS.md maintenance framework with automated compliance validation for Copilot context preservation",
-            "acceptance_criteria": [
-                "STATUS.md follows 11 mandatory sections",
-                "Automated compliance validation passing",
-                "Copilot context preservation across sessions",
-                "Technical state documentation standards"
-            ],
-            "implementation_files": [
-                ".github/instructions/status-maintenance.instructions.md",
-                "scripts/validate_status_compliance.py",
-                "scripts/auto_update_status.py"
-            ],
-            "test_files": [],
-            "documentation": [
-                "docs/STATUS_INSTRUCTION_SYSTEM_COMPLETE.md"
-            ],
-            "dependencies": [],
-            "dependents": [],
-            "blockers": [],
-            "completion_date": "2025-08-07",
-            "effort_estimate_hours": 6,
-            "effort_actual_hours": 5,
-            "commits": [
-                "feat: Complete Phase 1.3 + STATUS.md instruction system + Phase 1.4 comprehensive plan"
-            ]
-        },
-        "FTR-007": {
-            "id": "FTR-007",
-            "name": "Semantic Documentation Search",
-            "status": "COMPLETE",
-            "phase": "1.3",
-            "priority": "MEDIUM",
-            "category": "documentation",
-            "description": "AI-powered semantic search system with ChromaDB and Instructor-XL embeddings for comprehensive STM32H7/L6470/BSP documentation",
-            "acceptance_criteria": [
-                "77,938 documents indexed across 10 collections",
-                "Semantic understanding with AI embeddings",
-                "Multi-scope search (STM32H7/L6470/NUCLEO_BSP/all)",
-                "Production-ready with GPU acceleration"
-            ],
-            "implementation_files": [
-                "scripts/stm32_semantic_search.py",
-                "scripts/stm32_search.sh"
-            ],
-            "test_files": [],
-            "documentation": [
-                "docs/SEMANTIC_SEARCH_ENGINE_DESIGN.md"
-            ],
-            "dependencies": [],
-            "dependents": [],
-            "blockers": [],
-            "completion_date": "2025-08-06",
-            "effort_estimate_hours": 20,
-            "effort_actual_hours": 18,
-            "commits": []
-        },
-        "FTR-008": {
-            "id": "FTR-008",
-            "name": "Hardware Integration Testing",
-            "status": "PLANNED",
-            "phase": "1.4",
-            "priority": "HIGH",
-            "category": "integration",
-            "description": "Hardware-in-the-loop integration testing with STM32H753ZI + X-NUCLEO-IHM02A1 + AS5600 encoders",
-            "acceptance_criteria": [
-                "Real hardware validation of all Phase 1.3 modules",
-                "1kHz control loop validation on hardware",
-                "Safety system response <1ms on real hardware",
-                "Efficiency improvement 15-25% demonstration"
-            ],
-            "implementation_files": [],
-            "test_files": [],
-            "documentation": [
-                "docs/PHASE_1_4_INTEGRATION_TESTING_PLAN.md",
-                "docs/PHASE_1_4_QUICK_REFERENCE.md"
-            ],
-            "dependencies": [
-                "FTR-001",
-                "FTR-002",
-                "FTR-004",
-                "FTR-005"
-            ],
-            "dependents": [],
-            "blockers": [
-                "AS5600 encoder procurement",
-                "Stepper motor hardware setup"
-            ],
-            "completion_date": null,
-            "effort_estimate_hours": 40,
-            "effort_actual_hours": 0,
-            "commits": []
-        },
-        "FTR-009": {
-            "id": "FTR-009",
-            "name": "Motor Efficiency Optimization",
-            "status": "IN_PROGRESS",
-            "phase": "1.4",
-            "priority": "MEDIUM",
-            "category": "optimization",
-            "description": "Implementation of efficiency optimization algorithms based on motor characterization data",
-            "acceptance_criteria": [
-                "15-25% efficiency improvement over baseline",
-                "Real-time parameter adaptation",
-                "Integration with telemetry system",
-                "Validation on real hardware"
-            ],
-            "implementation_files": [
-                "src/optimization/"
-            ],
-            "test_files": [],
-            "documentation": [],
-            "dependencies": [
-                "FTR-001",
-                "FTR-002"
-            ],
-            "dependents": [],
-            "blockers": [
-                "FTR-008"
-            ],
-            "completion_date": null,
-            "effort_estimate_hours": 20,
-            "effort_actual_hours": 2,
-            "commits": []
-        },
-        "FTR-010": {
-            "id": "FTR-010",
-            "name": "Advanced Trajectory Planning",
-            "status": "PLANNED",
-            "phase": "3.0",
-            "priority": "MEDIUM",
-            "category": "motor_control",
-            "description": "Quintic polynomial trajectories with S-curve motion profiles and multi-axis coordination",
-            "acceptance_criteria": [
-                "Smooth acceleration profiles for mechanical stress reduction",
-                "Multi-axis synchronized movement",
-                "Real-time trajectory modification",
-                "<0.1% position accuracy"
-            ],
-            "implementation_files": [],
-            "test_files": [],
-            "documentation": [
-                "docs/PHASE3_ADVANCED_SYSTEM_CAPABILITIES_PLAN.md"
-            ],
-            "dependencies": [
-                "FTR-008"
-            ],
-            "dependents": [],
-            "blockers": [],
-            "completion_date": null,
-            "effort_estimate_hours": 32,
-            "effort_actual_hours": 0,
-            "commits": []
-        },
-        "FTR-011": {
-            "id": "FTR-011",
-            "name": "Industrial Communication Protocols",
-            "status": "PLANNED",
-            "phase": "3.0",
-            "priority": "MEDIUM",
-            "category": "communication",
-            "description": "OPC UA over Ethernet, Modbus TCP, and industrial network integration",
-            "acceptance_criteria": [
-                "OPC UA with <10ms publishing interval",
-                "Modbus TCP with <50ms response time",
-                "Industrial SCADA/HMI compatibility",
-                "Secure communication with certificates"
-            ],
-            "implementation_files": [],
-            "test_files": [],
-            "documentation": [
-                "docs/PHASE3_ADVANCED_SYSTEM_CAPABILITIES_PLAN.md"
-            ],
-            "dependencies": [
-                "FTR-008"
-            ],
-            "dependents": [],
-            "blockers": [],
-            "completion_date": null,
-            "effort_estimate_hours": 48,
-            "effort_actual_hours": 0,
-            "commits": []
-        },
-        "FTR-012": {
-            "id": "FTR-012",
-            "name": "AI-Driven Optimization",
-            "status": "PLANNED",
-            "phase": "3.0",
-            "priority": "LOW",
-            "category": "optimization",
-            "description": "Machine learning algorithms for predictive maintenance and adaptive control optimization",
-            "acceptance_criteria": [
-                "Predictive maintenance capabilities",
-                "20%+ performance improvement with ML optimization",
-                "Real-time system health prediction",
-                "Adaptive control parameter optimization"
-            ],
-            "implementation_files": [],
-            "test_files": [],
-            "documentation": [
-                "docs/PHASE3_ADVANCED_SYSTEM_CAPABILITIES_PLAN.md"
-            ],
-            "dependencies": [
-                "FTR-009",
-                "FTR-010"
-            ],
-            "dependents": [],
-            "blockers": [],
-            "completion_date": null,
-            "effort_estimate_hours": 60,
-            "effort_actual_hours": 0,
-            "commits": []
-        }
+    "FTR-004": {
+      "id": "FTR-004",
+      "name": "Safety System with HAL Abstraction",
+      "status": "COMPLETE",
+      "phase": "1.2",
+      "priority": "CRITICAL",
+      "category": "safety",
+      "description": "Emergency stop and safety monitoring systems with hardware abstraction for testing",
+      "acceptance_criteria": [
+        "Emergency stop response <1ms",
+        "HAL abstraction for cross-platform testing",
+        "Fault detection and recovery mechanisms",
+        "Safety system validation on both ARM and host"
+      ],
+      "implementation_files": [
+        "src/safety/emergency_stop_abstracted.c",
+        "src/safety/emergency_stop_abstracted.h"
+      ],
+      "test_files": [
+        "tests/unit/test_safety_systems_hal_abstracted.c"
+      ],
+      "documentation": [
+        ".github/instructions/safety-rt.instructions.md"
+      ],
+      "dependencies": [
+        "FTR-003"
+      ],
+      "dependents": [
+        "FTR-005",
+        "FTR-008"
+      ],
+      "blockers": [],
+      "completion_date": "2025-08-06",
+      "effort_estimate_hours": 10,
+      "effort_actual_hours": 8,
+      "commits": []
+    },
+    "FTR-005": {
+      "id": "FTR-005",
+      "name": "FreeRTOS Task Architecture",
+      "status": "COMPLETE",
+      "phase": "2.0",
+      "priority": "HIGH",
+      "category": "rtos",
+      "description": "Complete FreeRTOS integration with motor control, safety monitoring, and communication tasks",
+      "acceptance_criteria": [
+        "Motor control task at 1kHz deterministic timing",
+        "Safety monitor task at 500Hz",
+        "Inter-task communication via queues and semaphores",
+        "Task performance monitoring"
+      ],
+      "implementation_files": [
+        "src/rtos/motor_control_task.c",
+        "src/rtos/safety_monitor_task.c",
+        "src/rtos/communication_tasks.c",
+        "Core/Src/freertos.c"
+      ],
+      "test_files": [
+        "tests/integration/test_task_communication.c"
+      ],
+      "documentation": [
+        "docs/PHASE2_CUSTOM_TASK_IMPLEMENTATION_PLAN.md"
+      ],
+      "dependencies": [
+        "FTR-001",
+        "FTR-004"
+      ],
+      "dependents": [
+        "FTR-008"
+      ],
+      "blockers": [],
+      "completion_date": "2025-08-05",
+      "effort_estimate_hours": 24,
+      "effort_actual_hours": 20,
+      "commits": []
+    },
+    "FTR-006": {
+      "id": "FTR-006",
+      "name": "STATUS.md Instruction System",
+      "status": "COMPLETE",
+      "phase": "1.4",
+      "priority": "MEDIUM",
+      "category": "documentation",
+      "description": "Comprehensive STATUS.md maintenance framework with automated compliance validation for Copilot context preservation",
+      "acceptance_criteria": [
+        "STATUS.md follows 11 mandatory sections",
+        "Automated compliance validation passing",
+        "Copilot context preservation across sessions",
+        "Technical state documentation standards"
+      ],
+      "implementation_files": [
+        ".github/instructions/status-maintenance.instructions.md",
+        "scripts/validate_status_compliance.py",
+        "scripts/auto_update_status.py"
+      ],
+      "test_files": [],
+      "documentation": [
+        "docs/STATUS_INSTRUCTION_SYSTEM_COMPLETE.md"
+      ],
+      "dependencies": [],
+      "dependents": [],
+      "blockers": [],
+      "completion_date": "2025-08-07",
+      "effort_estimate_hours": 6,
+      "effort_actual_hours": 5,
+      "commits": [
+        "feat: Complete Phase 1.3 + STATUS.md instruction system + Phase 1.4 comprehensive plan"
+      ]
+    },
+    "FTR-007": {
+      "id": "FTR-007",
+      "name": "Semantic Documentation Search",
+      "status": "COMPLETE",
+      "phase": "1.3",
+      "priority": "MEDIUM",
+      "category": "documentation",
+      "description": "AI-powered semantic search system with ChromaDB and Instructor-XL embeddings for comprehensive STM32H7/L6470/BSP documentation",
+      "acceptance_criteria": [
+        "77,938 documents indexed across 10 collections",
+        "Semantic understanding with AI embeddings",
+        "Multi-scope search (STM32H7/L6470/NUCLEO_BSP/all)",
+        "Production-ready with GPU acceleration"
+      ],
+      "implementation_files": [
+        "scripts/stm32_semantic_search.py",
+        "scripts/stm32_search.sh"
+      ],
+      "test_files": [],
+      "documentation": [
+        "docs/SEMANTIC_SEARCH_ENGINE_DESIGN.md"
+      ],
+      "dependencies": [],
+      "dependents": [],
+      "blockers": [],
+      "completion_date": "2025-08-06",
+      "effort_estimate_hours": 20,
+      "effort_actual_hours": 18,
+      "commits": []
+    },
+    "FTR-008": {
+      "id": "FTR-008",
+      "name": "Hardware Integration Testing",
+      "status": "PLANNED",
+      "phase": "1.4",
+      "priority": "HIGH",
+      "category": "integration",
+      "description": "Hardware-in-the-loop integration testing with STM32H753ZI + X-NUCLEO-IHM02A1 + AS5600 encoders",
+      "acceptance_criteria": [
+        "Real hardware validation of all Phase 1.3 modules",
+        "1kHz control loop validation on hardware",
+        "Safety system response <1ms on real hardware",
+        "Efficiency improvement 15-25% demonstration"
+      ],
+      "implementation_files": [],
+      "test_files": [],
+      "documentation": [
+        "docs/PHASE_1_4_INTEGRATION_TESTING_PLAN.md",
+        "docs/PHASE_1_4_QUICK_REFERENCE.md"
+      ],
+      "dependencies": [
+        "FTR-001",
+        "FTR-002",
+        "FTR-004",
+        "FTR-005"
+      ],
+      "dependents": [],
+      "blockers": [
+        "AS5600 encoder procurement",
+        "Stepper motor hardware setup"
+      ],
+      "completion_date": null,
+      "effort_estimate_hours": 40,
+      "effort_actual_hours": 0,
+      "commits": []
+    },
+    "FTR-009": {
+      "id": "FTR-009",
+      "name": "Motor Efficiency Optimization",
+      "status": "COMPLETE",
+      "phase": "1.4",
+      "priority": "MEDIUM",
+      "category": "optimization",
+      "description": "Implementation of efficiency optimization algorithms based on motor characterization data",
+      "acceptance_criteria": [
+        "15-25% efficiency improvement over baseline",
+        "Real-time parameter adaptation",
+        "Integration with telemetry system",
+        "Validation on real hardware"
+      ],
+      "implementation_files": [
+        "src/optimization/"
+      ],
+      "test_files": [],
+      "documentation": [],
+      "dependencies": [
+        "FTR-001",
+        "FTR-002"
+      ],
+      "dependents": [],
+      "blockers": [
+        "FTR-008"
+      ],
+      "completion_date": "2025-08-10",
+      "effort_estimate_hours": 20,
+      "effort_actual_hours": 8,
+      "commits": []
+    },
+    "FTR-010": {
+      "id": "FTR-010",
+      "name": "Advanced Trajectory Planning",
+      "status": "PLANNED",
+      "phase": "3.0",
+      "priority": "MEDIUM",
+      "category": "motor_control",
+      "description": "Quintic polynomial trajectories with S-curve motion profiles and multi-axis coordination",
+      "acceptance_criteria": [
+        "Smooth acceleration profiles for mechanical stress reduction",
+        "Multi-axis synchronized movement",
+        "Real-time trajectory modification",
+        "<0.1% position accuracy"
+      ],
+      "implementation_files": [],
+      "test_files": [],
+      "documentation": [
+        "docs/PHASE3_ADVANCED_SYSTEM_CAPABILITIES_PLAN.md"
+      ],
+      "dependencies": [
+        "FTR-008"
+      ],
+      "dependents": [],
+      "blockers": [],
+      "completion_date": null,
+      "effort_estimate_hours": 32,
+      "effort_actual_hours": 0,
+      "commits": []
+    },
+    "FTR-011": {
+      "id": "FTR-011",
+      "name": "Industrial Communication Protocols",
+      "status": "PLANNED",
+      "phase": "3.0",
+      "priority": "MEDIUM",
+      "category": "communication",
+      "description": "OPC UA over Ethernet, Modbus TCP, and industrial network integration",
+      "acceptance_criteria": [
+        "OPC UA with <10ms publishing interval",
+        "Modbus TCP with <50ms response time",
+        "Industrial SCADA/HMI compatibility",
+        "Secure communication with certificates"
+      ],
+      "implementation_files": [],
+      "test_files": [],
+      "documentation": [
+        "docs/PHASE3_ADVANCED_SYSTEM_CAPABILITIES_PLAN.md"
+      ],
+      "dependencies": [
+        "FTR-008"
+      ],
+      "dependents": [],
+      "blockers": [],
+      "completion_date": null,
+      "effort_estimate_hours": 48,
+      "effort_actual_hours": 0,
+      "commits": []
+    },
+    "FTR-012": {
+      "id": "FTR-012",
+      "name": "AI-Driven Optimization",
+      "status": "PLANNED",
+      "phase": "3.0",
+      "priority": "LOW",
+      "category": "optimization",
+      "description": "Machine learning algorithms for predictive maintenance and adaptive control optimization",
+      "acceptance_criteria": [
+        "Predictive maintenance capabilities",
+        "20%+ performance improvement with ML optimization",
+        "Real-time system health prediction",
+        "Adaptive control parameter optimization"
+      ],
+      "implementation_files": [],
+      "test_files": [],
+      "documentation": [
+        "docs/PHASE3_ADVANCED_SYSTEM_CAPABILITIES_PLAN.md"
+      ],
+      "dependencies": [
+        "FTR-009",
+        "FTR-010"
+      ],
+      "dependents": [],
+      "blockers": [],
+      "completion_date": null,
+      "effort_estimate_hours": 60,
+      "effort_actual_hours": 0,
+      "commits": []
+    },
+    "FTR-013": {
+      "id": "FTR-013",
+      "name": "HAL Abstraction Driver Interfaces",
+      "status": "COMPLETE",
+      "phase": "1.2",
+      "priority": "HIGH",
+      "category": "testing",
+      "description": "Complete the HAL abstraction layer with proper driver interfaces for AS5600 encoders and L6470 motor drivers. This enables consistent architecture where high-level modules use HAL abstraction instead of direct STM32 HAL, supporting both firmware and unit test builds through the dual build system.",
+      "acceptance_criteria": [
+        "HAL abstraction layer includes AS5600 encoder interfaces",
+        "HAL abstraction layer includes L6470 motor driver interfaces",
+        "All telemetry modules use HAL abstraction exclusively",
+        "Real hardware implementations call actual drivers",
+        "Mock implementations support unit testing",
+        "No conditional compilation in high-level modules",
+        "Unit tests compile and run successfully",
+        "Firmware functionality remains unchanged"
+      ],
+      "implementation_files": [
+        "src/hal_abstraction/hal_abstraction.h",
+        "src/hal_abstraction/hal_abstraction_stm32h7.c",
+        "tests/mocks/mock_hal_abstraction.c",
+        "src/telemetry/optimization_telemetry.c"
+      ],
+      "test_files": [
+        "tests/unit/test_optimization_telemetry.c"
+      ],
+      "documentation": [],
+      "dependencies": [
+        "FTR-003",
+        "FTR-004"
+      ],
+      "dependents": [
+        "FTR-008"
+      ],
+      "blockers": [],
+      "completion_date": "2025-08-10",
+      "effort_estimate_hours": 8,
+      "effort_actual_hours": 4,
+      "commits": []
     }
+  }
 }

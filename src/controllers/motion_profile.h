@@ -215,16 +215,8 @@ SystemError_t motion_profile_synchronize(uint8_t *motor_ids,
                                          MotionProfile_t *profiles,
                                          uint8_t motor_count);
 
-// Internal functions (implementation specific)
-static SystemError_t execute_trapezoidal_profile(MotionProfile_t *profile,
-                                                 uint32_t elapsed_time_ms,
-                                                 int32_t *target_pos,
-                                                 uint32_t *target_vel);
-
-static SystemError_t execute_scurve_profile(MotionProfile_t *profile,
-                                            uint32_t elapsed_time_ms,
-                                            int32_t *target_pos,
-                                            uint32_t *target_vel);
+// Internal functions are implemented in motion_profile.c
+// (No public declarations needed for static internal functions)
 
 // Motion profile constants
 #define MOTION_PROFILE_UPDATE_RATE_MS 1      ///< Default update rate (1ms)

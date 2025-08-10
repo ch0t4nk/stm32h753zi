@@ -204,8 +204,9 @@ int main(void) {
     printf("  - Telemetry: Priority %d, %d words stack, %d ms period\r\n",
            TELEMETRY_TASK_PRIORITY, TELEMETRY_TASK_STACK_SIZE,
            TELEMETRY_PERIOD_MS);
-    printf("  - Default Task: Priority %d (lowest), %d words stack\r\n",
-           tskIDLE_PRIORITY, defaultTask_attributes.stack_size);
+    printf("  - Default Task: Priority %ld (lowest), %lu words stack\r\n",
+           (long)tskIDLE_PRIORITY,
+           (unsigned long)defaultTask_attributes.stack_size);
     printf("Main: Starting FreeRTOS scheduler...\r\n");
 
     /* USER CODE END RTOS_THREADS */

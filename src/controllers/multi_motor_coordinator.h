@@ -172,24 +172,7 @@ SystemError_t multi_motor_emergency_stop(void);
 SystemError_t multi_motor_home_all_motors(void);
 
 // Internal functions (declared for testing)
-static SystemError_t
-validate_coordinated_move(CoordinatedMoveCommand_t *move_cmd);
-static SystemError_t
-execute_synchronized_move(CoordinatedMoveCommand_t *move_cmd);
-static SystemError_t
-execute_load_sharing_move(CoordinatedMoveCommand_t *move_cmd);
-static SystemError_t
-execute_master_slave_move(CoordinatedMoveCommand_t *move_cmd);
-static SystemError_t
-execute_independent_move(CoordinatedMoveCommand_t *move_cmd);
-
-static void update_motor_states(void);
-static void update_synchronized_motion(uint32_t dt_ms);
-static void update_load_sharing(uint32_t dt_ms);
-static void update_master_slave_motion(uint32_t dt_ms);
-static void check_motion_completion(void);
-static void calculate_sync_error(CoordinationStatus_t *status);
-static uint32_t calculate_move_time(int32_t distance, uint32_t max_velocity,
-                                    uint32_t acceleration);
+// Internal functions are implemented in multi_motor_coordinator.c
+// (Static functions should not be declared in headers)
 
 #endif // MULTI_MOTOR_COORDINATOR_H

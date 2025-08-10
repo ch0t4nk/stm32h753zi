@@ -29,6 +29,18 @@
 
 /* ============================================================================
  */
+/* Constants */
+/* ============================================================================
+ */
+
+/// @brief History size for dynamic tuning calculations
+#define DYNAMIC_TUNING_HISTORY_SIZE 10
+
+/// @brief Maximum number of tasks that can be tuned
+#define MAX_TUNABLE_TASKS 8
+
+/* ============================================================================
+ */
 /* Type Definitions */
 /* ============================================================================
  */
@@ -96,9 +108,6 @@ typedef struct {
 /* Constants */
 /* ============================================================================
  */
-
-/// @brief Maximum number of tasks that can be tuned
-#define MAX_TUNABLE_TASKS 8
 
 /// @brief Default tuning configuration values
 #define DEFAULT_MEASUREMENT_WINDOW_MS 5000 ///< 5 second measurement window

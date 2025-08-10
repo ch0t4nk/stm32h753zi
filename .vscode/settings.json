@@ -100,11 +100,26 @@
     "terminal.integrated.defaultProfile.linux": "bash",
     "terminal.integrated.profiles.linux": {
         "bash": {
-            "path": "bash",
+            "path": "/bin/bash",
             "args": [
-                "-c",
-                "export WORKSPACE_FOLDER=${workspaceFolder} && source ${workspaceFolder}/.vscode/shell_integration.sh && source ${workspaceFolder}/.venv/bin/activate 2>/dev/null && exec bash || exec bash"
-            ]
+                "--init-file",
+                "${workspaceFolder}/.vscode/bash_profile.sh"
+            ],
+            "icon": "terminal-bash"
+        },
+        "PowerShell": {
+            "path": "/usr/bin/pwsh",
+            "args": [
+                "-NoExit",
+                "-File",
+                "${workspaceFolder}/.vscode/powershell_profile.ps1"
+            ],
+            "icon": "terminal-powershell"
+        },
+        "sh": {
+            "path": "/bin/sh",
+            "args": [],
+            "icon": "terminal"
         }
     },
     // Shell integration configuration for command detection

@@ -47,6 +47,11 @@
 #include <stdio.h>
 #include <string.h> // For memset, memcpy
 
+// Forward declarations for static functions
+static SystemError_t init_event_groups(void);
+static SystemError_t init_memory_pools(void);
+static SystemError_t init_task_utilities(void);
+
 /* ==========================================================================
  */
 /* Private Variables                                                         */
@@ -446,6 +451,9 @@ void TelemetryTask(void *argument) {
             .safety_task_cycles = safety_task_cycles,
             .emergency_stop_active = emergency_stop_active};
 
+        // TODO: Actually transmit telemetry_data when comm protocol ready
+        (void)telemetry_data; // Suppress unused variable warning
+
         // Performance monitoring
         if ((telemetry_task_cycles % 10) == 0) {
             UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark(NULL);
@@ -483,8 +491,8 @@ void TimerServiceCallback(TimerHandle_t xTimer) {
 
         if (free_heap < (RTOS_HEAP_SIZE_BYTES / 4)) {
             printf("TimerServiceCallback: WARNING - Low heap memory: %u "
-                   "bytes\r\n",
-                   free_heap);
+                   "bytes (min ever: %u)\r\n",
+                   free_heap, min_ever_free);
         }
     }
 }
@@ -873,7 +881,7 @@ SystemError_t rtos_wait_motion_complete(uint32_t motors, uint32_t timeout_ms) {
                             pdTRUE, pdMS_TO_TICKS(timeout_ms));
 
     if ((result & required_events) == required_events) {
-        xEventGroupSetBits(motion_event_group, MOTION_EVENT_MOTION_COMPLETE);
+        xEventGroupSetBits(motion_event_group, SYSTEM_EVENT_MOTION_COMPLETE);
         return SYSTEM_OK;
     }
 
@@ -1019,20 +1027,13 @@ SystemError_t rtos_get_memory_stats(MemoryPoolStats_t *stats) {
         return ERROR_NOT_INITIALIZED;
     }
 
-    // Small pool stats
-    stats->small_pool.total_blocks = MEMORY_POOL_SMALL_BLOCK_COUNT;
-    stats->small_pool.available_blocks =
-        osMemoryPoolGetSpace(small_memory_pool);
-
-    // Medium pool stats
-    stats->medium_pool.total_blocks = MEMORY_POOL_MEDIUM_BLOCK_COUNT;
-    stats->medium_pool.available_blocks =
-        osMemoryPoolGetSpace(medium_memory_pool);
-
-    // Large pool stats
-    stats->large_pool.total_blocks = MEMORY_POOL_LARGE_BLOCK_COUNT;
-    stats->large_pool.available_blocks =
-        osMemoryPoolGetSpace(large_memory_pool);
+    // Small pool stats (default pool for this interface)
+    stats->total_blocks = MEMORY_POOL_SMALL_BLOCK_COUNT;
+    stats->available_blocks = osMemoryPoolGetSpace(small_memory_pool);
+    stats->peak_usage =
+        MEMORY_POOL_SMALL_BLOCK_COUNT - stats->available_blocks;
+    stats->allocation_failures =
+        0; // TODO: Implement allocation failure tracking
 
     return SYSTEM_OK;
 }

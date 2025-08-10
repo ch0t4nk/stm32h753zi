@@ -68,6 +68,15 @@ typedef enum {
     ERROR_CHECKSUM_FAILED,        // 0x100D - Checksum verification failed
     ERROR_VERSION_MISMATCH,       // 0x100E - Version compatibility error
     ERROR_INSUFFICIENT_RESOURCES, // 0x100F - Insufficient system resources
+    ERROR_MEMORY_ALLOCATION,      // 0x1010 - Memory allocation failed
+
+    // RTOS Error Codes
+    ERROR_QUEUE_FULL,     // 0x1011 - Queue is full, cannot add item
+    ERROR_STACK_OVERFLOW, // 0x1012 - Stack overflow detected
+
+    // Timer Error Codes
+    ERROR_TIMER_INIT_FAILED,  // 0x1013 - Timer initialization failed
+    ERROR_TIMER_START_FAILED, // 0x1014 - Timer start operation failed
 
     // Motor Control Error Codes - integrated into SystemError_t
     ERROR_MOTOR_INIT_FAILED =
@@ -106,6 +115,12 @@ typedef enum {
     ERROR_MOTOR_PROFILE_ERROR,          // 0x201D - Motion profile error
     ERROR_MOTOR_SEQUENCE_ERROR,         // 0x201E - Motor sequence error
     ERROR_MOTOR_COMMUNICATION_FAILED,   // 0x201F - Motor communication failed
+
+    // Additional optimization-specific motor errors
+    ERROR_OPERATION_IN_PROGRESS, // 0x2020 - Operation already in progress
+    ERROR_INVALID_DATA,          // 0x2021 - Invalid data provided
+    ERROR_SIGNAL_QUALITY_LOW,    // 0x2022 - Signal quality too low
+    ERROR_PARAMETER_VALIDATION_FAILED, // 0x2023 - Parameter validation failed
 
     // Encoder/Sensor Error Codes - integrated into SystemError_t
     ERROR_ENCODER_INIT_FAILED =
@@ -237,11 +252,13 @@ typedef enum {
     ERROR_HARDWARE_FAULT,         // 0x7001 - Hardware fault detected
     ERROR_POWER_SUPPLY_FAULT,     // 0x7002 - Power supply fault
     ERROR_TEMPERATURE_FAULT,      // 0x7003 - Temperature out of range
-    ERROR_VOLTAGE_FAULT,          // 0x7004 - Voltage out of range
-    ERROR_CLOCK_FAULT,            // 0x7005 - System clock fault
-    ERROR_HARDWARE_FAILURE,       // 0x7006 - Hardware failure
-    ERROR_UNKNOWN,                // 0x7007 - Unknown error
-    ERROR_GPIO_WRITE_FAILED,      // 0x7008 - GPIO write operation failed
+    ERROR_THERMAL_THROTTLE,       // 0x7004 - Thermal throttling activated
+    ERROR_VOLTAGE_FAULT,          // 0x7005 - Voltage out of range
+    ERROR_CLOCK_FAULT,            // 0x7006 - System clock fault
+    ERROR_HARDWARE_FAILURE,       // 0x7007 - Hardware failure
+    ERROR_UNKNOWN,                // 0x7008 - Unknown error
+    ERROR_GPIO_WRITE_FAILED,      // 0x7009 - GPIO write operation failed
+    ERROR_CONFIG_OUT_OF_RANGE, // 0x700A - Configuration parameter out of range
 } SystemError_t;
 
 /* ==========================================================================

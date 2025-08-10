@@ -455,6 +455,87 @@ SystemError_t HAL_Abstraction_ConfigureSafetyHardware(void);
  */
 SystemError_t HAL_Abstraction_ConfigureCommunicationHardware(void);
 
+/* ==========================================================================
+ */
+/* Driver Abstraction Interface (FTR-013)                                   */
+/* ==========================================================================
+ */
+
+/**
+ * @brief AS5600 Encoder Driver Abstraction
+ *
+ * Provides hardware-independent interface for AS5600 magnetic encoder
+ * operations. Implementation calls actual drivers for firmware builds
+ * and provides mocks for unit testing.
+ */
+
+/**
+ * @brief Initialize AS5600 encoder
+ * @param encoder_id Encoder identifier (0-based)
+ * @return SystemError_t Success or error code
+ */
+SystemError_t HAL_Abstraction_AS5600_Init(uint8_t encoder_id);
+
+/**
+ * @brief Read angle from AS5600 encoder in degrees
+ * @param encoder_id Encoder identifier (0-based)
+ * @param angle_degrees Pointer to store angle in degrees (0-360)
+ * @return SystemError_t Success or error code
+ */
+SystemError_t HAL_Abstraction_AS5600_ReadAngle(uint8_t encoder_id,
+                                               float *angle_degrees);
+
+/**
+ * @brief Check AS5600 magnet detection status
+ * @param encoder_id Encoder identifier (0-based)
+ * @param magnet_detected Pointer to store magnet detection status
+ * @return SystemError_t Success or error code
+ */
+SystemError_t HAL_Abstraction_AS5600_CheckMagnet(uint8_t encoder_id,
+                                                 bool *magnet_detected);
+
+/**
+ * @brief L6470 Motor Driver Abstraction
+ *
+ * Provides hardware-independent interface for L6470 stepper motor driver
+ * operations. Implementation calls actual drivers for firmware builds
+ * and provides mocks for unit testing.
+ */
+
+/**
+ * @brief Initialize L6470 motor driver
+ * @param motor_id Motor identifier (0-based)
+ * @return SystemError_t Success or error code
+ */
+SystemError_t HAL_Abstraction_L6470_Init(uint8_t motor_id);
+
+/**
+ * @brief Get L6470 status register
+ * @param motor_id Motor identifier (0-based)
+ * @param status Pointer to store status value
+ * @return SystemError_t Success or error code
+ */
+SystemError_t HAL_Abstraction_L6470_GetStatus(uint8_t motor_id,
+                                              uint32_t *status);
+
+/**
+ * @brief Get L6470 parameter value
+ * @param motor_id Motor identifier (0-based)
+ * @param param Parameter register address
+ * @param value Pointer to store parameter value
+ * @return SystemError_t Success or error code
+ */
+SystemError_t HAL_Abstraction_L6470_GetParameter(uint8_t motor_id,
+                                                 uint8_t param,
+                                                 uint32_t *value);
+
+/**
+ * @brief Perform hard stop on L6470 motor
+ * @param motor_id Motor identifier (0-based)
+ * @return SystemError_t Success or error code
+ */
+SystemError_t HAL_Abstraction_L6470_HardStop(uint8_t motor_id);
+
 #ifdef __cplusplus
 }
 #endif

@@ -221,6 +221,7 @@ def main():
     update_parser.add_argument('feature_id', help='Feature ID to update')
     update_parser.add_argument('--status', choices=['COMPLETE', 'IN_PROGRESS', 'PLANNED'], help='Update status')
     update_parser.add_argument('--effort-actual', type=int, help='Update actual effort hours')
+    update_parser.add_argument('--notes', type=str, help='Add completion notes or implementation details')
     
     # Report command
     subparsers.add_parser('report', help='Generate status report')
@@ -289,6 +290,14 @@ def main():
                     updates['completion_date'] = datetime.now().strftime('%Y-%m-%d')
             if args.effort_actual:
                 updates['effort_actual_hours'] = args.effort_actual
+            if args.notes:
+                # Add notes to implementation_notes array (create if doesn't exist)
+                feature = tracker.get_feature(args.feature_id)
+                if feature:
+                    implementation_notes = feature.get('implementation_notes', [])
+                    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    implementation_notes.append(f"[{timestamp}] {args.notes}")
+                    updates['implementation_notes'] = implementation_notes
             
             tracker.update_feature(args.feature_id, **updates)
             print(f"Updated {args.feature_id}: {updates}")

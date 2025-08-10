@@ -445,7 +445,7 @@ void WWDG_IRQHandler(void) {
 /**
  * @brief WWDG callback function
  */
-void HAL_WWDG_EarlyWakeupCallback(WWDG_HandleTypeDef *hwwdg) {
+void HAL_WWDG_EarlyWakeupCallback(WWDG_HandleTypeDef *wwdg_handle) {
     // Early wakeup callback - implement any last-chance recovery here
     watchdog_warning_active = true;
 }

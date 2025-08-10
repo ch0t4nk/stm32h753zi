@@ -6,5 +6,5 @@ C_DEFINES = -DHOST_TESTING=1 -DSIMULATION_ENABLED=1 -DSTM32H753xx -DTEST_MODE=1 
 
 C_INCLUDES = -I/workspaces/code/host_tests -I/workspaces/code/host_tests/../tests/mocks -I/workspaces/code/host_tests/../tests/fixtures -I/workspaces/code/host_tests/../external/unity -I/workspaces/code/host_tests/../src -I/workspaces/code/host_tests/../src/config -I/workspaces/code/host_tests/../src/common -I/workspaces/code/host_tests/../src/safety -I/workspaces/code/host_tests/../src/controllers -I/workspaces/code/host_tests/../src/communication -I/workspaces/code/host_tests/../src/drivers -I/workspaces/code/host_tests/../src/hal_abstraction -I/workspaces/code/host_tests/../src/telemetry
 
-C_FLAGS = -Wall -Wextra -Wpedantic -g -O0 -DSIMULATION_ENABLED=1 -DTEST_MODE=1 -DHOST_TESTING=1 -DUNITY_TESTING=1 -DSTM32H753xx -DUSE_HAL_DRIVER -g -Wall -Wextra -Wpedantic -Wno-unused-parameter -fdata-sections -ffunction-sections -Og -g3 -ggdb -std=gnu11
+C_FLAGS = -Wall -Wextra -Wpedantic -g -O0 -DSIMULATION_ENABLED=1 -DTEST_MODE=1 -DHOST_TESTING=1 -DUNITY_TESTING=1 -DSTM32H753xx -DUSE_HAL_DRIVER -DHOST_TEST_BUILD=1 -g -Wall -Wextra -Wpedantic -Wno-unused-parameter -fdata-sections -ffunction-sections -Og -g3 -ggdb -std=gnu11
 

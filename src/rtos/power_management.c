@@ -429,7 +429,7 @@ static SystemError_t apply_power_mode(PowerMode_t mode) {
     // Note: Task period adjustments would be applied here in a full
     // implementation For now, we log the intended adjustments
     printf("Power Management: Applied mode %d config:\r\n", mode);
-    printf("  CPU: %d MHz\r\n", config->cpu_frequency_mhz);
+    printf("  CPU: %lu MHz\r\n", (unsigned long)config->cpu_frequency_mhz);
     printf("  Motor period: %dx\r\n", config->motor_period_multiplier);
     printf("  Safety period: %dx\r\n", config->safety_period_multiplier);
     printf("  Comm period: %dx\r\n", config->comm_period_multiplier);
@@ -539,7 +539,8 @@ SystemError_t power_management_set_cpu_frequency(uint32_t frequency_mhz) {
 
     // For STM32H753ZI, this would configure PLL and system clocks
     // For now, we simulate the frequency change
-    printf("Power Management: CPU frequency set to %d MHz\r\n", frequency_mhz);
+    printf("Power Management: CPU frequency set to %lu MHz\r\n",
+           (unsigned long)frequency_mhz);
 
     return SYSTEM_OK;
 }
@@ -556,7 +557,7 @@ SystemError_t power_management_thermal_check(float temperature_celsius) {
         power_management_request_mode(POWER_MODE_IDLE, true);
         printf("Power Management: THERMAL CRITICAL - Forced idle mode at "
                "%.1f°C\r\n",
-               temperature_celsius);
+               (double)temperature_celsius);
         return ERROR_THERMAL_THROTTLE;
     } else if (temperature_celsius > THERMAL_WARNING_TEMP) {
         // Suggest quiet mode for thermal management
@@ -564,7 +565,7 @@ SystemError_t power_management_thermal_check(float temperature_celsius) {
             power_management_request_mode(POWER_MODE_QUIET, false);
             printf("Power Management: Thermal warning - Suggested quiet mode "
                    "at %.1f°C\r\n",
-                   temperature_celsius);
+                   (double)temperature_celsius);
         }
     }
 

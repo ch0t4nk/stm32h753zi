@@ -20,12 +20,19 @@
 #include "config/motor_config.h"
 #include "drivers/as5600/as5600_driver.h"
 #include "drivers/l6470/l6470_driver.h"
-#include "optimization_telemetry.h"
+#include "optimization/optimization_compatibility.h"
 #include "safety/safety_system.h"
+#include "telemetry/optimization_telemetry.h"
 
+#define _USE_MATH_DEFINES // For M_PI constant
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
+
+// Define M_PI if not available
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 // ================================================================================================
 // PRIVATE CONSTANTS AND CONFIGURATION
@@ -179,19 +186,19 @@ SystemError_t motor_characterization_init(uint8_t motor_id) {
     }
 
     // Initialize motor driver for characterization
-    result = l6470_init(motor_id);
+    result = l6470_init();
     if (result != SYSTEM_OK) {
         return result;
     }
 
     // Initialize encoder for characterization
-    result = as5600_init(motor_id);
+    result = as5600_init();
     if (result != SYSTEM_OK) {
         return result;
     }
 
     // Set motor to known initial state
-    result = l6470_stop(motor_id);
+    result = l6470_soft_stop(motor_id);
     if (result != SYSTEM_OK) {
         return result;
     }
@@ -295,19 +302,21 @@ SystemError_t motor_characterization_run_comprehensive(
 
     // Generate optimization summary
     if (overall_result == SYSTEM_OK) {
-        snprintf(results->optimization_summary,
-                 sizeof(results->optimization_summary),
-                 "Motor characterization completed successfully. "
-                 "Predicted improvements: Efficiency +%.1f%%, Settling time "
-                 "-%.1f%%, "
-                 "Overshoot -%.1f%%, Power -%.1f%%. "
-                 "Parameter confidence: %.1f%%. Ready for deployment: %s",
-                 results->optimal_params.predicted_efficiency_improvement,
-                 results->optimal_params.predicted_settling_time_improvement,
-                 results->optimal_params.predicted_overshoot_reduction,
-                 results->optimal_params.predicted_power_reduction,
-                 results->physical_params.parameter_confidence_percent,
-                 results->ready_for_deployment ? "Yes" : "No");
+        snprintf(
+            results->optimization_summary,
+            sizeof(results->optimization_summary),
+            "Motor characterization completed successfully. "
+            "Predicted improvements: Efficiency +%.1f%%, Settling time "
+            "-%.1f%%, "
+            "Overshoot -%.1f%%, Power -%.1f%%. "
+            "Parameter confidence: %.1f%%. Ready for deployment: %s",
+            (double)results->optimal_params.predicted_efficiency_improvement,
+            (double)
+                results->optimal_params.predicted_settling_time_improvement,
+            (double)results->optimal_params.predicted_overshoot_reduction,
+            (double)results->optimal_params.predicted_power_reduction,
+            (double)results->physical_params.parameter_confidence_percent,
+            results->ready_for_deployment ? "Yes" : "No");
     } else {
         snprintf(results->optimization_summary,
                  sizeof(results->optimization_summary),
@@ -474,7 +483,7 @@ SystemError_t motor_characterization_frequency_response(
         for (uint32_t cycle = 0; cycle < 3;
              cycle++) { // 3 cycles per frequency
             for (uint32_t sample = 0; sample < samples_per_cycle; sample++) {
-                float phase = 2.0f * M_PI * sample / samples_per_cycle;
+                float phase = 2.0f * (float)M_PI * sample / samples_per_cycle;
                 float target_position =
                     initial_position + sweep_amplitude * sinf(phase);
 
@@ -695,7 +704,7 @@ analyze_step_response_data(const CharacterizationDataSet_t *dataset,
         if (natural_frequency > 0.1f &&
             natural_frequency < 1000.0f) { // Reasonable range
             params->mechanical_time_constant =
-                1.0f / (2.0f * M_PI * natural_frequency);
+                1.0f / (2.0f * (float)M_PI * natural_frequency);
 
             // Estimate inertia from natural frequency (simplified)
             params->rotor_inertia_kg_m2 = 1e-5f * (10.0f / natural_frequency);
@@ -905,7 +914,7 @@ static SystemError_t apply_low_pass_filter(float *data, uint32_t length,
         return ERROR_INVALID_PARAMETER;
 
     // Simple first-order low-pass filter implementation
-    float alpha = 2.0f * M_PI * cutoff_hz / sample_rate_hz;
+    float alpha = 2.0f * (float)M_PI * cutoff_hz / sample_rate_hz;
     if (alpha > 1.0f)
         alpha = 1.0f;
 
@@ -1096,19 +1105,20 @@ SystemError_t motor_characterization_get_status(uint8_t motor_id,
         uint32_t elapsed_time =
             HAL_GetTick() - context->characterization_start_time;
         snprintf(status_summary, buffer_size,
-                 "Motor %d: Characterization in progress (%u ms elapsed)",
-                 motor_id, elapsed_time);
+                 "Motor %d: Characterization in progress (%lu ms elapsed)",
+                 motor_id, (unsigned long)elapsed_time);
     } else if (context->last_results.ready_for_deployment) {
         snprintf(
             status_summary, buffer_size,
             "Motor %d: Optimized parameters ready. Predicted improvements: "
             "Efficiency +%.1f%%, Settling -%.1f%%, Power -%.1f%%",
             motor_id,
-            context->last_results.optimal_params
+            (double)context->last_results.optimal_params
                 .predicted_efficiency_improvement,
-            context->last_results.optimal_params
+            (double)context->last_results.optimal_params
                 .predicted_settling_time_improvement,
-            context->last_results.optimal_params.predicted_power_reduction);
+            (double)context->last_results.optimal_params
+                .predicted_power_reduction);
     } else {
         snprintf(status_summary, buffer_size,
                  "Motor %d: Initialized, no valid characterization results",
@@ -1126,58 +1136,58 @@ SystemError_t motor_characterization_generate_report(
     }
 
     // Generate comprehensive JSON report
-    int written =
-        snprintf(json_buffer, buffer_size,
-                 "{\n"
-                 "  \"motor_characterization_report\": {\n"
-                 "    \"motor_id\": %u,\n"
-                 "    \"test_timestamp\": %u,\n"
-                 "    \"ready_for_deployment\": %s,\n"
-                 "    \"physical_parameters\": {\n"
-                 "      \"rotor_inertia_kg_m2\": %.2e,\n"
-                 "      \"viscous_friction_coeff\": %.2e,\n"
-                 "      \"static_friction_torque\": %.6f,\n"
-                 "      \"winding_resistance_ohm\": %.2f,\n"
-                 "      \"mechanical_time_constant\": %.4f,\n"
-                 "      \"parameter_confidence_percent\": %.1f\n"
-                 "    },\n"
-                 "    \"optimal_parameters\": {\n"
-                 "      \"optimal_kval_hold\": %u,\n"
-                 "      \"optimal_kval_run\": %u,\n"
-                 "      \"optimal_kval_acc\": %u,\n"
-                 "      \"optimal_kval_dec\": %u,\n"
-                 "      \"optimal_acceleration\": %u,\n"
-                 "      \"optimal_max_speed\": %u\n"
-                 "    },\n"
-                 "    \"predicted_improvements\": {\n"
-                 "      \"efficiency_improvement_percent\": %.1f,\n"
-                 "      \"settling_time_improvement_percent\": %.1f,\n"
-                 "      \"overshoot_reduction_percent\": %.1f,\n"
-                 "      \"power_reduction_percent\": %.1f\n"
-                 "    },\n"
-                 "    \"optimization_summary\": \"%s\",\n"
-                 "    \"safety_notes\": \"%s\"\n"
-                 "  }\n"
-                 "}\n",
-                 results->motor_id, results->test_timestamp,
-                 results->ready_for_deployment ? "true" : "false",
-                 results->physical_params.rotor_inertia_kg_m2,
-                 results->physical_params.viscous_friction_coeff,
-                 results->physical_params.static_friction_torque,
-                 results->physical_params.winding_resistance_ohm,
-                 results->physical_params.mechanical_time_constant,
-                 results->physical_params.parameter_confidence_percent,
-                 results->optimal_params.optimal_kval_hold,
-                 results->optimal_params.optimal_kval_run,
-                 results->optimal_params.optimal_kval_acc,
-                 results->optimal_params.optimal_kval_dec,
-                 results->optimal_params.optimal_acceleration,
-                 results->optimal_params.optimal_max_speed,
-                 results->optimal_params.predicted_efficiency_improvement,
-                 results->optimal_params.predicted_settling_time_improvement,
-                 results->optimal_params.predicted_overshoot_reduction,
-                 results->optimal_params.predicted_power_reduction,
-                 results->optimization_summary, results->safety_notes);
+    int written = snprintf(
+        json_buffer, buffer_size,
+        "{\n"
+        "  \"motor_characterization_report\": {\n"
+        "    \"motor_id\": %u,\n"
+        "    \"test_timestamp\": %lu,\n"
+        "    \"ready_for_deployment\": %s,\n"
+        "    \"physical_parameters\": {\n"
+        "      \"rotor_inertia_kg_m2\": %.2e,\n"
+        "      \"viscous_friction_coeff\": %.2e,\n"
+        "      \"static_friction_torque\": %.6f,\n"
+        "      \"winding_resistance_ohm\": %.2f,\n"
+        "      \"mechanical_time_constant\": %.4f,\n"
+        "      \"parameter_confidence_percent\": %.1f\n"
+        "    },\n"
+        "    \"optimal_parameters\": {\n"
+        "      \"optimal_kval_hold\": %u,\n"
+        "      \"optimal_kval_run\": %u,\n"
+        "      \"optimal_kval_acc\": %u,\n"
+        "      \"optimal_kval_dec\": %u,\n"
+        "      \"optimal_acceleration\": %u,\n"
+        "      \"optimal_max_speed\": %u\n"
+        "    },\n"
+        "    \"predicted_improvements\": {\n"
+        "      \"efficiency_improvement_percent\": %.1f,\n"
+        "      \"settling_time_improvement_percent\": %.1f,\n"
+        "      \"overshoot_reduction_percent\": %.1f,\n"
+        "      \"power_reduction_percent\": %.1f\n"
+        "    },\n"
+        "    \"optimization_summary\": \"%s\",\n"
+        "    \"safety_notes\": \"%s\"\n"
+        "  }\n"
+        "}\n",
+        results->motor_id, (unsigned long)results->test_timestamp,
+        results->ready_for_deployment ? "true" : "false",
+        (double)results->physical_params.rotor_inertia_kg_m2,
+        (double)results->physical_params.viscous_friction_coeff,
+        (double)results->physical_params.static_friction_torque,
+        (double)results->physical_params.winding_resistance_ohm,
+        (double)results->physical_params.mechanical_time_constant,
+        (double)results->physical_params.parameter_confidence_percent,
+        results->optimal_params.optimal_kval_hold,
+        results->optimal_params.optimal_kval_run,
+        results->optimal_params.optimal_kval_acc,
+        results->optimal_params.optimal_kval_dec,
+        results->optimal_params.optimal_acceleration,
+        results->optimal_params.optimal_max_speed,
+        (double)results->optimal_params.predicted_efficiency_improvement,
+        (double)results->optimal_params.predicted_settling_time_improvement,
+        (double)results->optimal_params.predicted_overshoot_reduction,
+        (double)results->optimal_params.predicted_power_reduction,
+        results->optimization_summary, results->safety_notes);
 
     if (written >= (int)buffer_size) {
         return ERROR_BUFFER_OVERFLOW;
@@ -1244,4 +1254,48 @@ SystemError_t motor_characterization_emergency_stop(uint8_t motor_id) {
     l6470_emergency_stop(motor_id);
 
     return SYSTEM_OK;
+}
+
+/* ==========================================================================
+ */
+/* Missing Function Implementations (TODO: Complete)                         */
+/* ==========================================================================
+ */
+
+/**
+ * @brief Analyze frequency response data (TODO: Implementation needed)
+ */
+static SystemError_t
+analyze_frequency_response_data(const CharacterizationDataSet_t *dataset,
+                                MotorPhysicalParameters_t *params) {
+    // TODO: Implement frequency domain analysis
+    (void)dataset; // Suppress unused parameter warning
+    (void)params;  // Suppress unused parameter warning
+
+    return ERROR_NOT_SUPPORTED;
+}
+
+/**
+ * @brief Check characterization safety bounds (TODO: Implementation needed)
+ */
+__attribute__((unused)) static SystemError_t
+check_characterization_safety_bounds(
+    uint8_t motor_id, const CharacterizationDataSet_t *dataset) {
+    // TODO: Implement safety bounds checking
+    (void)motor_id; // Suppress unused parameter warning
+    (void)dataset;  // Suppress unused parameter warning
+
+    return SYSTEM_OK; // Assume safe for now
+}
+
+/**
+ * @brief Calculate RMS value (TODO: Implementation needed)
+ */
+__attribute__((unused)) static float calculate_rms_value(const float *data,
+                                                         uint32_t length) {
+    // TODO: Implement RMS calculation
+    (void)data;   // Suppress unused parameter warning
+    (void)length; // Suppress unused parameter warning
+
+    return 0.0f; // Placeholder return
 }

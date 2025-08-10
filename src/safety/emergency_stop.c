@@ -218,7 +218,7 @@ EmergencyStopState_t emergency_stop_get_state(void) {
 bool is_emergency_stop_pressed(void) {
     // Read button state (active low with pull-up)
     GPIO_PinState button_state =
-        HAL_GPIO_ReadPin(ESTOP_BUTTON_PORT, ESTOP_BUTTON_PIN);
+        HAL_GPIO_ReadPin(ESTOP_BUTTON_STM32_PORT, ESTOP_BUTTON_STM32_PIN);
     return (button_state == GPIO_PIN_RESET);
 }
 
@@ -230,9 +230,9 @@ void emergency_stop_interrupt_handler(void) {
     // This is called from EXTI interrupt handler
 
     // Verify this is actually the emergency stop button
-    if (__HAL_GPIO_EXTI_GET_IT(ESTOP_BUTTON_PIN) != RESET) {
+    if (__HAL_GPIO_EXTI_GET_IT(ESTOP_BUTTON_STM32_PIN) != RESET) {
         // Clear interrupt flag first
-        __HAL_GPIO_EXTI_CLEAR_IT(ESTOP_BUTTON_PIN);
+        __HAL_GPIO_EXTI_CLEAR_IT(ESTOP_BUTTON_STM32_PIN);
 
         // Execute emergency stop (minimal processing in ISR)
         emergency_stop_execute(ESTOP_SOURCE_BUTTON);
@@ -251,7 +251,7 @@ SystemError_t emergency_stop_self_test(void) {
     // Note: STM32 HAL doesn't provide HAL_GPIO_GetConfig, so we test
     // functionality
     GPIO_PinState current_state =
-        HAL_GPIO_ReadPin(ESTOP_BUTTON_PORT, ESTOP_BUTTON_PIN);
+        HAL_GPIO_ReadPin(ESTOP_BUTTON_STM32_PORT, ESTOP_BUTTON_STM32_PIN);
     (void)current_state; // Suppress unused warning - we just verify pin is
                          // accessible
 
@@ -340,13 +340,14 @@ static SystemError_t initialize_estop_gpio(void) {
 
     // Configure emergency stop button (input with pull-up, interrupt on
     // falling edge)
-    estop_button_gpio.Pin = ESTOP_BUTTON_PIN;
+    estop_button_gpio.Pin = ESTOP_BUTTON_STM32_PIN;
     estop_button_gpio.Mode = GPIO_MODE_IT_FALLING;
     estop_button_gpio.Pull = GPIO_PULLUP;
-    estop_button_gpio.Speed = GPIO_SPEED_FREQ_HIGH;
-    HAL_GPIO_Init(ESTOP_BUTTON_PORT, &estop_button_gpio);
+    estop_button_gpio.Speed = GPIO_SPEED_FREQ_LOW;
 
-    // Configure safety relay outputs (active high)
+    HAL_GPIO_Init(
+        ESTOP_BUTTON_STM32_PORT,
+        &estop_button_gpio); // Configure safety relay outputs (active high)
     safety_relay_gpio.Pin = SAFETY_RELAY1_PIN | SAFETY_RELAY2_PIN;
     safety_relay_gpio.Mode = GPIO_MODE_OUTPUT_PP;
     safety_relay_gpio.Pull = GPIO_NOPULL;
@@ -430,7 +431,7 @@ static SystemError_t validate_reset_conditions(void) {
  */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     // Check if this is the emergency stop button
-    if (GPIO_Pin == ESTOP_BUTTON_PIN) {
+    if (GPIO_Pin == ESTOP_BUTTON_STM32_PIN) {
         // Call emergency stop handler
         emergency_stop_interrupt_handler();
     }

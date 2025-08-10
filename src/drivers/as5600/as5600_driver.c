@@ -98,9 +98,9 @@ SystemError_t as5600_init(void) {
     // Initialize each encoder
     for (uint8_t encoder_id = 0; encoder_id < AS5600_MAX_ENCODERS;
          encoder_id++) {
-        SystemError_t result = as5600_init_encoder(encoder_id);
-        if (result != SYSTEM_OK) {
-            return result;
+        SystemError_t init_result = as5600_init_encoder(encoder_id);
+        if (init_result != SYSTEM_OK) {
+            return init_result;
         }
     }
 

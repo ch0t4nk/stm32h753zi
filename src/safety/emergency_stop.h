@@ -43,20 +43,14 @@ extern "C" {
 /* ==========================================================================
  */
 
-// Emergency stop button configuration (using SSOT hardware config)
-#define ESTOP_BUTTON_PORT GPIOC
-#define ESTOP_BUTTON_PIN GPIO_PIN_13 // User button on Nucleo-144
+// Emergency stop hardware definitions are in hardware_config.h (SSOT)
+// Use the centralized definitions to avoid redefinition conflicts:
+// - ESTOP_BUTTON_PORT, ESTOP_BUTTON_PIN from hardware_config.h
+// - SAFETY_RELAY1_PORT, SAFETY_RELAY1_PIN from hardware_config.h
+// - SAFETY_RELAY2_PORT, SAFETY_RELAY2_PIN from hardware_config.h
+// - ESTOP_LED_PORT, ESTOP_LED_PIN from hardware_config.h
+
 #define ESTOP_BUTTON_EXTI_IRQn EXTI15_10_IRQn
-
-// Safety relay outputs (if external safety relays are used)
-#define SAFETY_RELAY1_PORT GPIOB
-#define SAFETY_RELAY1_PIN GPIO_PIN_0
-#define SAFETY_RELAY2_PORT GPIOB
-#define SAFETY_RELAY2_PIN GPIO_PIN_1
-
-// Emergency stop LED indicator
-#define ESTOP_LED_PORT GPIOB
-#define ESTOP_LED_PIN GPIO_PIN_14 // Red LED
 
 /* ==========================================================================
  */

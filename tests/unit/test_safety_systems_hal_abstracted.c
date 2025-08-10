@@ -56,14 +56,14 @@ void test_emergency_stop_init_success(void) {
 
     // Verify GPIO pins were configured
     MockHAL_State_t *mock_state = MockHAL_GetState();
+    TEST_ASSERT_TRUE(mock_state->gpio_configured[ESTOP_BUTTON_PORT]
+                                                [ESTOP_BUTTON_PIN_INDEX]);
     TEST_ASSERT_TRUE(
-        mock_state->gpio_configured[ESTOP_BUTTON_PORT][ESTOP_BUTTON_PIN]);
-    TEST_ASSERT_TRUE(
-        mock_state->gpio_configured[ESTOP_LED_PORT][ESTOP_LED_PIN]);
-    TEST_ASSERT_TRUE(
-        mock_state->gpio_configured[SAFETY_RELAY1_PORT][SAFETY_RELAY1_PIN]);
-    TEST_ASSERT_TRUE(
-        mock_state->gpio_configured[SAFETY_RELAY2_PORT][SAFETY_RELAY2_PIN]);
+        mock_state->gpio_configured[ESTOP_LED_PORT][ESTOP_LED_PIN_INDEX]);
+    TEST_ASSERT_TRUE(mock_state->gpio_configured[SAFETY_RELAY1_PORT]
+                                                [SAFETY_RELAY1_PIN_INDEX]);
+    TEST_ASSERT_TRUE(mock_state->gpio_configured[SAFETY_RELAY2_PORT]
+                                                [SAFETY_RELAY2_PIN_INDEX]);
 }
 
 void test_emergency_stop_init_gpio_failure(void) {
@@ -271,7 +271,7 @@ void test_emergency_stop_led_heartbeat_armed(void) {
     // The exact pattern depends on timing, but LED should be actively
     // controlled
     TEST_ASSERT_TRUE(
-        mock_state->gpio_configured[ESTOP_LED_PORT][ESTOP_LED_PIN]);
+        mock_state->gpio_configured[ESTOP_LED_PORT][ESTOP_LED_PIN_INDEX]);
 }
 
 void test_emergency_stop_led_triggered_state(void) {
@@ -300,9 +300,9 @@ void test_emergency_stop_self_test_success(void) {
     // Verify that GPIO operations were performed during self-test
     MockHAL_State_t *mock_state = MockHAL_GetState();
     TEST_ASSERT_TRUE(
-        mock_state->gpio_configured[ESTOP_LED_PORT][ESTOP_LED_PIN]);
-    TEST_ASSERT_TRUE(
-        mock_state->gpio_configured[SAFETY_RELAY1_PORT][SAFETY_RELAY1_PIN]);
+        mock_state->gpio_configured[ESTOP_LED_PORT][ESTOP_LED_PIN_INDEX]);
+    TEST_ASSERT_TRUE(mock_state->gpio_configured[SAFETY_RELAY1_PORT]
+                                                [SAFETY_RELAY1_PIN_INDEX]);
 }
 
 void test_emergency_stop_self_test_gpio_failure(void) {
@@ -506,14 +506,14 @@ void test_hal_abstraction_integration_emergency_stop_full_cycle(void) {
 
     // 9. Verify all GPIO operations were successful
     MockHAL_State_t *mock_state = MockHAL_GetState();
+    TEST_ASSERT_TRUE(mock_state->gpio_configured[ESTOP_BUTTON_PORT]
+                                                [ESTOP_BUTTON_PIN_INDEX]);
     TEST_ASSERT_TRUE(
-        mock_state->gpio_configured[ESTOP_BUTTON_PORT][ESTOP_BUTTON_PIN]);
-    TEST_ASSERT_TRUE(
-        mock_state->gpio_configured[ESTOP_LED_PORT][ESTOP_LED_PIN]);
-    TEST_ASSERT_TRUE(
-        mock_state->gpio_configured[SAFETY_RELAY1_PORT][SAFETY_RELAY1_PIN]);
-    TEST_ASSERT_TRUE(
-        mock_state->gpio_configured[SAFETY_RELAY2_PORT][SAFETY_RELAY2_PIN]);
+        mock_state->gpio_configured[ESTOP_LED_PORT][ESTOP_LED_PIN_INDEX]);
+    TEST_ASSERT_TRUE(mock_state->gpio_configured[SAFETY_RELAY1_PORT]
+                                                [SAFETY_RELAY1_PIN_INDEX]);
+    TEST_ASSERT_TRUE(mock_state->gpio_configured[SAFETY_RELAY2_PORT]
+                                                [SAFETY_RELAY2_PIN_INDEX]);
 }
 
 /* ==========================================================================

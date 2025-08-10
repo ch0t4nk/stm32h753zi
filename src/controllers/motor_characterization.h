@@ -4,7 +4,7 @@
 #include "common/error_codes.h"
 #include "config/motor_config.h"
 #include "hal_abstraction.h"
-#include "optimization_telemetry.h"
+#include "telemetry/optimization_telemetry.h"
 
 #ifdef __cplusplus
 extern "C" {
