@@ -369,6 +369,132 @@
         "clear": true
       },
       "problemMatcher": []
+    },
+    {
+      "label": "🚀 WORKFLOW: Before Work",
+      "type": "shell",
+      "command": "./scripts/workflow.sh",
+      "args": [
+        "before"
+      ],
+      "group": "build",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
+          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🔄 WORKFLOW: During Work (Build + Update)",
+      "type": "shell",
+      "command": "./scripts/workflow.sh",
+      "args": [
+        "during"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
+          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": [
+        "$gcc"
+      ]
+    },
+    {
+      "label": "✅ WORKFLOW: After Work (Prepare Commit)",
+      "type": "shell",
+      "command": "./scripts/workflow.sh",
+      "args": [
+        "after"
+      ],
+      "group": "build",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
+          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📋 WORKFLOW: Check Feature Status",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "args": [
+        "scripts/feature_tracker.py",
+        "list",
+        "--status",
+        "IN_PROGRESS"
+      ],
+      "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📊 WORKFLOW: Project Report",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "args": [
+        "scripts/feature_tracker.py",
+        "report"
+      ],
+      "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
     }
   ]
 }
