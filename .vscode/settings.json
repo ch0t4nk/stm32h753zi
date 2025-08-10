@@ -103,10 +103,21 @@
             "path": "bash",
             "args": [
                 "-c",
-                "source ${workspaceFolder}/.venv/bin/activate 2>/dev/null && exec bash || exec bash"
+                "export WORKSPACE_FOLDER=${workspaceFolder} && source ${workspaceFolder}/.vscode/shell_integration.sh && source ${workspaceFolder}/.venv/bin/activate 2>/dev/null && exec bash || exec bash"
             ]
         }
     },
+    // Shell integration configuration for command detection
+    "terminal.integrated.shellIntegration.enabled": true,
+    "terminal.integrated.shellIntegration.showWelcome": false,
+    "terminal.integrated.shellIntegration.decorationsEnabled": "both",
+    "terminal.integrated.enablePersistentSessions": true,
+    "terminal.integrated.persistentSessionReviveProcess": "onExitAndWindowClose",
+    // Enhanced command detection settings
+    "terminal.integrated.shellIntegration.history": 100,
+    "terminal.integrated.commandsToSkipShell": [],
+    "terminal.integrated.allowMnemonics": true,
+    "terminal.integrated.confirmOnExit": "hasChildProcesses",
     // CMake configuration for this workspace
     "cmake.buildDirectory": "${workspaceFolder}/build",
     "cmake.sourceDirectory": "${workspaceFolder}",

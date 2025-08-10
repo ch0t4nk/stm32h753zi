@@ -3816,3 +3816,113 @@ RuntimeError: Format validation failed
  1 file changed, 1 insertion(+), 1 deletion(-)
 [2025-08-10 00:47:17] POST-COMMIT: STATUS.md auto-commit completed
 [2025-08-10 00:47:17] POST-COMMIT: === Post-commit hook completed ===
+[2025-08-10 00:58:28] PRE-COMMIT: === Pre-commit validation started ===
+[2025-08-10 00:58:28] PRE-COMMIT: Relevant files changed, running SSOT validation...
+🔍 Starting SSOT validation...
+🔍 SSOT Validation Report for STM32H753ZI Project
+============================================================
+✅ SSOT structure complete
+
+⚠️  Found 295 potential SSOT violations:
+
+   📁 src/application/main.c:
+      Line 103: * - SPI1 for L6470 (stm32h7-spi-l6470.instructions.md)...
+      💡 SPI instances should be in hardware_config.h
+      Line 104: * - I2C1/I2C2 for AS5600 (stm32h7-i2c-as5600.instructions.md...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/application/main_application.c:
+      Line 28: extern SPI_HandleTypeDef hspi2;   // SPI2 for L6470 drivers...
+      💡 SPI instances should be in hardware_config.h
+      Line 29: extern I2C_HandleTypeDef hi2c1;   // I2C1 for encoder 0...
+      💡 I2C instances should be in hardware_config.h
+      Line 30: extern I2C_HandleTypeDef hi2c2;   // I2C2 for encoder 1...
+      💡 I2C instances should be in hardware_config.h
+
+   📁 src/communication/comm_protocol.c:
+      Line 114: safety_log_event(SAFETY_EVENT_SYSTEM_INIT, 0xFF, (uint32_t)S...
+      💡 Hex addresses should be in config headers
+      Line 646: uint16_t crc = 0xFFFF;...
+      💡 Hex addresses should be in config headers
+      Line 654: crc = (crc >> 1) ^ 0xA001;...
+      💡 Hex addresses should be in config headers
+
+   📁 src/controllers/motor_characterization.c:
+      Line 458: float sweep_amplitude = 5.0f;  // 5 degree amplitude for saf...
+      💡 Angles should use angle_deg_t type
+      Line 486: HAL_Delay(1); // 1ms delay for 1kHz rate...
+      💡 Time values should use timestamp_ms_t type
+      Line 948: *mechanical_tc = 0.1f;   // 100ms typical mechanical time co...
+      💡 Time values should use timestamp_ms_t type
+
+   📁 src/controllers/motor_controller.c:
+      Line 89: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 0);...
+      💡 Hex addresses should be in config headers
+      Line 95: safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 1);...
+      💡 Hex addresses should be in config headers
+
+   ... and 20 more files with violations
+
+⚠️  Found 10 include dependency issues:
+   📁 src/hal_abstraction/hal_abstraction_mock.c
+      Issue: Uses hardware constants but does not include hardware_config.h
+      💡 Add #include "config/hardware_config.h"
+   📁 src/hal_abstraction/hal_abstraction_stm32h7.c
+      Issue: Uses motor constants but does not include motor_config.h
+      💡 Add #include "config/motor_config.h"
+   📁 src/rtos/power_management.c
+      Issue: Uses motor constants but does not include motor_config.h
+      💡 Add #include "config/motor_config.h"
+   📁 src/rtos/rtos_tasks.c
+      Issue: Uses communication constants but does not include comm_config.h
+      💡 Add #include "config/comm_config.h"
+   📁 src/rtos/rtos_tasks.c
+      Issue: Uses motor constants but does not include motor_config.h
+      💡 Add #include "config/motor_config.h"
+
+⚠️  Found 1 configuration inconsistencies:
+   🔗 MAX_MOTORS defined as 2 but system_state.h does not use MAX_MOTORS constant
+      Files: src/config/motor_config.h, src/common/system_state.h
+      💡 Use MotorState_t motors[MAX_MOTORS] in system_state.h
+
+📊 Summary:
+   • Missing SSOT files: 0
+   • Hardcoded value violations: 295
+   • Include dependency issues: 10
+   • Configuration inconsistencies: 1
+   • Total issues found: 306
+
+🔧 Action required: 306 issues need attention.
+
+💡 Next steps:
+   2. Replace hardcoded values with SSOT references
+   3. Add missing SSOT header includes
+   4. Fix configuration inconsistencies
+   5. Re-run validation: python3 scripts/validate_ssot.py
+
+🚀 SSOT validation complete!
+[2025-08-10 00:58:28] PRE-COMMIT: SSOT validation passed
+[2025-08-10 00:58:28] PRE-COMMIT: === Pre-commit validation completed ===
+[2025-08-10 00:58:28] POST-COMMIT: === Post-commit hook triggered ===
+[2025-08-10 00:58:28] POST-COMMIT: Processing commit: 59999a0 - feat: add VS Code workflow tasks and intelligent workflow script
+[2025-08-10 00:58:29] POST-COMMIT: Running STATUS.md automation...
+[00:58:29] INFO: Starting STATUS.md update (source: git-commit)
+[00:58:29] INFO: Updating timestamp
+[00:58:29] INFO: Analyzing last 5 commits
+[00:58:29] INFO: Commit analysis: 5 commits categorized
+[00:58:29] INFO: Analyzing source code status
+[00:58:29] INFO: Code analysis: 79 TODOs, 2 drivers checked
+[00:58:29] INFO: Updating architecture status
+[00:58:29] INFO: Format validation passed
+[00:58:29] INFO: No changes detected
+
+📊 Update Summary:
+  Source: git-commit
+  Changes Made: No
+  Build Status: Skipped
+  Commits Analyzed: 5
+  TODOs Found: 79
+ℹ️  No updates needed
+[2025-08-10 00:58:29] POST-COMMIT: STATUS.md automation completed successfully
+[2025-08-10 00:58:29] POST-COMMIT: No STATUS.md changes needed
+[2025-08-10 00:58:29] POST-COMMIT: === Post-commit hook completed ===
