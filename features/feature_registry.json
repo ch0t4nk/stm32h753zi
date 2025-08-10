@@ -1,11 +1,16 @@
 {
   "metadata": {
     "version": "1.0.0",
-    "last_updated": "2025-08-10T16:46:01.224468Z",
-    "total_features": 13,
-    "completed_features": 9,
-    "in_progress_features": 0,
-    "planned_features": 4
+    "last_updated": "2025-08-10T19:00:00.000000Z",
+    "total_features": 14,
+    "completed_features": 8,
+    "in_progress_features": 2,
+    "planned_features": 4,
+    "urgent_features": 1,
+    "blocking_issues": [
+      "FTR-014: Git push blocked by 917.71MB semantic database file",
+      "FTR-014: Semantic database staleness affecting development accuracy"
+    ]
   },
   "categories": {
     "telemetry": "Real-time data collection and monitoring systems",
@@ -439,7 +444,7 @@
     "FTR-013": {
       "id": "FTR-013",
       "name": "HAL Abstraction Driver Interfaces",
-      "status": "COMPLETE",
+      "status": "IN_PROGRESS",
       "phase": "1.2",
       "priority": "HIGH",
       "category": "testing",
@@ -472,10 +477,60 @@
         "FTR-008"
       ],
       "blockers": [],
-      "completion_date": "2025-08-10",
+      "completion_date": null,
       "effort_estimate_hours": 8,
-      "effort_actual_hours": 4,
+      "effort_actual_hours": 0,
       "commits": []
+    },
+    "FTR-014": {
+      "id": "FTR-014",
+      "name": "Semantic Search Delta Update System",
+      "status": "IN_PROGRESS",
+      "phase": "1.3",
+      "priority": "HIGH",
+      "category": "documentation",
+      "description": "Intelligent delta-based incremental updates for semantic vector database to enable efficient maintenance and git-friendly storage. Addresses 917.71MB database file blocking git operations.",
+      "acceptance_criteria": [
+        "Automated change detection for documentation and source files",
+        "Incremental database updates processing only changed content",
+        "Git-friendly storage with database chunking <100MB per file",
+        "Delta update performance <30 seconds for typical changes",
+        "Integration with development workflow automation"
+      ],
+      "implementation_files": [
+        "scripts/semantic_delta_updater.py",
+        "scripts/change_detector.py",
+        "scripts/database_optimizer.py",
+        "docs/design/SEMANTIC_SEARCH_ENGINE_DESIGN.md"
+      ],
+      "test_files": [
+        "tests/unit/test_semantic_delta_updates.c",
+        "tests/integration/test_semantic_workflow.py"
+      ],
+      "documentation": [
+        "docs/design/SEMANTIC_SEARCH_ENGINE_DESIGN.md",
+        "docs/SEMANTIC_DELTA_UPDATE_GUIDE.md"
+      ],
+      "dependencies": [
+        "FTR-007"
+      ],
+      "dependents": [],
+      "blockers": [
+        "Git push blocked by 917.71MB database file - URGENT",
+        "Database staleness (last updated Aug 7, missing 3 days progress)",
+        "Manual database maintenance overhead limiting development velocity"
+      ],
+      "completion_date": null,
+      "effort_estimate_hours": 12,
+      "effort_actual_hours": 2,
+      "commits": [],
+      "urgency_notes": "Critical priority - blocking git push operations and current development workflow. Semantic database out of sync with current codebase state.",
+      "implementation_phases": [
+        "Phase 1: Git unblocking (database exclusion and history cleanup)",
+        "Phase 2: Database refresh (rebuild with current content)",
+        "Phase 3: Delta update implementation (automated incremental updates)",
+        "Phase 4: Workflow integration (seamless development integration)"
+      ]
     }
   }
 }

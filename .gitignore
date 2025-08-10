@@ -1,4 +1,33 @@
+# STM32H753ZI Motor Control Project - Git Ignore
+# ================================================
+
+# === BUILD ARTIFACTS ===
 /build/
+/build_host_tests/
+*.o
+*.elf
+*.bin
+*.hex
+*.map
+*.lst
+*.su
+*.d
+
+# === DEVELOPMENT ENVIRONMENTS ===
+# Python virtual environments - use requirements.txt instead
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# === IDE AND EDITOR FILES ===
 # VS Code - ignore personal settings but keep workspace config
 .vscode/
 !.vscode/extensions.json
@@ -6,51 +35,44 @@
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/settings.json
-*.o
-*.elf
-*.bin
-.env
-
-# Large files and installers - should not be tracked
-*.exe
-*.msi
-*.dmg
-*.iso
-*.tar.gz
-*.zip
-00_reference/ST_Assets/
+!.vscode/cmake-kits.json
+# VS Code database files (can be 500MB+)
 .vscode/browse.vc.db*
+.vscode/ipch/
 
-# Legacy search indexes - replaced by semantic search
-docs/indexes/STM32H7_FULL_INDEX.json
-docs/indexes/L6470_SEARCH_INDEX.json
-docs/indexes/STM32H7xx_Nucleo_BSP_INDEX.json
-
-# Semantic vector database - too large for git (1.53GB)
-docs/semantic_vector_db/
-
-# Python cache files
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-.venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Development artifacts
-*.tmp
+# Other editors
 *.swp
 *.swo
 *~
 .DS_Store
 Thumbs.db
 
-# Test artifacts
+# === REFERENCE MATERIALS (NEVER TRACK) ===
+# ST official assets and tools - too large for git (7+ GB total)
+00_reference/
+# These should be downloaded locally per README instructions
+
+# === SEMANTIC SEARCH DATABASE ===
+# Vector database - too large for git (1.5+ GB)
+docs/semantic_vector_db/
+*.sqlite3
+# Use semantic database rebuild scripts instead
+
+# === LARGE FILES AND INSTALLERS ===
+*.exe
+*.msi
+*.dmg
+*.iso
+*.tar.gz
+*.zip
+
+# === DOCUMENTATION ARTIFACTS ===
+# Legacy search indexes - replaced by semantic search
+docs/indexes/STM32H7_FULL_INDEX.json
+docs/indexes/L6470_SEARCH_INDEX.json
+docs/indexes/STM32H7xx_Nucleo_BSP_INDEX.json
+
+# === TEST ARTIFACTS ===
 tests/host_tests/CMakeCache.txt
 tests/host_tests/CMakeFiles/
 tests/host_tests/*.cmake
@@ -58,7 +80,9 @@ tests/host_tests/Makefile
 tests/host_tests/Testing/
 tests/host_tests/*.a
 
-# Temporary development files
+# === TEMPORARY AND DEVELOPMENT FILES ===
+*.tmp
+.env
 scripts/*demo*.py
 scripts/test_*.py
 scripts/semantic_search_backup*.py
@@ -67,8 +91,18 @@ scripts/fix_ollama.py
 scripts/embedding_test_results.json
 vector_db/
 
-# Untracked reference docs
-00_reference/
-# Exclude large semantic vector database files
-docs/semantic_vector_db/
-*.sqlite3
+# === CMAKE BUILD SYSTEM ===
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+DartConfiguration.tcl
+Makefile
+*.cmake
+!CMakeLists.txt
+!cmake/
+!CMakePresets.json
+
+# === LOGS AND RUNTIME FILES ===
+logs/
+*.log

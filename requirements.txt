@@ -1,0 +1,76 @@
+# STM32H753ZI Motor Control Project - Python Dependencies
+# ======================================================
+# Use: pip install -r requirements.txt
+
+# === SEMANTIC SEARCH AND AI ===
+# ChromaDB for vector database and semantic search
+chromadb>=0.4.22
+# Instructor for text embeddings (Instructor-XL model)
+InstructorEmbedding>=1.0.1
+# Requests for HTTP communication with Ollama
+requests>=2.31.0
+# Ollama client for local AI model access
+ollama>=0.1.7
+
+# === DOCUMENTATION AND VALIDATION ===
+# Markdown processing and link validation
+markdown>=3.5.1
+# YAML processing for configuration files
+PyYAML>=6.0.1
+# JSON schema validation
+jsonschema>=4.19.0
+
+# === DEVELOPMENT TOOLS ===
+# Code quality and formatting
+black>=23.9.1
+flake8>=6.0.0
+# Git hooks and automation
+pre-commit>=3.4.0
+
+# === DATA PROCESSING ===
+# NumPy for numerical operations
+numpy>=1.24.0
+# Pandas for data analysis (optional, for telemetry processing)
+pandas>=2.0.0
+
+# === HARDWARE SIMULATION (OPTIONAL) ===
+# PySerial for UART communication simulation
+pyserial>=3.5
+# CAN bus simulation
+python-can>=4.2.0
+
+# === MACHINE LEARNING (GPU ACCELERATION) ===
+# PyTorch with CUDA support for embeddings (matches current .venv)
+torch>=2.1.0
+# Transformers for advanced text processing
+transformers>=4.34.0
+# Sentence transformers for embedding models
+sentence-transformers>=2.2.2
+
+# === SYSTEM UTILITIES ===
+# File system operations and monitoring
+watchdog>=3.0.0
+# Process management
+psutil>=5.9.0
+# Logging enhancements
+colorlog>=6.7.0
+
+# === TESTING AND QUALITY ASSURANCE ===
+# Unit testing framework
+pytest>=7.4.0
+# Coverage reporting
+pytest-cov>=4.1.0
+# Mocking framework
+pytest-mock>=3.11.0
+
+# === EMBEDDED DEVELOPMENT SUPPORT ===
+# Intel HEX file processing
+intelhex>=2.3.0
+# Binary file analysis
+binwalk>=2.3.4
+
+# Notes:
+# - Run 'pip install -r requirements.txt' to install all dependencies
+# - For development: 'pip install -r requirements.txt -e .'
+# - GPU acceleration requires NVIDIA CUDA drivers and toolkit
+# - Ollama service must be running for semantic search functionality
