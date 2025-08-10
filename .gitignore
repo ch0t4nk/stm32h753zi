@@ -69,3 +69,6 @@ vector_db/
 
 # Untracked reference docs
 00_reference/
+# Exclude large semantic vector database files
+docs/semantic_vector_db/
+*.sqlite3
