@@ -1,5 +1,27 @@
 {
   "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "searchQuery",
+      "description": "Enter your search query (concept, function, register, etc.)",
+      "default": "GPIO configuration",
+      "type": "promptString"
+    },
+    {
+      "id": "searchScope",
+      "description": "Select search scope",
+      "default": "STM32H7",
+      "type": "pickString",
+      "options": [
+        "STM32H7",
+        "motor_control",
+        "instruction_guides",
+        "project_code",
+        "safety_systems",
+        "all"
+      ]
+    }
+  ],
   "tasks": [
     {
       "label": "Build (CMake)",
@@ -481,6 +503,124 @@
       "args": [
         "scripts/feature_tracker.py",
         "report"
+      ],
+      "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🚀 SEMANTIC: Start Ollama",
+      "type": "shell",
+      "command": "./scripts/start_ollama.sh",
+      "group": "build",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
+          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🔍 SEMANTIC: Search STM32 Docs",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "args": [
+        "scripts/stm32_semantic_search.py",
+        "concept",
+        "${input:searchQuery}",
+        "--scope",
+        "${input:searchScope}"
+      ],
+      "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🔍 SEMANTIC: Quick GPIO Search",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "args": [
+        "scripts/stm32_semantic_search.py",
+        "concept",
+        "GPIO configuration",
+        "--scope",
+        "STM32H7"
+      ],
+      "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🔍 SEMANTIC: Quick L6470 Search",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "args": [
+        "scripts/stm32_semantic_search.py",
+        "function",
+        "L6470",
+        "--scope",
+        "motor_control"
+      ],
+      "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📈 SEMANTIC: Performance Test",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "args": [
+        "scripts/semantic_search.py"
       ],
       "group": "test",
       "options": {

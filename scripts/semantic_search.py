@@ -25,6 +25,17 @@ class SearchResult:
     metadata: Dict[str, Any]
     collection: str
 
+    def to_dict(self):
+        """Converts the object to a dictionary for JSON serialization."""
+        return {
+            "content": self.content,
+            "source_file": self.source_file,
+            "chunk_type": self.chunk_type,
+            "similarity_score": self.similarity_score,
+            "metadata": self.metadata,
+            "collection": self.collection,
+        }
+
 
 @dataclass
 class SearchQuery:
@@ -70,7 +81,7 @@ class STM32SemanticSearch:
             test_response = ollama.embed(
                 model=self.embedding_model, input="test connection"
             )
-            return "embedding" in test_response
+            return "embeddings" in test_response and len(test_response["embeddings"]) > 0
         except Exception as e:
             print(f"⚠️  Ollama connection failed: {e}")
             print("   Using mock embeddings for demonstration")
@@ -230,7 +241,7 @@ class STM32SemanticSearch:
             response = ollama.embed(
                 model=self.embedding_model, input=query_text
             )
-            return response["embedding"]
+            return response["embeddings"][0]
 
         except Exception as e:
             print(f"Query embedding generation failed: {e}")
