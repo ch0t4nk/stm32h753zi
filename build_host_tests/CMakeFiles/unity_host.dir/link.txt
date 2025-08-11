@@ -1,2 +1,0 @@
-/usr/bin/ar qc libunity_host.a CMakeFiles/unity_host.dir/workspaces/code/external/unity/unity.c.o
-/usr/bin/ranlib libunity_host.a

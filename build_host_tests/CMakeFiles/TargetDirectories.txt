@@ -1,6 +1,0 @@
-/workspaces/code/build_host_tests/CMakeFiles/unity_host.dir
-/workspaces/code/build_host_tests/CMakeFiles/test_phase1_3_validation_host.dir
-/workspaces/code/build_host_tests/CMakeFiles/test_safety_systems_hal_abstracted_host.dir
-/workspaces/code/build_host_tests/CMakeFiles/test.dir
-/workspaces/code/build_host_tests/CMakeFiles/edit_cache.dir
-/workspaces/code/build_host_tests/CMakeFiles/rebuild_cache.dir

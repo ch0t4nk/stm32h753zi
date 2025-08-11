@@ -1,7 +1,33 @@
 #!/usr/bin/env python3
 """
 STM32 Semantic Search - Production Integration
-Replaces legacy search_enhanced_docs.py with semantic search capabilities
+Replaces legacy search_enhanced_docs.py with semantic         # Check if database is             if total_docs == 0 and self.auto_rebuild:
+                print("� Empty database detected, rebuilding...")
+                self._process_workspace_docs()
+            else:
+                print(f"📊 Database ready: {total_docs} documents across {len(stats)} collections")
+                # Cache collection references for faster access
+                self._cached_collections = {}
+                for collection_name in stats.keys():
+                    try:
+                        self._cached_collections[collection_name] = self.vector_db.client.get_collection(collection_name)
+                        print(f"   ✅ {collection_name}: {stats[collection_name]['document_count']} docs")
+                    except Exception as e:
+                        print(f"   ⚠️  Failed to cache {collection_name}: {e}")
+                print("⚡ Collections cached for optimal query performance")able and has data
+        if not hasattr(self, '_vector_db') or self._vector_db is None:
+            print("🔧 Initializing vector database...")
+            self._vector_db = STM32VectorDatabase()
+            stats = self.vector_db.get_collection_stats()
+            total_docs = sum(stat["document_count"] for stat in stats.values())
+            if total_docs == 0 and self.auto_rebuild:
+                print("📥 No documents found. Rebuilding database...")
+                self._vector_db.initialize_database()
+                print(f"✅ Database rebuilt with documents")
+            else:
+                print(f"📊 Using existing database: {total_docs} documents")
+        
+        STM32WorkspaceSearcher._initialized = Truees
 Integrates with existing workspace documentation
 """
 
@@ -101,45 +127,96 @@ class OllamaEmbedding:
 
 
 class STM32WorkspaceSearcher:
-    """Production STM32 workspace semantic search system"""
-
-    def __init__(self, db_path: Optional[str] = None):
-        self.db_path = Path(db_path) if db_path else SEMANTIC_DB_PATH
-        self.embedder = OllamaEmbedding()
-        self.chunker = STM32DocumentChunker()
-        self.vector_db = STM32VectorDatabase(str(self.db_path))
-        self.search_engine = None
-
-        # Initialize or load existing database
-        self._initialize_system()
-
-    def _initialize_system(self):
-        """Initialize the semantic search system"""
-        print(f"🗄️  Initializing semantic database at {self.db_path}")
-
+    """Enhanced STM32 workspace searcher with semantic capabilities"""
+    
+    _instance = None
+    _initialized = False
+    
+    def __new__(cls, auto_rebuild=True):
+        if cls._instance is None:
+            cls._instance = super(STM32WorkspaceSearcher, cls).__new__(cls)
+        return cls._instance
+    
+    def __init__(self, auto_rebuild=True):
+        # Only initialize once
+        if STM32WorkspaceSearcher._initialized:
+            return
+            
+        self.workspace_root = Path("/workspaces/code")
+        self.vector_db_path = self.workspace_root / "docs" / "semantic_vector_db"
+        self.auto_rebuild = auto_rebuild
+        
+        # Initialize embedder and chunker first
+        self.searcher = STM32SemanticSearch()
+        
+        # Add direct access to chunker for performance
+        self.chunker = self.searcher.chunker if hasattr(self.searcher, 'chunker') else STM32DocumentChunker()
+        
+        # Initialize vector database with persistent connection
+        self.vector_db = STM32VectorDatabase(str(self.vector_db_path))
+        
+        # Initialize database connection and load existing collections
+        print("🔗 Initializing database connection...")
         if not self.vector_db.initialize_database():
-            raise RuntimeError("Failed to initialize vector database")
+            if self.auto_rebuild:
+                print("⚠️  Database initialization failed, rebuilding...")
+                self._process_workspace_docs()
+                return
+            else:
+                raise Exception("Failed to initialize vector database")
+        
+        # Pre-load all collections for faster queries (performance optimization)
+        print("⚡ Pre-loading collections for optimal performance...")
+        try:
+            stats = self.vector_db.get_collection_stats()
+            total_docs = sum(stat["document_count"] for stat in stats.values())
+            if total_docs == 0 and self.auto_rebuild:
+                print("� Empty database detected, rebuilding...")
+                self._process_workspace_docs()
+            else:
+                print(f"📊 Using existing database: {total_docs} documents")
+        except Exception as e:
+            if self.auto_rebuild:
+                print(f"⚠️  Database error: {e}, rebuilding...")
+                self._process_workspace_docs()
+            else:
+                print(f"❌ Database error: {e}")
+                raise
+        
+        STM32WorkspaceSearcher._initialized = True
+        print("✅ STM32WorkspaceSearcher initialization complete")
 
-        self.search_engine = STM32SemanticSearch(
-            embedding_model="mxbai-embed-large",
-            vector_db_path=str(self.db_path),
-        )
-
-        # Check if database needs population
-        stats = self.vector_db.get_collection_stats()
-        total_docs = sum(
-            info.get("document_count", 0)
-            for info in stats.values()
-            if "error" not in info
-        )
-
-        if total_docs == 0:
-            print("📚 Database empty, processing workspace documentation...")
-            self._process_workspace_docs()
-        else:
-            print(
-                f"📊 Database loaded: {total_docs} documents across {len(stats)} collections"
+    def _search_cached_collection(self, collection_name: str, query_embedding: List[float], n_results: int = 10):
+        """Fast search using cached collection reference"""
+        if not hasattr(self, '_cached_collections') or collection_name not in self._cached_collections:
+            # Fallback to regular search if cache not available
+            print(f"⚠️  Collection {collection_name} not cached, using fallback")
+            collection_type = CollectionType(collection_name)
+            return self.vector_db.search_documents(collection_type, query_embedding, n_results)
+        
+        try:
+            # Use cached collection for direct query (much faster)
+            collection = self._cached_collections[collection_name]
+            results = collection.query(
+                query_embeddings=[query_embedding],
+                n_results=n_results,
+                include=["documents", "metadatas", "distances"]
             )
+            
+            # Convert to the same format as search_documents
+            if results and "documents" in results and len(results["documents"]) > 0:
+                return {
+                    "documents": results["documents"][0],  # ChromaDB returns list of lists
+                    "metadatas": results["metadatas"][0] if "metadatas" in results else [],
+                    "distances": results["distances"][0] if "distances" in results else []
+                }
+            return None
+            
+        except Exception as e:
+            print(f"   ⚠️  Error in cached search for {collection_name}: {e}")
+            # Fallback to regular search
+            collection_type = CollectionType(collection_name)
+            return self.vector_db.search_documents(collection_type, query_embedding, n_results)
 
     def _process_workspace_docs(self):
         """Process actual workspace documentation"""
@@ -164,6 +241,39 @@ class STM32WorkspaceSearcher:
                 "collection": CollectionType.STM32_HAL,
                 "pattern": "*.md",
                 "category": "nucleo_bsp",
+            },
+            # Add project source code
+            {
+                "path": WORKSPACE_ROOT / "src",
+                "collection": CollectionType.PROJECT_CODE,
+                "pattern": "**/*.{c,h}",
+                "category": "project_source",
+            },
+            {
+                "path": WORKSPACE_ROOT / ".github" / "instructions",
+                "collection": CollectionType.INSTRUCTION_GUIDES,
+                "pattern": "*.md",
+                "category": "development_instructions",
+            },
+            {
+                "path": WORKSPACE_ROOT / "docs",
+                "collection": CollectionType.INSTRUCTION_GUIDES,
+                "pattern": "**/*.md",
+                "category": "project_documentation",
+            },
+            # Add build system files
+            {
+                "path": WORKSPACE_ROOT / "cmake",
+                "collection": CollectionType.PROJECT_CODE,
+                "pattern": "*.cmake",
+                "category": "build_system",
+            },
+            # Add testing files
+            {
+                "path": WORKSPACE_ROOT / "tests",
+                "collection": CollectionType.SAFETY_SYSTEMS,
+                "pattern": "**/*.{c,h}",
+                "category": "testing_validation",
             },
         ]
 
@@ -205,15 +315,32 @@ class STM32WorkspaceSearcher:
         print(f"   📁 Processing {source['path'].name}...")
 
         processed = 0
-        md_files = list(source["path"].glob(source["pattern"]))
+        
+        # Handle different pattern types
+        pattern = source["pattern"]
+        if "**/" in pattern:
+            # Recursive pattern
+            if pattern.startswith("**/"):
+                pattern = pattern[3:]  # Remove **/ prefix
+            files = list(source["path"].rglob(pattern))
+        elif "{" in pattern:
+            # Multiple extensions pattern like *.{c,h}
+            base_pattern = pattern.split("{")[0]  # Get base like "*."
+            extensions = pattern.split("{")[1].split("}")[0].split(",")  # Get extensions
+            files = []
+            for ext in extensions:
+                files.extend(source["path"].glob(f"{base_pattern}{ext}"))
+        else:
+            # Simple pattern
+            files = list(source["path"].glob(pattern))
 
-        for md_file in md_files[:10]:  # Limit for demo - remove in production
+        for file_path in files:
             try:
                 processed += self._process_single_file(
-                    md_file, source["collection"], source["category"]
+                    file_path, source["collection"], source["category"]
                 )
             except Exception as e:
-                print(f"      ⚠️  Failed to process {md_file.name}: {e}")
+                print(f"      ⚠️  Failed to process {file_path.name}: {e}")
 
         print(
             f"      ✅ Processed {processed} files from {source['path'].name}"
@@ -233,6 +360,7 @@ class STM32WorkspaceSearcher:
                 return 0
 
             # Chunk the document
+            # Process and chunk the document
             chunks = self.chunker.chunk_document(content, str(file_path.name))
 
             if not chunks:
@@ -252,7 +380,7 @@ class STM32WorkspaceSearcher:
                 ids = []
 
                 for j, chunk in enumerate(batch_chunks):
-                    embedding = self.embedder.generate_embedding(chunk.content)
+                    embedding = self.searcher.generate_query_embedding(chunk.content)
 
                     metadata = {
                         "source_file": file_path.name,
@@ -299,7 +427,10 @@ class STM32WorkspaceSearcher:
         print(f"🔍 Semantic search: '{query}' (category: {category})")
 
         # Generate query embedding
-        query_embedding = self.embedder.generate_embedding(query)
+        query_embedding = self.searcher.generate_query_embedding(query)
+        if query_embedding is None:
+            print("❌ Failed to generate query embedding")
+            return []
 
         # Map category to collections
         collection_mapping = {
@@ -321,12 +452,14 @@ class STM32WorkspaceSearcher:
             category, collection_mapping["all"]
         )
 
-        # Search each collection directly
+        # Search each collection directly using cached collections for better performance
         all_results = []
         for collection in collections_to_search:
             try:
-                results = self.vector_db.search_documents(
-                    collection, query_embedding, max_results
+                # Use cached collection search for better performance
+                print(f"   🔍 Searching {collection.value}...")
+                results = self._search_cached_collection(
+                    collection.value, query_embedding, max_results
                 )
 
                 # Convert ChromaDB results to SearchResult objects
@@ -399,6 +532,9 @@ def main():
     parser.add_argument(
         "--rebuild", action="store_true", help="Rebuild semantic database"
     )
+    parser.add_argument(
+        "--debug", action="store_true", help="Enable debug output for database operations"
+    )
 
     args = parser.parse_args()
 
@@ -411,17 +547,27 @@ def main():
     }
 
     try:
-        # Initialize searcher
-        searcher = STM32WorkspaceSearcher()
-
+        # Initialize searcher - only auto-rebuild if explicitly requested
         if args.rebuild:
             print("🔄 Rebuilding semantic database...")
             # Clear and rebuild database
-            if searcher.db_path.exists():
+            if SEMANTIC_DB_PATH.exists():
                 import shutil
-
-                shutil.rmtree(searcher.db_path)
-            searcher = STM32WorkspaceSearcher()
+                shutil.rmtree(SEMANTIC_DB_PATH)
+            searcher = STM32WorkspaceSearcher(auto_rebuild=True)
+        else:
+            # Normal search mode - do not auto-rebuild
+            searcher = STM32WorkspaceSearcher(auto_rebuild=False)
+            
+        # Enable debug output if requested
+        if args.debug:
+            print(f"🔍 Debug: Searcher instance: {type(searcher)}")
+            try:
+                collection_stats = searcher.vector_db.get_collection_stats()
+                print(f"🔍 Debug: Available collections: {list(collection_stats.keys())}")
+                print(f"🔍 Debug: Collection counts: {collection_stats}")
+            except Exception as e:
+                print(f"🔍 Debug: Error getting collection info: {e}")
 
         # Perform search
         category = scope_mapping.get(args.scope, "all")

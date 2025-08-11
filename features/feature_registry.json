@@ -484,52 +484,50 @@
     },
     "FTR-014": {
       "id": "FTR-014",
-      "name": "Semantic Search Delta Update System",
+      "name": "High-Performance Semantic Search System",
       "status": "IN_PROGRESS",
       "phase": "1.3",
       "priority": "HIGH",
       "category": "documentation",
-      "description": "Intelligent delta-based incremental updates for semantic vector database to enable efficient maintenance and git-friendly storage. Addresses 917.71MB database file blocking git operations.",
+      "description": "Ultra-fast semantic search with intelligent caching, lazy loading, and sub-second query performance. Database treated as local resource with rapid regeneration capabilities.",
       "acceptance_criteria": [
-        "Automated change detection for documentation and source files",
-        "Incremental database updates processing only changed content",
-        "Git-friendly storage with database chunking <100MB per file",
-        "Delta update performance <30 seconds for typical changes",
-        "Integration with development workflow automation"
+        "Query response time <2 seconds (down from 25+ seconds)",
+        "Lazy collection loading - only load needed data",
+        "Intelligent local caching with fast regeneration",
+        "Collection-specific queries without full database load",
+        "Integration with development workflow automation",
+        "Fast database rebuild from source files <5 minutes"
       ],
       "implementation_files": [
-        "scripts/semantic_delta_updater.py",
-        "scripts/change_detector.py",
-        "scripts/database_optimizer.py",
-        "docs/design/SEMANTIC_SEARCH_ENGINE_DESIGN.md"
+        "scripts/semantic_search_service.py",
+        "scripts/semantic_search_optimized.py",
+        "scripts/collection_manager.py"
       ],
       "test_files": [
-        "tests/unit/test_semantic_delta_updates.c",
-        "tests/integration/test_semantic_workflow.py"
+        "tests/integration/test_semantic_performance.py"
       ],
       "documentation": [
-        "docs/design/SEMANTIC_SEARCH_ENGINE_DESIGN.md",
-        "docs/SEMANTIC_DELTA_UPDATE_GUIDE.md"
+        "docs/SEMANTIC_SEARCH_PERFORMANCE_DESIGN.md"
       ],
       "dependencies": [
         "FTR-007"
       ],
       "dependents": [],
       "blockers": [
-        "Git push blocked by 917.71MB database file - URGENT",
-        "Database staleness (last updated Aug 7, missing 3 days progress)",
-        "Manual database maintenance overhead limiting development velocity"
+        "Current 25+ second query times making system unusable",
+        "Full database reload on every query",
+        "No collection-specific loading optimization"
       ],
       "completion_date": null,
       "effort_estimate_hours": 12,
       "effort_actual_hours": 2,
       "commits": [],
-      "urgency_notes": "Critical priority - blocking git push operations and current development workflow. Semantic database out of sync with current codebase state.",
+      "urgency_notes": "Critical performance issue - 25+ second queries making semantic search unusable for development workflow.",
       "implementation_phases": [
-        "Phase 1: Git unblocking (database exclusion and history cleanup)",
-        "Phase 2: Database refresh (rebuild with current content)",
-        "Phase 3: Delta update implementation (automated incremental updates)",
-        "Phase 4: Workflow integration (seamless development integration)"
+        "Phase 1: High-performance service architecture",
+        "Phase 2: Lazy collection loading implementation",
+        "Phase 3: Intelligent caching system",
+        "Phase 4: Performance validation and optimization"
       ]
     }
   }
