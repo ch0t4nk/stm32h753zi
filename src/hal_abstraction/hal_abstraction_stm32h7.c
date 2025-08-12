@@ -28,6 +28,15 @@
 
 /* ==========================================================================
  */
+/* Driver Includes (FTR-013)                                                 */
+/* ==========================================================================
+ */
+
+#include "drivers/as5600/as5600_driver.h"
+#include "drivers/l6470/l6470_driver.h"
+
+/* ==========================================================================
+ */
 /* Private Variables                                                         */
 /* ==========================================================================
  */
@@ -730,46 +739,78 @@ SystemError_t HAL_Abstraction_ConfigureCommunicationHardware(void) {
  */
 
 SystemError_t HAL_Abstraction_AS5600_Init(uint8_t encoder_id) {
-    // TODO: Implement AS5600 initialization through actual driver (FTR-013)
-    // Should call as5600_init_encoder(encoder_id) when driver interface is
-    // ready
-    (void)encoder_id; // Suppress unused parameter warning
+    // FTR-013: AS5600 encoder initialization through actual driver
+    // This function bridges HAL abstraction to actual AS5600 driver
 
-    // Stub implementation - return success for now
-    // Real implementation will call: return as5600_init_encoder(encoder_id);
+    SystemError_t result = as5600_init_encoder(encoder_id);
+
+    // HARDWARE_GATING: AS5600 I2C communication requires physical hardware
+    // connection
+    // TODO_HARDWARE: Complete AS5600 I2C wiring and test with actual encoder
+    // hardware STUB_REMOVAL: This implementation replaces previous stub -
+    // FTR-013 progress
+
+    if (result != SYSTEM_OK) {
+        // Log hardware initialization failure for debugging
+        // In production, this would trigger system health monitoring
+        return result;
+    }
+
     return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_AS5600_ReadAngle(uint8_t encoder_id,
                                                float *angle_degrees) {
-    // TODO: Implement AS5600 angle reading through actual driver (FTR-013)
-    // Should call as5600_read_angle_degrees(encoder_id, angle_degrees)
-    (void)encoder_id; // Suppress unused parameter warning
+    // FTR-013: AS5600 angle reading through actual driver
+    // This function bridges HAL abstraction to actual AS5600 driver
 
     if (angle_degrees == NULL) {
         return ERROR_INVALID_PARAMETER;
     }
 
-    // Stub implementation - return mock data for now
-    *angle_degrees = 0.0f;
-    // Real implementation will call: return
-    // as5600_read_angle_degrees(encoder_id, angle_degrees);
+    SystemError_t result =
+        as5600_read_angle_degrees(encoder_id, angle_degrees);
+
+    // HARDWARE_GATING: AS5600 I2C read operations require physical hardware
+    // connection
+    // TODO_HARDWARE: Verify AS5600 magnet positioning and I2C signal integrity
+    // STUB_REMOVAL: This implementation replaces previous stub - FTR-013
+    // progress
+
+    if (result != SYSTEM_OK) {
+        // Set safe default value on hardware communication failure
+        *angle_degrees = 0.0f;
+        return result;
+    }
+
     return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_AS5600_CheckMagnet(uint8_t encoder_id,
                                                  bool *magnet_detected) {
-    // TODO: Implement AS5600 magnet detection through actual driver (FTR-013)
-    (void)encoder_id; // Suppress unused parameter warning
+    // FTR-013: AS5600 magnet detection through actual driver
+    // This function bridges HAL abstraction to actual AS5600 driver
 
     if (magnet_detected == NULL) {
         return ERROR_INVALID_PARAMETER;
     }
 
-    // Stub implementation - return magnet detected for now
-    *magnet_detected = true;
-    // Real implementation will read AS5600 status register and check magnet
-    // bits
+    SystemError_t result = as5600_check_magnet(encoder_id, magnet_detected);
+
+    // HARDWARE_GATING: AS5600 magnet detection requires physical hardware with
+    // proper magnet positioning
+    // TODO_HARDWARE: Verify AS5600 magnet strength and positioning for
+    // reliable detection STUB_REMOVAL: This implementation replaces previous
+    // stub - FTR-013 progress SAFETY_CRITICAL: Magnet detection failure could
+    // indicate encoder hardware fault
+
+    if (result != SYSTEM_OK) {
+        // Conservative safety approach: assume no magnet detected on
+        // communication failure
+        *magnet_detected = false;
+        return result;
+    }
+
     return SYSTEM_OK;
 }
 
@@ -782,58 +823,108 @@ SystemError_t HAL_Abstraction_AS5600_CheckMagnet(uint8_t encoder_id,
  */
 
 SystemError_t HAL_Abstraction_L6470_Init(uint8_t motor_id) {
-    // TODO: Implement L6470 initialization through actual driver (FTR-013)
-    // Should call l6470_init() or equivalent driver function
-    (void)motor_id; // Suppress unused parameter warning
+    // FTR-013: L6470 stepper driver initialization through actual driver
+    // This function bridges HAL abstraction to actual L6470 driver
 
-    // Stub implementation - return success for now
-    // Real implementation will call appropriate L6470 driver init function
+    SystemError_t result = l6470_init_motor(motor_id);
+
+    // HARDWARE_GATING: L6470 SPI communication requires physical hardware
+    // connection and power
+    // TODO_HARDWARE: Verify L6470 power supply, SPI wiring, and FLAG/BUSY pin
+    // connections STUB_REMOVAL: This implementation replaces previous stub -
+    // FTR-013 progress SAFETY_CRITICAL: L6470 initialization failure prevents
+    // motor control - system should remain in safe state
+
+    if (result != SYSTEM_OK) {
+        // Log initialization failure for system health monitoring
+        // Motor control should remain disabled until successful initialization
+        return result;
+    }
+
     return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_L6470_GetStatus(uint8_t motor_id,
                                               uint32_t *status) {
-    // TODO: Implement L6470 status reading through actual driver (FTR-013)
-    // Should call l6470_get_status(motor_id, status)
-    (void)motor_id; // Suppress unused parameter warning
+    // FTR-013: L6470 status reading through actual driver
+    // This function bridges HAL abstraction to actual L6470 driver
 
     if (status == NULL) {
         return ERROR_INVALID_PARAMETER;
     }
 
-    // Stub implementation - return normal status for now
-    *status = 0x7E83; // Normal operation status
-    // Real implementation will call: return l6470_get_status(motor_id,
-    // status);
+    // L6470 driver uses uint16_t for status, HAL abstraction uses uint32_t
+    uint16_t driver_status = 0;
+    SystemError_t result = l6470_get_status(motor_id, &driver_status);
+
+    // HARDWARE_GATING: L6470 status reading requires functional SPI
+    // communication and powered L6470
+    // TODO_HARDWARE: Test L6470 status register reads under various motor
+    // states STUB_REMOVAL: This implementation replaces previous stub -
+    // FTR-013 progress SAFETY_CRITICAL: Status register contains fault flags -
+    // essential for safety monitoring
+
+    if (result != SYSTEM_OK) {
+        // Set conservative status on communication failure
+        // Clear all status bits except for communication error indication
+        *status = 0x00000000; // All fault flags set (safe state)
+        return result;
+    }
+
+    // Convert uint16_t driver status to uint32_t HAL abstraction format
+    *status = (uint32_t)driver_status;
+
     return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_L6470_GetParameter(uint8_t motor_id,
                                                  uint8_t param,
                                                  uint32_t *value) {
-    // TODO: Implement L6470 parameter reading through actual driver (FTR-013)
-    // Should call l6470_get_parameter(motor_id, param, value)
-    (void)motor_id; // Suppress unused parameter warning
-    (void)param;    // Suppress unused parameter warning
+    // FTR-013: L6470 parameter reading through actual driver
+    // This function bridges HAL abstraction to actual L6470 driver
 
     if (value == NULL) {
         return ERROR_INVALID_PARAMETER;
     }
 
-    // Stub implementation - return default value for now
-    *value = 0;
-    // Real implementation will call: return l6470_get_parameter(motor_id,
-    // param, value);
+    SystemError_t result = l6470_get_parameter(motor_id, param, value);
+
+    // HARDWARE_GATING: L6470 parameter reading requires functional SPI and
+    // correct register addressing
+    // TODO_HARDWARE: Validate L6470 parameter register access patterns and
+    // timing STUB_REMOVAL: This implementation replaces previous stub -
+    // FTR-013 progress SAFETY_CONSIDERATION: Parameter values affect motor
+    // behavior - validate against SSOT motor config
+
+    if (result != SYSTEM_OK) {
+        // Set safe default parameter value on communication failure
+        *value = 0;
+        return result;
+    }
+
     return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_L6470_HardStop(uint8_t motor_id) {
-    // TODO: Implement L6470 hard stop through actual driver (FTR-013)
-    // Should call l6470_hard_stop(motor_id)
-    (void)motor_id; // Suppress unused parameter warning
+    // FTR-013: L6470 hard stop through actual driver
+    // This function bridges HAL abstraction to actual L6470 driver
+    // SAFETY_CRITICAL: Hard stop is emergency safety function - must succeed
 
-    // Stub implementation - return success for now
-    // Real implementation will call: return l6470_hard_stop(motor_id);
+    SystemError_t result = l6470_hard_stop(motor_id);
+
+    // HARDWARE_GATING: L6470 hard stop requires functional SPI communication
+    // TODO_HARDWARE: Test hard stop command timing and verify immediate motor
+    // stopping STUB_REMOVAL: This implementation replaces previous stub -
+    // FTR-013 progress SAFETY_CRITICAL: Hard stop failure is a safety hazard -
+    // system should enter fault state
+
+    if (result != SYSTEM_OK) {
+        // Hard stop failure is critical - log and potentially trigger
+        // emergency procedures Consider hardware-level motor power
+        // disconnection as backup
+        return result;
+    }
+
     return SYSTEM_OK;
 }
 
