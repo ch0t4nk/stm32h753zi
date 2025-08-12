@@ -1,0 +1,80 @@
+# STM32H753ZI Motor Control Project - Git Attributes
+# ===================================================
+
+# Line ending handling - ensure consistent line endings across platforms
+* text=auto
+
+# Source code files - always use LF line endings
+*.c text eol=lf
+*.h text eol=lf
+*.cpp text eol=lf
+*.hpp text eol=lf
+
+# Configuration and documentation files
+*.md text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.txt text eol=lf
+*.cmake text eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+
+# CMake files
+CMakeLists.txt text eol=lf
+*.cmake text eol=lf
+
+# Git configuration files
+.gitignore text eol=lf
+.gitattributes text eol=lf
+
+# Binary files - never modify these
+*.bin binary
+*.elf binary
+*.hex binary
+*.map binary
+*.o binary
+*.a binary
+*.so binary
+*.dll binary
+*.exe binary
+
+# Documentation and media files
+*.pdf binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.ico binary
+
+# Archives and installers
+*.zip binary
+*.tar binary
+*.gz binary
+*.7z binary
+*.rar binary
+*.msi binary
+*.dmg binary
+*.iso binary
+
+# Database files
+*.db binary
+*.sqlite binary
+*.sqlite3 binary
+
+# Export ignore - exclude from git archives
+archive/ export-ignore
+.vscode/browse.vc.db export-ignore
+docs/semantic_vector_db/ export-ignore
+00_reference/ export-ignore
+build/ export-ignore
+build_host_tests/ export-ignore
+.venv/ export-ignore
+
+# Language-specific attributes for proper diff handling
+*.c diff=c
+*.h diff=c
+*.cpp diff=cpp
+*.py diff=python
+*.md diff=markdown
+*.json diff=json

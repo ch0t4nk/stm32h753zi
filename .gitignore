@@ -67,10 +67,16 @@ docs/semantic_vector_db/
 *.zip
 
 # === DOCUMENTATION ARTIFACTS ===
+# Generated documentation output
+docs/html/
+
 # Legacy search indexes - replaced by semantic search
 docs/indexes/STM32H7_FULL_INDEX.json
 docs/indexes/L6470_SEARCH_INDEX.json
 docs/indexes/STM32H7xx_Nucleo_BSP_INDEX.json
+
+# Generated documentation HTML
+docs/html/
 
 # === TEST ARTIFACTS ===
 tests/host_tests/CMakeCache.txt
