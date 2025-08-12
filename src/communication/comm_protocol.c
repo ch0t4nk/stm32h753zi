@@ -111,7 +111,8 @@ SystemError_t comm_protocol_init(void) {
     comm_protocol_initialized = true;
 
     // Log initialization success
-    safety_log_event(SAFETY_EVENT_SYSTEM_INIT, 0xFF, (uint32_t)SYSTEM_OK);
+    safety_log_event(SAFETY_EVENT_SYSTEM_INIT, INVALID_DEVICE_ID,
+                     (uint32_t)SYSTEM_OK);
 
     return SYSTEM_OK;
 }
@@ -643,7 +644,7 @@ static SystemError_t validate_motor_command(const MotorCommand_t *command) {
 static uint16_t calculate_message_checksum(const MessageHeader_t *header,
                                            const uint8_t *payload) {
     // Simple CRC16 implementation
-    uint16_t crc = 0xFFFF;
+    uint16_t crc = CRC16_INIT_VALUE;
 
     // Include header in checksum (excluding checksum field itself)
     const uint8_t *data = (const uint8_t *)header;
@@ -651,7 +652,7 @@ static uint16_t calculate_message_checksum(const MessageHeader_t *header,
         crc ^= data[i];
         for (int j = 0; j < 8; j++) {
             if (crc & 1) {
-                crc = (crc >> 1) ^ 0xA001;
+                crc = (crc >> 1) ^ CRC16_POLYNOMIAL;
             } else {
                 crc >>= 1;
             }
@@ -663,7 +664,7 @@ static uint16_t calculate_message_checksum(const MessageHeader_t *header,
         crc ^= payload[i];
         for (int j = 0; j < 8; j++) {
             if (crc & 1) {
-                crc = (crc >> 1) ^ 0xA001;
+                crc = (crc >> 1) ^ CRC16_POLYNOMIAL;
             } else {
                 crc >>= 1;
             }

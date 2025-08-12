@@ -1,15 +1,16 @@
 {
   "metadata": {
     "version": "1.0.0",
-    "last_updated": "2025-08-12T17:50:24.810572Z",
-    "total_features": 14,
-    "completed_features": 9,
+    "last_updated": "2025-08-12T21:14:27.945887Z",
+    "total_features": 15,
+    "completed_features": 10,
     "in_progress_features": 1,
     "planned_features": 4,
-    "urgent_features": 1,
+    "urgent_features": 2,
     "blocking_issues": [
       "FTR-014: Git push blocked by 917.71MB semantic database file",
-      "FTR-014: Semantic database staleness affecting development accuracy"
+      "FTR-014: Semantic database staleness affecting development accuracy",
+      "FTR-015: 305 SSOT violations blocking pre-commit hooks"
     ]
   },
   "categories": {
@@ -529,6 +530,63 @@
         "Phase 3: Intelligent caching system",
         "Phase 4: Performance validation and optimization"
       ]
+    },
+    "FTR-015": {
+      "id": "FTR-015",
+      "name": "SSOT Compliance Implementation",
+      "status": "COMPLETE",
+      "phase": "1.4",
+      "priority": "CRITICAL",
+      "category": "integration",
+      "description": "Comprehensive SSOT compliance implementation to resolve all 305 violations detected by pre-commit validation. Migrate hardcoded values to SSOT references, fix include dependencies, and resolve configuration inconsistencies while maintaining full functionality.",
+      "acceptance_criteria": [
+        "All 296 hardcoded value violations resolved with SSOT references",
+        "All 8 include dependency issues fixed with proper header includes",
+        "Configuration inconsistency resolved (MAX_MOTORS usage)",
+        "Pre-commit SSOT validation passes completely",
+        "No functionality reduction or asset disabling",
+        "All existing tests continue to pass",
+        "Code follows ssot-config.instructions.md principles",
+        "Implementation follows core-software.instructions.md patterns"
+      ],
+      "implementation_files": [
+        "src/config/hardware_config.h",
+        "src/config/motor_config.h",
+        "src/config/comm_config.h",
+        "src/config/safety_config.h",
+        "src/common/system_state.h",
+        "src/hal_abstraction/hal_abstraction_mock.c",
+        "src/hal_abstraction/hal_abstraction_stm32h7.c",
+        "src/rtos/power_management.c",
+        "src/rtos/rtos_tasks.c"
+      ],
+      "test_files": [
+        "tests/unit/test_ssot_compliance.c"
+      ],
+      "documentation": [
+        ".github/instructions/ssot-config.instructions.md",
+        ".github/instructions/core-software.instructions.md"
+      ],
+      "dependencies": [
+        "FTR-013"
+      ],
+      "dependents": [
+        "FTR-008"
+      ],
+      "blockers": [
+        "305 SSOT violations blocking pre-commit hooks"
+      ],
+      "completion_date": "2025-08-12",
+      "effort_estimate_hours": 16,
+      "effort_actual_hours": 16,
+      "commits": [],
+      "urgency_notes": "Critical blocker - pre-commit hooks preventing code commits until SSOT compliance achieved.",
+      "violation_breakdown": {
+        "hardcoded_values": 296,
+        "include_dependencies": 8,
+        "configuration_inconsistencies": 1,
+        "total_violations": 305
+      }
     }
   }
 }

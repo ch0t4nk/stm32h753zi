@@ -14,6 +14,7 @@
 #include "motor_controller.h"
 #include "common/error_codes.h"
 #include "common/system_state.h"
+#include "config/comm_config.h"
 #include "config/hardware_config.h"
 #include "config/motor_config.h"
 #include "config/safety_config.h"
@@ -86,13 +87,15 @@ SystemError_t motor_controller_init(SPI_HandleTypeDef *hspi,
 
     // SAFETY-CRITICAL: Check safety system is operational before motor init
     if (!safety_system_is_operational()) {
-        safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 0);
+        safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, INVALID_DEVICE_ID,
+                         0);
         return ERROR_SAFETY_SYSTEM_NOT_READY;
     }
 
     // Check for emergency stop condition
     if (safety_get_emergency_stop_state()) {
-        safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, 0xFF, 1);
+        safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, INVALID_DEVICE_ID,
+                         1);
         return ERROR_SAFETY_EMERGENCY_STOP;
     }
 

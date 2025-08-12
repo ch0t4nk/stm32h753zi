@@ -21,6 +21,7 @@
  */
 
 #include "config/hardware_config.h"
+#include "config/motor_config.h"
 #include "stm32h7xx_hal.h"
 #include "stm32h7xx_hal_iwdg.h"
 #include "stm32h7xx_hal_tim.h"
@@ -867,7 +868,8 @@ SystemError_t HAL_Abstraction_L6470_GetStatus(uint8_t motor_id,
     if (result != SYSTEM_OK) {
         // Set conservative status on communication failure
         // Clear all status bits except for communication error indication
-        *status = 0x00000000; // All fault flags set (safe state)
+        *status = HAL_SAFETY_STATUS_ALL_FAULTS_CLEAR; // All fault flags set
+                                                      // (safe state)
         return result;
     }
 

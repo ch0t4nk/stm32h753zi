@@ -16,6 +16,7 @@
  */
 
 #include "motor_characterization.h"
+#include "common/data_types.h"
 #include "common/system_state.h"
 #include "config/motor_config.h"
 #include "drivers/as5600/as5600_driver.h"
@@ -464,7 +465,9 @@ SystemError_t motor_characterization_frequency_response(
     }
 
     // Generate frequency sweep command sequence
-    float sweep_amplitude = 5.0f;  // 5 degree amplitude for safety
+    angle_deg_t sweep_amplitude = (angle_deg_t)
+        MOTOR_CHARACTERIZATION_SWEEP_AMPLITUDE_DEG; // 5 degree amplitude for
+                                                    // safety
     uint32_t num_frequencies = 20; // Test 20 discrete frequencies
 
     // Execute frequency sweep (simplified implementation)
@@ -492,7 +495,11 @@ SystemError_t motor_characterization_frequency_response(
                     return result;
                 }
 
-                HAL_Delay(1); // 1ms delay for 1kHz rate
+                HAL_Delay(
+                    (uint32_t)
+                        MOTOR_CHARACTERIZATION_SAMPLE_DELAY_MS); // 1ms delay
+                                                                 // for 1kHz
+                                                                 // rate
 
                 // Check for safety abort
                 if (safety_system_is_emergency_active()) {
@@ -954,8 +961,12 @@ calculate_time_constants(const CharacterizationDataSet_t *dataset,
     // Simplified time constant estimation
     // Full implementation would analyze step response characteristics
 
-    *mechanical_tc = 0.1f;   // 100ms typical mechanical time constant
-    *electrical_tc = 0.002f; // 2ms typical electrical time constant
+    *mechanical_tc = (float)
+        MOTOR_TYPICAL_MECHANICAL_TIME_CONSTANT_S; // 100ms typical mechanical
+                                                  // time constant
+    *electrical_tc = (float)
+        MOTOR_TYPICAL_ELECTRICAL_TIME_CONSTANT_S; // 2ms typical electrical
+                                                  // time constant
 
     return SYSTEM_OK;
 }

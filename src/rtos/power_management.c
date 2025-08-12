@@ -18,6 +18,8 @@
  */
 
 #include "power_management.h"
+#include "config/freertos_config_ssot.h"
+#include "config/motor_config.h"
 #include "hal_abstraction/hal_abstraction.h"
 #include "rtos_tasks.h"
 #include "safety/safety_system.h"

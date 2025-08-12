@@ -8,12 +8,14 @@
  * Implements real-time fault detection with <1ms reaction time
  */
 
+#include "l6470_fault_monitor.h"
 #include "common/system_state.h"
+#include "config/hardware_config.h"
+#include "config/motor_config.h"
 #include "drivers/l6470/l6470_driver.h"
 #include "emergency_stop.h"
 #include "fault_monitor.h"
 #include "hal_abstraction/hal_abstraction.h"
-#include "l6470_fault_monitor.h"
 #include <string.h>
 
 /* ==========================================================================

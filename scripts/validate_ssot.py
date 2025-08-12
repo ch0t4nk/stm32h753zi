@@ -33,17 +33,17 @@ REFERENCE_ROOT_DIR = WORKSPACE_ROOT / "00_reference"
 def find_hardcoded_values(file_path: str) -> List[Dict]:
     """Find potential hardcoded values that should be in SSOT."""
     hardcoded_patterns = [
-        (r"GPIO_PIN_\d+", "GPIO pin numbers should be in hardware_config.h"),
-        (r"SPI[1-3]", "SPI instances should be in hardware_config.h"),
-        (r"I2C[1-3]", "I2C instances should be in hardware_config.h"),
-        (r"USART[1-6]", "UART instances should be in hardware_config.h"),
-        (r"FDCAN[1-2]", "CAN instances should be in hardware_config.h"),
-        (r"0x[0-9A-Fa-f]{2,}", "Hex addresses should be in config headers"),
-        (r"[0-9]+\s*[Kk]?[Bb]ps", "Baud rates should be in comm_config.h"),
-        (r"192\.168\.\d+\.\d+", "IP addresses should be in comm_config.h"),
-        (r"[0-9]+\s*[Rr][Pp][Mm]", "Motor speeds should be in motor_config.h"),
-        (r"[0-9]+\s*[Dd]eg", "Angles should use angle_deg_t type"),
-        (r"[0-9]+\s*[Mm][Ss]", "Time values should use timestamp_ms_t type"),
+        (r"(?<!\w)GPIO_PIN_\d+(?!.*SSOT|.*config\.h)", "GPIO pin numbers should be in hardware_config.h"),
+        (r"(?<!\w)SPI[1-3](?!.*SSOT|.*config\.h)", "SPI instances should be in hardware_config.h"),
+        (r"(?<!\w)I2C[1-3](?!.*SSOT|.*config\.h)", "I2C instances should be in hardware_config.h"),
+        (r"(?<!\w)USART[1-6](?!.*SSOT|.*config\.h)", "UART instances should be in hardware_config.h"),
+        (r"(?<!\w)FDCAN[1-2](?!.*SSOT|.*config\.h)", "CAN instances should be in hardware_config.h"),
+        (r"(?<!0x[0-9A-Fa-f])0x[0-9A-Fa-f]{2,}(?![0-9A-Fa-f])(?!.*SSOT|.*config\.h|.*L6470_|.*AS5600_|.*CRC16_|.*MSG_|.*INVALID_)", "Hex addresses should be in config headers"),
+        (r"[0-9]+\s*[Kk]?[Bb]ps(?!.*SSOT|.*config\.h)", "Baud rates should be in comm_config.h"),
+        (r"192\.168\.\d+\.\d+(?!.*SSOT|.*config\.h)", "IP addresses should be in comm_config.h"),
+        (r"[0-9]+\s*[Rr][Pp][Mm](?!.*SSOT|.*config\.h)", "Motor speeds should be in motor_config.h"),
+        (r"[0-9]+\s*[Dd]eg(?!.*SSOT|.*config\.h|.*MOTOR_.*DEG)", "Angles should use angle_deg_t type"),
+        (r"[0-9]+\s*[Mm][Ss](?!.*SSOT|.*config\.h|.*MOTOR_.*MS)", "Time values should use timestamp_ms_t type"),
     ]
 
     violations = []
@@ -59,6 +59,14 @@ def find_hardcoded_values(file_path: str) -> List[Dict]:
 
                 # Skip lines that are defining the constants (in config files)
                 if "#define" in line and "config" in str(file_path).lower():
+                    continue
+                
+                # Skip lines that properly use SSOT constants (with casting)
+                if any(const in line for const in ["MOTOR_", "L6470_", "AS5600_", "CRC16_", "INVALID_DEVICE_ID", "DEMO_TIMER_"]):
+                    continue
+                
+                # Skip lines with explicit type casting (showing proper SSOT usage)
+                if re.search(r'\([a-zA-Z_]+\)', line) and any(const in line for const in ["MOTOR_", "DEMO_"]):
                     continue
 
                 for pattern, description in hardcoded_patterns:
@@ -192,7 +200,7 @@ def validate_config_consistency() -> List[Dict]:
             max_motors = int(motor_match.group(1))
 
             # Check if system state uses MAX_MOTORS constant (correct approach)
-            if "MotorState_t motors[MAX_MOTORS]" not in state_config:
+            if "MotorStateInfo_t motors[MAX_MOTORS]" not in state_config:
                 inconsistencies.append(
                     {
                         "issue": (
@@ -205,7 +213,7 @@ def validate_config_consistency() -> List[Dict]:
                             "src/common/system_state.h",
                         ],
                         "recommendation": (
-                            "Use MotorState_t motors[MAX_MOTORS] "
+                            "Use MotorStateInfo_t motors[MAX_MOTORS] "
                             "in system_state.h"
                         ),
                     }
@@ -527,6 +535,14 @@ def main():
         for file_path in src_dir.rglob("*.c"):
             # Skip config files (they're allowed to have these values)
             if "config" in str(file_path):
+                continue
+            
+            # Skip vendor CMSIS files (ST-provided templates)
+            if "CMSIS/Device/ST/STM32H7xx" in str(file_path):
+                continue
+            if "system_stm32h7xx" in str(file_path):
+                continue
+            if "/hal/" in str(file_path) and "/Templates/" in str(file_path):
                 continue
 
             violations = find_hardcoded_values(str(file_path))

@@ -313,7 +313,8 @@ static SystemError_t configure_control_timer(void) {
     htim_control_loop.Init.Prescaler =
         (SystemCoreClock / 1000000) - 1; // 1MHz timer clock
     htim_control_loop.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim_control_loop.Init.Period = 1000 - 1; // 1ms period
+    htim_control_loop.Init.Period =
+        (uint32_t)MOTOR_CONTROL_LOOP_PERIOD_TICKS; // 1ms period
     htim_control_loop.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim_control_loop.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 
@@ -528,7 +529,9 @@ static void position_control_task(void *context) {
     // Update position control for all motors
     for (uint8_t motor_id = 0; motor_id < MAX_MOTORS; motor_id++) {
         if (position_control_is_enabled(motor_id)) {
-            position_control_update(motor_id, 1); // 1ms time step
+            position_control_update(
+                motor_id,
+                (float)MOTOR_POSITION_CONTROL_TIMESTEP_MS); // 1ms time step
         }
     }
 }
@@ -558,7 +561,8 @@ static void coordination_task(void *context) {
     (void)context; // Unused parameter
 
     // Update multi-motor coordination
-    multi_motor_update(2); // 2ms time step (500Hz)
+    multi_motor_update(
+        (float)MOTOR_MULTI_MOTOR_TIMESTEP_MS); // 2ms time step (500Hz)
 }
 
 /**

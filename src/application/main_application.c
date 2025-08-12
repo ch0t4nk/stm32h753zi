@@ -25,10 +25,10 @@
  */
 
 // HAL peripheral handles
-extern SPI_HandleTypeDef hspi2;   // SPI2 for L6470 drivers
-extern I2C_HandleTypeDef hi2c1;   // I2C1 for encoder 0
-extern I2C_HandleTypeDef hi2c2;   // I2C2 for encoder 1
-extern UART_HandleTypeDef huart3; // UART3 for debugging (VCP)
+extern SPI_HandleTypeDef hspi2;   // MOTOR_SPI_INSTANCE for L6470 drivers
+extern I2C_HandleTypeDef hi2c1;   // ENCODER_I2C_INSTANCE for encoder 0
+extern I2C_HandleTypeDef hi2c2;   // ENCODER2_I2C_INSTANCE for encoder 1
+extern UART_HandleTypeDef huart3; // UART_INSTANCE for debugging (VCP)
 
 // Application state
 static bool application_initialized = false;

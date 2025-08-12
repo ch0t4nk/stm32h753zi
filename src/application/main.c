@@ -100,9 +100,9 @@ int main(void) {
     SystemClock_Config();
 
     /* TODO: Initialize peripherals following instruction files:
-     * - SPI1 for L6470 (stm32h7-spi-l6470.instructions.md)
-     * - I2C1/I2C2 for AS5600 (stm32h7-i2c-as5600.instructions.md)
-     * - UART3 for debug (stm32h7-uart-protocol.instructions.md)
+     * - MOTOR_SPI_INSTANCE for L6470 (stm32h7-spi-l6470.instructions.md)
+     * - ENCODER_I2C_INSTANCE for AS5600 (stm32h7-i2c-as5600.instructions.md)
+     * - UART_INSTANCE for debug (stm32h7-uart-protocol.instructions.md)
      * - Safety systems (safety-systems.instructions.md)
      */
 

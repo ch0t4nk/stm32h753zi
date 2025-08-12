@@ -11,8 +11,10 @@
  * @note Only included when in UNITY_TESTING mode
  */
 
-#include "mock_hal_abstraction.h"
+#include "config/hardware_config.h"
+#include "config/motor_config.h"
 #include "hal_abstraction.h"
+#include "mock_hal_abstraction.h"
 
 #ifdef UNITY_TESTING
 /* ==========================================================================
@@ -467,7 +469,8 @@ HAL_Abstraction_SPI_TransmitReceive(HAL_SPI_Instance_t instance,
         transaction->data_size <= sizeof(spi->last_rx_data)) {
         // For testing, fill rx_data with test pattern
         for (uint16_t i = 0; i < transaction->data_size; i++) {
-            transaction->rx_data[i] = 0xA5 + i; // Test pattern
+            transaction->rx_data[i] =
+                HAL_MOCK_TEST_PATTERN_BASE + i; // Test pattern
         }
         memcpy(spi->last_rx_data, transaction->rx_data,
                transaction->data_size);
@@ -518,7 +521,7 @@ SystemError_t HAL_Abstraction_SPI_Receive(HAL_SPI_Instance_t instance,
 
     // Fill with test pattern
     for (uint16_t i = 0; i < data_size; i++) {
-        rx_data[i] = 0x5A + i;
+        rx_data[i] = HAL_MOCK_TEST_PATTERN_ALT + i;
     }
 
     if (data_size <= sizeof(spi->last_rx_data)) {

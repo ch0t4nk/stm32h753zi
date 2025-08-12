@@ -438,6 +438,43 @@
 // Ethernet DMA buffers placement (must be in D2 domain)
 #define ETH_DMA_BUFFER_BASE SRAM2_BASE_ADDR
 
+// ============================================================================
+// AS5600 Magnetic Encoder Constants
+// ============================================================================
+
+// AS5600 I2C Hardware Constants
+#define AS5600_I2C_ADDRESS 0x36      // AS5600 I2C slave address (7-bit)
+#define AS5600_I2C_ADDRESS_8BIT 0x6C // AS5600 I2C address (8-bit format)
+
+// AS5600 Register Addresses
+#define AS5600_RAW_ANGLE_REG 0x0C // Raw angle register address (12-bit)
+#define AS5600_ANGLE_REG 0x0E     // Processed angle register address
+#define AS5600_STATUS_REG 0x0B    // Status register address
+#define AS5600_AGC_REG 0x1A       // Automatic Gain Control register
+#define AS5600_MAGNITUDE_REG 0x1B // Magnitude register address
+
+// AS5600 Configuration Constants
+#define AS5600_ANGLE_RESOLUTION 4096U         // 12-bit resolution (2^12)
+#define AS5600_DEGREES_PER_COUNT 0.087890625f // 360/4096 degrees per count
+
+// AS5600 Mock Testing Constants
+#define AS5600_MOCK_ANGLE_DATA 0x12      // Mock angle data for HAL testing
+#define AS5600_MOCK_ANGLE_HIGH_BYTE 0x34 // Mock high byte for 16-bit testing
+#define AS5600_MOCK_ANGLE_LOW_BYTE 0x56  // Mock low byte for 16-bit testing
+
+// ============================================================================
+// Safety System Status Constants
+// ============================================================================
+
+// Safety Status Values for HAL Abstraction Layer
+#define HAL_SAFETY_STATUS_ALL_FAULTS_CLEAR                                    \
+    0x00000000 // All fault flags set (safe state)
+#define HAL_SAFETY_STATUS_SYSTEM_FAULT 0xFFFFFFFF // System fault detected
+#define HAL_SAFETY_STATUS_MOTOR_FAULT 0x80000000  // Motor fault flag
+#define HAL_SAFETY_STATUS_COMM_FAULT 0x40000000   // Communication fault flag
+#define HAL_SAFETY_STATUS_SENSOR_FAULT 0x20000000 // Sensor fault flag
+#define HAL_SAFETY_STATUS_TEMP_FAULT 0x10000000   // Temperature fault flag
+
 #endif /* HARDWARE_CONFIG_H */
 
 /**

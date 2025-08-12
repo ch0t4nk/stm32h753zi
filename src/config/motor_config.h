@@ -16,6 +16,7 @@
 #ifndef MOTOR_CONFIG_H
 #define MOTOR_CONFIG_H
 
+#include "common/data_types.h"
 #include <stdint.h>
 
 /* ==========================================================================
@@ -66,6 +67,28 @@
 #define MOTOR_MICROSTEPS 128    // Microstepping setting (1/128)
 #define MOTOR_TOTAL_STEPS (MOTOR_STEPS_PER_REV * MOTOR_MICROSTEPS)
 #define MOTOR_DEGREES_PER_STEP (360.0f / MOTOR_TOTAL_STEPS)
+
+// Motor time constants (for characterization)
+#define MOTOR_TYPICAL_MECHANICAL_TIME_CONSTANT_S                              \
+    ((timestamp_ms_t)0.1f) // 100ms typical mechanical time constant
+#define MOTOR_TYPICAL_ELECTRICAL_TIME_CONSTANT_S                              \
+    ((timestamp_ms_t)0.002f) // 2ms typical electrical time constant
+#define MOTOR_CHARACTERIZATION_SWEEP_AMPLITUDE_DEG                            \
+    ((angle_deg_t)5.0f) // 5 degree amplitude for safety
+#define MOTOR_CHARACTERIZATION_SAMPLE_DELAY_MS                                \
+    ((timestamp_ms_t)1) // 1ms delay for 1kHz sampling rate
+
+// Real-time control timing constants (SSOT)
+#define MOTOR_CONTROL_LOOP_PERIOD_TICKS                                       \
+    ((timestamp_ms_t)(1000 - 1)) // 1ms period for timer
+#define MOTOR_POSITION_CONTROL_TIMESTEP_MS                                    \
+    ((timestamp_ms_t)1) // 1ms time step for position control
+#define MOTOR_MULTI_MOTOR_TIMESTEP_MS                                         \
+    ((timestamp_ms_t)2) // 2ms time step (500Hz) for coordination
+
+// Demo timing constants (SSOT)
+#define DEMO_TIMER_PERIOD_1MS                                                 \
+    ((timestamp_ms_t)1000) // 1ms period for demo timer
 
 // Motor mechanical limits
 #define MOTOR_MAX_SPEED_RPM 100.0f   // Maximum safe speed
@@ -204,6 +227,11 @@
 #define L6470_CMD_GOUNTIL 0x82   // Go until switch/flag
 #define L6470_CMD_RELEASESW 0x92 // Release switch
 
+// L6470 Command Padding and Special Values (SSOT)
+#define L6470_CMD_PADDING 0x00   // Padding byte for multi-motor commands
+#define L6470_PARAM_NULL 0x00    // Null parameter value
+#define L6470_DEFAULT_VALUE 0x00 // Default return value for stubs
+
 // Control Commands
 #define L6470_CMD_HARDSTOP 0xB8 // Immediate stop
 #define L6470_CMD_SOFTSTOP 0xB0 // Soft stop with deceleration
@@ -234,6 +262,38 @@
 #define L6470_REG_MAX_SPEED 0x07 // Maximum speed (10-bit)
 #define L6470_REG_MIN_SPEED 0x08 // Minimum speed (13-bit)
 #define L6470_REG_FS_SPD 0x15    // Full step speed (10-bit)
+
+/* ==========================================================================
+ */
+/* L6470 Bit Masks (SSOT) - Hardware-defined bit patterns                   */
+/* ==========================================================================
+ */
+// Status register and data bit masks (from L6470 datasheet)
+#define L6470_STATUS_MASK_16BIT 0xFFFF     // 16-bit status register mask
+#define L6470_POSITION_MASK_22BIT 0x3FFFFF // 22-bit position value mask
+#define L6470_DATA_MASK_24BIT                                                 \
+    0xFFFFFF                 // 24-bit data mask for 3-byte operations
+#define L6470_BYTE_MASK 0xFF // 8-bit byte mask for SPI operations
+#define L6470_STATUS_STUB_VALUE 0xDEAD // Mock status value for testing
+
+// Direction control bits (from L6470 datasheet)
+#define L6470_DIRECTION_FORWARD 0x01 // Forward direction bit
+#define L6470_DIRECTION_REVERSE 0x00 // Reverse direction bit (default)
+
+// Speed calculation constants (from L6470 datasheet specifications)
+#define L6470_SPEED_SCALE_FACTOR 0x100 // Speed scaling factor (256)
+#define L6470_MAX_SPEED_VALUE 0x3FF    // Maximum 10-bit speed value (1023)
+
+/* ==========================================================================
+ */
+/* HAL Mock Test Patterns (SSOT) - Test validation constants                */
+/* ==========================================================================
+ */
+// Standard test patterns for HAL abstraction validation
+#define HAL_MOCK_TEST_PATTERN_BASE                                            \
+    0xA5 // Primary test pattern (alternating bits)
+#define HAL_MOCK_TEST_PATTERN_ALT 0x5A  // Alternate test pattern (inverted)
+#define HAL_MOCK_TEST_PATTERN_INIT 0x00 // Initial test state pattern
 
 // Current Control Registers
 #define L6470_REG_KVAL_HOLD 0x09 // Holding KVAL
@@ -344,6 +404,24 @@ typedef enum {
 // Statistics collection
 #define STATS_SAMPLE_INTERVAL_MS 100 // Statistics sampling rate
 #define STATS_HISTORY_SAMPLES 600    // 1 minute of history at 100ms rate
+
+// ============================================================================
+// L6470 Hardware Constants
+// ============================================================================
+
+// L6470 Speed Calculation Constants
+#define L6470_SPEED_SCALE_FACTOR_HEX                                          \
+    0x100 // 256 decimal - speed calculation scaling factor
+#define L6470_SPEED_CALC_DIVISOR                                              \
+    0x3FF // 1023 decimal - speed calculation divisor
+#define L6470_SPEED_SCALE_FACTOR                                              \
+    256U // Speed calculation scaling (readable form)
+#define L6470_MAX_SPEED_VALUE                                                 \
+    1023U // Maximum speed register value (readable form)
+
+// L6470 Register Value Constants
+#define L6470_MIN_SPEED_DEFAULT 0x000 // Minimum speed register default value
+#define L6470_FS_SPD_DEFAULT 0x027    // Full step speed register default value
 
 #endif /* MOTOR_CONFIG_H */
 

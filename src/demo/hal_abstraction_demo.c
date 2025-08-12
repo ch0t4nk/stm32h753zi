@@ -10,6 +10,8 @@
 
 #include "common/error_codes.h"
 #include "config/hardware_config.h"
+#include "config/motor_config.h"
+#include "drivers/as5600/as5600_driver.h"
 #include "hal_abstraction/hal_abstraction.h"
 
 /**
@@ -54,7 +56,8 @@ SystemError_t demo_spi_operations(void) {
     SystemError_t result;
 
     // Test SPI communication (simulated L6470 command)
-    uint8_t tx_data[] = {0x20, 0x00, 0x00}; // NOP command
+    uint8_t tx_data[] = {L6470_CMD_GETPARAM, L6470_CMD_NOP,
+                         L6470_CMD_NOP}; // GETPARAM command
     uint8_t rx_data[3] = {0};
 
     HAL_SPI_Transaction_t transaction = {.tx_data = tx_data,
@@ -75,7 +78,7 @@ SystemError_t demo_i2c_operations(void) {
     SystemError_t result;
 
     // Test I2C communication (simulated AS5600 read)
-    uint8_t register_addr = 0x0C; // AS5600 angle register
+    uint8_t register_addr = AS5600_REG_RAW_ANGLE_H; // AS5600 angle register
     uint8_t angle_data[2] = {0};
 
     HAL_I2C_Transaction_t transaction = {.device_address =
@@ -99,11 +102,11 @@ SystemError_t demo_timer_operations(void) {
     SystemError_t result;
 
     // Configure timer for 1ms interrupts
-    HAL_Timer_Config_t timer_config = {.prescaler =
-                                           200,        // Assuming 200MHz clock
-                                       .period = 1000, // 1ms period
-                                       .clock_division = 0,
-                                       .counter_mode = TIMER_COUNTERMODE_UP};
+    HAL_Timer_Config_t timer_config = {
+        .prescaler = 200,                          // Assuming 200MHz clock
+        .period = (uint32_t)DEMO_TIMER_PERIOD_1MS, // 1ms period
+        .clock_division = 0,
+        .counter_mode = TIMER_COUNTERMODE_UP};
 
     result = HAL_Abstraction_Timer_Init(HAL_TIMER_2, &timer_config);
     if (result != SYSTEM_OK) {

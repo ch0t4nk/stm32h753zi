@@ -255,6 +255,12 @@
 // Binary Message Headers (for CAN)
 #define MSG_HEADER_SYNC 0xAA
 #define MSG_HEADER_VERSION 0x01
+
+// CRC16 Checksum Constants (SSOT)
+#define CRC16_INIT_VALUE 0xFFFF // Initial CRC value
+#define CRC16_POLYNOMIAL 0xA001 // CRC-16-ANSI polynomial
+#define INVALID_DEVICE_ID 0xFF  // Invalid/broadcast device ID
+
 #define MSG_CHECKSUM_POLY 0x1D // CRC polynomial
 
 // Message Priority Levels

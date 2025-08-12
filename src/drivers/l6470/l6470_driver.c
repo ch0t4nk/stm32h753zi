@@ -347,23 +347,23 @@ SystemError_t l6470_get_parameter(uint8_t motor_id, uint8_t register_addr,
     if (motor_id == 0) {
         // Command motor 1, NOP for motor 2
         tx_buffer[0] = command;
-        tx_buffer[1] = 0x00;
-        tx_buffer[2] = 0x00;
-        tx_buffer[3] = 0x00;
+        tx_buffer[1] = L6470_CMD_PADDING;
+        tx_buffer[2] = L6470_CMD_PADDING;
+        tx_buffer[3] = L6470_CMD_PADDING;
         tx_buffer[4] = L6470_CMD_NOP;
-        tx_buffer[5] = 0x00;
-        tx_buffer[6] = 0x00;
-        tx_buffer[7] = 0x00;
+        tx_buffer[5] = L6470_CMD_PADDING;
+        tx_buffer[6] = L6470_CMD_PADDING;
+        tx_buffer[7] = L6470_CMD_PADDING;
     } else {
         // NOP for motor 1, command motor 2
         tx_buffer[0] = L6470_CMD_NOP;
-        tx_buffer[1] = 0x00;
-        tx_buffer[2] = 0x00;
-        tx_buffer[3] = 0x00;
+        tx_buffer[1] = L6470_CMD_PADDING;
+        tx_buffer[2] = L6470_CMD_PADDING;
+        tx_buffer[3] = L6470_CMD_PADDING;
         tx_buffer[4] = command;
-        tx_buffer[5] = 0x00;
-        tx_buffer[6] = 0x00;
-        tx_buffer[7] = 0x00;
+        tx_buffer[5] = L6470_CMD_PADDING;
+        tx_buffer[6] = L6470_CMD_PADDING;
+        tx_buffer[7] = L6470_CMD_PADDING;
     }
 
     result = l6470_spi_transaction(tx_buffer, rx_buffer, 8);
@@ -403,14 +403,14 @@ SystemError_t l6470_get_status(uint8_t motor_id, uint16_t *status) {
         simulation_error_t sim_result =
             l6470_sim_read_register(L6470_REG_STATUS, &status_value);
         if (sim_result == SIM_OK) {
-            *status = (uint16_t)(status_value & 0xFFFF);
+            *status = (uint16_t)(status_value & L6470_STATUS_MASK_16BIT);
             return SYSTEM_OK;
         }
         return ERROR_MOTOR_COMMUNICATION_FAILED;
     }
 #endif
 
-    uint8_t tx_data[2] = {L6470_CMD_GET_STATUS, 0x00};
+    uint8_t tx_data[2] = {L6470_CMD_GET_STATUS, L6470_CMD_PADDING};
     uint8_t rx_data[2] = {0};
 
     // Assert CS
@@ -496,7 +496,8 @@ SystemError_t l6470_move_to_position(uint8_t motor_id, int32_t position) {
 #endif
 
     uint8_t command = L6470_CMD_GOTO;
-    uint32_t abs_position = (uint32_t)position & 0x3FFFFF; // 22-bit position
+    uint32_t abs_position =
+        (uint32_t)position & L6470_POSITION_MASK_22BIT; // 22-bit position
 
     result = l6470_send_single_command(motor_id, command, abs_position);
     if (result == SYSTEM_OK) {
@@ -692,13 +693,13 @@ static SystemError_t l6470_send_daisy_command(uint8_t motor1_cmd,
 
     // Pack daisy-chain data (motor 1 first, motor 2 second)
     tx_buffer[0] = motor1_cmd;
-    tx_buffer[1] = (motor1_data >> 16) & 0xFF;
-    tx_buffer[2] = (motor1_data >> 8) & 0xFF;
-    tx_buffer[3] = motor1_data & 0xFF;
+    tx_buffer[1] = (motor1_data >> 16) & L6470_BYTE_MASK;
+    tx_buffer[2] = (motor1_data >> 8) & L6470_BYTE_MASK;
+    tx_buffer[3] = motor1_data & L6470_BYTE_MASK;
     tx_buffer[4] = motor2_cmd;
-    tx_buffer[5] = (motor2_data >> 16) & 0xFF;
-    tx_buffer[6] = (motor2_data >> 8) & 0xFF;
-    tx_buffer[7] = motor2_data & 0xFF;
+    tx_buffer[5] = (motor2_data >> 16) & L6470_BYTE_MASK;
+    tx_buffer[6] = (motor2_data >> 8) & L6470_BYTE_MASK;
+    tx_buffer[7] = motor2_data & L6470_BYTE_MASK;
 
     return l6470_spi_transaction(tx_buffer, rx_buffer, 8);
 }
@@ -736,12 +737,12 @@ static uint32_t l6470_pack_parameter(uint8_t register_addr, uint32_t value,
 
     switch (num_bytes) {
     case 1:
-        return value & 0xFF;
+        return value & L6470_BYTE_MASK;
     case 2:
-        return value & 0xFFFF;
+        return value & L6470_STATUS_MASK_16BIT;
     case 3:
     default:
-        return value & 0xFFFFFF;
+        return value & L6470_DATA_MASK_24BIT;
     }
 }
 
@@ -846,9 +847,10 @@ SystemError_t l6470_run(uint8_t motor_id, bool direction, float speed) {
     // Use simulation for run command if enabled
     if (driver_state[motor_id].simulation_mode) {
         // Convert speed to L6470 format
-        uint32_t l6470_speed = (uint32_t)(speed / 4000000.0f * 0x10000000UL);
-        if (l6470_speed > 0x3FF) {
-            l6470_speed = 0x3FF;
+        uint32_t l6470_speed =
+            (uint32_t)(speed / 4000000.0f * L6470_SPEED_SCALE_FACTOR);
+        if (l6470_speed > L6470_MAX_SPEED_VALUE) {
+            l6470_speed = L6470_MAX_SPEED_VALUE;
         }
 
         uint8_t command = L6470_CMD_RUN;
@@ -917,12 +919,12 @@ SystemError_t l6470_reset_position(uint8_t motor_id) {
     // Send RESET_POS command
     if (motor_id == 0) {
         // Motor 0: send command, Motor 1: NOP
-        return l6470_send_daisy_command(L6470_CMD_RESET_POS, 0x00,
-                                        L6470_CMD_NOP, 0x00);
+        return l6470_send_daisy_command(L6470_CMD_RESET_POS, L6470_PARAM_NULL,
+                                        L6470_CMD_NOP, L6470_PARAM_NULL);
     } else {
         // Motor 0: NOP, Motor 1: send command
-        return l6470_send_daisy_command(L6470_CMD_NOP, 0x00,
-                                        L6470_CMD_RESET_POS, 0x00);
+        return l6470_send_daisy_command(L6470_CMD_NOP, L6470_PARAM_NULL,
+                                        L6470_CMD_RESET_POS, L6470_PARAM_NULL);
     }
 }
 
@@ -970,7 +972,7 @@ simulation_error_t l6470_sim_read_register(uint8_t reg_addr, uint32_t *value) {
     // Stub implementation for ARM firmware builds
     (void)reg_addr; // Suppress unused parameter warnings
     if (value != NULL) {
-        *value = 0x00; // Return default value for ARM builds
+        *value = L6470_DEFAULT_VALUE; // Return default value for ARM builds
     }
     return SIM_OK;
 }

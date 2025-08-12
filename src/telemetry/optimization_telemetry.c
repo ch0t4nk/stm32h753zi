@@ -18,6 +18,7 @@
 
 #include "optimization_telemetry.h"
 #include "common/system_state.h"
+#include "config/hardware_config.h"
 #include "hal_abstraction.h"
 #include "rtos/telemetry_dashboard.h"
 #include "safety/safety_system.h"

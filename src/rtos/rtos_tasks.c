@@ -25,6 +25,11 @@
 
 #include "rtos_tasks.h"
 
+// SSOT Configuration
+#include "config/comm_config.h"
+#include "config/freertos_config_ssot.h"
+#include "config/motor_config.h"
+
 // Common system includes
 #include "common/error_codes.h"
 
