@@ -76,37 +76,47 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>AS5600 Magnetic Encoder Driver Implementation - STM32H7 I2C HAL.  
+<p>AS5600 Magnetic Encoder Driver Implementation using HAL abstraction.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d3/d91/hardware__config_8h_source.html">config/hardware_config.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../de/d58/motor__config_8h_source.html">config/motor_config.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d3/d88/comm__config_8h_source.html">config/comm_config.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../de/d11/error__codes_8h_source.html">common/error_codes.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d9/dfd/system__state_8h_source.html">common/system_state.h</a>&quot;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="../../da/de0/as5600__registers__generated_8h_source.html">config/as5600_registers_generated.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d3/d88/comm__config_8h_source.html">config/comm_config.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d3/d91/hardware__config_8h_source.html">config/hardware_config.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../de/d58/motor__config_8h_source.html">config/motor_config.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d6/dee/hal__abstraction_8h_source.html">hal_abstraction/hal_abstraction.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d5/d8e/motor__simulation_8h_source.html">simulation/motor_simulation.h</a>&quot;</code><br />
 <code>#include &lt;math.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for as5600_driver.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../de/d3d/as5600__driver_8c__incl.png" border="0" usemap="#asrc_2drivers_2as5600_2as5600__driver_8c" alt=""/></div>
 <map name="asrc_2drivers_2as5600_2as5600__driver_8c" id="asrc_2drivers_2as5600_2as5600__driver_8c">
-<area shape="rect" title="AS5600 Magnetic Encoder Driver Implementation &#45; STM32H7 I2C HAL." alt="" coords="917,5,1059,47"/>
-<area shape="rect" href="../../de/d2b/as5600__driver_8h.html" title="AS5600 Magnetic Encoder Driver Header." alt="" coords="216,169,341,196"/>
-<area shape="rect" href="../../d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="5,244,189,271"/>
-<area shape="rect" href="../../de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="1144,244,1307,271"/>
-<area shape="rect" href="../../de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="709,244,880,271"/>
-<area shape="rect" href="../../d3/d88/comm__config_8h.html" title="Communication Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="1382,169,1546,196"/>
-<area shape="rect" href="../../d9/dfd/system__state_8h.html" title="Central System State &#45; Single Source of Truth (SSOT)" alt="" coords="833,95,1015,121"/>
-<area shape="rect" title=" " alt="" coords="1142,95,1213,121"/>
-<area shape="rect" title=" " alt="" coords="1237,95,1305,121"/>
-<area shape="rect" title=" " alt="" coords="159,319,294,345"/>
-<area shape="rect" title=" " alt="" coords="942,319,1013,345"/>
-<area shape="rect" title=" " alt="" coords="388,319,471,345"/>
-<area shape="rect" href="../../d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="955,244,1119,271"/>
-<area shape="rect" href="../../df/d2b/fault__monitor_8h.html" title="Fault Detection and Monitoring System Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="529,169,695,196"/>
-<area shape="rect" href="../../d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="467,244,634,271"/>
-<area shape="rect" title=" " alt="" coords="513,319,588,345"/>
+<area shape="rect" title="AS5600 Magnetic Encoder Driver Implementation using HAL abstraction." alt="" coords="979,5,1120,47"/>
+<area shape="rect" href="../../de/d2b/as5600__driver_8h.html" title="AS5600 Magnetic Encoder Driver Header." alt="" coords="987,169,1112,196"/>
+<area shape="rect" href="../../de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="645,423,816,449"/>
+<area shape="rect" href="../../d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="393,251,577,278"/>
+<area shape="rect" href="../../d6/dee/hal__abstraction_8h.html" title="Hardware Abstraction Layer (HAL) Interface for STM32H753ZI." alt="" coords="383,333,529,375"/>
+<area shape="rect" href="../../de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="1524,251,1687,278"/>
+<area shape="rect" href="../../d9/dfd/system__state_8h.html" title="Central System State &#45; Single Source of Truth (SSOT)" alt="" coords="1181,95,1363,121"/>
+<area shape="rect" href="../../da/de0/as5600__registers__generated_8h.html" title="AS5600 Register Definitions &#45; Auto&#45;Generated from Schema." alt="" coords="143,244,319,285"/>
+<area shape="rect" href="../../d3/d88/comm__config_8h.html" title="Communication Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="1762,169,1926,196"/>
+<area shape="rect" href="../../d5/d8e/motor__simulation_8h.html" title="Motor and Encoder Simulation Framework." alt="" coords="667,169,890,196"/>
+<area shape="rect" title=" " alt="" coords="1694,95,1762,121"/>
+<area shape="rect" title=" " alt="" coords="1786,95,1857,121"/>
+<area shape="rect" title=" " alt="" coords="516,497,599,524"/>
+<area shape="rect" title=" " alt="" coords="1347,497,1418,524"/>
+<area shape="rect" href="../../d8/d36/stm32h7xx__hal_8h.html" title="Mock STM32H7xx HAL header for unit testing." alt="" coords="1033,341,1167,367"/>
+<area shape="rect" href="../../d4/d03/mock__hal__types_8h.html" title="Mock HAL type definitions for unit testing environment." alt="" coords="891,423,1031,449"/>
+<area shape="rect" href="../../d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="1711,251,1875,278"/>
+<area shape="rect" href="../../df/d2b/fault__monitor_8h.html" title="Fault Detection and Monitoring System Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1189,169,1355,196"/>
+<area shape="rect" href="../../d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="1547,423,1714,449"/>
+<area shape="rect" title=" " alt="" coords="1593,497,1668,524"/>
+<area shape="rect" href="../../d4/da0/l6470__registers__generated_8h.html" title="L6470 Register Definitions &#45; Auto&#45;Generated from Schema." alt="" coords="653,251,859,278"/>
+<area shape="rect" href="../../d4/d7e/system__config_8h.html" title="System&#45;wide configuration parameters and feature flags." alt="" coords="1243,341,1371,367"/>
+<area shape="rect" href="../../d8/d2b/build__config_8h.html" title="Build Configuration and Version Info &#45; Single Source of Truth (SSOT)" alt="" coords="1208,423,1320,449"/>
 </map>
 </div>
 </div>
@@ -120,7 +130,7 @@ Data Structures</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a4b6339588518f0f592cc2668d300751f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d75/as5600__driver_8c.html#a4b6339588518f0f592cc2668d300751f">as5600_i2c_read_register</a> (uint8_t encoder_id, uint8_t reg_addr, uint8_t *data)</td></tr>
-<tr class="memdesc:a4b6339588518f0f592cc2668d300751f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read single register from AS5600.  <a href="../../d8/d75/as5600__driver_8c.html#a4b6339588518f0f592cc2668d300751f">More...</a><br /></td></tr>
+<tr class="memdesc:a4b6339588518f0f592cc2668d300751f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert simulation bool result to system error.  <a href="../../d8/d75/as5600__driver_8c.html#a4b6339588518f0f592cc2668d300751f">More...</a><br /></td></tr>
 <tr class="separator:a4b6339588518f0f592cc2668d300751f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d50f3e7fd46d51c6a3840e0942a7f65"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d75/as5600__driver_8c.html#a8d50f3e7fd46d51c6a3840e0942a7f65">as5600_i2c_write_register</a> (uint8_t encoder_id, uint8_t reg_addr, uint8_t data)</td></tr>
 <tr class="separator:a8d50f3e7fd46d51c6a3840e0942a7f65"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -139,9 +149,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ac011909e9d10d37747d061b620696749"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d75/as5600__driver_8c.html#ac011909e9d10d37747d061b620696749">as5600_calculate_velocity</a> (uint8_t encoder_id)</td></tr>
 <tr class="memdesc:ac011909e9d10d37747d061b620696749"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate angular velocity from position difference.  <a href="../../d8/d75/as5600__driver_8c.html#ac011909e9d10d37747d061b620696749">More...</a><br /></td></tr>
 <tr class="separator:ac011909e9d10d37747d061b620696749"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ddf1c52d15ebd5b57eef365f8573b58"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d75/as5600__driver_8c.html#a0ddf1c52d15ebd5b57eef365f8573b58">as5600_init</a> (I2C_HandleTypeDef *<a class="el" href="../../d9/dfd/main__application_8c.html#af7b2c26e44dadaaa798a5c3d82914ba7">hi2c1</a>, I2C_HandleTypeDef *<a class="el" href="../../d9/dfd/main__application_8c.html#ac379bcc152d860f08b1279fd3e232295">hi2c2</a>)</td></tr>
-<tr class="memdesc:a0ddf1c52d15ebd5b57eef365f8573b58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize AS5600 encoder system.  <a href="../../d8/d75/as5600__driver_8c.html#a0ddf1c52d15ebd5b57eef365f8573b58">More...</a><br /></td></tr>
-<tr class="separator:a0ddf1c52d15ebd5b57eef365f8573b58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8adb9a956d8ae3293e5b6dfb0166d561"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d75/as5600__driver_8c.html#a8adb9a956d8ae3293e5b6dfb0166d561">as5600_init</a> (void)</td></tr>
+<tr class="memdesc:a8adb9a956d8ae3293e5b6dfb0166d561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize AS5600 encoders using HAL abstraction.  <a href="../../d8/d75/as5600__driver_8c.html#a8adb9a956d8ae3293e5b6dfb0166d561">More...</a><br /></td></tr>
+<tr class="separator:a8adb9a956d8ae3293e5b6dfb0166d561"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d5858b661f472c7e16e664e583747e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d75/as5600__driver_8c.html#a4d5858b661f472c7e16e664e583747e6">as5600_init_encoder</a> (uint8_t encoder_id)</td></tr>
 <tr class="memdesc:a4d5858b661f472c7e16e664e583747e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize individual encoder.  <a href="../../d8/d75/as5600__driver_8c.html#a4d5858b661f472c7e16e664e583747e6">More...</a><br /></td></tr>
 <tr class="separator:a4d5858b661f472c7e16e664e583747e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -191,11 +201,9 @@ Variables</h2></td></tr>
 <tr class="separator:aaff936c02550c85c1ddeb0374c55b95d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15b81626007876923bd7523053b3a40c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="../../da/dd9/structAS5600__EncoderState__t.html">AS5600_EncoderState_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d75/as5600__driver_8c.html#a15b81626007876923bd7523053b3a40c">encoder_state</a> [<a class="el" href="../../de/d2b/as5600__driver_8h.html#a65364b2996b94f89529dccc8f6a38835">AS5600_MAX_ENCODERS</a>] = {0}</td></tr>
 <tr class="separator:a15b81626007876923bd7523053b3a40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6beffec0ae43f9eecad4bedd6f28adbe"><td class="memItemLeft" align="right" valign="top">static I2C_HandleTypeDef *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d75/as5600__driver_8c.html#a6beffec0ae43f9eecad4bedd6f28adbe">encoder_i2c_handles</a> [<a class="el" href="../../de/d2b/as5600__driver_8h.html#a65364b2996b94f89529dccc8f6a38835">AS5600_MAX_ENCODERS</a>] = {NULL, NULL}</td></tr>
-<tr class="separator:a6beffec0ae43f9eecad4bedd6f28adbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>AS5600 Magnetic Encoder Driver Implementation - STM32H7 I2C HAL. </p>
+<div class="textblock"><p>AS5600 Magnetic Encoder Driver Implementation using HAL abstraction. </p>
 <dl class="section author"><dt>Author</dt><dd>STM32H753ZI Project Team </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2025-08-05</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>AS5600 12-bit magnetic encoder driver implementation following:<ul>
@@ -224,7 +232,6 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Write single register to AS5600. </p>
-<p>Get human-readable fault description.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">encoder_id</td><td>Encoder identifier </td></tr>
@@ -245,7 +252,7 @@ Variables</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Currently unused - reserved for future OTP programming features </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00456">456</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00511">511</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -281,7 +288,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00573">573</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00672">672</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -321,7 +328,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00353">353</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00378">378</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -361,7 +368,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00326">326</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00351">351</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -398,7 +405,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00541">541</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00640">640</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -438,7 +445,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00613">613</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00714">714</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -478,7 +485,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00641">641</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00743">743</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -518,7 +525,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00306">306</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00331">331</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -573,7 +580,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00482">482</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00549">549</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -617,8 +624,15 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Read single register from AS5600. </p>
+<p>Convert simulation bool result to system error. </p>
 <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sim_success</td><td>Simulation function success (true/false) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Corresponding system error code</dd></dl>
+<p>Read single register from AS5600 </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">encoder_id</td><td>Encoder identifier </td></tr>
     <tr><td class="paramname">reg_addr</td><td>Register address </td></tr>
@@ -628,7 +642,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00423">423</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00467">467</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -674,8 +688,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a0ddf1c52d15ebd5b57eef365f8573b58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ddf1c52d15ebd5b57eef365f8573b58">&#9670;&nbsp;</a></span>as5600_init()</h2>
+<a id="a8adb9a956d8ae3293e5b6dfb0166d561"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8adb9a956d8ae3293e5b6dfb0166d561">&#9670;&nbsp;</a></span>as5600_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -683,34 +697,18 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> as5600_init </td>
           <td>(</td>
-          <td class="paramtype">I2C_HandleTypeDef *&#160;</td>
-          <td class="paramname"><em>hi2c1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">I2C_HandleTypeDef *&#160;</td>
-          <td class="paramname"><em>hi2c2</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initialize AS5600 encoder system. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">hi2c1</td><td>I2C handle for encoder 1 </td></tr>
-    <tr><td class="paramname">hi2c2</td><td>I2C handle for encoder 2 </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Initialize AS5600 encoders using HAL abstraction. </p>
+<p>Initialize AS5600 encoder system.</p>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00077">77</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00086">86</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -731,6 +729,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initialize individual encoder. </p>
+<p>Mock AS5600 encoder initialization.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">encoder_id</td><td>Encoder identifier (0 or 1) </td></tr>
@@ -739,7 +738,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00104">104</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00117">117</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -762,7 +761,7 @@ Variables</h2></td></tr>
 <p>Check if AS5600 encoder system is initialized. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if initialized, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00631">631</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00733">733</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -799,7 +798,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Angle in degrees (0.0 to 360.0) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00531">531</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00630">630</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -839,7 +838,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00195">195</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00217">217</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -870,6 +869,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Read angle in degrees. </p>
+<p>Mock AS5600 angle reading in degrees.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">encoder_id</td><td>Encoder identifier </td></tr>
@@ -879,7 +879,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00225">225</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00247">247</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -919,7 +919,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00255">255</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00278">278</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -959,7 +959,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00165">165</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00186">186</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -999,7 +999,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00279">279</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00303">303</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1039,7 +1039,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00391">391</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00420">420</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1076,7 +1076,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00510">510</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00609">609</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1101,31 +1101,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00026">26</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
-
-</div>
-</div>
-<a id="a6beffec0ae43f9eecad4bedd6f28adbe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6beffec0ae43f9eecad4bedd6f28adbe">&#9670;&nbsp;</a></span>encoder_i2c_handles</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">I2C_HandleTypeDef* encoder_i2c_handles[<a class="el" href="../../de/d2b/as5600__driver_8h.html#a65364b2996b94f89529dccc8f6a38835">AS5600_MAX_ENCODERS</a>] = {NULL, NULL}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00053">53</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00031">31</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1149,14 +1125,14 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00050">50</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00056">56</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 5 2025 13:09:33 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 11 2025 23:51:11 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

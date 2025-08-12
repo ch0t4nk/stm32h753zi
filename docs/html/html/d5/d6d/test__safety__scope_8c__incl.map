@@ -1,7 +1,8 @@
 <map id="tests/copilot_integration/test_safety_scope.c" name="tests/copilot_integration/test_safety_scope.c">
-<area shape="rect" id="node1" title="Test file for validating safety&#45;rt.instructions.md scoping." alt="" coords="71,5,251,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,95,140,121"/>
-<area shape="rect" id="node3" href="$de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="165,95,335,121"/>
-<area shape="rect" id="node4" title=" " alt="" coords="164,169,235,196"/>
-<area shape="rect" id="node5" title=" " alt="" coords="259,169,342,196"/>
+<area shape="rect" id="node1" title="Test file for validating safety&#45;rt.instructions.md scoping." alt="" coords="115,5,295,47"/>
+<area shape="rect" id="node2" href="$d8/d36/stm32h7xx__hal_8h.html" title="Mock STM32H7xx HAL header for unit testing." alt="" coords="199,95,334,121"/>
+<area shape="rect" id="node6" href="$de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="5,169,176,196"/>
+<area shape="rect" id="node3" title=" " alt="" coords="172,244,255,271"/>
+<area shape="rect" id="node4" title=" " alt="" coords="286,244,357,271"/>
+<area shape="rect" id="node5" href="$d4/d03/mock__hal__types_8h.html" title="Mock HAL type definitions for unit testing environment." alt="" coords="251,169,391,196"/>
 </map>

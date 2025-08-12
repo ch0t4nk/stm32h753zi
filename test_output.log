@@ -23,20 +23,22 @@
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /workspaces/code/build_host_tests
-[ 11%] Building C object CMakeFiles/unity_host.dir/workspaces/code/external/unity/unity.c.o
-[ 22%] Linking C static library libunity_host.a
-[ 22%] Built target unity_host
-[ 33%] Building C object CMakeFiles/test_phase1_3_validation_host.dir/workspaces/code/tests/unit/test_phase1_3_validation.c.o
-/workspaces/code/tests/unit/test_phase1_3_validation.c: In function 'test_data_validation':
-/workspaces/code/tests/unit/test_phase1_3_validation.c:325:39: warning: the comparison will always evaluate as 'true' for the address of 'test_dataset' will never be NULL [-Waddress]
-  325 |     bool valid_check = (&test_dataset != NULL);
+[  9%] Building C object CMakeFiles/unity_host.dir/workspaces/code/external/unity/unity.c.o
+[ 18%] Linking C static library libunity_host.a
+[ 18%] Built target unity_host
+[ 27%] Building C object CMakeFiles/test_phase1_3_validation_host.dir/workspaces/code/tests/unit/test_phase1_3_validation.c.o
+/workspaces/code/tests/unit/test_phase1_3_validation.c: In function ‘test_data_validation’:
+/workspaces/code/tests/unit/test_phase1_3_validation.c:337:39: warning: the comparison will always evaluate as ‘true’ for the address of ‘test_dataset’ will never be NULL [-Waddress]
+  337 |     bool valid_check = (&test_dataset != NULL);
       |                                       ^~
-[ 44%] Building C object CMakeFiles/test_phase1_3_validation_host.dir/workspaces/code/tests/mocks/mock_hal_abstraction.c.o
-[ 55%] Linking C executable test_phase1_3_validation_host
-[ 55%] Built target test_phase1_3_validation_host
-[ 66%] Building C object CMakeFiles/test_safety_systems_hal_abstracted_host.dir/workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c.o
-[ 77%] Building C object CMakeFiles/test_safety_systems_hal_abstracted_host.dir/workspaces/code/tests/mocks/mock_hal_abstraction.c.o
-[ 88%] Building C object CMakeFiles/test_safety_systems_hal_abstracted_host.dir/workspaces/code/src/safety/emergency_stop_abstracted.c.o
+[ 36%] Building C object CMakeFiles/test_phase1_3_validation_host.dir/workspaces/code/tests/mocks/mock_hal_abstraction.c.o
+[ 45%] Building C object CMakeFiles/test_phase1_3_validation_host.dir/workspaces/code/tests/mocks/mock_drivers.c.o
+[ 54%] Linking C executable test_phase1_3_validation_host
+[ 54%] Built target test_phase1_3_validation_host
+[ 63%] Building C object CMakeFiles/test_safety_systems_hal_abstracted_host.dir/workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c.o
+[ 72%] Building C object CMakeFiles/test_safety_systems_hal_abstracted_host.dir/workspaces/code/tests/mocks/mock_hal_abstraction.c.o
+[ 81%] Building C object CMakeFiles/test_safety_systems_hal_abstracted_host.dir/workspaces/code/tests/mocks/mock_drivers.c.o
+[ 90%] Building C object CMakeFiles/test_safety_systems_hal_abstracted_host.dir/workspaces/code/src/safety/emergency_stop_abstracted.c.o
 [100%] Linking C executable test_safety_systems_hal_abstracted_host
 [100%] Built target test_safety_systems_hal_abstracted_host
 🏃 Running host-based unit tests via CTest...
@@ -54,30 +56,31 @@ test 1
 
 1: Test command: /workspaces/code/build_host_tests/test_phase1_3_validation_host
 1: Test timeout computed to be: 10000000
-1: /workspaces/code/tests/unit/test_phase1_3_validation.c:355:test_telemetry_packet_basic:PASS
-1: /workspaces/code/tests/unit/test_phase1_3_validation.c:356:test_dataset_sample_addition:PASS
-1: /workspaces/code/tests/unit/test_phase1_3_validation.c:357:test_dataset_overflow_protection:PASS
-1: /workspaces/code/tests/unit/test_phase1_3_validation.c:360:test_safety_bounds_validation:PASS
-1: /workspaces/code/tests/unit/test_phase1_3_validation.c:361:test_data_validation:PASS
-1: /workspaces/code/tests/unit/test_phase1_3_validation.c:364:test_time_constant_identification:PASS
-1: /workspaces/code/tests/unit/test_phase1_3_validation.c:365:test_mathematical_accuracy:PASS
-1: /workspaces/code/tests/unit/test_phase1_3_validation.c:246:test_l6470_parameter_calculation:FAIL: Expected 0 to be greater than 0
-1: /workspaces/code/tests/unit/test_phase1_3_validation.c:371:test_performance_timing:PASS
-1: /workspaces/code/tests/unit/test_phase1_3_validation.c:372:test_memory_usage:PASS
+1: /workspaces/code/tests/unit/test_phase1_3_validation.c:367:test_telemetry_packet_basic:PASS
+1: /workspaces/code/tests/unit/test_phase1_3_validation.c:368:test_dataset_sample_addition:PASS
+1: /workspaces/code/tests/unit/test_phase1_3_validation.c:369:test_dataset_overflow_protection:PASS
+1: /workspaces/code/tests/unit/test_phase1_3_validation.c:372:test_safety_bounds_validation:PASS
+1: /workspaces/code/tests/unit/test_phase1_3_validation.c:373:test_data_validation:PASS
+1: /workspaces/code/tests/unit/test_phase1_3_validation.c:376:test_time_constant_identification:PASS
+1: /workspaces/code/tests/unit/test_phase1_3_validation.c:377:test_mathematical_accuracy:PASS
+1: /workspaces/code/tests/unit/test_phase1_3_validation.c:247:test_l6470_parameter_calculation:FAIL: Expected 0 to be greater than 0
+1: /workspaces/code/tests/unit/test_phase1_3_validation.c:383:test_performance_timing:PASS
+1: /workspaces/code/tests/unit/test_phase1_3_validation.c:384:test_memory_usage:PASS
+1: 
 1: -----------------------
 1: 10 Tests 1 Failures 0 Ignored 
 1: FAIL
-1/2 Test #1: test_phase1_3_validation_host .............***Failed    0.04 sec
-/workspaces/code/tests/unit/test_phase1_3_validation.c:355:test_telemetry_packet_basic:PASS
-/workspaces/code/tests/unit/test_phase1_3_validation.c:356:test_dataset_sample_addition:PASS
-/workspaces/code/tests/unit/test_phase1_3_validation.c:357:test_dataset_overflow_protection:PASS
-/workspaces/code/tests/unit/test_phase1_3_validation.c:360:test_safety_bounds_validation:PASS
-/workspaces/code/tests/unit/test_phase1_3_validation.c:361:test_data_validation:PASS
-/workspaces/code/tests/unit/test_phase1_3_validation.c:364:test_time_constant_identification:PASS
-/workspaces/code/tests/unit/test_phase1_3_validation.c:365:test_mathematical_accuracy:PASS
-/workspaces/code/tests/unit/test_phase1_3_validation.c:246:test_l6470_parameter_calculation:FAIL: Expected 0 to be greater than 0
-/workspaces/code/tests/unit/test_phase1_3_validation.c:371:test_performance_timing:PASS
-/workspaces/code/tests/unit/test_phase1_3_validation.c:372:test_memory_usage:PASS
+1/2 Test #1: test_phase1_3_validation_host .............***Failed    0.01 sec
+/workspaces/code/tests/unit/test_phase1_3_validation.c:367:test_telemetry_packet_basic:PASS
+/workspaces/code/tests/unit/test_phase1_3_validation.c:368:test_dataset_sample_addition:PASS
+/workspaces/code/tests/unit/test_phase1_3_validation.c:369:test_dataset_overflow_protection:PASS
+/workspaces/code/tests/unit/test_phase1_3_validation.c:372:test_safety_bounds_validation:PASS
+/workspaces/code/tests/unit/test_phase1_3_validation.c:373:test_data_validation:PASS
+/workspaces/code/tests/unit/test_phase1_3_validation.c:376:test_time_constant_identification:PASS
+/workspaces/code/tests/unit/test_phase1_3_validation.c:377:test_mathematical_accuracy:PASS
+/workspaces/code/tests/unit/test_phase1_3_validation.c:247:test_l6470_parameter_calculation:FAIL: Expected 0 to be greater than 0
+/workspaces/code/tests/unit/test_phase1_3_validation.c:383:test_performance_timing:PASS
+/workspaces/code/tests/unit/test_phase1_3_validation.c:384:test_memory_usage:PASS
 
 -----------------------
 10 Tests 1 Failures 0 Ignored 
@@ -88,14 +91,39 @@ test 2
 
 2: Test command: /workspaces/code/build_host_tests/test_safety_systems_hal_abstracted_host
 2: Test timeout computed to be: 10000000
-2/2 Test #2: test_safety_systems_hal_abstracted_host ...***Exception: SegFault  0.01 sec
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:529:test_emergency_stop_init_success:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:530:test_emergency_stop_init_gpio_failure:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:533:test_emergency_stop_button_press:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:534:test_emergency_stop_button_debounce:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:535:test_emergency_stop_timing_requirement:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:538:test_emergency_stop_software_trigger:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:539:test_emergency_stop_multiple_sources:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:542:test_emergency_stop_reset_success:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:543:test_emergency_stop_reset_button_pressed:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:544:test_emergency_stop_reset_not_triggered:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:547:test_emergency_stop_led_heartbeat_armed:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:548:test_emergency_stop_led_triggered_state:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:551:test_emergency_stop_self_test_success:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:552:test_emergency_stop_self_test_gpio_failure:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:555:test_emergency_stop_statistics:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:558:test_emergency_stop_health_check_success:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:559:test_emergency_stop_health_check_not_initialized:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:562:test_hal_abstraction_gpio_operations:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:563:test_hal_abstraction_fault_injection:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:564:test_hal_abstraction_timing_functions:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:565:test_hal_abstraction_spi_operations:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:566:test_hal_abstraction_i2c_operations:PASS
+2: /workspaces/code/tests/unit/test_safety_systems_hal_abstracted.c:569:test_hal_abstraction_integration_emergency_stop_full_cycle:PASS
+2: 
+2: -----------------------
+2: 23 Tests 0 Failures 0 Ignored 
+2: OK
+2/2 Test #2: test_safety_systems_hal_abstracted_host ...   Passed    0.01 sec
 
+50% tests passed, 1 tests failed out of 2
 
-0% tests passed, 2 tests failed out of 2
-
-Total Test time (real) =   0.08 sec
+Total Test time (real) =   0.03 sec
 
 The following tests FAILED:
 	  1 - test_phase1_3_validation_host (Failed)
-	  2 - test_safety_systems_hal_abstracted_host (SEGFAULT)
 Errors while running CTest

@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['hal_5fbusy_3240',['HAL_BUSY',['../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478fa8532fa3641ae7c14cb1b0554e2d9cbc7',1,'mock_hal.h']]],
-  ['hal_5ferror_3241',['HAL_ERROR',['../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478fa5a04e395e501e4e400172c610478c4a4',1,'mock_hal.h']]],
-  ['hal_5fok_3242',['HAL_OK',['../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478fa6eb724a07061d89a4a2052744e5a3632',1,'mock_hal.h']]],
-  ['hal_5ftimeout_3243',['HAL_TIMEOUT',['../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478fa00c89549bc881c35e8e4cd9e718337e5',1,'mock_hal.h']]]
+  ['gpio_5fpin_5freset_7296',['GPIO_PIN_RESET',['../d4/d03/mock__hal__types_8h.html#a5b3ef0486b179415581eb342e0ea6b43a90af2af95004ea61d76950ff3f2f6ec2',1,'mock_hal_types.h']]],
+  ['gpio_5fpin_5fset_7297',['GPIO_PIN_SET',['../d4/d03/mock__hal__types_8h.html#a5b3ef0486b179415581eb342e0ea6b43a746c062509db3ad1e47beed7527f9f8a',1,'mock_hal_types.h']]]
 ];

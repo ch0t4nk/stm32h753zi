@@ -1,4 +1,7 @@
 <map id="src/communication/comm_protocol.h" name="src/communication/comm_protocol.h">
-<area shape="rect" id="node1" title="Communication Protocol Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="5,5,196,47"/>
+<area shape="rect" id="node1" title="Communication Protocol Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="103,5,293,47"/>
 <area shape="rect" id="node2" href="$d8/d86/comm__protocol_8c.html" title="Communication Protocol Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="5,95,196,136"/>
+<area shape="rect" id="node3" href="$de/d6d/rtos__tasks_8h.html" title="FreeRTOS Task Implementations for STM32H753ZI Motor Control System." alt="" coords="220,102,373,129"/>
+<area shape="rect" id="node4" href="$dc/dd2/power__management_8c.html" title="Advanced Power Management Implementation for STM32H753ZI Motor Control System." alt="" coords="82,184,301,211"/>
+<area shape="rect" id="node5" href="$d3/d37/rtos__tasks_8c.html" title="FreeRTOS Task Implementations for STM32H753ZI Motor Control System." alt="" coords="325,184,477,211"/>
 </map>

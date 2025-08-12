@@ -76,7 +76,7 @@ $(function() {
 
 <p>Main Application API - STM32H753ZI Stepper Motor Control Demo.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;stm32h7xx_hal.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="../../d8/d36/stm32h7xx__hal_8h_source.html">stm32h7xx_hal.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../de/d11/error__codes_8h_source.html">common/error_codes.h</a>&quot;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -84,11 +84,12 @@ Include dependency graph for main_application.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/d46/main__application_8h__incl.png" border="0" usemap="#asrc_2application_2main__application_8h" alt=""/></div>
 <map name="asrc_2application_2main__application_8h" id="asrc_2application_2main__application_8h">
-<area shape="rect" title="Main Application API &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="173,5,327,47"/>
-<area shape="rect" title=" " alt="" coords="5,95,140,121"/>
-<area shape="rect" href="../../de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="165,95,335,121"/>
-<area shape="rect" title=" " alt="" coords="321,169,403,196"/>
-<area shape="rect" title=" " alt="" coords="215,169,285,196"/>
+<area shape="rect" title="Main Application API &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="28,5,183,47"/>
+<area shape="rect" href="../../d8/d36/stm32h7xx__hal_8h.html" title="Mock STM32H7xx HAL header for unit testing." alt="" coords="38,95,173,121"/>
+<area shape="rect" title=" " alt="" coords="11,244,93,271"/>
+<area shape="rect" href="../../de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="251,169,421,196"/>
+<area shape="rect" title=" " alt="" coords="178,244,249,271"/>
+<area shape="rect" href="../../d4/d03/mock__hal__types_8h.html" title="Mock HAL type definitions for unit testing environment." alt="" coords="35,169,175,196"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -96,8 +97,10 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../df/d46/main__application_8h__dep__incl.png" border="0" usemap="#asrc_2application_2main__application_8hdep" alt=""/></div>
 <map name="asrc_2application_2main__application_8hdep" id="asrc_2application_2main__application_8hdep">
-<area shape="rect" title="Main Application API &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="5,5,160,47"/>
-<area shape="rect" href="../../d9/dfd/main__application_8c.html" title="Main Application &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="5,95,160,136"/>
+<area shape="rect" title="Main Application API &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="195,5,349,47"/>
+<area shape="rect" href="../../d0/d29/main_8c.html" title=" " alt="" coords="5,102,171,129"/>
+<area shape="rect" href="../../d9/dfd/main__application_8c.html" title="Main Application &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="195,95,349,136"/>
+<area shape="rect" href="../../d3/d37/rtos__tasks_8c.html" title="FreeRTOS Task Implementations for STM32H753ZI Motor Control System." alt="" coords="373,102,525,129"/>
 </map>
 </div>
 </div>
@@ -117,12 +120,18 @@ Functions</h2></td></tr>
 <tr class="memitem:a1ffc584d4d2e59435a34430a6c4377e5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d2d/main__application_8h.html#a1ffc584d4d2e59435a34430a6c4377e5">main_application_is_initialized</a> (void)</td></tr>
 <tr class="memdesc:a1ffc584d4d2e59435a34430a6c4377e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if application is initialized.  <a href="../../dd/d2d/main__application_8h.html#a1ffc584d4d2e59435a34430a6c4377e5">More...</a><br /></td></tr>
 <tr class="separator:a1ffc584d4d2e59435a34430a6c4377e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac293332fa6bcf796e53a223aa7922232"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d2d/main__application_8h.html#ac293332fa6bcf796e53a223aa7922232">main_application_get_stats</a> (uint32_t *uptime_ms, uint32_t *cycles)</td></tr>
+<tr class="memdesc:ac293332fa6bcf796e53a223aa7922232"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get application runtime statistics.  <a href="../../dd/d2d/main__application_8h.html#ac293332fa6bcf796e53a223aa7922232">More...</a><br /></td></tr>
+<tr class="separator:ac293332fa6bcf796e53a223aa7922232"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e470fe5644ef94a35094c744f6415c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d2d/main__application_8h.html#a9e470fe5644ef94a35094c744f6415c7">main_application_self_test</a> (void)</td></tr>
+<tr class="memdesc:a9e470fe5644ef94a35094c744f6415c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform application self-test including watchdog validation.  <a href="../../dd/d2d/main__application_8h.html#a9e470fe5644ef94a35094c744f6415c7">More...</a><br /></td></tr>
+<tr class="separator:a9e470fe5644ef94a35094c744f6415c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Main Application API - STM32H753ZI Stepper Motor Control Demo. </p>
 <dl class="section author"><dt>Author</dt><dd>STM32H753ZI Project Team </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2025-08-05</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Main application API demonstrating closed-loop stepper motor control </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Main application API with integrated safety system and watchdog management Phase 1 Step 3: Watchdog Integration - COMPLETE </dd></dl>
 
 <p class="definition">Definition in file <a class="el" href="../../dd/d2d/main__application_8h_source.html">main_application.h</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
@@ -144,10 +153,58 @@ Functions</h2></td></tr>
 
 <p>Emergency stop all motors. </p>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t - SYSTEM_OK on success, error code on failure</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>This function performs immediate emergency stop of all motors</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function performs immediate emergency stop of all motors via the integrated safety system</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/dfd/main__application_8c_source.html#l00069">69</a> of file <a class="el" href="../../d9/dfd/main__application_8c_source.html">main_application.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/dfd/main__application_8c_source.html#l00156">156</a> of file <a class="el" href="../../d9/dfd/main__application_8c_source.html">main_application.c</a>.</p>
+
+</div>
+</div>
+<a id="ac293332fa6bcf796e53a223aa7922232"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac293332fa6bcf796e53a223aa7922232">&#9670;&nbsp;</a></span>main_application_get_stats()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> main_application_get_stats </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>uptime_ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>cycles</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get application runtime statistics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uptime_ms</td><td>Pointer to store uptime in milliseconds </td></tr>
+    <tr><td class="paramname">cycles</td><td>Pointer to store application cycles </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SystemError_t - SYSTEM_OK on success, error code on failure</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uptime_ms</td><td>Pointer to store uptime in milliseconds </td></tr>
+    <tr><td class="paramname">cycles</td><td>Pointer to store application cycles </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d9/dfd/main__application_8c_source.html#l00185">185</a> of file <a class="el" href="../../d9/dfd/main__application_8c_source.html">main_application.c</a>.</p>
 
 </div>
 </div>
@@ -170,6 +227,7 @@ Functions</h2></td></tr>
 <p>Initialize main application. </p>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t - SYSTEM_OK on success, error code on failure</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>This function initializes:<ul>
+<li>Safety system (emergency stop, fault monitoring, watchdog)</li>
 <li>HAL peripheral validation</li>
 <li>Motor controller system</li>
 <li>Both stepper motors</li>
@@ -180,7 +238,7 @@ Functions</h2></td></tr>
 </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/dfd/main__application_8c_source.html#l00039">39</a> of file <a class="el" href="../../d9/dfd/main__application_8c_source.html">main_application.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/dfd/main__application_8c_source.html#l00049">49</a> of file <a class="el" href="../../d9/dfd/main__application_8c_source.html">main_application.c</a>.</p>
 
 </div>
 </div>
@@ -203,7 +261,7 @@ Functions</h2></td></tr>
 <p>Check if application is initialized. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if initialized, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/dfd/main__application_8c_source.html#l00078">78</a> of file <a class="el" href="../../d9/dfd/main__application_8c_source.html">main_application.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/dfd/main__application_8c_source.html#l00175">175</a> of file <a class="el" href="../../d9/dfd/main__application_8c_source.html">main_application.c</a>.</p>
 
 </div>
 </div>
@@ -226,22 +284,54 @@ Functions</h2></td></tr>
 <p>Main application loop (call continuously) </p>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t - Overall system status</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>This function manages:<ul>
+<li>Watchdog refresh (safety critical, every 50ms)</li>
+<li>Safety system periodic checks (every 10ms)</li>
 <li>Motor control loop execution (50Hz)</li>
 <li>Demo sequence progression</li>
-<li>Status reporting (1Hz)</li>
+<li>Status reporting (every 5 seconds)</li>
 <li>Error handling and recovery</li>
 </ul>
 </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/dfd/main__application_8c_source.html#l00053">53</a> of file <a class="el" href="../../d9/dfd/main__application_8c_source.html">main_application.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/dfd/main__application_8c_source.html#l00081">81</a> of file <a class="el" href="../../d9/dfd/main__application_8c_source.html">main_application.c</a>.</p>
+
+</div>
+</div>
+<a id="a9e470fe5644ef94a35094c744f6415c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e470fe5644ef94a35094c744f6415c7">&#9670;&nbsp;</a></span>main_application_self_test()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> main_application_self_test </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Perform application self-test including watchdog validation. </p>
+<dl class="section return"><dt>Returns</dt><dd>SystemError_t - SYSTEM_OK on success, error code on failure</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function tests:<ul>
+<li>Safety system functionality</li>
+<li>Watchdog system configuration and operation</li>
+<li>Application initialization state</li>
+</ul>
+</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d9/dfd/main__application_8c_source.html#l00206">206</a> of file <a class="el" href="../../d9/dfd/main__application_8c_source.html">main_application.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 5 2025 13:09:33 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 11 2025 23:51:10 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

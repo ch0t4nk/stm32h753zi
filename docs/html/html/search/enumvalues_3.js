@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['gpio_5fpin_5freset_3238',['GPIO_PIN_RESET',['../d4/d05/mock__hal_8h.html#a5b3ef0486b179415581eb342e0ea6b43a90af2af95004ea61d76950ff3f2f6ec2',1,'mock_hal.h']]],
-  ['gpio_5fpin_5fset_3239',['GPIO_PIN_SET',['../d4/d05/mock__hal_8h.html#a5b3ef0486b179415581eb342e0ea6b43a746c062509db3ad1e47beed7527f9f8a',1,'mock_hal.h']]]
+  ['fault_5fseverity_5fcritical_7292',['FAULT_SEVERITY_CRITICAL',['../df/d2b/fault__monitor_8h.html#adf1fa7a9d2794610474b03fa37677a01aade5d77e601d06be284fac305c3787b4',1,'fault_monitor.h']]],
+  ['fault_5fseverity_5ferror_7293',['FAULT_SEVERITY_ERROR',['../df/d2b/fault__monitor_8h.html#adf1fa7a9d2794610474b03fa37677a01a5f56cb2c3d27cb44954f2c082a223cf5',1,'fault_monitor.h']]],
+  ['fault_5fseverity_5finfo_7294',['FAULT_SEVERITY_INFO',['../df/d2b/fault__monitor_8h.html#adf1fa7a9d2794610474b03fa37677a01addaf53e458153663592f6f3a912497fd',1,'fault_monitor.h']]],
+  ['fault_5fseverity_5fwarning_7295',['FAULT_SEVERITY_WARNING',['../df/d2b/fault__monitor_8h.html#adf1fa7a9d2794610474b03fa37677a01aab84fc586f34534c5305214192ff7826',1,'fault_monitor.h']]]
 ];

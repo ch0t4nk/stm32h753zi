@@ -1,9 +1,23 @@
 var searchData=
 [
-  ['calibration_5fdata_5ft_2102',['calibration_data_t',['../d5/d0d/structcalibration__data__t.html',1,'']]],
-  ['circular_5fbuffer_5ft_2103',['circular_buffer_t',['../df/d3c/structcircular__buffer__t.html',1,'']]],
-  ['commchannelconfig_5ft_2104',['CommChannelConfig_t',['../d8/da6/structCommChannelConfig__t.html',1,'']]],
-  ['communicationstate_5ft_2105',['CommunicationState_t',['../df/d35/structCommunicationState__t.html',1,'']]],
-  ['config_5fparameter_5ft_2106',['config_parameter_t',['../d7/d9a/structconfig__parameter__t.html',1,'']]],
-  ['config_5fparameter_5fvalue_5ft_2107',['config_parameter_value_t',['../d1/d7c/unionconfig__parameter__value__t.html',1,'']]]
+  ['calibration_5fdata_5ft_4602',['calibration_data_t',['../d5/d0d/structcalibration__data__t.html',1,'']]],
+  ['canmessage_5ft_4603',['CANMessage_t',['../dd/d24/structCANMessage__t.html',1,'']]],
+  ['characterizationcontext_5ft_4604',['CharacterizationContext_t',['../dd/d49/structCharacterizationContext__t.html',1,'']]],
+  ['characterizationdataset_5ft_4605',['CharacterizationDataSet_t',['../d8/d84/structCharacterizationDataSet__t.html',1,'']]],
+  ['characterizationtestconfig_5ft_4606',['CharacterizationTestConfig_t',['../d5/d89/structCharacterizationTestConfig__t.html',1,'']]],
+  ['circular_5fbuffer_5ft_4607',['circular_buffer_t',['../df/d3c/structcircular__buffer__t.html',1,'']]],
+  ['codequalitymetrics_5ft_4608',['CodeQualityMetrics_t',['../da/d62/structCodeQualityMetrics__t.html',1,'']]],
+  ['commchannelconfig_5ft_4609',['CommChannelConfig_t',['../d8/da6/structCommChannelConfig__t.html',1,'']]],
+  ['commtelemetrydata_5ft_4610',['CommTelemetryData_t',['../da/d9c/structCommTelemetryData__t.html',1,'']]],
+  ['communicationstate_5ft_4611',['CommunicationState_t',['../df/d35/structCommunicationState__t.html',1,'']]],
+  ['complianceconfiguration_5ft_4612',['ComplianceConfiguration_t',['../dd/d7b/structComplianceConfiguration__t.html',1,'']]],
+  ['config_5fparameter_5ft_4613',['config_parameter_t',['../d7/d9a/structconfig__parameter__t.html',1,'']]],
+  ['config_5fparameter_5fvalue_5ft_4614',['config_parameter_value_t',['../d1/d7c/unionconfig__parameter__value__t.html',1,'']]],
+  ['controlhistory_5ft_4615',['ControlHistory_t',['../d5/d2c/structControlHistory__t.html',1,'']]],
+  ['controllimits_5ft_4616',['ControlLimits_t',['../de/dac/structControlLimits__t.html',1,'']]],
+  ['controlstate_5ft_4617',['ControlState_t',['../d6/d57/structControlState__t.html',1,'']]],
+  ['coordinatedmotionstate_5ft_4618',['CoordinatedMotionState_t',['../d7/d2b/structCoordinatedMotionState__t.html',1,'']]],
+  ['coordinatedmovecommand_5ft_4619',['CoordinatedMoveCommand_t',['../d7/da6/structCoordinatedMoveCommand__t.html',1,'']]],
+  ['coordinationstatus_5ft_4620',['CoordinationStatus_t',['../de/dba/structCoordinationStatus__t.html',1,'']]],
+  ['coordinatormotorstate_5ft_4621',['CoordinatorMotorState_t',['../d1/d11/structCoordinatorMotorState__t.html',1,'']]]
 ];

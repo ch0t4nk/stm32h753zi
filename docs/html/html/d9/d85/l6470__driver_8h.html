@@ -78,10 +78,10 @@ $(function() {
 
 <p>L6470 Stepper Driver Header - X-CUBE-SPN2 Based Implementation.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="../../d3/d91/hardware__config_8h_source.html">config/hardware_config.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="../../de/d11/error__codes_8h_source.html">common/error_codes.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d3/d91/hardware__config_8h_source.html">config/hardware_config.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../de/d58/motor__config_8h_source.html">config/motor_config.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../de/d11/error__codes_8h_source.html">common/error_codes.h</a>&quot;</code><br />
-<code>#include &quot;stm32h7xx_hal.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d8/d36/stm32h7xx__hal_8h_source.html">stm32h7xx_hal.h</a>&quot;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -89,13 +89,15 @@ Include dependency graph for l6470_driver.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/d34/l6470__driver_8h__incl.png" border="0" usemap="#asrc_2drivers_2l6470_2l6470__driver_8h" alt=""/></div>
 <map name="asrc_2drivers_2l6470_2l6470__driver_8h" id="asrc_2drivers_2l6470_2l6470__driver_8h">
-<area shape="rect" title="L6470 Stepper Driver Header &#45; X&#45;CUBE&#45;SPN2 Based Implementation." alt="" coords="319,5,489,47"/>
-<area shape="rect" href="../../d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="5,95,189,121"/>
-<area shape="rect" title=" " alt="" coords="95,169,230,196"/>
-<area shape="rect" href="../../de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="264,95,427,121"/>
-<area shape="rect" title=" " alt="" coords="429,169,499,196"/>
-<area shape="rect" href="../../de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="501,95,672,121"/>
-<area shape="rect" title=" " alt="" coords="607,169,689,196"/>
+<area shape="rect" title="L6470 Stepper Driver Header &#45; X&#45;CUBE&#45;SPN2 Based Implementation." alt="" coords="242,5,413,47"/>
+<area shape="rect" href="../../de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="21,259,191,285"/>
+<area shape="rect" title=" " alt="" coords="187,333,270,360"/>
+<area shape="rect" title=" " alt="" coords="456,333,527,360"/>
+<area shape="rect" href="../../d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="153,95,337,121"/>
+<area shape="rect" href="../../de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="634,95,797,121"/>
+<area shape="rect" href="../../d8/d36/stm32h7xx__hal_8h.html" title="Mock STM32H7xx HAL header for unit testing." alt="" coords="352,177,487,203"/>
+<area shape="rect" href="../../d6/dee/hal__abstraction_8h.html" title="Hardware Abstraction Layer (HAL) Interface for STM32H753ZI." alt="" coords="171,169,318,211"/>
+<area shape="rect" href="../../d4/d03/mock__hal__types_8h.html" title="Mock HAL type definitions for unit testing environment." alt="" coords="368,259,508,285"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -103,9 +105,15 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d7/dff/l6470__driver_8h__dep__incl.png" border="0" usemap="#asrc_2drivers_2l6470_2l6470__driver_8hdep" alt=""/></div>
 <map name="asrc_2drivers_2l6470_2l6470__driver_8hdep" id="asrc_2drivers_2l6470_2l6470__driver_8hdep">
-<area shape="rect" title="L6470 Stepper Driver Header &#45; X&#45;CUBE&#45;SPN2 Based Implementation." alt="" coords="92,5,263,47"/>
-<area shape="rect" href="../../d0/dde/motor__controller_8c.html" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="5,95,163,136"/>
-<area shape="rect" href="../../d1/d41/l6470__driver_8c.html" title="L6470 Stepper Driver Implementation &#45; STM32H7 SPI HAL." alt="" coords="187,95,357,136"/>
+<area shape="rect" title="L6470 Stepper Driver Header &#45; X&#45;CUBE&#45;SPN2 Based Implementation." alt="" coords="689,5,860,47"/>
+<area shape="rect" href="../../dd/dbd/motor__characterization_8c.html" title="Motor parameter identification and characterization implementation." alt="" coords="5,95,163,136"/>
+<area shape="rect" href="../../d0/dde/motor__controller_8c.html" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="187,95,344,136"/>
+<area shape="rect" href="../../d1/d41/l6470__driver_8c.html" title="L6470 Stepper Driver Implementation &#45; STM32H7 SPI HAL." alt="" coords="368,95,539,136"/>
+<area shape="rect" href="../../dd/d68/optimization__compatibility_8c.html" title="Compatibility layer implementation for optimization module development." alt="" coords="563,95,776,136"/>
+<area shape="rect" href="../../d3/da2/emergency__stop_8c.html" title="Emergency Stop System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="800,95,963,136"/>
+<area shape="rect" href="../../dc/d33/l6470__fault__monitor_8c.html" title="L6470 Hardware Fault Monitoring Implementation." alt="" coords="987,95,1149,136"/>
+<area shape="rect" href="../../db/d1a/safety__system_8c.html" title="Safety System Manager Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1173,102,1371,129"/>
+<area shape="rect" href="../../d7/df8/test__l6470__register__programming_8c.html" title="Unit tests for L6470 register programming validation." alt="" coords="1395,95,1581,136"/>
 </map>
 </div>
 </div>
@@ -119,7 +127,7 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a0df5304be0af04995e86be4e81a4c21f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a0df5304be0af04995e86be4e81a4c21f">L6470_MAX_DEVICES</a>&#160;&#160;&#160;<a class="el" href="../../de/d58/motor__config_8h.html#a40dfd7fdfce455ce507bf3fed368c2ed">MAX_MOTORS</a></td></tr>
+<tr class="memitem:a0df5304be0af04995e86be4e81a4c21f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a0df5304be0af04995e86be4e81a4c21f">L6470_MAX_DEVICES</a>&#160;&#160;&#160;<a class="el" href="../../d7/df8/test__l6470__register__programming_8c.html#a40dfd7fdfce455ce507bf3fed368c2ed">MAX_MOTORS</a></td></tr>
 <tr class="separator:a0df5304be0af04995e86be4e81a4c21f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e1858bcbf0d225fea5ef7c32bb54ac8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a0e1858bcbf0d225fea5ef7c32bb54ac8">L6470_SPI_INSTANCE</a>&#160;&#160;&#160;<a class="el" href="../../d3/d91/hardware__config_8h.html#a463ad6f2f4e61cfd3b45d842141d1cc1">MOTOR_SPI_INSTANCE</a></td></tr>
 <tr class="separator:a0e1858bcbf0d225fea5ef7c32bb54ac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -253,45 +261,47 @@ Macros</h2></td></tr>
 <tr class="separator:ab38bd12a134a5867b9f85259508517e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49fd0d70a2b3f076bc20900b8539e2b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a49fd0d70a2b3f076bc20900b8539e2b2">L6470_MOT_STATUS_CONST_SPD</a>&#160;&#160;&#160;0x03</td></tr>
 <tr class="separator:a49fd0d70a2b3f076bc20900b8539e2b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8effe093baba5c57e0252cd4e3b68ec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#ac8effe093baba5c57e0252cd4e3b68ec">L6470_STATUS_MOT_STATUS_Msk</a>&#160;&#160;&#160;<a class="el" href="../../d9/d85/l6470__driver_8h.html#a51ae580397cb0c45ec2f6fcb312ec8af">L6470_STATUS_MOT_STATUS</a></td></tr>
+<tr class="separator:ac8effe093baba5c57e0252cd4e3b68ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a33fe15521424b1f7730943c3dc8872e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a33fe15521424b1f7730943c3dc8872e0">L6470_Init</a> (SPI_HandleTypeDef *hspi)</td></tr>
+<tr class="memitem:a33fe15521424b1f7730943c3dc8872e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a33fe15521424b1f7730943c3dc8872e0">L6470_Init</a> (<a class="el" href="../../d5/d0d/structSPI__HandleTypeDef.html">SPI_HandleTypeDef</a> *hspi)</td></tr>
 <tr class="memdesc:a33fe15521424b1f7730943c3dc8872e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize L6470 driver system.  <a href="../../d9/d85/l6470__driver_8h.html#a33fe15521424b1f7730943c3dc8872e0">More...</a><br /></td></tr>
 <tr class="separator:a33fe15521424b1f7730943c3dc8872e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee9d10b8663f13884d69e7767cbb20b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#aee9d10b8663f13884d69e7767cbb20b0">L6470_DeviceInit</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, uint8_t device_id, SPI_HandleTypeDef *hspi)</td></tr>
+<tr class="memitem:aee9d10b8663f13884d69e7767cbb20b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#aee9d10b8663f13884d69e7767cbb20b0">L6470_DeviceInit</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, uint8_t device_id, <a class="el" href="../../d5/d0d/structSPI__HandleTypeDef.html">SPI_HandleTypeDef</a> *hspi)</td></tr>
 <tr class="memdesc:aee9d10b8663f13884d69e7767cbb20b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a specific L6470 device.  <a href="../../d9/d85/l6470__driver_8h.html#aee9d10b8663f13884d69e7767cbb20b0">More...</a><br /></td></tr>
 <tr class="separator:aee9d10b8663f13884d69e7767cbb20b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a539ccbeab9168b19e88576486b0a5065"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a539ccbeab9168b19e88576486b0a5065">L6470_SendCommand</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, uint8_t command, uint32_t param)</td></tr>
+<tr class="memitem:a539ccbeab9168b19e88576486b0a5065"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a539ccbeab9168b19e88576486b0a5065">L6470_SendCommand</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, uint8_t command, uint32_t param)</td></tr>
 <tr class="memdesc:a539ccbeab9168b19e88576486b0a5065"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send command to L6470 device.  <a href="../../d9/d85/l6470__driver_8h.html#a539ccbeab9168b19e88576486b0a5065">More...</a><br /></td></tr>
 <tr class="separator:a539ccbeab9168b19e88576486b0a5065"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a589ec2d0b6da54c90e45f18304646c4f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a589ec2d0b6da54c90e45f18304646c4f">L6470_ReadRegister</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, uint8_t reg, uint32_t *value)</td></tr>
+<tr class="memitem:a589ec2d0b6da54c90e45f18304646c4f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a589ec2d0b6da54c90e45f18304646c4f">L6470_ReadRegister</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, uint8_t reg, uint32_t *value)</td></tr>
 <tr class="memdesc:a589ec2d0b6da54c90e45f18304646c4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read register from L6470 device.  <a href="../../d9/d85/l6470__driver_8h.html#a589ec2d0b6da54c90e45f18304646c4f">More...</a><br /></td></tr>
 <tr class="separator:a589ec2d0b6da54c90e45f18304646c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3f7d4e0bfb5ac2f9a320ac9729f3410"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#ad3f7d4e0bfb5ac2f9a320ac9729f3410">L6470_WriteRegister</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, uint8_t reg, uint32_t value)</td></tr>
+<tr class="memitem:ad3f7d4e0bfb5ac2f9a320ac9729f3410"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#ad3f7d4e0bfb5ac2f9a320ac9729f3410">L6470_WriteRegister</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, uint8_t reg, uint32_t value)</td></tr>
 <tr class="memdesc:ad3f7d4e0bfb5ac2f9a320ac9729f3410"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write register to L6470 device.  <a href="../../d9/d85/l6470__driver_8h.html#ad3f7d4e0bfb5ac2f9a320ac9729f3410">More...</a><br /></td></tr>
 <tr class="separator:ad3f7d4e0bfb5ac2f9a320ac9729f3410"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab377f90a8694d8753cc030a5c8f0b3e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#ab377f90a8694d8753cc030a5c8f0b3e5">L6470_MoveToPosition</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, uint32_t position)</td></tr>
+<tr class="memitem:ab377f90a8694d8753cc030a5c8f0b3e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#ab377f90a8694d8753cc030a5c8f0b3e5">L6470_MoveToPosition</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, uint32_t position)</td></tr>
 <tr class="memdesc:ab377f90a8694d8753cc030a5c8f0b3e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move motor to absolute position.  <a href="../../d9/d85/l6470__driver_8h.html#ab377f90a8694d8753cc030a5c8f0b3e5">More...</a><br /></td></tr>
 <tr class="separator:ab377f90a8694d8753cc030a5c8f0b3e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4394533b18a95a3326da8778f726110"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#aa4394533b18a95a3326da8778f726110">L6470_MoveSteps</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, int32_t steps)</td></tr>
+<tr class="memitem:aa4394533b18a95a3326da8778f726110"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#aa4394533b18a95a3326da8778f726110">L6470_MoveSteps</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, int32_t steps)</td></tr>
 <tr class="memdesc:aa4394533b18a95a3326da8778f726110"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move motor relative steps.  <a href="../../d9/d85/l6470__driver_8h.html#aa4394533b18a95a3326da8778f726110">More...</a><br /></td></tr>
 <tr class="separator:aa4394533b18a95a3326da8778f726110"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebc2546a5ee9efb982945b7a96eb8e39"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#aebc2546a5ee9efb982945b7a96eb8e39">L6470_Run</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, uint32_t speed, uint8_t direction)</td></tr>
+<tr class="memitem:aebc2546a5ee9efb982945b7a96eb8e39"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#aebc2546a5ee9efb982945b7a96eb8e39">L6470_Run</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, uint32_t speed, uint8_t direction)</td></tr>
 <tr class="memdesc:aebc2546a5ee9efb982945b7a96eb8e39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run motor at specified speed.  <a href="../../d9/d85/l6470__driver_8h.html#aebc2546a5ee9efb982945b7a96eb8e39">More...</a><br /></td></tr>
 <tr class="separator:aebc2546a5ee9efb982945b7a96eb8e39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88c6c9f206355c6b55975e1073db6a62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a88c6c9f206355c6b55975e1073db6a62">L6470_Stop</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle)</td></tr>
+<tr class="memitem:a88c6c9f206355c6b55975e1073db6a62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a88c6c9f206355c6b55975e1073db6a62">L6470_Stop</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle)</td></tr>
 <tr class="memdesc:a88c6c9f206355c6b55975e1073db6a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop motor (soft stop)  <a href="../../d9/d85/l6470__driver_8h.html#a88c6c9f206355c6b55975e1073db6a62">More...</a><br /></td></tr>
 <tr class="separator:a88c6c9f206355c6b55975e1073db6a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56806c0999f5fafe2c76bfb561a09e8e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a56806c0999f5fafe2c76bfb561a09e8e">L6470_EmergencyStop</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle)</td></tr>
+<tr class="memitem:a56806c0999f5fafe2c76bfb561a09e8e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a56806c0999f5fafe2c76bfb561a09e8e">L6470_EmergencyStop</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle)</td></tr>
 <tr class="memdesc:a56806c0999f5fafe2c76bfb561a09e8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emergency stop motor (hard stop)  <a href="../../d9/d85/l6470__driver_8h.html#a56806c0999f5fafe2c76bfb561a09e8e">More...</a><br /></td></tr>
 <tr class="separator:a56806c0999f5fafe2c76bfb561a09e8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fc9cb4c1b370c4f7b30a54df545b3f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a6fc9cb4c1b370c4f7b30a54df545b3f8">L6470_GetPosition</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, uint32_t *position)</td></tr>
+<tr class="memitem:a6fc9cb4c1b370c4f7b30a54df545b3f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a6fc9cb4c1b370c4f7b30a54df545b3f8">L6470_GetPosition</a> (<a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *handle, uint32_t *position)</td></tr>
 <tr class="memdesc:a6fc9cb4c1b370c4f7b30a54df545b3f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current motor position.  <a href="../../d9/d85/l6470__driver_8h.html#a6fc9cb4c1b370c4f7b30a54df545b3f8">More...</a><br /></td></tr>
 <tr class="separator:a6fc9cb4c1b370c4f7b30a54df545b3f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3f4ca881bcaf7103c31171ba569e3e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#ac3f4ca881bcaf7103c31171ba569e3e1">l6470_init</a> (SPI_HandleTypeDef *spi_handle)</td></tr>
-<tr class="memdesc:ac3f4ca881bcaf7103c31171ba569e3e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize L6470 driver system.  <a href="../../d9/d85/l6470__driver_8h.html#ac3f4ca881bcaf7103c31171ba569e3e1">More...</a><br /></td></tr>
-<tr class="separator:ac3f4ca881bcaf7103c31171ba569e3e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c9bc9ef73738d1c09f801b26d261d27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#a1c9bc9ef73738d1c09f801b26d261d27">l6470_init</a> (void)</td></tr>
+<tr class="memdesc:a1c9bc9ef73738d1c09f801b26d261d27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize L6470 driver system.  <a href="../../d9/d85/l6470__driver_8h.html#a1c9bc9ef73738d1c09f801b26d261d27">More...</a><br /></td></tr>
+<tr class="separator:a1c9bc9ef73738d1c09f801b26d261d27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab48e7483059b23b1e7d1bf6edf7ad149"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d85/l6470__driver_8h.html#ab48e7483059b23b1e7d1bf6edf7ad149">l6470_init_motor</a> (uint8_t motor_id)</td></tr>
 <tr class="memdesc:ab48e7483059b23b1e7d1bf6edf7ad149"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize individual motor configuration.  <a href="../../d9/d85/l6470__driver_8h.html#ab48e7483059b23b1e7d1bf6edf7ad149">More...</a><br /></td></tr>
 <tr class="separator:ab48e7483059b23b1e7d1bf6edf7ad149"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -350,7 +360,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00053">53</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00061">61</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -366,7 +376,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00069">69</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00077">77</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -382,7 +392,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00061">61</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00069">69</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -398,7 +408,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00062">62</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00070">70</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -414,7 +424,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00059">59</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00067">67</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -430,7 +440,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00057">57</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00065">65</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -446,7 +456,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00058">58</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00066">66</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -462,7 +472,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00068">68</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00076">76</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -478,7 +488,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00066">66</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00074">74</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -494,7 +504,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00056">56</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00064">64</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -510,7 +520,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00051">51</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00059">59</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -526,7 +536,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00060">60</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00068">68</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -542,7 +552,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00064">64</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00072">72</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -558,7 +568,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00063">63</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00071">71</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -574,7 +584,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00054">54</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00062">62</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -590,7 +600,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00052">52</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00060">60</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -606,7 +616,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00067">67</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00075">75</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -622,7 +632,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00065">65</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00073">73</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -638,7 +648,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00055">55</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00063">63</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -654,7 +664,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00034">34</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00038">38</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -670,7 +680,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00033">33</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00037">37</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -681,12 +691,12 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define L6470_MAX_DEVICES&#160;&#160;&#160;<a class="el" href="../../de/d58/motor__config_8h.html#a40dfd7fdfce455ce507bf3fed368c2ed">MAX_MOTORS</a></td>
+          <td class="memname">#define L6470_MAX_DEVICES&#160;&#160;&#160;<a class="el" href="../../d7/df8/test__l6470__register__programming_8c.html#a40dfd7fdfce455ce507bf3fed368c2ed">MAX_MOTORS</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00031">31</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00035">35</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -702,7 +712,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00125">125</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00137">137</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -718,7 +728,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00127">127</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00139">139</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -734,7 +744,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00126">126</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00138">138</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -750,7 +760,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00124">124</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00136">136</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -766,7 +776,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00076">76</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00086">86</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -782,7 +792,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00080">80</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00090">90</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -798,7 +808,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00094">94</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00104">104</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -814,7 +824,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00098">98</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00108">108</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -830,7 +840,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00099">99</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00109">109</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -846,7 +856,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00081">81</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00091">91</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -862,7 +872,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00077">77</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00087">87</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -878,7 +888,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00091">91</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00101">101</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -894,7 +904,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00092">92</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00102">102</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -910,7 +920,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00084">84</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00094">94</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -926,7 +936,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00089">89</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00099">99</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -942,7 +952,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00093">93</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00103">103</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -958,7 +968,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00087">87</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00097">97</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -974,7 +984,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00088">88</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00098">98</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -990,7 +1000,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00085">85</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00095">95</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1006,7 +1016,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00086">86</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00096">96</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1022,7 +1032,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00078">78</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00088">88</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1038,7 +1048,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00082">82</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00092">92</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1054,7 +1064,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00083">83</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00093">93</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1070,7 +1080,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00095">95</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00105">105</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1086,7 +1096,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00079">79</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00089">89</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1102,7 +1112,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00090">90</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00100">100</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1118,7 +1128,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00096">96</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00106">106</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1134,7 +1144,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00100">100</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00110">110</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1150,7 +1160,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00097">97</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00107">107</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1166,7 +1176,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00032">32</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00036">36</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1182,7 +1192,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00108">108</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00120">120</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1198,7 +1208,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00111">111</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00123">123</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1214,7 +1224,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00107">107</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00119">119</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1230,7 +1240,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00112">112</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00124">124</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+
+</div>
+</div>
+<a id="ac8effe093baba5c57e0252cd4e3b68ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8effe093baba5c57e0252cd4e3b68ec">&#9670;&nbsp;</a></span>L6470_STATUS_MOT_STATUS_Msk</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define L6470_STATUS_MOT_STATUS_Msk&#160;&#160;&#160;<a class="el" href="../../d9/d85/l6470__driver_8h.html#a51ae580397cb0c45ec2f6fcb312ec8af">L6470_STATUS_MOT_STATUS</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00148">148</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1246,7 +1272,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00113">113</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00125">125</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1262,7 +1288,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00118">118</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00130">130</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1278,7 +1304,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00121">121</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00133">133</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1294,7 +1320,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00119">119</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00131">131</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1310,7 +1336,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00120">120</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00132">132</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1326,7 +1352,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00110">110</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00122">122</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1342,7 +1368,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00109">109</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00121">121</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1358,7 +1384,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00117">117</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00129">129</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1374,7 +1400,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00116">116</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00128">128</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1390,7 +1416,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00115">115</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00127">127</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1406,7 +1432,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00114">114</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d85/l6470__driver_8h_source.html#l00126">126</a> of file <a class="el" href="../../d9/d85/l6470__driver_8h_source.html">l6470_driver.h</a>.</p>
 
 </div>
 </div>
@@ -1418,7 +1444,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_DeviceInit </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_DeviceInit </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -1432,7 +1458,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">SPI_HandleTypeDef *&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d5/d0d/structSPI__HandleTypeDef.html">SPI_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>hspi</em>&#160;</td>
         </tr>
         <tr>
@@ -1463,7 +1489,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_EmergencyStop </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_EmergencyStop </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em></td><td>)</td>
@@ -1535,7 +1561,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00241">241</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00320">320</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1568,8 +1594,7 @@ Functions</h2></td></tr>
 <p>Get L6470 status register. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">motor_id</td><td>Motor identifier <br  />
- </td></tr>
+    <tr><td class="paramname">motor_id</td><td>Motor identifier </td></tr>
     <tr><td class="paramname">status</td><td>Pointer to store status value </td></tr>
   </table>
   </dd>
@@ -1577,15 +1602,14 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t System error code</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">motor_id</td><td>Motor identifier <br  />
- </td></tr>
+    <tr><td class="paramname">motor_id</td><td>Motor identifier </td></tr>
     <tr><td class="paramname">status</td><td>Pointer to store status value </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00299">299</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00389">389</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1596,7 +1620,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_GetPosition </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_GetPosition </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -1659,7 +1683,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00430">430</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00585">585</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1695,7 +1719,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00410">410</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00550">550</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1706,9 +1730,9 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_Init </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_Init </td>
           <td>(</td>
-          <td class="paramtype">SPI_HandleTypeDef *&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d5/d0d/structSPI__HandleTypeDef.html">SPI_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>hspi</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1727,8 +1751,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac3f4ca881bcaf7103c31171ba569e3e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3f4ca881bcaf7103c31171ba569e3e1">&#9670;&nbsp;</a></span>l6470_init()</h2>
+<a id="a1c9bc9ef73738d1c09f801b26d261d27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c9bc9ef73738d1c09f801b26d261d27">&#9670;&nbsp;</a></span>l6470_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1736,8 +1760,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> l6470_init </td>
           <td>(</td>
-          <td class="paramtype">SPI_HandleTypeDef *&#160;</td>
-          <td class="paramname"><em>spi_handle</em></td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1750,16 +1774,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>SystemError_t System error code</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">spi_handle</td><td>Pointer to configured SPI handle </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>SystemError_t System error code</dd>
+<dd>
+System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00070">70</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00084">84</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1795,7 +1814,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00101">101</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00131">131</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1820,7 +1839,7 @@ Functions</h2></td></tr>
 <dd>
 true if initialized, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00623">623</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00825">825</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1868,7 +1887,7 @@ true if initialized, false otherwise </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00362">362</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00472">472</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1879,7 +1898,7 @@ true if initialized, false otherwise </dd></dl>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_MoveSteps </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_MoveSteps </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -1917,7 +1936,7 @@ true if initialized, false otherwise </dd></dl>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_MoveToPosition </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_MoveToPosition </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -1956,7 +1975,7 @@ true if initialized, false otherwise </dd></dl>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_ReadRegister </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_ReadRegister </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -2026,7 +2045,7 @@ true if initialized, false otherwise </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00170">170</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00216">216</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
 
 </div>
 </div>
@@ -2055,7 +2074,7 @@ true if initialized, false otherwise </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t - SYSTEM_OK on success, error code on failure </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00673">673</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00898">898</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
 
 </div>
 </div>
@@ -2066,7 +2085,7 @@ true if initialized, false otherwise </dd></dl>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_Run </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_Run </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -2147,7 +2166,7 @@ true if initialized, false otherwise </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t - SYSTEM_OK on success, error code on failure </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00634">634</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00836">836</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
 
 </div>
 </div>
@@ -2158,7 +2177,7 @@ true if initialized, false otherwise </dd></dl>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_SendCommand </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_SendCommand </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -2248,7 +2267,7 @@ true if initialized, false otherwise </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00199">199</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00265">265</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
 
 </div>
 </div>
@@ -2284,7 +2303,7 @@ true if initialized, false otherwise </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00390">390</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/d41/l6470__driver_8c_source.html#l00515">515</a> of file <a class="el" href="../../d1/d41/l6470__driver_8c_source.html">l6470_driver.c</a>.</p>
 
 </div>
 </div>
@@ -2295,7 +2314,7 @@ true if initialized, false otherwise </dd></dl>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_Stop </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_Stop </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em></td><td>)</td>
@@ -2322,7 +2341,7 @@ true if initialized, false otherwise </dd></dl>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_WriteRegister </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> L6470_WriteRegister </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d6/d6e/structL6470__HandleTypeDef.html">L6470_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -2363,7 +2382,7 @@ true if initialized, false otherwise </dd></dl>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 5 2025 13:09:33 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 11 2025 23:51:11 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

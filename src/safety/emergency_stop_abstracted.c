@@ -15,6 +15,7 @@
  */
 
 #include "emergency_stop_abstracted.h"
+#include "config/hardware_config.h" // SSOT for hardware pin definitions
 #include "config/safety_config.h"
 #include "hal_abstraction/hal_abstraction.h"
 #include <string.h>
@@ -82,6 +83,8 @@ SystemError_t emergency_stop_init(void) {
 
     // Initialize state
     estop_context.state_entry_time = HAL_Abstraction_GetTick();
+    // Initialize debounce reference to current time to avoid spurious triggers
+    estop_context.last_button_time = estop_context.state_entry_time;
     estop_context.initialized = true;
     estop_change_state(EMERGENCY_STOP_ARMED);
 
@@ -260,6 +263,13 @@ SystemError_t emergency_stop_check_health(void) {
     // Check if we're in a valid state
     if (estop_context.state >= EMERGENCY_STOP_FAULT) {
         return ERROR_SYSTEM_FAULT;
+    }
+
+    // Verify we can still read the button (HAL healthy)
+    bool dummy_pressed = false;
+    SystemError_t btn_res = estop_read_button_state(&dummy_pressed);
+    if (btn_res != SYSTEM_OK) {
+        return ERROR_NOT_INITIALIZED;
     }
 
     // Check timing constraints

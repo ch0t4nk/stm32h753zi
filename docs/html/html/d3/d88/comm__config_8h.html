@@ -94,10 +94,13 @@ This graph shows which files directly or indirectly include this file:</div>
 <area shape="rect" title="Communication Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="360,5,547,32"/>
 <area shape="rect" href="../../d0/d29/main_8c.html" title=" " alt="" coords="5,87,171,114"/>
 <area shape="rect" href="../../d9/dfd/main__application_8c.html" title="Main Application &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="195,80,349,121"/>
-<area shape="rect" href="../../d8/d86/comm__protocol_8c.html" title="Communication Protocol Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="358,169,549,211"/>
+<area shape="rect" href="../../d8/d86/comm__protocol_8c.html" title="Communication Protocol Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="291,169,482,211"/>
 <area shape="rect" href="../../dc/d81/comm__protocol_8h.html" title="Communication Protocol Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="425,80,615,121"/>
-<area shape="rect" href="../../d8/d75/as5600__driver_8c.html" title="AS5600 Magnetic Encoder Driver Implementation &#45; STM32H7 I2C HAL." alt="" coords="640,80,781,121"/>
+<area shape="rect" href="../../d8/d75/as5600__driver_8c.html" title="AS5600 Magnetic Encoder Driver Implementation using HAL abstraction." alt="" coords="640,80,781,121"/>
 <area shape="rect" href="../../d1/d41/l6470__driver_8c.html" title="L6470 Stepper Driver Implementation &#45; STM32H7 SPI HAL." alt="" coords="805,80,976,121"/>
+<area shape="rect" href="../../de/d6d/rtos__tasks_8h.html" title="FreeRTOS Task Implementations for STM32H753ZI Motor Control System." alt="" coords="506,177,659,203"/>
+<area shape="rect" href="../../dc/dd2/power__management_8c.html" title="Advanced Power Management Implementation for STM32H753ZI Motor Control System." alt="" coords="368,259,587,285"/>
+<area shape="rect" href="../../d3/d37/rtos__tasks_8c.html" title="FreeRTOS Task Implementations for STM32H753ZI Motor Control System." alt="" coords="611,259,763,285"/>
 </map>
 </div>
 </div>
@@ -107,8 +110,8 @@ This graph shows which files directly or indirectly include this file:</div>
 Macros</h2></td></tr>
 <tr class="memitem:a4c78df0dfd8607bcd2e87b5b67227845"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d88/comm__config_8h.html#a4c78df0dfd8607bcd2e87b5b67227845">MAX_MESSAGE_PAYLOAD</a>&#160;&#160;&#160;128</td></tr>
 <tr class="separator:a4c78df0dfd8607bcd2e87b5b67227845"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4041187e6b5a98c2d367ed1efc7b91ae"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d88/comm__config_8h.html#a4041187e6b5a98c2d367ed1efc7b91ae">MAX_ETH_PAYLOAD</a>&#160;&#160;&#160;1500</td></tr>
-<tr class="separator:a4041187e6b5a98c2d367ed1efc7b91ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fb866f7916a4623465c1d186a1dd70c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d88/comm__config_8h.html#a6fb866f7916a4623465c1d186a1dd70c">COMM_MAX_ETH_PAYLOAD</a>&#160;&#160;&#160;1500</td></tr>
+<tr class="separator:a6fb866f7916a4623465c1d186a1dd70c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c7ed0283bd6f2f9d791860d6254ef4f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d88/comm__config_8h.html#a2c7ed0283bd6f2f9d791860d6254ef4f">UART_BAUDRATE</a>&#160;&#160;&#160;115200</td></tr>
 <tr class="separator:a2c7ed0283bd6f2f9d791860d6254ef4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a120cc83796f75c76373b5e51c6d5e64f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d88/comm__config_8h.html#a120cc83796f75c76373b5e51c6d5e64f">UART_WORD_LENGTH</a>&#160;&#160;&#160;UART_WORDLENGTH_8B</td></tr>
@@ -231,7 +234,7 @@ Macros</h2></td></tr>
 <tr class="separator:a1a5b6a796459336acc1515ac3893b07b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ed6416f8888be04fc5aa7b4395b2814"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d88/comm__config_8h.html#a4ed6416f8888be04fc5aa7b4395b2814">ETH_DNS_SERVER</a>&#160;&#160;&#160;&quot;8.8.8.8&quot;</td></tr>
 <tr class="separator:a4ed6416f8888be04fc5aa7b4395b2814"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca3335efd8e9bb6dd7473f46cd1c33bc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d88/comm__config_8h.html#aca3335efd8e9bb6dd7473f46cd1c33bc">ETH_MAC_ADDR</a>&#160;&#160;&#160;  { 0x02, 0x00, 0x00, 0x12, 0x34, 0x56 }</td></tr>
+<tr class="memitem:aca3335efd8e9bb6dd7473f46cd1c33bc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d88/comm__config_8h.html#aca3335efd8e9bb6dd7473f46cd1c33bc">ETH_MAC_ADDR</a>&#160;&#160;&#160;{0x02, 0x00, 0x00, 0x12, 0x34, 0x56}</td></tr>
 <tr class="separator:aca3335efd8e9bb6dd7473f46cd1c33bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5017889290713c7b619c083c9a36addb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d88/comm__config_8h.html#a5017889290713c7b619c083c9a36addb">TCP_SERVER_PORT</a>&#160;&#160;&#160;8000</td></tr>
 <tr class="separator:a5017889290713c7b619c083c9a36addb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -309,7 +312,7 @@ Macros</h2></td></tr>
 <tr class="separator:aa393f920680bc7a14ff280deae4303fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14445f86300d5faa6a4ebad02e496c09"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d88/comm__config_8h.html#a14445f86300d5faa6a4ebad02e496c09">RECONNECT_INTERVAL_MS</a>&#160;&#160;&#160;30000</td></tr>
 <tr class="separator:a14445f86300d5faa6a4ebad02e496c09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87fd76ce8f4a22be52c27d9321ce7798"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d88/comm__config_8h.html#a87fd76ce8f4a22be52c27d9321ce7798">JSON_MOTOR_STATUS_FMT</a>&#160;&#160;&#160;  &quot;{\&quot;motor\&quot;:%d,\&quot;angle\&quot;:%.2f,\&quot;speed\&quot;:%.2f,\&quot;status\&quot;:%d}&quot;</td></tr>
+<tr class="memitem:a87fd76ce8f4a22be52c27d9321ce7798"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d88/comm__config_8h.html#a87fd76ce8f4a22be52c27d9321ce7798">JSON_MOTOR_STATUS_FMT</a>&#160;&#160;&#160;    &quot;{\&quot;motor\&quot;:%d,\&quot;angle\&quot;:%.2f,\&quot;speed\&quot;:%.2f,\&quot;status\&quot;:%d}&quot;</td></tr>
 <tr class="separator:a87fd76ce8f4a22be52c27d9321ce7798"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd6111781367a3876e4ea230240b0af6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d88/comm__config_8h.html#afd6111781367a3876e4ea230240b0af6">JSON_COMMAND_FMT</a>&#160;&#160;&#160;&quot;{\&quot;cmd\&quot;:\&quot;%s\&quot;,\&quot;motor\&quot;:%d,\&quot;value\&quot;:%.2f}&quot;</td></tr>
 <tr class="separator:afd6111781367a3876e4ea230240b0af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -351,7 +354,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00076">76</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00081">81</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -367,7 +370,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00098">98</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00103">103</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -383,7 +386,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00083">83</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00088">88</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -399,7 +402,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00084">84</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00089">89</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -415,7 +418,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00087">87</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00092">92</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -431,7 +434,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00085">85</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00090">90</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -447,7 +450,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00086">86</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00091">91</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -463,7 +466,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00132">132</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00139">139</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -479,7 +482,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00133">133</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00140">140</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -495,7 +498,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00109">109</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00116">116</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -511,7 +514,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00110">110</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00117">117</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -527,7 +530,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00111">111</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00118">118</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -543,7 +546,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00112">112</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00119">119</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -559,7 +562,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00108">108</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00115">115</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -575,7 +578,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00122">122</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00129">129</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -591,7 +594,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00117">117</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00124">124</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -607,7 +610,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00118">118</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00125">125</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -623,7 +626,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00125">125</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00132">132</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -639,7 +642,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00128">128</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00135">135</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -655,7 +658,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00115">115</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00122">122</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -671,7 +674,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00116">116</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00123">123</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -687,7 +690,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00124">124</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00131">131</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -703,7 +706,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00120">120</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00127">127</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -719,7 +722,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00121">121</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00128">128</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -735,7 +738,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00126">126</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00133">133</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -751,7 +754,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00129">129</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00136">136</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -767,7 +770,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00090">90</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00095">95</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -783,7 +786,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00099">99</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00104">104</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -799,7 +802,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00091">91</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00096">96</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -815,7 +818,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00097">97</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00102">102</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -831,7 +834,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00077">77</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00082">82</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -847,7 +850,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00094">94</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00099">99</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -863,7 +866,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00080">80</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00085">85</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -879,7 +882,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00078">78</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00083">83</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -895,7 +898,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00079">79</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00084">84</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -911,7 +914,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00092">92</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00097">97</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -927,7 +930,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00093">93</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00098">98</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -943,7 +946,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00223">223</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00237">237</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -959,7 +962,23 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00060">60</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00063">63</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+
+</div>
+</div>
+<a id="a6fb866f7916a4623465c1d186a1dd70c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fb866f7916a4623465c1d186a1dd70c">&#9670;&nbsp;</a></span>COMM_MAX_ETH_PAYLOAD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COMM_MAX_ETH_PAYLOAD&#160;&#160;&#160;1500</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00032">32</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -975,7 +994,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00057">57</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00060">60</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -991,7 +1010,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00145">145</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00154">154</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1007,7 +1026,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00144">144</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00153">153</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1018,12 +1037,12 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ETH_MAC_ADDR&#160;&#160;&#160;  { 0x02, 0x00, 0x00, 0x12, 0x34, 0x56 }</td>
+          <td class="memname">#define ETH_MAC_ADDR&#160;&#160;&#160;{0x02, 0x00, 0x00, 0x12, 0x34, 0x56}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00146">146</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00155">155</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1039,7 +1058,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00143">143</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00152">152</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1055,7 +1074,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00142">142</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00151">151</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1071,7 +1090,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00217">217</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00231">231</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1087,7 +1106,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00164">164</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00172">172</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1103,7 +1122,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00163">163</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00171">171</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1119,7 +1138,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00162">162</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00170">170</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1135,7 +1154,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00182">182</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00192">192</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1151,7 +1170,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00183">183</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00193">193</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1167,7 +1186,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00177">177</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00187">187</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1183,7 +1202,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00179">179</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00189">189</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1199,7 +1218,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00178">178</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00188">188</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1215,7 +1234,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00174">174</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00184">184</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1231,7 +1250,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00173">173</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00183">183</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1247,7 +1266,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00236">236</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00252">252</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1263,7 +1282,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00237">237</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00253">253</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1274,12 +1293,12 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define JSON_MOTOR_STATUS_FMT&#160;&#160;&#160;  &quot;{\&quot;motor\&quot;:%d,\&quot;angle\&quot;:%.2f,\&quot;speed\&quot;:%.2f,\&quot;status\&quot;:%d}&quot;</td>
+          <td class="memname">#define JSON_MOTOR_STATUS_FMT&#160;&#160;&#160;    &quot;{\&quot;motor\&quot;:%d,\&quot;angle\&quot;:%.2f,\&quot;speed\&quot;:%.2f,\&quot;status\&quot;:%d}&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00234">234</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00250">250</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1295,7 +1314,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00207">207</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00219">219</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1311,7 +1330,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00208">208</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00220">220</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1327,23 +1346,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00224">224</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
-
-</div>
-</div>
-<a id="a4041187e6b5a98c2d367ed1efc7b91ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4041187e6b5a98c2d367ed1efc7b91ae">&#9670;&nbsp;</a></span>MAX_ETH_PAYLOAD</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MAX_ETH_PAYLOAD&#160;&#160;&#160;1500</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00030">30</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00238">238</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1359,7 +1362,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00028">28</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00030">30</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1375,7 +1378,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00242">242</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00258">258</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1391,7 +1394,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00240">240</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00256">256</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1407,7 +1410,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00241">241</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00257">257</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1423,7 +1426,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00245">245</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00261">261</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1439,7 +1442,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00246">246</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00262">262</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1455,7 +1458,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00248">248</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00264">264</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1471,7 +1474,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00247">247</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00263">263</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1487,7 +1490,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00225">225</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00239">239</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1503,7 +1506,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00219">219</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00233">233</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1519,7 +1522,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00192">192</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00204">204</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1535,7 +1538,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00196">196</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00208">208</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1551,7 +1554,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00195">195</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00207">207</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1567,7 +1570,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00204">204</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00216">216</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1583,7 +1586,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00203">203</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00215">215</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1599,7 +1602,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00194">194</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00206">206</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1615,7 +1618,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00193">193</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00205">205</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1631,7 +1634,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00198">198</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00210">210</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1647,7 +1650,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00202">202</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00214">214</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1663,7 +1666,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00197">197</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00209">209</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1679,7 +1682,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00201">201</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00213">213</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1695,7 +1698,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00218">218</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00232">232</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1711,7 +1714,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00154">154</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00162">162</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1727,7 +1730,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00152">152</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00160">160</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1743,7 +1746,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00153">153</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00161">161</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1759,7 +1762,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00159">159</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00167">167</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1775,7 +1778,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00151">151</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00159">159</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1791,7 +1794,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00158">158</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00166">166</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1807,7 +1810,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00150">150</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00158">158</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1823,7 +1826,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00157">157</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00165">165</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1839,7 +1842,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00040">40</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00043">43</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1855,7 +1858,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00064">64</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00067">67</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1871,7 +1874,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00050">50</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00053">53</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1887,7 +1890,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00065">65</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00068">68</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1903,7 +1906,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00063">63</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00066">66</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1919,7 +1922,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00055">55</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00058">58</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1935,7 +1938,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00044">44</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00047">47</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1951,7 +1954,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00045">45</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00048">48</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1967,7 +1970,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00043">43</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00046">46</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1983,7 +1986,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00067">67</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00070">70</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -1999,7 +2002,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00066">66</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00069">69</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -2015,7 +2018,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00049">49</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00052">52</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -2031,7 +2034,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00054">54</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00057">57</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -2047,7 +2050,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00042">42</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00045">45</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -2063,7 +2066,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00056">56</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00059">59</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -2079,7 +2082,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00048">48</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00051">51</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -2095,7 +2098,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00053">53</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00056">56</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -2111,7 +2114,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00041">41</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00044">44</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
@@ -2127,14 +2130,14 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00220">220</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d88/comm__config_8h_source.html#l00234">234</a> of file <a class="el" href="../../d3/d88/comm__config_8h_source.html">comm_config.h</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 5 2025 13:09:33 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 11 2025 23:51:10 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

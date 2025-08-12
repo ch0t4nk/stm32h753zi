@@ -1,4 +1,7 @@
 <map id="tests/copilot_integration/test_hardware_scope.c" name="tests/copilot_integration/test_hardware_scope.c">
-<area shape="rect" id="node1" title="Test file for validating hardware.instructions.md scoping." alt="" coords="5,5,185,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="28,95,163,121"/>
+<area shape="rect" id="node1" title="Test file for validating hardware.instructions.md scoping." alt="" coords="9,5,189,47"/>
+<area shape="rect" id="node2" href="$d8/d36/stm32h7xx__hal_8h.html" title="Mock STM32H7xx HAL header for unit testing." alt="" coords="31,95,166,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,244,88,271"/>
+<area shape="rect" id="node4" title=" " alt="" coords="115,244,186,271"/>
+<area shape="rect" id="node5" href="$d4/d03/mock__hal__types_8h.html" title="Mock HAL type definitions for unit testing environment." alt="" coords="29,169,169,196"/>
 </map>

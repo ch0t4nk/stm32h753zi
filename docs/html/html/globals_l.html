@@ -69,6 +69,12 @@ $(function() {
 <li>L6470_ACC
 : <a class="el" href="de/d58/motor__config_8h.html#aa56e4071941394f6d695fb5e36fb345f">motor_config.h</a>
 </li>
+<li>L6470_ACCELERATION_SAFETY_FACTOR
+: <a class="el" href="dd/dbd/motor__characterization_8c.html#af5629f897945057b7cb19e841ce5de6d">motor_characterization.c</a>
+</li>
+<li>L6470_ALARM_EN_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a13dbad52dbdf9e28dbe00bd5af9c074c">l6470_registers_generated.h</a>
+</li>
 <li>L6470_CHAIN_LENGTH
 : <a class="el" href="d3/d88/comm__config_8h.html#a636303d8b8a62fe73782ca0cb98f1578">comm_config.h</a>
 </li>
@@ -172,6 +178,9 @@ $(function() {
 <li>L6470_CMD_STEPCLOCK
 : <a class="el" href="de/d58/motor__config_8h.html#a1920f0ec6c5a79c41ef0dfb4165414ae">motor_config.h</a>
 </li>
+<li>L6470_CONFIG_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#ad53a89ae23ec642673d4fc75ef67f153">l6470_registers_generated.h</a>
+</li>
 <li>L6470_CS_PIN
 : <a class="el" href="d9/d85/l6470__driver_8h.html#a7af3194eb58be4a4f4f0fd32c2b581c0">l6470_driver.h</a>
 </li>
@@ -184,6 +193,10 @@ $(function() {
 <li>L6470_DeviceInit()
 : <a class="el" href="d9/d85/l6470__driver_8h.html#aee9d10b8663f13884d69e7767cbb20b0">l6470_driver.h</a>
 </li>
+<li>l6470_emergency_stop()
+: <a class="el" href="d8/daa/optimization__compatibility_8h.html#a77cf3f1cb6a2882bbe993d6592c014b2">optimization_compatibility.h</a>
+, <a class="el" href="dd/d68/optimization__compatibility_8c.html#a77cf3f1cb6a2882bbe993d6592c014b2">optimization_compatibility.c</a>
+</li>
 <li>L6470_EmergencyStop()
 : <a class="el" href="d9/d85/l6470__driver_8h.html#a56806c0999f5fafe2c76bfb561a09e8e">l6470_driver.h</a>
 </li>
@@ -192,6 +205,42 @@ $(function() {
 </li>
 <li>L6470_FAULT_COMMAND_ERROR
 : <a class="el" href="df/d2b/fault__monitor_8h.html#a4abf0e97f98db269ac212d103b43948da27f57afeaf93b1c7914d409b2ebbe6f2">fault_monitor.h</a>
+</li>
+<li>l6470_fault_monitor_busy_interrupt()
+: <a class="el" href="dc/d33/l6470__fault__monitor_8c.html#a2b6f0295cd41dd0a32291347b1f9c363">l6470_fault_monitor.c</a>
+, <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a2b6f0295cd41dd0a32291347b1f9c363">l6470_fault_monitor.h</a>
+</li>
+<li>l6470_fault_monitor_clear_faults()
+: <a class="el" href="dc/d33/l6470__fault__monitor_8c.html#a04695dfea50539d91f0762583cfee3bc">l6470_fault_monitor.c</a>
+, <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a04695dfea50539d91f0762583cfee3bc">l6470_fault_monitor.h</a>
+</li>
+<li>l6470_fault_monitor_disable()
+: <a class="el" href="dc/d33/l6470__fault__monitor_8c.html#af7451c07c595bf09765c0786a3a37cd1">l6470_fault_monitor.c</a>
+, <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#af7451c07c595bf09765c0786a3a37cd1">l6470_fault_monitor.h</a>
+</li>
+<li>l6470_fault_monitor_enable()
+: <a class="el" href="dc/d33/l6470__fault__monitor_8c.html#a7f6855ddd383d645d3faae43d33f3bf6">l6470_fault_monitor.c</a>
+, <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a7f6855ddd383d645d3faae43d33f3bf6">l6470_fault_monitor.h</a>
+</li>
+<li>l6470_fault_monitor_flag_interrupt()
+: <a class="el" href="dc/d33/l6470__fault__monitor_8c.html#a9c20c99128892adc5ca527e410936a5a">l6470_fault_monitor.c</a>
+, <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a9c20c99128892adc5ca527e410936a5a">l6470_fault_monitor.h</a>
+</li>
+<li>l6470_fault_monitor_get_status()
+: <a class="el" href="dc/d33/l6470__fault__monitor_8c.html#a02912bce1ab0bd86ec7b246a30d6a1a1">l6470_fault_monitor.c</a>
+, <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a02912bce1ab0bd86ec7b246a30d6a1a1">l6470_fault_monitor.h</a>
+</li>
+<li>l6470_fault_monitor_init()
+: <a class="el" href="dc/d33/l6470__fault__monitor_8c.html#a96f69095f2e64faf02f911515db9bb1a">l6470_fault_monitor.c</a>
+, <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a96f69095f2e64faf02f911515db9bb1a">l6470_fault_monitor.h</a>
+</li>
+<li>l6470_fault_monitor_is_active()
+: <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a4ceccd8bc2151e3d3298c85fcd4451ed">l6470_fault_monitor.h</a>
+, <a class="el" href="dc/d33/l6470__fault__monitor_8c.html#a4ceccd8bc2151e3d3298c85fcd4451ed">l6470_fault_monitor.c</a>
+</li>
+<li>l6470_fault_monitor_test()
+: <a class="el" href="dc/d33/l6470__fault__monitor_8c.html#a931d256449f06a49759d7707e80e7609">l6470_fault_monitor.c</a>
+, <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a931d256449f06a49759d7707e80e7609">l6470_fault_monitor.h</a>
 </li>
 <li>L6470_FAULT_NONE
 : <a class="el" href="df/d2b/fault__monitor_8h.html#a4abf0e97f98db269ac212d103b43948dac9e97f3ab71388290488946acc957279">fault_monitor.h</a>
@@ -230,15 +279,26 @@ $(function() {
 : <a class="el" href="d1/d41/l6470__driver_8c.html#a072cbf92f3da535e9cefe3ce00c124b5">l6470_driver.c</a>
 </li>
 <li>l6470_get_parameter()
-: <a class="el" href="d9/d85/l6470__driver_8h.html#a0707db93f413d7873c979f58317cfdbf">l6470_driver.h</a>
-, <a class="el" href="d1/d41/l6470__driver_8c.html#a0707db93f413d7873c979f58317cfdbf">l6470_driver.c</a>
+: <a class="el" href="d1/d41/l6470__driver_8c.html#a0707db93f413d7873c979f58317cfdbf">l6470_driver.c</a>
+, <a class="el" href="d9/d85/l6470__driver_8h.html#a0707db93f413d7873c979f58317cfdbf">l6470_driver.h</a>
+, <a class="el" href="d5/d20/mock__drivers_8c.html#aa99257c6659fc911760047b72e177151">mock_drivers.c</a>
+, <a class="el" href="d7/d7e/mock__drivers_8h.html#aa99257c6659fc911760047b72e177151">mock_drivers.h</a>
+</li>
+<li>l6470_get_register_size()
+: <a class="el" href="d1/d62/l6470__registers__generated_8c.html#a10de9997cb2fb1e0ec6c2a57b29c6a15">l6470_registers_generated.c</a>
+</li>
+<li>l6470_get_safe_default()
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a39b98e5d5cbfbb127309a36ca159c419">l6470_registers_generated.h</a>
+, <a class="el" href="d1/d62/l6470__registers__generated_8c.html#a39b98e5d5cbfbb127309a36ca159c419">l6470_registers_generated.c</a>
 </li>
 <li>l6470_get_spi_health()
 : <a class="el" href="d1/d41/l6470__driver_8c.html#a3d1a871e3fa060b61d633cf0873da4ba">l6470_driver.c</a>
 </li>
 <li>l6470_get_status()
-: <a class="el" href="d1/d41/l6470__driver_8c.html#a42ca93ecac84879e203c2ad8d750ee49">l6470_driver.c</a>
-, <a class="el" href="d9/d85/l6470__driver_8h.html#a42ca93ecac84879e203c2ad8d750ee49">l6470_driver.h</a>
+: <a class="el" href="d9/d85/l6470__driver_8h.html#a42ca93ecac84879e203c2ad8d750ee49">l6470_driver.h</a>
+, <a class="el" href="d5/d20/mock__drivers_8c.html#a002f1ea586986c7939c8b7dc847fa6f4">mock_drivers.c</a>
+, <a class="el" href="d7/d7e/mock__drivers_8h.html#a002f1ea586986c7939c8b7dc847fa6f4">mock_drivers.h</a>
+, <a class="el" href="d1/d41/l6470__driver_8c.html#a42ca93ecac84879e203c2ad8d750ee49">l6470_driver.c</a>
 </li>
 <li>L6470_GetPosition()
 : <a class="el" href="d9/d85/l6470__driver_8h.html#a6fc9cb4c1b370c4f7b30a54df545b3f8">l6470_driver.h</a>
@@ -250,13 +310,44 @@ $(function() {
 <li>l6470_hard_stop()
 : <a class="el" href="d1/d41/l6470__driver_8c.html#aa5380bb0c00c1a28c1306eedf39236e6">l6470_driver.c</a>
 , <a class="el" href="d9/d85/l6470__driver_8h.html#aa5380bb0c00c1a28c1306eedf39236e6">l6470_driver.h</a>
+, <a class="el" href="d5/d20/mock__drivers_8c.html#aa5380bb0c00c1a28c1306eedf39236e6">mock_drivers.c</a>
+, <a class="el" href="d7/d7e/mock__drivers_8h.html#aa5380bb0c00c1a28c1306eedf39236e6">mock_drivers.h</a>
+</li>
+<li>L6470_HW_FAULT_ALL_MASK
+: <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a481eb89147eec557ce8897a5865456eca30e8edeef4b273cf3ed12e4c5658e7c7">l6470_fault_monitor.h</a>
+</li>
+<li>L6470_HW_FAULT_COMMAND_ERROR
+: <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a481eb89147eec557ce8897a5865456eca9dfa2fe79c7370e7b78fc0d963281e0d">l6470_fault_monitor.h</a>
+</li>
+<li>L6470_HW_FAULT_NONE
+: <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a481eb89147eec557ce8897a5865456eca86c18cb1f8c6b82b69d00074c0fde5e1">l6470_fault_monitor.h</a>
+</li>
+<li>L6470_HW_FAULT_OVERCURRENT
+: <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a481eb89147eec557ce8897a5865456eca0da12bbc3964974e18bd3facc6497bf8">l6470_fault_monitor.h</a>
+</li>
+<li>L6470_HW_FAULT_STALL_DETECTED
+: <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a481eb89147eec557ce8897a5865456ecaa6ca690af7492dbfd1f603f905ed3640">l6470_fault_monitor.h</a>
+</li>
+<li>L6470_HW_FAULT_STEP_LOSS
+: <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a481eb89147eec557ce8897a5865456eca86f8f3698b57bdddd3315a1652add6ba">l6470_fault_monitor.h</a>
+</li>
+<li>L6470_HW_FAULT_THERMAL_SHUTDOWN
+: <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a481eb89147eec557ce8897a5865456ecae8fd58809d8110753d238aa1bf629ade">l6470_fault_monitor.h</a>
+</li>
+<li>L6470_HW_FAULT_THERMAL_WARNING
+: <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a481eb89147eec557ce8897a5865456eca2696caf5589df9c502cbf79b03284f12">l6470_fault_monitor.h</a>
+</li>
+<li>L6470_HW_FAULT_UNDERVOLTAGE
+: <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a481eb89147eec557ce8897a5865456eca41dc4e10958d3ffc0deb92fe1075b899">l6470_fault_monitor.h</a>
 </li>
 <li>L6470_Init()
 : <a class="el" href="d9/d85/l6470__driver_8h.html#a33fe15521424b1f7730943c3dc8872e0">l6470_driver.h</a>
 </li>
 <li>l6470_init()
-: <a class="el" href="d1/d41/l6470__driver_8c.html#ac3f4ca881bcaf7103c31171ba569e3e1">l6470_driver.c</a>
-, <a class="el" href="d9/d85/l6470__driver_8h.html#ac3f4ca881bcaf7103c31171ba569e3e1">l6470_driver.h</a>
+: <a class="el" href="d9/d85/l6470__driver_8h.html#a1c9bc9ef73738d1c09f801b26d261d27">l6470_driver.h</a>
+, <a class="el" href="d7/d7e/mock__drivers_8h.html#a1c9bc9ef73738d1c09f801b26d261d27">mock_drivers.h</a>
+, <a class="el" href="d1/d41/l6470__driver_8c.html#a1c9bc9ef73738d1c09f801b26d261d27">l6470_driver.c</a>
+, <a class="el" href="d5/d20/mock__drivers_8c.html#a1c9bc9ef73738d1c09f801b26d261d27">mock_drivers.c</a>
 </li>
 <li>l6470_init_motor()
 : <a class="el" href="d1/d41/l6470__driver_8c.html#ab48e7483059b23b1e7d1bf6edf7ad149">l6470_driver.c</a>
@@ -268,15 +359,24 @@ $(function() {
 <li>L6470_INT_SPD
 : <a class="el" href="de/d58/motor__config_8h.html#ade3c95ae82cb2b6e457ba42da9ea3348">motor_config.h</a>
 </li>
+<li>l6470_is_critical_register()
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a2ca62e0529e601abf0796d6956d3452e">l6470_registers_generated.h</a>
+</li>
 <li>l6470_is_initialized()
 : <a class="el" href="d1/d41/l6470__driver_8c.html#a085f125e5b514aee2de5cd8e3436ceb4">l6470_driver.c</a>
 , <a class="el" href="d9/d85/l6470__driver_8h.html#a085f125e5b514aee2de5cd8e3436ceb4">l6470_driver.h</a>
+</li>
+<li>l6470_is_register_readonly()
+: <a class="el" href="d1/d62/l6470__registers__generated_8c.html#a04417975762ce4c8cff40ad35f5c4a0c">l6470_registers_generated.c</a>
 </li>
 <li>L6470_KVAL_ACC
 : <a class="el" href="de/d58/motor__config_8h.html#abad8d8f5518ab84099ddb12950bd619b">motor_config.h</a>
 </li>
 <li>L6470_KVAL_DEC
 : <a class="el" href="de/d58/motor__config_8h.html#a6cc4575eff845da3935d7a078a082029">motor_config.h</a>
+</li>
+<li>L6470_KVAL_EFFICIENCY_FACTOR
+: <a class="el" href="dd/dbd/motor__characterization_8c.html#ad3225c0fa12c8945846dd8e1a55241d3">motor_characterization.c</a>
 </li>
 <li>L6470_KVAL_HOLD
 : <a class="el" href="de/d58/motor__config_8h.html#a725308483f78a3dc1d1fb0da49d676a5">motor_config.h</a>
@@ -323,6 +423,9 @@ $(function() {
 </li>
 <li>L6470_OCD_TH
 : <a class="el" href="de/d58/motor__config_8h.html#ad3fda08d35cb2b97c704b6f7fb3cff52">motor_config.h</a>
+</li>
+<li>L6470_OCD_TH_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a62565b34bf36783a6e20a7970c60e4bf">l6470_registers_generated.h</a>
 </li>
 <li>l6470_pack_parameter()
 : <a class="el" href="d1/d41/l6470__driver_8c.html#a31cc210283c45e6c88a484f9674c1780">l6470_driver.c</a>
@@ -371,8 +474,8 @@ $(function() {
 , <a class="el" href="d9/d85/l6470__driver_8h.html#aecab19e50dde683643ceba4a7a5a66d4">l6470_driver.h</a>
 </li>
 <li>L6470_REG_FN_SLP_ACC
-: <a class="el" href="de/d58/motor__config_8h.html#acac3e5ef7cffc89bd2e9113e4d632cb3">motor_config.h</a>
-, <a class="el" href="d9/d85/l6470__driver_8h.html#acac3e5ef7cffc89bd2e9113e4d632cb3">l6470_driver.h</a>
+: <a class="el" href="d9/d85/l6470__driver_8h.html#acac3e5ef7cffc89bd2e9113e4d632cb3">l6470_driver.h</a>
+, <a class="el" href="de/d58/motor__config_8h.html#acac3e5ef7cffc89bd2e9113e4d632cb3">motor_config.h</a>
 </li>
 <li>L6470_REG_FN_SLP_DEC
 : <a class="el" href="de/d58/motor__config_8h.html#a09b39f9889d7d59ab43de4d80d6e2aff">motor_config.h</a>
@@ -391,8 +494,8 @@ $(function() {
 , <a class="el" href="d9/d85/l6470__driver_8h.html#aed442678fe1d2ff79b56b0b9ba02d5c8">l6470_driver.h</a>
 </li>
 <li>L6470_REG_KVAL_ACC
-: <a class="el" href="d9/d85/l6470__driver_8h.html#a365ca37f4c89adc9382f402fa25418fa">l6470_driver.h</a>
-, <a class="el" href="de/d58/motor__config_8h.html#a365ca37f4c89adc9382f402fa25418fa">motor_config.h</a>
+: <a class="el" href="de/d58/motor__config_8h.html#a365ca37f4c89adc9382f402fa25418fa">motor_config.h</a>
+, <a class="el" href="d9/d85/l6470__driver_8h.html#a365ca37f4c89adc9382f402fa25418fa">l6470_driver.h</a>
 </li>
 <li>L6470_REG_KVAL_DEC
 : <a class="el" href="de/d58/motor__config_8h.html#a995bc461fddb3510df227325f589712e">motor_config.h</a>
@@ -415,8 +518,8 @@ $(function() {
 , <a class="el" href="d9/d85/l6470__driver_8h.html#a2385e9385e21a9e40682b5dfebefa61c">l6470_driver.h</a>
 </li>
 <li>L6470_REG_MIN_SPEED
-: <a class="el" href="d9/d85/l6470__driver_8h.html#a369b3dab366dbf9758be19ba86bbc22e">l6470_driver.h</a>
-, <a class="el" href="de/d58/motor__config_8h.html#a369b3dab366dbf9758be19ba86bbc22e">motor_config.h</a>
+: <a class="el" href="de/d58/motor__config_8h.html#a369b3dab366dbf9758be19ba86bbc22e">motor_config.h</a>
+, <a class="el" href="d9/d85/l6470__driver_8h.html#a369b3dab366dbf9758be19ba86bbc22e">l6470_driver.h</a>
 </li>
 <li>L6470_REG_OCD_TH
 : <a class="el" href="de/d58/motor__config_8h.html#a186eb7067f7b348e33f7333d9d2497c6">motor_config.h</a>
@@ -439,8 +542,14 @@ $(function() {
 , <a class="el" href="d9/d85/l6470__driver_8h.html#ab445b7874303b85dcdcee8bba8783a77">l6470_driver.h</a>
 </li>
 <li>L6470_REG_STEP_MODE
-: <a class="el" href="de/d58/motor__config_8h.html#ad16fae690f83f21a658fb3190382faac">motor_config.h</a>
-, <a class="el" href="d9/d85/l6470__driver_8h.html#ad16fae690f83f21a658fb3190382faac">l6470_driver.h</a>
+: <a class="el" href="d9/d85/l6470__driver_8h.html#ad16fae690f83f21a658fb3190382faac">l6470_driver.h</a>
+, <a class="el" href="de/d58/motor__config_8h.html#ad16fae690f83f21a658fb3190382faac">motor_config.h</a>
+</li>
+<li>l6470_register_readonly
+: <a class="el" href="d1/d62/l6470__registers__generated_8c.html#a93ff6e78c7850569160809aa2fc12caf">l6470_registers_generated.c</a>
+</li>
+<li>l6470_register_sizes
+: <a class="el" href="d1/d62/l6470__registers__generated_8c.html#af7ac874e00d10d83c93d697c4f1e199a">l6470_registers_generated.c</a>
 </li>
 <li>l6470_reset_device()
 : <a class="el" href="d1/d41/l6470__driver_8c.html#af913c68c1f0548723be5ab1eb0419ef5">l6470_driver.c</a>
@@ -450,12 +559,30 @@ $(function() {
 : <a class="el" href="d1/d41/l6470__driver_8c.html#af16c63b85a636c53ee64d0a03073dae5">l6470_driver.c</a>
 , <a class="el" href="d9/d85/l6470__driver_8h.html#af16c63b85a636c53ee64d0a03073dae5">l6470_driver.h</a>
 </li>
-<li>L6470_Run()
-: <a class="el" href="d9/d85/l6470__driver_8h.html#aebc2546a5ee9efb982945b7a96eb8e39">l6470_driver.h</a>
-</li>
 <li>l6470_run()
 : <a class="el" href="d1/d41/l6470__driver_8c.html#a1c8061f4da28764e7215533ad29a2079">l6470_driver.c</a>
 , <a class="el" href="d9/d85/l6470__driver_8h.html#a1c8061f4da28764e7215533ad29a2079">l6470_driver.h</a>
+</li>
+<li>L6470_Run()
+: <a class="el" href="d9/d85/l6470__driver_8h.html#aebc2546a5ee9efb982945b7a96eb8e39">l6470_driver.h</a>
+</li>
+<li>L6470_SAFE_DEFAULT_ACC
+: <a class="el" href="de/d58/motor__config_8h.html#a22cec38820630c6aef14a02b4b98b80d">motor_config.h</a>
+</li>
+<li>L6470_SAFE_DEFAULT_DEC
+: <a class="el" href="de/d58/motor__config_8h.html#a0d822f2346831fa6fd4d2576806f2c5c">motor_config.h</a>
+</li>
+<li>L6470_SAFE_DEFAULT_KVAL_RUN
+: <a class="el" href="de/d58/motor__config_8h.html#a7f0590869597b5820c1446be30e5baca">motor_config.h</a>
+</li>
+<li>L6470_SAFE_DEFAULT_MAX_SPEED
+: <a class="el" href="de/d58/motor__config_8h.html#a2b3979f2a10f6924c89855c54d19c74a">motor_config.h</a>
+</li>
+<li>L6470_SAFE_DEFAULT_OCD_TH
+: <a class="el" href="de/d58/motor__config_8h.html#aa985eb31a00ca3638b254f3b290f59e0">motor_config.h</a>
+</li>
+<li>l6470_schema_path
+: <a class="el" href="d1/d4d/hardware__simulation_8c.html#a23010de90c6490755526c14959c1081d">hardware_simulation.c</a>
 </li>
 <li>l6470_send_daisy_command()
 : <a class="el" href="d1/d41/l6470__driver_8c.html#a232b462d8ff2bef5725f8aa336a8ac8d">l6470_driver.c</a>
@@ -466,19 +593,94 @@ $(function() {
 <li>L6470_SendCommand()
 : <a class="el" href="d9/d85/l6470__driver_8h.html#a539ccbeab9168b19e88576486b0a5065">l6470_driver.h</a>
 </li>
+<li>l6470_set_acceleration()
+: <a class="el" href="d8/daa/optimization__compatibility_8h.html#afcd6d9de175d1fdb0cb091e6acdc8e77">optimization_compatibility.h</a>
+, <a class="el" href="dd/d68/optimization__compatibility_8c.html#afcd6d9de175d1fdb0cb091e6acdc8e77">optimization_compatibility.c</a>
+</li>
+<li>l6470_set_deceleration()
+: <a class="el" href="dd/d68/optimization__compatibility_8c.html#ab13032adc89a8a1d8a8a117a1cd7b0f5">optimization_compatibility.c</a>
+, <a class="el" href="d8/daa/optimization__compatibility_8h.html#ab13032adc89a8a1d8a8a117a1cd7b0f5">optimization_compatibility.h</a>
+</li>
+<li>l6470_set_kval_acc()
+: <a class="el" href="dd/d68/optimization__compatibility_8c.html#a0b6d418f3531685d6ee2e4a138d95ab4">optimization_compatibility.c</a>
+, <a class="el" href="d8/daa/optimization__compatibility_8h.html#a0b6d418f3531685d6ee2e4a138d95ab4">optimization_compatibility.h</a>
+</li>
+<li>l6470_set_kval_dec()
+: <a class="el" href="dd/d68/optimization__compatibility_8c.html#a23dc1d131bf665151ce49c8226ace10c">optimization_compatibility.c</a>
+, <a class="el" href="d8/daa/optimization__compatibility_8h.html#a23dc1d131bf665151ce49c8226ace10c">optimization_compatibility.h</a>
+</li>
+<li>l6470_set_kval_hold()
+: <a class="el" href="dd/d68/optimization__compatibility_8c.html#a9d4419cc9fd4cb119b95c009dcd38c16">optimization_compatibility.c</a>
+, <a class="el" href="d8/daa/optimization__compatibility_8h.html#a9d4419cc9fd4cb119b95c009dcd38c16">optimization_compatibility.h</a>
+</li>
+<li>l6470_set_kval_run()
+: <a class="el" href="dd/d68/optimization__compatibility_8c.html#a35aa3e1aa5700c76d497a89fbeb3cc87">optimization_compatibility.c</a>
+, <a class="el" href="d8/daa/optimization__compatibility_8h.html#a35aa3e1aa5700c76d497a89fbeb3cc87">optimization_compatibility.h</a>
+</li>
+<li>l6470_set_max_speed()
+: <a class="el" href="d8/daa/optimization__compatibility_8h.html#a6f89eddc41b42833a81b3e5efefa50c2">optimization_compatibility.h</a>
+, <a class="el" href="dd/d68/optimization__compatibility_8c.html#a6f89eddc41b42833a81b3e5efefa50c2">optimization_compatibility.c</a>
+</li>
 <li>l6470_set_parameter()
 : <a class="el" href="d1/d41/l6470__driver_8c.html#a344b96a73609865a7a554f2d83a93e22">l6470_driver.c</a>
 , <a class="el" href="d9/d85/l6470__driver_8h.html#a344b96a73609865a7a554f2d83a93e22">l6470_driver.h</a>
+</li>
+<li>l6470_sim_execute_command()
+: <a class="el" href="dd/def/motor__simulation_8c.html#af7899344a4faf7bebc9034bc7c8606b1">motor_simulation.c</a>
+, <a class="el" href="d5/d8e/motor__simulation_8h.html#af7899344a4faf7bebc9034bc7c8606b1">motor_simulation.h</a>
+</li>
+<li>l6470_sim_get_position()
+: <a class="el" href="dd/def/motor__simulation_8c.html#a8d573ceb0a62873d8c357c83d09b3576">motor_simulation.c</a>
+, <a class="el" href="d5/d8e/motor__simulation_8h.html#a8d573ceb0a62873d8c357c83d09b3576">motor_simulation.h</a>
+</li>
+<li>l6470_sim_get_speed()
+: <a class="el" href="dd/def/motor__simulation_8c.html#a17be3510a5bc030fb055eef972f65d6d">motor_simulation.c</a>
+, <a class="el" href="d5/d8e/motor__simulation_8h.html#a17be3510a5bc030fb055eef972f65d6d">motor_simulation.h</a>
+</li>
+<li>l6470_sim_init()
+: <a class="el" href="dd/def/motor__simulation_8c.html#abc40aa951693e7e95f5ef74fe5ebf184">motor_simulation.c</a>
+, <a class="el" href="d5/d8e/motor__simulation_8h.html#abc40aa951693e7e95f5ef74fe5ebf184">motor_simulation.h</a>
+</li>
+<li>l6470_sim_inject_fault()
+: <a class="el" href="d5/d8e/motor__simulation_8h.html#a4f096a5abaab7b0becf59036218ed013">motor_simulation.h</a>
+</li>
+<li>l6470_sim_read_register()
+: <a class="el" href="d1/d41/l6470__driver_8c.html#a05b3f7e62e5aba50bbbb58c4c51f0edb">l6470_driver.c</a>
+, <a class="el" href="d1/d4d/hardware__simulation_8c.html#ac4983373c360bd9960d1beec70768b4c">hardware_simulation.c</a>
+, <a class="el" href="d9/d57/hardware__simulation_8h.html#ac4983373c360bd9960d1beec70768b4c">hardware_simulation.h</a>
+, <a class="el" href="dd/def/motor__simulation_8c.html#ae8f6eb8e94d2953616091e4e348d2db9">motor_simulation.c</a>
+, <a class="el" href="d5/d8e/motor__simulation_8h.html#ae8f6eb8e94d2953616091e4e348d2db9">motor_simulation.h</a>
+</li>
+<li>l6470_sim_send_command()
+: <a class="el" href="d1/d41/l6470__driver_8c.html#ade9724f227eae12a3cbe1608944b7e75">l6470_driver.c</a>
+, <a class="el" href="d1/d4d/hardware__simulation_8c.html#ade9724f227eae12a3cbe1608944b7e75">hardware_simulation.c</a>
+, <a class="el" href="d9/d57/hardware__simulation_8h.html#ade9724f227eae12a3cbe1608944b7e75">hardware_simulation.h</a>
+</li>
+<li>l6470_sim_update_motion()
+: <a class="el" href="dd/def/motor__simulation_8c.html#ab2ac12255ceb619a034289c9b2496962">motor_simulation.c</a>
+</li>
+<li>l6470_sim_update_status_register()
+: <a class="el" href="dd/def/motor__simulation_8c.html#ac99aefdc7f4b7acb56d69ad24915baa4">motor_simulation.c</a>
+</li>
+<li>l6470_sim_validate_register_write()
+: <a class="el" href="dd/def/motor__simulation_8c.html#a5208e8e95301b232b4c5779648d3d2a3">motor_simulation.c</a>
+</li>
+<li>l6470_sim_write_register()
+: <a class="el" href="d1/d41/l6470__driver_8c.html#aeceea27119d588d4c8edbfadcb2cd1d5">l6470_driver.c</a>
+, <a class="el" href="d1/d4d/hardware__simulation_8c.html#aaab139fd1352e054dcca0da9f13ee5e3">hardware_simulation.c</a>
+, <a class="el" href="d9/d57/hardware__simulation_8h.html#aaab139fd1352e054dcca0da9f13ee5e3">hardware_simulation.h</a>
+, <a class="el" href="dd/def/motor__simulation_8c.html#a73bfa0431202e48c70037ecb0b11f4ab">motor_simulation.c</a>
+, <a class="el" href="d5/d8e/motor__simulation_8h.html#a73bfa0431202e48c70037ecb0b11f4ab">motor_simulation.h</a>
 </li>
 <li>L6470_SLEW_RATE
 : <a class="el" href="de/d58/motor__config_8h.html#a1c88f6abf33f57fc74dd372c523b0b16">motor_config.h</a>
 </li>
 <li>l6470_soft_stop()
-: <a class="el" href="d1/d41/l6470__driver_8c.html#a2674e3493c521eefa2690a166a51759f">l6470_driver.c</a>
-, <a class="el" href="d9/d85/l6470__driver_8h.html#a2674e3493c521eefa2690a166a51759f">l6470_driver.h</a>
+: <a class="el" href="d9/d85/l6470__driver_8h.html#a2674e3493c521eefa2690a166a51759f">l6470_driver.h</a>
+, <a class="el" href="d1/d41/l6470__driver_8c.html#a2674e3493c521eefa2690a166a51759f">l6470_driver.c</a>
 </li>
-<li>l6470_spi_handle
-: <a class="el" href="d1/d41/l6470__driver_8c.html#ae382a2eb706a27132f8c68603f126867">l6470_driver.c</a>
+<li>L6470_SPEED_OPTIMIZATION_FACTOR
+: <a class="el" href="dd/dbd/motor__characterization_8c.html#a32ef6cdc18447b383a6e27fa7675ba37">motor_characterization.c</a>
 </li>
 <li>L6470_SPI_INSTANCE
 : <a class="el" href="d9/d85/l6470__driver_8h.html#a0e1858bcbf0d225fea5ef7c32bb54ac8">l6470_driver.h</a>
@@ -492,6 +694,12 @@ $(function() {
 <li>L6470_STALL_TH
 : <a class="el" href="de/d58/motor__config_8h.html#a576c4200f9547dc089377b674627a662">motor_config.h</a>
 </li>
+<li>L6470_STALL_TH_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#aa95492d73b05202fa13000aa9c028d5c">l6470_registers_generated.h</a>
+</li>
+<li>L6470_STATUS_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a5d7edb69717b8cfce4f45cc372049657">l6470_registers_generated.h</a>
+</li>
 <li>L6470_STATUS_BUSY
 : <a class="el" href="d9/d85/l6470__driver_8h.html#afa1fa65d4cb90e3a1a07538edd463376">l6470_driver.h</a>
 </li>
@@ -501,23 +709,32 @@ $(function() {
 <li>L6470_STATUS_HIZ
 : <a class="el" href="d9/d85/l6470__driver_8h.html#abd31e6d4c632e3e50c6d7c80d4021a1f">l6470_driver.h</a>
 </li>
+<li>L6470_STATUS_MASK
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a71ba86c86b18c994744edcdfd35e5223">l6470_registers_generated.h</a>
+</li>
 <li>L6470_STATUS_MOT_STATUS
 : <a class="el" href="d9/d85/l6470__driver_8h.html#a51ae580397cb0c45ec2f6fcb312ec8af">l6470_driver.h</a>
+</li>
+<li>L6470_STATUS_MOT_STATUS_Msk
+: <a class="el" href="d9/d85/l6470__driver_8h.html#ac8effe093baba5c57e0252cd4e3b68ec">l6470_driver.h</a>
 </li>
 <li>L6470_STATUS_NOTPERF_CMD
 : <a class="el" href="d9/d85/l6470__driver_8h.html#aa01a8c5eda34b9b6c80192ce43b063e2">l6470_driver.h</a>
 </li>
 <li>L6470_STATUS_OCD
 : <a class="el" href="d9/d85/l6470__driver_8h.html#a4e67d83d9c1527ee9c3d669dd5d90734">l6470_driver.h</a>
+, <a class="el" href="d7/d7e/mock__drivers_8h.html#a4e67d83d9c1527ee9c3d669dd5d90734">mock_drivers.h</a>
 </li>
 <li>L6470_STATUS_SCK_MOD
 : <a class="el" href="d9/d85/l6470__driver_8h.html#a07b8036b2eb35b4d8d3499a0bc7dbb5d">l6470_driver.h</a>
 </li>
 <li>L6470_STATUS_STEP_LOSS_A
 : <a class="el" href="d9/d85/l6470__driver_8h.html#a4051ac5616306ab16ba8cbf2d335ad32">l6470_driver.h</a>
+, <a class="el" href="d7/d7e/mock__drivers_8h.html#a4051ac5616306ab16ba8cbf2d335ad32">mock_drivers.h</a>
 </li>
 <li>L6470_STATUS_STEP_LOSS_B
 : <a class="el" href="d9/d85/l6470__driver_8h.html#a64d90a84492e0a0838e3d5e1d3876ba1">l6470_driver.h</a>
+, <a class="el" href="d7/d7e/mock__drivers_8h.html#a64d90a84492e0a0838e3d5e1d3876ba1">mock_drivers.h</a>
 </li>
 <li>L6470_STATUS_SW_EVN
 : <a class="el" href="d9/d85/l6470__driver_8h.html#affd01223966efc8e04d8b5cbc89361a4">l6470_driver.h</a>
@@ -530,6 +747,7 @@ $(function() {
 </li>
 <li>L6470_STATUS_TH_WRN
 : <a class="el" href="d9/d85/l6470__driver_8h.html#a883a182738d9b8ff58f798745340a9e2">l6470_driver.h</a>
+, <a class="el" href="d7/d7e/mock__drivers_8h.html#a883a182738d9b8ff58f798745340a9e2">mock_drivers.h</a>
 </li>
 <li>L6470_STATUS_UVLO
 : <a class="el" href="d9/d85/l6470__driver_8h.html#abbb1cacc3cf0d2cdfdf4a3421dd87d00">l6470_driver.h</a>
@@ -539,6 +757,9 @@ $(function() {
 </li>
 <li>L6470_STEP_MODE
 : <a class="el" href="de/d58/motor__config_8h.html#a53354d69b07ecdd4b93ea6f0a190e5dc">motor_config.h</a>
+</li>
+<li>L6470_STEP_MODE_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#ad45f138be459911389ffb8f0c7ebf436">l6470_registers_generated.h</a>
 </li>
 <li>L6470_Stop()
 : <a class="el" href="d9/d85/l6470__driver_8h.html#a88c6c9f206355c6b55975e1073db6a62">l6470_driver.h</a>
@@ -558,11 +779,27 @@ $(function() {
 <li>l6470_validate_motor_id()
 : <a class="el" href="d1/d41/l6470__driver_8c.html#a33480b6b12731248ff6cef3836be57be">l6470_driver.c</a>
 </li>
+<li>l6470_validate_register()
+: <a class="el" href="d1/d62/l6470__registers__generated_8c.html#a7436a6680d2936413b54745d2377d967">l6470_registers_generated.c</a>
+</li>
+<li>l6470_validate_register_value()
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a912ed797d49790fd1bf11c0269003438">l6470_registers_generated.h</a>
+</li>
 <li>L6470_WriteRegister()
 : <a class="el" href="d9/d85/l6470__driver_8h.html#ad3f7d4e0bfb5ac2f9a320ac9729f3410">l6470_driver.h</a>
 </li>
 <li>L6470FaultFlags_t
 : <a class="el" href="df/d2b/fault__monitor_8h.html#a4abf0e97f98db269ac212d103b43948d">fault_monitor.h</a>
+</li>
+<li>L6470HwFaultType_t
+: <a class="el" href="de/d1f/l6470__fault__monitor_8h.html#a481eb89147eec557ce8897a5865456ec">l6470_fault_monitor.h</a>
+</li>
+<li>large_memory_pool
+: <a class="el" href="de/d6d/rtos__tasks_8h.html#a03a968f41adc84711784ea035211c84f">rtos_tasks.h</a>
+, <a class="el" href="d3/d37/rtos__tasks_8c.html#a03a968f41adc84711784ea035211c84f">rtos_tasks.c</a>
+</li>
+<li>last_idle_time
+: <a class="el" href="d3/d37/rtos__tasks_8c.html#a931068150f51d0fa576a1d600f94acc9">rtos_tasks.c</a>
 </li>
 <li>last_motor_current
 : <a class="el" href="d3/d16/fault__monitor_8c.html#ad7947806541c52edd56450c3b39166d2">fault_monitor.c</a>
@@ -573,6 +810,9 @@ $(function() {
 <li>last_refresh_interval
 : <a class="el" href="d2/d94/watchdog__manager_8c.html#a9671544ff11273aa41cc34b1cf934399">watchdog_manager.c</a>
 </li>
+<li>last_safety_check
+: <a class="el" href="d9/dfd/main__application_8c.html#af1289670f5fbb17db13f4a6e8a1f5b02">main_application.c</a>
+</li>
 <li>last_safety_check_time
 : <a class="el" href="db/d1a/safety__system_8c.html#aa6de8aaf7cae096df4ace907bdcba044">safety_system.c</a>
 </li>
@@ -582,23 +822,59 @@ $(function() {
 <li>last_voltage_reading
 : <a class="el" href="d3/d16/fault__monitor_8c.html#a27ba13dc7b528ee133f6d4b7d81db972">fault_monitor.c</a>
 </li>
+<li>last_watchdog_refresh
+: <a class="el" href="d9/dfd/main__application_8c.html#afb9280fdec252b5d88ec1b18a4e2ab19">main_application.c</a>
+</li>
 <li>LED_GREEN_PIN
 : <a class="el" href="d3/d91/hardware__config_8h.html#a0539be032702009fb24beec89c6fa0c0">hardware_config.h</a>
+</li>
+<li>LED_GREEN_PIN_INDEX
+: <a class="el" href="d3/d91/hardware__config_8h.html#afd991b7e173017e394c9d723b15e5f71">hardware_config.h</a>
+</li>
+<li>LED_GREEN_PIN_NUM
+: <a class="el" href="d3/d91/hardware__config_8h.html#a3b491d63685e7b3aa9f54bb700c2b76c">hardware_config.h</a>
 </li>
 <li>LED_GREEN_PORT
 : <a class="el" href="d3/d91/hardware__config_8h.html#a3ed8b1ac183679013d04fa3ebe0e44e5">hardware_config.h</a>
 </li>
+<li>LED_GREEN_PORT_ENUM
+: <a class="el" href="d3/d91/hardware__config_8h.html#a03e0c6bdf1e688e9c77e250f954c320f">hardware_config.h</a>
+</li>
 <li>LED_RED_PIN
 : <a class="el" href="d3/d91/hardware__config_8h.html#ab9824ab080c30006c1baaa0dd7e863c5">hardware_config.h</a>
+</li>
+<li>LED_RED_PIN_INDEX
+: <a class="el" href="d3/d91/hardware__config_8h.html#a886d730d34d794534809fdc9a5a85a1a">hardware_config.h</a>
+</li>
+<li>LED_RED_PIN_NUM
+: <a class="el" href="d3/d91/hardware__config_8h.html#a000d55417d3b202fd989261135b6b664">hardware_config.h</a>
 </li>
 <li>LED_RED_PORT
 : <a class="el" href="d3/d91/hardware__config_8h.html#a7959a54f2383757d0007ee4b96071186">hardware_config.h</a>
 </li>
+<li>LED_RED_PORT_ENUM
+: <a class="el" href="d3/d91/hardware__config_8h.html#a6113454e33e396c6133ca91a469d51fa">hardware_config.h</a>
+</li>
+<li>led_status_timer
+: <a class="el" href="de/db3/rtos__resources__config_8h.html#aadf39cf9cd93b489421b93489b844151">rtos_resources_config.h</a>
+</li>
 <li>LED_YELLOW_PIN
 : <a class="el" href="d3/d91/hardware__config_8h.html#a3efbeab3ef9de8a67a070364621e01e6">hardware_config.h</a>
 </li>
+<li>LED_YELLOW_PIN_INDEX
+: <a class="el" href="d3/d91/hardware__config_8h.html#a85db005145fcc98aa2372bae0ec286f4">hardware_config.h</a>
+</li>
+<li>LED_YELLOW_PIN_NUM
+: <a class="el" href="d3/d91/hardware__config_8h.html#aafe7dd2330c0706572abe0781325e857">hardware_config.h</a>
+</li>
 <li>LED_YELLOW_PORT
 : <a class="el" href="d3/d91/hardware__config_8h.html#ae52dce245c53b294fb89456e42f3508d">hardware_config.h</a>
+</li>
+<li>LED_YELLOW_PORT_ENUM
+: <a class="el" href="d3/d91/hardware__config_8h.html#a6a8e6f220248d808f1240b8b693fe0f1">hardware_config.h</a>
+</li>
+<li>LedStatusTimerCallback()
+: <a class="el" href="de/db3/rtos__resources__config_8h.html#a8e608f79b2b4ff3a9d06db950df03b2f">rtos_resources_config.h</a>
 </li>
 <li>linear_velocity_mm_s_t
 : <a class="el" href="d3/ddc/data__types_8h.html#a84f2efb0823f8f44ae4e622acad7ab12">data_types.h</a>
@@ -608,6 +884,9 @@ $(function() {
 </li>
 <li>LINK_VALIDATOR_SCRIPT_PATH
 : <a class="el" href="db/de7/documentation__config_8h.html#a85a714fe995f5da98bcac541ee278c4f">documentation_config.h</a>
+</li>
+<li>LOAD_BALANCE_THRESHOLD
+: <a class="el" href="d5/d1f/multi__motor__coordinator_8h.html#a80c27bccd4159b81da3cb85391034c28">multi_motor_coordinator.h</a>
 </li>
 <li>LOG_BUFFER_SIZE
 : <a class="el" href="d8/d2b/build__config_8h.html#a381c342b2b34df0b1a5b39c0d94da4e1">build_config.h</a>
@@ -621,24 +900,33 @@ $(function() {
 <li>log_error_detailed()
 : <a class="el" href="de/d11/error__codes_8h.html#ae55afacbaa06da66695e32e3b118ddcb">error_codes.h</a>
 </li>
+<li>LOG_ERROR_PRINTF
+: <a class="el" href="db/d87/motor__efficiency__optimizer_8c.html#ae5e94994cf4266cc5412c8bd6993fe0e">motor_efficiency_optimizer.c</a>
+</li>
+<li>LOG_INFO
+: <a class="el" href="db/d87/motor__efficiency__optimizer_8c.html#ae69d735f8291bd2aff230fe6ffb4d4b3">motor_efficiency_optimizer.c</a>
+</li>
 <li>LOG_MAX_MESSAGE_LEN
 : <a class="el" href="d8/d2b/build__config_8h.html#a818c68828d8886dda70d4e8023d5fad3">build_config.h</a>
 </li>
 <li>log_safety_event()
-: <a class="el" href="db/d1a/safety__system_8c.html#a4eec73403fd733136ba124f487da6928">safety_system.c</a>
-, <a class="el" href="d2/db6/safety__system_8h.html#a4eec73403fd733136ba124f487da6928">safety_system.h</a>
+: <a class="el" href="db/d1a/safety__system_8c.html#a15fc4860a245b0fb5a5520868f8ea246">safety_system.c</a>
+, <a class="el" href="d2/db6/safety__system_8h.html#a15fc4860a245b0fb5a5520868f8ea246">safety_system.h</a>
 </li>
 <li>LOG_TIMESTAMP_ENABLE
 : <a class="el" href="d8/d2b/build__config_8h.html#a8bd950a5022d2d33d5d35f016f9ddc4c">build_config.h</a>
 </li>
-<li>LSE_VALUE
-: <a class="el" href="d3/d91/hardware__config_8h.html#a7bbb9d19e5189a6ccd0fb6fa6177d20d">hardware_config.h</a>
+<li>LOG_WARN
+: <a class="el" href="db/d87/motor__efficiency__optimizer_8c.html#adba1363ea408060eab75cb5a48dcb907">motor_efficiency_optimizer.c</a>
+</li>
+<li>LOG_WARNING
+: <a class="el" href="db/d87/motor__efficiency__optimizer_8c.html#afde44945335adc0c0ae2986fea13438f">motor_efficiency_optimizer.c</a>
 </li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 5 2025 13:09:34 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 11 2025 23:51:14 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

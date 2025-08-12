@@ -70,134 +70,218 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="../../d4/d05/mock__hal_8h_source.html">mock_hal.h</a>&gt;</code></p>
-<div class="dynheader">
-Collaboration diagram for MockHAL_State_t:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../d9/dc4/structMockHAL__State__t__coll__graph.png" border="0" usemap="#aMockHAL__State__t_coll__map" alt="Collaboration graph"/></div>
-<map name="aMockHAL__State__t_coll__map" id="aMockHAL__State__t_coll__map">
-<area shape="rect" title=" " alt="" coords="9,184,145,211"/>
-<area shape="rect" href="../../d6/d2b/structMockGPIO__State__t.html" title=" " alt="" coords="5,95,148,121"/>
-<area shape="rect" href="../../d0/d6b/structGPIO__TypeDef.html" title=" " alt="" coords="19,5,134,32"/>
-</map>
-<center><span class="legend">[<a href="../../graph_legend.html">legend</a>]</span></center></div>
+<p>Complete mock HAL state structure for test verification This matches the internal mock state used by tests.  
+ <a href="../../da/d16/structMockHAL__State__t.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
+<tr class="memitem:a57dc1c94b50951459ce1a6a800256900"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#a57dc1c94b50951459ce1a6a800256900">gpio_configured</a> [<a class="el" href="../../d6/dee/hal__abstraction_8h.html#a18ed399330b8982bcd6ccc5443c4f126a1e41c7f63356429b3d82fef0ad431f0a">HAL_GPIO_PORT_MAX</a>][16]</td></tr>
+<tr class="separator:a57dc1c94b50951459ce1a6a800256900"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97c6ed126c422c370408aafc7da2e339"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d6/dee/hal__abstraction_8h.html#a182c8e930bef2c558d391449928f36d9">HAL_GPIO_State_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#a97c6ed126c422c370408aafc7da2e339">gpio_states</a> [<a class="el" href="../../d6/dee/hal__abstraction_8h.html#a18ed399330b8982bcd6ccc5443c4f126a1e41c7f63356429b3d82fef0ad431f0a">HAL_GPIO_PORT_MAX</a>][16]</td></tr>
+<tr class="separator:a97c6ed126c422c370408aafc7da2e339"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53bff10130cedd7388175120469a3bc5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#a53bff10130cedd7388175120469a3bc5">spi_transaction_count</a> [<a class="el" href="../../d6/dee/hal__abstraction_8h.html#adb8a350cca61720e45a0d94d212838eea128c02a52724ae4a96245a17bf5e18f5">HAL_SPI_INSTANCE_MAX</a>]</td></tr>
+<tr class="separator:a53bff10130cedd7388175120469a3bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47bdf15dd31ae1954e1fcec7e2f75486"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#a47bdf15dd31ae1954e1fcec7e2f75486">i2c_transaction_count</a> [<a class="el" href="../../d6/dee/hal__abstraction_8h.html#accd6a7e427a65a82ce3c257fc8817576a0c29336b3aa318ab896731d5ad2058f2">HAL_I2C_INSTANCE_MAX</a>]</td></tr>
+<tr class="separator:a47bdf15dd31ae1954e1fcec7e2f75486"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ad9d328443c31a01c80cbca9cddc2f1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#a7ad9d328443c31a01c80cbca9cddc2f1">system_tick</a></td></tr>
 <tr class="separator:a7ad9d328443c31a01c80cbca9cddc2f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1c82379b771175b95370f7559fe0f6c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#ab1c82379b771175b95370f7559fe0f6c">call_count</a></td></tr>
-<tr class="separator:ab1c82379b771175b95370f7559fe0f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9ecb72c50bf3595c114a1954d373479"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#af9ecb72c50bf3595c114a1954d373479">emergency_stop_state</a></td></tr>
-<tr class="separator:af9ecb72c50bf3595c114a1954d373479"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a416418097193894baeca4cd08941d12f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#a416418097193894baeca4cd08941d12f">fault_pin_state</a></td></tr>
-<tr class="separator:a416418097193894baeca4cd08941d12f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a067cf1f31e173bb462e7a608cc2d31f6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#a067cf1f31e173bb462e7a608cc2d31f6">delay_call_count</a></td></tr>
+<tr class="separator:a067cf1f31e173bb462e7a608cc2d31f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7250e1ea9d6c7a59bf920f5c1c9b19fa"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#a7250e1ea9d6c7a59bf920f5c1c9b19fa">watchdog_refresh_count</a></td></tr>
 <tr class="separator:a7250e1ea9d6c7a59bf920f5c1c9b19fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a4a313d71f1350acc9fc1e8b8c2d8df"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#a0a4a313d71f1350acc9fc1e8b8c2d8df">last_watchdog_refresh</a></td></tr>
-<tr class="separator:a0a4a313d71f1350acc9fc1e8b8c2d8df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c47d6e93f429dc17206d27f609cd611"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d6/d2b/structMockGPIO__State__t.html">MockGPIO_State_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#a1c47d6e93f429dc17206d27f609cd611">gpio_states</a> [<a class="el" href="../../d4/d05/mock__hal_8h.html#a4e2f4ce4cece58f2134a229aaf01a588">MAX_GPIO_STATES</a>]</td></tr>
-<tr class="separator:a1c47d6e93f429dc17206d27f609cd611"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b3936c5badfbafd911e91c4bd3c4f43"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#a2b3936c5badfbafd911e91c4bd3c4f43">gpio_state_count</a></td></tr>
-<tr class="separator:a2b3936c5badfbafd911e91c4bd3c4f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0071dd3e0c32b182edf6780eea01cf3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#aa0071dd3e0c32b182edf6780eea01cf3">interrupts_enabled</a></td></tr>
+<tr class="separator:aa0071dd3e0c32b182edf6780eea01cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66fdbbc19ce12d535afb51f7dcf715d7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#a66fdbbc19ce12d535afb51f7dcf715d7">hal_initialized</a></td></tr>
+<tr class="separator:a66fdbbc19ce12d535afb51f7dcf715d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab73c29b6f29cad3c233b6f2336c4762e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#ab73c29b6f29cad3c233b6f2336c4762e">inject_spi_failure</a></td></tr>
+<tr class="separator:ab73c29b6f29cad3c233b6f2336c4762e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a253434d8429a0d6313db2f456d583b1b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#a253434d8429a0d6313db2f456d583b1b">inject_i2c_failure</a></td></tr>
+<tr class="separator:a253434d8429a0d6313db2f456d583b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac58672fd9344f661553a44b6f512e405"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#ac58672fd9344f661553a44b6f512e405">inject_gpio_failure</a></td></tr>
+<tr class="separator:ac58672fd9344f661553a44b6f512e405"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a260213b2f06777b6d8562de9d9d66b2f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d16/structMockHAL__State__t.html#a260213b2f06777b6d8562de9d9d66b2f">inject_timer_failure</a></td></tr>
+<tr class="separator:a260213b2f06777b6d8562de9d9d66b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="../../d4/d05/mock__hal_8h_source.html#l00071">71</a> of file <a class="el" href="../../d4/d05/mock__hal_8h_source.html">mock_hal.h</a>.</p>
+<div class="textblock"><p>Complete mock HAL state structure for test verification This matches the internal mock state used by tests. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html#l00149">149</a> of file <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="ab1c82379b771175b95370f7559fe0f6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab1c82379b771175b95370f7559fe0f6c">&#9670;&nbsp;</a></span>call_count</h2>
+<a id="a067cf1f31e173bb462e7a608cc2d31f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a067cf1f31e173bb462e7a608cc2d31f6">&#9670;&nbsp;</a></span>delay_call_count</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t MockHAL_State_t::call_count</td>
+          <td class="memname">uint32_t MockHAL_State_t::delay_call_count</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d05/mock__hal_8h_source.html#l00073">73</a> of file <a class="el" href="../../d4/d05/mock__hal_8h_source.html">mock_hal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html#l00155">155</a> of file <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a>.</p>
 
 </div>
 </div>
-<a id="af9ecb72c50bf3595c114a1954d373479"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9ecb72c50bf3595c114a1954d373479">&#9670;&nbsp;</a></span>emergency_stop_state</h2>
+<a id="a57dc1c94b50951459ce1a6a800256900"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57dc1c94b50951459ce1a6a800256900">&#9670;&nbsp;</a></span>gpio_configured</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool MockHAL_State_t::emergency_stop_state</td>
+          <td class="memname">bool MockHAL_State_t::gpio_configured[<a class="el" href="../../d6/dee/hal__abstraction_8h.html#a18ed399330b8982bcd6ccc5443c4f126a1e41c7f63356429b3d82fef0ad431f0a">HAL_GPIO_PORT_MAX</a>][16]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d05/mock__hal_8h_source.html#l00074">74</a> of file <a class="el" href="../../d4/d05/mock__hal_8h_source.html">mock_hal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html#l00150">150</a> of file <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a>.</p>
 
 </div>
 </div>
-<a id="a416418097193894baeca4cd08941d12f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a416418097193894baeca4cd08941d12f">&#9670;&nbsp;</a></span>fault_pin_state</h2>
+<a id="a97c6ed126c422c370408aafc7da2e339"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97c6ed126c422c370408aafc7da2e339">&#9670;&nbsp;</a></span>gpio_states</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool MockHAL_State_t::fault_pin_state</td>
+          <td class="memname"><a class="el" href="../../d6/dee/hal__abstraction_8h.html#a182c8e930bef2c558d391449928f36d9">HAL_GPIO_State_t</a> MockHAL_State_t::gpio_states[<a class="el" href="../../d6/dee/hal__abstraction_8h.html#a18ed399330b8982bcd6ccc5443c4f126a1e41c7f63356429b3d82fef0ad431f0a">HAL_GPIO_PORT_MAX</a>][16]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d05/mock__hal_8h_source.html#l00075">75</a> of file <a class="el" href="../../d4/d05/mock__hal_8h_source.html">mock_hal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html#l00151">151</a> of file <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a>.</p>
 
 </div>
 </div>
-<a id="a2b3936c5badfbafd911e91c4bd3c4f43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b3936c5badfbafd911e91c4bd3c4f43">&#9670;&nbsp;</a></span>gpio_state_count</h2>
+<a id="a66fdbbc19ce12d535afb51f7dcf715d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66fdbbc19ce12d535afb51f7dcf715d7">&#9670;&nbsp;</a></span>hal_initialized</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int MockHAL_State_t::gpio_state_count</td>
+          <td class="memname">bool MockHAL_State_t::hal_initialized</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d05/mock__hal_8h_source.html#l00079">79</a> of file <a class="el" href="../../d4/d05/mock__hal_8h_source.html">mock_hal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html#l00158">158</a> of file <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a>.</p>
 
 </div>
 </div>
-<a id="a1c47d6e93f429dc17206d27f609cd611"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c47d6e93f429dc17206d27f609cd611">&#9670;&nbsp;</a></span>gpio_states</h2>
+<a id="a47bdf15dd31ae1954e1fcec7e2f75486"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47bdf15dd31ae1954e1fcec7e2f75486">&#9670;&nbsp;</a></span>i2c_transaction_count</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d6/d2b/structMockGPIO__State__t.html">MockGPIO_State_t</a> MockHAL_State_t::gpio_states[<a class="el" href="../../d4/d05/mock__hal_8h.html#a4e2f4ce4cece58f2134a229aaf01a588">MAX_GPIO_STATES</a>]</td>
+          <td class="memname">uint32_t MockHAL_State_t::i2c_transaction_count[<a class="el" href="../../d6/dee/hal__abstraction_8h.html#accd6a7e427a65a82ce3c257fc8817576a0c29336b3aa318ab896731d5ad2058f2">HAL_I2C_INSTANCE_MAX</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d05/mock__hal_8h_source.html#l00078">78</a> of file <a class="el" href="../../d4/d05/mock__hal_8h_source.html">mock_hal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html#l00153">153</a> of file <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a>.</p>
 
 </div>
 </div>
-<a id="a0a4a313d71f1350acc9fc1e8b8c2d8df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a4a313d71f1350acc9fc1e8b8c2d8df">&#9670;&nbsp;</a></span>last_watchdog_refresh</h2>
+<a id="ac58672fd9344f661553a44b6f512e405"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac58672fd9344f661553a44b6f512e405">&#9670;&nbsp;</a></span>inject_gpio_failure</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t MockHAL_State_t::last_watchdog_refresh</td>
+          <td class="memname">bool MockHAL_State_t::inject_gpio_failure</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d05/mock__hal_8h_source.html#l00077">77</a> of file <a class="el" href="../../d4/d05/mock__hal_8h_source.html">mock_hal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html#l00163">163</a> of file <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a>.</p>
+
+</div>
+</div>
+<a id="a253434d8429a0d6313db2f456d583b1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a253434d8429a0d6313db2f456d583b1b">&#9670;&nbsp;</a></span>inject_i2c_failure</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MockHAL_State_t::inject_i2c_failure</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html#l00162">162</a> of file <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a>.</p>
+
+</div>
+</div>
+<a id="ab73c29b6f29cad3c233b6f2336c4762e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab73c29b6f29cad3c233b6f2336c4762e">&#9670;&nbsp;</a></span>inject_spi_failure</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MockHAL_State_t::inject_spi_failure</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html#l00161">161</a> of file <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a>.</p>
+
+</div>
+</div>
+<a id="a260213b2f06777b6d8562de9d9d66b2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a260213b2f06777b6d8562de9d9d66b2f">&#9670;&nbsp;</a></span>inject_timer_failure</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MockHAL_State_t::inject_timer_failure</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html#l00164">164</a> of file <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a>.</p>
+
+</div>
+</div>
+<a id="aa0071dd3e0c32b182edf6780eea01cf3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0071dd3e0c32b182edf6780eea01cf3">&#9670;&nbsp;</a></span>interrupts_enabled</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MockHAL_State_t::interrupts_enabled</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html#l00157">157</a> of file <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a>.</p>
+
+</div>
+</div>
+<a id="a53bff10130cedd7388175120469a3bc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53bff10130cedd7388175120469a3bc5">&#9670;&nbsp;</a></span>spi_transaction_count</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t MockHAL_State_t::spi_transaction_count[<a class="el" href="../../d6/dee/hal__abstraction_8h.html#adb8a350cca61720e45a0d94d212838eea128c02a52724ae4a96245a17bf5e18f5">HAL_SPI_INSTANCE_MAX</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html#l00152">152</a> of file <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a>.</p>
 
 </div>
 </div>
@@ -213,7 +297,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d05/mock__hal_8h_source.html#l00072">72</a> of file <a class="el" href="../../d4/d05/mock__hal_8h_source.html">mock_hal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html#l00154">154</a> of file <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a>.</p>
 
 </div>
 </div>
@@ -229,17 +313,17 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d4/d05/mock__hal_8h_source.html#l00076">76</a> of file <a class="el" href="../../d4/d05/mock__hal_8h_source.html">mock_hal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html#l00156">156</a> of file <a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>tests/mocks/<a class="el" href="../../d4/d05/mock__hal_8h_source.html">mock_hal.h</a></li>
+<li>tests/mocks/<a class="el" href="../../d2/d64/mock__hal__abstraction_8h_source.html">mock_hal_abstraction.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 5 2025 13:09:33 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 11 2025 23:51:12 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

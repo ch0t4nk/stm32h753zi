@@ -89,6 +89,19 @@ SystemError_t as5600_read_angle_degrees(uint8_t motor_id,
     return func->return_value;
 }
 
+SystemError_t as5600_check_magnet(uint8_t encoder_id, bool *magnet_ok) {
+    MockDriverFunction_t *func = get_function_mock("as5600_check_magnet");
+    func->call_count++;
+
+    if (encoder_id >= 2 || !magnet_ok) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    // For mock purposes, assume magnet is always detected
+    *magnet_ok = true;
+    return func->return_value;
+}
+
 /* ==========================================================================
  */
 /* L6470 Driver Mock Implementations */
@@ -98,6 +111,17 @@ SystemError_t as5600_read_angle_degrees(uint8_t motor_id,
 SystemError_t l6470_init(void) {
     MockDriverFunction_t *func = get_function_mock("l6470_init");
     func->call_count++;
+    return func->return_value;
+}
+
+SystemError_t l6470_init_motor(uint8_t motor_id) {
+    MockDriverFunction_t *func = get_function_mock("l6470_init_motor");
+    func->call_count++;
+
+    if (motor_id >= 2) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
     return func->return_value;
 }
 

@@ -78,10 +78,10 @@ $(function() {
 
 <p>AS5600 Magnetic Encoder Driver Header.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="../../d3/d91/hardware__config_8h_source.html">config/hardware_config.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="../../de/d11/error__codes_8h_source.html">common/error_codes.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d3/d91/hardware__config_8h_source.html">config/hardware_config.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../de/d58/motor__config_8h_source.html">config/motor_config.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../de/d11/error__codes_8h_source.html">common/error_codes.h</a>&quot;</code><br />
-<code>#include &quot;stm32h7xx_hal.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d8/d36/stm32h7xx__hal_8h_source.html">stm32h7xx_hal.h</a>&quot;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -89,13 +89,15 @@ Include dependency graph for as5600_driver.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d4/d50/as5600__driver_8h__incl.png" border="0" usemap="#asrc_2drivers_2as5600_2as5600__driver_8h" alt=""/></div>
 <map name="asrc_2drivers_2as5600_2as5600__driver_8h" id="asrc_2drivers_2as5600_2as5600__driver_8h">
-<area shape="rect" title="AS5600 Magnetic Encoder Driver Header." alt="" coords="333,5,475,47"/>
-<area shape="rect" href="../../d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="5,95,189,121"/>
-<area shape="rect" title=" " alt="" coords="95,169,230,196"/>
-<area shape="rect" href="../../de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="264,95,427,121"/>
-<area shape="rect" title=" " alt="" coords="429,169,499,196"/>
-<area shape="rect" href="../../de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="501,95,672,121"/>
-<area shape="rect" title=" " alt="" coords="607,169,689,196"/>
+<area shape="rect" title="AS5600 Magnetic Encoder Driver Header." alt="" coords="257,5,398,47"/>
+<area shape="rect" href="../../de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="21,259,191,285"/>
+<area shape="rect" title=" " alt="" coords="187,333,270,360"/>
+<area shape="rect" title=" " alt="" coords="456,333,527,360"/>
+<area shape="rect" href="../../d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="153,95,337,121"/>
+<area shape="rect" href="../../de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="634,95,797,121"/>
+<area shape="rect" href="../../d8/d36/stm32h7xx__hal_8h.html" title="Mock STM32H7xx HAL header for unit testing." alt="" coords="352,177,487,203"/>
+<area shape="rect" href="../../d6/dee/hal__abstraction_8h.html" title="Hardware Abstraction Layer (HAL) Interface for STM32H753ZI." alt="" coords="171,169,318,211"/>
+<area shape="rect" href="../../d4/d03/mock__hal__types_8h.html" title="Mock HAL type definitions for unit testing environment." alt="" coords="368,259,508,285"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -103,9 +105,12 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../df/d47/as5600__driver_8h__dep__incl.png" border="0" usemap="#asrc_2drivers_2as5600_2as5600__driver_8hdep" alt=""/></div>
 <map name="asrc_2drivers_2as5600_2as5600__driver_8hdep" id="asrc_2drivers_2as5600_2as5600__driver_8hdep">
-<area shape="rect" title="AS5600 Magnetic Encoder Driver Header." alt="" coords="100,5,241,47"/>
-<area shape="rect" href="../../d0/dde/motor__controller_8c.html" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="5,95,163,136"/>
-<area shape="rect" href="../../d8/d75/as5600__driver_8c.html" title="AS5600 Magnetic Encoder Driver Implementation &#45; STM32H7 I2C HAL." alt="" coords="187,95,328,136"/>
+<area shape="rect" title="AS5600 Magnetic Encoder Driver Header." alt="" coords="383,5,524,47"/>
+<area shape="rect" href="../../dd/dbd/motor__characterization_8c.html" title="Motor parameter identification and characterization implementation." alt="" coords="5,95,163,136"/>
+<area shape="rect" href="../../d0/dde/motor__controller_8c.html" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="187,95,344,136"/>
+<area shape="rect" href="../../dc/da4/position__control_8c.html" title="Advanced Position Control with Encoder Feedback." alt="" coords="368,95,539,136"/>
+<area shape="rect" href="../../d8/d75/as5600__driver_8c.html" title="AS5600 Magnetic Encoder Driver Implementation using HAL abstraction." alt="" coords="563,95,704,136"/>
+<area shape="rect" href="../../dd/d68/optimization__compatibility_8c.html" title="Compatibility layer implementation for optimization module development." alt="" coords="728,95,941,136"/>
 </map>
 </div>
 </div>
@@ -127,7 +132,7 @@ Macros</h2></td></tr>
 <tr class="separator:a6aab2aeb4d5c74eba909e15039d18be1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6aa6746a4838d5c1601520b85d1376d7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a6aa6746a4838d5c1601520b85d1376d7">AS5600_I2C_TIMEOUT</a>&#160;&#160;&#160;1000</td></tr>
 <tr class="separator:a6aa6746a4838d5c1601520b85d1376d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65364b2996b94f89529dccc8f6a38835"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a65364b2996b94f89529dccc8f6a38835">AS5600_MAX_ENCODERS</a>&#160;&#160;&#160;<a class="el" href="../../de/d58/motor__config_8h.html#a40dfd7fdfce455ce507bf3fed368c2ed">MAX_MOTORS</a></td></tr>
+<tr class="memitem:a65364b2996b94f89529dccc8f6a38835"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a65364b2996b94f89529dccc8f6a38835">AS5600_MAX_ENCODERS</a>&#160;&#160;&#160;<a class="el" href="../../d7/df8/test__l6470__register__programming_8c.html#a40dfd7fdfce455ce507bf3fed368c2ed">MAX_MOTORS</a></td></tr>
 <tr class="separator:a65364b2996b94f89529dccc8f6a38835"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade0deb3ae306bb801d8cacaefb8e5437"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#ade0deb3ae306bb801d8cacaefb8e5437">AS5600_REG_ZMCO</a>&#160;&#160;&#160;0x00</td></tr>
 <tr class="separator:ade0deb3ae306bb801d8cacaefb8e5437"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -180,45 +185,45 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a18bea0d8caefbdb7f7ed54a46f6bcfb5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a18bea0d8caefbdb7f7ed54a46f6bcfb5">AS5600_Init</a> (I2C_HandleTypeDef *<a class="el" href="../../d9/dfd/main__application_8c.html#af7b2c26e44dadaaa798a5c3d82914ba7">hi2c1</a>, I2C_HandleTypeDef *<a class="el" href="../../d9/dfd/main__application_8c.html#ac379bcc152d860f08b1279fd3e232295">hi2c2</a>)</td></tr>
+<tr class="memitem:a18bea0d8caefbdb7f7ed54a46f6bcfb5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a18bea0d8caefbdb7f7ed54a46f6bcfb5">AS5600_Init</a> (<a class="el" href="../../dd/d39/structI2C__HandleTypeDef.html">I2C_HandleTypeDef</a> *<a class="el" href="../../d5/d49/hal__abstraction__stm32h7_8c.html#af7b2c26e44dadaaa798a5c3d82914ba7">hi2c1</a>, <a class="el" href="../../dd/d39/structI2C__HandleTypeDef.html">I2C_HandleTypeDef</a> *<a class="el" href="../../d5/d49/hal__abstraction__stm32h7_8c.html#ac379bcc152d860f08b1279fd3e232295">hi2c2</a>)</td></tr>
 <tr class="memdesc:a18bea0d8caefbdb7f7ed54a46f6bcfb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize AS5600 encoder system.  <a href="../../de/d2b/as5600__driver_8h.html#a18bea0d8caefbdb7f7ed54a46f6bcfb5">More...</a><br /></td></tr>
 <tr class="separator:a18bea0d8caefbdb7f7ed54a46f6bcfb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1d617b712c5d5b708861984c345a146"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#ae1d617b712c5d5b708861984c345a146">AS5600_DeviceInit</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint8_t encoder_id, I2C_HandleTypeDef *hi2c)</td></tr>
+<tr class="memitem:ae1d617b712c5d5b708861984c345a146"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#ae1d617b712c5d5b708861984c345a146">AS5600_DeviceInit</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint8_t encoder_id, <a class="el" href="../../dd/d39/structI2C__HandleTypeDef.html">I2C_HandleTypeDef</a> *hi2c)</td></tr>
 <tr class="memdesc:ae1d617b712c5d5b708861984c345a146"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a specific AS5600 encoder.  <a href="../../de/d2b/as5600__driver_8h.html#ae1d617b712c5d5b708861984c345a146">More...</a><br /></td></tr>
 <tr class="separator:ae1d617b712c5d5b708861984c345a146"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c27b56f4b4ab2c80103c045a8f468b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a7c27b56f4b4ab2c80103c045a8f468b7">AS5600_ReadRegister</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint8_t reg, uint8_t *value)</td></tr>
+<tr class="memitem:a7c27b56f4b4ab2c80103c045a8f468b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a7c27b56f4b4ab2c80103c045a8f468b7">AS5600_ReadRegister</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint8_t reg, uint8_t *value)</td></tr>
 <tr class="memdesc:a7c27b56f4b4ab2c80103c045a8f468b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read register from AS5600.  <a href="../../de/d2b/as5600__driver_8h.html#a7c27b56f4b4ab2c80103c045a8f468b7">More...</a><br /></td></tr>
 <tr class="separator:a7c27b56f4b4ab2c80103c045a8f468b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a131caa9348b58c50dc9800565e7634"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a3a131caa9348b58c50dc9800565e7634">AS5600_WriteRegister</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint8_t reg, uint8_t value)</td></tr>
+<tr class="memitem:a3a131caa9348b58c50dc9800565e7634"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a3a131caa9348b58c50dc9800565e7634">AS5600_WriteRegister</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint8_t reg, uint8_t value)</td></tr>
 <tr class="memdesc:a3a131caa9348b58c50dc9800565e7634"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write register to AS5600.  <a href="../../de/d2b/as5600__driver_8h.html#a3a131caa9348b58c50dc9800565e7634">More...</a><br /></td></tr>
 <tr class="separator:a3a131caa9348b58c50dc9800565e7634"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe7e9b7c67fae7dee56100f934c0c5ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#afe7e9b7c67fae7dee56100f934c0c5ca">AS5600_ReadRegister16</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint8_t reg_h, uint16_t *value)</td></tr>
+<tr class="memitem:afe7e9b7c67fae7dee56100f934c0c5ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#afe7e9b7c67fae7dee56100f934c0c5ca">AS5600_ReadRegister16</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint8_t reg_h, uint16_t *value)</td></tr>
 <tr class="memdesc:afe7e9b7c67fae7dee56100f934c0c5ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read 16-bit register pair from AS5600.  <a href="../../de/d2b/as5600__driver_8h.html#afe7e9b7c67fae7dee56100f934c0c5ca">More...</a><br /></td></tr>
 <tr class="separator:afe7e9b7c67fae7dee56100f934c0c5ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d6faacb85c54f51fde5efafff1649c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a5d6faacb85c54f51fde5efafff1649c9">AS5600_GetRawAngle</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint16_t *angle)</td></tr>
+<tr class="memitem:a5d6faacb85c54f51fde5efafff1649c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a5d6faacb85c54f51fde5efafff1649c9">AS5600_GetRawAngle</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint16_t *angle)</td></tr>
 <tr class="memdesc:a5d6faacb85c54f51fde5efafff1649c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get raw angle reading.  <a href="../../de/d2b/as5600__driver_8h.html#a5d6faacb85c54f51fde5efafff1649c9">More...</a><br /></td></tr>
 <tr class="separator:a5d6faacb85c54f51fde5efafff1649c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7546c35e407294f75b7e8ac5110816e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a7546c35e407294f75b7e8ac5110816e7">AS5600_GetAngle</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint16_t *angle)</td></tr>
+<tr class="memitem:a7546c35e407294f75b7e8ac5110816e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a7546c35e407294f75b7e8ac5110816e7">AS5600_GetAngle</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint16_t *angle)</td></tr>
 <tr class="memdesc:a7546c35e407294f75b7e8ac5110816e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get filtered angle reading.  <a href="../../de/d2b/as5600__driver_8h.html#a7546c35e407294f75b7e8ac5110816e7">More...</a><br /></td></tr>
 <tr class="separator:a7546c35e407294f75b7e8ac5110816e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ea915a45a9f6f0a0eeca2701615d9a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a9ea915a45a9f6f0a0eeca2701615d9a8">AS5600_GetAngleDegrees</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, float *degrees)</td></tr>
+<tr class="memitem:a9ea915a45a9f6f0a0eeca2701615d9a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a9ea915a45a9f6f0a0eeca2701615d9a8">AS5600_GetAngleDegrees</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, float *degrees)</td></tr>
 <tr class="memdesc:a9ea915a45a9f6f0a0eeca2701615d9a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get angle in degrees.  <a href="../../de/d2b/as5600__driver_8h.html#a9ea915a45a9f6f0a0eeca2701615d9a8">More...</a><br /></td></tr>
 <tr class="separator:a9ea915a45a9f6f0a0eeca2701615d9a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30614cd3b13c6ca798a01ac98967e497"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a30614cd3b13c6ca798a01ac98967e497">AS5600_CheckMagnet</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, bool *detected, bool *too_strong, bool *too_weak)</td></tr>
+<tr class="memitem:a30614cd3b13c6ca798a01ac98967e497"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a30614cd3b13c6ca798a01ac98967e497">AS5600_CheckMagnet</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, bool *detected, bool *too_strong, bool *too_weak)</td></tr>
 <tr class="memdesc:a30614cd3b13c6ca798a01ac98967e497"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check magnet status.  <a href="../../de/d2b/as5600__driver_8h.html#a30614cd3b13c6ca798a01ac98967e497">More...</a><br /></td></tr>
 <tr class="separator:a30614cd3b13c6ca798a01ac98967e497"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c3f5183b42a8a89ec5a0af9859cefa4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a5c3f5183b42a8a89ec5a0af9859cefa4">AS5600_SetZeroPosition</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint16_t zero_pos)</td></tr>
+<tr class="memitem:a5c3f5183b42a8a89ec5a0af9859cefa4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a5c3f5183b42a8a89ec5a0af9859cefa4">AS5600_SetZeroPosition</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint16_t zero_pos)</td></tr>
 <tr class="memdesc:a5c3f5183b42a8a89ec5a0af9859cefa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set zero position.  <a href="../../de/d2b/as5600__driver_8h.html#a5c3f5183b42a8a89ec5a0af9859cefa4">More...</a><br /></td></tr>
 <tr class="separator:a5c3f5183b42a8a89ec5a0af9859cefa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae044b639e50f714bb2a6b9bf8c6a5c3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#aae044b639e50f714bb2a6b9bf8c6a5c3">AS5600_GetAGC</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint8_t *agc)</td></tr>
+<tr class="memitem:aae044b639e50f714bb2a6b9bf8c6a5c3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#aae044b639e50f714bb2a6b9bf8c6a5c3">AS5600_GetAGC</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint8_t *agc)</td></tr>
 <tr class="memdesc:aae044b639e50f714bb2a6b9bf8c6a5c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get AGC value.  <a href="../../de/d2b/as5600__driver_8h.html#aae044b639e50f714bb2a6b9bf8c6a5c3">More...</a><br /></td></tr>
 <tr class="separator:aae044b639e50f714bb2a6b9bf8c6a5c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1064e91b639b9389b5d341553f1d0145"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a1064e91b639b9389b5d341553f1d0145">AS5600_GetMagnitude</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint16_t *magnitude)</td></tr>
+<tr class="memitem:a1064e91b639b9389b5d341553f1d0145"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a1064e91b639b9389b5d341553f1d0145">AS5600_GetMagnitude</a> (<a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *handle, uint16_t *magnitude)</td></tr>
 <tr class="memdesc:a1064e91b639b9389b5d341553f1d0145"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get magnitude.  <a href="../../de/d2b/as5600__driver_8h.html#a1064e91b639b9389b5d341553f1d0145">More...</a><br /></td></tr>
 <tr class="separator:a1064e91b639b9389b5d341553f1d0145"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ddf1c52d15ebd5b57eef365f8573b58"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a0ddf1c52d15ebd5b57eef365f8573b58">as5600_init</a> (I2C_HandleTypeDef *<a class="el" href="../../d9/dfd/main__application_8c.html#af7b2c26e44dadaaa798a5c3d82914ba7">hi2c1</a>, I2C_HandleTypeDef *<a class="el" href="../../d9/dfd/main__application_8c.html#ac379bcc152d860f08b1279fd3e232295">hi2c2</a>)</td></tr>
-<tr class="memdesc:a0ddf1c52d15ebd5b57eef365f8573b58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize AS5600 encoder system.  <a href="../../de/d2b/as5600__driver_8h.html#a0ddf1c52d15ebd5b57eef365f8573b58">More...</a><br /></td></tr>
-<tr class="separator:a0ddf1c52d15ebd5b57eef365f8573b58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8adb9a956d8ae3293e5b6dfb0166d561"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a8adb9a956d8ae3293e5b6dfb0166d561">as5600_init</a> (void)</td></tr>
+<tr class="memdesc:a8adb9a956d8ae3293e5b6dfb0166d561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize AS5600 encoder system.  <a href="../../de/d2b/as5600__driver_8h.html#a8adb9a956d8ae3293e5b6dfb0166d561">More...</a><br /></td></tr>
+<tr class="separator:a8adb9a956d8ae3293e5b6dfb0166d561"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d5858b661f472c7e16e664e583747e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d2b/as5600__driver_8h.html#a4d5858b661f472c7e16e664e583747e6">as5600_init_encoder</a> (uint8_t encoder_id)</td></tr>
 <tr class="memdesc:a4d5858b661f472c7e16e664e583747e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize individual encoder.  <a href="../../de/d2b/as5600__driver_8h.html#a4d5858b661f472c7e16e664e583747e6">More...</a><br /></td></tr>
 <tr class="separator:a4d5858b661f472c7e16e664e583747e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -277,7 +282,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00080">80</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00088">88</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -293,7 +298,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00079">79</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00087">87</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -309,7 +314,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00081">81</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00089">89</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -325,7 +330,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00029">29</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00033">33</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -341,7 +346,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00030">30</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00034">34</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -357,7 +362,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00033">33</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00037">37</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -373,7 +378,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00034">34</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00038">38</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -384,12 +389,12 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define AS5600_MAX_ENCODERS&#160;&#160;&#160;<a class="el" href="../../de/d58/motor__config_8h.html#a40dfd7fdfce455ce507bf3fed368c2ed">MAX_MOTORS</a></td>
+          <td class="memname">#define AS5600_MAX_ENCODERS&#160;&#160;&#160;<a class="el" href="../../d7/df8/test__l6470__register__programming_8c.html#a40dfd7fdfce455ce507bf3fed368c2ed">MAX_MOTORS</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00037">37</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00041">41</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -405,7 +410,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00062">62</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00068">68</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -421,7 +426,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00057">57</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00063">63</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -437,7 +442,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00058">58</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00064">64</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -453,7 +458,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00067">67</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00073">73</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -469,7 +474,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00051">51</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00057">57</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -485,7 +490,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00052">52</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00058">58</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -501,7 +506,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00063">63</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00069">69</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -517,7 +522,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00064">64</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00070">70</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -533,7 +538,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00049">49</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00055">55</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -549,7 +554,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00050">50</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00056">56</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -565,7 +570,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00047">47</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00053">53</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -581,7 +586,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00048">48</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00054">54</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -597,7 +602,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00055">55</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00061">61</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -613,7 +618,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00056">56</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00062">62</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -629,7 +634,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00061">61</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00067">67</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -645,7 +650,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00044">44</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00050">50</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -661,7 +666,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00045">45</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00051">51</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -677,7 +682,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00046">46</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00052">52</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -693,7 +698,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00076">76</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00084">84</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -709,7 +714,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00074">74</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00082">82</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -725,7 +730,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00075">75</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/d2b/as5600__driver_8h_source.html#l00083">83</a> of file <a class="el" href="../../de/d2b/as5600__driver_8h_source.html">as5600_driver.h</a>.</p>
 
 </div>
 </div>
@@ -774,7 +779,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00353">353</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00378">378</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -822,7 +827,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00326">326</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00351">351</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -833,7 +838,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_CheckMagnet </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_CheckMagnet </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -885,7 +890,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_DeviceInit </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_DeviceInit </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -899,7 +904,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">I2C_HandleTypeDef *&#160;</td>
+          <td class="paramtype"><a class="el" href="../../dd/d39/structI2C__HandleTypeDef.html">I2C_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>hi2c</em>&#160;</td>
         </tr>
         <tr>
@@ -967,7 +972,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00641">641</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00743">743</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1015,7 +1020,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00306">306</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00331">331</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1026,7 +1031,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_GetAGC </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_GetAGC </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -1064,7 +1069,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_GetAngle </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_GetAngle </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -1102,7 +1107,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_GetAngleDegrees </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_GetAngleDegrees </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -1140,7 +1145,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_GetMagnitude </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_GetMagnitude </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -1178,7 +1183,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_GetRawAngle </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_GetRawAngle </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -1216,15 +1221,15 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_Init </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_Init </td>
           <td>(</td>
-          <td class="paramtype">I2C_HandleTypeDef *&#160;</td>
+          <td class="paramtype"><a class="el" href="../../dd/d39/structI2C__HandleTypeDef.html">I2C_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>hi2c1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">I2C_HandleTypeDef *&#160;</td>
+          <td class="paramtype"><a class="el" href="../../dd/d39/structI2C__HandleTypeDef.html">I2C_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>hi2c2</em>&#160;</td>
         </tr>
         <tr>
@@ -1248,8 +1253,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0ddf1c52d15ebd5b57eef365f8573b58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ddf1c52d15ebd5b57eef365f8573b58">&#9670;&nbsp;</a></span>as5600_init()</h2>
+<a id="a8adb9a956d8ae3293e5b6dfb0166d561"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8adb9a956d8ae3293e5b6dfb0166d561">&#9670;&nbsp;</a></span>as5600_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1257,19 +1262,9 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> as5600_init </td>
           <td>(</td>
-          <td class="paramtype">I2C_HandleTypeDef *&#160;</td>
-          <td class="paramname"><em>hi2c1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">I2C_HandleTypeDef *&#160;</td>
-          <td class="paramname"><em>hi2c2</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1283,16 +1278,10 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t System error code</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">hi2c1</td><td>I2C handle for encoder 1 </td></tr>
-    <tr><td class="paramname">hi2c2</td><td>I2C handle for encoder 2 </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Initialize AS5600 encoder system.</p>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00077">77</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00086">86</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1328,7 +1317,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00104">104</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00117">117</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1353,7 +1342,7 @@ Functions</h2></td></tr>
 <dd>
 true if initialized, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00631">631</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00733">733</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1401,7 +1390,7 @@ true if initialized, false otherwise </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00195">195</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00217">217</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1449,7 +1438,7 @@ true if initialized, false otherwise </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00225">225</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00247">247</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1497,7 +1486,7 @@ true if initialized, false otherwise </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00255">255</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00278">278</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1545,7 +1534,7 @@ true if initialized, false otherwise </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00165">165</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00186">186</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1593,7 +1582,7 @@ true if initialized, false otherwise </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00279">279</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00303">303</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1604,7 +1593,7 @@ true if initialized, false otherwise </dd></dl>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_ReadRegister </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_ReadRegister </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -1649,7 +1638,7 @@ true if initialized, false otherwise </dd></dl>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_ReadRegister16 </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_ReadRegister16 </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -1723,7 +1712,7 @@ true if initialized, false otherwise </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00391">391</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00420">420</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -1734,7 +1723,7 @@ true if initialized, false otherwise </dd></dl>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_SetZeroPosition </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_SetZeroPosition </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -1772,7 +1761,7 @@ true if initialized, false otherwise </dd></dl>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d4/d05/mock__hal_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_WriteRegister </td>
+          <td class="memname"><a class="el" href="../../d4/d03/mock__hal__types_8h.html#a63c0679d1cb8b8c684fbb0632743478f">HAL_StatusTypeDef</a> AS5600_WriteRegister </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d55/structAS5600__HandleTypeDef.html">AS5600_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -1813,7 +1802,7 @@ true if initialized, false otherwise </dd></dl>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 5 2025 13:09:33 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 11 2025 23:51:11 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

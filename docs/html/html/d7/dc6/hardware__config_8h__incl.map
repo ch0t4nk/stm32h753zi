@@ -1,4 +1,7 @@
 <map id="src/config/hardware_config.h" name="src/config/hardware_config.h">
-<area shape="rect" id="node1" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="5,5,155,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="13,95,147,121"/>
+<area shape="rect" id="node1" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="32,5,181,47"/>
+<area shape="rect" id="node2" href="$d6/dee/hal__abstraction_8h.html" title="Hardware Abstraction Layer (HAL) Interface for STM32H753ZI." alt="" coords="33,95,180,136"/>
+<area shape="rect" id="node3" href="$de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="21,184,192,211"/>
+<area shape="rect" id="node4" title=" " alt="" coords="9,259,92,285"/>
+<area shape="rect" id="node5" title=" " alt="" coords="127,259,198,285"/>
 </map>

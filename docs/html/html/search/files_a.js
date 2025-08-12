@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['safety_5fconfig_2eh_2185',['safety_config.h',['../d3/d5c/safety__config_8h.html',1,'']]],
-  ['safety_5fsystem_2ec_2186',['safety_system.c',['../db/d1a/safety__system_8c.html',1,'']]],
-  ['safety_5fsystem_2eh_2187',['safety_system.h',['../d2/db6/safety__system_8h.html',1,'']]],
-  ['syscalls_2ec_2188',['syscalls.c',['../d5/d87/syscalls_8c.html',1,'']]],
-  ['system_5fstate_2eh_2189',['system_state.h',['../d9/dfd/system__state_8h.html',1,'']]]
+  ['position_5fcontrol_2ec_4820',['position_control.c',['../dc/da4/position__control_8c.html',1,'']]],
+  ['position_5fcontrol_2eh_4821',['position_control.h',['../d0/dba/position__control_8h.html',1,'']]],
+  ['power_5fmanagement_2ec_4822',['power_management.c',['../dc/dd2/power__management_8c.html',1,'']]],
+  ['power_5fmanagement_2eh_4823',['power_management.h',['../d8/d68/power__management_8h.html',1,'']]]
 ];

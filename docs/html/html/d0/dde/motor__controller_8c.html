@@ -79,38 +79,41 @@ $(function() {
 <p>Motor Controller Implementation - Integrates L6470 + AS5600.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="../../d0/dda/motor__controller_8h_source.html">motor_controller.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d9/d85/l6470__driver_8h_source.html">drivers/l6470/l6470_driver.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../de/d2b/as5600__driver_8h_source.html">drivers/as5600/as5600_driver.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../de/d11/error__codes_8h_source.html">common/error_codes.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d9/dfd/system__state_8h_source.html">common/system_state.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d3/d91/hardware__config_8h_source.html">config/hardware_config.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../de/d58/motor__config_8h_source.html">config/motor_config.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d3/d5c/safety__config_8h_source.html">config/safety_config.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../de/d11/error__codes_8h_source.html">common/error_codes.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d9/dfd/system__state_8h_source.html">common/system_state.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d2/db6/safety__system_8h_source.html">safety/safety_system.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../de/d2b/as5600__driver_8h_source.html">drivers/as5600/as5600_driver.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d9/d85/l6470__driver_8h_source.html">drivers/l6470/l6470_driver.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d6/dee/hal__abstraction_8h_source.html">hal_abstraction/hal_abstraction.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../df/d2b/fault__monitor_8h_source.html">safety/fault_monitor.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d2/db6/safety__system_8h_source.html">safety/safety_system.h</a>&quot;</code><br />
 <code>#include &lt;math.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for motor_controller.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d4/db6/motor__controller_8c__incl.png" border="0" usemap="#asrc_2controllers_2motor__controller_8c" alt=""/></div>
 <map name="asrc_2controllers_2motor__controller_8c" id="asrc_2controllers_2motor__controller_8c">
-<area shape="rect" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="738,5,895,47"/>
-<area shape="rect" href="../../d0/dda/motor__controller_8h.html" title="Motor Controller API &#45; Integrates L6470 + AS5600 for Closed&#45;Loop Control." alt="" coords="587,177,729,203"/>
-<area shape="rect" href="../../de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="773,259,943,285"/>
-<area shape="rect" href="../../de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="586,259,749,285"/>
-<area shape="rect" href="../../d9/d85/l6470__driver_8h.html" title="L6470 Stepper Driver Header &#45; X&#45;CUBE&#45;SPN2 Based Implementation." alt="" coords="203,169,350,211"/>
-<area shape="rect" href="../../d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="175,259,359,285"/>
-<area shape="rect" href="../../de/d2b/as5600__driver_8h.html" title="AS5600 Magnetic Encoder Driver Header." alt="" coords="375,169,544,211"/>
-<area shape="rect" href="../../d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="1515,259,1679,285"/>
-<area shape="rect" href="../../d9/dfd/system__state_8h.html" title="Central System State &#45; Single Source of Truth (SSOT)" alt="" coords="1195,95,1377,121"/>
-<area shape="rect" href="../../df/d2b/fault__monitor_8h.html" title="Fault Detection and Monitoring System Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1203,177,1369,203"/>
-<area shape="rect" href="../../d2/db6/safety__system_8h.html" title="Safety System Manager &#45; STM32H753ZI Stepper Motor Project." alt="" coords="956,177,1131,203"/>
-<area shape="rect" title=" " alt="" coords="1753,95,1821,121"/>
-<area shape="rect" title=" " alt="" coords="316,333,451,360"/>
-<area shape="rect" title=" " alt="" coords="863,333,946,360"/>
-<area shape="rect" href="../../d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="1069,259,1236,285"/>
-<area shape="rect" title=" " alt="" coords="1165,333,1236,360"/>
-<area shape="rect" title=" " alt="" coords="1066,333,1141,360"/>
+<area shape="rect" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="912,5,1070,47"/>
+<area shape="rect" href="../../d0/dda/motor__controller_8h.html" title="Motor Controller API &#45; Integrates L6470 + AS5600 for Closed&#45;Loop Control." alt="" coords="651,177,792,203"/>
+<area shape="rect" href="../../de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="652,423,823,449"/>
+<area shape="rect" href="../../de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="855,259,1018,285"/>
+<area shape="rect" href="../../d9/dfd/system__state_8h.html" title="Central System State &#45; Single Source of Truth (SSOT)" alt="" coords="1488,95,1670,121"/>
+<area shape="rect" href="../../d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="1488,259,1652,285"/>
+<area shape="rect" href="../../df/d2b/fault__monitor_8h.html" title="Fault Detection and Monitoring System Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="817,177,984,203"/>
+<area shape="rect" href="../../d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="234,259,418,285"/>
+<area shape="rect" href="../../d6/dee/hal__abstraction_8h.html" title="Hardware Abstraction Layer (HAL) Interface for STM32H753ZI." alt="" coords="183,333,330,375"/>
+<area shape="rect" href="../../de/d2b/as5600__driver_8h.html" title="AS5600 Magnetic Encoder Driver Header." alt="" coords="236,169,405,211"/>
+<area shape="rect" href="../../d9/d85/l6470__driver_8h.html" title="L6470 Stepper Driver Header &#45; X&#45;CUBE&#45;SPN2 Based Implementation." alt="" coords="480,169,627,211"/>
+<area shape="rect" href="../../d2/db6/safety__system_8h.html" title="Safety System Manager &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1110,177,1285,203"/>
+<area shape="rect" title=" " alt="" coords="1694,95,1762,121"/>
+<area shape="rect" href="../../d8/d36/stm32h7xx__hal_8h.html" title="Mock STM32H7xx HAL header for unit testing." alt="" coords="442,259,577,285"/>
+<area shape="rect" title=" " alt="" coords="415,497,498,524"/>
+<area shape="rect" href="../../d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="1042,259,1209,285"/>
+<area shape="rect" title=" " alt="" coords="881,497,952,524"/>
+<area shape="rect" href="../../d4/d03/mock__hal__types_8h.html" title="Mock HAL type definitions for unit testing environment." alt="" coords="386,423,526,449"/>
+<area shape="rect" title=" " alt="" coords="948,341,1023,367"/>
 </map>
 </div>
 </div>
@@ -138,7 +141,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a137d985b128fb2ba635122ea41351e22"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dde/motor__controller_8c.html#a137d985b128fb2ba635122ea41351e22">motor_controller_calculate_position_error</a> (float target, float current)</td></tr>
 <tr class="memdesc:a137d985b128fb2ba635122ea41351e22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate shortest angular distance between target and current position.  <a href="../../d0/dde/motor__controller_8c.html#a137d985b128fb2ba635122ea41351e22">More...</a><br /></td></tr>
 <tr class="separator:a137d985b128fb2ba635122ea41351e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a930ffe59b5186d0886b0ec77701122e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dde/motor__controller_8c.html#a930ffe59b5186d0886b0ec77701122e8">motor_controller_init</a> (SPI_HandleTypeDef *hspi, I2C_HandleTypeDef *<a class="el" href="../../d9/dfd/main__application_8c.html#af7b2c26e44dadaaa798a5c3d82914ba7">hi2c1</a>, I2C_HandleTypeDef *<a class="el" href="../../d9/dfd/main__application_8c.html#ac379bcc152d860f08b1279fd3e232295">hi2c2</a>)</td></tr>
+<tr class="memitem:a930ffe59b5186d0886b0ec77701122e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dde/motor__controller_8c.html#a930ffe59b5186d0886b0ec77701122e8">motor_controller_init</a> (<a class="el" href="../../d5/d0d/structSPI__HandleTypeDef.html">SPI_HandleTypeDef</a> *hspi, <a class="el" href="../../dd/d39/structI2C__HandleTypeDef.html">I2C_HandleTypeDef</a> *<a class="el" href="../../d5/d49/hal__abstraction__stm32h7_8c.html#af7b2c26e44dadaaa798a5c3d82914ba7">hi2c1</a>, <a class="el" href="../../dd/d39/structI2C__HandleTypeDef.html">I2C_HandleTypeDef</a> *<a class="el" href="../../d5/d49/hal__abstraction__stm32h7_8c.html#ac379bcc152d860f08b1279fd3e232295">hi2c2</a>)</td></tr>
 <tr class="memdesc:a930ffe59b5186d0886b0ec77701122e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize motor controller system.  <a href="../../d0/dde/motor__controller_8c.html#a930ffe59b5186d0886b0ec77701122e8">More...</a><br /></td></tr>
 <tr class="separator:a930ffe59b5186d0886b0ec77701122e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8216217b32b5e5d50c13d05a66d316cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dde/motor__controller_8c.html#a8216217b32b5e5d50c13d05a66d316cd">motor_controller_enable_motor</a> (uint8_t motor_id)</td></tr>
@@ -188,13 +191,13 @@ Functions</h2></td></tr>
 Variables</h2></td></tr>
 <tr class="memitem:a41ba07d4be48e90bfd76130c919f8964"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dde/motor__controller_8c.html#a41ba07d4be48e90bfd76130c919f8964">motor_controller_initialized</a> = false</td></tr>
 <tr class="separator:a41ba07d4be48e90bfd76130c919f8964"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae37490fc4ff0c5dbb826b2438ee8e728"><td class="memItemLeft" align="right" valign="top">static SPI_HandleTypeDef *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dde/motor__controller_8c.html#ae37490fc4ff0c5dbb826b2438ee8e728">motor_spi_handle</a> = NULL</td></tr>
+<tr class="memitem:ae37490fc4ff0c5dbb826b2438ee8e728"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="../../d5/d0d/structSPI__HandleTypeDef.html">SPI_HandleTypeDef</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dde/motor__controller_8c.html#ae37490fc4ff0c5dbb826b2438ee8e728">motor_spi_handle</a> = <a class="el" href="../../d1/db4/stm32h7xx__hal__def_8h.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
 <tr class="separator:ae37490fc4ff0c5dbb826b2438ee8e728"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8b06654bc5fafa81b409e59a82c5142"><td class="memItemLeft" align="right" valign="top">static I2C_HandleTypeDef *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dde/motor__controller_8c.html#ae8b06654bc5fafa81b409e59a82c5142">encoder_i2c1_handle</a> = NULL</td></tr>
+<tr class="memitem:ae8b06654bc5fafa81b409e59a82c5142"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="../../dd/d39/structI2C__HandleTypeDef.html">I2C_HandleTypeDef</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dde/motor__controller_8c.html#ae8b06654bc5fafa81b409e59a82c5142">encoder_i2c1_handle</a> = <a class="el" href="../../d1/db4/stm32h7xx__hal__def_8h.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
 <tr class="separator:ae8b06654bc5fafa81b409e59a82c5142"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66540ee57534463b0e23320a2bdc34d0"><td class="memItemLeft" align="right" valign="top">static I2C_HandleTypeDef *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dde/motor__controller_8c.html#a66540ee57534463b0e23320a2bdc34d0">encoder_i2c2_handle</a> = NULL</td></tr>
+<tr class="memitem:a66540ee57534463b0e23320a2bdc34d0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="../../dd/d39/structI2C__HandleTypeDef.html">I2C_HandleTypeDef</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dde/motor__controller_8c.html#a66540ee57534463b0e23320a2bdc34d0">encoder_i2c2_handle</a> = <a class="el" href="../../d1/db4/stm32h7xx__hal__def_8h.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
 <tr class="separator:a66540ee57534463b0e23320a2bdc34d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafdd9e30e81241fe679a4d4243c9977f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="../../dd/d80/structMotorControlState__t.html">MotorControlState_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dde/motor__controller_8c.html#aafdd9e30e81241fe679a4d4243c9977f">motor_control_state</a> [<a class="el" href="../../de/d58/motor__config_8h.html#a40dfd7fdfce455ce507bf3fed368c2ed">MAX_MOTORS</a>] = {0}</td></tr>
+<tr class="memitem:aafdd9e30e81241fe679a4d4243c9977f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="../../dd/d80/structMotorControlState__t.html">MotorControlState_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dde/motor__controller_8c.html#aafdd9e30e81241fe679a4d4243c9977f">motor_control_state</a> [<a class="el" href="../../d7/df8/test__l6470__register__programming_8c.html#a40dfd7fdfce455ce507bf3fed368c2ed">MAX_MOTORS</a>] = {0}</td></tr>
 <tr class="separator:aafdd9e30e81241fe679a4d4243c9977f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -255,7 +258,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Position error in degrees (-180 to +180) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00549">549</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00570">570</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -295,7 +298,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00662">662</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00685">685</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -343,7 +346,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00503">503</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00522">522</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -373,7 +376,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00181">181</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00191">191</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -402,7 +405,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00278">278</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00290">290</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -432,7 +435,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00143">143</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00152">152</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -473,7 +476,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00354">354</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00366">366</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -513,7 +516,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00403">403</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00417">417</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -553,7 +556,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00423">423</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00438">438</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -594,7 +597,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00379">379</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00392">392</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -623,7 +626,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00576">576</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00598">598</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -636,19 +639,19 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> motor_controller_init </td>
           <td>(</td>
-          <td class="paramtype">SPI_HandleTypeDef *&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d5/d0d/structSPI__HandleTypeDef.html">SPI_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>hspi</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">I2C_HandleTypeDef *&#160;</td>
+          <td class="paramtype"><a class="el" href="../../dd/d39/structI2C__HandleTypeDef.html">I2C_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>hi2c1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">I2C_HandleTypeDef *&#160;</td>
+          <td class="paramtype"><a class="el" href="../../dd/d39/structI2C__HandleTypeDef.html">I2C_HandleTypeDef</a> *&#160;</td>
           <td class="paramname"><em>hi2c2</em>&#160;</td>
         </tr>
         <tr>
@@ -669,8 +672,10 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="../../d6/d64/_2workspaces_2code_2src_2config_2system_config_8h-example.html#a0">/workspaces/code/src/config/system_config.h</a>.</dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00071">71</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00080">80</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -694,7 +699,7 @@ Variables</h2></td></tr>
 <p>Check if motor controller system is initialized.</p>
 <dl class="section return"><dt>Returns</dt><dd>true if initialized, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00567">567</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00589">589</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -734,7 +739,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00206">206</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00216">216</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -771,7 +776,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00520">520</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00540">540</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -811,7 +816,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00622">622</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00644">644</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -840,7 +845,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00255">255</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00267">267</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -863,7 +868,7 @@ Variables</h2></td></tr>
 <p>Update motor control loop (call periodically) </p>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00300">300</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00312">312</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -900,7 +905,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00480">480</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00498">498</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -937,7 +942,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>System error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00463">463</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00481">481</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -952,7 +957,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">I2C_HandleTypeDef* encoder_i2c1_handle = NULL</td>
+          <td class="memname"><a class="el" href="../../dd/d39/structI2C__HandleTypeDef.html">I2C_HandleTypeDef</a>* encoder_i2c1_handle = <a class="el" href="../../d1/db4/stm32h7xx__hal__def_8h.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
         </tr>
       </table>
   </td>
@@ -962,7 +967,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00032">32</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00035">35</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -976,7 +981,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">I2C_HandleTypeDef* encoder_i2c2_handle = NULL</td>
+          <td class="memname"><a class="el" href="../../dd/d39/structI2C__HandleTypeDef.html">I2C_HandleTypeDef</a>* encoder_i2c2_handle = <a class="el" href="../../d1/db4/stm32h7xx__hal__def_8h.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
         </tr>
       </table>
   </td>
@@ -986,7 +991,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00033">33</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00036">36</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -1000,7 +1005,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../dd/d80/structMotorControlState__t.html">MotorControlState_t</a> motor_control_state[<a class="el" href="../../de/d58/motor__config_8h.html#a40dfd7fdfce455ce507bf3fed368c2ed">MAX_MOTORS</a>] = {0}</td>
+          <td class="memname"><a class="el" href="../../dd/d80/structMotorControlState__t.html">MotorControlState_t</a> motor_control_state[<a class="el" href="../../d7/df8/test__l6470__register__programming_8c.html#a40dfd7fdfce455ce507bf3fed368c2ed">MAX_MOTORS</a>] = {0}</td>
         </tr>
       </table>
   </td>
@@ -1010,7 +1015,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00048">48</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00051">51</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -1034,7 +1039,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00030">30</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00033">33</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
@@ -1048,7 +1053,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">SPI_HandleTypeDef* motor_spi_handle = NULL</td>
+          <td class="memname"><a class="el" href="../../d5/d0d/structSPI__HandleTypeDef.html">SPI_HandleTypeDef</a>* motor_spi_handle = <a class="el" href="../../d1/db4/stm32h7xx__hal__def_8h.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
         </tr>
       </table>
   </td>
@@ -1058,14 +1063,14 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00031">31</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/dde/motor__controller_8c_source.html#l00034">34</a> of file <a class="el" href="../../d0/dde/motor__controller_8c_source.html">motor_controller.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 5 2025 13:09:33 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 11 2025 23:51:11 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

@@ -74,8 +74,8 @@ $(function() {
 Data Fields</h2></td></tr>
 <tr class="memitem:aae599268c55308caf1928ebce4327843"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd9/structAS5600__EncoderState__t.html#aae599268c55308caf1928ebce4327843">is_initialized</a></td></tr>
 <tr class="separator:aae599268c55308caf1928ebce4327843"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05d25ee3c3663e53776aad5eba29f737"><td class="memItemLeft" align="right" valign="top">I2C_HandleTypeDef *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd9/structAS5600__EncoderState__t.html#a05d25ee3c3663e53776aad5eba29f737">hi2c</a></td></tr>
-<tr class="separator:a05d25ee3c3663e53776aad5eba29f737"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a044bc68804b7fc257fd0ae37a54cb32a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d6/dee/hal__abstraction_8h.html#accd6a7e427a65a82ce3c257fc8817576">HAL_I2C_Instance_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd9/structAS5600__EncoderState__t.html#a044bc68804b7fc257fd0ae37a54cb32a">i2c_instance</a></td></tr>
+<tr class="separator:a044bc68804b7fc257fd0ae37a54cb32a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a871824bcba3936da1e9eead7a1bca33f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd9/structAS5600__EncoderState__t.html#a871824bcba3936da1e9eead7a1bca33f">i2c_address</a></td></tr>
 <tr class="separator:a871824bcba3936da1e9eead7a1bca33f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bc61e62af6109e369c6b27aef842fef"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd9/structAS5600__EncoderState__t.html#a0bc61e62af6109e369c6b27aef842fef">raw_angle</a></td></tr>
@@ -108,10 +108,12 @@ Data Fields</h2></td></tr>
 <tr class="separator:a4e5260bb860fbf4384007a8f60570ea8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa3e6d1c685d360818078257f844f491"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd9/structAS5600__EncoderState__t.html#aaa3e6d1c685d360818078257f844f491">zero_offset</a></td></tr>
 <tr class="separator:aaa3e6d1c685d360818078257f844f491"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f234ba432a17b169ff9a5ca483e33bb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dd9/structAS5600__EncoderState__t.html#a3f234ba432a17b169ff9a5ca483e33bb">simulation_mode</a></td></tr>
+<tr class="separator:a3f234ba432a17b169ff9a5ca483e33bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00029">29</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00034">34</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="a72060712ddd99159c00a709e404afc6f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a72060712ddd99159c00a709e404afc6f">&#9670;&nbsp;</a></span>angle_degrees</h2>
@@ -125,7 +127,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00035">35</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00040">40</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -141,7 +143,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00046">46</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00051">51</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -157,7 +159,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00044">44</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00049">49</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -173,23 +175,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00034">34</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
-
-</div>
-</div>
-<a id="a05d25ee3c3663e53776aad5eba29f737"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a05d25ee3c3663e53776aad5eba29f737">&#9670;&nbsp;</a></span>hi2c</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">I2C_HandleTypeDef* AS5600_EncoderState_t::hi2c</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00031">31</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00039">39</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -205,7 +191,23 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00032">32</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00037">37</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+
+</div>
+</div>
+<a id="a044bc68804b7fc257fd0ae37a54cb32a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a044bc68804b7fc257fd0ae37a54cb32a">&#9670;&nbsp;</a></span>i2c_instance</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d6/dee/hal__abstraction_8h.html#accd6a7e427a65a82ce3c257fc8817576">HAL_I2C_Instance_t</a> AS5600_EncoderState_t::i2c_instance</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00036">36</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -221,7 +223,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00030">30</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00035">35</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -237,7 +239,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00039">39</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00044">44</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -253,7 +255,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00040">40</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00045">45</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -269,7 +271,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00045">45</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00050">50</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -285,7 +287,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00041">41</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00046">46</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -301,7 +303,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00036">36</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00041">41</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -317,7 +319,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00033">33</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00038">38</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -333,7 +335,23 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00043">43</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00048">48</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+
+</div>
+</div>
+<a id="a3f234ba432a17b169ff9a5ca483e33bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f234ba432a17b169ff9a5ca483e33bb">&#9670;&nbsp;</a></span>simulation_mode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool AS5600_EncoderState_t::simulation_mode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00053">53</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -349,7 +367,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00042">42</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00047">47</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -365,7 +383,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00037">37</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00042">42</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -381,7 +399,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00047">47</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00052">52</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -397,7 +415,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00038">38</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d75/as5600__driver_8c_source.html#l00043">43</a> of file <a class="el" href="../../d8/d75/as5600__driver_8c_source.html">as5600_driver.c</a>.</p>
 
 </div>
 </div>
@@ -407,7 +425,7 @@ Data Fields</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 5 2025 13:09:33 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 11 2025 23:51:12 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

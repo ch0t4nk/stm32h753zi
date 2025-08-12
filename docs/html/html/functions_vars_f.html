@@ -66,21 +66,42 @@ $(function() {
 &#160;
 
 <h3><a id="index_f"></a>- f -</h3><ul>
+<li>fault_active
+: <a class="el" href="d6/dca/structL6470HwFaultStatus__t.html#a1b91da401a9701ef48773ef23e0d15b3">L6470HwFaultStatus_t</a>
+</li>
 <li>fault_code
 : <a class="el" href="dc/d63/structFaultRecord__t.html#a3702c2258800c656df78f4d914828602">FaultRecord_t</a>
 </li>
 <li>fault_count
 : <a class="el" href="df/df8/structFaultMonitorConfig__t.html#aa567e9b8cdfeebb906f6fb254a2608c9">FaultMonitorConfig_t</a>
 , <a class="el" href="d7/d4b/structL6470__DriverState__t.html#a8417f4b2137ec465c75b2602f46daaf7">L6470_DriverState_t</a>
+, <a class="el" href="d6/dca/structL6470HwFaultStatus__t.html#a7584f592c314e8e201e82f18f6ede509">L6470HwFaultStatus_t</a>
 , <a class="el" href="dd/d80/structMotorControlState__t.html#a74585f93ea84f005c9118721a2ca443d">MotorControlState_t</a>
 , <a class="el" href="d5/d47/structMotorStatus__t.html#ae7c8a3d218950cbbf4df4a2e80f36839">MotorStatus_t</a>
+, <a class="el" href="de/d12/structSafetyMonitoringStatus__t.html#a08f6223929a4b403d6b93efcd171541b">SafetyMonitoringStatus_t</a>
 </li>
 <li>fault_flags
 : <a class="el" href="d0/d57/structMotorStateInfo__t.html#abf6c04b68cdc417fc46c29699663534f">MotorStateInfo_t</a>
 , <a class="el" href="de/d97/structMotorStatusResponse__t.html#aa5345fa81f00557aef1cbf1650b8a7f1">MotorStatusResponse_t</a>
+, <a class="el" href="d3/dce/structMotorTelemetryData__t.html#a25b50ddf296e48bd511e617a31afdcb6">MotorTelemetryData_t</a>
 </li>
-<li>fault_pin_state
-: <a class="el" href="da/d16/structMockHAL__State__t.html#a416418097193894baeca4cd08941d12f">MockHAL_State_t</a>
+<li>fault_injection_enabled
+: <a class="el" href="d6/dc1/structMotorSimulation__t.html#abd9095262c06d840c96102e3042055f6">MotorSimulation_t</a>
+</li>
+<li>fault_injection_time
+: <a class="el" href="d6/df4/structL6470__SimState__t.html#a63f7ae3dd1ea525d214056b6b4f6dbb4">L6470_SimState_t</a>
+</li>
+<li>fault_monitor_active
+: <a class="el" href="de/d12/structSafetyMonitoringStatus__t.html#a6ada18b0ecbcd1b880a86e6ced025f6d">SafetyMonitoringStatus_t</a>
+</li>
+<li>fault_probability
+: <a class="el" href="d6/dc1/structMotorSimulation__t.html#a58c9c695a3c1223d94091ad0a9d42f82">MotorSimulation_t</a>
+</li>
+<li>fault_reaction_time_us
+: <a class="el" href="d6/dca/structL6470HwFaultStatus__t.html#a5ae9ae5f67c07e90c230e891f915c0e2">L6470HwFaultStatus_t</a>
+</li>
+<li>fault_recovery_count
+: <a class="el" href="df/d5a/structSafetyTelemetryData__t.html#ad23e1af76fb47959e6e47352d59fcdbd">SafetyTelemetryData_t</a>
 </li>
 <li>fault_tolerance
 : <a class="el" href="da/d4b/structSafetyConfig__t.html#aea56f05699b2a4c047f82590eef3a445">SafetyConfig_t</a>
@@ -91,16 +112,38 @@ $(function() {
 <li>feedback_handle
 : <a class="el" href="d1/d55/structAS5600__HandleTypeDef.html#aa3640b659e110630d1085688a24d4026">AS5600_HandleTypeDef</a>
 </li>
+<li>feedforward
+: <a class="el" href="da/dd6/structPositionControl__t.html#a6b4144b9819542bcd46d917883060d8a">PositionControl_t</a>
+</li>
+<li>feedforward_output
+: <a class="el" href="df/d9d/structPositionControlStatus__t.html#ad2f3157c07e9d2ef583ca503b22fa9f9">PositionControlStatus_t</a>
+</li>
 <li>file
 : <a class="el" href="dc/dec/structErrorInfo__t.html#a31498d16ff22ea62e1cba873be168ba6">ErrorInfo_t</a>
 , <a class="el" href="dc/d52/structmemory__block__t.html#a3b6948bd87abc22bd94436210941cd70">memory_block_t</a>
 </li>
+<li>file_name
+: <a class="el" href="d0/d71/structMisraViolationRecord__t.html#af53ecb3329de4f56ff11c40aceca38c9">MisraViolationRecord_t</a>
+</li>
+<li>file_or_module
+: <a class="el" href="d9/dee/structDesignReviewRecord__t.html#ad5f439f066c04df411fa44a410c23e2f">DesignReviewRecord_t</a>
+</li>
+<li>filter
+: <a class="el" href="da/dd6/structPositionControl__t.html#aba109f7064cc6908c96f541d015a6092">PositionControl_t</a>
+</li>
 <li>filtered_angle
 : <a class="el" href="da/dd9/structAS5600__EncoderState__t.html#a3219a9c44f2a5285aaff1975c8ae8334">AS5600_EncoderState_t</a>
 , <a class="el" href="d1/d55/structAS5600__HandleTypeDef.html#a37c1793e849c0c95f46edf5793dd9436">AS5600_HandleTypeDef</a>
+, <a class="el" href="d0/dd3/structAS5600__SimState__t.html#ace749f8fcf4cc7a6946501cac2205e9a">AS5600_SimState_t</a>
 </li>
 <li>filtered_angle_deg
 : <a class="el" href="d2/d34/structEncoderState__t.html#a472dd93652a7d938c17c41e4d0a71edc">EncoderState_t</a>
+</li>
+<li>filtered_position
+: <a class="el" href="d6/d57/structControlState__t.html#a819bd521fcdaf105f05e83bf016c289a">ControlState_t</a>
+</li>
+<li>findings
+: <a class="el" href="d9/dee/structDesignReviewRecord__t.html#aa44807d3ad0b152eea02aed462043c08">DesignReviewRecord_t</a>
 </li>
 <li>firmware_version
 : <a class="el" href="d4/d68/structSystemState__t.html#aaf2ac384c32cadb399a113f13d355976">SystemState_t</a>
@@ -111,18 +154,60 @@ $(function() {
 <li>free_blocks
 : <a class="el" href="dd/dd5/structmemory__pool__t.html#a094f481e5bc2e142d20f397ff807da4d">memory_pool_t</a>
 </li>
+<li>free_heap_bytes
+: <a class="el" href="d9/dad/structSystemTelemetryData__t.html#ac02ee0a10a83f00ce81226f5d967c2f6">SystemTelemetryData_t</a>
+, <a class="el" href="da/d59/structTelemetryData__t.html#ac7797e4823e0cae2a26c429999b8d41e">TelemetryData_t</a>
+</li>
+<li>free_heap_size
+: <a class="el" href="d4/d26/structSystemPerformanceStats__t.html#ac4b5aff4a215a44b6ec634f16babfcfd">SystemPerformanceStats_t</a>
+</li>
+<li>frequency_end_hz
+: <a class="el" href="d5/d89/structCharacterizationTestConfig__t.html#ab05dad9ba565cb42775a3d0f1607b8e2">CharacterizationTestConfig_t</a>
+</li>
+<li>frequency_hz
+: <a class="el" href="dd/dc5/structHAL__Timer__Config__t.html#a7a8b4477d943568b15df30b77e0afcfe">HAL_Timer_Config_t</a>
+</li>
+<li>frequency_start_hz
+: <a class="el" href="d5/d89/structCharacterizationTestConfig__t.html#a5ca117de22ab9a2e89a590d5f981ebb2">CharacterizationTestConfig_t</a>
+</li>
+<li>frequency_sweep_end_hz
+: <a class="el" href="df/dc8/structMotorCharacterizationConfig__t.html#a850174fe18a0c05aa23228292608f5ec">MotorCharacterizationConfig_t</a>
+</li>
+<li>frequency_sweep_start_hz
+: <a class="el" href="df/dc8/structMotorCharacterizationConfig__t.html#a7f418708acbdd2799837407fa512cfa3">MotorCharacterizationConfig_t</a>
+</li>
+<li>friction_compensation
+: <a class="el" href="d2/de8/structFeedforwardController__t.html#ab94fa9f23d37c3c6541733120ec23048">FeedforwardController_t</a>
+</li>
 <li>front
 : <a class="el" href="d9/d21/structfifo__queue__t.html#a235d030ee802a04f2b47bd10e287289e">fifo_queue_t</a>
 </li>
 <li>function
 : <a class="el" href="dc/dec/structErrorInfo__t.html#ac9379a6d8ee160f8e132b04ace63e7b4">ErrorInfo_t</a>
+, <a class="el" href="d0/d08/structRTTask__t.html#a76f209c37bf6d575d903920aa13e8ae5">RTTask_t</a>
+, <a class="el" href="d1/dcc/structRTTaskConfig__t.html#a5c6d75e9b3b03d5153a3ccad16783d4a">RTTaskConfig_t</a>
 , <a class="el" href="da/d4b/structSafetyConfig__t.html#a9c5ba63a2f36f6fa13c5ed19708c8ffb">SafetyConfig_t</a>
+</li>
+<li>function_count
+: <a class="el" href="da/d62/structCodeQualityMetrics__t.html#a7d577a4b5836c431f5dd9493dfa3138f">CodeQualityMetrics_t</a>
+</li>
+<li>function_id
+: <a class="el" href="d7/d05/structSafetyFunctionRecord__t.html#aacaec3aeb7c0ac642886b8ddf2ddbe03">SafetyFunctionRecord_t</a>
+</li>
+<li>function_name
+: <a class="el" href="d7/d05/structSafetyFunctionRecord__t.html#a3e0ae13d0f8900a8d3e0dc527d167e1f">SafetyFunctionRecord_t</a>
+</li>
+<li>function_names
+: <a class="el" href="d7/dc8/structMockDriverState__t.html#abee71e2574d28c35032066fc258c3041">MockDriverState_t</a>
+</li>
+<li>functions
+: <a class="el" href="d7/dc8/structMockDriverState__t.html#a0a6c948c80a4e13658e96a511965253a">MockDriverState_t</a>
 </li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 5 2025 13:09:34 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 11 2025 23:51:14 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

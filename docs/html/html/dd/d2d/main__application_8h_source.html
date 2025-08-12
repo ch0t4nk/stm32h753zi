@@ -72,48 +72,62 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a href="../../dd/d2d/main__application_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#ifndef MAIN_APPLICATION_H</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define MAIN_APPLICATION_H</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">/* ========================================================================== */</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">/* Includes                                                                   */</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">/* ========================================================================== */</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;stm32h7xx_hal.h&quot;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../de/d11/error__codes_8h.html">common/error_codes.h</a>&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">/* ========================================================================== */</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">/* Public API Function Declarations                                          */</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">/* ========================================================================== */</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<a class="code" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> <a class="code" href="../../dd/d2d/main__application_8h.html#a0db590e383e344561b0a7585659d54e9">main_application_init</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<a class="code" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> <a class="code" href="../../dd/d2d/main__application_8h.html#a82b27cbcd25d00381305ae4dd8b07a87">main_application_run</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<a class="code" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> <a class="code" href="../../dd/d2d/main__application_8h.html#a42b13a3ed82bbc35b1a18f26d5862e5e">main_application_emergency_stop</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="../../dd/d2d/main__application_8h.html#a1ffc584d4d2e59435a34430a6c4377e5">main_application_is_initialized</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MAIN_APPLICATION_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#ifndef MAIN_APPLICATION_H</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define MAIN_APPLICATION_H</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">/* ==========================================================================</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">/* Includes */</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">/* ==========================================================================</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#ifndef UNITY_TESTING</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../d8/d36/stm32h7xx__hal_8h.html">stm32h7xx_hal.h</a>&quot;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../de/d11/error__codes_8h.html">common/error_codes.h</a>&quot;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">/* ==========================================================================</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">/* Public API Function Declarations                                          */</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">/* ==========================================================================</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<a class="code" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> <a class="code" href="../../dd/d2d/main__application_8h.html#a0db590e383e344561b0a7585659d54e9">main_application_init</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<a class="code" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> <a class="code" href="../../dd/d2d/main__application_8h.html#a82b27cbcd25d00381305ae4dd8b07a87">main_application_run</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<a class="code" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> <a class="code" href="../../dd/d2d/main__application_8h.html#a42b13a3ed82bbc35b1a18f26d5862e5e">main_application_emergency_stop</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="../../dd/d2d/main__application_8h.html#a1ffc584d4d2e59435a34430a6c4377e5">main_application_is_initialized</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<a class="code" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> <a class="code" href="../../dd/d2d/main__application_8h.html#ac293332fa6bcf796e53a223aa7922232">main_application_get_stats</a>(uint32_t *uptime_ms,</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                                         uint32_t *cycles);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<a class="code" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> <a class="code" href="../../dd/d2d/main__application_8h.html#a9e470fe5644ef94a35094c744f6415c7">main_application_self_test</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MAIN_APPLICATION_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="aerror__codes_8h_html"><div class="ttname"><a href="../../de/d11/error__codes_8h.html">error_codes.h</a></div><div class="ttdoc">System Error Codes - Single Source of Truth (SSOT)</div></div>
-<div class="ttc" id="aerror__codes_8h_html_ad18804b039d93258aac27507b1ad3756"><div class="ttname"><a href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a></div><div class="ttdeci">SystemError_t</div><div class="ttdef"><b>Definition:</b> <a href="../../de/d11/error__codes_8h_source.html#l00043">error_codes.h:43</a></div></div>
-<div class="ttc" id="amain__application_8h_html_a0db590e383e344561b0a7585659d54e9"><div class="ttname"><a href="../../dd/d2d/main__application_8h.html#a0db590e383e344561b0a7585659d54e9">main_application_init</a></div><div class="ttdeci">SystemError_t main_application_init(void)</div><div class="ttdoc">Initialize main application.</div><div class="ttdef"><b>Definition:</b> <a href="../../d9/dfd/main__application_8c_source.html#l00039">main_application.c:39</a></div></div>
-<div class="ttc" id="amain__application_8h_html_a1ffc584d4d2e59435a34430a6c4377e5"><div class="ttname"><a href="../../dd/d2d/main__application_8h.html#a1ffc584d4d2e59435a34430a6c4377e5">main_application_is_initialized</a></div><div class="ttdeci">bool main_application_is_initialized(void)</div><div class="ttdoc">Check if application is initialized.</div><div class="ttdef"><b>Definition:</b> <a href="../../d9/dfd/main__application_8c_source.html#l00078">main_application.c:78</a></div></div>
-<div class="ttc" id="amain__application_8h_html_a42b13a3ed82bbc35b1a18f26d5862e5e"><div class="ttname"><a href="../../dd/d2d/main__application_8h.html#a42b13a3ed82bbc35b1a18f26d5862e5e">main_application_emergency_stop</a></div><div class="ttdeci">SystemError_t main_application_emergency_stop(void)</div><div class="ttdoc">Emergency stop all motors.</div><div class="ttdef"><b>Definition:</b> <a href="../../d9/dfd/main__application_8c_source.html#l00069">main_application.c:69</a></div></div>
-<div class="ttc" id="amain__application_8h_html_a82b27cbcd25d00381305ae4dd8b07a87"><div class="ttname"><a href="../../dd/d2d/main__application_8h.html#a82b27cbcd25d00381305ae4dd8b07a87">main_application_run</a></div><div class="ttdeci">SystemError_t main_application_run(void)</div><div class="ttdoc">Main application loop (call continuously)</div><div class="ttdef"><b>Definition:</b> <a href="../../d9/dfd/main__application_8c_source.html#l00053">main_application.c:53</a></div></div>
+<div class="ttc" id="aerror__codes_8h_html_ad18804b039d93258aac27507b1ad3756"><div class="ttname"><a href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a></div><div class="ttdeci">SystemError_t</div><div class="ttdef"><b>Definition:</b> <a href="../../de/d11/error__codes_8h_source.html#l00048">error_codes.h:48</a></div></div>
+<div class="ttc" id="amain__application_8h_html_a0db590e383e344561b0a7585659d54e9"><div class="ttname"><a href="../../dd/d2d/main__application_8h.html#a0db590e383e344561b0a7585659d54e9">main_application_init</a></div><div class="ttdeci">SystemError_t main_application_init(void)</div><div class="ttdoc">Initialize main application.</div><div class="ttdef"><b>Definition:</b> <a href="../../d9/dfd/main__application_8c_source.html#l00049">main_application.c:49</a></div></div>
+<div class="ttc" id="amain__application_8h_html_a1ffc584d4d2e59435a34430a6c4377e5"><div class="ttname"><a href="../../dd/d2d/main__application_8h.html#a1ffc584d4d2e59435a34430a6c4377e5">main_application_is_initialized</a></div><div class="ttdeci">bool main_application_is_initialized(void)</div><div class="ttdoc">Check if application is initialized.</div><div class="ttdef"><b>Definition:</b> <a href="../../d9/dfd/main__application_8c_source.html#l00175">main_application.c:175</a></div></div>
+<div class="ttc" id="amain__application_8h_html_a42b13a3ed82bbc35b1a18f26d5862e5e"><div class="ttname"><a href="../../dd/d2d/main__application_8h.html#a42b13a3ed82bbc35b1a18f26d5862e5e">main_application_emergency_stop</a></div><div class="ttdeci">SystemError_t main_application_emergency_stop(void)</div><div class="ttdoc">Emergency stop all motors.</div><div class="ttdef"><b>Definition:</b> <a href="../../d9/dfd/main__application_8c_source.html#l00156">main_application.c:156</a></div></div>
+<div class="ttc" id="amain__application_8h_html_a82b27cbcd25d00381305ae4dd8b07a87"><div class="ttname"><a href="../../dd/d2d/main__application_8h.html#a82b27cbcd25d00381305ae4dd8b07a87">main_application_run</a></div><div class="ttdeci">SystemError_t main_application_run(void)</div><div class="ttdoc">Main application loop (call continuously)</div><div class="ttdef"><b>Definition:</b> <a href="../../d9/dfd/main__application_8c_source.html#l00081">main_application.c:81</a></div></div>
+<div class="ttc" id="amain__application_8h_html_a9e470fe5644ef94a35094c744f6415c7"><div class="ttname"><a href="../../dd/d2d/main__application_8h.html#a9e470fe5644ef94a35094c744f6415c7">main_application_self_test</a></div><div class="ttdeci">SystemError_t main_application_self_test(void)</div><div class="ttdoc">Perform application self-test including watchdog validation.</div><div class="ttdef"><b>Definition:</b> <a href="../../d9/dfd/main__application_8c_source.html#l00206">main_application.c:206</a></div></div>
+<div class="ttc" id="amain__application_8h_html_ac293332fa6bcf796e53a223aa7922232"><div class="ttname"><a href="../../dd/d2d/main__application_8h.html#ac293332fa6bcf796e53a223aa7922232">main_application_get_stats</a></div><div class="ttdeci">SystemError_t main_application_get_stats(uint32_t *uptime_ms, uint32_t *cycles)</div><div class="ttdoc">Get application runtime statistics.</div><div class="ttdef"><b>Definition:</b> <a href="../../d9/dfd/main__application_8c_source.html#l00185">main_application.c:185</a></div></div>
+<div class="ttc" id="astm32h7xx__hal_8h_html"><div class="ttname"><a href="../../d8/d36/stm32h7xx__hal_8h.html">stm32h7xx_hal.h</a></div><div class="ttdoc">Mock STM32H7xx HAL header for unit testing.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 5 2025 13:09:32 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 11 2025 23:51:08 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

@@ -1,5 +1,8 @@
 <map id="src/drivers/as5600/as5600_driver.h" name="src/drivers/as5600/as5600_driver.h">
-<area shape="rect" id="node1" title="AS5600 Magnetic Encoder Driver Header." alt="" coords="100,5,241,47"/>
-<area shape="rect" id="node2" href="$d0/dde/motor__controller_8c.html" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="5,95,163,136"/>
-<area shape="rect" id="node3" href="$d8/d75/as5600__driver_8c.html" title="AS5600 Magnetic Encoder Driver Implementation &#45; STM32H7 I2C HAL." alt="" coords="187,95,328,136"/>
+<area shape="rect" id="node1" title="AS5600 Magnetic Encoder Driver Header." alt="" coords="383,5,524,47"/>
+<area shape="rect" id="node2" href="$dd/dbd/motor__characterization_8c.html" title="Motor parameter identification and characterization implementation." alt="" coords="5,95,163,136"/>
+<area shape="rect" id="node3" href="$d0/dde/motor__controller_8c.html" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="187,95,344,136"/>
+<area shape="rect" id="node4" href="$dc/da4/position__control_8c.html" title="Advanced Position Control with Encoder Feedback." alt="" coords="368,95,539,136"/>
+<area shape="rect" id="node5" href="$d8/d75/as5600__driver_8c.html" title="AS5600 Magnetic Encoder Driver Implementation using HAL abstraction." alt="" coords="563,95,704,136"/>
+<area shape="rect" id="node6" href="$dd/d68/optimization__compatibility_8c.html" title="Compatibility layer implementation for optimization module development." alt="" coords="728,95,941,136"/>
 </map>

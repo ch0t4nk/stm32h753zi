@@ -66,11 +66,14 @@ $(function() {
 &#160;
 
 <h3><a id="index_c"></a>- c -</h3><ul>
-<li>C_VERSION
-: <a class="el" href="d9/d4b/CMakeCCompilerId_8c.html#adaee3ee7c5a7a22451ea25e762e1d7d5">CMakeCCompilerId.c</a>
-</li>
 <li>CACHE_COHERENCY_CHECK
 : <a class="el" href="d8/d2b/build__config_8h.html#a5ec66ba406face406d59e5b494dc1dee">build_config.h</a>
+</li>
+<li>CACHE_HASH_ALGORITHM
+: <a class="el" href="d2/d19/group__CACHE__CONFIG.html#gab3d8f4e291fceafa93bbdd5f421922ad">embedding_config.h</a>
+</li>
+<li>CACHE_KEY_MAX_LENGTH
+: <a class="el" href="d2/d19/group__CACHE__CONFIG.html#ga63e55de30a66b8d537c3ae635699334b">embedding_config.h</a>
 </li>
 <li>CALIBRATION_SAMPLES
 : <a class="el" href="de/d58/motor__config_8h.html#a56f83b7a445aba5ced3c6a88392d5cbe">motor_config.h</a>
@@ -83,6 +86,12 @@ $(function() {
 </li>
 <li>CAN_BUS_OFF_RECOVERY_TIME_MS
 : <a class="el" href="d3/d5c/safety__config_8h.html#a4476ac81dc016389f243b9748583cb73">safety_config.h</a>
+</li>
+<li>CAN_COMM_TASK_PRIORITY
+: <a class="el" href="d8/de1/freertos__config__ssot_8h.html#a82a776ffd327c5b99b4200191e6cbe7a">freertos_config_ssot.h</a>
+</li>
+<li>CAN_COMM_TASK_STACK_SIZE
+: <a class="el" href="d8/de1/freertos__config__ssot_8h.html#a9d4fdc4877b791042050cefedb79b1e4">freertos_config_ssot.h</a>
 </li>
 <li>CAN_ERROR_PASSIVE_MAX
 : <a class="el" href="d3/d5c/safety__config_8h.html#ae6a96326b364eea21a0f63fd47331b43">safety_config.h</a>
@@ -165,6 +174,9 @@ $(function() {
 <li>CAN_INSTANCE
 : <a class="el" href="d3/d91/hardware__config_8h.html#a1a61699ef2a59d5daffa88b97f9212a4">hardware_config.h</a>
 </li>
+<li>CAN_INTERRUPT_PRIORITY
+: <a class="el" href="d8/de1/freertos__config__ssot_8h.html#a2c025227b3329c932a2a9efe331eb08b">freertos_config_ssot.h</a>
+</li>
 <li>CAN_MAX_MESSAGE_SIZE
 : <a class="el" href="d3/d88/comm__config_8h.html#ae01b173bf43f63fefd9241f407782072">comm_config.h</a>
 </li>
@@ -174,11 +186,17 @@ $(function() {
 <li>CAN_MESSAGE_QUEUE_MAX
 : <a class="el" href="d3/d5c/safety__config_8h.html#a73aac024bcf6ec329b2b4e550805a207">safety_config.h</a>
 </li>
+<li>CAN_MESSAGE_QUEUE_SIZE
+: <a class="el" href="d8/de1/freertos__config__ssot_8h.html#a7a972ce1c1a0a68b0bf81d025b1a6081">freertos_config_ssot.h</a>
+</li>
 <li>CAN_MOTOR_BASE_ID
 : <a class="el" href="d3/d88/comm__config_8h.html#a1486e60a5b05bafd30602b3e09af52be">comm_config.h</a>
 </li>
 <li>CAN_NODE_ID
 : <a class="el" href="d3/d88/comm__config_8h.html#ae9462fd6c430027c9490d6d69a027afd">comm_config.h</a>
+</li>
+<li>CAN_POLL_PERIOD_MS
+: <a class="el" href="d8/de1/freertos__config__ssot_8h.html#a3ab293e34eafbb915a0b1345262b48f2">freertos_config_ssot.h</a>
 </li>
 <li>CAN_PRESCALER
 : <a class="el" href="d3/d88/comm__config_8h.html#a8a0f9fa5f6434076707287c9c0ed2581">comm_config.h</a>
@@ -219,8 +237,115 @@ $(function() {
 <li>CAN_TX_PORT
 : <a class="el" href="d3/d91/hardware__config_8h.html#accdb14a5d4c81b8d47aeaa24889e1181">hardware_config.h</a>
 </li>
+<li>CHAR_EFFICIENCY_IMPROVEMENT_TARGET
+: <a class="el" href="de/d6e/motor__characterization_8h.html#abd9d1ca998520b9351c84b99964b57ac">motor_characterization.h</a>
+</li>
+<li>CHAR_ELECTRICAL_ACCURACY_TARGET
+: <a class="el" href="de/d6e/motor__characterization_8h.html#ab11b14dad7026318ad9bbbf7dd166b21">motor_characterization.h</a>
+</li>
+<li>CHAR_FRICTION_ACCURACY_TARGET
+: <a class="el" href="de/d6e/motor__characterization_8h.html#a2ea89be3980f5df7228e6ae01c94e521">motor_characterization.h</a>
+</li>
+<li>CHAR_INERTIA_ACCURACY_TARGET
+: <a class="el" href="de/d6e/motor__characterization_8h.html#a3db48570de4ae8a33669d6a16448015c">motor_characterization.h</a>
+</li>
+<li>CHAR_MAX_TEST_AMPLITUDE_DEG
+: <a class="el" href="de/d6e/motor__characterization_8h.html#a0a18444452dad1a6589c6d3f8659f692">motor_characterization.h</a>
+</li>
+<li>CHAR_MAX_TEST_DURATION_MS
+: <a class="el" href="de/d6e/motor__characterization_8h.html#ac73bf55c3168e336efe05194784a5e68">motor_characterization.h</a>
+</li>
+<li>CHAR_MAX_TEST_FREQUENCY_HZ
+: <a class="el" href="de/d6e/motor__characterization_8h.html#a4b8209107a97e0c84fc9a16b552c2cfe">motor_characterization.h</a>
+</li>
+<li>CHAR_MIN_TEST_SAMPLES
+: <a class="el" href="de/d6e/motor__characterization_8h.html#abd18627b3bd4c3145d44ebf4e49b128b">motor_characterization.h</a>
+</li>
+<li>CHAR_OVERSHOOT_REDUCTION_TARGET
+: <a class="el" href="de/d6e/motor__characterization_8h.html#a93c57c9032ede2184e59b03311c733b7">motor_characterization.h</a>
+</li>
+<li>CHAR_SETTLING_TIME_IMPROVEMENT_TARGET
+: <a class="el" href="de/d6e/motor__characterization_8h.html#aa043d320f154d8dfdd70bcc3e2148adf">motor_characterization.h</a>
+</li>
+<li>CHAR_THERMAL_ACCURACY_TARGET
+: <a class="el" href="de/d6e/motor__characterization_8h.html#a44c3c0c4de831f32bdb019e3b629d2e7">motor_characterization.h</a>
+</li>
+<li>CHARACTERIZATION_BUFFER_SIZE
+: <a class="el" href="d7/d6e/optimization__telemetry_8h.html#a60e6bed02558e4997a376ded78243902">optimization_telemetry.h</a>
+</li>
 <li>CHECK_ERROR
 : <a class="el" href="de/d11/error__codes_8h.html#a18443b09b240d0845b76df71e72c82ee">error_codes.h</a>
+</li>
+<li>CHIP_ABS_POS_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a9f1fe325a0f5b75c358e0b6457c6b09e">l6470_registers_generated.h</a>
+</li>
+<li>CHIP_ACC_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#aabb5e13788d4e3dac3dd32c2c6855674">l6470_registers_generated.h</a>
+</li>
+<li>CHIP_CONF_H_ADDR
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a0aaed2977006886cd855aac9942ad4b5">as5600_registers_generated.h</a>
+</li>
+<li>CHIP_CONF_L_ADDR
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a50b5616c5ceb4a2e8e73448e794739ca">as5600_registers_generated.h</a>
+</li>
+<li>CHIP_DEC_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a6a0be6cb126b81f068e443898b60b823">l6470_registers_generated.h</a>
+</li>
+<li>CHIP_EL_POS_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a2c344ccd00b607aa09e81eb8cd6f718d">l6470_registers_generated.h</a>
+</li>
+<li>CHIP_FS_SPD_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#aa21383378a81e7e65d96556a34a4c48d">l6470_registers_generated.h</a>
+</li>
+<li>CHIP_INT_SPD_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a107ee18c7949a5d625cc9bcf8344733d">l6470_registers_generated.h</a>
+</li>
+<li>CHIP_KVAL_ACC_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a314014351d1d54fb970ba31454eb30f6">l6470_registers_generated.h</a>
+</li>
+<li>CHIP_KVAL_DEC_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#ae95277298189373fce01b2eac79f0b7d">l6470_registers_generated.h</a>
+</li>
+<li>CHIP_KVAL_HOLD_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#ac7f8ab6c5cb668e2a1b5f57342f55801">l6470_registers_generated.h</a>
+, <a class="el" href="d7/d7e/mock__drivers_8h.html#ac7f8ab6c5cb668e2a1b5f57342f55801">mock_drivers.h</a>
+</li>
+<li>CHIP_KVAL_RUN_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a7ae075c74b0ce8e26e1809d706d3ac29">l6470_registers_generated.h</a>
+, <a class="el" href="d7/d7e/mock__drivers_8h.html#a7ae075c74b0ce8e26e1809d706d3ac29">mock_drivers.h</a>
+</li>
+<li>CHIP_MANG_H_ADDR
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a4481f76bd6170ba8f35d64b5c49ff9cb">as5600_registers_generated.h</a>
+</li>
+<li>CHIP_MANG_L_ADDR
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a504f82178ca7df40c42963fb3127b355">as5600_registers_generated.h</a>
+</li>
+<li>CHIP_MARK_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a0522a3a6952ec0f91a3099dd0dc2809e">l6470_registers_generated.h</a>
+</li>
+<li>CHIP_MAX_SPEED_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a2b9de063a6d707eb59f06aaa584b5ded">l6470_registers_generated.h</a>
+</li>
+<li>CHIP_MIN_SPEED_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#ab305c6e86579578ab0b4429cc7eed88a">l6470_registers_generated.h</a>
+</li>
+<li>CHIP_MPOS_H_ADDR
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#aaab77819a2a17e8a85d1963942cdff9d">as5600_registers_generated.h</a>
+</li>
+<li>CHIP_MPOS_L_ADDR
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a0bba266486d613b545d3c8062da826a3">as5600_registers_generated.h</a>
+</li>
+<li>CHIP_SPEED_ADDR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a85e9b3d48abeec7228ed34d730f09e04">l6470_registers_generated.h</a>
+</li>
+<li>CHIP_ZMCO_ADDR
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a4eaa27ef5300383fd727ed712ea5adb7">as5600_registers_generated.h</a>
+</li>
+<li>CHIP_ZPOS_H_ADDR
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a6ca3553ecd3c6b3bda6445f1fa5da6c3">as5600_registers_generated.h</a>
+</li>
+<li>CHIP_ZPOS_L_ADDR
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#ab908dd93b4d5e04ec5f7cb9acb78e502">as5600_registers_generated.h</a>
 </li>
 <li>CLAMP
 : <a class="el" href="d3/ddc/data__types_8h.html#aa46c464f8003d6bc85ccb0d97e7fa481">data_types.h</a>
@@ -228,11 +353,89 @@ $(function() {
 <li>CLOSED_LOOP_FEEDBACK
 : <a class="el" href="de/d58/motor__config_8h.html#a8a013d618a3cf02a0c753f25d74e187d">motor_config.h</a>
 </li>
+<li>CMD_GET_PARAM
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a9f0fa97da3084d4d7c0176d4d91e287a">l6470_registers_generated.h</a>
+</li>
+<li>CMD_GET_STATUS
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a66f7b6f26a4f3c2ff469ccf6ae05c44a">l6470_registers_generated.h</a>
+</li>
+<li>CMD_GO_HOME
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a9943f2a0526b2e13f26b88ce19e4757d">l6470_registers_generated.h</a>
+</li>
+<li>CMD_GO_MARK
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#ad5ff8c2cae78a4f04d38ac6918f4100f">l6470_registers_generated.h</a>
+</li>
+<li>CMD_GO_UNTIL
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a7e1af7230c40f5ab582285bf9da5a745">l6470_registers_generated.h</a>
+</li>
+<li>CMD_GOTO
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a1215841616c9c3726ff601aa2e7e6194">l6470_registers_generated.h</a>
+</li>
+<li>CMD_GOTO_DIR
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a30440acdd8e3caa030679b0a3a6a206c">l6470_registers_generated.h</a>
+</li>
+<li>CMD_HARD_HIZ
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a5a5ef5f1898886893580a36be869b7c8">l6470_registers_generated.h</a>
+</li>
+<li>CMD_HARD_STOP
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a040066cc40b089cd8d5472ee3daaff01">l6470_registers_generated.h</a>
+</li>
+<li>CMD_MOVE
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#ab0b6207219b9ccdecff1eef892d6d3ff">l6470_registers_generated.h</a>
+</li>
+<li>CMD_NOP
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a6d864e31a00add16032f27b5e593b4bb">l6470_registers_generated.h</a>
+</li>
+<li>CMD_RELEASE_SW
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a58bde5b082a8c7bf34f2b0fb9ed8ab06">l6470_registers_generated.h</a>
+</li>
+<li>CMD_RESET_DEVICE
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a2ad12bafd3d7b71f517be7e49a8e75f6">l6470_registers_generated.h</a>
+</li>
+<li>CMD_RESET_POS
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a050c7185ba675114dff89a0e63f28bd8">l6470_registers_generated.h</a>
+</li>
 <li>CMD_RESPONSE_TIMEOUT_MS
 : <a class="el" href="d3/d88/comm__config_8h.html#a4cb5d01364488d8de93626ed6856ee90">comm_config.h</a>
 </li>
+<li>CMD_RUN
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a7cb8cc5db74f6beeb3f682a85bd7c616">l6470_registers_generated.h</a>
+</li>
+<li>CMD_SET_PARAM
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a26fb80d454022ee596a007a33f2025d5">l6470_registers_generated.h</a>
+</li>
+<li>CMD_SOFT_HIZ
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#aa4a3fde08af9347bd343f73de8a604c5">l6470_registers_generated.h</a>
+</li>
+<li>CMD_SOFT_STOP
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#ae91948b8b04b1aa79165386068326157">l6470_registers_generated.h</a>
+</li>
+<li>CMD_STEP_CLOCK
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a683ca28c8ed40184a0ac0dc0aed5b442">l6470_registers_generated.h</a>
+</li>
 <li>COMM_DEFAULT_TIMEOUT_MS
 : <a class="el" href="d3/d88/comm__config_8h.html#a74d276cabe919fbeb337ea500d90aaa2">comm_config.h</a>
+</li>
+<li>COMM_EVENT_CAN_MESSAGE_READY
+: <a class="el" href="d8/de1/freertos__config__ssot_8h.html#a331b91877816d4ec4e46ac20bd12d43e">freertos_config_ssot.h</a>
+</li>
+<li>COMM_EVENT_ERROR_REPORT_PENDING
+: <a class="el" href="d8/de1/freertos__config__ssot_8h.html#a4ba7490619c49ce038ab8d7257eed57d">freertos_config_ssot.h</a>
+</li>
+<li>COMM_EVENT_STATUS_UPDATE_REQUIRED
+: <a class="el" href="d8/de1/freertos__config__ssot_8h.html#a3d1abf34369edad036b1d7b1a9839004">freertos_config_ssot.h</a>
+</li>
+<li>COMM_EVENT_TELEMETRY_REQUEST
+: <a class="el" href="d8/de1/freertos__config__ssot_8h.html#a91a2449475c92676edea3666514f80d4">freertos_config_ssot.h</a>
+</li>
+<li>COMM_EVENT_UART_RECEIVE_READY
+: <a class="el" href="d8/de1/freertos__config__ssot_8h.html#aad741a423879914ed59494db6f9c56c8">freertos_config_ssot.h</a>
+</li>
+<li>COMM_EVENT_UART_TRANSMIT_COMPLETE
+: <a class="el" href="d8/de1/freertos__config__ssot_8h.html#a28ebd95d1b3ff184a99e9c0d82f2db12">freertos_config_ssot.h</a>
+</li>
+<li>COMM_MAX_ETH_PAYLOAD
+: <a class="el" href="d3/d88/comm__config_8h.html#a6fb866f7916a4623465c1d186a1dd70c">comm_config.h</a>
 </li>
 <li>COMM_SAFETY_CHECK
 : <a class="el" href="dc/d81/comm__protocol_8h.html#aad269d543f3378e8d350b4af4c54e42f">comm_protocol.h</a>
@@ -240,11 +443,200 @@ $(function() {
 <li>COMMUNICATION_BUFFER_SIZE
 : <a class="el" href="d8/d2b/build__config_8h.html#a557424f6d2420b81a5bd72b346664631">build_config.h</a>
 </li>
-<li>COMPILER_ID
-: <a class="el" href="d9/d4b/CMakeCCompilerId_8c.html#a81dee0709ded976b2e0319239f72d174">CMakeCCompilerId.c</a>
+<li>CONF_H_HYST_1_LSB
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a806526163c1fd837cce65c9ec25f0143">as5600_registers_generated.h</a>
 </li>
-<li>COMPILER_VERSION_MAJOR
-: <a class="el" href="d9/d4b/CMakeCCompilerId_8c.html#ae7bf900aff29dfa924045a502e5b1134">CMakeCCompilerId.c</a>
+<li>CONF_H_HYST_2_LSBS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#ad5fcb501cd30f9cb5adfd3e1d53ec958">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_HYST_3_LSBS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a2971b47e26f4322447721ee3a0a609f4">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_HYST_MSK
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a1baaa991c3dee4e616bb151bd9af060d">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_HYST_OFF
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#af1cc1b18b018fe8d285906b8c262bf8f">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_HYST_POS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#abeff37dbea924d9833d29efc4a631b69">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_MASK
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#ae13c7c43010ed640edc901931fadf8fb">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_OUTS_ANALOG_FULL_RANGE
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a0539a83dab03452c5791e74f1f472392">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_OUTS_ANALOG_REDUCED_RANGE
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#ab4bde0bf6b68da93ad79d0a1079f126c">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_OUTS_DIGITAL_PWM
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a7dfcd7d77ec7afe0d5abb4b4a986814f">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_OUTS_MSK
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a346ba984498ec6584c41d695963b133d">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_OUTS_POS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a3582c29998eeac57a5a7d981f7af6c64">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_OUTS_RESERVED
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a52692af583774c3eaf2af85f03cd8726">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_PM_LPM1_
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a2409241f83db0d21e051b8102929a18c">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_PM_LPM2_
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a8c04894248d82d6687fde27c91a0812c">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_PM_LPM3_
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a01836c90b1689b495c81b1576742d721">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_PM_MSK
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#aa03873a94980f681f823a0400c6ac2a1">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_PM_NOM_
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a3233262388ffcd3ad855aaf593509805">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_PM_POS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a598eea6683a1b72585a9d65f637a9d54">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_PWMF_115_HZ
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a891dab8d447e544b2edff96f9fbd9bde">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_PWMF_230_HZ
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#aeea423141131c677662e14c7d21285d5">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_PWMF_460_HZ
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a241219be7ed8ce143cff848b62a8d9ed">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_PWMF_920_HZ
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#aedeaf54e783e54560c72f98cf41ae06c">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_PWMF_MSK
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#ab937e3bf663537d8d2e8870a0c1b2074">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_PWMF_POS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#af55329fb394913aa1f0391ddad8d8770">as5600_registers_generated.h</a>
+</li>
+<li>CONF_H_SAFE_DEFAULT
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#af8ef4fd375649430bc7038a572aa5079">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_FTH_10_LSBS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#adfff8c3fbb735a8797425b81e3a7f269">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_FTH_18_LSBS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a335df4246ed57e823a45ef3f5aea4172">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_FTH_21_LSBS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#acc27e3bb4adfd4cb8a3814ba2ee214bb">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_FTH_24_LSBS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#ae1e7326bf23929698c19041c8908f710">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_FTH_6_LSBS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a5eba5df3281ed337e3ca4ec12b29b243">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_FTH_7_LSBS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a63f8e736419d7dd25cec33d9cd6c6af4">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_FTH_9_LSBS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#aebc66b8440c652f95f1d5f06e0208eed">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_FTH_MSK
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#aeaa641e494fc203bc833851efe69ac1c">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_FTH_POS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a43b176a5fb77e8485b501607ebfde436">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_FTH_SLOW_FILTER_ONLY
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#ac3191df7069c49198a23a838d5ac21c8">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_MASK
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a1ff481d369bd9e6edbba3ffb7f0cccbd">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_SAFE_DEFAULT
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#ad53ca673d2d14a6088fe70ba55c580e1">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_SF_16X
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#afc5f8e427756b6b14ea2dec9d728a96e">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_SF_2X
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a8f9333576e0982275dc558af0674faf2">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_SF_4X
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#af6f9c88f40ada014ed41d4e0fb727af5">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_SF_8X
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a3e02fa1ceba313fd1ab6f93dbc3cf0ab">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_SF_MSK
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#ac44220e545875093e21c7d113d63b32b">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_SF_POS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a03498155721a8606599d63ff7523a4fd">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_WD_MSK
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a1b1a1767c77658255316cc3a04b1cdcc">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_WD_OFF
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a2518a788f64a8de7da4ca820fbc82ab7">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_WD_ON
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a2b2b0b44ae150cfe9d8ad0c5e480855b">as5600_registers_generated.h</a>
+</li>
+<li>CONF_L_WD_POS
+: <a class="el" href="da/de0/as5600__registers__generated_8h.html#a070e48b93de09a7a8cdfb88edb632ed2">as5600_registers_generated.h</a>
+</li>
+<li>CONFIG_EN_VSCOMP_MSK
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a74b7c62758733b60b915f5d34269a5f4">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_EN_VSCOMP_POS
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#ac1d02c99e3df24269f5c67c3be140d58">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_EXT_CLK_MSK
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a171af0fb3dbc6c473384af00208a2798">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_EXT_CLK_POS
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a7d8a41a4dab10cde65cee2b3c053060a">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_F_PWM_DEC_MSK
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#aba056a84c2ba153d4af20733782f6f6d">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_F_PWM_DEC_POS
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a35e087caa445f2526079de425b2888fd">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_F_PWM_INT_MSK
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a22b4ece1bda5b74bdeda9b622ead3bc0">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_F_PWM_INT_POS
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a7e8866eb1c19e8c79bb9dffdb39248ee">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_MASK
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a30670930179ee7a289b93aa3cc9900ef">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_OC_SD_MSK
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#ab53518a922ee0457e032153b22fc1c94">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_OC_SD_POS
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#abd7e0c806783c6c4c15cd048213aa2ae">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_OSC_SEL_MSK
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a6ec8a1ef3d96ca80bbc8ea5f2ad46d87">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_OSC_SEL_POS
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#ae330e46b92185b46a58998c62a34754a">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_POW_SR_MSK
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a7428d61d75b2d7d628cb5872ccb3ae7a">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_POW_SR_POS
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#aba93a78ca3771968421adb1ee79aa9c2">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_SW_MODE_MSK
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#a9acfb433861ca8e148da5f57a92024af">l6470_registers_generated.h</a>
+</li>
+<li>CONFIG_SW_MODE_POS
+: <a class="el" href="d4/da0/l6470__registers__generated_8h.html#ae3b6c4bef655709c19b9e9ab72a861f2">l6470_registers_generated.h</a>
 </li>
 <li>CONSOLIDATION_SCRIPT_PATH
 : <a class="el" href="db/de7/documentation__config_8h.html#a28e827c9501745e4874a04c465ccf7b5">documentation_config.h</a>
@@ -264,17 +656,29 @@ $(function() {
 <li>CONTROL_TIMER_INSTANCE
 : <a class="el" href="d3/d91/hardware__config_8h.html#a852bf6b5401b95692ae8dbb6f72f2bb7">hardware_config.h</a>
 </li>
+<li>CONVERGENCE_STABILITY_COUNT
+: <a class="el" href="d2/d8f/motor__efficiency__optimizer_8h.html#a239e1c9f17d13b549e1cb20a2ac0f5be">motor_efficiency_optimizer.h</a>
+</li>
+<li>CPU_USAGE_CALCULATION_PERIOD_MS
+: <a class="el" href="d8/de1/freertos__config__ssot_8h.html#a1e2c266776cbeafa13df43e084f1afb8">freertos_config_ssot.h</a>
+</li>
 <li>CPU_USAGE_CRITICAL_PCT
 : <a class="el" href="d3/d5c/safety__config_8h.html#a6d83b9da7e250f49dc261a7ef038387a">safety_config.h</a>
 </li>
+<li>CPU_USAGE_IDLE_THRESHOLD_PERCENT
+: <a class="el" href="d8/de1/freertos__config__ssot_8h.html#a4a3a632eb32fead820c4fb4b4cd16eb8">freertos_config_ssot.h</a>
+</li>
 <li>CPU_USAGE_WARNING_PCT
 : <a class="el" href="d3/d5c/safety__config_8h.html#a418987d7ef4d4985b31e349cda938180">safety_config.h</a>
+</li>
+<li>CPU_UTILIZATION_WARNING_THRESHOLD
+: <a class="el" href="d7/dda/real__time__control_8h.html#aa61325e65fcffe153846384c2723b591">real_time_control.h</a>
 </li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 5 2025 13:09:35 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 11 2025 23:51:15 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

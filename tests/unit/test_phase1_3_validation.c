@@ -16,6 +16,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 
 // Include only the essential defines we need for testing
@@ -243,22 +244,33 @@ void test_l6470_parameter_calculation(void) {
     test_params.max_velocity_rad_s = 50.0f;
 
     // Validate parameters are reasonable
-    TEST_ASSERT_GREATER_THAN(0.0f, test_params.moment_of_inertia_kg_m2);
-    TEST_ASSERT_LESS_THAN(0.1f, test_params.moment_of_inertia_kg_m2);
+    TEST_ASSERT_GREATER_THAN_FLOAT(0.0f, test_params.moment_of_inertia_kg_m2);
+    TEST_ASSERT_LESS_THAN_FLOAT(0.1f, test_params.moment_of_inertia_kg_m2);
 
-    TEST_ASSERT_GREATER_THAN(0.0f, test_params.torque_constant_nm_a);
-    TEST_ASSERT_LESS_THAN(1.0f, test_params.torque_constant_nm_a);
+    TEST_ASSERT_GREATER_THAN_FLOAT(0.0f, test_params.torque_constant_nm_a);
+    TEST_ASSERT_LESS_THAN_FLOAT(1.0f, test_params.torque_constant_nm_a);
 
     // Simple L6470 KVAL calculation based on max current
-    float max_kval = 255.0f;
-    float calculated_kval =
-        (test_params.max_current_a / 3.0f) * max_kval; // Assume 3A max
+    const float max_kval = 255.0f;
+
+    // Verify that test_params.max_current_a was set correctly
+    TEST_ASSERT_EQUAL_FLOAT(2.0f, test_params.max_current_a);
+
+    // Use a local copy to avoid any aliasing/optimizer surprises
+    const float max_current = test_params.max_current_a;
+    const float denom = 3.0f;
+    const float current_ratio = max_current / denom;
+    float calculated_kval = current_ratio * max_kval;
+
+    // Debug output with explicit values
+    printf("DEBUG: max_current = %f, denom = %f, ratio = %f, kval = %f\n",
+           max_current, denom, current_ratio, calculated_kval);
 
     // Ensure KVAL is within valid range
     if (calculated_kval > 255.0f)
         calculated_kval = 255.0f;
-    TEST_ASSERT_GREATER_THAN(0.0f, calculated_kval);
-    TEST_ASSERT_LESS_OR_EQUAL(255.0f, calculated_kval);
+    TEST_ASSERT_GREATER_THAN_FLOAT(0.0f, calculated_kval);
+    TEST_ASSERT_LESS_OR_EQUAL_FLOAT(255.0f, calculated_kval);
 }
 
 /**

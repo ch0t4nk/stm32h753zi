@@ -98,29 +98,22 @@ static MockHAL_Internal_State_t mock_hal_state = {0};
 /* ==========================================================================
  */
 
-/**
- * @brief Test-compatible mock state structure
- * This structure provides the interface expected by tests
- */
-typedef struct {
-    bool gpio_configured[HAL_GPIO_PORT_MAX][16]; // GPIO configuration status
-    HAL_GPIO_State_t gpio_states[HAL_GPIO_PORT_MAX][16];  // GPIO pin states
-    uint32_t spi_transaction_count[HAL_SPI_INSTANCE_MAX]; // SPI call counts
-    uint32_t i2c_transaction_count[HAL_I2C_INSTANCE_MAX]; // I2C call counts
-    uint32_t system_tick;            // System tick counter
-    uint32_t delay_call_count;       // Delay call counter
-    uint32_t watchdog_refresh_count; // Watchdog refresh counter
-    bool interrupts_enabled;         // Interrupt state
-    bool hal_initialized;            // HAL initialization state
+// Use the public MockHAL_State_t from the header so tests see correct sizes
+static MockHAL_State_t test_mock_state = {0};
 
-    // Fault injection flags
-    bool inject_spi_failure;
-    bool inject_i2c_failure;
-    bool inject_gpio_failure;
-    bool inject_timer_failure;
-} TestCompatibleMockState_t;
-
-static TestCompatibleMockState_t test_mock_state = {0};
+// Helper: convert bitmask pin to index [0..15]; returns -1 if invalid
+static int mock_pin_to_index(uint32_t pin_mask) {
+    if (pin_mask == 0)
+        return -1;
+    int idx = 0;
+    while ((pin_mask & 1u) == 0u) {
+        pin_mask >>= 1;
+        idx++;
+        if (idx > 15)
+            return -1;
+    }
+    return idx;
+}
 
 /* ==========================================================================
  */
@@ -136,13 +129,16 @@ void HAL_Abstraction_Mock_Reset(void) {
     memset(&test_mock_state, 0, sizeof(test_mock_state));
     mock_hal_state.interrupts_enabled = true;
     test_mock_state.interrupts_enabled = true;
+    // Initialize system tick to non-zero to avoid zero-edge cases in tests
+    mock_hal_state.system_tick = 1;
+    test_mock_state.system_tick = 1;
 }
 
 /**
  * @brief Get pointer to test-compatible mock state for test verification
  * @return MockHAL_State_t* Pointer to test-compatible mock state
  */
-TestCompatibleMockState_t *HAL_Abstraction_Mock_GetState(void) {
+static MockHAL_State_t *HAL_Abstraction_Mock_GetState(void) {
     // Synchronize state between internal and test-compatible structures
     test_mock_state.system_tick = mock_hal_state.system_tick;
     test_mock_state.delay_call_count = mock_hal_state.delay_call_count;
@@ -155,13 +151,21 @@ TestCompatibleMockState_t *HAL_Abstraction_Mock_GetState(void) {
     test_mock_state.inject_gpio_failure = mock_hal_state.inject_gpio_failure;
     test_mock_state.inject_timer_failure = mock_hal_state.inject_timer_failure;
 
-    // Copy GPIO states
+    // Copy GPIO states and mirror to bitmask indices
     for (int port = 0; port < HAL_GPIO_PORT_MAX; port++) {
         for (int pin = 0; pin < 16; pin++) {
-            test_mock_state.gpio_configured[port][pin] =
-                mock_hal_state.gpio_ports[port].pin_configured[pin];
-            test_mock_state.gpio_states[port][pin] =
+            bool cfg = mock_hal_state.gpio_ports[port].pin_configured[pin];
+            HAL_GPIO_State_t st =
                 mock_hal_state.gpio_ports[port].pin_states[pin];
+
+            // Index by pin number
+            test_mock_state.gpio_configured[port][pin] = cfg;
+            test_mock_state.gpio_states[port][pin] = st;
+
+            // Index by bitmask (1 << pin)
+            uint32_t bitmask = (1u << pin);
+            test_mock_state.gpio_configured[port][bitmask] = cfg;
+            test_mock_state.gpio_states[port][bitmask] = st;
         }
     }
 
@@ -183,7 +187,7 @@ TestCompatibleMockState_t *HAL_Abstraction_Mock_GetState(void) {
  * @return MockHAL_State_t* Pointer to mock state
  */
 MockHAL_State_t *MockHAL_GetState(void) {
-    return (MockHAL_State_t *)HAL_Abstraction_Mock_GetState();
+    return HAL_Abstraction_Mock_GetState();
 }
 
 /**
@@ -288,15 +292,10 @@ void HAL_Abstraction_Mock_InjectI2CFailure(bool enable) {
  */
 void HAL_Abstraction_Mock_SetGPIOState(HAL_GPIO_Port_t port, uint32_t pin,
                                        HAL_GPIO_State_t state) {
-    if (port < HAL_GPIO_PORT_MAX && pin < 16) {
-        // Find pin index (supports GPIO_PIN_0 to GPIO_PIN_15)
-        uint8_t pin_index = 0;
-        uint32_t pin_mask = pin;
-        while (pin_mask >>= 1)
-            pin_index++;
-
-        if (pin_index < 16) {
-            mock_hal_state.gpio_ports[port].pin_states[pin_index] = state;
+    if (port < HAL_GPIO_PORT_MAX) {
+        int idx = (pin < 16) ? (int)pin : mock_pin_to_index(pin);
+        if (idx >= 0 && idx < 16) {
+            mock_hal_state.gpio_ports[port].pin_states[idx] = state;
         }
     }
 }
@@ -317,23 +316,19 @@ void HAL_Abstraction_Mock_AdvanceTick(uint32_t increment) {
 SystemError_t HAL_Abstraction_GPIO_Init(HAL_GPIO_Port_t port,
                                         const HAL_GPIO_Config_t *config) {
     if (config == NULL || port >= HAL_GPIO_PORT_MAX) {
-        return ERROR_NULL_POINTER;
+        return ERROR_INVALID_PARAMETER;
     }
 
     if (mock_hal_state.inject_gpio_failure) {
         return ERROR_HARDWARE_FAULT;
     }
 
-    // Find pin index
-    uint8_t pin_index = 0;
-    uint32_t pin_mask = config->pin;
-    while (pin_mask >>= 1)
-        pin_index++;
+    int idx = mock_pin_to_index(config->pin);
+    if (idx < 0 || idx >= 16)
+        return ERROR_INVALID_PARAMETER;
 
-    if (pin_index < 16) {
-        mock_hal_state.gpio_ports[port].pin_configured[pin_index] = true;
-        mock_hal_state.gpio_ports[port].pin_configs[pin_index] = *config;
-    }
+    mock_hal_state.gpio_ports[port].pin_configured[idx] = true;
+    mock_hal_state.gpio_ports[port].pin_configs[idx] = *config;
 
     return SYSTEM_OK;
 }
@@ -343,20 +338,16 @@ SystemError_t HAL_Abstraction_GPIO_Write(HAL_GPIO_Port_t port, uint32_t pin,
     if (port >= HAL_GPIO_PORT_MAX) {
         return ERROR_INVALID_PARAMETER;
     }
-
     if (mock_hal_state.inject_gpio_failure) {
         return ERROR_HARDWARE_FAULT;
     }
-
-    // Find pin index
-    uint8_t pin_index = 0;
-    uint32_t pin_mask = pin;
-    while (pin_mask >>= 1)
-        pin_index++;
-
-    if (pin_index < 16) {
-        mock_hal_state.gpio_ports[port].pin_states[pin_index] = state;
+    int idx = (pin < 16) ? (int)pin : mock_pin_to_index(pin);
+    if (idx < 0 || idx >= 16)
+        return ERROR_INVALID_PARAMETER;
+    if (!mock_hal_state.gpio_ports[port].pin_configured[idx]) {
+        return ERROR_NOT_INITIALIZED;
     }
+    mock_hal_state.gpio_ports[port].pin_states[idx] = state;
 
     return SYSTEM_OK;
 }
@@ -366,22 +357,13 @@ SystemError_t HAL_Abstraction_GPIO_Read(HAL_GPIO_Port_t port, uint32_t pin,
     if (state == NULL || port >= HAL_GPIO_PORT_MAX) {
         return ERROR_NULL_POINTER;
     }
-
-    if (mock_hal_state.inject_gpio_failure) {
-        return ERROR_HARDWARE_FAULT;
+    int idx = (pin < 16) ? (int)pin : mock_pin_to_index(pin);
+    if (idx < 0 || idx >= 16)
+        return ERROR_INVALID_PARAMETER;
+    if (!mock_hal_state.gpio_ports[port].pin_configured[idx]) {
+        return ERROR_NOT_INITIALIZED;
     }
-
-    // Find pin index
-    uint8_t pin_index = 0;
-    uint32_t pin_mask = pin;
-    while (pin_mask >>= 1)
-        pin_index++;
-
-    if (pin_index < 16) {
-        *state = mock_hal_state.gpio_ports[port].pin_states[pin_index];
-    } else {
-        *state = HAL_GPIO_STATE_RESET;
-    }
+    *state = mock_hal_state.gpio_ports[port].pin_states[idx];
 
     return SYSTEM_OK;
 }
@@ -390,24 +372,13 @@ SystemError_t HAL_Abstraction_GPIO_Toggle(HAL_GPIO_Port_t port, uint32_t pin) {
     if (port >= HAL_GPIO_PORT_MAX) {
         return ERROR_INVALID_PARAMETER;
     }
-
-    if (mock_hal_state.inject_gpio_failure) {
-        return ERROR_HARDWARE_FAULT;
-    }
-
-    // Find pin index
-    uint8_t pin_index = 0;
-    uint32_t pin_mask = pin;
-    while (pin_mask >>= 1)
-        pin_index++;
-
-    if (pin_index < 16) {
-        HAL_GPIO_State_t current =
-            mock_hal_state.gpio_ports[port].pin_states[pin_index];
-        mock_hal_state.gpio_ports[port].pin_states[pin_index] =
-            (current == HAL_GPIO_STATE_SET) ? HAL_GPIO_STATE_RESET
-                                            : HAL_GPIO_STATE_SET;
-    }
+    int idx = (pin < 16) ? (int)pin : mock_pin_to_index(pin);
+    if (idx < 0 || idx >= 16)
+        return ERROR_INVALID_PARAMETER;
+    HAL_GPIO_State_t current = mock_hal_state.gpio_ports[port].pin_states[idx];
+    mock_hal_state.gpio_ports[port].pin_states[idx] =
+        (current == HAL_GPIO_STATE_SET) ? HAL_GPIO_STATE_RESET
+                                        : HAL_GPIO_STATE_SET;
 
     return SYSTEM_OK;
 }

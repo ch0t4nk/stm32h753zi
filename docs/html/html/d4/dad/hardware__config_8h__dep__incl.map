@@ -1,26 +1,52 @@
 <map id="src/config/hardware_config.h" name="src/config/hardware_config.h">
-<area shape="rect" id="node1" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="651,5,800,47"/>
-<area shape="rect" id="node2" href="$d0/d29/main_8c.html" title=" " alt="" coords="5,102,171,129"/>
-<area shape="rect" id="node3" href="$d9/dfd/main__application_8c.html" title="Main Application &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="195,95,349,136"/>
-<area shape="rect" id="node4" href="$d0/dde/motor__controller_8c.html" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="873,273,1031,315"/>
-<area shape="rect" id="node5" href="$d8/d75/as5600__driver_8c.html" title="AS5600 Magnetic Encoder Driver Implementation &#45; STM32H7 I2C HAL." alt="" coords="475,273,616,315"/>
-<area shape="rect" id="node6" href="$de/d2b/as5600__driver_8h.html" title="AS5600 Magnetic Encoder Driver Header." alt="" coords="475,184,616,225"/>
-<area shape="rect" id="node7" href="$d1/d41/l6470__driver_8c.html" title="L6470 Stepper Driver Implementation &#45; STM32H7 SPI HAL." alt="" coords="640,273,811,315"/>
-<area shape="rect" id="node8" href="$d9/d85/l6470__driver_8h.html" title="L6470 Stepper Driver Header &#45; X&#45;CUBE&#45;SPN2 Based Implementation." alt="" coords="640,184,811,225"/>
-<area shape="rect" id="node9" href="$d3/da2/emergency__stop_8c.html" title="Emergency Stop System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1100,273,1263,315"/>
-<area shape="rect" id="node10" href="$d0/d78/emergency__stop_8h.html" title="Emergency Stop System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="2024,184,2187,225"/>
-<area shape="rect" id="node15" href="$df/d2b/fault__monitor_8h.html" title="Fault Detection and Monitoring System Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1265,102,1455,129"/>
-<area shape="rect" id="node20" href="$d2/db6/safety__system_8h.html" title="Safety System Manager &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1870,102,2069,129"/>
-<area shape="rect" id="node11" href="$db/d1a/safety__system_8c.html" title="Safety System Manager Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1605,281,1803,307"/>
-<area shape="rect" id="node12" href="$d0/d0d/test__emergency__stop_8c.html" title="Focused unit tests for emergency stop functionality." alt="" coords="1827,273,2019,315"/>
-<area shape="rect" id="node13" href="$d0/d45/test__safety__gtest_8cpp.html" title="GoogleTest&#45;based unit tests for safety systems (C++ wrapper for C code)" alt="" coords="2043,273,2203,315"/>
-<area shape="rect" id="node14" href="$de/d22/test__safety__systems_8c.html" title="Unit tests for safety systems using Unity framework." alt="" coords="2227,273,2387,315"/>
-<area shape="rect" id="node16" href="$d9/dfd/system__state_8h.html" title="Central System State &#45; Single Source of Truth (SSOT)" alt="" coords="886,191,1093,218"/>
-<area shape="rect" id="node17" href="$d8/d86/comm__protocol_8c.html" title="Communication Protocol Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1350,273,1541,315"/>
-<area shape="rect" id="node18" href="$d3/d16/fault__monitor_8c.html" title="Fault Detection and Monitoring System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1494,191,1682,218"/>
-<area shape="rect" id="node19" href="$d1/d66/test__fault__monitor_8c.html" title="Focused unit tests for fault monitoring system." alt="" coords="1219,184,1368,225"/>
-<area shape="rect" id="node21" href="$dc/d81/comm__protocol_8h.html" title="Communication Protocol Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1758,184,1949,225"/>
-<area shape="rect" id="node22" href="$d6/d79/watchdog__manager_8h.html" title="Watchdog Management System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="2363,184,2517,225"/>
-<area shape="rect" id="node23" href="$d2/d94/watchdog__manager_8c.html" title="Watchdog Management System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="2629,273,2782,315"/>
-<area shape="rect" id="node24" href="$d3/df3/test__watchdog_8c.html" title="Focused unit tests for watchdog management." alt="" coords="2411,281,2605,307"/>
+<area shape="rect" id="node1" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="3043,5,3193,47"/>
+<area shape="rect" id="node2" href="$d0/d29/main_8c.html" title=" " alt="" coords="915,199,1081,225"/>
+<area shape="rect" id="node3" href="$d9/dfd/main__application_8c.html" title="Main Application &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="6013,191,6167,233"/>
+<area shape="rect" id="node4" href="$d0/dde/motor__controller_8c.html" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="734,191,891,233"/>
+<area shape="rect" id="node5" href="$df/d29/hal__abstraction__demo_8c.html" title="Demonstration of HAL Abstraction Layer Usage." alt="" coords="4493,191,4679,233"/>
+<area shape="rect" id="node6" href="$d8/d75/as5600__driver_8c.html" title="AS5600 Magnetic Encoder Driver Implementation using HAL abstraction." alt="" coords="35,288,177,329"/>
+<area shape="rect" id="node7" href="$de/d2b/as5600__driver_8h.html" title="AS5600 Magnetic Encoder Driver Header." alt="" coords="137,95,278,136"/>
+<area shape="rect" id="node11" href="$d1/d41/l6470__driver_8c.html" title="L6470 Stepper Driver Implementation &#45; STM32H7 SPI HAL." alt="" coords="1093,288,1263,329"/>
+<area shape="rect" id="node12" href="$d9/d85/l6470__driver_8h.html" title="L6470 Stepper Driver Header &#45; X&#45;CUBE&#45;SPN2 Based Implementation." alt="" coords="531,95,702,136"/>
+<area shape="rect" id="node13" href="$d3/da2/emergency__stop_8c.html" title="Emergency Stop System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="750,288,913,329"/>
+<area shape="rect" id="node17" href="$d6/dee/hal__abstraction_8h.html" title="Hardware Abstraction Layer (HAL) Interface for STM32H753ZI." alt="" coords="2953,95,3099,136"/>
+<area shape="rect" id="node29" href="$d5/d49/hal__abstraction__stm32h7_8c.html" title="STM32H7 Hardware Abstraction Layer Implementation." alt="" coords="4755,191,4956,233"/>
+<area shape="rect" id="node34" href="$d7/dee/emergency__stop__abstracted_8h.html" title="Emergency Stop System with HAL Abstraction &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1478,191,1641,233"/>
+<area shape="rect" id="node39" href="$d7/d6e/optimization__telemetry_8h.html" title="Focused telemetry data acquisition for motor characterization and optimization." alt="" coords="3114,191,3309,233"/>
+<area shape="rect" id="node41" href="$d8/d6e/test__hal__abstraction__basic_8c.html" title="Basic HAL Abstraction Layer Tests." alt="" coords="4981,191,5162,233"/>
+<area shape="rect" id="node42" href="$de/d61/test__hal__abstraction__basic__corrected_8c.html" title="Basic HAL Abstraction Layer Tests (Corrected)" alt="" coords="5186,184,5357,240"/>
+<area shape="rect" id="node46" href="$d0/d78/emergency__stop_8h.html" title="Emergency Stop System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="6293,191,6455,233"/>
+<area shape="rect" id="node48" href="$df/d2b/fault__monitor_8h.html" title="Fault Detection and Monitoring System Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="4037,102,4226,129"/>
+<area shape="rect" id="node49" href="$de/d1f/l6470__fault__monitor_8h.html" title="L6470 Hardware Fault Monitoring &#45; GPIO Interrupt Handlers." alt="" coords="6115,95,6278,136"/>
+<area shape="rect" id="node50" href="$d2/db6/safety__system_8h.html" title="Safety System Manager &#45; STM32H753ZI Stepper Motor Project." alt="" coords="5815,102,6013,129"/>
+<area shape="rect" id="node8" href="$dd/dbd/motor__characterization_8c.html" title="Motor parameter identification and characterization implementation." alt="" coords="2867,377,3025,419"/>
+<area shape="rect" id="node9" href="$dc/da4/position__control_8c.html" title="Advanced Position Control with Encoder Feedback." alt="" coords="2554,191,2725,233"/>
+<area shape="rect" id="node10" href="$dd/d68/optimization__compatibility_8c.html" title="Compatibility layer implementation for optimization module development." alt="" coords="201,288,414,329"/>
+<area shape="rect" id="node14" href="$dc/d33/l6470__fault__monitor_8c.html" title="L6470 Hardware Fault Monitoring Implementation." alt="" coords="4374,288,4537,329"/>
+<area shape="rect" id="node15" href="$db/d1a/safety__system_8c.html" title="Safety System Manager Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="4618,295,4815,322"/>
+<area shape="rect" id="node16" href="$d7/df8/test__l6470__register__programming_8c.html" title="Unit tests for L6470 register programming validation." alt="" coords="524,191,709,233"/>
+<area shape="rect" id="node18" href="$d8/d86/comm__protocol_8c.html" title="Communication Protocol Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="4227,191,4417,233"/>
+<area shape="rect" id="node19" href="$da/de0/as5600__registers__generated_8h.html" title="AS5600 Register Definitions &#45; Auto&#45;Generated from Schema." alt="" coords="1155,191,1353,233"/>
+<area shape="rect" id="node20" href="$d4/da0/l6470__registers__generated_8h.html" title="L6470 Register Definitions &#45; Auto&#45;Generated from Schema." alt="" coords="2749,191,2937,233"/>
+<area shape="rect" id="node21" href="$dd/d21/optimization__telemetry_8c.html" title="Focused telemetry data acquisition implementation for motor characterization." alt="" coords="2747,288,2942,329"/>
+<area shape="rect" id="node22" href="$d2/de7/motion__profile_8c.html" title="Advanced Motion Profiling for STM32H753ZI Motor Control." alt="" coords="3485,191,3649,233"/>
+<area shape="rect" id="node23" href="$de/d6e/motor__characterization_8h.html" title="Motor parameter identification and characterization framework." alt="" coords="3017,288,3174,329"/>
+<area shape="rect" id="node24" href="$d1/dde/test__motor__characterization_8c.html" title="Unit tests for motor characterization system." alt="" coords="3049,377,3208,419"/>
+<area shape="rect" id="node25" href="$da/d40/test__motor__efficiency__optimizer_8c.html" title="Unit tests for motor efficiency optimization module (FTR&#45;009)" alt="" coords="3397,377,3567,419"/>
+<area shape="rect" id="node26" href="$d6/d93/multi__motor__coordinator_8c.html" title="Multi&#45;Motor Coordination and Synchronization System." alt="" coords="3877,191,4036,233"/>
+<area shape="rect" id="node27" href="$df/d55/real__time__control_8c.html" title="Real&#45;Time Motor Control Task System." alt="" coords="4060,191,4203,233"/>
+<area shape="rect" id="node28" href="$de/d23/hal__abstraction__mock_8c.html" title="Mock Hardware Abstraction Layer Implementation for Testing." alt="" coords="2107,288,2287,329"/>
+<area shape="rect" id="node30" href="$d2/d8f/motor__efficiency__optimizer_8h.html" title="Motor Efficiency Optimization Module &#45; FTR&#45;009 Implementation." alt="" coords="3527,288,3699,329"/>
+<area shape="rect" id="node31" href="$dc/dd2/power__management_8c.html" title="Advanced Power Management Implementation for STM32H753ZI Motor Control System." alt="" coords="5557,199,5775,225"/>
+<area shape="rect" id="node32" href="$d3/d37/rtos__tasks_8c.html" title="FreeRTOS Task Implementations for STM32H753ZI Motor Control System." alt="" coords="5381,199,5533,225"/>
+<area shape="rect" id="node33" href="$d4/d9a/emergency__stop__abstracted_8c.html" title="Emergency Stop System Implementation with HAL Abstraction." alt="" coords="1418,288,1581,329"/>
+<area shape="rect" id="node35" href="$d1/d9a/host__tests_2test__safety__systems__hal__abstracted_8c.html" title="Unit Tests for Safety Systems with HAL Abstraction." alt="" coords="1605,288,1852,329"/>
+<area shape="rect" id="node36" href="$d3/dfc/unit_2test__safety__systems__hal__abstracted_8c.html" title="Unit Tests for Safety Systems with HAL Abstraction." alt="" coords="1876,288,2075,329"/>
+<area shape="rect" id="node37" href="$d3/d16/fault__monitor_8c.html" title="Fault Detection and Monitoring System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="5800,199,5988,225"/>
+<area shape="rect" id="node38" href="$d2/d94/watchdog__manager_8c.html" title="Watchdog Management System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1817,191,1971,233"/>
+<area shape="rect" id="node40" href="$d3/dc8/test__optimization__telemetry_8c.html" title="Unit tests for optimization telemetry system." alt="" coords="3300,288,3501,329"/>
+<area shape="rect" id="node43" href="$d1/d19/mock__hal__abstraction_8c.html" title=" " alt="" coords="2311,288,2479,329"/>
+<area shape="rect" id="node44" href="$d2/d64/mock__hal__abstraction_8h.html" title="Mock HAL Abstraction for Unit Testing." alt="" coords="2261,191,2429,233"/>
+<area shape="rect" id="node45" href="$de/d75/test__hal__abstraction__integration_8c.html" title="Integration tests for HAL abstraction with mock implementation." alt="" coords="1995,191,2185,233"/>
+<area shape="rect" id="node47" href="$d0/d45/test__safety__gtest_8cpp.html" title="GoogleTest&#45;based unit tests for safety systems (C++ wrapper for C code)" alt="" coords="6346,288,6506,329"/>
 </map>

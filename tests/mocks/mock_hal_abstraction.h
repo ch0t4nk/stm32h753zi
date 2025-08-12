@@ -118,9 +118,13 @@ typedef struct {
     bool enabled;
 } MockFunction_t;
 
+// Allow tests to index by either pin index [0..15] or pin bitmask (1<<n)
+// by expanding the second dimension. This avoids out-of-bounds when tests
+// erroneously use bitmasks as indices.
+#define MOCK_GPIO_INDEX_SPACE (1u << 16)
 typedef struct {
-    HAL_GPIO_State_t pin_states[HAL_GPIO_PORT_MAX][16]; // 16 pins per port max
-    bool pin_written[HAL_GPIO_PORT_MAX][16];
+    HAL_GPIO_State_t pin_states[HAL_GPIO_PORT_MAX][MOCK_GPIO_INDEX_SPACE];
+    bool pin_written[HAL_GPIO_PORT_MAX][MOCK_GPIO_INDEX_SPACE];
     MockFunction_t gpio_functions;
 } MockGPIO_t;
 
@@ -147,8 +151,10 @@ typedef struct {
  * This matches the internal mock state used by tests
  */
 typedef struct {
-    bool gpio_configured[HAL_GPIO_PORT_MAX][16]; // GPIO configuration status
-    HAL_GPIO_State_t gpio_states[HAL_GPIO_PORT_MAX][16];  // GPIO pin states
+    bool gpio_configured[HAL_GPIO_PORT_MAX]
+                        [MOCK_GPIO_INDEX_SPACE]; // GPIO configuration status
+    HAL_GPIO_State_t gpio_states[HAL_GPIO_PORT_MAX]
+                                [MOCK_GPIO_INDEX_SPACE];  // GPIO pin states
     uint32_t spi_transaction_count[HAL_SPI_INSTANCE_MAX]; // SPI call counts
     uint32_t i2c_transaction_count[HAL_I2C_INSTANCE_MAX]; // I2C call counts
     uint32_t system_tick;            // System tick counter

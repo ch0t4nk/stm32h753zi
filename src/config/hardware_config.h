@@ -303,6 +303,9 @@
 #define ESTOP_BUTTON_STM32_PORT                                               \
     USER_BUTTON_STM32_PORT // STM32 HAL port pointer
 
+// Emergency stop button trigger type for interrupts
+#define ESTOP_BUTTON_TRIGGER_TYPE HAL_GPIO_MODE_IT_FALLING
+
 // Emergency stop LED mapping for HAL abstraction compatibility
 #ifdef USE_STM32_HAL_DIRECT
 // For STM32 HAL direct usage - emergency stop uses HAL abstraction, so use HAL

@@ -77,10 +77,10 @@ $(function() {
 
 <p>Emergency Stop System - STM32H753ZI Stepper Motor Project.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;stm32h7xx_hal.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d3/d5c/safety__config_8h_source.html">config/safety_config.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d3/d91/hardware__config_8h_source.html">config/hardware_config.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="../../d8/d36/stm32h7xx__hal_8h_source.html">stm32h7xx_hal.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../de/d11/error__codes_8h_source.html">common/error_codes.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d3/d91/hardware__config_8h_source.html">config/hardware_config.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d3/d5c/safety__config_8h_source.html">config/safety_config.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d2/db6/safety__system_8h_source.html">safety_system.h</a>&quot;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
@@ -89,17 +89,19 @@ Include dependency graph for emergency_stop.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d6/d70/emergency__stop_8h__incl.png" border="0" usemap="#asrc_2safety_2emergency__stop_8h" alt=""/></div>
 <map name="asrc_2safety_2emergency__stop_8h" id="asrc_2safety_2emergency__stop_8h">
-<area shape="rect" title="Emergency Stop System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="462,5,625,47"/>
-<area shape="rect" title=" " alt="" coords="48,244,183,271"/>
-<area shape="rect" href="../../d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="232,169,396,196"/>
-<area shape="rect" title=" " alt="" coords="627,244,698,271"/>
-<area shape="rect" href="../../d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="24,169,208,196"/>
-<area shape="rect" href="../../de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="1002,169,1173,196"/>
-<area shape="rect" title=" " alt="" coords="985,244,1068,271"/>
-<area shape="rect" href="../../d2/db6/safety__system_8h.html" title="Safety System Manager &#45; STM32H753ZI Stepper Motor Project." alt="" coords="478,95,609,121"/>
-<area shape="rect" href="../../de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="522,169,685,196"/>
-<area shape="rect" href="../../d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="760,169,927,196"/>
-<area shape="rect" title=" " alt="" coords="806,244,881,271"/>
+<area shape="rect" title="Emergency Stop System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="397,5,560,47"/>
+<area shape="rect" href="../../d8/d36/stm32h7xx__hal_8h.html" title="Mock STM32H7xx HAL header for unit testing." alt="" coords="437,251,571,278"/>
+<area shape="rect" title=" " alt="" coords="188,408,271,435"/>
+<area shape="rect" title=" " alt="" coords="634,408,705,435"/>
+<area shape="rect" href="../../de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="144,333,315,360"/>
+<area shape="rect" href="../../d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="180,169,364,196"/>
+<area shape="rect" href="../../d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="827,169,991,196"/>
+<area shape="rect" href="../../d2/db6/safety__system_8h.html" title="Safety System Manager &#45; STM32H753ZI Stepper Motor Project." alt="" coords="516,95,647,121"/>
+<area shape="rect" href="../../d4/d03/mock__hal__types_8h.html" title="Mock HAL type definitions for unit testing environment." alt="" coords="441,333,581,360"/>
+<area shape="rect" href="../../d6/dee/hal__abstraction_8h.html" title="Hardware Abstraction Layer (HAL) Interface for STM32H753ZI." alt="" coords="199,244,345,285"/>
+<area shape="rect" href="../../d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="758,333,925,360"/>
+<area shape="rect" href="../../de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="647,251,809,278"/>
+<area shape="rect" title=" " alt="" coords="804,408,879,435"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -107,12 +109,11 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d3/dd0/emergency__stop_8h__dep__incl.png" border="0" usemap="#asrc_2safety_2emergency__stop_8hdep" alt=""/></div>
 <map name="asrc_2safety_2emergency__stop_8hdep" id="asrc_2safety_2emergency__stop_8hdep">
-<area shape="rect" title="Emergency Stop System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="428,5,591,47"/>
+<area shape="rect" title="Emergency Stop System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="293,5,456,47"/>
 <area shape="rect" href="../../d3/da2/emergency__stop_8c.html" title="Emergency Stop System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="5,95,168,136"/>
-<area shape="rect" href="../../db/d1a/safety__system_8c.html" title="Safety System Manager Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="192,102,389,129"/>
-<area shape="rect" href="../../d0/d0d/test__emergency__stop_8c.html" title="Focused unit tests for emergency stop functionality." alt="" coords="413,95,605,136"/>
-<area shape="rect" href="../../d0/d45/test__safety__gtest_8cpp.html" title="GoogleTest&#45;based unit tests for safety systems (C++ wrapper for C code)" alt="" coords="629,95,789,136"/>
-<area shape="rect" href="../../de/d22/test__safety__systems_8c.html" title="Unit tests for safety systems using Unity framework." alt="" coords="813,95,973,136"/>
+<area shape="rect" href="../../dc/d33/l6470__fault__monitor_8c.html" title="L6470 Hardware Fault Monitoring Implementation." alt="" coords="192,95,355,136"/>
+<area shape="rect" href="../../db/d1a/safety__system_8c.html" title="Safety System Manager Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="379,102,576,129"/>
+<area shape="rect" href="../../d0/d45/test__safety__gtest_8cpp.html" title="GoogleTest&#45;based unit tests for safety systems (C++ wrapper for C code)" alt="" coords="600,95,760,136"/>
 </map>
 </div>
 </div>
@@ -120,31 +121,15 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a35159c86c1975ff7b6f11757b292c3ca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d78/emergency__stop_8h.html#a35159c86c1975ff7b6f11757b292c3ca">ESTOP_BUTTON_PORT</a>&#160;&#160;&#160;<a class="el" href="../../d4/d05/mock__hal_8h.html#a60e5a8c41625cbf05100145895ffa62c">GPIOC</a></td></tr>
-<tr class="separator:a35159c86c1975ff7b6f11757b292c3ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52f54436c335982ff4150c536b9e1edc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d78/emergency__stop_8h.html#a52f54436c335982ff4150c536b9e1edc">ESTOP_BUTTON_PIN</a>&#160;&#160;&#160;GPIO_PIN_13</td></tr>
-<tr class="separator:a52f54436c335982ff4150c536b9e1edc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6a12bad885ba9e925048d064505e228"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d78/emergency__stop_8h.html#ac6a12bad885ba9e925048d064505e228">ESTOP_BUTTON_EXTI_IRQn</a>&#160;&#160;&#160;EXTI15_10_IRQn</td></tr>
 <tr class="separator:ac6a12bad885ba9e925048d064505e228"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acab27d96cab6baed70a0fdfc1e1915e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d78/emergency__stop_8h.html#acab27d96cab6baed70a0fdfc1e1915e0">SAFETY_RELAY1_PORT</a>&#160;&#160;&#160;<a class="el" href="../../d4/d05/mock__hal_8h.html#acfa078c791b459a14ce4eb7cd8d3aca0">GPIOB</a></td></tr>
-<tr class="separator:acab27d96cab6baed70a0fdfc1e1915e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e2ba4522b6b25b076ce34892253aa59"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d78/emergency__stop_8h.html#a1e2ba4522b6b25b076ce34892253aa59">SAFETY_RELAY1_PIN</a>&#160;&#160;&#160;<a class="el" href="../../d4/d05/mock__hal_8h.html#a176efbf43a259b7bb0a85a47401505be">GPIO_PIN_0</a></td></tr>
-<tr class="separator:a1e2ba4522b6b25b076ce34892253aa59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23d6b78666dded28730480abb2692e6e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d78/emergency__stop_8h.html#a23d6b78666dded28730480abb2692e6e">SAFETY_RELAY2_PORT</a>&#160;&#160;&#160;<a class="el" href="../../d4/d05/mock__hal_8h.html#acfa078c791b459a14ce4eb7cd8d3aca0">GPIOB</a></td></tr>
-<tr class="separator:a23d6b78666dded28730480abb2692e6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac75f3748c1d3f5f23cbdaa96a59ab453"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d78/emergency__stop_8h.html#ac75f3748c1d3f5f23cbdaa96a59ab453">SAFETY_RELAY2_PIN</a>&#160;&#160;&#160;<a class="el" href="../../d4/d05/mock__hal_8h.html#a6c35af4e75c3cb57bb650feaa7a136b5">GPIO_PIN_1</a></td></tr>
-<tr class="separator:ac75f3748c1d3f5f23cbdaa96a59ab453"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a0facf410b6469be118e9f5f15c6fff"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d78/emergency__stop_8h.html#a8a0facf410b6469be118e9f5f15c6fff">ESTOP_LED_PORT</a>&#160;&#160;&#160;<a class="el" href="../../d4/d05/mock__hal_8h.html#acfa078c791b459a14ce4eb7cd8d3aca0">GPIOB</a></td></tr>
-<tr class="separator:a8a0facf410b6469be118e9f5f15c6fff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71c1dbb39065294502d66c0821ec2786"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d78/emergency__stop_8h.html#a71c1dbb39065294502d66c0821ec2786">ESTOP_LED_PIN</a>&#160;&#160;&#160;GPIO_PIN_14</td></tr>
-<tr class="separator:a71c1dbb39065294502d66c0821ec2786"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a02dd8263af70b87592afdb439bd7aa48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d78/emergency__stop_8h.html#a02dd8263af70b87592afdb439bd7aa48">emergency_stop_init</a> (void)</td></tr>
 <tr class="memdesc:a02dd8263af70b87592afdb439bd7aa48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize emergency stop system.  <a href="../../d0/d78/emergency__stop_8h.html#a02dd8263af70b87592afdb439bd7aa48">More...</a><br /></td></tr>
 <tr class="separator:a02dd8263af70b87592afdb439bd7aa48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf6f86329cc1e7c3c03d5f14d9152a86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d78/emergency__stop_8h.html#acf6f86329cc1e7c3c03d5f14d9152a86">emergency_stop_execute</a> (<a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5f">EmergencyStopSource_t</a> source)</td></tr>
+<tr class="memitem:acf6f86329cc1e7c3c03d5f14d9152a86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d78/emergency__stop_8h.html#acf6f86329cc1e7c3c03d5f14d9152a86">emergency_stop_execute</a> (<a class="el" href="../../d7/dee/emergency__stop__abstracted_8h.html#a6aa1047d8d110a0a098574f9819d8d5f">EmergencyStopSource_t</a> source)</td></tr>
 <tr class="memdesc:acf6f86329cc1e7c3c03d5f14d9152a86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute emergency stop sequence.  <a href="../../d0/d78/emergency__stop_8h.html#acf6f86329cc1e7c3c03d5f14d9152a86">More...</a><br /></td></tr>
 <tr class="separator:acf6f86329cc1e7c3c03d5f14d9152a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84c4efcf7dd4f7023a18bcf8887c44ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d78/emergency__stop_8h.html#a84c4efcf7dd4f7023a18bcf8887c44ec">emergency_stop_reset</a> (void)</td></tr>
@@ -194,135 +179,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d78/emergency__stop_8h_source.html#l00040">40</a> of file <a class="el" href="../../d0/d78/emergency__stop_8h_source.html">emergency_stop.h</a>.</p>
-
-</div>
-</div>
-<a id="a52f54436c335982ff4150c536b9e1edc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52f54436c335982ff4150c536b9e1edc">&#9670;&nbsp;</a></span>ESTOP_BUTTON_PIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ESTOP_BUTTON_PIN&#160;&#160;&#160;GPIO_PIN_13</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d78/emergency__stop_8h_source.html#l00039">39</a> of file <a class="el" href="../../d0/d78/emergency__stop_8h_source.html">emergency_stop.h</a>.</p>
-
-</div>
-</div>
-<a id="a35159c86c1975ff7b6f11757b292c3ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35159c86c1975ff7b6f11757b292c3ca">&#9670;&nbsp;</a></span>ESTOP_BUTTON_PORT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ESTOP_BUTTON_PORT&#160;&#160;&#160;<a class="el" href="../../d4/d05/mock__hal_8h.html#a60e5a8c41625cbf05100145895ffa62c">GPIOC</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d78/emergency__stop_8h_source.html#l00038">38</a> of file <a class="el" href="../../d0/d78/emergency__stop_8h_source.html">emergency_stop.h</a>.</p>
-
-</div>
-</div>
-<a id="a71c1dbb39065294502d66c0821ec2786"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71c1dbb39065294502d66c0821ec2786">&#9670;&nbsp;</a></span>ESTOP_LED_PIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ESTOP_LED_PIN&#160;&#160;&#160;GPIO_PIN_14</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d78/emergency__stop_8h_source.html#l00050">50</a> of file <a class="el" href="../../d0/d78/emergency__stop_8h_source.html">emergency_stop.h</a>.</p>
-
-</div>
-</div>
-<a id="a8a0facf410b6469be118e9f5f15c6fff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a0facf410b6469be118e9f5f15c6fff">&#9670;&nbsp;</a></span>ESTOP_LED_PORT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ESTOP_LED_PORT&#160;&#160;&#160;<a class="el" href="../../d4/d05/mock__hal_8h.html#acfa078c791b459a14ce4eb7cd8d3aca0">GPIOB</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d78/emergency__stop_8h_source.html#l00049">49</a> of file <a class="el" href="../../d0/d78/emergency__stop_8h_source.html">emergency_stop.h</a>.</p>
-
-</div>
-</div>
-<a id="a1e2ba4522b6b25b076ce34892253aa59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e2ba4522b6b25b076ce34892253aa59">&#9670;&nbsp;</a></span>SAFETY_RELAY1_PIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SAFETY_RELAY1_PIN&#160;&#160;&#160;<a class="el" href="../../d4/d05/mock__hal_8h.html#a176efbf43a259b7bb0a85a47401505be">GPIO_PIN_0</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d78/emergency__stop_8h_source.html#l00044">44</a> of file <a class="el" href="../../d0/d78/emergency__stop_8h_source.html">emergency_stop.h</a>.</p>
-
-</div>
-</div>
-<a id="acab27d96cab6baed70a0fdfc1e1915e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acab27d96cab6baed70a0fdfc1e1915e0">&#9670;&nbsp;</a></span>SAFETY_RELAY1_PORT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SAFETY_RELAY1_PORT&#160;&#160;&#160;<a class="el" href="../../d4/d05/mock__hal_8h.html#acfa078c791b459a14ce4eb7cd8d3aca0">GPIOB</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d78/emergency__stop_8h_source.html#l00043">43</a> of file <a class="el" href="../../d0/d78/emergency__stop_8h_source.html">emergency_stop.h</a>.</p>
-
-</div>
-</div>
-<a id="ac75f3748c1d3f5f23cbdaa96a59ab453"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac75f3748c1d3f5f23cbdaa96a59ab453">&#9670;&nbsp;</a></span>SAFETY_RELAY2_PIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SAFETY_RELAY2_PIN&#160;&#160;&#160;<a class="el" href="../../d4/d05/mock__hal_8h.html#a6c35af4e75c3cb57bb650feaa7a136b5">GPIO_PIN_1</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d78/emergency__stop_8h_source.html#l00046">46</a> of file <a class="el" href="../../d0/d78/emergency__stop_8h_source.html">emergency_stop.h</a>.</p>
-
-</div>
-</div>
-<a id="a23d6b78666dded28730480abb2692e6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23d6b78666dded28730480abb2692e6e">&#9670;&nbsp;</a></span>SAFETY_RELAY2_PORT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SAFETY_RELAY2_PORT&#160;&#160;&#160;<a class="el" href="../../d4/d05/mock__hal_8h.html#acfa078c791b459a14ce4eb7cd8d3aca0">GPIOB</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d78/emergency__stop_8h_source.html#l00045">45</a> of file <a class="el" href="../../d0/d78/emergency__stop_8h_source.html">emergency_stop.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/d78/emergency__stop_8h_source.html#l00053">53</a> of file <a class="el" href="../../d0/d78/emergency__stop_8h_source.html">emergency_stop.h</a>.</p>
 
 </div>
 </div>
@@ -346,7 +203,7 @@ Functions</h2></td></tr>
 <p>Check emergency stop system health. </p>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00278">278</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00299">299</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
 
 </div>
 </div>
@@ -359,7 +216,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> emergency_stop_execute </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5f">EmergencyStopSource_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d7/dee/emergency__stop__abstracted_8h.html#a6aa1047d8d110a0a098574f9819d8d5f">EmergencyStopSource_t</a>&#160;</td>
           <td class="paramname"><em>source</em></td><td>)</td>
           <td></td>
         </tr>
@@ -375,7 +232,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00094">94</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00105">105</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
 
 </div>
 </div>
@@ -398,7 +255,7 @@ Functions</h2></td></tr>
 <p>Get current emergency stop state. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d7/dbf/structEmergencyStopState__t.html" title="Emergency stop state structure.">EmergencyStopState_t</a> Current state </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00195">195</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00211">211</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
 
 </div>
 </div>
@@ -421,7 +278,7 @@ Functions</h2></td></tr>
 <p>Initialize emergency stop system. </p>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00050">50</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00061">61</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
 
 </div>
 </div>
@@ -443,7 +300,7 @@ Functions</h2></td></tr>
 
 <p>Emergency stop interrupt handler. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00211">211</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00228">228</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
 
 </div>
 </div>
@@ -466,7 +323,7 @@ Functions</h2></td></tr>
 <p>Reset emergency stop (requires manual confirmation) </p>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00140">140</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00155">155</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
 
 </div>
 </div>
@@ -489,7 +346,7 @@ Functions</h2></td></tr>
 <p>Perform emergency stop self-test. </p>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00228">228</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00245">245</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
 
 </div>
 </div>
@@ -517,7 +374,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00270">270</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00291">291</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
 
 </div>
 </div>
@@ -540,14 +397,14 @@ Functions</h2></td></tr>
 <p>Check if emergency stop button is pressed. </p>
 <dl class="section return"><dt>Returns</dt><dd>bool True if button is pressed </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00202">202</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00218">218</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 5 2025 13:09:33 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 11 2025 23:51:11 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

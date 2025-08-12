@@ -80,6 +80,7 @@ endfunction()
 add_host_test(test_phase1_3_validation_host
     ${TEST_UNIT_DIR}/test_phase1_3_validation.c
     ${TEST_MOCKS_DIR}/mock_hal_abstraction.c
+    ${TEST_MOCKS_DIR}/mock_drivers.c
 )
 
 # Full integration tests (commented out until dependencies are ready)
@@ -100,6 +101,7 @@ add_host_test(test_phase1_3_validation_host
 add_host_test(test_safety_systems_hal_abstracted_host
     ${TEST_UNIT_DIR}/test_safety_systems_hal_abstracted.c
     ${TEST_MOCKS_DIR}/mock_hal_abstraction.c
+    ${TEST_MOCKS_DIR}/mock_drivers.c
     ${CMAKE_SOURCE_DIR}/../src/safety/emergency_stop_abstracted.c
 )
 

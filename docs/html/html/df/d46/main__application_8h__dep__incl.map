@@ -1,4 +1,6 @@
 <map id="src/application/main_application.h" name="src/application/main_application.h">
-<area shape="rect" id="node1" title="Main Application API &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="5,5,160,47"/>
-<area shape="rect" id="node2" href="$d9/dfd/main__application_8c.html" title="Main Application &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="5,95,160,136"/>
+<area shape="rect" id="node1" title="Main Application API &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="195,5,349,47"/>
+<area shape="rect" id="node2" href="$d0/d29/main_8c.html" title=" " alt="" coords="5,102,171,129"/>
+<area shape="rect" id="node3" href="$d9/dfd/main__application_8c.html" title="Main Application &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="195,95,349,136"/>
+<area shape="rect" id="node4" href="$d3/d37/rtos__tasks_8c.html" title="FreeRTOS Task Implementations for STM32H753ZI Motor Control System." alt="" coords="373,102,525,129"/>
 </map>

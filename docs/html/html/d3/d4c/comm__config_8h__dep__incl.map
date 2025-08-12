@@ -2,8 +2,11 @@
 <area shape="rect" id="node1" title="Communication Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="360,5,547,32"/>
 <area shape="rect" id="node2" href="$d0/d29/main_8c.html" title=" " alt="" coords="5,87,171,114"/>
 <area shape="rect" id="node3" href="$d9/dfd/main__application_8c.html" title="Main Application &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="195,80,349,121"/>
-<area shape="rect" id="node4" href="$d8/d86/comm__protocol_8c.html" title="Communication Protocol Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="358,169,549,211"/>
+<area shape="rect" id="node4" href="$d8/d86/comm__protocol_8c.html" title="Communication Protocol Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="291,169,482,211"/>
 <area shape="rect" id="node5" href="$dc/d81/comm__protocol_8h.html" title="Communication Protocol Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="425,80,615,121"/>
-<area shape="rect" id="node6" href="$d8/d75/as5600__driver_8c.html" title="AS5600 Magnetic Encoder Driver Implementation &#45; STM32H7 I2C HAL." alt="" coords="640,80,781,121"/>
-<area shape="rect" id="node7" href="$d1/d41/l6470__driver_8c.html" title="L6470 Stepper Driver Implementation &#45; STM32H7 SPI HAL." alt="" coords="805,80,976,121"/>
+<area shape="rect" id="node9" href="$d8/d75/as5600__driver_8c.html" title="AS5600 Magnetic Encoder Driver Implementation using HAL abstraction." alt="" coords="640,80,781,121"/>
+<area shape="rect" id="node10" href="$d1/d41/l6470__driver_8c.html" title="L6470 Stepper Driver Implementation &#45; STM32H7 SPI HAL." alt="" coords="805,80,976,121"/>
+<area shape="rect" id="node6" href="$de/d6d/rtos__tasks_8h.html" title="FreeRTOS Task Implementations for STM32H753ZI Motor Control System." alt="" coords="506,177,659,203"/>
+<area shape="rect" id="node7" href="$dc/dd2/power__management_8c.html" title="Advanced Power Management Implementation for STM32H753ZI Motor Control System." alt="" coords="368,259,587,285"/>
+<area shape="rect" id="node8" href="$d3/d37/rtos__tasks_8c.html" title="FreeRTOS Task Implementations for STM32H753ZI Motor Control System." alt="" coords="611,259,763,285"/>
 </map>

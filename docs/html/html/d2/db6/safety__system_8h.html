@@ -78,12 +78,12 @@ $(function() {
 
 <p>Safety System Manager - STM32H753ZI Stepper Motor Project.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;stm32h7xx_hal.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d3/d5c/safety__config_8h_source.html">config/safety_config.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="../../d8/d36/stm32h7xx__hal_8h_source.html">stm32h7xx_hal.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d3/ddc/data__types_8h_source.html">common/data_types.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../de/d11/error__codes_8h_source.html">common/error_codes.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d3/d91/hardware__config_8h_source.html">config/hardware_config.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../de/d58/motor__config_8h_source.html">config/motor_config.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../de/d11/error__codes_8h_source.html">common/error_codes.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d3/ddc/data__types_8h_source.html">common/data_types.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d3/d5c/safety__config_8h_source.html">config/safety_config.h</a>&quot;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -91,16 +91,18 @@ Include dependency graph for safety_system.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../de/d4c/safety__system_8h__incl.png" border="0" usemap="#asrc_2safety_2safety__system_8h" alt=""/></div>
 <map name="asrc_2safety_2safety__system_8h" id="asrc_2safety_2safety__system_8h">
-<area shape="rect" title="Safety System Manager &#45; STM32H753ZI Stepper Motor Project." alt="" coords="380,5,579,32"/>
-<area shape="rect" title=" " alt="" coords="5,155,140,181"/>
-<area shape="rect" href="../../d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="304,80,468,107"/>
-<area shape="rect" title=" " alt="" coords="539,155,609,181"/>
-<area shape="rect" href="../../d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="45,80,229,107"/>
-<area shape="rect" href="../../de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="493,80,655,107"/>
-<area shape="rect" href="../../de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="679,80,850,107"/>
-<area shape="rect" title=" " alt="" coords="967,155,1050,181"/>
-<area shape="rect" href="../../d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="875,80,1041,107"/>
-<area shape="rect" title=" " alt="" coords="869,155,943,181"/>
+<area shape="rect" title="Safety System Manager &#45; STM32H753ZI Stepper Motor Project." alt="" coords="452,5,651,32"/>
+<area shape="rect" href="../../d8/d36/stm32h7xx__hal_8h.html" title="Mock STM32H7xx HAL header for unit testing." alt="" coords="577,162,712,189"/>
+<area shape="rect" title=" " alt="" coords="353,319,435,345"/>
+<area shape="rect" title=" " alt="" coords="683,319,753,345"/>
+<area shape="rect" href="../../d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="5,244,172,271"/>
+<area shape="rect" href="../../de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="247,244,418,271"/>
+<area shape="rect" href="../../d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="377,80,561,107"/>
+<area shape="rect" href="../../de/d58/motor__config_8h.html" title="Motor and L6470 Driver Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="793,162,955,189"/>
+<area shape="rect" href="../../d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="893,80,1057,107"/>
+<area shape="rect" href="../../d4/d03/mock__hal__types_8h.html" title="Mock HAL type definitions for unit testing environment." alt="" coords="595,244,735,271"/>
+<area shape="rect" title=" " alt="" coords="51,319,126,345"/>
+<area shape="rect" href="../../d6/dee/hal__abstraction_8h.html" title="Hardware Abstraction Layer (HAL) Interface for STM32H753ZI." alt="" coords="395,155,542,196"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -108,20 +110,25 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d7/d1e/safety__system_8h__dep__incl.png" border="0" usemap="#asrc_2safety_2safety__system_8hdep" alt=""/></div>
 <map name="asrc_2safety_2safety__system_8hdep" id="asrc_2safety_2safety__system_8hdep">
-<area shape="rect" title="Safety System Manager &#45; STM32H753ZI Stepper Motor Project." alt="" coords="661,5,860,32"/>
-<area shape="rect" href="../../dc/d81/comm__protocol_8h.html" title="Communication Protocol Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="89,80,280,121"/>
-<area shape="rect" href="../../d0/dde/motor__controller_8c.html" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="389,80,546,121"/>
-<area shape="rect" href="../../d0/d78/emergency__stop_8h.html" title="Emergency Stop System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="621,80,783,121"/>
-<area shape="rect" href="../../db/d1a/safety__system_8c.html" title="Safety System Manager Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="807,177,1005,203"/>
-<area shape="rect" href="../../d0/d45/test__safety__gtest_8cpp.html" title="GoogleTest&#45;based unit tests for safety systems (C++ wrapper for C code)" alt="" coords="221,169,381,211"/>
-<area shape="rect" href="../../de/d22/test__safety__systems_8c.html" title="Unit tests for safety systems using Unity framework." alt="" coords="1029,169,1189,211"/>
-<area shape="rect" href="../../d3/d16/fault__monitor_8c.html" title="Fault Detection and Monitoring System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="909,87,1097,114"/>
-<area shape="rect" href="../../d6/d79/watchdog__manager_8h.html" title="Watchdog Management System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1121,80,1275,121"/>
-<area shape="rect" href="../../d8/d86/comm__protocol_8c.html" title="Communication Protocol Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="5,169,196,211"/>
-<area shape="rect" href="../../d3/da2/emergency__stop_8c.html" title="Emergency Stop System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="621,169,783,211"/>
-<area shape="rect" href="../../d0/d0d/test__emergency__stop_8c.html" title="Focused unit tests for emergency stop functionality." alt="" coords="405,169,597,211"/>
-<area shape="rect" href="../../d2/d94/watchdog__manager_8c.html" title="Watchdog Management System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1213,169,1367,211"/>
-<area shape="rect" href="../../d3/df3/test__watchdog_8c.html" title="Focused unit tests for watchdog management." alt="" coords="1391,177,1584,203"/>
+<area shape="rect" title="Safety System Manager &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1003,5,1202,32"/>
+<area shape="rect" href="../../d9/dfd/main__application_8c.html" title="Main Application &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="418,169,573,211"/>
+<area shape="rect" href="../../dc/d81/comm__protocol_8h.html" title="Communication Protocol Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="222,80,412,121"/>
+<area shape="rect" href="../../dc/dd2/power__management_8c.html" title="Advanced Power Management Implementation for STM32H753ZI Motor Control System." alt="" coords="44,259,262,285"/>
+<area shape="rect" href="../../d3/d37/rtos__tasks_8c.html" title="FreeRTOS Task Implementations for STM32H753ZI Motor Control System." alt="" coords="534,259,686,285"/>
+<area shape="rect" href="../../dd/dbd/motor__characterization_8c.html" title="Motor parameter identification and characterization implementation." alt="" coords="726,80,884,121"/>
+<area shape="rect" href="../../d0/dde/motor__controller_8c.html" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="908,80,1065,121"/>
+<area shape="rect" href="../../d0/d78/emergency__stop_8h.html" title="Emergency Stop System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1140,80,1302,121"/>
+<area shape="rect" href="../../db/d1a/safety__system_8c.html" title="Safety System Manager Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="826,177,1024,203"/>
+<area shape="rect" href="../../d0/d45/test__safety__gtest_8cpp.html" title="GoogleTest&#45;based unit tests for safety systems (C++ wrapper for C code)" alt="" coords="1421,169,1581,211"/>
+<area shape="rect" href="../../d3/d16/fault__monitor_8c.html" title="Fault Detection and Monitoring System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1378,87,1566,114"/>
+<area shape="rect" href="../../d6/d79/watchdog__manager_8h.html" title="Watchdog Management System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="548,80,702,121"/>
+<area shape="rect" href="../../dd/d21/optimization__telemetry_8c.html" title="Focused telemetry data acquisition implementation for motor characterization." alt="" coords="1656,80,1850,121"/>
+<area shape="rect" href="../../d3/dc8/test__optimization__telemetry_8c.html" title="Unit tests for optimization telemetry system." alt="" coords="1875,80,2076,121"/>
+<area shape="rect" href="../../d8/d86/comm__protocol_8c.html" title="Communication Protocol Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="26,169,216,211"/>
+<area shape="rect" href="../../de/d6d/rtos__tasks_8h.html" title="FreeRTOS Task Implementations for STM32H753ZI Motor Control System." alt="" coords="240,177,394,203"/>
+<area shape="rect" href="../../d3/da2/emergency__stop_8c.html" title="Emergency Stop System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1234,169,1397,211"/>
+<area shape="rect" href="../../dc/d33/l6470__fault__monitor_8c.html" title="L6470 Hardware Fault Monitoring Implementation." alt="" coords="1048,169,1210,211"/>
+<area shape="rect" href="../../d2/d94/watchdog__manager_8c.html" title="Watchdog Management System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="648,169,802,211"/>
 </map>
 </div>
 </div>
@@ -148,12 +155,18 @@ Data Structures</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:a1ad1a3ebebd35cd5f26326542f96f3d7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/db6/safety__system_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7">SafetyIntegrityLevel_t</a> { <br />
-&#160;&#160;<a class="el" href="../../d2/db6/safety__system_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7aae8bf66e88550576fd3c1e48289f35e3">SIL_NONE</a> = 0
+&#160;&#160;<a class="el" href="../../d7/d22/standards__compliance_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7aae8bf66e88550576fd3c1e48289f35e3">SIL_NONE</a> = 0
+, <a class="el" href="../../d7/d22/standards__compliance_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7aa33b1ae57a293a26a7d4fa0f07523154">SIL_1</a> = 1
+, <a class="el" href="../../d7/d22/standards__compliance_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7afca2a5b27733325764340a49e73960e7">SIL_2</a> = 2
+, <a class="el" href="../../d7/d22/standards__compliance_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7a555f8cfbe8ee8efd94acc62096c27354">SIL_3</a> = 3
+, <br />
+&#160;&#160;<a class="el" href="../../d7/d22/standards__compliance_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7a5abe64d8ab932d7a4039cf8e86d82ebf">SIL_4</a> = 4
+, <a class="el" href="../../d2/db6/safety__system_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7aae8bf66e88550576fd3c1e48289f35e3">SIL_NONE</a> = 0
 , <a class="el" href="../../d2/db6/safety__system_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7aa33b1ae57a293a26a7d4fa0f07523154">SIL_1</a> = 1
 , <a class="el" href="../../d2/db6/safety__system_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7afca2a5b27733325764340a49e73960e7">SIL_2</a> = 2
-, <a class="el" href="../../d2/db6/safety__system_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7a555f8cfbe8ee8efd94acc62096c27354">SIL_3</a> = 3
 , <br />
-&#160;&#160;<a class="el" href="../../d2/db6/safety__system_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7a5abe64d8ab932d7a4039cf8e86d82ebf">SIL_4</a> = 4
+&#160;&#160;<a class="el" href="../../d2/db6/safety__system_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7a555f8cfbe8ee8efd94acc62096c27354">SIL_3</a> = 3
+, <a class="el" href="../../d2/db6/safety__system_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7a5abe64d8ab932d7a4039cf8e86d82ebf">SIL_4</a> = 4
 <br />
  }</td></tr>
 <tr class="memdesc:a1ad1a3ebebd35cd5f26326542f96f3d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safety Integrity Level (SIL) definitions.  <a href="../../d2/db6/safety__system_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7">More...</a><br /></td></tr>
@@ -175,46 +188,33 @@ Enumerations</h2></td></tr>
 <tr class="memdesc:a54844bc0911ee30294fdeba65ca3af4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safety function classifications.  <a href="../../d2/db6/safety__system_8h.html#a54844bc0911ee30294fdeba65ca3af4e">More...</a><br /></td></tr>
 <tr class="separator:a54844bc0911ee30294fdeba65ca3af4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6aa1047d8d110a0a098574f9819d8d5f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5f">EmergencyStopSource_t</a> { <br />
-&#160;&#160;<a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa0b19072b51c2a737fdb74fbb04ebdd6d">ESTOP_SOURCE_NONE</a> = 0
+&#160;&#160;<a class="el" href="../../d7/dee/emergency__stop__abstracted_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa403824799e9c150979d0e0b59ca09017">ESTOP_SOURCE_UNKNOWN</a> = 0
+, <a class="el" href="../../d7/dee/emergency__stop__abstracted_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa65fc730d8e1c301907ca072b565e23a1">ESTOP_SOURCE_BUTTON</a> = 1
+, <a class="el" href="../../d7/dee/emergency__stop__abstracted_8h.html#a6aa1047d8d110a0a098574f9819d8d5facb3dafb0a184ad4df91be441f496ed75">ESTOP_SOURCE_SOFTWARE</a> = 2
+, <a class="el" href="../../d7/dee/emergency__stop__abstracted_8h.html#a6aa1047d8d110a0a098574f9819d8d5fada7c69295d77dd3060c0e3c1942d3627">ESTOP_SOURCE_COMMUNICATION</a> = 3
+, <br />
+&#160;&#160;<a class="el" href="../../d7/dee/emergency__stop__abstracted_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa22bc89fef7ad0158e9a1c9563f20a029">ESTOP_SOURCE_SAFETY_MONITOR</a> = 4
+, <a class="el" href="../../d7/dee/emergency__stop__abstracted_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa81417c32a7ad8112fc55afc828074c50">ESTOP_SOURCE_MOTOR_FAULT</a> = 5
+, <a class="el" href="../../d7/dee/emergency__stop__abstracted_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa23c03be9442c163fb8e9c50e400164c5">ESTOP_SOURCE_ENCODER_FAULT</a> = 6
+, <a class="el" href="../../d7/dee/emergency__stop__abstracted_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa9d46b0bf3b85226ad6b4451736df2bce">ESTOP_SOURCE_WATCHDOG</a> = 7
+, <br />
+&#160;&#160;<a class="el" href="../../d7/dee/emergency__stop__abstracted_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa7414a530aece31ac73a4915165f89a0d">ESTOP_SOURCE_SYSTEM_FAULT</a> = 8
+, <a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa0b19072b51c2a737fdb74fbb04ebdd6d">ESTOP_SOURCE_NONE</a> = 0
 , <a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa65fc730d8e1c301907ca072b565e23a1">ESTOP_SOURCE_BUTTON</a>
 , <a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5facb3dafb0a184ad4df91be441f496ed75">ESTOP_SOURCE_SOFTWARE</a>
-, <a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa208c6f7842524887c5008ab60e51a7d9">ESTOP_SOURCE_COMM_LOSS</a>
 , <br />
-&#160;&#160;<a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5fabf44eac455f93bee86fcf1edb8a3cccd">ESTOP_SOURCE_FAULT_CASCADE</a>
+&#160;&#160;<a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa208c6f7842524887c5008ab60e51a7d9">ESTOP_SOURCE_COMM_LOSS</a>
+, <a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5fabf44eac455f93bee86fcf1edb8a3cccd">ESTOP_SOURCE_FAULT_CASCADE</a>
 , <a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa9d46b0bf3b85226ad6b4451736df2bce">ESTOP_SOURCE_WATCHDOG</a>
 , <a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5faa782ec25820e459560436dc7ed0bb23d">ESTOP_SOURCE_OVERHEAT</a>
-, <a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5fac715c0d4a834107f0b8ce0f58517ea5c">ESTOP_SOURCE_OVERCURRENT</a>
 , <br />
-&#160;&#160;<a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa2e04ced495c6406a9398ae49242fd853">ESTOP_SOURCE_POSITION_LIMIT</a>
+&#160;&#160;<a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5fac715c0d4a834107f0b8ce0f58517ea5c">ESTOP_SOURCE_OVERCURRENT</a>
+, <a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa2e04ced495c6406a9398ae49242fd853">ESTOP_SOURCE_POSITION_LIMIT</a>
 , <a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5fa1bd03418ca84082e1147a300d12a88b8">ESTOP_SOURCE_COUNT</a>
 <br />
  }</td></tr>
 <tr class="memdesc:a6aa1047d8d110a0a098574f9819d8d5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emergency stop sources.  <a href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5f">More...</a><br /></td></tr>
 <tr class="separator:a6aa1047d8d110a0a098574f9819d8d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a737632a646ec612b67e3f808aae1dae2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2">SafetyEvent_t</a> { <br />
-&#160;&#160;<a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2aa916098bab572ce0e56dd72098970f14">SAFETY_EVENT_EMERGENCY_STOP</a>
-, <a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2ae5a979d6fa22e1cc4a0b505963c2d93a">SAFETY_EVENT_EMERGENCY_STOP_RESET</a>
-, <a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2a8c6a2f5702ae422efb56461d4b158602">SAFETY_EVENT_WATCHDOG_WARNING</a>
-, <a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2af3d3df530924f0f1c85a7b876913e18a">SAFETY_EVENT_WATCHDOG_TIMEOUT</a>
-, <br />
-&#160;&#160;<a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2a153020bbfc2aa290287379fbcada7f9f">SAFETY_EVENT_LIMIT_VIOLATION</a>
-, <a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2a7fc3d76dcb9aa5fbec03e587161daf9c">SAFETY_EVENT_WARNING</a>
-, <a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2a5bc7a20dff9d5f3e28af55e7bf509ecd">SAFETY_EVENT_OVERCURRENT_STOP</a>
-, <a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2a013e9475fe8edefe9d8f735f30ababf7">SAFETY_EVENT_OVERSPEED_STOP</a>
-, <br />
-&#160;&#160;<a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2a822b245e528a28015e6ff78990e51de1">SAFETY_EVENT_POSITION_LIMIT_STOP</a>
-, <a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2adde220bc45faa786d09496b646bc1d17">SAFETY_EVENT_TEMPERATURE_WARNING</a>
-, <a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2a51383a549bf0c9a10a1e08b8a49f5a92">SAFETY_EVENT_COMMUNICATION_FAULT</a>
-, <a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2ac30eb5415eb83a0113490b0978f8273a">SAFETY_EVENT_SYSTEM_INIT</a>
-, <br />
-&#160;&#160;<a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2a9ed545251a008acbcbb6b33c4968bd74">SAFETY_EVENT_MOTOR_INIT_BLOCKED</a>
-, <a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2af63e35b27d38178b2b86743602baf4a7">SAFETY_EVENT_FAULT_DETECTED</a>
-, <a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2ac17e72d6b9b3c6b5b59104172c0e3338">SAFETY_EVENT_FAULT_CLEARED</a>
-, <a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2aa0bc2a136e4435ebf42d9f3ca38ebb20">SAFETY_EVENT_COUNT</a>
-<br />
- }</td></tr>
-<tr class="memdesc:a737632a646ec612b67e3f808aae1dae2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safety event types for logging.  <a href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2">More...</a><br /></td></tr>
-<tr class="separator:a737632a646ec612b67e3f808aae1dae2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afed0cf4c6440b09609f8c72b3a7dda00"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/db6/safety__system_8h.html#afed0cf4c6440b09609f8c72b3a7dda00">MonitorChannel_t</a> { <br />
 &#160;&#160;<a class="el" href="../../d2/db6/safety__system_8h.html#afed0cf4c6440b09609f8c72b3a7dda00a198bd3c9810f89d296f57a13875ff48a">MONITOR_MOTOR1_CURRENT</a>
 , <a class="el" href="../../d2/db6/safety__system_8h.html#afed0cf4c6440b09609f8c72b3a7dda00aed546cc5b24199198524d525e020d55d">MONITOR_MOTOR2_CURRENT</a>
@@ -248,10 +248,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a830e662d7ebec3562ef1742ea0755464"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/db6/safety__system_8h.html#a830e662d7ebec3562ef1742ea0755464">safety_get_emergency_stop_state</a> (void)</td></tr>
 <tr class="memdesc:a830e662d7ebec3562ef1742ea0755464"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get emergency stop state.  <a href="../../d2/db6/safety__system_8h.html#a830e662d7ebec3562ef1742ea0755464">More...</a><br /></td></tr>
 <tr class="separator:a830e662d7ebec3562ef1742ea0755464"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e92ee6a693789e0488fe971dc67a1d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/db6/safety__system_8h.html#a0e92ee6a693789e0488fe971dc67a1d9">safety_log_event</a> (<a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2">SafetyEvent_t</a> event, uint8_t motor_id, uint32_t data)</td></tr>
-<tr class="memdesc:a0e92ee6a693789e0488fe971dc67a1d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log safety event.  <a href="../../d2/db6/safety__system_8h.html#a0e92ee6a693789e0488fe971dc67a1d9">More...</a><br /></td></tr>
-<tr class="separator:a0e92ee6a693789e0488fe971dc67a1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a539da3e68120831332ac42f720951c79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/db6/safety__system_8h.html#a539da3e68120831332ac42f720951c79">execute_emergency_stop</a> (<a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5f">EmergencyStopSource_t</a> source)</td></tr>
+<tr class="memitem:a309dbdf304562f4522defa57f94d17da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/db6/safety__system_8h.html#a309dbdf304562f4522defa57f94d17da">safety_log_event</a> (<a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fe">SafetyEventType_t</a> event, uint8_t motor_id, uint32_t data)</td></tr>
+<tr class="memdesc:a309dbdf304562f4522defa57f94d17da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log safety event.  <a href="../../d2/db6/safety__system_8h.html#a309dbdf304562f4522defa57f94d17da">More...</a><br /></td></tr>
+<tr class="separator:a309dbdf304562f4522defa57f94d17da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a539da3e68120831332ac42f720951c79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/db6/safety__system_8h.html#a539da3e68120831332ac42f720951c79">execute_emergency_stop</a> (<a class="el" href="../../d7/dee/emergency__stop__abstracted_8h.html#a6aa1047d8d110a0a098574f9819d8d5f">EmergencyStopSource_t</a> source)</td></tr>
 <tr class="memdesc:a539da3e68120831332ac42f720951c79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute emergency stop sequence.  <a href="../../d2/db6/safety__system_8h.html#a539da3e68120831332ac42f720951c79">More...</a><br /></td></tr>
 <tr class="separator:a539da3e68120831332ac42f720951c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a661e98ea9ec33c3acbb6a4f121cc0a79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/db6/safety__system_8h.html#a661e98ea9ec33c3acbb6a4f121cc0a79">reset_emergency_stop</a> (void)</td></tr>
@@ -269,9 +269,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ac807a3dd5039f721537c337d689e5dd1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/db0/structSafetyStatistics__t.html">SafetyStatistics_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/db6/safety__system_8h.html#ac807a3dd5039f721537c337d689e5dd1">get_safety_statistics</a> (void)</td></tr>
 <tr class="memdesc:ac807a3dd5039f721537c337d689e5dd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get safety statistics.  <a href="../../d2/db6/safety__system_8h.html#ac807a3dd5039f721537c337d689e5dd1">More...</a><br /></td></tr>
 <tr class="separator:ac807a3dd5039f721537c337d689e5dd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4eec73403fd733136ba124f487da6928"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/db6/safety__system_8h.html#a4eec73403fd733136ba124f487da6928">log_safety_event</a> (<a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2">SafetyEvent_t</a> event, uint32_t parameter, uint32_t timestamp)</td></tr>
-<tr class="memdesc:a4eec73403fd733136ba124f487da6928"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log safety event.  <a href="../../d2/db6/safety__system_8h.html#a4eec73403fd733136ba124f487da6928">More...</a><br /></td></tr>
-<tr class="separator:a4eec73403fd733136ba124f487da6928"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15fc4860a245b0fb5a5520868f8ea246"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/db6/safety__system_8h.html#a15fc4860a245b0fb5a5520868f8ea246">log_safety_event</a> (<a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fe">SafetyEventType_t</a> event, uint32_t parameter, uint32_t timestamp)</td></tr>
+<tr class="memdesc:a15fc4860a245b0fb5a5520868f8ea246"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log safety event.  <a href="../../d2/db6/safety__system_8h.html#a15fc4860a245b0fb5a5520868f8ea246">More...</a><br /></td></tr>
+<tr class="separator:a15fc4860a245b0fb5a5520868f8ea246"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02dd8263af70b87592afdb439bd7aa48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/db6/safety__system_8h.html#a02dd8263af70b87592afdb439bd7aa48">emergency_stop_init</a> (void)</td></tr>
 <tr class="memdesc:a02dd8263af70b87592afdb439bd7aa48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize emergency stop system.  <a href="../../d2/db6/safety__system_8h.html#a02dd8263af70b87592afdb439bd7aa48">More...</a><br /></td></tr>
 <tr class="separator:a02dd8263af70b87592afdb439bd7aa48"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -335,14 +335,23 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5f">EmergencyStopSource_t</a></td>
+          <td class="memname">enum <a class="el" href="../../d7/dee/emergency__stop__abstracted_8h.html#a6aa1047d8d110a0a098574f9819d8d5f">EmergencyStopSource_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Emergency stop sources. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a6aa1047d8d110a0a098574f9819d8d5fa0b19072b51c2a737fdb74fbb04ebdd6d"></a>ESTOP_SOURCE_NONE&#160;</td><td class="fielddoc"><p>No emergency stop. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a6aa1047d8d110a0a098574f9819d8d5fa403824799e9c150979d0e0b59ca09017"></a>ESTOP_SOURCE_UNKNOWN&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a6aa1047d8d110a0a098574f9819d8d5fa65fc730d8e1c301907ca072b565e23a1"></a>ESTOP_SOURCE_BUTTON&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a6aa1047d8d110a0a098574f9819d8d5facb3dafb0a184ad4df91be441f496ed75"></a>ESTOP_SOURCE_SOFTWARE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a6aa1047d8d110a0a098574f9819d8d5fada7c69295d77dd3060c0e3c1942d3627"></a>ESTOP_SOURCE_COMMUNICATION&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a6aa1047d8d110a0a098574f9819d8d5fa22bc89fef7ad0158e9a1c9563f20a029"></a>ESTOP_SOURCE_SAFETY_MONITOR&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a6aa1047d8d110a0a098574f9819d8d5fa81417c32a7ad8112fc55afc828074c50"></a>ESTOP_SOURCE_MOTOR_FAULT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a6aa1047d8d110a0a098574f9819d8d5fa23c03be9442c163fb8e9c50e400164c5"></a>ESTOP_SOURCE_ENCODER_FAULT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a6aa1047d8d110a0a098574f9819d8d5fa9d46b0bf3b85226ad6b4451736df2bce"></a>ESTOP_SOURCE_WATCHDOG&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a6aa1047d8d110a0a098574f9819d8d5fa7414a530aece31ac73a4915165f89a0d"></a>ESTOP_SOURCE_SYSTEM_FAULT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a6aa1047d8d110a0a098574f9819d8d5fa0b19072b51c2a737fdb74fbb04ebdd6d"></a>ESTOP_SOURCE_NONE&#160;</td><td class="fielddoc"><p>No emergency stop. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a6aa1047d8d110a0a098574f9819d8d5fa65fc730d8e1c301907ca072b565e23a1"></a>ESTOP_SOURCE_BUTTON&#160;</td><td class="fielddoc"><p>Physical button. </p>
 </td></tr>
@@ -364,7 +373,7 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/db6/safety__system_8h_source.html#l00068">68</a> of file <a class="el" href="../../d2/db6/safety__system_8h_source.html">safety_system.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/db6/safety__system_8h_source.html#l00074">74</a> of file <a class="el" href="../../d2/db6/safety__system_8h_source.html">safety_system.h</a>.</p>
 
 </div>
 </div>
@@ -406,59 +415,7 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/db6/safety__system_8h_source.html#l00159">159</a> of file <a class="el" href="../../d2/db6/safety__system_8h_source.html">safety_system.h</a>.</p>
-
-</div>
-</div>
-<a id="a737632a646ec612b67e3f808aae1dae2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a737632a646ec612b67e3f808aae1dae2">&#9670;&nbsp;</a></span>SafetyEvent_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2">SafetyEvent_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Safety event types for logging. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2aa916098bab572ce0e56dd72098970f14"></a>SAFETY_EVENT_EMERGENCY_STOP&#160;</td><td class="fielddoc"><p>Emergency stop activated. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2ae5a979d6fa22e1cc4a0b505963c2d93a"></a>SAFETY_EVENT_EMERGENCY_STOP_RESET&#160;</td><td class="fielddoc"><p>Emergency stop reset. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2a8c6a2f5702ae422efb56461d4b158602"></a>SAFETY_EVENT_WATCHDOG_WARNING&#160;</td><td class="fielddoc"><p>Watchdog warning. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2af3d3df530924f0f1c85a7b876913e18a"></a>SAFETY_EVENT_WATCHDOG_TIMEOUT&#160;</td><td class="fielddoc"><p>Watchdog timeout. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2a153020bbfc2aa290287379fbcada7f9f"></a>SAFETY_EVENT_LIMIT_VIOLATION&#160;</td><td class="fielddoc"><p>Safety limit violation. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2a7fc3d76dcb9aa5fbec03e587161daf9c"></a>SAFETY_EVENT_WARNING&#160;</td><td class="fielddoc"><p>Safety warning. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2a5bc7a20dff9d5f3e28af55e7bf509ecd"></a>SAFETY_EVENT_OVERCURRENT_STOP&#160;</td><td class="fielddoc"><p>Overcurrent stop. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2a013e9475fe8edefe9d8f735f30ababf7"></a>SAFETY_EVENT_OVERSPEED_STOP&#160;</td><td class="fielddoc"><p>Overspeed stop. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2a822b245e528a28015e6ff78990e51de1"></a>SAFETY_EVENT_POSITION_LIMIT_STOP&#160;</td><td class="fielddoc"><p>Position limit stop. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2adde220bc45faa786d09496b646bc1d17"></a>SAFETY_EVENT_TEMPERATURE_WARNING&#160;</td><td class="fielddoc"><p>Temperature warning. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2a51383a549bf0c9a10a1e08b8a49f5a92"></a>SAFETY_EVENT_COMMUNICATION_FAULT&#160;</td><td class="fielddoc"><p>Communication fault. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2ac30eb5415eb83a0113490b0978f8273a"></a>SAFETY_EVENT_SYSTEM_INIT&#160;</td><td class="fielddoc"><p>System initialization. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2a9ed545251a008acbcbb6b33c4968bd74"></a>SAFETY_EVENT_MOTOR_INIT_BLOCKED&#160;</td><td class="fielddoc"><p>Motor init blocked by safety. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2af63e35b27d38178b2b86743602baf4a7"></a>SAFETY_EVENT_FAULT_DETECTED&#160;</td><td class="fielddoc"><p>Fault detected. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2ac17e72d6b9b3c6b5b59104172c0e3338"></a>SAFETY_EVENT_FAULT_CLEARED&#160;</td><td class="fielddoc"><p>Fault cleared. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a737632a646ec612b67e3f808aae1dae2aa0bc2a136e4435ebf42d9f3ca38ebb20"></a>SAFETY_EVENT_COUNT&#160;</td><td class="fielddoc"><p>Number of event types. </p>
-</td></tr>
-</table>
-
-<p class="definition">Definition at line <a class="el" href="../../d2/db6/safety__system_8h_source.html#l00084">84</a> of file <a class="el" href="../../d2/db6/safety__system_8h_source.html">safety_system.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/db6/safety__system_8h_source.html#l00145">145</a> of file <a class="el" href="../../d2/db6/safety__system_8h_source.html">safety_system.h</a>.</p>
 
 </div>
 </div>
@@ -496,7 +453,7 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/db6/safety__system_8h_source.html#l00053">53</a> of file <a class="el" href="../../d2/db6/safety__system_8h_source.html">safety_system.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/db6/safety__system_8h_source.html#l00059">59</a> of file <a class="el" href="../../d2/db6/safety__system_8h_source.html">safety_system.h</a>.</p>
 
 </div>
 </div>
@@ -507,7 +464,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="../../d2/db6/safety__system_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7">SafetyIntegrityLevel_t</a></td>
+          <td class="memname">enum <a class="el" href="../../d7/d22/standards__compliance_8h.html#a1ad1a3ebebd35cd5f26326542f96f3d7">SafetyIntegrityLevel_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -515,6 +472,16 @@ Functions</h2></td></tr>
 <p>Safety Integrity Level (SIL) definitions. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a1ad1a3ebebd35cd5f26326542f96f3d7aae8bf66e88550576fd3c1e48289f35e3"></a>SIL_NONE&#160;</td><td class="fielddoc"><p>No safety requirements. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a1ad1a3ebebd35cd5f26326542f96f3d7aa33b1ae57a293a26a7d4fa0f07523154"></a>SIL_1&#160;</td><td class="fielddoc"><p>Low safety integrity. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a1ad1a3ebebd35cd5f26326542f96f3d7afca2a5b27733325764340a49e73960e7"></a>SIL_2&#160;</td><td class="fielddoc"><p>Medium safety integrity (target) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a1ad1a3ebebd35cd5f26326542f96f3d7a555f8cfbe8ee8efd94acc62096c27354"></a>SIL_3&#160;</td><td class="fielddoc"><p>High safety integrity. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a1ad1a3ebebd35cd5f26326542f96f3d7a5abe64d8ab932d7a4039cf8e86d82ebf"></a>SIL_4&#160;</td><td class="fielddoc"><p>Very high safety integrity. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a1ad1a3ebebd35cd5f26326542f96f3d7aae8bf66e88550576fd3c1e48289f35e3"></a>SIL_NONE&#160;</td><td class="fielddoc"><p>No safety requirements. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a1ad1a3ebebd35cd5f26326542f96f3d7aa33b1ae57a293a26a7d4fa0f07523154"></a>SIL_1&#160;</td><td class="fielddoc"><p>Low safety integrity. </p>
 </td></tr>
@@ -526,7 +493,7 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/db6/safety__system_8h_source.html#l00042">42</a> of file <a class="el" href="../../d2/db6/safety__system_8h_source.html">safety_system.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/db6/safety__system_8h_source.html#l00048">48</a> of file <a class="el" href="../../d2/db6/safety__system_8h_source.html">safety_system.h</a>.</p>
 
 </div>
 </div>
@@ -586,9 +553,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initialize emergency stop system. </p>
+<dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code</dd></dl>
+<p>Initialize emergency stop system with HAL abstraction.</p>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00050">50</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00061">61</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
 
 </div>
 </div>
@@ -609,8 +578,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Emergency stop interrupt handler. </p>
+<p>Emergency stop interrupt handler (called by HAL abstraction) </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00211">211</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00228">228</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
 
 </div>
 </div>
@@ -623,7 +593,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> execute_emergency_stop </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/db6/safety__system_8h.html#a6aa1047d8d110a0a098574f9819d8d5f">EmergencyStopSource_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d7/dee/emergency__stop__abstracted_8h.html#a6aa1047d8d110a0a098574f9819d8d5f">EmergencyStopSource_t</a>&#160;</td>
           <td class="paramname"><em>source</em></td><td>)</td>
           <td></td>
         </tr>
@@ -639,7 +609,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00171">171</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00182">182</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
 
 </div>
 </div>
@@ -662,7 +632,7 @@ Functions</h2></td></tr>
 <p>Get current emergency stop state. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d7/dbf/structEmergencyStopState__t.html" title="Emergency stop state structure.">EmergencyStopState_t</a> Current state </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00221">221</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00233">233</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
 
 </div>
 </div>
@@ -718,7 +688,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../df/d2c/structSafetyMonitor__t.html" title="Real-time monitoring structure.">SafetyMonitor_t</a> Monitor status </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00425">425</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00454">454</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
 
 </div>
 </div>
@@ -741,7 +711,7 @@ Functions</h2></td></tr>
 <p>Get safety statistics. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d4/db0/structSafetyStatistics__t.html" title="Safety system statistics.">SafetyStatistics_t</a> Current statistics </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00319">319</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00334">334</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
 
 </div>
 </div>
@@ -764,7 +734,7 @@ Functions</h2></td></tr>
 <p>Get watchdog configuration. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="../../d5/d87/structWatchdogConfig__t.html" title="Watchdog configuration structure.">WatchdogConfig_t</a> Current configuration </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html#l00179">179</a> of file <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html">watchdog_manager.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html#l00189">189</a> of file <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html">watchdog_manager.c</a>.</p>
 
 </div>
 </div>
@@ -804,7 +774,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00358">358</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00376">376</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
 
 </div>
 </div>
@@ -829,7 +799,7 @@ Functions</h2></td></tr>
 <p>Check emergency stop button state.</p>
 <dl class="section return"><dt>Returns</dt><dd>bool True if button is pressed </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00202">202</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/da2/emergency__stop_8c_source.html#l00218">218</a> of file <a class="el" href="../../d3/da2/emergency__stop_8c_source.html">emergency_stop.c</a>.</p>
 
 </div>
 </div>
@@ -852,12 +822,12 @@ Functions</h2></td></tr>
 <p>Check if system is in safe state for operation. </p>
 <dl class="section return"><dt>Returns</dt><dd>bool True if safe to operate </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00228">228</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00240">240</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
 
 </div>
 </div>
-<a id="a4eec73403fd733136ba124f487da6928"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4eec73403fd733136ba124f487da6928">&#9670;&nbsp;</a></span>log_safety_event()</h2>
+<a id="a15fc4860a245b0fb5a5520868f8ea246"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15fc4860a245b0fb5a5520868f8ea246">&#9670;&nbsp;</a></span>log_safety_event()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -865,7 +835,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="../../de/d11/error__codes_8h.html#ad18804b039d93258aac27507b1ad3756">SystemError_t</a> log_safety_event </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2">SafetyEvent_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fe">SafetyEventType_t</a>&#160;</td>
           <td class="paramname"><em>event</em>, </td>
         </tr>
         <tr>
@@ -899,7 +869,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00326">326</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00341">341</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
 
 </div>
 </div>
@@ -922,7 +892,7 @@ Functions</h2></td></tr>
 <p>Perform comprehensive safety self-test. </p>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00450">450</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00480">480</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
 
 </div>
 </div>
@@ -945,7 +915,7 @@ Functions</h2></td></tr>
 <p>Reset emergency stop (requires manual confirmation) </p>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00196">196</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00207">207</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
 
 </div>
 </div>
@@ -970,8 +940,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0e92ee6a693789e0488fe971dc67a1d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e92ee6a693789e0488fe971dc67a1d9">&#9670;&nbsp;</a></span>safety_log_event()</h2>
+<a id="a309dbdf304562f4522defa57f94d17da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a309dbdf304562f4522defa57f94d17da">&#9670;&nbsp;</a></span>safety_log_event()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -979,7 +949,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void safety_log_event </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d2/db6/safety__system_8h.html#a737632a646ec612b67e3f808aae1dae2">SafetyEvent_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fe">SafetyEventType_t</a>&#160;</td>
           <td class="paramname"><em>event</em>, </td>
         </tr>
         <tr>
@@ -1013,7 +983,7 @@ Functions</h2></td></tr>
 </dl>
 <p>Log safety event. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00347">347</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00364">364</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
 
 </div>
 </div>
@@ -1053,7 +1023,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00266">266</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00280">280</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
 
 </div>
 </div>
@@ -1097,7 +1067,7 @@ Functions</h2></td></tr>
 <p>Initialize the complete safety system. </p>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00069">69</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00078">78</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
 
 </div>
 </div>
@@ -1141,7 +1111,7 @@ Functions</h2></td></tr>
 <p>Perform periodic safety system tasks (call from main loop) </p>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00132">132</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00142">142</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
 
 </div>
 </div>
@@ -1181,7 +1151,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00437">437</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d1a/safety__system_8c_source.html#l00466">466</a> of file <a class="el" href="../../db/d1a/safety__system_8c_source.html">safety_system.c</a>.</p>
 
 </div>
 </div>
@@ -1204,7 +1174,7 @@ Functions</h2></td></tr>
 <p>Check watchdog status and health. </p>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html#l00144">144</a> of file <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html">watchdog_manager.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html#l00154">154</a> of file <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html">watchdog_manager.c</a>.</p>
 
 </div>
 </div>
@@ -1227,7 +1197,7 @@ Functions</h2></td></tr>
 <p>Initialize watchdog timer system. </p>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html#l00048">48</a> of file <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html">watchdog_manager.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html#l00058">58</a> of file <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html">watchdog_manager.c</a>.</p>
 
 </div>
 </div>
@@ -1250,14 +1220,14 @@ Functions</h2></td></tr>
 <p>Refresh watchdog timer (call regularly from main loop) </p>
 <dl class="section return"><dt>Returns</dt><dd>SystemError_t Success or error code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html#l00094">94</a> of file <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html">watchdog_manager.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html#l00104">104</a> of file <a class="el" href="../../d2/d94/watchdog__manager_8c_source.html">watchdog_manager.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 5 2025 13:09:33 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 11 2025 23:51:11 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

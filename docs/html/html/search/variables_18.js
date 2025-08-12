@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['z_2981',['z',['../de/dd4/structvector3d__t.html#ac630e41bf48387a9acb6b64290d4f703',1,'vector3d_t::z()'],['../de/de3/structquaternion__t.html#af37261672d7a30dd825fe62d4e31d7c6',1,'quaternion_t::z()']]],
-  ['zero_5foffset_2982',['zero_offset',['../da/dd9/structAS5600__EncoderState__t.html#aaa3e6d1c685d360818078257f844f491',1,'AS5600_EncoderState_t']]],
-  ['zero_5foffset_5fdeg_2983',['zero_offset_deg',['../d2/d34/structEncoderState__t.html#a1410496eb3ea66857e174dc75b4621b2',1,'EncoderState_t']]],
-  ['zero_5fposition_2984',['zero_position',['../d1/d55/structAS5600__HandleTypeDef.html#aba8e3beba7d78e381b4d353145ed3c4f',1,'AS5600_HandleTypeDef']]],
-  ['zero_5fposition_5fdeg_2985',['zero_position_deg',['../da/dd9/structAS5600__EncoderState__t.html#a4eb2fb950e7b2d5e67cac701f90a4fca',1,'AS5600_EncoderState_t']]]
+  ['y_6947',['y',['../da/de9/structvector2d__t.html#a1f59e8859fb8d26cdad37dbc434dfacb',1,'vector2d_t::y()'],['../de/dd4/structvector3d__t.html#a56c18a1a45100c1b51e9a8320bd9bf96',1,'vector3d_t::y()'],['../de/de3/structquaternion__t.html#a4d54d1c69cf5230051b07e799a8f0ac4',1,'quaternion_t::y()']]],
+  ['year_6948',['year',['../df/d98/structdatetime__t.html#ab0e534d31324dccbc29e0bd548177ee8',1,'datetime_t']]]
 ];

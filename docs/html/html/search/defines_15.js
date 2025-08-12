@@ -1,12 +1,16 @@
 var searchData=
 [
-  ['watchdog_5fkick_5finterval_5fms_4187',['WATCHDOG_KICK_INTERVAL_MS',['../d3/d5c/safety__config_8h.html#a6dfe1f6bff6af87edecd0036bbf8124b',1,'safety_config.h']]],
-  ['watchdog_5flate_5fkick_5fms_4188',['WATCHDOG_LATE_KICK_MS',['../d3/d5c/safety__config_8h.html#a22bc7f0d91b5388239dfe18bb7bb723c',1,'safety_config.h']]],
-  ['watchdog_5fmissed_5fkick_5fmax_4189',['WATCHDOG_MISSED_KICK_MAX',['../d3/d5c/safety__config_8h.html#a100db0a71311042899b22eb17733d4f6',1,'safety_config.h']]],
-  ['watchdog_5ftimeout_5fms_4190',['WATCHDOG_TIMEOUT_MS',['../d3/d88/comm__config_8h.html#a7806944d3d2580d7208d9f051a19f310',1,'comm_config.h']]],
-  ['weak_4191',['WEAK',['../d8/d2b/build__config_8h.html#ad1480e9557edcc543498ca259cee6c7d',1,'build_config.h']]],
-  ['wwdg_5fcounter_5fvalue_4192',['WWDG_COUNTER_VALUE',['../d3/d5c/safety__config_8h.html#a5847e95716da5d30be4fd12d1cbf942b',1,'safety_config.h']]],
-  ['wwdg_5fenable_4193',['WWDG_ENABLE',['../d3/d5c/safety__config_8h.html#a2e918a23714f0c8f1cc2a8fbc9907a5d',1,'safety_config.h']]],
-  ['wwdg_5fprescaler_4194',['WWDG_PRESCALER',['../d3/d5c/safety__config_8h.html#add0848a0893b12b25ab80c6a31380a6e',1,'safety_config.h']]],
-  ['wwdg_5fwindow_5fvalue_4195',['WWDG_WINDOW_VALUE',['../d3/d5c/safety__config_8h.html#ae4a37e45a820e1284492bdb07f15f37b',1,'safety_config.h']]]
+  ['validate_5fdoc_5fpath_9080',['VALIDATE_DOC_PATH',['../db/de7/documentation__config_8h.html#a012d88c33f1f91d5e76fd92068b1c50d',1,'documentation_config.h']]],
+  ['validate_5fextension_9081',['VALIDATE_EXTENSION',['../db/de7/documentation__config_8h.html#aced4fc60370d5f1ab715c4b70641f977',1,'documentation_config.h']]],
+  ['validate_5fmessage_5fheader_9082',['VALIDATE_MESSAGE_HEADER',['../dc/d81/comm__protocol_8h.html#af0c6026e905d0be7bfc1bbdf173ffec6',1,'comm_protocol.h']]],
+  ['validation_5fscript_5fpath_9083',['VALIDATION_SCRIPT_PATH',['../db/de7/documentation__config_8h.html#aeda50c0c6f48cb2b7eedff742ebdbece',1,'documentation_config.h']]],
+  ['vdd_5fvalue_9084',['VDD_VALUE',['../d4/d03/mock__hal__types_8h.html#aae550dad9f96d52cfce5e539adadbbb4',1,'VDD_VALUE():&#160;mock_hal_types.h'],['../d8/d36/stm32h7xx__hal_8h.html#aae550dad9f96d52cfce5e539adadbbb4',1,'VDD_VALUE():&#160;stm32h7xx_hal.h']]],
+  ['velocity_5ffilter_5falpha_9085',['VELOCITY_FILTER_ALPHA',['../d0/dba/position__control_8h.html#a1a5da372bddcb3ae03c10bd52956f620',1,'position_control.h']]],
+  ['velocity_5fsettled_5fthreshold_9086',['VELOCITY_SETTLED_THRESHOLD',['../d0/dba/position__control_8h.html#a4095ca74f14971350013a72adfecaabe',1,'position_control.h']]],
+  ['velocity_5ftolerance_5frpm_9087',['VELOCITY_TOLERANCE_RPM',['../de/d58/motor__config_8h.html#a8a014e1bae60b548177973c48d035792',1,'motor_config.h']]],
+  ['version_5fbuild_9088',['VERSION_BUILD',['../d8/d2b/build__config_8h.html#a88c2f137526b274b84cf311aa8c68f3a',1,'build_config.h']]],
+  ['version_5fmajor_9089',['VERSION_MAJOR',['../d8/d2b/build__config_8h.html#a1a53b724b6de666faa8a9e0d06d1055f',1,'build_config.h']]],
+  ['version_5fminor_9090',['VERSION_MINOR',['../d8/d2b/build__config_8h.html#ae0cb52afb79b185b1bf82c7e235f682b',1,'build_config.h']]],
+  ['version_5fpatch_9091',['VERSION_PATCH',['../d8/d2b/build__config_8h.html#a901edadf17488bb6be1ac9a1e3cfea7a',1,'build_config.h']]],
+  ['version_5fstring_9092',['VERSION_STRING',['../d8/d2b/build__config_8h.html#a698acb89e1bf5837b33c30ef35c30044',1,'build_config.h']]]
 ];

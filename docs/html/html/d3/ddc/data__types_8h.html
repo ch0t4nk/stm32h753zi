@@ -71,6 +71,7 @@ $(function() {
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">data_types.h File Reference</div>  </div>
@@ -98,28 +99,48 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../dd/d86/data__types_8h__dep__incl.png" border="0" usemap="#asrc_2common_2data__types_8hdep" alt=""/></div>
 <map name="asrc_2common_2data__types_8hdep" id="asrc_2common_2data__types_8hdep">
-<area shape="rect" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="736,5,927,32"/>
-<area shape="rect" href="../../dc/d81/comm__protocol_8h.html" title="Communication Protocol Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="5,169,196,211"/>
-<area shape="rect" href="../../d0/dda/motor__controller_8h.html" title="Motor Controller API &#45; Integrates L6470 + AS5600 for Closed&#45;Loop Control." alt="" coords="221,169,378,211"/>
-<area shape="rect" href="../../df/d2b/fault__monitor_8h.html" title="Fault Detection and Monitoring System Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="737,87,926,114"/>
-<area shape="rect" href="../../d2/db6/safety__system_8h.html" title="Safety System Manager &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1071,87,1269,114"/>
-<area shape="rect" href="../../d0/d8f/test__core__scope_8h.html" title="Test file for validating core&#45;software.instructions.md scoping." alt="" coords="1293,80,1473,121"/>
-<area shape="rect" href="../../d8/d86/comm__protocol_8c.html" title="Communication Protocol Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="91,259,281,300"/>
-<area shape="rect" href="../../d0/dde/motor__controller_8c.html" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="306,259,463,300"/>
-<area shape="rect" href="../../d9/dfd/system__state_8h.html" title="Central System State &#45; Single Source of Truth (SSOT)" alt="" coords="728,177,935,203"/>
-<area shape="rect" href="../../db/d1a/safety__system_8c.html" title="Safety System Manager Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1034,266,1231,293"/>
-<area shape="rect" href="../../d3/d16/fault__monitor_8c.html" title="Fault Detection and Monitoring System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1011,177,1199,203"/>
-<area shape="rect" href="../../d1/d66/test__fault__monitor_8c.html" title="Focused unit tests for fault monitoring system." alt="" coords="453,169,602,211"/>
-<area shape="rect" href="../../de/d22/test__safety__systems_8c.html" title="Unit tests for safety systems using Unity framework." alt="" coords="1655,259,1815,300"/>
-<area shape="rect" href="../../d8/d75/as5600__driver_8c.html" title="AS5600 Magnetic Encoder Driver Implementation &#45; STM32H7 I2C HAL." alt="" coords="682,259,823,300"/>
-<area shape="rect" href="../../d1/d41/l6470__driver_8c.html" title="L6470 Stepper Driver Implementation &#45; STM32H7 SPI HAL." alt="" coords="487,259,658,300"/>
-<area shape="rect" href="../../d3/da2/emergency__stop_8c.html" title="Emergency Stop System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="847,259,1010,300"/>
-<area shape="rect" href="../../d0/d78/emergency__stop_8h.html" title="Emergency Stop System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1274,169,1437,211"/>
-<area shape="rect" href="../../d0/d45/test__safety__gtest_8cpp.html" title="GoogleTest&#45;based unit tests for safety systems (C++ wrapper for C code)" alt="" coords="1471,259,1631,300"/>
-<area shape="rect" href="../../d6/d79/watchdog__manager_8h.html" title="Watchdog Management System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1659,169,1812,211"/>
-<area shape="rect" href="../../d0/d0d/test__emergency__stop_8c.html" title="Focused unit tests for emergency stop functionality." alt="" coords="1255,259,1447,300"/>
-<area shape="rect" href="../../d2/d94/watchdog__manager_8c.html" title="Watchdog Management System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="2057,259,2211,300"/>
-<area shape="rect" href="../../d3/df3/test__watchdog_8c.html" title="Focused unit tests for watchdog management." alt="" coords="1840,266,2033,293"/>
+<area shape="rect" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="2100,5,2291,32"/>
+<area shape="rect" href="../../dc/d81/comm__protocol_8h.html" title="Communication Protocol Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1431,169,1621,211"/>
+<area shape="rect" href="../../de/d6d/rtos__tasks_8h.html" title="FreeRTOS Task Implementations for STM32H753ZI Motor Control System." alt="" coords="2139,266,2292,293"/>
+<area shape="rect" href="../../d0/dda/motor__controller_8h.html" title="Motor Controller API &#45; Integrates L6470 + AS5600 for Closed&#45;Loop Control." alt="" coords="551,169,709,211"/>
+<area shape="rect" href="../../d5/d1f/multi__motor__coordinator_8h.html" title="Multi&#45;Motor Coordination and Synchronization System &#45; Header." alt="" coords="173,80,333,121"/>
+<area shape="rect" href="../../d0/dba/position__control_8h.html" title="Advanced Position Control with Encoder Feedback &#45; Header." alt="" coords="357,80,527,121"/>
+<area shape="rect" href="../../d7/dda/real__time__control_8h.html" title="Real&#45;Time Motor Control Task System &#45; Header." alt="" coords="5,80,148,121"/>
+<area shape="rect" href="../../d5/d22/adaptive__current__algorithm_8h.html" title="Adaptive Current Optimization Algorithm &#45; FTR&#45;009 Component." alt="" coords="3444,169,3632,211"/>
+<area shape="rect" href="../../db/d87/motor__efficiency__optimizer_8c.html" title="Motor Efficiency Optimization Module Implementation &#45; FTR&#45;009." alt="" coords="3181,259,3351,300"/>
+<area shape="rect" href="../../d2/d8f/motor__efficiency__optimizer_8h.html" title="Motor Efficiency Optimization Module &#45; FTR&#45;009 Implementation." alt="" coords="3292,80,3464,121"/>
+<area shape="rect" href="../../d8/d68/power__management_8h.html" title="Advanced Power Management for STM32H753ZI Motor Control System." alt="" coords="2603,87,2823,114"/>
+<area shape="rect" href="../../df/d2b/fault__monitor_8h.html" title="Fault Detection and Monitoring System Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="770,87,959,114"/>
+<area shape="rect" href="../../d2/db6/safety__system_8h.html" title="Safety System Manager &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1905,87,2104,114"/>
+<area shape="rect" href="../../d7/d6e/optimization__telemetry_8h.html" title="Focused telemetry data acquisition for motor characterization and optimization." alt="" coords="2861,80,3055,121"/>
+<area shape="rect" href="../../d0/d8f/test__core__scope_8h.html" title="Test file for validating core&#45;software.instructions.md scoping." alt="" coords="3540,80,3720,121"/>
+<area shape="rect" href="../../d8/d86/comm__protocol_8c.html" title="Communication Protocol Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="112,259,303,300"/>
+<area shape="rect" href="../../dc/dd2/power__management_8c.html" title="Advanced Power Management Implementation for STM32H753ZI Motor Control System." alt="" coords="2399,348,2618,375"/>
+<area shape="rect" href="../../d3/d37/rtos__tasks_8c.html" title="FreeRTOS Task Implementations for STM32H753ZI Motor Control System." alt="" coords="1910,348,2062,375"/>
+<area shape="rect" href="../../d0/dde/motor__controller_8c.html" title="Motor Controller Implementation &#45; Integrates L6470 + AS5600." alt="" coords="327,259,485,300"/>
+<area shape="rect" href="../../d6/d93/multi__motor__coordinator_8c.html" title="Multi&#45;Motor Coordination and Synchronization System." alt="" coords="173,169,332,211"/>
+<area shape="rect" href="../../df/d55/real__time__control_8c.html" title="Real&#45;Time Motor Control Task System." alt="" coords="7,169,149,211"/>
+<area shape="rect" href="../../dc/da4/position__control_8c.html" title="Advanced Position Control with Encoder Feedback." alt="" coords="357,169,527,211"/>
+<area shape="rect" href="../../da/d40/test__motor__efficiency__optimizer_8c.html" title="Unit tests for motor efficiency optimization module (FTR&#45;009)" alt="" coords="3375,259,3546,300"/>
+<area shape="rect" href="../../d8/d53/telemetry__dashboard_8h.html" title="Real&#45;Time Telemetry Dashboard and HTTP JSON API." alt="" coords="2643,169,2782,211"/>
+<area shape="rect" href="../../dd/d21/optimization__telemetry_8c.html" title="Focused telemetry data acquisition implementation for motor characterization." alt="" coords="2546,259,2741,300"/>
+<area shape="rect" href="../../d9/dfd/system__state_8h.html" title="Central System State &#45; Single Source of Truth (SSOT)" alt="" coords="936,177,1143,203"/>
+<area shape="rect" href="../../dc/d33/l6470__fault__monitor_8c.html" title="L6470 Hardware Fault Monitoring Implementation." alt="" coords="914,259,1077,300"/>
+<area shape="rect" href="../../db/d1a/safety__system_8c.html" title="Safety System Manager Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1453,266,1650,293"/>
+<area shape="rect" href="../../d3/d16/fault__monitor_8c.html" title="Fault Detection and Monitoring System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1219,177,1407,203"/>
+<area shape="rect" href="../../dd/dbd/motor__characterization_8c.html" title="Motor parameter identification and characterization implementation." alt="" coords="2765,259,2922,300"/>
+<area shape="rect" href="../../d8/d75/as5600__driver_8c.html" title="AS5600 Magnetic Encoder Driver Implementation using HAL abstraction." alt="" coords="1101,259,1242,300"/>
+<area shape="rect" href="../../d1/d41/l6470__driver_8c.html" title="L6470 Stepper Driver Implementation &#45; STM32H7 SPI HAL." alt="" coords="509,259,679,300"/>
+<area shape="rect" href="../../d3/da2/emergency__stop_8c.html" title="Emergency Stop System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1266,259,1429,300"/>
+<area shape="rect" href="../../d7/df8/test__l6470__register__programming_8c.html" title="Unit tests for L6470 register programming validation." alt="" coords="704,259,889,300"/>
+<area shape="rect" href="../../d9/dfd/main__application_8c.html" title="Main Application &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="2317,259,2471,300"/>
+<area shape="rect" href="../../d0/d78/emergency__stop_8h.html" title="Emergency Stop System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1646,169,1809,211"/>
+<area shape="rect" href="../../d0/d45/test__safety__gtest_8cpp.html" title="GoogleTest&#45;based unit tests for safety systems (C++ wrapper for C code)" alt="" coords="1674,259,1834,300"/>
+<area shape="rect" href="../../d6/d79/watchdog__manager_8h.html" title="Watchdog Management System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1985,169,2139,211"/>
+<area shape="rect" href="../../d3/dc8/test__optimization__telemetry_8c.html" title="Unit tests for optimization telemetry system." alt="" coords="2417,169,2619,211"/>
+<area shape="rect" href="../../d2/d94/watchdog__manager_8c.html" title="Watchdog Management System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="1909,259,2063,300"/>
+<area shape="rect" href="../../de/d6e/motor__characterization_8h.html" title="Motor parameter identification and characterization framework." alt="" coords="3009,169,3166,211"/>
+<area shape="rect" href="../../d1/dde/test__motor__characterization_8c.html" title="Unit tests for motor characterization system." alt="" coords="2997,259,3156,300"/>
 </map>
 </div>
 </div>
@@ -167,6 +188,21 @@ Data Structures</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/dd5/structmemory__pool__t.html">memory_pool_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d89/structSafetyEvent__t.html">SafetyEvent_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safety event structure for safety monitoring (SSOT) Used for FreeRTOS queue communication and logging.  <a href="../../d2/d89/structSafetyEvent__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d59/structTelemetryData__t.html">TelemetryData_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Telemetry data structure for system monitoring.  <a href="../../da/d59/structTelemetryData__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d24/structCANMessage__t.html">CANMessage_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAN message structure for CAN communication.  <a href="../../dd/d24/structCANMessage__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d88/structUARTMessage__t.html">UARTMessage_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART message structure for UART communication.  <a href="../../de/d88/structUARTMessage__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d46/structTaskStats__t.html">TaskStats_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Task statistics structure for performance monitoring.  <a href="../../da/d46/structTaskStats__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -190,11 +226,11 @@ Macros</h2></td></tr>
 <tr class="separator:a65f7ca583ff069544ecb5b07400b9599"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af283ab92ce4e05457701e27802ffa64e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/ddc/data__types_8h.html#af283ab92ce4e05457701e27802ffa64e">BIT_CHECK</a>(reg,  bit)&#160;&#160;&#160;(((reg) &gt;&gt; (bit)) &amp; 1U)</td></tr>
 <tr class="separator:af283ab92ce4e05457701e27802ffa64e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9574f6fac776f807d4ece5809e6acc4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/ddc/data__types_8h.html#ae9574f6fac776f807d4ece5809e6acc4">ALIGN_UP</a>(val,  align)&#160;&#160;&#160;(((val) + (align)-1) &amp; ~((align)-1))</td></tr>
+<tr class="memitem:ae9574f6fac776f807d4ece5809e6acc4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/ddc/data__types_8h.html#ae9574f6fac776f807d4ece5809e6acc4">ALIGN_UP</a>(val,  align)&#160;&#160;&#160;(((val) + (align) - 1) &amp; ~((align) - 1))</td></tr>
 <tr class="separator:ae9574f6fac776f807d4ece5809e6acc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3709bf3e8bd9fb78b519bacc3cfde65"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/ddc/data__types_8h.html#ae3709bf3e8bd9fb78b519bacc3cfde65">ALIGN_DOWN</a>(val,  align)&#160;&#160;&#160;((val) &amp; ~((align)-1))</td></tr>
+<tr class="memitem:ae3709bf3e8bd9fb78b519bacc3cfde65"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/ddc/data__types_8h.html#ae3709bf3e8bd9fb78b519bacc3cfde65">ALIGN_DOWN</a>(val,  align)&#160;&#160;&#160;((val) &amp; ~((align) - 1))</td></tr>
 <tr class="separator:ae3709bf3e8bd9fb78b519bacc3cfde65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32fb97f6716a7c262d34a320113e7787"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/ddc/data__types_8h.html#a32fb97f6716a7c262d34a320113e7787">IS_ALIGNED</a>(val,  align)&#160;&#160;&#160;(((val) &amp; ((align)-1)) == 0)</td></tr>
+<tr class="memitem:a32fb97f6716a7c262d34a320113e7787"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/ddc/data__types_8h.html#a32fb97f6716a7c262d34a320113e7787">IS_ALIGNED</a>(val,  align)&#160;&#160;&#160;(((val) &amp; ((align) - 1)) == 0)</td></tr>
 <tr class="separator:a32fb97f6716a7c262d34a320113e7787"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7cd57d876062160d9846dff1b9b8d4e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/ddc/data__types_8h.html#a7cd57d876062160d9846dff1b9b8d4e7">SWAP16</a>(val)&#160;&#160;&#160;(((val) &lt;&lt; 8) | ((val) &gt;&gt; 8))</td></tr>
 <tr class="separator:a7cd57d876062160d9846dff1b9b8d4e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -348,6 +384,43 @@ Typedefs</h2></td></tr>
 <tr class="memitem:af92690747c8089805eb0d53a113b64f8"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="../../d3/ddc/data__types_8h.html#ace9d960e74685e2cd84b36132dbbf8aa">u16</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/ddc/data__types_8h.html#af92690747c8089805eb0d53a113b64f8">modbus_register_t</a></td></tr>
 <tr class="separator:af92690747c8089805eb0d53a113b64f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ab880d551ef9ae5a9034e4e05b10d24fe"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fe">SafetyEventType_t</a> { <br />
+&#160;&#160;<a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24feaa916098bab572ce0e56dd72098970f14">SAFETY_EVENT_EMERGENCY_STOP</a> = 0
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24feae5a979d6fa22e1cc4a0b505963c2d93a">SAFETY_EVENT_EMERGENCY_STOP_RESET</a> = 1
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24feaf63e35b27d38178b2b86743602baf4a7">SAFETY_EVENT_FAULT_DETECTED</a> = 2
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24feac17e72d6b9b3c6b5b59104172c0e3338">SAFETY_EVENT_FAULT_CLEARED</a> = 3
+, <br />
+&#160;&#160;<a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fea302c8a1355f06f8ff540ba3dee645bcf">SAFETY_EVENT_SHUTDOWN_REQUEST</a> = 4
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fea058411dab391c12e444d2fb7f2f23c32">SAFETY_EVENT_MOTOR_ERROR</a> = 10
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fea9ed545251a008acbcbb6b33c4968bd74">SAFETY_EVENT_MOTOR_INIT_BLOCKED</a> = 11
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fea5bc7a20dff9d5f3e28af55e7bf509ecd">SAFETY_EVENT_OVERCURRENT_STOP</a> = 12
+, <br />
+&#160;&#160;<a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fea013e9475fe8edefe9d8f735f30ababf7">SAFETY_EVENT_OVERSPEED_STOP</a> = 13
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fea822b245e528a28015e6ff78990e51de1">SAFETY_EVENT_POSITION_LIMIT_STOP</a> = 14
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fea8c6a2f5702ae422efb56461d4b158602">SAFETY_EVENT_WATCHDOG_WARNING</a> = 20
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24feaf3d3df530924f0f1c85a7b876913e18a">SAFETY_EVENT_WATCHDOG_TIMEOUT</a> = 21
+, <br />
+&#160;&#160;<a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24feadde220bc45faa786d09496b646bc1d17">SAFETY_EVENT_TEMPERATURE_WARNING</a> = 22
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fea04b1d3855ff506f5e3338eed7a2a53e2">SAFETY_EVENT_POWER_WARNING</a> = 23
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fea1800882cb46b673e928035f96726aca7">SAFETY_EVENT_MEMORY_WARNING</a> = 24
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fea0364e94cd035ab2fb6fc7070b187e958">SAFETY_EVENT_COMMUNICATION_ERROR</a> = 25
+, <br />
+&#160;&#160;<a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fea51383a549bf0c9a10a1e08b8a49f5a92">SAFETY_EVENT_COMMUNICATION_FAULT</a> = 26
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24feac30eb5415eb83a0113490b0978f8273a">SAFETY_EVENT_SYSTEM_INIT</a> = 30
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fea1fb2723003c16e2007b43f05d16d8b7a">SAFETY_EVENT_INIT_COMPLETE</a> = 31
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24feaf8d2a95151f1235b74062d08b0955413">SAFETY_EVENT_RECOVERY_COMPLETE</a> = 32
+, <br />
+&#160;&#160;<a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fea53b838541c7d490aa9dca47109fb4630">SAFETY_EVENT_SENSOR_ERROR</a> = 40
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fea153020bbfc2aa290287379fbcada7f9f">SAFETY_EVENT_LIMIT_VIOLATION</a> = 41
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fea7fc3d76dcb9aa5fbec03e587161daf9c">SAFETY_EVENT_WARNING</a> = 42
+, <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24feaa0bc2a136e4435ebf42d9f3ca38ebb20">SAFETY_EVENT_COUNT</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:ab880d551ef9ae5a9034e4e05b10d24fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Motor command definitions moved to <a class="el" href="dc/d81/comm__protocol_8h.html" title="Communication Protocol Interface - STM32H753ZI Stepper Motor Project.">comm_protocol.h</a> (SSOT) Include "communication/comm_protocol.h" for <a class="el" href="da/d7b/structMotorCommand__t.html" title="Motor command structure.">MotorCommand_t</a> and MotorCommandType_t.  <a href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fe">More...</a><br /></td></tr>
+<tr class="separator:ab880d551ef9ae5a9034e4e05b10d24fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a593f31fe70f52962d5664c3f62c8989d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/ddc/data__types_8h.html#a593f31fe70f52962d5664c3f62c8989d">DECLARE_RING_BUFFER</a> (<a class="el" href="../../d3/ddc/data__types_8h.html#a5f6906312a689f27d70e9d086649d3fd">f32</a>, float)</td></tr>
@@ -395,12 +468,12 @@ Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;((val) &amp; ~((align)-1))</td>
+          <td></td><td>&#160;&#160;&#160;((val) &amp; ~((align) - 1))</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00375">375</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00397">397</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -425,12 +498,12 @@ Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;(((val) + (align)-1) &amp; ~((align)-1))</td>
+          <td></td><td>&#160;&#160;&#160;(((val) + (align) - 1) &amp; ~((align) - 1))</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00374">374</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00396">396</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -450,7 +523,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00360">360</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00382">382</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -480,7 +553,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00371">371</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00393">393</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -510,7 +583,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00369">369</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00391">391</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -540,7 +613,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00368">368</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00390">390</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -570,7 +643,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00370">370</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00392">392</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -606,7 +679,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00365">365</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00387">387</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -635,14 +708,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">typedef</span> <span class="keyword">struct </span>{                                                             \</div>
-<div class="line">    type value;                                                                \</div>
-<div class="line">    u32 error_code;                                                            \</div>
-<div class="line">    boolean valid;                                                             \</div>
-<div class="line">    timestamp_ms_t timestamp;                                                  \</div>
-<div class="line">  } name##_result_t</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">typedef</span> <span class="keyword">struct </span>{                                                          \</div>
+<div class="line">        type value;                                                           \</div>
+<div class="line">        u32 error_code;                                                       \</div>
+<div class="line">        boolean valid;                                                        \</div>
+<div class="line">        timestamp_ms_t timestamp;                                             \</div>
+<div class="line">    } name##_result_t</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00306">306</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00324">324</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -671,16 +744,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">typedef</span> <span class="keyword">struct </span>{                                                             \</div>
-<div class="line">    type *buffer;                                                              \</div>
-<div class="line">    u32 size;                                                                  \</div>
-<div class="line">    u32 head;                                                                  \</div>
-<div class="line">    u32 tail;                                                                  \</div>
-<div class="line">    u32 count;                                                                 \</div>
-<div class="line">    boolean full;                                                              \</div>
-<div class="line">  } name##_ring_buffer_t</div>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">typedef</span> <span class="keyword">struct </span>{                                                          \</div>
+<div class="line">        type *buffer;                                                         \</div>
+<div class="line">        u32 size;                                                             \</div>
+<div class="line">        u32 head;                                                             \</div>
+<div class="line">        u32 tail;                                                             \</div>
+<div class="line">        u32 count;                                                            \</div>
+<div class="line">        boolean full;                                                         \</div>
+<div class="line">    } name##_ring_buffer_t</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00249">249</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00263">263</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -696,7 +769,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00392">392</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00414">414</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -712,7 +785,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00388">388</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00410">410</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -728,7 +801,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00403">403</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00425">425</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -744,7 +817,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00407">407</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00429">429</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -760,7 +833,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00408">408</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00430">430</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -776,7 +849,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00406">406</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00428">428</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -801,12 +874,12 @@ Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;(((val) &amp; ((align)-1)) == 0)</td>
+          <td></td><td>&#160;&#160;&#160;(((val) &amp; ((align) - 1)) == 0)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00376">376</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00398">398</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -836,7 +909,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00364">364</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00386">386</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -866,7 +939,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00363">363</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00385">385</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -882,7 +955,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00402">402</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00424">424</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -898,7 +971,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00398">398</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00420">420</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -914,7 +987,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00400">400</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00422">422</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -930,7 +1003,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00385">385</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00407">407</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -946,7 +1019,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00386">386</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00408">408</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -962,7 +1035,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00387">387</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00409">409</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -978,7 +1051,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00395">395</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00417">417</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -994,7 +1067,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00393">393</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00415">415</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1010,7 +1083,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00394">394</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00416">416</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1026,7 +1099,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00401">401</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00423">423</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1042,7 +1115,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00389">389</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00411">411</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1062,7 +1135,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00379">379</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00401">401</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1081,10 +1154,10 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">  (((val) &lt;&lt; 24) | (((val)&amp;0xFF00) &lt;&lt; 8) | (((val)&amp;0xFF0000) &gt;&gt; 8) |           \</div>
-<div class="line">   ((val) &gt;&gt; 24))</div>
+<b>Value:</b><div class="fragment"><div class="line">    (((val) &lt;&lt; 24) | (((val) &amp; 0xFF00) &lt;&lt; 8) | (((val) &amp; 0xFF0000) &gt;&gt; 8) |    \</div>
+<div class="line">     ((val) &gt;&gt; 24))</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00380">380</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00402">402</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1100,7 +1173,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00409">409</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00431">431</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1116,7 +1189,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00399">399</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00421">421</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1133,7 +1206,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00077">77</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00083">83</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1149,7 +1222,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00078">78</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00084">84</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1165,7 +1238,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00089">89</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00095">95</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1181,7 +1254,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00088">88</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00094">94</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1197,7 +1270,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00086">86</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00092">92</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1213,7 +1286,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00085">85</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00091">91</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1229,7 +1302,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00127">127</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00135">135</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1245,7 +1318,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00044">44</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00046">46</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1261,7 +1334,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00124">124</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00132">132</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1277,7 +1350,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00123">123</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00131">131</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1293,7 +1366,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00122">122</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00130">130</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1309,7 +1382,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00121">121</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00129">129</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1325,7 +1398,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00097">97</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00103">103</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1341,7 +1414,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00045">45</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00047">47</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1357,7 +1430,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00094">94</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00100">100</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1373,7 +1446,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00093">93</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00099">99</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1389,7 +1462,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00055">55</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00059">59</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1405,7 +1478,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00056">56</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00060">60</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1421,7 +1494,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00081">81</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00087">87</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1437,7 +1510,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00040">40</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00042">42</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1453,7 +1526,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00041">41</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00043">43</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1469,7 +1542,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00106">106</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00112">112</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1485,7 +1558,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00057">57</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00061">61</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1501,7 +1574,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00098">98</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00104">104</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1517,7 +1590,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00116">116</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00124">124</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1533,7 +1606,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00087">87</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00093">93</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1549,7 +1622,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00118">118</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00126">126</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1565,7 +1638,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00129">129</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00137">137</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1581,7 +1654,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00082">82</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00088">88</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1597,7 +1670,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00058">58</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00062">62</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1613,7 +1686,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00117">117</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00125">125</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1629,7 +1702,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00080">80</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00086">86</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1645,7 +1718,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00079">79</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00085">85</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1661,7 +1734,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00095">95</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00101">101</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1677,7 +1750,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00108">108</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00114">114</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1693,7 +1766,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00096">96</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00102">102</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1709,7 +1782,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00034">34</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00036">36</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1725,7 +1798,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00036">36</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00038">38</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1741,7 +1814,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00038">38</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00040">40</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1757,7 +1830,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00032">32</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00034">34</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1773,7 +1846,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00101">101</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00107">107</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1789,7 +1862,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00103">103</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00109">109</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1805,7 +1878,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00102">102</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00108">108</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1821,7 +1894,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00053">53</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00057">57</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1837,7 +1910,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00054">54</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00058">58</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1853,7 +1926,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00107">107</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00113">113</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1869,7 +1942,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00033">33</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00035">35</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1885,7 +1958,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00035">35</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00037">37</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1901,7 +1974,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00037">37</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00039">39</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1917,7 +1990,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00031">31</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00033">33</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1933,7 +2006,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00128">128</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00136">136</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1949,7 +2022,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00046">46</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00048">48</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -1965,7 +2038,53 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00092">92</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00098">98</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ab880d551ef9ae5a9034e4e05b10d24fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab880d551ef9ae5a9034e4e05b10d24fe">&#9670;&nbsp;</a></span>SafetyEventType_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="../../d3/ddc/data__types_8h.html#ab880d551ef9ae5a9034e4e05b10d24fe">SafetyEventType_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Motor command definitions moved to <a class="el" href="../../dc/d81/comm__protocol_8h.html" title="Communication Protocol Interface - STM32H753ZI Stepper Motor Project.">comm_protocol.h</a> (SSOT) Include "communication/comm_protocol.h" for <a class="el" href="../../da/d7b/structMotorCommand__t.html" title="Motor command structure.">MotorCommand_t</a> and MotorCommandType_t. </p>
+<p>Safety event types for safety monitoring (SSOT) Consolidated from <a class="el" href="../../d2/db6/safety__system_8h.html" title="Safety System Manager - STM32H753ZI Stepper Motor Project.">safety_system.h</a>, <a class="el" href="../../d4/d28/safety__state__manager_8h.html" title="@br/**">safety_state_manager.h</a>, and <a class="el" href="../../d3/ddc/data__types_8h.html" title="Common Data Types - Single Source of Truth (SSOT)">data_types.h</a> </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24feaa916098bab572ce0e56dd72098970f14"></a>SAFETY_EVENT_EMERGENCY_STOP&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24feae5a979d6fa22e1cc4a0b505963c2d93a"></a>SAFETY_EVENT_EMERGENCY_STOP_RESET&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24feaf63e35b27d38178b2b86743602baf4a7"></a>SAFETY_EVENT_FAULT_DETECTED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24feac17e72d6b9b3c6b5b59104172c0e3338"></a>SAFETY_EVENT_FAULT_CLEARED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24fea302c8a1355f06f8ff540ba3dee645bcf"></a>SAFETY_EVENT_SHUTDOWN_REQUEST&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24fea058411dab391c12e444d2fb7f2f23c32"></a>SAFETY_EVENT_MOTOR_ERROR&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24fea9ed545251a008acbcbb6b33c4968bd74"></a>SAFETY_EVENT_MOTOR_INIT_BLOCKED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24fea5bc7a20dff9d5f3e28af55e7bf509ecd"></a>SAFETY_EVENT_OVERCURRENT_STOP&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24fea013e9475fe8edefe9d8f735f30ababf7"></a>SAFETY_EVENT_OVERSPEED_STOP&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24fea822b245e528a28015e6ff78990e51de1"></a>SAFETY_EVENT_POSITION_LIMIT_STOP&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24fea8c6a2f5702ae422efb56461d4b158602"></a>SAFETY_EVENT_WATCHDOG_WARNING&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24feaf3d3df530924f0f1c85a7b876913e18a"></a>SAFETY_EVENT_WATCHDOG_TIMEOUT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24feadde220bc45faa786d09496b646bc1d17"></a>SAFETY_EVENT_TEMPERATURE_WARNING&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24fea04b1d3855ff506f5e3338eed7a2a53e2"></a>SAFETY_EVENT_POWER_WARNING&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24fea1800882cb46b673e928035f96726aca7"></a>SAFETY_EVENT_MEMORY_WARNING&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24fea0364e94cd035ab2fb6fc7070b187e958"></a>SAFETY_EVENT_COMMUNICATION_ERROR&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24fea51383a549bf0c9a10a1e08b8a49f5a92"></a>SAFETY_EVENT_COMMUNICATION_FAULT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24feac30eb5415eb83a0113490b0978f8273a"></a>SAFETY_EVENT_SYSTEM_INIT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24fea1fb2723003c16e2007b43f05d16d8b7a"></a>SAFETY_EVENT_INIT_COMPLETE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24feaf8d2a95151f1235b74062d08b0955413"></a>SAFETY_EVENT_RECOVERY_COMPLETE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24fea53b838541c7d490aa9dca47109fb4630"></a>SAFETY_EVENT_SENSOR_ERROR&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24fea153020bbfc2aa290287379fbcada7f9f"></a>SAFETY_EVENT_LIMIT_VIOLATION&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24fea7fc3d76dcb9aa5fbec03e587161daf9c"></a>SAFETY_EVENT_WARNING&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab880d551ef9ae5a9034e4e05b10d24feaa0bc2a136e4435ebf42d9f3ca38ebb20"></a>SAFETY_EVENT_COUNT&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/ddc/data__types_8h_source.html#l00449">449</a> of file <a class="el" href="../../d3/ddc/data__types_8h_source.html">data_types.h</a>.</p>
 
 </div>
 </div>
@@ -2169,7 +2288,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 5 2025 13:09:33 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+Generated on Mon Aug 11 2025 23:51:10 for STM32H753ZI Motor Control System by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
 </small></address>
 </body>
 </html>

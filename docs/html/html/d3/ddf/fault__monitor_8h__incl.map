@@ -1,11 +1,13 @@
 <map id="src/safety/fault_monitor.h" name="src/safety/fault_monitor.h">
-<area shape="rect" id="node1" title="Fault Detection and Monitoring System Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="427,5,617,32"/>
-<area shape="rect" id="node2" href="$d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="5,80,169,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="184,155,255,181"/>
-<area shape="rect" id="node4" href="$d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="682,80,866,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="771,155,905,181"/>
-<area shape="rect" id="node6" href="$d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="245,80,412,107"/>
-<area shape="rect" id="node7" title=" " alt="" coords="481,155,563,181"/>
-<area shape="rect" id="node9" href="$de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="437,80,607,107"/>
-<area shape="rect" id="node8" title=" " alt="" coords="291,155,366,181"/>
+<area shape="rect" id="node1" title="Fault Detection and Monitoring System Interface &#45; STM32H753ZI Stepper Motor Project." alt="" coords="335,5,524,32"/>
+<area shape="rect" id="node2" href="$d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="23,244,190,271"/>
+<area shape="rect" id="node3" title=" " alt="" coords="320,319,403,345"/>
+<area shape="rect" id="node5" title=" " alt="" coords="597,319,667,345"/>
+<area shape="rect" id="node6" href="$de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="215,244,385,271"/>
+<area shape="rect" id="node7" href="$d3/d91/hardware__config_8h.html" title="Hardware Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="337,80,521,107"/>
+<area shape="rect" id="node9" href="$d3/d5c/safety__config_8h.html" title="Safety Configuration &#45; Single Source of Truth (SSOT)" alt="" coords="829,80,993,107"/>
+<area shape="rect" id="node10" href="$d8/d36/stm32h7xx__hal_8h.html" title="Mock STM32H7xx HAL header for unit testing." alt="" coords="546,162,681,189"/>
+<area shape="rect" id="node4" title=" " alt="" coords="69,319,144,345"/>
+<area shape="rect" id="node8" href="$d6/dee/hal__abstraction_8h.html" title="Hardware Abstraction Layer (HAL) Interface for STM32H753ZI." alt="" coords="356,155,503,196"/>
+<area shape="rect" id="node11" href="$d4/d03/mock__hal__types_8h.html" title="Mock HAL type definitions for unit testing environment." alt="" coords="562,244,702,271"/>
 </map>
