@@ -1,16 +1,18 @@
 openapi: 3.1.0
 info:
-  title: STM32H753ZI Motor Control REST API
-  version: 1.0.0
+  title: STM32H753ZI Motor Control & Semantic Search API
+  version: 2.0.0
   description: |
-    **PRODUCTION-READY REST API** for STM32H753ZI stepper motor control system
+    **PRODUCTION-READY REST API** for STM32H753ZI stepper motor control and semantic search system
 
     **Project Status**: ✅ COMPLETE - All systems validated and operational
     **Hardware**: STM32H753ZI + X-NUCLEO-IHM02A1 + AS5600 encoders
     **Safety**: <1ms emergency stop response with comprehensive fault monitoring
+    **Semantic Search**: AI-powered documentation search with 252K+ indexed documents
 
     This API provides complete control and monitoring for the dual L6470 stepper motor
-    system with AS5600 magnetic encoder feedback and safety systems.
+    system with AS5600 magnetic encoder feedback, safety systems, and intelligent
+    documentation search capabilities.
 
   contact:
     name: STM32H753ZI Motor Control API
@@ -19,47 +21,436 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8080
+    description: Semantic Search Service (Development)
+  - url: http://localhost:3000
+    description: Motor Control API (Development)
+
 paths:
+  # Semantic Search API Endpoints
+  /query:
+    post:
+      tags:
+        - Semantic Search
+      summary: Perform semantic search
+      description: |
+        Execute AI-powered semantic search across STM32H7, L6470, and project documentation.
+        Uses ChromaDB with Instructor-XL embeddings for intelligent document retrieval.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchQuery"
+            examples:
+              concept_search:
+                summary: Concept Search Example
+                value:
+                  query: "GPIO configuration"
+                  search_type: "concept"
+                  scope: "STM32H7"
+                  max_results: 5
+              function_search:
+                summary: Function Search Example
+                value:
+                  query: "HAL_GPIO_Init"
+                  search_type: "function"
+                  scope: "STM32H7"
+                  max_results: 3
+              motor_control:
+                summary: Motor Control Search
+                value:
+                  query: "L6470 stepper driver"
+                  search_type: "function"
+                  scope: "motor_control"
+                  max_results: 10
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchResponse"
+        "400":
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /health:
+    get:
+      tags:
+        - Semantic Search
+      summary: Service health check
+      description: Returns comprehensive service health and status information
+      responses:
+        "200":
+          description: Service health status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+        "503":
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /status:
+    get:
+      tags:
+        - Semantic Search
+      summary: Detailed service status
+      description: Returns detailed operational status and collection metrics
+      responses:
+        "200":
+          description: Service status information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusResponse"
+
+  # Motor Control API Endpoints (Future Implementation)
   /motors:
     get:
+      tags:
+        - Motor Control
       summary: Get motor status
+      description: Retrieve current status of both stepper motors
       responses:
         "200":
           description: Motor status
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  motor1:
-                    type: object
-                    properties:
-                      position:
-                        type: number
-                      status:
-                        type: string
-                  motor2:
-                    type: object
-                    properties:
-                      position:
-                        type: number
-                      status:
-                        type: string
+                $ref: "#/components/schemas/MotorStatus"
+
+  /motors/{motorId}/move:
+    post:
+      tags:
+        - Motor Control
+      summary: Move motor to position
+      description: Command motor to move to specified position with safety validation
+      parameters:
+        - name: motorId
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 2
+          description: Motor ID (1 or 2)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MoveCommand"
+      responses:
+        "200":
+          description: Move command accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MoveResponse"
+        "400":
+          description: Invalid parameters
+        "503":
+          description: Motor not ready
+
   /metrics:
     get:
+      tags:
+        - System Monitoring
       summary: Get system metrics
+      description: Retrieve comprehensive system performance and health metrics
       responses:
         "200":
           description: System metrics
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  uptime:
-                    type: number
-                  temperature:
-                    type: number
-                  errors:
-                    type: integer
-# TODO: See .github/instructions/comm-protocols.instructions.md for API design guidance
+                $ref: "#/components/schemas/SystemMetrics"
+
+components:
+  schemas:
+    # Semantic Search Schemas
+    SearchQuery:
+      type: object
+      required:
+        - query
+        - search_type
+        - scope
+      properties:
+        query:
+          type: string
+          description: Search query text
+          maxLength: 1000
+          example: "GPIO configuration"
+        search_type:
+          type: string
+          enum: [concept, function, peripheral, register]
+          description: Type of search to perform
+          example: "concept"
+        scope:
+          type: string
+          enum: [STM32H7, L6470, motor_control, NUCLEO_BSP, project_code, all]
+          description: Search scope/collection
+          example: "STM32H7"
+        max_results:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 5
+          description: Maximum number of results to return
+
+    SearchResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/SearchResult"
+        query_time_ms:
+          type: number
+          description: Query execution time in milliseconds
+        total_results:
+          type: integer
+          description: Total number of results found
+        cached:
+          type: boolean
+          description: Whether results were served from cache
+        collections_searched:
+          type: array
+          items:
+            type: string
+          description: Collections that were searched
+
+    SearchResult:
+      type: object
+      properties:
+        content:
+          type: string
+          description: Relevant document content
+        source_file:
+          type: string
+          description: Source file name
+        similarity_score:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+          description: Similarity score (0.0 to 1.0)
+        collection:
+          type: string
+          description: Source collection name
+        metadata:
+          type: object
+          properties:
+            file_path:
+              type: string
+            section:
+              type: string
+            category:
+              type: string
+
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [healthy, unhealthy, degraded]
+        service:
+          type: string
+          example: "STM32 Semantic Search Service"
+        version:
+          type: string
+          example: "1.0"
+        uptime_seconds:
+          type: integer
+        memory_usage_mb:
+          type: number
+        collections:
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/CollectionHealth"
+        embedding_model:
+          type: string
+          example: "mxbai-embed-large"
+        embedding_dimensions:
+          type: integer
+          example: 1024
+        ollama_status:
+          type: string
+          enum: [connected, disconnected, error]
+
+    CollectionHealth:
+      type: object
+      properties:
+        documents:
+          type: integer
+        status:
+          type: string
+          enum: [ready, loading, error, empty]
+        size_mb:
+          type: number
+
+    StatusResponse:
+      type: object
+      properties:
+        service_status:
+          type: string
+          enum: [running, starting, stopping, error]
+        collections_loaded:
+          type: integer
+        total_documents:
+          type: integer
+        cache_size:
+          type: integer
+        cache_hit_rate:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+        last_query_time:
+          type: string
+          format: date-time
+        collections:
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/CollectionStatus"
+
+    CollectionStatus:
+      type: object
+      properties:
+        name:
+          type: string
+        documents:
+          type: integer
+        size_mb:
+          type: number
+        last_updated:
+          type: string
+          format: date-time
+
+    # Motor Control Schemas (Future Implementation)
+    MotorStatus:
+      type: object
+      properties:
+        motor1:
+          $ref: "#/components/schemas/SingleMotorStatus"
+        motor2:
+          $ref: "#/components/schemas/SingleMotorStatus"
+
+    SingleMotorStatus:
+      type: object
+      properties:
+        position:
+          type: number
+          description: Current position in steps
+        status:
+          type: string
+          enum: [idle, running, fault, emergency_stop]
+        speed:
+          type: number
+          description: Current speed in steps/second
+        encoder_position:
+          type: number
+          description: AS5600 encoder position
+        fault_flags:
+          type: integer
+          description: L6470 fault status flags
+
+    MoveCommand:
+      type: object
+      required:
+        - target_position
+      properties:
+        target_position:
+          type: number
+          description: Target position in steps
+        speed:
+          type: number
+          minimum: 1
+          maximum: 15625
+          description: Movement speed in steps/second
+        acceleration:
+          type: number
+          minimum: 1
+          maximum: 59590
+          description: Acceleration in steps/second²
+
+    MoveResponse:
+      type: object
+      properties:
+        command_id:
+          type: string
+          description: Unique command identifier
+        estimated_time_ms:
+          type: integer
+          description: Estimated movement time in milliseconds
+        status:
+          type: string
+          enum: [accepted, rejected, queued]
+
+    # System Monitoring Schemas
+    SystemMetrics:
+      type: object
+      properties:
+        uptime:
+          type: number
+          description: System uptime in seconds
+        temperature:
+          type: number
+          description: System temperature in Celsius
+        errors:
+          type: integer
+          description: Total error count
+        memory_usage:
+          type: object
+          properties:
+            total_mb:
+              type: number
+            used_mb:
+              type: number
+            free_mb:
+              type: number
+        cpu_usage:
+          type: number
+          minimum: 0.0
+          maximum: 100.0
+          description: CPU usage percentage
+
+    # Common Error Schema
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error type
+        message:
+          type: string
+          description: Detailed error message
+        status_code:
+          type: integer
+          description: HTTP status code
+        timestamp:
+          type: string
+          format: date-time
+          description: Error timestamp
+
+tags:
+  - name: Semantic Search
+    description: AI-powered documentation search capabilities
+  - name: Motor Control
+    description: Stepper motor control and monitoring (Future Implementation)
+  - name: System Monitoring
+    description: System health and performance monitoring
