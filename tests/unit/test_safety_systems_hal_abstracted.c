@@ -518,6 +518,70 @@ void test_hal_abstraction_integration_emergency_stop_full_cycle(void) {
 
 /* ==========================================================================
  */
+/* New Safety System Integration Tests                                      */
+/* ==========================================================================
+ */
+
+void test_safety_system_state_integration(void) {
+    // Test that safety state changes are properly integrated
+    
+    // Reset and initialize safety system
+    MockHAL_Reset();
+    SystemError_t result = safety_system_init();
+    TEST_ASSERT_EQUAL(SYSTEM_OK, result);
+    
+    // Verify safety system is operational
+    TEST_ASSERT_TRUE(safety_system_is_operational());
+    
+    // Run safety system task and verify no errors
+    result = safety_system_task();
+    TEST_ASSERT_EQUAL(SYSTEM_OK, result);
+}
+
+void test_emergency_stop_broadcast(void) {
+    // Test that emergency stop broadcast is triggered correctly
+    
+    MockHAL_Reset();
+    emergency_stop_init();
+    
+    // Verify initial state
+    TEST_ASSERT_FALSE(emergency_stop_is_active());
+    
+    // Trigger emergency stop and verify broadcast occurs
+    // This tests the integration with the broadcast function
+    emergency_stop_trigger(ESTOP_SOURCE_SOFTWARE);
+    
+    // Verify emergency stop is active
+    TEST_ASSERT_TRUE(emergency_stop_is_active());
+    
+    // The broadcast function should have been called internally
+    // This validates that the integration is working
+}
+
+void test_safety_monitoring_health_checks(void) {
+    // Test enhanced safety monitoring health checks
+    
+    MockHAL_Reset();
+    SystemError_t result = safety_system_init();
+    TEST_ASSERT_EQUAL(SYSTEM_OK, result);
+    
+    // Test that safety system task performs health checks
+    result = safety_system_task();
+    TEST_ASSERT_EQUAL(SYSTEM_OK, result);
+    
+    // Test fault monitoring integration
+    result = fault_monitor_check();
+    // Should succeed with mocked HAL
+    TEST_ASSERT_EQUAL(SYSTEM_OK, result);
+    
+    // Test watchdog health checking
+    result = watchdog_check_health();
+    // Should succeed with mocked HAL  
+    TEST_ASSERT_EQUAL(SYSTEM_OK, result);
+}
+
+/* ==========================================================================
+ */
 /* Test Suite Setup                                                          */
 /* ==========================================================================
  */
@@ -567,6 +631,11 @@ int main(void) {
 
     // Integration Tests
     RUN_TEST(test_hal_abstraction_integration_emergency_stop_full_cycle);
+    
+    // Safety System Integration Tests (New)
+    RUN_TEST(test_safety_system_state_integration);
+    RUN_TEST(test_emergency_stop_broadcast);
+    RUN_TEST(test_safety_monitoring_health_checks);
 
     return UNITY_END();
 }

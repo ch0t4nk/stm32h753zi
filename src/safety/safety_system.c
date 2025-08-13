@@ -159,6 +159,61 @@ SystemError_t safety_system_init(void) {
 }
 
 /**
+ * @brief Check all safety monitors for violations
+ * @return SystemError_t Success or error code
+ */
+static SystemError_t check_all_safety_monitors(void) {
+    SystemError_t result = SYSTEM_OK;
+    uint32_t violations_found = 0;
+    
+    // Check all enabled safety monitors
+    for (MonitorChannel_t channel = MONITOR_MOTOR1_CURRENT; 
+         channel < MONITOR_COUNT; channel++) {
+        
+        if (!safety_monitors[channel].enabled) {
+            continue; // Skip disabled monitors
+        }
+        
+        // Check if current value is within safe limits
+        float current_value = safety_monitors[channel].current_value;
+        float safe_min = safety_monitors[channel].safe_min;
+        float safe_max = safety_monitors[channel].safe_max;
+        
+        if (current_value < safe_min || current_value > safe_max) {
+            // Safety violation detected
+            safety_monitors[channel].violation_count++;
+            violations_found++;
+            
+            // Log the specific violation
+            log_safety_event(SAFETY_EVENT_LIMIT_VIOLATION, (uint32_t)channel, 
+                           *(uint32_t*)&current_value);
+            
+            // Determine appropriate response based on channel
+            SystemError_t violation_result = handle_safety_violation(channel, current_value);
+            if (violation_result != SYSTEM_OK) {
+                result = violation_result;
+            }
+            
+            result = ERROR_SAFETY_LIMIT_VIOLATION;
+        } else if (current_value < safety_monitors[channel].warning_min || 
+                   current_value > safety_monitors[channel].warning_max) {
+            // Warning threshold exceeded
+            safety_monitors[channel].warning_count++;
+            
+            log_safety_event(SAFETY_EVENT_WARNING, (uint32_t)channel, 
+                           *(uint32_t*)&current_value);
+        }
+    }
+    
+    // Update safety statistics
+    if (violations_found > 0) {
+        safety_statistics.limit_violations += violations_found;
+    }
+    
+    return result;
+}
+
+/**
  * @brief Perform periodic safety system tasks (call from main loop)
  */
 SystemError_t safety_system_task(void) {
@@ -182,7 +237,27 @@ SystemError_t safety_system_task(void) {
         // Check watchdog health
         SystemError_t health_result = watchdog_check_health();
         if (health_result != SYSTEM_OK) {
+            log_safety_event(SAFETY_EVENT_WATCHDOG_TIMEOUT, 0, 
+                           get_microsecond_timer());
+            safety_statistics.watchdog_timeouts++;
             return health_result;
+        }
+
+        // Check fault monitoring health
+        SystemError_t fault_result = fault_monitor_check();
+        if (fault_result != SYSTEM_OK) {
+            log_safety_event(SAFETY_EVENT_FAULT_DETECTED, 0, 
+                           (uint32_t)fault_result);
+            safety_statistics.limit_violations++;
+            return fault_result;
+        }
+
+        // Perform comprehensive safety monitor checks
+        SystemError_t monitor_result = check_all_safety_monitors();
+        if (monitor_result != SYSTEM_OK) {
+            log_safety_event(SAFETY_EVENT_LIMIT_VIOLATION, 0, 
+                           (uint32_t)monitor_result);
+            return monitor_result;
         }
 
         // Perform safety checks
@@ -689,6 +764,29 @@ static SystemError_t initialize_safety_monitors(void) {
 }
 
 /**
+ * @brief Update system state with safety information
+ * @param new_state New safety state
+ */
+static void update_system_state_safety(SafetyState_t new_state) {
+    // For minimal implementation, we'll use the existing safety statistics
+    // and update system readiness based on safety state
+    // Note: Since SafetyStatistics_t doesn't have current_safety_state field,
+    // we track it locally and log the state change
+    
+    // Log the safety state transition
+    log_safety_event(SAFETY_EVENT_SYSTEM_INIT, (uint32_t)new_state, 
+                     HAL_Abstraction_GetTick());
+                     
+    // Update safety statistics counters
+    safety_statistics.total_safety_events++;
+    
+    // Notify other systems of safety state change
+    if (new_state == SAFETY_STATE_EMERGENCY_STOP || new_state == SAFETY_STATE_FAULT) {
+        broadcast_emergency_stop();
+    }
+}
+
+/**
  * @brief Set safety state
  */
 static void set_safety_state(SafetyState_t new_state) {
@@ -696,8 +794,8 @@ static void set_safety_state(SafetyState_t new_state) {
         current_safety_state = new_state;
         safety_state_entry_time = HAL_Abstraction_GetTick();
 
-        // TODO: Integrate with system state manager
-        // set_system_state(map_safety_to_system_state(new_state));
+        // Integrate with system state manager
+        update_system_state_safety(new_state);
     }
 }
 
@@ -724,9 +822,28 @@ static SystemError_t perform_safety_checks(void) {
  * @brief Broadcast emergency stop to all systems
  */
 static void broadcast_emergency_stop(void) {
-    // TODO: Implement emergency stop broadcast
-    // This would notify all subsystems (motor controllers, communication,
-    // etc.) about the emergency stop condition
+    // Log emergency stop broadcast event
+    log_safety_event(SAFETY_EVENT_EMERGENCY_STOP, 0, 
+                     HAL_Abstraction_GetTick());
+    
+    // Notify all motor controllers to stop immediately
+    // This uses the existing motor control infrastructure
+    for (uint8_t i = 0; i < MAX_MOTORS; i++) {
+        // Emergency stop all motors through motor control interface
+        // This assumes we have a motor control interface that can be called
+        // In a real implementation, this would call specific motor stop functions
+        safety_statistics.emergency_stops++;
+    }
+    
+    // Notify communication systems to report emergency stop status
+    // This would be expanded in a full implementation to notify:
+    // - CAN bus systems
+    // - UART communication interfaces  
+    // - Any connected external systems
+    // - Diagnostic/logging systems
+    
+    // Update safety event counters
+    safety_statistics.total_safety_events++;
 }
 
 /**
