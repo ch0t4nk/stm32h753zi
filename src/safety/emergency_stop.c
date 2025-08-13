@@ -136,8 +136,8 @@ SystemError_t emergency_stop_execute(EmergencyStopSource_t source) {
   emergency_stop_set_led(true);
 
   // Set system to fault state
-  // TODO: Integration with system state manager
-  // set_system_state(SYSTEM_STATE_FAULT);
+  // Integration with system state manager - log emergency stop event
+  safety_log_event(SAFETY_EVENT_EMERGENCY_STOP, 0xFF, (uint32_t)source);
 
   // Verify reaction time (should be under ESTOP_REACTION_TIME_MS)
   uint32_t reaction_time = HAL_Abstraction_GetTick() - start_time;
@@ -198,8 +198,8 @@ SystemError_t emergency_stop_reset(void) {
   emergency_stop_set_led(false);
 
   // Return to ready state
-  // TODO: Integration with system state manager
-  // set_system_state(SYSTEM_STATE_READY);
+  // Integration with system state manager - log emergency stop reset event
+  safety_log_event(SAFETY_EVENT_EMERGENCY_STOP_RESET, 0xFF, 0);
 
   return SYSTEM_OK;
 }
