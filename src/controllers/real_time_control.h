@@ -42,29 +42,29 @@
  * @brief Real-time task priority levels
  */
 typedef enum {
-    RT_PRIORITY_CRITICAL = 0, ///< Critical priority (safety tasks)
-    RT_PRIORITY_HIGH,         ///< High priority (control loops)
-    RT_PRIORITY_NORMAL,       ///< Normal priority (coordination)
-    RT_PRIORITY_LOW           ///< Low priority (logging, diagnostics)
+  RT_PRIORITY_CRITICAL = 0, ///< Critical priority (safety tasks)
+  RT_PRIORITY_HIGH,         ///< High priority (control loops)
+  RT_PRIORITY_NORMAL,       ///< Normal priority (coordination)
+  RT_PRIORITY_LOW           ///< Low priority (logging, diagnostics)
 } RTTaskPriority_t;
 
 /**
  * @brief Real-time task states
  */
 typedef enum {
-    RT_TASK_IDLE = 0, ///< Task is idle/disabled
-    RT_TASK_READY,    ///< Task is ready to run
-    RT_TASK_RUNNING,  ///< Task is currently executing
-    RT_TASK_BLOCKED   ///< Task is blocked waiting for resource
+  RT_TASK_IDLE = 0, ///< Task is idle/disabled
+  RT_TASK_READY,    ///< Task is ready to run
+  RT_TASK_RUNNING,  ///< Task is currently executing
+  RT_TASK_BLOCKED   ///< Task is blocked waiting for resource
 } RTTaskState_t;
 
 /**
  * @brief Real-time system states
  */
 typedef enum {
-    RT_SYSTEM_STOPPED = 0, ///< System is stopped
-    RT_SYSTEM_RUNNING,     ///< System is running normally
-    RT_SYSTEM_ERROR        ///< System is in error state
+  RT_SYSTEM_STOPPED = 0, ///< System is stopped
+  RT_SYSTEM_RUNNING,     ///< System is running normally
+  RT_SYSTEM_ERROR        ///< System is in error state
 } RTSystemState_t;
 
 /**
@@ -76,89 +76,89 @@ typedef void (*RTTaskFunction_t)(void *context);
  * @brief Real-time task configuration structure
  */
 typedef struct {
-    char name[RT_TASK_NAME_MAX]; ///< Task name
-    RTTaskPriority_t priority;   ///< Task priority
-    uint32_t period_us;          ///< Task period in microseconds
-    uint32_t deadline_us;        ///< Task deadline in microseconds
-    RTTaskFunction_t function;   ///< Task function pointer
-    void *context;               ///< Task context data
+  char name[RT_TASK_NAME_MAX]; ///< Task name
+  RTTaskPriority_t priority;   ///< Task priority
+  uint32_t period_us;          ///< Task period in microseconds
+  uint32_t deadline_us;        ///< Task deadline in microseconds
+  RTTaskFunction_t function;   ///< Task function pointer
+  void *context;               ///< Task context data
 } RTTaskConfig_t;
 
 /**
  * @brief Real-time task control block
  */
 typedef struct {
-    uint8_t id;                  ///< Task identifier
-    char name[RT_TASK_NAME_MAX]; ///< Task name
-    bool enabled;                ///< Task enabled flag
-    RTTaskState_t state;         ///< Current task state
-    RTTaskPriority_t priority;   ///< Task priority
-    uint32_t period_us;          ///< Task period in microseconds
-    uint32_t deadline_us;        ///< Task deadline in microseconds
-    RTTaskFunction_t function;   ///< Task function pointer
-    void *context;               ///< Task context data
+  uint8_t id;                  ///< Task identifier
+  char name[RT_TASK_NAME_MAX]; ///< Task name
+  bool enabled;                ///< Task enabled flag
+  RTTaskState_t state;         ///< Current task state
+  RTTaskPriority_t priority;   ///< Task priority
+  uint32_t period_us;          ///< Task period in microseconds
+  uint32_t deadline_us;        ///< Task deadline in microseconds
+  RTTaskFunction_t function;   ///< Task function pointer
+  void *context;               ///< Task context data
 
-    // Execution statistics
-    uint32_t last_execution;       ///< Last execution timestamp
-    uint32_t execution_count;      ///< Total execution count
-    uint32_t total_execution_time; ///< Total execution time
-    uint32_t max_execution_time;   ///< Maximum execution time
-    uint32_t missed_deadlines;     ///< Number of missed deadlines
+  // Execution statistics
+  uint32_t last_execution;       ///< Last execution timestamp
+  uint32_t execution_count;      ///< Total execution count
+  uint32_t total_execution_time; ///< Total execution time
+  uint32_t max_execution_time;   ///< Maximum execution time
+  uint32_t missed_deadlines;     ///< Number of missed deadlines
 } RTTask_t;
 
 /**
  * @brief Real-time system timing statistics
  */
 typedef struct {
-    uint32_t system_start_time; ///< System start timestamp
-    uint32_t total_cycles;      ///< Total control cycles executed
-    uint32_t max_jitter_us;     ///< Maximum timing jitter
-    uint32_t overrun_count;     ///< Number of timing overruns
+  uint32_t system_start_time; ///< System start timestamp
+  uint32_t total_cycles;      ///< Total control cycles executed
+  uint32_t max_jitter_us;     ///< Maximum timing jitter
+  uint32_t overrun_count;     ///< Number of timing overruns
 } RTTiming_t;
 
 /**
  * @brief Real-time system performance monitoring
  */
 typedef struct {
-    float cpu_utilization;     ///< Current CPU utilization (%)
-    float max_cpu_utilization; ///< Maximum CPU utilization (%)
-    uint32_t memory_usage;     ///< Memory usage in bytes
-    uint32_t stack_usage;      ///< Stack usage in bytes
+  float cpu_utilization;     ///< Current CPU utilization (%)
+  float max_cpu_utilization; ///< Maximum CPU utilization (%)
+  uint32_t memory_usage;     ///< Memory usage in bytes
+  uint32_t stack_usage;      ///< Stack usage in bytes
 } RTPerformance_t;
 
 /**
  * @brief Real-time control system structure
  */
 typedef struct {
-    RTSystemState_t system_state; ///< Current system state
-    RTTask_t tasks[RT_MAX_TASKS]; ///< Real-time tasks array
-    RTTiming_t timing;            ///< Timing statistics
-    RTPerformance_t performance;  ///< Performance monitoring
+  RTSystemState_t system_state; ///< Current system state
+  RTTask_t tasks[RT_MAX_TASKS]; ///< Real-time tasks array
+  RTTiming_t timing;            ///< Timing statistics
+  RTPerformance_t performance;  ///< Performance monitoring
 } RTControlSystem_t;
 
 /**
  * @brief Real-time system status structure
  */
 typedef struct {
-    RTSystemState_t system_state; ///< Current system state
-    uint32_t uptime_ms;           ///< System uptime in milliseconds
-    uint32_t total_cycles;        ///< Total control cycles
-    uint32_t overrun_count;       ///< Timing overrun count
-    uint32_t max_jitter_us;       ///< Maximum jitter
-    uint8_t active_tasks;         ///< Number of active tasks
-    RTPerformance_t performance;  ///< Performance data
+  RTSystemState_t system_state; ///< Current system state
+  uint32_t uptime_ms;           ///< System uptime in milliseconds
+  uint32_t total_cycles;        ///< Total control cycles
+  uint32_t overrun_count;       ///< Timing overrun count
+  uint32_t max_jitter_us;       ///< Maximum jitter
+  uint8_t active_tasks;         ///< Number of active tasks
+  RTPerformance_t performance;  ///< Performance data
 } RTSystemStatus_t;
 
 /**
  * @brief Real-time task statistics structure
  */
 typedef struct {
-    char name[RT_TASK_NAME_MAX];     ///< Task name
-    uint32_t execution_count;        ///< Total executions
-    uint32_t missed_deadlines;       ///< Missed deadlines
-    uint32_t max_execution_time;     ///< Maximum execution time
-    uint32_t average_execution_time; ///< Average execution time
-    float cpu_utilization;           ///< Task CPU utilization (%)
+  char name[RT_TASK_NAME_MAX];     ///< Task name
+  uint32_t execution_count;        ///< Total executions
+  uint32_t missed_deadlines;       ///< Missed deadlines
+  uint32_t max_execution_time;     ///< Maximum execution time
+  uint32_t average_execution_time; ///< Average execution time
+  float cpu_utilization;           ///< Task CPU utilization (%)
 } RTTaskStats_t;
 
 // Core real-time control functions

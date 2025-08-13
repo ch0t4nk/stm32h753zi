@@ -34,8 +34,8 @@ extern "C" {
 // ================================================================================================
 
 // Telemetry buffer sizes (optimized for STM32H7 memory)
-#define CHARACTERIZATION_BUFFER_SIZE                                          \
-    (2000) // 2000 samples for 2-second tests at 1kHz
+#define CHARACTERIZATION_BUFFER_SIZE                                           \
+  (2000) // 2000 samples for 2-second tests at 1kHz
 #define TELEMETRY_SAMPLE_RATE_MAX_HZ (1000)    // Maximum sample rate (1kHz)
 #define TELEMETRY_SAMPLE_RATE_DEFAULT_HZ (500) // Default sample rate (500Hz)
 #define TELEMETRY_MEMORY_POOL_SIZE_KB (8)      // Memory pool size (8KB target)
@@ -43,13 +43,12 @@ extern "C" {
 // Performance monitoring constants
 #define TELEMETRY_CPU_OVERHEAD_TARGET_PCT (2.0f) // Target CPU overhead (<2%)
 #define TELEMETRY_TIMING_TOLERANCE_US (100)      // Timing tolerance (±100µs)
-#define TELEMETRY_SAFETY_CHECK_INTERVAL_MS (10) // Safety check interval (10ms)
+#define TELEMETRY_SAFETY_CHECK_INTERVAL_MS (10)  // Safety check interval (10ms)
 
 // Validation and calibration constants
-#define TELEMETRY_CALIBRATION_SAMPLES (100) // Calibration sample count
-#define TELEMETRY_VALIDATION_DURATION_MS                                      \
-    (5000)                                    // Validation test duration (5s)
-#define TELEMETRY_ACCURACY_TARGET_PCT (95.0f) // Target accuracy (95%)
+#define TELEMETRY_CALIBRATION_SAMPLES (100)     // Calibration sample count
+#define TELEMETRY_VALIDATION_DURATION_MS (5000) // Validation test duration (5s)
+#define TELEMETRY_ACCURACY_TARGET_PCT (95.0f)   // Target accuracy (95%)
 
 // ================================================================================================
 // DATA STRUCTURES
@@ -62,56 +61,54 @@ extern "C" {
  * footprint. All fields aligned for efficient STM32H7 access patterns.
  */
 typedef struct {
-    // === AS5600 Encoder Data ===
-    float position_degrees;  ///< Current position (0.088° resolution)
-    float velocity_dps;      ///< Calculated velocity (degrees/second)
-    float acceleration_dps2; ///< Calculated acceleration (degrees/second²)
+  // === AS5600 Encoder Data ===
+  float position_degrees;  ///< Current position (0.088° resolution)
+  float velocity_dps;      ///< Calculated velocity (degrees/second)
+  float acceleration_dps2; ///< Calculated acceleration (degrees/second²)
 
-    // === L6470 Driver Data ===
-    float motor_current_a;     ///< Measured current from L6470 ADC (Amperes)
-    uint16_t kval_hold_actual; ///< Current KVAL_HOLD setting (0-255)
-    uint16_t kval_run_actual;  ///< Current KVAL_RUN setting (0-255)
-    uint8_t status_flags;      ///< L6470 status register bits
-    bool thermal_warning;      ///< Thermal warning flag from L6470
-    bool stall_detected;       ///< Stall detection flag from L6470
-    bool overcurrent_detected; ///< Overcurrent protection flag
+  // === L6470 Driver Data ===
+  float motor_current_a;     ///< Measured current from L6470 ADC (Amperes)
+  uint16_t kval_hold_actual; ///< Current KVAL_HOLD setting (0-255)
+  uint16_t kval_run_actual;  ///< Current KVAL_RUN setting (0-255)
+  uint8_t status_flags;      ///< L6470 status register bits
+  bool thermal_warning;      ///< Thermal warning flag from L6470
+  bool stall_detected;       ///< Stall detection flag from L6470
+  bool overcurrent_detected; ///< Overcurrent protection flag
 
-    // === System Performance Data ===
-    uint32_t timestamp_us; ///< High-resolution timestamp (microseconds)
-    uint32_t
-        control_loop_time_us;  ///< Control loop execution time (microseconds)
-    float power_consumption_w; ///< Calculated power consumption (Watts)
-    float thermal_performance; ///< Temperature-based performance metric
-                               ///< (0.0-1.0)
-    float cpu_utilization_percent; ///< Current CPU utilization (percentage)
+  // === System Performance Data ===
+  uint32_t timestamp_us;         ///< High-resolution timestamp (microseconds)
+  uint32_t control_loop_time_us; ///< Control loop execution time (microseconds)
+  float power_consumption_w;     ///< Calculated power consumption (Watts)
+  float thermal_performance;     ///< Temperature-based performance metric
+                                 ///< (0.0-1.0)
+  float cpu_utilization_percent; ///< Current CPU utilization (percentage)
 
-    // === Test-Specific Data ===
-    float
-        commanded_position; ///< Commanded position for current test (degrees)
-    float commanded_velocity; ///< Commanded velocity for current test (dps)
-    float position_error;     ///< Position tracking error (degrees)
-    float control_effort;     ///< PID controller output (-1.0 to 1.0)
+  // === Test-Specific Data ===
+  float commanded_position; ///< Commanded position for current test (degrees)
+  float commanded_velocity; ///< Commanded velocity for current test (dps)
+  float position_error;     ///< Position tracking error (degrees)
+  float control_effort;     ///< PID controller output (-1.0 to 1.0)
 
-    // === Quality Metrics ===
-    uint8_t data_quality_score;  ///< Data quality indicator (0-100)
-    bool safety_bounds_ok;       ///< All safety bounds within limits
-    uint32_t sample_sequence_id; ///< Sequential sample identifier
+  // === Quality Metrics ===
+  uint8_t data_quality_score;  ///< Data quality indicator (0-100)
+  bool safety_bounds_ok;       ///< All safety bounds within limits
+  uint32_t sample_sequence_id; ///< Sequential sample identifier
 } OptimizationTelemetryPacket_t;
 
 /**
  * @brief Characterization test types for targeted data collection
  */
 typedef enum {
-    CHAR_TEST_TYPE_STEP_RESPONSE,   ///< Step response test for time constant
-                                    ///< identification
-    CHAR_TEST_TYPE_FREQUENCY_SWEEP, ///< Frequency response test for system
-                                    ///< identification
-    CHAR_TEST_TYPE_LOAD_VARIATION, ///< Load variation test for adaptive tuning
-    CHAR_TEST_TYPE_THERMAL_CYCLING, ///< Thermal cycling test for temperature
-                                    ///< compensation
-    CHAR_TEST_TYPE_EFFICIENCY_MAP,  ///< Efficiency mapping test for power
-                                    ///< optimization
-    CHAR_TEST_TYPE_CUSTOM           ///< User-defined custom test
+  CHAR_TEST_TYPE_STEP_RESPONSE,   ///< Step response test for time constant
+                                  ///< identification
+  CHAR_TEST_TYPE_FREQUENCY_SWEEP, ///< Frequency response test for system
+                                  ///< identification
+  CHAR_TEST_TYPE_LOAD_VARIATION,  ///< Load variation test for adaptive tuning
+  CHAR_TEST_TYPE_THERMAL_CYCLING, ///< Thermal cycling test for temperature
+                                  ///< compensation
+  CHAR_TEST_TYPE_EFFICIENCY_MAP,  ///< Efficiency mapping test for power
+                                  ///< optimization
+  CHAR_TEST_TYPE_CUSTOM           ///< User-defined custom test
 } CharacterizationTestType_t;
 
 /**
@@ -122,19 +119,19 @@ typedef enum {
  * capabilities).
  */
 typedef struct {
-    OptimizationTelemetryPacket_t
-        samples[CHARACTERIZATION_BUFFER_SIZE]; ///< Telemetry samples
-    uint32_t sample_count;     ///< Number of valid samples in buffer
-    uint32_t sample_rate_hz;   ///< Sampling frequency used for collection
-    uint32_t test_duration_ms; ///< Actual test duration (milliseconds)
-    CharacterizationTestType_t
-        test_type;                 ///< Type of characterization test performed
-    uint32_t test_start_timestamp; ///< Test start timestamp (system ticks)
-    float test_parameters[4];      ///< Test-specific parameters (amplitude,
-                                   ///< frequency, etc.)
-    uint8_t motor_id;              ///< Motor identifier (0-1)
-    bool data_valid;               ///< Data validity flag
-    uint32_t checksum;             ///< Data integrity checksum
+  OptimizationTelemetryPacket_t
+      samples[CHARACTERIZATION_BUFFER_SIZE]; ///< Telemetry samples
+  uint32_t sample_count;     ///< Number of valid samples in buffer
+  uint32_t sample_rate_hz;   ///< Sampling frequency used for collection
+  uint32_t test_duration_ms; ///< Actual test duration (milliseconds)
+  CharacterizationTestType_t
+      test_type;                 ///< Type of characterization test performed
+  uint32_t test_start_timestamp; ///< Test start timestamp (system ticks)
+  float test_parameters[4];      ///< Test-specific parameters (amplitude,
+                                 ///< frequency, etc.)
+  uint8_t motor_id;              ///< Motor identifier (0-1)
+  bool data_valid;               ///< Data validity flag
+  uint32_t checksum;             ///< Data integrity checksum
 } CharacterizationDataSet_t;
 
 /**
@@ -143,17 +140,17 @@ typedef struct {
  * Configuration structure for setting up targeted characterization tests.
  */
 typedef struct {
-    CharacterizationTestType_t test_type; ///< Type of test to perform
-    float step_amplitude_deg;     ///< Step response amplitude (degrees)
-    float frequency_start_hz;     ///< Frequency sweep start (Hz)
-    float frequency_end_hz;       ///< Frequency sweep end (Hz)
-    uint32_t test_duration_ms;    ///< Test duration (milliseconds)
-    uint32_t sample_rate_hz;      ///< Data collection sample rate (Hz)
-    bool enable_safety_limits;    ///< Enable safety bound checking during test
-    float safety_current_limit_a; ///< Maximum current limit for test (Amperes)
-    float safety_speed_limit_dps; ///< Maximum speed limit for test
-                                  ///< (degrees/second)
-    float safety_error_limit_deg; ///< Maximum position error limit (degrees)
+  CharacterizationTestType_t test_type; ///< Type of test to perform
+  float step_amplitude_deg;             ///< Step response amplitude (degrees)
+  float frequency_start_hz;             ///< Frequency sweep start (Hz)
+  float frequency_end_hz;               ///< Frequency sweep end (Hz)
+  uint32_t test_duration_ms;            ///< Test duration (milliseconds)
+  uint32_t sample_rate_hz;              ///< Data collection sample rate (Hz)
+  bool enable_safety_limits;    ///< Enable safety bound checking during test
+  float safety_current_limit_a; ///< Maximum current limit for test (Amperes)
+  float safety_speed_limit_dps; ///< Maximum speed limit for test
+                                ///< (degrees/second)
+  float safety_error_limit_deg; ///< Maximum position error limit (degrees)
 } CharacterizationTestConfig_t;
 
 /**
@@ -162,17 +159,16 @@ typedef struct {
  * Performance monitoring for telemetry system validation and optimization.
  */
 typedef struct {
-    float cpu_overhead_percent;  ///< CPU overhead of telemetry system
-                                 ///< (percentage)
-    uint32_t memory_usage_bytes; ///< Current memory usage (bytes)
-    uint32_t
-        average_sample_time_us;    ///< Average time per sample (microseconds)
-    uint32_t max_sample_time_us;   ///< Maximum time per sample (microseconds)
-    uint32_t missed_samples_count; ///< Number of missed samples due to timing
-    float timing_accuracy_percent; ///< Timing accuracy vs target sample rate
-                                   ///< (percentage)
-    bool real_time_compatible;     ///< Compatible with 1kHz control loop
-    uint32_t total_samples_collected; ///< Total samples collected since init
+  float cpu_overhead_percent;       ///< CPU overhead of telemetry system
+                                    ///< (percentage)
+  uint32_t memory_usage_bytes;      ///< Current memory usage (bytes)
+  uint32_t average_sample_time_us;  ///< Average time per sample (microseconds)
+  uint32_t max_sample_time_us;      ///< Maximum time per sample (microseconds)
+  uint32_t missed_samples_count;    ///< Number of missed samples due to timing
+  float timing_accuracy_percent;    ///< Timing accuracy vs target sample rate
+                                    ///< (percentage)
+  bool real_time_compatible;        ///< Compatible with 1kHz control loop
+  uint32_t total_samples_collected; ///< Total samples collected since init
 } TelemetryPerformanceMetrics_t;
 
 // ================================================================================================

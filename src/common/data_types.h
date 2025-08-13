@@ -63,13 +63,13 @@ typedef uint32_t period_ms_t;    // Period in milliseconds
 
 // Time structure for human-readable time
 typedef struct {
-    u16 year;        // Year (e.g., 2025)
-    u8 month;        // Month (1-12)
-    u8 day;          // Day (1-31)
-    u8 hour;         // Hour (0-23)
-    u8 minute;       // Minute (0-59)
-    u8 second;       // Second (0-59)
-    u16 millisecond; // Millisecond (0-999)
+  u16 year;        // Year (e.g., 2025)
+  u8 month;        // Month (1-12)
+  u8 day;          // Day (1-31)
+  u8 hour;         // Hour (0-23)
+  u8 minute;       // Minute (0-59)
+  u8 second;       // Second (0-59)
+  u16 millisecond; // Millisecond (0-999)
 } datetime_t;
 
 /* ==========================================================================
@@ -138,8 +138,8 @@ typedef u16 modbus_register_t; // Modbus register value
 
 // Network packet types
 typedef struct {
-    u16 length;    // Packet length
-    u8 data[1500]; // Ethernet MTU size
+  u16 length;    // Packet length
+  u8 data[1500]; // Ethernet MTU size
 } ethernet_packet_t;
 
 /* ==========================================================================
@@ -151,40 +151,40 @@ typedef struct {
 
 // PID controller types
 typedef struct {
-    f32 kp;                             // Proportional gain
-    f32 ki;                             // Integral gain
-    f32 kd;                             // Derivative gain
-    f32 integral_sum;                   // Integral accumulator
-    f32 last_error;                     // Previous error for derivative
-    f32 output_min;                     // Minimum output limit
-    f32 output_max;                     // Maximum output limit
-    boolean integral_windup_protection; // Integral windup protection enable
+  f32 kp;                             // Proportional gain
+  f32 ki;                             // Integral gain
+  f32 kd;                             // Derivative gain
+  f32 integral_sum;                   // Integral accumulator
+  f32 last_error;                     // Previous error for derivative
+  f32 output_min;                     // Minimum output limit
+  f32 output_max;                     // Maximum output limit
+  boolean integral_windup_protection; // Integral windup protection enable
 } pid_controller_t;
 
 // Motion profile types
 typedef struct {
-    f32 start_position;        // Starting position
-    f32 end_position;          // Ending position
-    f32 max_velocity;          // Maximum velocity
-    f32 acceleration;          // Acceleration rate
-    f32 deceleration;          // Deceleration rate
-    f32 jerk_limit;            // Jerk limitation
-    timestamp_ms_t start_time; // Profile start time
-    duration_ms_t total_time;  // Total profile time
+  f32 start_position;        // Starting position
+  f32 end_position;          // Ending position
+  f32 max_velocity;          // Maximum velocity
+  f32 acceleration;          // Acceleration rate
+  f32 deceleration;          // Deceleration rate
+  f32 jerk_limit;            // Jerk limitation
+  timestamp_ms_t start_time; // Profile start time
+  duration_ms_t total_time;  // Total profile time
 } motion_profile_t;
 
 // Filter types
 typedef struct {
-    f32 alpha;           // Filter coefficient (0-1)
-    f32 previous_output; // Previous filter output
-    boolean initialized; // Filter initialization flag
+  f32 alpha;           // Filter coefficient (0-1)
+  f32 previous_output; // Previous filter output
+  boolean initialized; // Filter initialization flag
 } low_pass_filter_t;
 
 typedef struct {
-    f32 samples[8]; // Sample buffer
-    u8 index;       // Current sample index
-    u8 count;       // Number of valid samples
-    f32 sum;        // Sum of samples
+  f32 samples[8]; // Sample buffer
+  u8 index;       // Current sample index
+  u8 count;       // Number of valid samples
+  f32 sum;        // Sum of samples
 } moving_average_filter_t;
 
 /* ==========================================================================
@@ -196,41 +196,41 @@ typedef struct {
 
 // 2D and 3D vector types
 typedef struct {
-    f32 x; // X component
-    f32 y; // Y component
+  f32 x; // X component
+  f32 y; // Y component
 } vector2d_t;
 
 typedef struct {
-    f32 x; // X component
-    f32 y; // Y component
-    f32 z; // Z component
+  f32 x; // X component
+  f32 y; // Y component
+  f32 z; // Z component
 } vector3d_t;
 
 // Matrix types
 typedef struct {
-    f32 elements[2][2]; // 2x2 matrix elements
+  f32 elements[2][2]; // 2x2 matrix elements
 } matrix2x2_t;
 
 typedef struct {
-    f32 elements[3][3]; // 3x3 matrix elements
+  f32 elements[3][3]; // 3x3 matrix elements
 } matrix3x3_t;
 
 // Quaternion type for 3D rotations
 typedef struct {
-    f32 w; // Real component
-    f32 x; // X component
-    f32 y; // Y component
-    f32 z; // Z component
+  f32 w; // Real component
+  f32 x; // X component
+  f32 y; // Y component
+  f32 z; // Z component
 } quaternion_t;
 
 // Statistical types
 typedef struct {
-    f32 mean;               // Mean value
-    f32 variance;           // Variance
-    f32 standard_deviation; // Standard deviation
-    f32 minimum;            // Minimum value
-    f32 maximum;            // Maximum value
-    u32 sample_count;       // Number of samples
+  f32 mean;               // Mean value
+  f32 variance;           // Variance
+  f32 standard_deviation; // Standard deviation
+  f32 minimum;            // Minimum value
+  f32 maximum;            // Maximum value
+  u32 sample_count;       // Number of samples
 } statistics_t;
 
 /* ==========================================================================
@@ -242,33 +242,33 @@ typedef struct {
 
 // Generic circular buffer
 typedef struct {
-    u8 *data;         // Buffer data pointer
-    u32 size;         // Buffer size
-    u32 head;         // Head index
-    u32 tail;         // Tail index
-    u32 count;        // Number of items in buffer
-    boolean overflow; // Overflow flag
+  u8 *data;         // Buffer data pointer
+  u32 size;         // Buffer size
+  u32 head;         // Head index
+  u32 tail;         // Tail index
+  u32 count;        // Number of items in buffer
+  boolean overflow; // Overflow flag
 } circular_buffer_t;
 
 // FIFO queue
 typedef struct {
-    void **items; // Queue item pointers
-    u32 capacity; // Queue capacity
-    u32 front;    // Front index
-    u32 rear;     // Rear index
-    u32 count;    // Number of items
+  void **items; // Queue item pointers
+  u32 capacity; // Queue capacity
+  u32 front;    // Front index
+  u32 rear;     // Rear index
+  u32 count;    // Number of items
 } fifo_queue_t;
 
 // Ring buffer for specific data types
-#define DECLARE_RING_BUFFER(type, name)                                       \
-    typedef struct {                                                          \
-        type *buffer;                                                         \
-        u32 size;                                                             \
-        u32 head;                                                             \
-        u32 tail;                                                             \
-        u32 count;                                                            \
-        boolean full;                                                         \
-    } name##_ring_buffer_t
+#define DECLARE_RING_BUFFER(type, name)                                        \
+  typedef struct {                                                             \
+    type *buffer;                                                              \
+    u32 size;                                                                  \
+    u32 head;                                                                  \
+    u32 tail;                                                                  \
+    u32 count;                                                                 \
+    boolean full;                                                              \
+  } name##_ring_buffer_t
 
 // Common ring buffer declarations
 DECLARE_RING_BUFFER(f32, float);
@@ -284,33 +284,33 @@ DECLARE_RING_BUFFER(timestamp_ms_t, timestamp);
 
 // Configuration parameter types
 typedef union {
-    u32 uint32_value;      // 32-bit unsigned integer parameter
-    s32 int32_value;       // 32-bit signed integer parameter
-    f32 float_value;       // 32-bit floating point parameter
-    bool bool_value;       // Boolean parameter
-    char string_value[32]; // String parameter (max 32 chars)
+  u32 uint32_value;      // 32-bit unsigned integer parameter
+  s32 int32_value;       // 32-bit signed integer parameter
+  f32 float_value;       // 32-bit floating point parameter
+  bool bool_value;       // Boolean parameter
+  char string_value[32]; // String parameter (max 32 chars)
 } config_parameter_value_t;
 
 typedef struct {
-    u16 parameter_id;                   // Parameter identifier
-    u8 parameter_type;                  // Parameter type (uint32, float, etc.)
-    config_parameter_value_t value;     // Parameter value
-    config_parameter_value_t min_value; // Minimum allowed value
-    config_parameter_value_t max_value; // Maximum allowed value
-    config_parameter_value_t default_value; // Default value
-    boolean read_only;                      // Read-only flag
-    boolean requires_restart;               // Requires system restart flag
+  u16 parameter_id;                   // Parameter identifier
+  u8 parameter_type;                  // Parameter type (uint32, float, etc.)
+  config_parameter_value_t value;     // Parameter value
+  config_parameter_value_t min_value; // Minimum allowed value
+  config_parameter_value_t max_value; // Maximum allowed value
+  config_parameter_value_t default_value; // Default value
+  boolean read_only;                      // Read-only flag
+  boolean requires_restart;               // Requires system restart flag
 } config_parameter_t;
 
 // Calibration data types
 typedef struct {
-    f32 offset;                      // Calibration offset
-    f32 scale;                       // Calibration scale factor
-    f32 linearity_correction[10];    // Linearity correction coefficients
-    timestamp_ms_t calibration_time; // When calibration was performed
-    u32 calibration_quality;         // Calibration quality metric (0-100)
-    boolean valid;                   // Calibration validity flag
-    u32 checksum;                    // Calibration data checksum
+  f32 offset;                      // Calibration offset
+  f32 scale;                       // Calibration scale factor
+  f32 linearity_correction[10];    // Linearity correction coefficients
+  timestamp_ms_t calibration_time; // When calibration was performed
+  u32 calibration_quality;         // Calibration quality metric (0-100)
+  boolean valid;                   // Calibration validity flag
+  u32 checksum;                    // Calibration data checksum
 } calibration_data_t;
 
 /* ==========================================================================
@@ -321,13 +321,13 @@ typedef struct {
 // TODO: See .instructions/status-types.md for status reporting patterns
 
 // Generic result type with value and error code
-#define DECLARE_RESULT_TYPE(type, name)                                       \
-    typedef struct {                                                          \
-        type value;                                                           \
-        u32 error_code;                                                       \
-        boolean valid;                                                        \
-        timestamp_ms_t timestamp;                                             \
-    } name##_result_t
+#define DECLARE_RESULT_TYPE(type, name)                                        \
+  typedef struct {                                                             \
+    type value;                                                                \
+    u32 error_code;                                                            \
+    boolean valid;                                                             \
+    timestamp_ms_t timestamp;                                                  \
+  } name##_result_t
 
 // Common result type declarations
 DECLARE_RESULT_TYPE(f32, float);
@@ -337,12 +337,12 @@ DECLARE_RESULT_TYPE(angular_velocity_rpm_t, velocity);
 
 // Operation status type
 typedef struct {
-    boolean in_progress;          // Operation in progress
-    u8 progress_percent;          // Progress percentage (0-100)
-    timestamp_ms_t start_time;    // Operation start time
-    duration_ms_t estimated_time; // Estimated completion time
-    u32 error_code;               // Error code (0 = no error)
-    char status_message[64];      // Human-readable status message
+  boolean in_progress;          // Operation in progress
+  u8 progress_percent;          // Progress percentage (0-100)
+  timestamp_ms_t start_time;    // Operation start time
+  duration_ms_t estimated_time; // Estimated completion time
+  u32 error_code;               // Error code (0 = no error)
+  char status_message[64];      // Human-readable status message
 } operation_status_t;
 
 /* ==========================================================================
@@ -354,22 +354,22 @@ typedef struct {
 
 // Memory block descriptor
 typedef struct {
-    void *address;             // Memory block address
-    u32 size;                  // Memory block size
-    boolean allocated;         // Allocation status
-    timestamp_ms_t alloc_time; // Allocation timestamp
-    const char *file;          // Source file that allocated memory
-    u32 line;                  // Line number that allocated memory
+  void *address;             // Memory block address
+  u32 size;                  // Memory block size
+  boolean allocated;         // Allocation status
+  timestamp_ms_t alloc_time; // Allocation timestamp
+  const char *file;          // Source file that allocated memory
+  u32 line;                  // Line number that allocated memory
 } memory_block_t;
 
 // Memory pool descriptor
 typedef struct {
-    void *pool_start;      // Pool start address
-    u32 pool_size;         // Total pool size
-    u32 block_size;        // Individual block size
-    u32 block_count;       // Number of blocks
-    u32 free_blocks;       // Number of free blocks
-    u8 *allocation_bitmap; // Block allocation bitmap
+  void *pool_start;      // Pool start address
+  u32 pool_size;         // Total pool size
+  u32 block_size;        // Individual block size
+  u32 block_count;       // Number of blocks
+  u32 free_blocks;       // Number of free blocks
+  u8 *allocation_bitmap; // Block allocation bitmap
 } memory_pool_t;
 
 /* ==========================================================================
@@ -393,15 +393,15 @@ typedef struct {
 #define BIT_CHECK(reg, bit) (((reg) >> (bit)) & 1U)
 
 // Alignment macros
-#define ALIGN_UP(val, align) (((val) + (align) - 1) & ~((align) - 1))
-#define ALIGN_DOWN(val, align) ((val) & ~((align) - 1))
-#define IS_ALIGNED(val, align) (((val) & ((align) - 1)) == 0)
+#define ALIGN_UP(val, align) (((val) + (align)-1) & ~((align)-1))
+#define ALIGN_DOWN(val, align) ((val) & ~((align)-1))
+#define IS_ALIGNED(val, align) (((val) & ((align)-1)) == 0)
 
 // Byte order conversion (for network protocols)
 #define SWAP16(val) (((val) << 8) | ((val) >> 8))
-#define SWAP32(val)                                                           \
-    (((val) << 24) | (((val) & 0xFF00) << 8) | (((val) & 0xFF0000) >> 8) |    \
-     ((val) >> 24))
+#define SWAP32(val)                                                            \
+  (((val) << 24) | (((val)&0xFF00) << 8) | (((val)&0xFF0000) >> 8) |           \
+   ((val) >> 24))
 
 // Mathematical constants
 #define PI 3.14159265358979323846f
@@ -447,40 +447,40 @@ typedef struct {
  * Consolidated from safety_system.h, safety_state_manager.h, and data_types.h
  */
 typedef enum {
-    // Emergency and critical events (0-9)
-    SAFETY_EVENT_EMERGENCY_STOP = 0,       // Emergency stop activated
-    SAFETY_EVENT_EMERGENCY_STOP_RESET = 1, // Emergency stop reset
-    SAFETY_EVENT_FAULT_DETECTED = 2,       // Fault detected
-    SAFETY_EVENT_FAULT_CLEARED = 3,        // Fault cleared
-    SAFETY_EVENT_SHUTDOWN_REQUEST = 4,     // Shutdown request
+  // Emergency and critical events (0-9)
+  SAFETY_EVENT_EMERGENCY_STOP = 0,       // Emergency stop activated
+  SAFETY_EVENT_EMERGENCY_STOP_RESET = 1, // Emergency stop reset
+  SAFETY_EVENT_FAULT_DETECTED = 2,       // Fault detected
+  SAFETY_EVENT_FAULT_CLEARED = 3,        // Fault cleared
+  SAFETY_EVENT_SHUTDOWN_REQUEST = 4,     // Shutdown request
 
-    // Motor control events (10-19)
-    SAFETY_EVENT_MOTOR_ERROR = 10,         // Motor control error
-    SAFETY_EVENT_MOTOR_INIT_BLOCKED = 11,  // Motor init blocked by safety
-    SAFETY_EVENT_OVERCURRENT_STOP = 12,    // Overcurrent stop
-    SAFETY_EVENT_OVERSPEED_STOP = 13,      // Overspeed stop
-    SAFETY_EVENT_POSITION_LIMIT_STOP = 14, // Position limit stop
+  // Motor control events (10-19)
+  SAFETY_EVENT_MOTOR_ERROR = 10,         // Motor control error
+  SAFETY_EVENT_MOTOR_INIT_BLOCKED = 11,  // Motor init blocked by safety
+  SAFETY_EVENT_OVERCURRENT_STOP = 12,    // Overcurrent stop
+  SAFETY_EVENT_OVERSPEED_STOP = 13,      // Overspeed stop
+  SAFETY_EVENT_POSITION_LIMIT_STOP = 14, // Position limit stop
 
-    // System monitoring events (20-29)
-    SAFETY_EVENT_WATCHDOG_WARNING = 20,    // Watchdog warning
-    SAFETY_EVENT_WATCHDOG_TIMEOUT = 21,    // Watchdog timeout
-    SAFETY_EVENT_TEMPERATURE_WARNING = 22, // Temperature warning
-    SAFETY_EVENT_POWER_WARNING = 23,       // Power supply warning
-    SAFETY_EVENT_MEMORY_WARNING = 24,      // Memory warning
-    SAFETY_EVENT_COMMUNICATION_ERROR = 25, // Communication error
-    SAFETY_EVENT_COMMUNICATION_FAULT = 26, // Communication fault
+  // System monitoring events (20-29)
+  SAFETY_EVENT_WATCHDOG_WARNING = 20,    // Watchdog warning
+  SAFETY_EVENT_WATCHDOG_TIMEOUT = 21,    // Watchdog timeout
+  SAFETY_EVENT_TEMPERATURE_WARNING = 22, // Temperature warning
+  SAFETY_EVENT_POWER_WARNING = 23,       // Power supply warning
+  SAFETY_EVENT_MEMORY_WARNING = 24,      // Memory warning
+  SAFETY_EVENT_COMMUNICATION_ERROR = 25, // Communication error
+  SAFETY_EVENT_COMMUNICATION_FAULT = 26, // Communication fault
 
-    // System lifecycle events (30-39)
-    SAFETY_EVENT_SYSTEM_INIT = 30,       // System initialization
-    SAFETY_EVENT_INIT_COMPLETE = 31,     // Initialization complete
-    SAFETY_EVENT_RECOVERY_COMPLETE = 32, // Recovery complete
+  // System lifecycle events (30-39)
+  SAFETY_EVENT_SYSTEM_INIT = 30,       // System initialization
+  SAFETY_EVENT_INIT_COMPLETE = 31,     // Initialization complete
+  SAFETY_EVENT_RECOVERY_COMPLETE = 32, // Recovery complete
 
-    // General events (40-49)
-    SAFETY_EVENT_SENSOR_ERROR = 40,    // Sensor error
-    SAFETY_EVENT_LIMIT_VIOLATION = 41, // Safety limit violation
-    SAFETY_EVENT_WARNING = 42,         // General safety warning
+  // General events (40-49)
+  SAFETY_EVENT_SENSOR_ERROR = 40,    // Sensor error
+  SAFETY_EVENT_LIMIT_VIOLATION = 41, // Safety limit violation
+  SAFETY_EVENT_WARNING = 42,         // General safety warning
 
-    SAFETY_EVENT_COUNT // Number of event types
+  SAFETY_EVENT_COUNT // Number of event types
 } SafetyEventType_t;
 
 /**
@@ -488,62 +488,62 @@ typedef enum {
  * Used for FreeRTOS queue communication and logging
  */
 typedef struct {
-    SafetyEventType_t event_type; // Safety event type (SSOT enum)
-    u16 error_code;               // Associated error code
-    u32 timestamp;                // Event timestamp
-    void *source_task;            // Source task handle (TaskHandle_t)
-    u32 additional_data;          // Additional event-specific data
+  SafetyEventType_t event_type; // Safety event type (SSOT enum)
+  u16 error_code;               // Associated error code
+  u32 timestamp;                // Event timestamp
+  void *source_task;            // Source task handle (TaskHandle_t)
+  u32 additional_data;          // Additional event-specific data
 } SafetyEvent_t;
 
 /**
  * @brief Telemetry data structure for system monitoring
  */
 typedef struct {
-    u32 uptime_ms;              // System uptime in milliseconds
-    u32 free_heap_bytes;        // Free heap memory in bytes
-    u32 motor_task_cycles;      // Motor control task cycle count
-    u32 safety_task_cycles;     // Safety monitor task cycle count
-    bool emergency_stop_active; // Emergency stop status
-    u16 cpu_usage_percent;      // CPU usage percentage (0-100)
-    s16 temperature_celsius;    // System temperature in Celsius
-    u32 total_errors;           // Total error count
+  u32 uptime_ms;              // System uptime in milliseconds
+  u32 free_heap_bytes;        // Free heap memory in bytes
+  u32 motor_task_cycles;      // Motor control task cycle count
+  u32 safety_task_cycles;     // Safety monitor task cycle count
+  bool emergency_stop_active; // Emergency stop status
+  u16 cpu_usage_percent;      // CPU usage percentage (0-100)
+  s16 temperature_celsius;    // System temperature in Celsius
+  u32 total_errors;           // Total error count
 } TelemetryData_t;
 
 /**
  * @brief CAN message structure for CAN communication
  */
 typedef struct {
-    u32 id;            // CAN message ID
-    u8 data[8];        // CAN message data (max 8 bytes)
-    u8 length;         // Data length (0-8)
-    u32 timestamp;     // Message timestamp
-    bool extended_id;  // Extended ID flag
-    bool remote_frame; // Remote transmission request flag
+  u32 id;            // CAN message ID
+  u8 data[8];        // CAN message data (max 8 bytes)
+  u8 length;         // Data length (0-8)
+  u32 timestamp;     // Message timestamp
+  bool extended_id;  // Extended ID flag
+  bool remote_frame; // Remote transmission request flag
 } CANMessage_t;
 
 /**
  * @brief UART message structure for UART communication
  */
 typedef struct {
-    u8 data[256];           // UART message data buffer
-    u16 length;             // Data length
-    u32 timestamp;          // Message timestamp
-    u8 source_address;      // Source device address
-    u8 destination_address; // Destination device address
-    u16 checksum;           // Message checksum
+  u8 data[256];           // UART message data buffer
+  u16 length;             // Data length
+  u32 timestamp;          // Message timestamp
+  u8 source_address;      // Source device address
+  u8 destination_address; // Destination device address
+  u16 checksum;           // Message checksum
 } UARTMessage_t;
 
 /**
  * @brief Task statistics structure for performance monitoring
  */
 typedef struct {
-    char task_name[16];   // Task name
-    u8 priority;          // Task priority
-    u32 stack_size;       // Task stack size in words
-    u32 stack_free;       // Free stack space in words
-    u32 cpu_time_percent; // CPU time percentage
-    u32 total_runtime;    // Total runtime in ticks
-    u32 cycle_count;      // Task execution cycle count
+  char task_name[16];   // Task name
+  u8 priority;          // Task priority
+  u32 stack_size;       // Task stack size in words
+  u32 stack_free;       // Free stack space in words
+  u32 cpu_time_percent; // CPU time percentage
+  u32 total_runtime;    // Total runtime in ticks
+  u32 cycle_count;      // Task execution cycle count
 } TaskStats_t;
 
 #endif /* DATA_TYPES_H */

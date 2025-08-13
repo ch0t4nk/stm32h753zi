@@ -351,10 +351,10 @@ SystemError_t rtos_memory_free(void *ptr, size_t size);
  * @brief Memory pool statistics structure
  */
 typedef struct {
-    uint32_t total_blocks;        // Total blocks in pool
-    uint32_t available_blocks;    // Currently available blocks
-    uint32_t peak_usage;          // Peak allocation count
-    uint32_t allocation_failures; // Number of failed allocations
+  uint32_t total_blocks;        // Total blocks in pool
+  uint32_t available_blocks;    // Currently available blocks
+  uint32_t peak_usage;          // Peak allocation count
+  uint32_t allocation_failures; // Number of failed allocations
 } MemoryPoolStats_t;
 
 /**
@@ -378,28 +378,28 @@ SystemError_t rtos_get_memory_stats(MemoryPoolStats_t *stats);
  * @brief Task performance statistics structure
  */
 typedef struct {
-    uint32_t cpu_usage_percent;     // CPU usage percentage (0-100)
-    uint32_t stack_high_water_mark; // Minimum remaining stack (words)
-    uint32_t execution_count;       // Number of task executions
-    uint32_t max_execution_time_us; // Maximum execution time (microseconds)
-    uint32_t avg_execution_time_us; // Average execution time (microseconds)
+  uint32_t cpu_usage_percent;     // CPU usage percentage (0-100)
+  uint32_t stack_high_water_mark; // Minimum remaining stack (words)
+  uint32_t execution_count;       // Number of task executions
+  uint32_t max_execution_time_us; // Maximum execution time (microseconds)
+  uint32_t avg_execution_time_us; // Average execution time (microseconds)
 } TaskPerformanceStats_t;
 
 /**
  * @brief System performance monitoring structure
  */
 typedef struct {
-    uint32_t system_cpu_usage;  // Overall system CPU usage (0-100)
-    uint32_t free_heap_size;    // Current free heap size
-    uint32_t minimum_free_heap; // Minimum free heap ever seen
-    TaskPerformanceStats_t motor_task;
-    TaskPerformanceStats_t safety_task;
-    TaskPerformanceStats_t can_task;
-    TaskPerformanceStats_t uart_task;
-    TaskPerformanceStats_t telemetry_task;
-    MemoryPoolStats_t small_pool;
-    MemoryPoolStats_t medium_pool;
-    MemoryPoolStats_t large_pool;
+  uint32_t system_cpu_usage;  // Overall system CPU usage (0-100)
+  uint32_t free_heap_size;    // Current free heap size
+  uint32_t minimum_free_heap; // Minimum free heap ever seen
+  TaskPerformanceStats_t motor_task;
+  TaskPerformanceStats_t safety_task;
+  TaskPerformanceStats_t can_task;
+  TaskPerformanceStats_t uart_task;
+  TaskPerformanceStats_t telemetry_task;
+  MemoryPoolStats_t small_pool;
+  MemoryPoolStats_t medium_pool;
+  MemoryPoolStats_t large_pool;
 } SystemPerformanceStats_t;
 
 /**

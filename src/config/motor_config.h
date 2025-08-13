@@ -406,22 +406,31 @@ typedef enum {
 #define STATS_HISTORY_SAMPLES 600    // 1 minute of history at 100ms rate
 
 // ============================================================================
+// Motor Communication IRQ Numbers
+// ============================================================================
+
+// L6470 SPI Communication IRQ
+#define MOTOR_SPI_IRQ SPI2_IRQn // L6470 stepper driver SPI interrupt
+
+// ============================================================================
 // L6470 Hardware Constants
 // ============================================================================
 
-// L6470 Speed Calculation Constants
+// L6470 Speed Calculation Constants - keeping only one set
 #define L6470_SPEED_SCALE_FACTOR_HEX                                          \
     0x100 // 256 decimal - speed calculation scaling factor
 #define L6470_SPEED_CALC_DIVISOR                                              \
     0x3FF // 1023 decimal - speed calculation divisor
-#define L6470_SPEED_SCALE_FACTOR                                              \
-    256U // Speed calculation scaling (readable form)
-#define L6470_MAX_SPEED_VALUE                                                 \
-    1023U // Maximum speed register value (readable form)
+// Note: L6470_SPEED_SCALE_FACTOR and L6470_MAX_SPEED_VALUE already defined
+// above
 
 // L6470 Register Value Constants
 #define L6470_MIN_SPEED_DEFAULT 0x000 // Minimum speed register default value
 #define L6470_FS_SPD_DEFAULT 0x027    // Full step speed register default value
+
+// L6470 Direction Control Constants
+#define L6470_DIRECTION_FORWARD_BIT 0x01 // Forward direction bit
+#define L6470_DIRECTION_REVERSE_BIT 0x00 // Reverse direction bit
 
 #endif /* MOTOR_CONFIG_H */
 

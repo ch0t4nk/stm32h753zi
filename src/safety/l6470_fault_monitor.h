@@ -30,15 +30,15 @@
  * @brief L6470 hardware fault types for GPIO monitoring
  */
 typedef enum {
-    L6470_HW_FAULT_NONE = 0x00,
-    L6470_HW_FAULT_OVERCURRENT = 0x01,
-    L6470_HW_FAULT_THERMAL_WARNING = 0x02,
-    L6470_HW_FAULT_THERMAL_SHUTDOWN = 0x04,
-    L6470_HW_FAULT_UNDERVOLTAGE = 0x08,
-    L6470_HW_FAULT_STEP_LOSS = 0x10,
-    L6470_HW_FAULT_STALL_DETECTED = 0x20,
-    L6470_HW_FAULT_COMMAND_ERROR = 0x40,
-    L6470_HW_FAULT_ALL_MASK = 0xFF
+  L6470_HW_FAULT_NONE = 0x00,
+  L6470_HW_FAULT_OVERCURRENT = 0x01,
+  L6470_HW_FAULT_THERMAL_WARNING = 0x02,
+  L6470_HW_FAULT_THERMAL_SHUTDOWN = 0x04,
+  L6470_HW_FAULT_UNDERVOLTAGE = 0x08,
+  L6470_HW_FAULT_STEP_LOSS = 0x10,
+  L6470_HW_FAULT_STALL_DETECTED = 0x20,
+  L6470_HW_FAULT_COMMAND_ERROR = 0x40,
+  L6470_HW_FAULT_ALL_MASK = 0xFF
 } L6470HwFaultType_t;
 
 /**
@@ -48,13 +48,12 @@ typedef enum {
  * @brief L6470 hardware fault status structure
  */
 typedef struct {
-    bool fault_active;                /**< Fault currently active */
-    bool monitoring_enabled;          /**< Monitoring system enabled */
-    L6470HwFaultType_t active_faults; /**< Currently active faults */
-    uint32_t fault_count;             /**< Total fault count */
-    uint32_t last_fault_time;         /**< Last fault timestamp */
-    uint32_t
-        fault_reaction_time_us; /**< Fault reaction time in microseconds */
+  bool fault_active;                /**< Fault currently active */
+  bool monitoring_enabled;          /**< Monitoring system enabled */
+  L6470HwFaultType_t active_faults; /**< Currently active faults */
+  uint32_t fault_count;             /**< Total fault count */
+  uint32_t last_fault_time;         /**< Last fault timestamp */
+  uint32_t fault_reaction_time_us;  /**< Fault reaction time in microseconds */
 } L6470HwFaultStatus_t;
 
 /* ==========================================================================

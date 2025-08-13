@@ -46,42 +46,42 @@ extern "C" {
  * @brief Safety Integrity Level (SIL) definitions
  */
 typedef enum {
-    SIL_NONE = 0, /**< No safety requirements */
-    SIL_1 = 1,    /**< Low safety integrity */
-    SIL_2 = 2,    /**< Medium safety integrity */
-    SIL_3 = 3,    /**< High safety integrity */
-    SIL_4 = 4     /**< Very high safety integrity */
+  SIL_NONE = 0, /**< No safety requirements */
+  SIL_1 = 1,    /**< Low safety integrity */
+  SIL_2 = 2,    /**< Medium safety integrity */
+  SIL_3 = 3,    /**< High safety integrity */
+  SIL_4 = 4     /**< Very high safety integrity */
 } SafetyIntegrityLevel_t;
 
 /**
  * @brief Safety function classifications
  */
 typedef enum {
-    SAFETY_FUNC_EMERGENCY_STOP,         /**< Emergency stop function */
-    SAFETY_FUNC_SPEED_MONITORING,       /**< Speed limit monitoring */
-    SAFETY_FUNC_POSITION_LIMITING,      /**< Position limit enforcement */
-    SAFETY_FUNC_TORQUE_LIMITING,        /**< Torque/current limiting */
-    SAFETY_FUNC_TEMPERATURE_MONITORING, /**< Temperature monitoring */
-    SAFETY_FUNC_WATCHDOG,               /**< System watchdog */
-    SAFETY_FUNC_COMMUNICATION_MONITOR,  /**< Communication integrity */
-    SAFETY_FUNC_SENSOR_VALIDATION,      /**< Sensor plausibility checking */
-    SAFETY_FUNC_COUNT                   /**< Number of safety functions */
+  SAFETY_FUNC_EMERGENCY_STOP,         /**< Emergency stop function */
+  SAFETY_FUNC_SPEED_MONITORING,       /**< Speed limit monitoring */
+  SAFETY_FUNC_POSITION_LIMITING,      /**< Position limit enforcement */
+  SAFETY_FUNC_TORQUE_LIMITING,        /**< Torque/current limiting */
+  SAFETY_FUNC_TEMPERATURE_MONITORING, /**< Temperature monitoring */
+  SAFETY_FUNC_WATCHDOG,               /**< System watchdog */
+  SAFETY_FUNC_COMMUNICATION_MONITOR,  /**< Communication integrity */
+  SAFETY_FUNC_SENSOR_VALIDATION,      /**< Sensor plausibility checking */
+  SAFETY_FUNC_COUNT                   /**< Number of safety functions */
 } SafetyFunction_t;
 
 /**
  * @brief Emergency stop sources
  */
 typedef enum {
-    ESTOP_SOURCE_NONE = 0,       /**< No emergency stop */
-    ESTOP_SOURCE_BUTTON,         /**< Physical button */
-    ESTOP_SOURCE_SOFTWARE,       /**< Software command */
-    ESTOP_SOURCE_COMM_LOSS,      /**< Communication loss */
-    ESTOP_SOURCE_FAULT_CASCADE,  /**< Fault cascade */
-    ESTOP_SOURCE_WATCHDOG,       /**< Watchdog timeout */
-    ESTOP_SOURCE_OVERHEAT,       /**< Overtemperature */
-    ESTOP_SOURCE_OVERCURRENT,    /**< Overcurrent protection */
-    ESTOP_SOURCE_POSITION_LIMIT, /**< Position limit violation */
-    ESTOP_SOURCE_COUNT           /**< Number of sources */
+  ESTOP_SOURCE_NONE = 0,       /**< No emergency stop */
+  ESTOP_SOURCE_BUTTON,         /**< Physical button */
+  ESTOP_SOURCE_SOFTWARE,       /**< Software command */
+  ESTOP_SOURCE_COMM_LOSS,      /**< Communication loss */
+  ESTOP_SOURCE_FAULT_CASCADE,  /**< Fault cascade */
+  ESTOP_SOURCE_WATCHDOG,       /**< Watchdog timeout */
+  ESTOP_SOURCE_OVERHEAT,       /**< Overtemperature */
+  ESTOP_SOURCE_OVERCURRENT,    /**< Overcurrent protection */
+  ESTOP_SOURCE_POSITION_LIMIT, /**< Position limit violation */
+  ESTOP_SOURCE_COUNT           /**< Number of sources */
 } EmergencyStopSource_t;
 
 // SafetyEvent_t definitions moved to data_types.h (SSOT)
@@ -90,83 +90,83 @@ typedef enum {
  * @brief Safety configuration structure
  */
 typedef struct {
-    SafetyFunction_t function;        /**< Safety function type */
-    SafetyIntegrityLevel_t sil_level; /**< Required SIL level */
-    uint32_t reaction_time_ms;        /**< Maximum reaction time */
-    bool enabled;                     /**< Function enabled/disabled */
-    float threshold_value;            /**< Safety threshold */
-    uint16_t fault_tolerance;         /**< Fault tolerance count */
-    bool automatic_reset;             /**< Auto-reset capability */
+  SafetyFunction_t function;        /**< Safety function type */
+  SafetyIntegrityLevel_t sil_level; /**< Required SIL level */
+  uint32_t reaction_time_ms;        /**< Maximum reaction time */
+  bool enabled;                     /**< Function enabled/disabled */
+  float threshold_value;            /**< Safety threshold */
+  uint16_t fault_tolerance;         /**< Fault tolerance count */
+  bool automatic_reset;             /**< Auto-reset capability */
 } SafetyConfig_t;
 
 /**
  * @brief Emergency stop state structure
  */
 typedef struct {
-    bool active;                  /**< Emergency stop is active */
-    bool latched;                 /**< Emergency stop is latched */
-    EmergencyStopSource_t source; /**< Source of emergency stop */
-    uint32_t timestamp;           /**< Timestamp when activated */
-    uint32_t reset_attempts;      /**< Number of reset attempts */
-    bool reset_pending;           /**< Reset operation pending */
+  bool active;                  /**< Emergency stop is active */
+  bool latched;                 /**< Emergency stop is latched */
+  EmergencyStopSource_t source; /**< Source of emergency stop */
+  uint32_t timestamp;           /**< Timestamp when activated */
+  uint32_t reset_attempts;      /**< Number of reset attempts */
+  bool reset_pending;           /**< Reset operation pending */
 } EmergencyStopState_t;
 
 /**
  * @brief Watchdog configuration structure
  */
 typedef struct {
-    uint32_t timeout_ms;           /**< Watchdog timeout period */
-    uint32_t warning_threshold_ms; /**< Warning before timeout */
-    bool enabled;                  /**< Watchdog enabled */
-    uint32_t last_refresh;         /**< Last refresh timestamp */
-    uint32_t refresh_count;        /**< Total refresh count */
-    uint32_t timeout_count;        /**< Timeout event count */
-    uint32_t missed_refresh_count; /**< Missed refresh count */
+  uint32_t timeout_ms;           /**< Watchdog timeout period */
+  uint32_t warning_threshold_ms; /**< Warning before timeout */
+  bool enabled;                  /**< Watchdog enabled */
+  uint32_t last_refresh;         /**< Last refresh timestamp */
+  uint32_t refresh_count;        /**< Total refresh count */
+  uint32_t timeout_count;        /**< Timeout event count */
+  uint32_t missed_refresh_count; /**< Missed refresh count */
 } WatchdogConfig_t;
 
 /**
  * @brief Real-time monitoring structure
  */
 typedef struct {
-    float current_value;      /**< Current measured value */
-    float safe_min;           /**< Minimum safe value */
-    float safe_max;           /**< Maximum safe value */
-    float warning_min;        /**< Warning threshold (min) */
-    float warning_max;        /**< Warning threshold (max) */
-    uint32_t violation_count; /**< Safety violation count */
-    uint32_t warning_count;   /**< Warning count */
-    uint32_t last_violation;  /**< Last violation time */
-    bool enabled;             /**< Monitoring enabled */
+  float current_value;      /**< Current measured value */
+  float safe_min;           /**< Minimum safe value */
+  float safe_max;           /**< Maximum safe value */
+  float warning_min;        /**< Warning threshold (min) */
+  float warning_max;        /**< Warning threshold (max) */
+  uint32_t violation_count; /**< Safety violation count */
+  uint32_t warning_count;   /**< Warning count */
+  uint32_t last_violation;  /**< Last violation time */
+  bool enabled;             /**< Monitoring enabled */
 } SafetyMonitor_t;
 
 /**
  * @brief Monitoring channels
  */
 typedef enum {
-    MONITOR_MOTOR1_CURRENT,     /**< Motor 1 current monitoring */
-    MONITOR_MOTOR2_CURRENT,     /**< Motor 2 current monitoring */
-    MONITOR_MOTOR1_SPEED,       /**< Motor 1 speed monitoring */
-    MONITOR_MOTOR2_SPEED,       /**< Motor 2 speed monitoring */
-    MONITOR_MOTOR1_POSITION,    /**< Motor 1 position monitoring */
-    MONITOR_MOTOR2_POSITION,    /**< Motor 2 position monitoring */
-    MONITOR_SYSTEM_TEMPERATURE, /**< System temperature monitoring */
-    MONITOR_SUPPLY_VOLTAGE,     /**< Supply voltage monitoring */
-    MONITOR_CPU_USAGE,          /**< CPU usage monitoring */
-    MONITOR_COMM_LATENCY,       /**< Communication latency */
-    MONITOR_COUNT               /**< Number of monitor channels */
+  MONITOR_MOTOR1_CURRENT,     /**< Motor 1 current monitoring */
+  MONITOR_MOTOR2_CURRENT,     /**< Motor 2 current monitoring */
+  MONITOR_MOTOR1_SPEED,       /**< Motor 1 speed monitoring */
+  MONITOR_MOTOR2_SPEED,       /**< Motor 2 speed monitoring */
+  MONITOR_MOTOR1_POSITION,    /**< Motor 1 position monitoring */
+  MONITOR_MOTOR2_POSITION,    /**< Motor 2 position monitoring */
+  MONITOR_SYSTEM_TEMPERATURE, /**< System temperature monitoring */
+  MONITOR_SUPPLY_VOLTAGE,     /**< Supply voltage monitoring */
+  MONITOR_CPU_USAGE,          /**< CPU usage monitoring */
+  MONITOR_COMM_LATENCY,       /**< Communication latency */
+  MONITOR_COUNT               /**< Number of monitor channels */
 } MonitorChannel_t;
 
 /**
  * @brief Safety system statistics
  */
 typedef struct {
-    uint32_t total_safety_events;    /**< Total safety events logged */
-    uint32_t emergency_stops;        /**< Total emergency stops */
-    uint32_t watchdog_timeouts;      /**< Total watchdog timeouts */
-    uint32_t limit_violations;       /**< Total limit violations */
-    uint32_t warnings_issued;        /**< Total warnings issued */
-    uint32_t system_uptime_hours;    /**< System uptime in hours */
-    uint32_t last_maintenance_hours; /**< Hours since last maintenance */
+  uint32_t total_safety_events;    /**< Total safety events logged */
+  uint32_t emergency_stops;        /**< Total emergency stops */
+  uint32_t watchdog_timeouts;      /**< Total watchdog timeouts */
+  uint32_t limit_violations;       /**< Total limit violations */
+  uint32_t warnings_issued;        /**< Total warnings issued */
+  uint32_t system_uptime_hours;    /**< System uptime in hours */
+  uint32_t last_maintenance_hours; /**< Hours since last maintenance */
 } SafetyStatistics_t;
 
 /* ==========================================================================
@@ -205,8 +205,7 @@ bool safety_get_emergency_stop_state(void);
  * @param motor_id Motor ID (0xFF for system events)
  * @param data Additional event data
  */
-void safety_log_event(SafetyEventType_t event, uint8_t motor_id,
-                      uint32_t data);
+void safety_log_event(SafetyEventType_t event, uint8_t motor_id, uint32_t data);
 
 /**
  * @brief Execute emergency stop sequence

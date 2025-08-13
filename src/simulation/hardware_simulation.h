@@ -27,46 +27,46 @@ extern "C" {
 
 /* Simulation Mode Types */
 typedef enum {
-    SIM_MODE_STATIC = 0,      /**< Fixed register values */
-    SIM_MODE_INTERACTIVE = 1, /**< Manual control via API */
-    SIM_MODE_PHYSICS = 2,     /**< Motor physics simulation */
-    SIM_MODE_PATTERN = 3      /**< Predefined motion patterns */
+  SIM_MODE_STATIC = 0,      /**< Fixed register values */
+  SIM_MODE_INTERACTIVE = 1, /**< Manual control via API */
+  SIM_MODE_PHYSICS = 2,     /**< Motor physics simulation */
+  SIM_MODE_PATTERN = 3      /**< Predefined motion patterns */
 } simulation_mode_t;
 
 /* Motor State Types */
 typedef enum {
-    MOTOR_STOPPED = 0,      /**< Motor not moving */
-    MOTOR_ACCELERATING = 1, /**< Motor speeding up */
-    MOTOR_RUNNING = 2,      /**< Motor at constant speed */
-    MOTOR_DECELERATING = 3  /**< Motor slowing down */
+  MOTOR_STOPPED = 0,      /**< Motor not moving */
+  MOTOR_ACCELERATING = 1, /**< Motor speeding up */
+  MOTOR_RUNNING = 2,      /**< Motor at constant speed */
+  MOTOR_DECELERATING = 3  /**< Motor slowing down */
 } motor_state_t;
 
 /* Simulation Status Structure */
 typedef struct {
-    /* L6470 Motor Status */
-    int32_t motor_position;    /**< Current position in steps */
-    float motor_speed;         /**< Current speed in steps/sec */
-    motor_state_t motor_state; /**< Current motor state */
-    int8_t motor_direction;    /**< 1 = forward, -1 = reverse */
+  /* L6470 Motor Status */
+  int32_t motor_position;    /**< Current position in steps */
+  float motor_speed;         /**< Current speed in steps/sec */
+  motor_state_t motor_state; /**< Current motor state */
+  int8_t motor_direction;    /**< 1 = forward, -1 = reverse */
 
-    /* AS5600 Encoder Status */
-    float encoder_angle;  /**< Current angle in degrees */
-    uint16_t encoder_raw; /**< Raw 12-bit angle value */
+  /* AS5600 Encoder Status */
+  float encoder_angle;  /**< Current angle in degrees */
+  uint16_t encoder_raw; /**< Raw 12-bit angle value */
 
-    /* Simulation Control */
-    bool linked_motion;     /**< Encoder follows motor */
-    bool physics_active;    /**< Physics simulation running */
-    uint32_t steps_per_rev; /**< Steps per revolution for linking */
+  /* Simulation Control */
+  bool linked_motion;     /**< Encoder follows motor */
+  bool physics_active;    /**< Physics simulation running */
+  uint32_t steps_per_rev; /**< Steps per revolution for linking */
 } simulation_status_t;
 
 /* Error Codes */
 typedef enum {
-    SIM_OK = 0,                   /**< Operation successful */
-    SIM_ERROR_INVALID_ADDR = 1,   /**< Invalid register address */
-    SIM_ERROR_READ_ONLY = 2,      /**< Attempted write to read-only register */
-    SIM_ERROR_INVALID_VALUE = 3,  /**< Value outside valid range */
-    SIM_ERROR_COMMAND_FAILED = 4, /**< Command execution failed */
-    SIM_ERROR_NOT_INITIALIZED = 5 /**< Simulation not initialized */
+  SIM_OK = 0,                   /**< Operation successful */
+  SIM_ERROR_INVALID_ADDR = 1,   /**< Invalid register address */
+  SIM_ERROR_READ_ONLY = 2,      /**< Attempted write to read-only register */
+  SIM_ERROR_INVALID_VALUE = 3,  /**< Value outside valid range */
+  SIM_ERROR_COMMAND_FAILED = 4, /**< Command execution failed */
+  SIM_ERROR_NOT_INITIALIZED = 5 /**< Simulation not initialized */
 } simulation_error_t;
 
 /**
@@ -177,27 +177,27 @@ simulation_error_t as5600_sim_set_angle(float degrees);
 /**
  * @brief Conditional compilation for simulation vs real hardware
  */
-#define SIM_REGISTER_READ(chip, addr, value)                                  \
-    do {                                                                      \
-        if (chip##_sim_read_register((addr), (value)) != SIM_OK) {            \
-            /* Handle simulation error */                                     \
-            *(value) = 0;                                                     \
-        }                                                                     \
-    } while (0)
+#define SIM_REGISTER_READ(chip, addr, value)                                   \
+  do {                                                                         \
+    if (chip##_sim_read_register((addr), (value)) != SIM_OK) {                 \
+      /* Handle simulation error */                                            \
+      *(value) = 0;                                                            \
+    }                                                                          \
+  } while (0)
 
-#define SIM_REGISTER_WRITE(chip, addr, value)                                 \
-    do {                                                                      \
-        if (chip##_sim_write_register((addr), (value)) != SIM_OK) {           \
-            /* Handle simulation error */                                     \
-        }                                                                     \
-    } while (0)
+#define SIM_REGISTER_WRITE(chip, addr, value)                                  \
+  do {                                                                         \
+    if (chip##_sim_write_register((addr), (value)) != SIM_OK) {                \
+      /* Handle simulation error */                                            \
+    }                                                                          \
+  } while (0)
 
-#define SIM_COMMAND_SEND(chip, cmd, param)                                    \
-    do {                                                                      \
-        if (chip##_sim_send_command((cmd), (param)) != SIM_OK) {              \
-            /* Handle simulation error */                                     \
-        }                                                                     \
-    } while (0)
+#define SIM_COMMAND_SEND(chip, cmd, param)                                     \
+  do {                                                                         \
+    if (chip##_sim_send_command((cmd), (param)) != SIM_OK) {                   \
+      /* Handle simulation error */                                            \
+    }                                                                          \
+  } while (0)
 
 #else
 /* Real hardware macros would be defined here */

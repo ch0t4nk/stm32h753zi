@@ -83,8 +83,7 @@ bool main_application_is_initialized(void);
  * @param cycles Pointer to store application cycles
  * @return SystemError_t - SYSTEM_OK on success, error code on failure
  */
-SystemError_t main_application_get_stats(uint32_t *uptime_ms,
-                                         uint32_t *cycles);
+SystemError_t main_application_get_stats(uint32_t *uptime_ms, uint32_t *cycles);
 
 /**
  * @brief Perform application self-test including watchdog validation

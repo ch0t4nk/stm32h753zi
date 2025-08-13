@@ -44,27 +44,26 @@ extern "C" {
  * @brief Emergency stop states
  */
 typedef enum {
-    EMERGENCY_STOP_UNINITIALIZED = 0, ///< System not initialized
-    EMERGENCY_STOP_ARMED = 1,         ///< System armed and ready
-    EMERGENCY_STOP_TRIGGERED = 2,     ///< Emergency stop activated
-    EMERGENCY_STOP_RESET_PENDING =
-        3,                   ///< Reset requested, awaiting confirmation
-    EMERGENCY_STOP_FAULT = 4 ///< System fault detected
+  EMERGENCY_STOP_UNINITIALIZED = 0, ///< System not initialized
+  EMERGENCY_STOP_ARMED = 1,         ///< System armed and ready
+  EMERGENCY_STOP_TRIGGERED = 2,     ///< Emergency stop activated
+  EMERGENCY_STOP_RESET_PENDING = 3, ///< Reset requested, awaiting confirmation
+  EMERGENCY_STOP_FAULT = 4          ///< System fault detected
 } EmergencyStopState_t;
 
 /**
  * @brief Emergency stop trigger sources
  */
 typedef enum {
-    ESTOP_SOURCE_UNKNOWN = 0,
-    ESTOP_SOURCE_BUTTON = 1,
-    ESTOP_SOURCE_SOFTWARE = 2,
-    ESTOP_SOURCE_COMMUNICATION = 3,
-    ESTOP_SOURCE_SAFETY_MONITOR = 4,
-    ESTOP_SOURCE_MOTOR_FAULT = 5,
-    ESTOP_SOURCE_ENCODER_FAULT = 6,
-    ESTOP_SOURCE_WATCHDOG = 7,
-    ESTOP_SOURCE_SYSTEM_FAULT = 8
+  ESTOP_SOURCE_UNKNOWN = 0,
+  ESTOP_SOURCE_BUTTON = 1,
+  ESTOP_SOURCE_SOFTWARE = 2,
+  ESTOP_SOURCE_COMMUNICATION = 3,
+  ESTOP_SOURCE_SAFETY_MONITOR = 4,
+  ESTOP_SOURCE_MOTOR_FAULT = 5,
+  ESTOP_SOURCE_ENCODER_FAULT = 6,
+  ESTOP_SOURCE_WATCHDOG = 7,
+  ESTOP_SOURCE_SYSTEM_FAULT = 8
 } EmergencyStopSource_t;
 
 /* ==========================================================================

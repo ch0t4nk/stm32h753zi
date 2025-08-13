@@ -291,6 +291,10 @@ typedef enum {
 #define SAFETY_CHECK_NORMAL_PERIOD 10  // Normal checks every 10ms
 #define SAFETY_CHECK_SLOW_PERIOD 100   // Slow checks every 100ms
 
+// Safety Monitor Timer Configuration (SSOT)
+#define SAFETY_MONITOR_PERIOD_TICKS                                           \
+    ((uint32_t)(100 - 1)) // 100μs period for safety monitor timer (TIM3)
+
 /* ==========================================================================
  */
 /* Safety Recovery Configuration (SSOT)                                      */

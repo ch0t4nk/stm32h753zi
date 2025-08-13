@@ -141,32 +141,32 @@
 /* ZPOS: Zero position (0-4095) */
 #define ZPOS_COMBINE(high, low) (((high) << 8) | (low))
 #define ZPOS_HIGH(val) (((val) >> 8) & 0x0F)
-#define ZPOS_LOW(val) ((val) & 0xFF)
+#define ZPOS_LOW(val) ((val)&0xFF)
 
 /* MPOS: Maximum position (0-4095) */
 #define MPOS_COMBINE(high, low) (((high) << 8) | (low))
 #define MPOS_HIGH(val) (((val) >> 8) & 0x0F)
-#define MPOS_LOW(val) ((val) & 0xFF)
+#define MPOS_LOW(val) ((val)&0xFF)
 
 /* MANG: Maximum angle (0-4095) */
 #define MANG_COMBINE(high, low) (((high) << 8) | (low))
 #define MANG_HIGH(val) (((val) >> 8) & 0x0F)
-#define MANG_LOW(val) ((val) & 0xFF)
+#define MANG_LOW(val) ((val)&0xFF)
 
 /* RAW_ANGLE: Raw angle reading (0-4095) */
 #define RAW_ANGLE_COMBINE(high, low) (((high) << 8) | (low))
 #define RAW_ANGLE_HIGH(val) (((val) >> 8) & 0x0F)
-#define RAW_ANGLE_LOW(val) ((val) & 0xFF)
+#define RAW_ANGLE_LOW(val) ((val)&0xFF)
 
 /* ANGLE: Filtered angle reading (0-4095) */
 #define ANGLE_COMBINE(high, low) (((high) << 8) | (low))
 #define ANGLE_HIGH(val) (((val) >> 8) & 0x0F)
-#define ANGLE_LOW(val) ((val) & 0xFF)
+#define ANGLE_LOW(val) ((val)&0xFF)
 
 /* MAGNITUDE: Magnitude reading (0-4095) */
 #define MAGNITUDE_COMBINE(high, low) (((high) << 8) | (low))
 #define MAGNITUDE_HIGH(val) (((val) >> 8) & 0x0F)
-#define MAGNITUDE_LOW(val) ((val) & 0xFF)
+#define MAGNITUDE_LOW(val) ((val)&0xFF)
 
 /* ==========================================================================
  */

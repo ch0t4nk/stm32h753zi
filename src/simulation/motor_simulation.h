@@ -40,31 +40,31 @@ extern "C" {
 
 /* Simulation modes */
 typedef enum {
-    SIM_MODE_DISABLED = 0,
-    SIM_MODE_BASIC,          // Basic register simulation
-    SIM_MODE_REALISTIC,      // Realistic motion physics
-    SIM_MODE_FAULT_INJECTION // Include fault scenarios
+  SIM_MODE_DISABLED = 0,
+  SIM_MODE_BASIC,          // Basic register simulation
+  SIM_MODE_REALISTIC,      // Realistic motion physics
+  SIM_MODE_FAULT_INJECTION // Include fault scenarios
 } SimulationMode_t;
 
 /* Motion patterns for encoder simulation */
 typedef enum {
-    SIM_PATTERN_STATIC = 0,
-    SIM_PATTERN_LINEAR,     // Constant velocity
-    SIM_PATTERN_SINUSOIDAL, // Oscillating motion
-    SIM_PATTERN_STEP,       // Discrete position changes
-    SIM_PATTERN_NOISY       // Add realistic noise
+  SIM_PATTERN_STATIC = 0,
+  SIM_PATTERN_LINEAR,     // Constant velocity
+  SIM_PATTERN_SINUSOIDAL, // Oscillating motion
+  SIM_PATTERN_STEP,       // Discrete position changes
+  SIM_PATTERN_NOISY       // Add realistic noise
 } MotionPattern_t;
 
 /* Fault types for safety testing */
 typedef enum {
-    SIM_FAULT_NONE = 0,
-    SIM_FAULT_OVERCURRENT,
-    SIM_FAULT_OVERHEAT,
-    SIM_FAULT_UNDERVOLTAGE,
-    SIM_FAULT_STALL,
-    SIM_FAULT_MAGNET_WEAK,
-    SIM_FAULT_MAGNET_STRONG,
-    SIM_FAULT_COMMUNICATION
+  SIM_FAULT_NONE = 0,
+  SIM_FAULT_OVERCURRENT,
+  SIM_FAULT_OVERHEAT,
+  SIM_FAULT_UNDERVOLTAGE,
+  SIM_FAULT_STALL,
+  SIM_FAULT_MAGNET_WEAK,
+  SIM_FAULT_MAGNET_STRONG,
+  SIM_FAULT_COMMUNICATION
 } SimulationFault_t;
 
 /* ==========================================================================
@@ -74,41 +74,41 @@ typedef enum {
  */
 
 typedef struct {
-    uint8_t motor_id;
-    bool initialized;
-    bool enabled;
+  uint8_t motor_id;
+  bool initialized;
+  bool enabled;
 
-    // Register shadow (simulated hardware state)
-    uint32_t registers[256]; // All possible register addresses
+  // Register shadow (simulated hardware state)
+  uint32_t registers[256]; // All possible register addresses
 
-    // Motion state
-    int32_t current_position; // Steps
-    int32_t target_position;  // Steps
-    float current_speed;      // Steps/second
-    float target_speed;       // Steps/second
-    float acceleration;       // Steps/second²
-    float deceleration;       // Steps/second²
+  // Motion state
+  int32_t current_position; // Steps
+  int32_t target_position;  // Steps
+  float current_speed;      // Steps/second
+  float target_speed;       // Steps/second
+  float acceleration;       // Steps/second²
+  float deceleration;       // Steps/second²
 
-    // Motion profile state
-    enum {
-        SIM_MOTOR_STOPPED = 0,
-        SIM_MOTOR_ACCELERATING,
-        SIM_MOTOR_CONSTANT_SPEED,
-        SIM_MOTOR_DECELERATING
-    } motion_state;
+  // Motion profile state
+  enum {
+    SIM_MOTOR_STOPPED = 0,
+    SIM_MOTOR_ACCELERATING,
+    SIM_MOTOR_CONSTANT_SPEED,
+    SIM_MOTOR_DECELERATING
+  } motion_state;
 
-    // Status flags
-    uint16_t status_register;
-    bool busy;
-    bool direction; // true = forward, false = reverse
+  // Status flags
+  uint16_t status_register;
+  bool busy;
+  bool direction; // true = forward, false = reverse
 
-    // Fault simulation
-    SimulationFault_t active_fault;
-    uint32_t fault_injection_time;
+  // Fault simulation
+  SimulationFault_t active_fault;
+  uint32_t fault_injection_time;
 
-    // Performance tracking
-    uint32_t command_count;
-    uint32_t last_update_time;
+  // Performance tracking
+  uint32_t command_count;
+  uint32_t last_update_time;
 
 } L6470_SimState_t;
 
@@ -119,37 +119,37 @@ typedef struct {
  */
 
 typedef struct {
-    uint8_t encoder_id;
-    bool initialized;
-    bool magnet_detected;
+  uint8_t encoder_id;
+  bool initialized;
+  bool magnet_detected;
 
-    // Register shadow
-    uint8_t registers[256];
+  // Register shadow
+  uint8_t registers[256];
 
-    // Position state
-    uint16_t raw_angle;        // 0-4095 (12-bit)
-    uint16_t filtered_angle;   // 0-4095 (12-bit)
-    float actual_position_deg; // Actual position in degrees
+  // Position state
+  uint16_t raw_angle;        // 0-4095 (12-bit)
+  uint16_t filtered_angle;   // 0-4095 (12-bit)
+  float actual_position_deg; // Actual position in degrees
 
-    // Motion simulation
-    MotionPattern_t pattern;
-    float pattern_parameter; // Pattern-specific parameter
-    uint32_t pattern_start_time;
+  // Motion simulation
+  MotionPattern_t pattern;
+  float pattern_parameter; // Pattern-specific parameter
+  uint32_t pattern_start_time;
 
-    // Magnet simulation
-    uint16_t magnitude; // Simulated magnetic field strength
-    uint8_t agc_value;  // Automatic gain control
+  // Magnet simulation
+  uint16_t magnitude; // Simulated magnetic field strength
+  uint8_t agc_value;  // Automatic gain control
 
-    // Status simulation
-    bool magnet_too_strong;
-    bool magnet_too_weak;
+  // Status simulation
+  bool magnet_too_strong;
+  bool magnet_too_weak;
 
-    // Fault simulation
-    SimulationFault_t active_fault;
+  // Fault simulation
+  SimulationFault_t active_fault;
 
-    // Noise parameters
-    float noise_amplitude; // Degrees
-    bool noise_enabled;
+  // Noise parameters
+  float noise_amplitude; // Degrees
+  bool noise_enabled;
 
 } AS5600_SimState_t;
 
@@ -160,24 +160,24 @@ typedef struct {
  */
 
 typedef struct {
-    SimulationMode_t mode;
-    bool initialized;
-    uint32_t simulation_time_ms;
-    uint32_t tick_counter;
+  SimulationMode_t mode;
+  bool initialized;
+  uint32_t simulation_time_ms;
+  uint32_t tick_counter;
 
-    // Motor simulation states
-    L6470_SimState_t motors[SIM_MAX_MOTORS];
+  // Motor simulation states
+  L6470_SimState_t motors[SIM_MAX_MOTORS];
 
-    // Encoder simulation states
-    AS5600_SimState_t encoders[SIM_MAX_ENCODERS];
+  // Encoder simulation states
+  AS5600_SimState_t encoders[SIM_MAX_ENCODERS];
 
-    // Global fault injection
-    bool fault_injection_enabled;
-    float fault_probability; // Per second
+  // Global fault injection
+  bool fault_injection_enabled;
+  float fault_probability; // Per second
 
-    // Performance metrics
-    uint32_t total_commands;
-    uint32_t total_updates;
+  // Performance metrics
+  uint32_t total_commands;
+  uint32_t total_updates;
 
 } MotorSimulation_t;
 
@@ -334,8 +334,7 @@ void motor_simulation_enable_fault_injection(float probability);
  * @param uptime_ms Pointer to store simulation uptime
  */
 void motor_simulation_get_metrics(uint32_t *total_commands,
-                                  uint32_t *total_updates,
-                                  uint32_t *uptime_ms);
+                                  uint32_t *total_updates, uint32_t *uptime_ms);
 
 /**
  * @brief Reset simulation to initial state

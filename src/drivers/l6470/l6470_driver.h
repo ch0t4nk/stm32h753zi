@@ -158,26 +158,26 @@
  * @note Integrates SPN2 framework with MCSDK enhancements
  */
 typedef struct {
-    uint8_t device_id;       // Device ID (0 or 1)
-    SPI_HandleTypeDef *hspi; // SPI handle from SSOT config
-    GPIO_TypeDef *cs_port;   // CS port from SSOT config
-    uint16_t cs_pin;         // CS pin from SSOT config
+  uint8_t device_id;       // Device ID (0 or 1)
+  SPI_HandleTypeDef *hspi; // SPI handle from SSOT config
+  GPIO_TypeDef *cs_port;   // CS port from SSOT config
+  uint16_t cs_pin;         // CS pin from SSOT config
 
-    // SPN2 Framework Integration
+  // SPN2 Framework Integration
 #if SPN2_FRAMEWORK_ENABLED
-    void *spn2_handle; // SPN2 device handle
+  void *spn2_handle; // SPN2 device handle
 #endif
 
-    // MCSDK Enhancement Integration
+  // MCSDK Enhancement Integration
 #if MCSDK_POSITION_CONTROL
-    void *mcsdk_position_handle; // MCSDK position controller
+  void *mcsdk_position_handle; // MCSDK position controller
 #endif
 
-    // Driver state
-    uint32_t position; // Current position (steps)
-    uint16_t speed;    // Current speed
-    uint8_t status;    // Device status
-    bool initialized;  // Initialization flag
+  // Driver state
+  uint32_t position; // Current position (steps)
+  uint16_t speed;    // Current speed
+  uint8_t status;    // Device status
+  bool initialized;  // Initialization flag
 
 } L6470_HandleTypeDef;
 

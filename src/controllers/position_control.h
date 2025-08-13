@@ -19,10 +19,13 @@
 
 // Position control configuration constants
 #define POSITION_SETTLED_THRESHOLD 10 // Steps for position settled
-#define VELOCITY_SETTLED_THRESHOLD 5  // Steps/sec for velocity settled
-#define MAX_POSITION_STEPS 1000000    // Maximum absolute position
-#define POSITION_FILTER_ALPHA 0.8f    // Position filter coefficient
-#define VELOCITY_FILTER_ALPHA 0.7f    // Velocity filter coefficient
+#define STEPS_TO_DEGREES                                                      \
+    (360.0f / 200.0f /                                                        \
+     16.0f) // Conversion factor (assuming 200 steps/rev, 16x microstepping)
+#define VELOCITY_SETTLED_THRESHOLD 5 // Steps/sec for velocity settled
+#define MAX_POSITION_STEPS 1000000   // Maximum absolute position
+#define POSITION_FILTER_ALPHA 0.8f   // Position filter coefficient
+#define VELOCITY_FILTER_ALPHA 0.7f   // Velocity filter coefficient
 
 // Default PID parameters (SSOT from motor_config.h)
 #define PID_KP_DEFAULT 2.0f
@@ -39,8 +42,9 @@
 // Error codes specific to position control
 #define ERROR_POSITION_ERROR_EXCESSIVE 0x4100
 #define ERROR_POSITION_OUT_OF_RANGE 0x4101
-#define ERROR_HOMING_TIMEOUT 0x4102
-#define ERROR_HOMING_FAILED 0x4103
+#define ERROR_POSITION_LIMIT_EXCEEDED 0x4102
+#define ERROR_HOMING_TIMEOUT 0x4103
+#define ERROR_HOMING_FAILED 0x4104
 
 /**
  * @brief Homing methods enumeration
@@ -170,6 +174,9 @@ SystemError_t position_control_home(uint8_t motor_id,
 // Status and monitoring
 SystemError_t position_control_get_status(uint8_t motor_id,
                                           PositionControlStatus_t *status);
+
+// Motor position access
+SystemError_t get_motor_position(uint8_t motor_id, float *position_deg);
 
 // PID tuning functions
 SystemError_t position_control_set_pid_gains(uint8_t motor_id, float kp,

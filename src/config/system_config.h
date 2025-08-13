@@ -56,9 +56,9 @@ extern "C" {
 
 /// Compile-time feature selection
 #ifndef ENABLED_FEATURES
-#define ENABLED_FEATURES                                                      \
-    (FEATURE_MOTOR_CONTROL | FEATURE_SAFETY_MONITORING |                      \
-     FEATURE_ENCODER_FEEDBACK | FEATURE_DEBUG_LOGGING)
+#define ENABLED_FEATURES                                                       \
+  (FEATURE_MOTOR_CONTROL | FEATURE_SAFETY_MONITORING |                         \
+   FEATURE_ENCODER_FEEDBACK | FEATURE_DEBUG_LOGGING)
 #endif
 
 /// Check if a feature is enabled
@@ -164,12 +164,12 @@ _Static_assert(SYSTEM_WATCHDOG_TIMEOUT_MS >= 1000,
 
 /// System information structure
 typedef struct {
-    uint32_t system_clock_hz;  ///< System clock frequency
-    uint32_t control_freq_hz;  ///< Control loop frequency
-    uint32_t enabled_features; ///< Enabled feature flags
-    uint32_t total_ram_bytes;  ///< Total available RAM
-    const char *build_version; ///< Build version string
-    const char *build_date;    ///< Build date string
+  uint32_t system_clock_hz;  ///< System clock frequency
+  uint32_t control_freq_hz;  ///< Control loop frequency
+  uint32_t enabled_features; ///< Enabled feature flags
+  uint32_t total_ram_bytes;  ///< Total available RAM
+  const char *build_version; ///< Build version string
+  const char *build_date;    ///< Build date string
 } SystemInfo_t;
 
 /// Get system information

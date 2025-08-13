@@ -3,26 +3,26 @@
  * @brief Communication Protocol Interface - STM32H753ZI Stepper Motor Project
  * @author STM32H753ZI Project Team
  * @date 2025-08-05
- * 
+ *
  * @note Communication implementation following:
  * - .github/instructions/comms.instructions.md
  * - config/comm_config.h (SSOT)
- * 
+ *
  * @warning SAFETY-CRITICAL: All communication must integrate with safety system
  */
 
 #ifndef COMM_PROTOCOL_H
 #define COMM_PROTOCOL_H
 
+#include "common/data_types.h"
 #include "config/comm_config.h"
 #include "config/safety_config.h"
-#include "common/data_types.h"
 #include "safety/safety_system.h"
 #ifndef UNITY_TESTING
 #include "stm32h7xx_hal.h"
 #endif
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 /* ========================================================================== */
 /* Communication Protocol Types (following comms.instructions.md)           */
@@ -32,59 +32,59 @@
  * @brief Communication protocol layers
  */
 typedef enum {
-    COMM_LAYER_PHYSICAL,     ///< GPIO, hardware interfaces
-    COMM_LAYER_DATALINK,     ///< SPI, I2C, UART framing
-    COMM_LAYER_NETWORK,      ///< CAN, Ethernet protocols
-    COMM_LAYER_TRANSPORT,    ///< Message segmentation, flow control
-    COMM_LAYER_APPLICATION   ///< Motor control commands, status
+  COMM_LAYER_PHYSICAL,   ///< GPIO, hardware interfaces
+  COMM_LAYER_DATALINK,   ///< SPI, I2C, UART framing
+  COMM_LAYER_NETWORK,    ///< CAN, Ethernet protocols
+  COMM_LAYER_TRANSPORT,  ///< Message segmentation, flow control
+  COMM_LAYER_APPLICATION ///< Motor control commands, status
 } CommLayer_t;
 
 /**
  * @brief Protocol types supported
  */
 typedef enum {
-    PROTOCOL_UART_ASCII,     ///< Human-readable ASCII commands
-    PROTOCOL_UART_BINARY,    ///< Binary protocol for efficiency
-    PROTOCOL_CAN_MOTOR,      ///< CAN motor control protocol
-    PROTOCOL_SPI_L6470,      ///< L6470 stepper driver protocol
-    PROTOCOL_I2C_AS5600,     ///< AS5600 encoder protocol
-    PROTOCOL_ETHERNET_UDP,   ///< UDP for real-time data
-    PROTOCOL_ETHERNET_TCP    ///< TCP for reliable commands
+  PROTOCOL_UART_ASCII,   ///< Human-readable ASCII commands
+  PROTOCOL_UART_BINARY,  ///< Binary protocol for efficiency
+  PROTOCOL_CAN_MOTOR,    ///< CAN motor control protocol
+  PROTOCOL_SPI_L6470,    ///< L6470 stepper driver protocol
+  PROTOCOL_I2C_AS5600,   ///< AS5600 encoder protocol
+  PROTOCOL_ETHERNET_UDP, ///< UDP for real-time data
+  PROTOCOL_ETHERNET_TCP  ///< TCP for reliable commands
 } CommProtocol_t;
 
 /**
  * @brief Universal message header
  */
 typedef struct {
-    uint32_t magic;          ///< 0xDEADBEEF for validation
-    uint16_t message_id;     ///< Unique message identifier
-    uint16_t payload_length; ///< Payload size in bytes
-    uint8_t protocol_type;   ///< CommProtocol_t value
-    uint8_t priority;        ///< Message priority (0=highest)
-    uint16_t checksum;       ///< CRC16 checksum
-    uint32_t timestamp_ms;   ///< Message timestamp
+  uint32_t magic;          ///< 0xDEADBEEF for validation
+  uint16_t message_id;     ///< Unique message identifier
+  uint16_t payload_length; ///< Payload size in bytes
+  uint8_t protocol_type;   ///< CommProtocol_t value
+  uint8_t priority;        ///< Message priority (0=highest)
+  uint16_t checksum;       ///< CRC16 checksum
+  uint32_t timestamp_ms;   ///< Message timestamp
 } __attribute__((packed)) MessageHeader_t;
 
 /**
  * @brief Complete message structure
  */
 typedef struct {
-    MessageHeader_t header;
-    uint8_t payload[MAX_MESSAGE_PAYLOAD];
+  MessageHeader_t header;
+  uint8_t payload[MAX_MESSAGE_PAYLOAD];
 } Message_t;
 
 /**
  * @brief Communication channel configuration
  */
 typedef struct {
-    CommProtocol_t protocol;    ///< Protocol type
-    bool enabled;               ///< Channel enabled/disabled
-    uint32_t baudrate;          ///< Baudrate for serial protocols
-    uint32_t timeout_ms;        ///< Communication timeout
-    uint32_t tx_count;          ///< Transmitted message count
-    uint32_t rx_count;          ///< Received message count
-    uint32_t error_count;       ///< Communication error count
-    uint32_t last_activity;     ///< Last activity timestamp
+  CommProtocol_t protocol; ///< Protocol type
+  bool enabled;            ///< Channel enabled/disabled
+  uint32_t baudrate;       ///< Baudrate for serial protocols
+  uint32_t timeout_ms;     ///< Communication timeout
+  uint32_t tx_count;       ///< Transmitted message count
+  uint32_t rx_count;       ///< Received message count
+  uint32_t error_count;    ///< Communication error count
+  uint32_t last_activity;  ///< Last activity timestamp
 } CommChannelConfig_t;
 
 /* ========================================================================== */
@@ -95,51 +95,51 @@ typedef struct {
  * @brief Motor control command types
  */
 typedef enum {
-    MOTOR_CMD_STOP = 0x01,          ///< Stop motor
-    MOTOR_CMD_EMERGENCY_STOP = 0x02, ///< Emergency stop
-    MOTOR_CMD_MOVE_ABSOLUTE = 0x10,  ///< Move to absolute position
-    MOTOR_CMD_MOVE_RELATIVE = 0x11,  ///< Move relative to current position
-    MOTOR_CMD_MOVE_CONTINUOUS = 0x12, ///< Continuous motion
-    MOTOR_CMD_HOME = 0x20,          ///< Home motor
-    MOTOR_CMD_CALIBRATE = 0x21,     ///< Calibrate position
-    MOTOR_CMD_SET_POSITION = 0x22,  ///< Set current position
-    MOTOR_CMD_GET_STATUS = 0x30,    ///< Get motor status
-    MOTOR_CMD_GET_POSITION = 0x31,  ///< Get current position
-    MOTOR_CMD_SET_PARAMETERS = 0x40, ///< Set motor parameters
-    MOTOR_CMD_SELF_TEST = 0x50      ///< Perform self-test
+  MOTOR_CMD_STOP = 0x01,            ///< Stop motor
+  MOTOR_CMD_EMERGENCY_STOP = 0x02,  ///< Emergency stop
+  MOTOR_CMD_MOVE_ABSOLUTE = 0x10,   ///< Move to absolute position
+  MOTOR_CMD_MOVE_RELATIVE = 0x11,   ///< Move relative to current position
+  MOTOR_CMD_MOVE_CONTINUOUS = 0x12, ///< Continuous motion
+  MOTOR_CMD_HOME = 0x20,            ///< Home motor
+  MOTOR_CMD_CALIBRATE = 0x21,       ///< Calibrate position
+  MOTOR_CMD_SET_POSITION = 0x22,    ///< Set current position
+  MOTOR_CMD_GET_STATUS = 0x30,      ///< Get motor status
+  MOTOR_CMD_GET_POSITION = 0x31,    ///< Get current position
+  MOTOR_CMD_SET_PARAMETERS = 0x40,  ///< Set motor parameters
+  MOTOR_CMD_SELF_TEST = 0x50        ///< Perform self-test
 } MotorCommandType_t;
 
 /**
  * @brief Motor command structure
  */
 typedef struct {
-    uint8_t motor_id;               ///< Target motor ID (0-based)
-    MotorCommandType_t command;     ///< Command type
-    union {
-        struct {
-            int32_t position_steps; ///< Target position for move commands
-            uint32_t speed_steps_per_sec; ///< Speed for move commands
-            uint32_t acceleration;  ///< Acceleration for move commands
-        } move;
-        struct {
-            uint32_t max_speed;     ///< Maximum speed parameter
-            uint32_t acceleration;  ///< Acceleration parameter
-            uint32_t current_ma;    ///< Motor current in mA
-        } parameters;
-        uint32_t raw_data;          ///< Raw command data
-    } data;
+  uint8_t motor_id;           ///< Target motor ID (0-based)
+  MotorCommandType_t command; ///< Command type
+  union {
+    struct {
+      int32_t position_steps;       ///< Target position for move commands
+      uint32_t speed_steps_per_sec; ///< Speed for move commands
+      uint32_t acceleration;        ///< Acceleration for move commands
+    } move;
+    struct {
+      uint32_t max_speed;    ///< Maximum speed parameter
+      uint32_t acceleration; ///< Acceleration parameter
+      uint32_t current_ma;   ///< Motor current in mA
+    } parameters;
+    uint32_t raw_data; ///< Raw command data
+  } data;
 } MotorCommand_t;
 
 /**
  * @brief Motor status response structure
  */
 typedef struct {
-    uint8_t motor_id;               ///< Motor ID
-    uint8_t state;                  ///< Current motor state
-    int32_t position_steps;         ///< Current position in steps
-    uint32_t speed_steps_per_sec;   ///< Current speed
-    uint32_t fault_flags;           ///< Active fault flags
-    uint32_t timestamp;             ///< Status timestamp
+  uint8_t motor_id;             ///< Motor ID
+  uint8_t state;                ///< Current motor state
+  int32_t position_steps;       ///< Current position in steps
+  uint32_t speed_steps_per_sec; ///< Current speed
+  uint32_t fault_flags;         ///< Active fault flags
+  uint32_t timestamp;           ///< Status timestamp
 } MotorStatusResponse_t;
 
 /* ========================================================================== */
@@ -158,21 +158,22 @@ SystemError_t comm_protocol_init(void);
  * @param protocol Protocol type (ASCII or binary)
  * @return System error code
  */
-SystemError_t comm_uart_init(UART_HandleTypeDef* huart, CommProtocol_t protocol);
+SystemError_t comm_uart_init(UART_HandleTypeDef *huart,
+                             CommProtocol_t protocol);
 
 /**
  * @brief Initialize CAN communication channel
  * @param hfdcan FDCAN handle (STM32H7 uses FDCAN not classic CAN)
  * @return System error code
  */
-SystemError_t comm_can_init(FDCAN_HandleTypeDef* hfdcan);
+SystemError_t comm_can_init(FDCAN_HandleTypeDef *hfdcan);
 
 /**
  * @brief Process received message
  * @param message Pointer to received message
  * @return System error code
  */
-SystemError_t comm_process_message(const Message_t* message);
+SystemError_t comm_process_message(const Message_t *message);
 
 /**
  * @brief Send motor command via communication channel
@@ -180,7 +181,8 @@ SystemError_t comm_process_message(const Message_t* message);
  * @param command Pointer to motor command
  * @return System error code
  */
-SystemError_t comm_send_motor_command(CommProtocol_t protocol, const MotorCommand_t* command);
+SystemError_t comm_send_motor_command(CommProtocol_t protocol,
+                                      const MotorCommand_t *command);
 
 /**
  * @brief Send motor status response
@@ -188,7 +190,8 @@ SystemError_t comm_send_motor_command(CommProtocol_t protocol, const MotorComman
  * @param status Pointer to motor status
  * @return System error code
  */
-SystemError_t comm_send_motor_status(CommProtocol_t protocol, const MotorStatusResponse_t* status);
+SystemError_t comm_send_motor_status(CommProtocol_t protocol,
+                                     const MotorStatusResponse_t *status);
 
 /**
  * @brief Send text message via UART (for debugging)
@@ -196,14 +199,15 @@ SystemError_t comm_send_motor_status(CommProtocol_t protocol, const MotorStatusR
  * @param message Text message to send
  * @return System error code
  */
-SystemError_t comm_send_text_message(CommProtocol_t protocol, const char* message);
+SystemError_t comm_send_text_message(CommProtocol_t protocol,
+                                     const char *message);
 
 /**
  * @brief Process UART ASCII command
  * @param command_string ASCII command string
  * @return System error code
  */
-SystemError_t comm_process_ascii_command(const char* command_string);
+SystemError_t comm_process_ascii_command(const char *command_string);
 
 /**
  * @brief Parse motor command from ASCII string
@@ -211,7 +215,8 @@ SystemError_t comm_process_ascii_command(const char* command_string);
  * @param motor_command Pointer to motor command structure to fill
  * @return System error code
  */
-SystemError_t comm_parse_ascii_motor_command(const char* ascii_command, MotorCommand_t* motor_command);
+SystemError_t comm_parse_ascii_motor_command(const char *ascii_command,
+                                             MotorCommand_t *motor_command);
 
 /**
  * @brief Format motor status as ASCII string
@@ -220,8 +225,9 @@ SystemError_t comm_parse_ascii_motor_command(const char* ascii_command, MotorCom
  * @param buffer_size Size of ASCII buffer
  * @return System error code
  */
-SystemError_t comm_format_ascii_motor_status(const MotorStatusResponse_t* status, 
-                                              char* ascii_buffer, size_t buffer_size);
+SystemError_t
+comm_format_ascii_motor_status(const MotorStatusResponse_t *status,
+                               char *ascii_buffer, size_t buffer_size);
 
 /**
  * @brief Periodic communication task (call from main loop)
@@ -242,7 +248,8 @@ bool comm_channel_is_healthy(CommProtocol_t protocol);
  * @param config Pointer to configuration structure to fill
  * @return System error code
  */
-SystemError_t comm_get_channel_config(CommProtocol_t protocol, CommChannelConfig_t* config);
+SystemError_t comm_get_channel_config(CommProtocol_t protocol,
+                                      CommChannelConfig_t *config);
 
 /**
  * @brief Enable/disable communication channel
@@ -267,25 +274,25 @@ SystemError_t comm_protocol_self_test(void);
  * @param huart UART handle (typically USART3 for ST-Link VCP)
  * @return System error code
  */
-SystemError_t debug_uart_init(UART_HandleTypeDef* huart);
+SystemError_t debug_uart_init(UART_HandleTypeDef *huart);
 
 /**
  * @brief Process UART RX complete callback
  * @param huart UART handle
  */
-void comm_uart_rx_complete_callback(UART_HandleTypeDef* huart);
+void comm_uart_rx_complete_callback(UART_HandleTypeDef *huart);
 
 /**
  * @brief Process UART TX complete callback
  * @param huart UART handle
  */
-void comm_uart_tx_complete_callback(UART_HandleTypeDef* huart);
+void comm_uart_tx_complete_callback(UART_HandleTypeDef *huart);
 
 /**
  * @brief Process UART error callback
  * @param huart UART handle
  */
-void comm_uart_error_callback(UART_HandleTypeDef* huart);
+void comm_uart_error_callback(UART_HandleTypeDef *huart);
 
 /* ========================================================================== */
 /* CAN Protocol Functions                                                    */
@@ -297,13 +304,14 @@ void comm_uart_error_callback(UART_HandleTypeDef* huart);
  * @param command Motor command
  * @return System error code
  */
-SystemError_t comm_can_send_motor_command(uint8_t motor_id, const MotorCommand_t* command);
+SystemError_t comm_can_send_motor_command(uint8_t motor_id,
+                                          const MotorCommand_t *command);
 
 /**
  * @brief Process received CAN message
  * @param hcan CAN handle
  */
-void comm_can_rx_callback(FDCAN_HandleTypeDef* hfdcan);
+void comm_can_rx_callback(FDCAN_HandleTypeDef *hfdcan);
 
 /* ========================================================================== */
 /* Safety Integration Macros                                                 */
@@ -312,41 +320,41 @@ void comm_can_rx_callback(FDCAN_HandleTypeDef* hfdcan);
 /**
  * @brief Safety check before processing commands
  */
-#define COMM_SAFETY_CHECK() \
-    do { \
-        if (!safety_system_is_operational()) { \
-            return ERROR_SAFETY_SYSTEM_NOT_READY; \
-        } \
-        if (safety_get_emergency_stop_state()) { \
-            return ERROR_SAFETY_EMERGENCY_STOP; \
-        } \
-    } while(0)
+#define COMM_SAFETY_CHECK()                                                    \
+  do {                                                                         \
+    if (!safety_system_is_operational()) {                                     \
+      return ERROR_SAFETY_SYSTEM_NOT_READY;                                    \
+    }                                                                          \
+    if (safety_get_emergency_stop_state()) {                                   \
+      return ERROR_SAFETY_EMERGENCY_STOP;                                      \
+    }                                                                          \
+  } while (0)
 
 /**
  * @brief Validate message header
  */
-#define VALIDATE_MESSAGE_HEADER(header) \
-    do { \
-        if ((header)->magic != MESSAGE_MAGIC) { \
-            return ERROR_COMM_INVALID_MESSAGE; \
-        } \
-        if ((header)->payload_length > MAX_MESSAGE_PAYLOAD) { \
-            return ERROR_COMM_MESSAGE_TOO_LARGE; \
-        } \
-    } while(0)
+#define VALIDATE_MESSAGE_HEADER(header)                                        \
+  do {                                                                         \
+    if ((header)->magic != MESSAGE_MAGIC) {                                    \
+      return ERROR_COMM_INVALID_MESSAGE;                                       \
+    }                                                                          \
+    if ((header)->payload_length > MAX_MESSAGE_PAYLOAD) {                      \
+      return ERROR_COMM_MESSAGE_TOO_LARGE;                                     \
+    }                                                                          \
+  } while (0)
 
 /* ========================================================================== */
 /* Constants and Configuration                                               */
 /* ========================================================================== */
 
-#define MESSAGE_MAGIC               0xDEADBEEF
+#define MESSAGE_MAGIC 0xDEADBEEF
 // MAX_MESSAGE_PAYLOAD and UART_RX_BUFFER_SIZE defined in comm_config.h (SSOT)
-#define UART_TX_BUFFER_SIZE         512
-#define ASCII_COMMAND_MAX_LENGTH    128
+#define UART_TX_BUFFER_SIZE 512
+#define ASCII_COMMAND_MAX_LENGTH 128
 
 // ASCII command delimiters
-#define ASCII_COMMAND_DELIMITER     '\r'
-#define ASCII_PARAMETER_SEPARATOR   ' '
-#define ASCII_END_OF_LINE           '\n'
+#define ASCII_COMMAND_DELIMITER '\r'
+#define ASCII_PARAMETER_SEPARATOR ' '
+#define ASCII_END_OF_LINE '\n'
 
 #endif /* COMM_PROTOCOL_H */

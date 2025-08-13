@@ -62,10 +62,8 @@
 
 /* STM32H7 Documentation Indexes */
 #define DOC_INDEX_STM32H7_FULL "docs/indexes/STM32H7_FULL_INDEX.json"
-#define DOC_INDEX_STM32H7_COPILOT_JSON                                        \
-    "docs/indexes/STM32H7_COPILOT_INDEX.json"
-#define DOC_INDEX_STM32H7_COPILOT_YAML                                        \
-    "docs/indexes/STM32H7_COPILOT_INDEX.yaml"
+#define DOC_INDEX_STM32H7_COPILOT_JSON "docs/indexes/STM32H7_COPILOT_INDEX.json"
+#define DOC_INDEX_STM32H7_COPILOT_YAML "docs/indexes/STM32H7_COPILOT_INDEX.yaml"
 
 /* L6470 Documentation Indexes */
 #define DOC_INDEX_L6470_SEARCH "docs/indexes/L6470_SEARCH_INDEX.json"
@@ -77,7 +75,7 @@
 #define DOC_INDEX_STM32H7_SIZE_MB 8.9    // Expected size in megabytes
 #define DOC_INDEX_L6470_SIZE_MB 2.1      // Expected size in megabytes
 #define DOC_INDEX_NUCLEO_BSP_SIZE_MB 1.0 // Expected size in megabytes
-#define DOC_INDEX_TOTAL_FILES 4227 // Total files in all indexes (4185 + 42)
+#define DOC_INDEX_TOTAL_FILES 4227     // Total files in all indexes (4185 + 42)
 #define DOC_INDEX_TOTAL_KEYWORDS 32200 // Total searchable keywords (estimated)
 
 /* =============================================================================
@@ -88,82 +86,81 @@
  */
 
 /* Core System Instructions */
-#define INSTRUCTION_SSOT_CONFIG                                               \
-    ".github/instructions/ssot-config.instructions.md"
-#define INSTRUCTION_WORKSPACE_SETUP                                           \
-    ".github/instructions/workspace-setup.instructions.md"
-#define INSTRUCTION_DATA_TYPES                                                \
-    ".github/instructions/data-types.instructions.md"
-#define INSTRUCTION_ERROR_HANDLING                                            \
-    ".github/instructions/error-handling.instructions.md"
-#define INSTRUCTION_BUILD_CONFIG                                              \
-    ".github/instructions/build-config.instructions.md"
-#define INSTRUCTION_BUILD_SYSTEM                                              \
-    ".github/instructions/build-system.instructions.md"
+#define INSTRUCTION_SSOT_CONFIG                                                \
+  ".github/instructions/ssot-config.instructions.md"
+#define INSTRUCTION_WORKSPACE_SETUP                                            \
+  ".github/instructions/workspace-setup.instructions.md"
+#define INSTRUCTION_DATA_TYPES ".github/instructions/data-types.instructions.md"
+#define INSTRUCTION_ERROR_HANDLING                                             \
+  ".github/instructions/error-handling.instructions.md"
+#define INSTRUCTION_BUILD_CONFIG                                               \
+  ".github/instructions/build-config.instructions.md"
+#define INSTRUCTION_BUILD_SYSTEM                                               \
+  ".github/instructions/build-system.instructions.md"
 
 /* Hardware Configuration Instructions */
-#define INSTRUCTION_HARDWARE_PINS                                             \
-    ".github/instructions/hardware-pins.instructions.md"
-#define INSTRUCTION_HARDWARE_VARIANTS                                         \
-    ".github/instructions/hardware-variants.instructions.md"
-#define INSTRUCTION_MEMORY_CONFIG                                             \
-    ".github/instructions/memory-config.instructions.md"
+#define INSTRUCTION_HARDWARE_PINS                                              \
+  ".github/instructions/hardware-pins.instructions.md"
+#define INSTRUCTION_HARDWARE_VARIANTS                                          \
+  ".github/instructions/hardware-variants.instructions.md"
+#define INSTRUCTION_MEMORY_CONFIG                                              \
+  ".github/instructions/memory-config.instructions.md"
 
 /* Motor Control Instructions */
-#define INSTRUCTION_L6470_REGISTERS                                           \
-    ".github/instructions/l6470-registers.instructions.md"
-#define INSTRUCTION_SAFETY_SYSTEMS                                            \
-    ".github/instructions/safety-systems.instructions.md"
-#define INSTRUCTION_TIME_HANDLING                                             \
-    ".github/instructions/time-handling.instructions.md"
-#define INSTRUCTION_UNITS_MEASUREMENTS                                        \
-    ".github/instructions/units-measurements.instructions.md"
-#define INSTRUCTION_CONTROL_TIMING                                            \
-    ".github/instructions/control-timing.instructions.md"
+#define INSTRUCTION_L6470_REGISTERS                                            \
+  ".github/instructions/l6470-registers.instructions.md"
+#define INSTRUCTION_SAFETY_SYSTEMS                                             \
+  ".github/instructions/safety-systems.instructions.md"
+#define INSTRUCTION_TIME_HANDLING                                              \
+  ".github/instructions/time-handling.instructions.md"
+#define INSTRUCTION_UNITS_MEASUREMENTS                                         \
+  ".github/instructions/units-measurements.instructions.md"
+#define INSTRUCTION_CONTROL_TIMING                                             \
+  ".github/instructions/control-timing.instructions.md"
 
 /* Communication Instructions */
-#define INSTRUCTION_COMM_PROTOCOLS                                            \
-    ".github/instructions/comm-protocols.instructions.md"
-#define INSTRUCTION_STM32H7_UART                                              \
-    ".github/instructions/stm32h7-uart-protocol.instructions.md"
-#define INSTRUCTION_STM32H7_SPI_L6470                                         \
-    ".github/instructions/stm32h7-spi-l6470.instructions.md"
-#define INSTRUCTION_STM32H7_I2C_AS5600                                        \
-    ".github/instructions/stm32h7-i2c-as5600.instructions.md"
-#define INSTRUCTION_STM32H7_GPIO_HAL                                          \
-    ".github/instructions/stm32h7-gpio-hal.instructions.md"
+#define INSTRUCTION_COMM_PROTOCOLS                                             \
+  ".github/instructions/comm-protocols.instructions.md"
+#define INSTRUCTION_STM32H7_UART                                               \
+  ".github/instructions/stm32h7-uart-protocol.instructions.md"
+#define INSTRUCTION_STM32H7_SPI_L6470                                          \
+  ".github/instructions/stm32h7-spi-l6470.instructions.md"
+#define INSTRUCTION_STM32H7_I2C_AS5600                                         \
+  ".github/instructions/stm32h7-i2c-as5600.instructions.md"
+#define INSTRUCTION_STM32H7_GPIO_HAL                                           \
+  ".github/instructions/stm32h7-gpio-hal.instructions.md"
 
 /* Development Process Instructions */
-#define INSTRUCTION_BUILD_VALIDATION                                          \
-    ".github/instructions/build-validation.instructions.md"
-#define INSTRUCTION_BUILD_VERSION                                             \
-    ".github/instructions/build-version.instructions.md"
-#define INSTRUCTION_TESTING_CONFIG                                            \
-    ".github/instructions/testing-config.instructions.md"
-#define INSTRUCTION_DEBUG_CONFIG                                              \
-    ".github/instructions/debug-config.instructions.md"
-#define INSTRUCTION_OPTIMIZATION                                              \
-    ".github/instructions/optimization.instructions.md"
+#define INSTRUCTION_BUILD_VALIDATION                                           \
+  ".github/instructions/build-validation.instructions.md"
+#define INSTRUCTION_BUILD_VERSION                                              \
+  ".github/instructions/build-version.instructions.md"
+#define INSTRUCTION_TESTING_CONFIG                                             \
+  ".github/instructions/testing-config.instructions.md"
+#define INSTRUCTION_DEBUG_CONFIG                                               \
+  ".github/instructions/debug-config.instructions.md"
+#define INSTRUCTION_OPTIMIZATION                                               \
+  ".github/instructions/optimization.instructions.md"
 
 /* System Architecture Instructions */
-#define INSTRUCTION_STATE_MANAGEMENT                                          \
-    ".github/instructions/state-management.instructions.md"
-#define INSTRUCTION_STATE_ACCESS                                              \
-    ".github/instructions/state-access.instructions.md"
-#define INSTRUCTION_SYSTEM_STATE                                              \
-    ".github/instructions/system-state.instructions.md"
-#define INSTRUCTION_THREAD_SAFETY                                             \
-    ".github/instructions/thread-safety.instructions.md"
-#define INSTRUCTION_BUFFER_MANAGEMENT                                         \
-    ".github/instructions/buffer-management.instructions.md"
+#define INSTRUCTION_STATE_MANAGEMENT                                           \
+  ".github/instructions/state-management.instructions.md"
+#define INSTRUCTION_STATE_ACCESS                                               \
+  ".github/instructions/state-access.instructions.md"
+#define INSTRUCTION_SYSTEM_STATE                                               \
+  ".github/instructions/system-state.instructions.md"
+#define INSTRUCTION_THREAD_SAFETY                                              \
+  ".github/instructions/thread-safety.instructions.md"
+#define INSTRUCTION_BUFFER_MANAGEMENT                                          \
+  ".github/instructions/buffer-management.instructions.md"
 
 /* Advanced Topics Instructions */
-#define INSTRUCTION_FEATURE_FLAGS                                             \
-    ".github/instructions/feature-flags.instructions.md"
-#define INSTRUCTION_PORTABILITY                                               \
-    ".github/instructions/portability.instructions.md"
-#define INSTRUCTION_USER_INTERFACE                                            \
-    ".github/instructions/user-interface.instructions.md"
+#define INSTRUCTION_FEATURE_FLAGS                                              \
+  ".github/instructions/feature-flags.instructions.md"
+#define INSTRUCTION_PORTABILITY                                                \
+  ".github/instructions/portability.instructions.md"
+#define INSTRUCTION_USER_INTERFACE                                             \
+  ".github/instructions/user-interface.instructions.md"
 
 /* =============================================================================
  * DOCUMENTATION TOOLING CONFIGURATION
@@ -196,17 +193,19 @@
 #define SEMANTIC_SEARCH_MOCK_MODEL "mock_embeddings"
 
 /* Model Warning Suppression Configuration */
-#define SUPPRESS_WARNINGS_FOR_MODELS                                          \
-    {"hkunlp/instructor-large", "sentence-transformers/all-MiniLM-L6-v2",     \
-     "BAAI/bge-large-en-v1.5"}
+#define SUPPRESS_WARNINGS_FOR_MODELS                                           \
+  {                                                                            \
+    "hkunlp/instructor-large", "sentence-transformers/all-MiniLM-L6-v2",       \
+        "BAAI/bge-large-en-v1.5"                                               \
+  }
 
 /* Warning Types to Suppress (model-specific) */
 #define SUPPRESS_DEPRECATION_WARNINGS true
 #define SUPPRESS_TARGET_DEVICE_WARNINGS true
-#define SUPPRESS_OLLAMA_CONNECTION_WARNINGS                                   \
-    false // Keep these visible for troubleshooting
-#define SUPPRESS_GPU_AVAILABILITY_WARNINGS                                    \
-    false // Keep these visible for GPU setup
+#define SUPPRESS_OLLAMA_CONNECTION_WARNINGS                                    \
+  false // Keep these visible for troubleshooting
+#define SUPPRESS_GPU_AVAILABILITY_WARNINGS                                     \
+  false // Keep these visible for GPU setup
 
 /* GPU and Performance Configuration */
 #define SEMANTIC_SEARCH_BATCH_SIZE_GPU 20
@@ -218,8 +217,8 @@
 #define VALIDATION_SCRIPT_PATH "scripts/validate_ssot.py"
 #define LINK_VALIDATOR_SCRIPT_PATH "scripts/link_validator.py"
 #define INSTRUCTION_VALIDATOR_PATH "scripts/fix_instruction_references.py"
-#define CONSOLIDATION_SCRIPT_PATH                                             \
-    "scripts/consolidate_instruction_references.py"
+#define CONSOLIDATION_SCRIPT_PATH                                              \
+  "scripts/consolidate_instruction_references.py"
 
 /* Documentation Output Paths */
 #define DOC_GENERATED_DIR "docs/generated"
@@ -268,12 +267,12 @@
 #define EXPECTED_CORE_INSTRUCTIONS 5
 
 /* Compile-time validation macros */
-#define VALIDATE_DOC_PATH(path)                                               \
-    _Static_assert(sizeof(path) > 1, "Documentation path cannot be empty")
+#define VALIDATE_DOC_PATH(path)                                                \
+  _Static_assert(sizeof(path) > 1, "Documentation path cannot be empty")
 
-#define VALIDATE_EXTENSION(filename, expected_ext)                            \
-    _Static_assert(strstr(filename, expected_ext) != NULL,                    \
-                   "File does not have expected extension")
+#define VALIDATE_EXTENSION(filename, expected_ext)                             \
+  _Static_assert(strstr(filename, expected_ext) != NULL,                       \
+                 "File does not have expected extension")
 
 /* Apply validations */
 VALIDATE_DOC_PATH(DOC_ROOT_DIR);

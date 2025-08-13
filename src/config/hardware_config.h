@@ -463,6 +463,24 @@
 #define AS5600_MOCK_ANGLE_LOW_BYTE 0x56  // Mock low byte for 16-bit testing
 
 // ============================================================================
+// Interrupt Request (IRQ) Numbers for Safety-Critical Interrupt Priorities
+// ============================================================================
+
+// Emergency Stop and Safety-Critical IRQs
+#define EMERGENCY_STOP_IRQ EXTI15_10_IRQn   // Emergency stop button interrupt
+#define SAFETY_TIMER_IRQ TIM1_UP_TIM10_IRQn // Safety monitor timer interrupt
+
+// Real-Time Control IRQs
+#define CONTROL_TIMER_IRQ TIM2_IRQn // Control loop timer interrupt
+
+// Sensor and Encoder IRQs
+#define ENCODER_I2C1_IRQ I2C1_EV_IRQn // AS5600 encoder 1 I2C interrupt
+#define ENCODER_I2C2_IRQ I2C2_EV_IRQn // AS5600 encoder 2 I2C interrupt
+
+// System Management IRQs
+#define SYSTEM_TICK_IRQ SysTick_IRQn // System tick timer interrupt
+
+// ============================================================================
 // Safety System Status Constants
 // ============================================================================
 

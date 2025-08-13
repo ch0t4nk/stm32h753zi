@@ -16,10 +16,14 @@
 #include "safety_system.h"
 #include "common/system_state.h"
 #include "config/motor_config.h"
+#include "controllers/position_safety.h"
+#include "controllers/timing_precision.h"
 #include "drivers/l6470/l6470_driver.h"
 #include "emergency_stop.h"
 #include "fault_monitor.h"
 #include "hal_abstraction/hal_abstraction.h"
+#include "safety/failsafe_manager.h"
+#include "safety/interrupt_priorities.h"
 #include "watchdog_manager.h"
 #include <math.h>
 #include <string.h>
@@ -64,7 +68,7 @@ static SystemError_t initialize_safety_monitors(void);
 static void set_safety_state(SafetyState_t new_state);
 static SystemError_t perform_safety_checks(void);
 static void broadcast_emergency_stop(void);
-static uint32_t get_microsecond_timer(void);
+// get_microsecond_timer() is declared in timing_precision.h (non-static)
 
 /* ==========================================================================
  */
@@ -108,6 +112,24 @@ SystemError_t safety_system_init(void) {
 
     // Initialize fault monitoring
     result = fault_monitor_init();
+    if (result != SYSTEM_OK) {
+        return result;
+    }
+
+    // Initialize high-precision timing system (FTR-016)
+    result = timing_precision_init();
+    if (result != SYSTEM_OK) {
+        return result;
+    }
+
+    // Initialize interrupt priority system (FTR-016)
+    result = interrupt_priorities_init();
+    if (result != SYSTEM_OK) {
+        return result;
+    }
+
+    // Initialize fail-safe manager (FTR-016)
+    result = failsafe_manager_init();
     if (result != SYSTEM_OK) {
         return result;
     }
@@ -708,9 +730,15 @@ static void broadcast_emergency_stop(void) {
 }
 
 /**
- * @brief Get microsecond timer value using HAL abstraction
+ * @brief Check if safety system is operational
+ * @return bool True if operational, false otherwise
  */
-static uint32_t get_microsecond_timer(void) {
-    // Use HAL abstraction for hardware-independent timing
-    return HAL_Abstraction_GetMicroseconds();
+bool safety_system_is_operational(void) {
+    // Safety system is considered operational if it's in SAFE or WARNING state
+    // FAULT, EMERGENCY_STOP, MAINTENANCE, RECOVERY, and UNKNOWN states are not
+    // operational
+    return (current_safety_state == SAFETY_STATE_SAFE ||
+            current_safety_state == SAFETY_STATE_WARNING);
 }
+
+// get_microsecond_timer() implementation is provided by timing_precision.c

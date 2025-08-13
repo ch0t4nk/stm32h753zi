@@ -47,60 +47,59 @@
 
 /// @brief Task tuning parameters for each task
 typedef struct {
-    TaskHandle_t task_handle;        ///< FreeRTOS task handle
-    const char *task_name;           ///< Task name for identification
-    uint32_t base_period_ms;         ///< Base period in milliseconds
-    uint32_t current_period_ms;      ///< Current adjusted period
-    uint32_t min_period_ms;          ///< Minimum allowed period
-    uint32_t max_period_ms;          ///< Maximum allowed period
-    uint32_t adjustment_step_ms;     ///< Period adjustment step size
-    bool enabled;                    ///< Tuning enabled for this task
-    uint32_t last_execution_time_us; ///< Last execution time in microseconds
-    uint32_t max_execution_time_us;  ///< Maximum execution time observed
-    uint32_t avg_execution_time_us;  ///< Average execution time
-    uint32_t execution_count;        ///< Number of executions counted
-    uint32_t overrun_count;          ///< Number of timing overruns
+  TaskHandle_t task_handle;        ///< FreeRTOS task handle
+  const char *task_name;           ///< Task name for identification
+  uint32_t base_period_ms;         ///< Base period in milliseconds
+  uint32_t current_period_ms;      ///< Current adjusted period
+  uint32_t min_period_ms;          ///< Minimum allowed period
+  uint32_t max_period_ms;          ///< Maximum allowed period
+  uint32_t adjustment_step_ms;     ///< Period adjustment step size
+  bool enabled;                    ///< Tuning enabled for this task
+  uint32_t last_execution_time_us; ///< Last execution time in microseconds
+  uint32_t max_execution_time_us;  ///< Maximum execution time observed
+  uint32_t avg_execution_time_us;  ///< Average execution time
+  uint32_t execution_count;        ///< Number of executions counted
+  uint32_t overrun_count;          ///< Number of timing overruns
 } TaskTuningParams_t;
 
 /// @brief System performance metrics
 typedef struct {
-    uint32_t cpu_utilization_percent;  ///< Current CPU utilization (0-100%)
-    uint32_t idle_time_percent;        ///< Idle task percentage
-    uint32_t peak_cpu_utilization;     ///< Peak CPU utilization observed
-    uint32_t avg_cpu_utilization;      ///< Average CPU utilization
-    uint32_t total_tasks;              ///< Total number of tasks
-    uint32_t active_tasks;             ///< Number of active tasks
-    uint32_t context_switches_per_sec; ///< Context switches per second
-    uint32_t stack_high_water_mark; ///< Minimum stack space across all tasks
-    uint32_t heap_free_bytes;       ///< Available heap memory
-    uint32_t measurement_period_ms; ///< Measurement period for metrics
+  uint32_t cpu_utilization_percent;  ///< Current CPU utilization (0-100%)
+  uint32_t idle_time_percent;        ///< Idle task percentage
+  uint32_t peak_cpu_utilization;     ///< Peak CPU utilization observed
+  uint32_t avg_cpu_utilization;      ///< Average CPU utilization
+  uint32_t total_tasks;              ///< Total number of tasks
+  uint32_t active_tasks;             ///< Number of active tasks
+  uint32_t context_switches_per_sec; ///< Context switches per second
+  uint32_t stack_high_water_mark;    ///< Minimum stack space across all tasks
+  uint32_t heap_free_bytes;          ///< Available heap memory
+  uint32_t measurement_period_ms;    ///< Measurement period for metrics
 } SystemPerformanceMetrics_t;
 
 /// @brief Tuning algorithm configuration
 typedef struct {
-    uint32_t measurement_window_ms;  ///< Performance measurement window
-    uint32_t tuning_interval_ms;     ///< Interval between tuning adjustments
-    uint32_t target_cpu_utilization; ///< Target CPU utilization percentage
-    uint32_t cpu_utilization_tolerance; ///< Tolerance around target
-    uint32_t aggressive_threshold;      ///< Threshold for aggressive tuning
-    bool adaptive_tuning_enabled;       ///< Enable adaptive algorithm
-    bool conservative_mode;             ///< Conservative tuning mode
+  uint32_t measurement_window_ms;     ///< Performance measurement window
+  uint32_t tuning_interval_ms;        ///< Interval between tuning adjustments
+  uint32_t target_cpu_utilization;    ///< Target CPU utilization percentage
+  uint32_t cpu_utilization_tolerance; ///< Tolerance around target
+  uint32_t aggressive_threshold;      ///< Threshold for aggressive tuning
+  bool adaptive_tuning_enabled;       ///< Enable adaptive algorithm
+  bool conservative_mode;             ///< Conservative tuning mode
 } TuningConfiguration_t;
 
 /// @brief Task performance history for predictive tuning
 typedef struct {
-    uint32_t execution_history[DYNAMIC_TUNING_HISTORY_SIZE]; ///< Execution
-                                                             ///< time history
-    uint32_t
-        period_history[DYNAMIC_TUNING_HISTORY_SIZE]; ///< Period adjustment
-                                                     ///< history
-    uint32_t
-        utilization_history[DYNAMIC_TUNING_HISTORY_SIZE]; ///< CPU utilization
-                                                          ///< history
-    uint8_t history_index;    ///< Current history index
-    bool history_full;        ///< History buffer is full
-    uint32_t trend_direction; ///< Performance trend (0=stable, 1=improving,
-                              ///< 2=degrading)
+  uint32_t execution_history[DYNAMIC_TUNING_HISTORY_SIZE]; ///< Execution
+                                                           ///< time history
+  uint32_t period_history[DYNAMIC_TUNING_HISTORY_SIZE]; ///< Period adjustment
+                                                        ///< history
+  uint32_t
+      utilization_history[DYNAMIC_TUNING_HISTORY_SIZE]; ///< CPU utilization
+                                                        ///< history
+  uint8_t history_index;    ///< Current history index
+  bool history_full;        ///< History buffer is full
+  uint32_t trend_direction; ///< Performance trend (0=stable, 1=improving,
+                            ///< 2=degrading)
 } TaskPerformanceHistory_t;
 
 /* ============================================================================

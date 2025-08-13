@@ -269,6 +269,14 @@
 #define MSG_PRIORITY_NORMAL 2    // Status updates
 #define MSG_PRIORITY_LOW 3       // Configuration, diagnostics
 
+// ============================================================================
+// Communication IRQ Numbers
+// ============================================================================
+
+// System Communication IRQs
+#define SYSTEM_UART_IRQ USART3_IRQn    // Debug/System UART interrupt
+#define SYSTEM_CAN_IRQ FDCAN1_IT0_IRQn // System CAN bus interrupt
+
 #endif /* COMM_CONFIG_H */
 
 /**

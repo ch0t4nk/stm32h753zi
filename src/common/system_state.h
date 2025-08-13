@@ -19,7 +19,7 @@
 #include "config/motor_config.h"
 #include "config/safety_config.h"
 #include "error_codes.h"
-#include "safety/fault_monitor.h"  // For MotorFaultType_t and SystemFaultType_t
+#include "safety/fault_monitor.h" // For MotorFaultType_t and SystemFaultType_t
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -38,9 +38,9 @@
 
 typedef struct {
   // Current motor status
-  MotorState_t current_state;      // Current motor state (enum from motor_config.h)
+  MotorState_t current_state; // Current motor state (enum from motor_config.h)
   MotorControlMode_t control_mode; // Current control mode
-  MotorFaultType_t fault_flags;   // Active fault flags
+  MotorFaultType_t fault_flags;    // Active fault flags
 
   // Position information
   float current_angle_deg;  // Current angle in degrees
@@ -181,7 +181,8 @@ typedef struct {
 
 typedef struct {
   // Overall safety status
-  SafetyState_t current_state;       // Current safety state (enum from safety_config.h)
+  SafetyState_t
+      current_state; // Current safety state (enum from safety_config.h)
   SafetyLevel_t current_level;       // Current safety level
   SafetyFaultFlags_t active_faults;  // Currently active safety faults
   SafetyFaultFlags_t latched_faults; // Latched safety faults (require reset)

@@ -3,11 +3,11 @@
  * @brief Watchdog Management System - STM32H753ZI Stepper Motor Project
  * @author STM32H753ZI Project Team
  * @date 2025-08-05
- * 
+ *
  * @note Watchdog implementation following:
  * - .github/instructions/safety-rt.instructions.md
  * - config/safety_config.h (SSOT)
- * 
+ *
  * @warning SAFETY-CRITICAL: Watchdog must be refreshed within timeout period
  */
 
@@ -25,8 +25,8 @@ extern "C" {
 #ifndef UNITY_TESTING
 #include "stm32h7xx_hal.h"
 #endif
-#include "config/safety_config.h"
 #include "common/error_codes.h"
+#include "config/safety_config.h"
 #include "safety_system.h"
 #include <stdbool.h>
 #include <stdint.h>
@@ -79,7 +79,9 @@ SystemError_t watchdog_set_enabled(bool enabled);
  * @param missed_count Pointer to store missed refresh count
  * @return SystemError_t Success or error code
  */
-SystemError_t watchdog_get_statistics(uint32_t* refresh_count, uint32_t* timeout_count, uint32_t* missed_count);
+SystemError_t watchdog_get_statistics(uint32_t *refresh_count,
+                                      uint32_t *timeout_count,
+                                      uint32_t *missed_count);
 
 /**
  * @brief Check if watchdog refresh is due

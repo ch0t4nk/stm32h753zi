@@ -15,6 +15,7 @@
 #include "motion_profile.h"
 #include "multi_motor_coordinator.h"
 #include "position_control.h"
+#include "position_safety.h"
 #include "safety/fault_monitor.h"
 #include "stm32h7xx_hal.h"
 #include "stm32h7xx_hal_tim.h"
@@ -75,6 +76,12 @@ SystemError_t rt_control_init(void) {
 
     // Create default tasks
     result = create_default_tasks();
+    if (result != SYSTEM_OK) {
+        return result;
+    }
+
+    // Initialize position safety system
+    result = position_safety_init();
     if (result != SYSTEM_OK) {
         return result;
     }
@@ -573,6 +580,24 @@ static void safety_monitor_task(void *context) {
 
     // Perform safety checks
     fault_monitor_check();
+
+    // Check position safety for all motors
+    for (uint8_t motor_id = 0; motor_id < MAX_MOTORS; motor_id++) {
+        // Get current motor position
+        float current_position;
+        if (get_motor_position(motor_id, &current_position) == SYSTEM_OK) {
+            // Update position safety monitoring
+            SystemError_t pos_result =
+                position_safety_update(motor_id, current_position);
+            if (pos_result != SYSTEM_OK) {
+                // Position safety violation detected
+                fault_monitor_record_system_fault(
+                    SYSTEM_FAULT_SAFETY_VIOLATION, FAULT_SEVERITY_CRITICAL,
+                    (uint32_t)(current_position *
+                               100)); // Convert to fixed-point for logging
+            }
+        }
+    }
 
     // Check system performance
     if (rt_control_system.performance.cpu_utilization >

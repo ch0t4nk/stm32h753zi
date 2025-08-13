@@ -36,220 +36,215 @@ static simulation_error_t parse_register_response(const char *response,
  */
 simulation_error_t simulation_init(const char *l6470_schema,
                                    const char *as5600_schema) {
-    if (simulation_initialized) {
-        return SIM_OK;
-    }
-
-    /* Store schema paths */
-    if (l6470_schema) {
-        strncpy(l6470_schema_path, l6470_schema,
-                sizeof(l6470_schema_path) - 1);
-        l6470_schema_path[sizeof(l6470_schema_path) - 1] = '\0';
-    }
-
-    if (as5600_schema) {
-        strncpy(as5600_schema_path, as5600_schema,
-                sizeof(as5600_schema_path) - 1);
-        as5600_schema_path[sizeof(as5600_schema_path) - 1] = '\0';
-    }
-
-    /* Test if Python script is accessible */
-    if (access(python_script_path, R_OK) != 0) {
-        return SIM_ERROR_NOT_INITIALIZED;
-    }
-
-    /* Test if schema files are accessible */
-    if (access(l6470_schema_path, R_OK) != 0 ||
-        access(as5600_schema_path, R_OK) != 0) {
-        return SIM_ERROR_NOT_INITIALIZED;
-    }
-
-    simulation_initialized = true;
+  if (simulation_initialized) {
     return SIM_OK;
+  }
+
+  /* Store schema paths */
+  if (l6470_schema) {
+    strncpy(l6470_schema_path, l6470_schema, sizeof(l6470_schema_path) - 1);
+    l6470_schema_path[sizeof(l6470_schema_path) - 1] = '\0';
+  }
+
+  if (as5600_schema) {
+    strncpy(as5600_schema_path, as5600_schema, sizeof(as5600_schema_path) - 1);
+    as5600_schema_path[sizeof(as5600_schema_path) - 1] = '\0';
+  }
+
+  /* Test if Python script is accessible */
+  if (access(python_script_path, R_OK) != 0) {
+    return SIM_ERROR_NOT_INITIALIZED;
+  }
+
+  /* Test if schema files are accessible */
+  if (access(l6470_schema_path, R_OK) != 0 ||
+      access(as5600_schema_path, R_OK) != 0) {
+    return SIM_ERROR_NOT_INITIALIZED;
+  }
+
+  simulation_initialized = true;
+  return SIM_OK;
 }
 
 /**
  * @brief Cleanup simulation
  */
-void simulation_cleanup(void) {
-    simulation_initialized = false;
-}
+void simulation_cleanup(void) { simulation_initialized = false; }
 
 /**
  * @brief Read L6470 register
  */
 simulation_error_t l6470_sim_read_register(uint8_t address, uint32_t *value) {
-    if (!simulation_initialized || !value) {
-        return SIM_ERROR_NOT_INITIALIZED;
-    }
+  if (!simulation_initialized || !value) {
+    return SIM_ERROR_NOT_INITIALIZED;
+  }
 
-    char command[512];
-    char output[256];
+  char command[512];
+  char output[256];
 
-    /* Create Python command to read register */
-    snprintf(command, sizeof(command),
-             "import sys; sys.path.append('.'); "
-             "from scripts.register_simulator import L6470Simulator; "
-             "sim = L6470Simulator('%s'); "
-             "print(sim.read_register(0x%02X))",
-             l6470_schema_path, address);
+  /* Create Python command to read register */
+  snprintf(command, sizeof(command),
+           "import sys; sys.path.append('.'); "
+           "from scripts.register_simulator import L6470Simulator; "
+           "sim = L6470Simulator('%s'); "
+           "print(sim.read_register(0x%02X))",
+           l6470_schema_path, address);
 
-    simulation_error_t result =
-        execute_python_command(command, output, sizeof(output));
-    if (result != SIM_OK) {
-        return result;
-    }
+  simulation_error_t result =
+      execute_python_command(command, output, sizeof(output));
+  if (result != SIM_OK) {
+    return result;
+  }
 
-    return parse_register_response(output, value);
+  return parse_register_response(output, value);
 }
 
 /**
  * @brief Write L6470 register
  */
 simulation_error_t l6470_sim_write_register(uint8_t address, uint32_t value) {
-    if (!simulation_initialized) {
-        return SIM_ERROR_NOT_INITIALIZED;
-    }
+  if (!simulation_initialized) {
+    return SIM_ERROR_NOT_INITIALIZED;
+  }
 
-    char command[512];
-    char output[256];
+  char command[512];
+  char output[256];
 
-    /* Create Python command to write register */
-    snprintf(command, sizeof(command),
-             "import sys; sys.path.append('.'); "
-             "from scripts.register_simulator import L6470Simulator; "
-             "sim = L6470Simulator('%s'); "
-             "print('OK' if sim.write_register(0x%02X, 0x%06X) else 'ERROR')",
-             l6470_schema_path, address, value);
+  /* Create Python command to write register */
+  snprintf(command, sizeof(command),
+           "import sys; sys.path.append('.'); "
+           "from scripts.register_simulator import L6470Simulator; "
+           "sim = L6470Simulator('%s'); "
+           "print('OK' if sim.write_register(0x%02X, 0x%06X) else 'ERROR')",
+           l6470_schema_path, address, value);
 
-    simulation_error_t result =
-        execute_python_command(command, output, sizeof(output));
-    if (result != SIM_OK) {
-        return result;
-    }
+  simulation_error_t result =
+      execute_python_command(command, output, sizeof(output));
+  if (result != SIM_OK) {
+    return result;
+  }
 
-    if (strstr(output, "ERROR") != NULL) {
-        return SIM_ERROR_INVALID_VALUE;
-    }
+  if (strstr(output, "ERROR") != NULL) {
+    return SIM_ERROR_INVALID_VALUE;
+  }
 
-    return SIM_OK;
+  return SIM_OK;
 }
 
 /**
  * @brief Send L6470 command
  */
-simulation_error_t l6470_sim_send_command(uint8_t command,
-                                          uint32_t parameter) {
-    if (!simulation_initialized) {
-        return SIM_ERROR_NOT_INITIALIZED;
-    }
+simulation_error_t l6470_sim_send_command(uint8_t command, uint32_t parameter) {
+  if (!simulation_initialized) {
+    return SIM_ERROR_NOT_INITIALIZED;
+  }
 
-    char cmd_str[512];
-    char output[256];
+  char cmd_str[512];
+  char output[256];
 
-    /* Create Python command to send command */
-    snprintf(cmd_str, sizeof(cmd_str),
-             "import sys; sys.path.append('.'); "
-             "from scripts.register_simulator import L6470Simulator; "
-             "sim = L6470Simulator('%s'); "
-             "print('OK' if sim.send_command(0x%02X, 0x%06X) else 'ERROR')",
-             l6470_schema_path, command, parameter);
+  /* Create Python command to send command */
+  snprintf(cmd_str, sizeof(cmd_str),
+           "import sys; sys.path.append('.'); "
+           "from scripts.register_simulator import L6470Simulator; "
+           "sim = L6470Simulator('%s'); "
+           "print('OK' if sim.send_command(0x%02X, 0x%06X) else 'ERROR')",
+           l6470_schema_path, command, parameter);
 
-    simulation_error_t result =
-        execute_python_command(cmd_str, output, sizeof(output));
-    if (result != SIM_OK) {
-        return result;
-    }
+  simulation_error_t result =
+      execute_python_command(cmd_str, output, sizeof(output));
+  if (result != SIM_OK) {
+    return result;
+  }
 
-    if (strstr(output, "ERROR") != NULL) {
-        return SIM_ERROR_COMMAND_FAILED;
-    }
+  if (strstr(output, "ERROR") != NULL) {
+    return SIM_ERROR_COMMAND_FAILED;
+  }
 
-    return SIM_OK;
+  return SIM_OK;
 }
 
 /**
  * @brief Read AS5600 register
  */
 simulation_error_t as5600_sim_read_register(uint8_t address, uint16_t *value) {
-    if (!simulation_initialized || !value) {
-        return SIM_ERROR_NOT_INITIALIZED;
-    }
+  if (!simulation_initialized || !value) {
+    return SIM_ERROR_NOT_INITIALIZED;
+  }
 
-    char command[512];
-    char output[256];
-    uint32_t temp_value;
+  char command[512];
+  char output[256];
+  uint32_t temp_value;
 
-    /* Create Python command to read register */
-    snprintf(command, sizeof(command),
-             "import sys; sys.path.append('.'); "
-             "from scripts.register_simulator import AS5600Simulator; "
-             "sim = AS5600Simulator('%s'); "
-             "print(sim.read_register(0x%02X))",
-             as5600_schema_path, address);
+  /* Create Python command to read register */
+  snprintf(command, sizeof(command),
+           "import sys; sys.path.append('.'); "
+           "from scripts.register_simulator import AS5600Simulator; "
+           "sim = AS5600Simulator('%s'); "
+           "print(sim.read_register(0x%02X))",
+           as5600_schema_path, address);
 
-    simulation_error_t result =
-        execute_python_command(command, output, sizeof(output));
-    if (result != SIM_OK) {
-        return result;
-    }
-
-    result = parse_register_response(output, &temp_value);
-    if (result == SIM_OK) {
-        *value = (uint16_t)(temp_value & 0xFFFF);
-    }
-
+  simulation_error_t result =
+      execute_python_command(command, output, sizeof(output));
+  if (result != SIM_OK) {
     return result;
+  }
+
+  result = parse_register_response(output, &temp_value);
+  if (result == SIM_OK) {
+    *value = (uint16_t)(temp_value & 0xFFFF);
+  }
+
+  return result;
 }
 
 /**
  * @brief Write AS5600 register
  */
 simulation_error_t as5600_sim_write_register(uint8_t address, uint16_t value) {
-    if (!simulation_initialized) {
-        return SIM_ERROR_NOT_INITIALIZED;
-    }
+  if (!simulation_initialized) {
+    return SIM_ERROR_NOT_INITIALIZED;
+  }
 
-    char command[512];
-    char output[256];
+  char command[512];
+  char output[256];
 
-    /* Create Python command to write register */
-    snprintf(command, sizeof(command),
-             "import sys; sys.path.append('.'); "
-             "from scripts.register_simulator import AS5600Simulator; "
-             "sim = AS5600Simulator('%s'); "
-             "print('OK' if sim.write_register(0x%02X, 0x%04X) else 'ERROR')",
-             as5600_schema_path, address, value);
+  /* Create Python command to write register */
+  snprintf(command, sizeof(command),
+           "import sys; sys.path.append('.'); "
+           "from scripts.register_simulator import AS5600Simulator; "
+           "sim = AS5600Simulator('%s'); "
+           "print('OK' if sim.write_register(0x%02X, 0x%04X) else 'ERROR')",
+           as5600_schema_path, address, value);
 
-    simulation_error_t result =
-        execute_python_command(command, output, sizeof(output));
-    if (result != SIM_OK) {
-        return result;
-    }
+  simulation_error_t result =
+      execute_python_command(command, output, sizeof(output));
+  if (result != SIM_OK) {
+    return result;
+  }
 
-    if (strstr(output, "ERROR") != NULL) {
-        return SIM_ERROR_INVALID_VALUE;
-    }
+  if (strstr(output, "ERROR") != NULL) {
+    return SIM_ERROR_INVALID_VALUE;
+  }
 
-    return SIM_OK;
+  return SIM_OK;
 }
 
 /**
  * @brief Get simulation status (simplified version)
  */
 simulation_error_t simulation_get_status(simulation_status_t *status) {
-    if (!simulation_initialized || !status) {
-        return SIM_ERROR_NOT_INITIALIZED;
-    }
+  if (!simulation_initialized || !status) {
+    return SIM_ERROR_NOT_INITIALIZED;
+  }
 
-    /* For now, return basic status - full implementation would need
-     * more complex Python interaction or shared memory */
-    memset(status, 0, sizeof(simulation_status_t));
-    status->linked_motion = false;
-    status->physics_active = false;
-    status->steps_per_rev = 200;
+  /* For now, return basic status - full implementation would need
+   * more complex Python interaction or shared memory */
+  memset(status, 0, sizeof(simulation_status_t));
+  status->linked_motion = false;
+  status->physics_active = false;
+  status->steps_per_rev = 200;
 
-    return SIM_OK;
+  return SIM_OK;
 }
 
 /**
@@ -257,81 +252,81 @@ simulation_error_t simulation_get_status(simulation_status_t *status) {
  */
 simulation_error_t
 simulation_enable_linked_motion(uint32_t steps_per_revolution) {
-    if (!simulation_initialized) {
-        return SIM_ERROR_NOT_INITIALIZED;
-    }
+  if (!simulation_initialized) {
+    return SIM_ERROR_NOT_INITIALIZED;
+  }
 
-    /* TODO: Implement Python call to enable linked motion */
-    (void)steps_per_revolution; /* Suppress unused parameter warning */
+  /* TODO: Implement Python call to enable linked motion */
+  (void)steps_per_revolution; /* Suppress unused parameter warning */
 
-    return SIM_OK;
+  return SIM_OK;
 }
 
 /**
  * @brief Disable linked motion
  */
 simulation_error_t simulation_disable_linked_motion(void) {
-    if (!simulation_initialized) {
-        return SIM_ERROR_NOT_INITIALIZED;
-    }
+  if (!simulation_initialized) {
+    return SIM_ERROR_NOT_INITIALIZED;
+  }
 
-    /* TODO: Implement Python call to disable linked motion */
+  /* TODO: Implement Python call to disable linked motion */
 
-    return SIM_OK;
+  return SIM_OK;
 }
 
 /**
  * @brief Start physics simulation
  */
 simulation_error_t simulation_start_physics(void) {
-    if (!simulation_initialized) {
-        return SIM_ERROR_NOT_INITIALIZED;
-    }
+  if (!simulation_initialized) {
+    return SIM_ERROR_NOT_INITIALIZED;
+  }
 
-    /* TODO: Implement Python call to start physics */
+  /* TODO: Implement Python call to start physics */
 
-    return SIM_OK;
+  return SIM_OK;
 }
 
 /**
  * @brief Stop physics simulation
  */
 simulation_error_t simulation_stop_physics(void) {
-    if (!simulation_initialized) {
-        return SIM_ERROR_NOT_INITIALIZED;
-    }
+  if (!simulation_initialized) {
+    return SIM_ERROR_NOT_INITIALIZED;
+  }
 
-    /* TODO: Implement Python call to stop physics */
+  /* TODO: Implement Python call to stop physics */
 
-    return SIM_OK;
+  return SIM_OK;
 }
 
 /**
  * @brief Set AS5600 angle pattern
  */
 simulation_error_t as5600_sim_set_pattern(const char *pattern, float speed) {
-    if (!simulation_initialized || !pattern) {
-        return SIM_ERROR_NOT_INITIALIZED;
-    }
+  if (!simulation_initialized || !pattern) {
+    return SIM_ERROR_NOT_INITIALIZED;
+  }
 
-    /* TODO: Implement Python call to set pattern */
-    (void)speed; /* Suppress unused parameter warning */
+  /* TODO: Implement Python call to set pattern */
+  (void)speed; /* Suppress unused parameter warning */
 
-    return SIM_OK;
+  return SIM_OK;
 }
 
 /**
  * @brief Set AS5600 angle
  */
 simulation_error_t as5600_sim_set_angle(float degrees) {
-    if (!simulation_initialized) {
-        return SIM_ERROR_NOT_INITIALIZED;
-    }
+  if (!simulation_initialized) {
+    return SIM_ERROR_NOT_INITIALIZED;
+  }
 
-    /* TODO: Implement Python call to set angle */
-    (void)degrees; /* Suppress unused parameter warning */
+  /* TODO: Implement Python call to set angle */
+  (void)degrees; /* Suppress unused parameter warning */
 
-    return SIM_OK;
+  return SIM_OK;
 }
 
 /* Private Function Implementations */
@@ -341,33 +336,33 @@ simulation_error_t as5600_sim_set_angle(float degrees) {
  */
 static simulation_error_t
 execute_python_command(const char *command, char *output, size_t output_size) {
-    char full_command[1024];
-    FILE *pipe;
+  char full_command[1024];
+  FILE *pipe;
 
-    /* Build full Python command */
-    snprintf(full_command, sizeof(full_command),
-             "python3 -c \"%s\" 2>/dev/null", command);
+  /* Build full Python command */
+  snprintf(full_command, sizeof(full_command), "python3 -c \"%s\" 2>/dev/null",
+           command);
 
-    /* Execute command and capture output */
-    pipe = popen(full_command, "r");
-    if (!pipe) {
-        return SIM_ERROR_COMMAND_FAILED;
-    }
+  /* Execute command and capture output */
+  pipe = popen(full_command, "r");
+  if (!pipe) {
+    return SIM_ERROR_COMMAND_FAILED;
+  }
 
-    if (fgets(output, output_size, pipe) == NULL) {
-        pclose(pipe);
-        return SIM_ERROR_COMMAND_FAILED;
-    }
-
+  if (fgets(output, output_size, pipe) == NULL) {
     pclose(pipe);
+    return SIM_ERROR_COMMAND_FAILED;
+  }
 
-    /* Remove trailing newline */
-    size_t len = strlen(output);
-    if (len > 0 && output[len - 1] == '\n') {
-        output[len - 1] = '\0';
-    }
+  pclose(pipe);
 
-    return SIM_OK;
+  /* Remove trailing newline */
+  size_t len = strlen(output);
+  if (len > 0 && output[len - 1] == '\n') {
+    output[len - 1] = '\0';
+  }
+
+  return SIM_OK;
 }
 
 /**
@@ -375,16 +370,16 @@ execute_python_command(const char *command, char *output, size_t output_size) {
  */
 static simulation_error_t parse_register_response(const char *response,
                                                   uint32_t *value) {
-    if (!response || !value) {
-        return SIM_ERROR_COMMAND_FAILED;
-    }
+  if (!response || !value) {
+    return SIM_ERROR_COMMAND_FAILED;
+  }
 
-    /* Parse decimal or hexadecimal response */
-    if (strncmp(response, "0x", 2) == 0) {
-        *value = (uint32_t)strtoul(response, NULL, 16);
-    } else {
-        *value = (uint32_t)strtoul(response, NULL, 10);
-    }
+  /* Parse decimal or hexadecimal response */
+  if (strncmp(response, "0x", 2) == 0) {
+    *value = (uint32_t)strtoul(response, NULL, 16);
+  } else {
+    *value = (uint32_t)strtoul(response, NULL, 10);
+  }
 
-    return SIM_OK;
+  return SIM_OK;
 }

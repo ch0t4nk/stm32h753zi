@@ -36,111 +36,111 @@
  * @brief Motor fault types with severity levels
  */
 typedef enum {
-    MOTOR_FAULT_NONE = 0x00000000,
+  MOTOR_FAULT_NONE = 0x00000000,
 
-    // Critical faults (immediate stop required)
-    MOTOR_FAULT_OVERCURRENT = 0x00000001,      ///< Motor overcurrent detected
-    MOTOR_FAULT_OVERVOLTAGE = 0x00000002,      ///< Supply overvoltage
-    MOTOR_FAULT_UNDERVOLTAGE = 0x00000004,     ///< Supply undervoltage
-    MOTOR_FAULT_OVERTEMPERATURE = 0x00000008,  ///< Driver overtemperature
-    MOTOR_FAULT_L6470_FLAG = 0x00000010,       ///< L6470 driver fault flag
-    MOTOR_FAULT_EMERGENCY_STOP = 0x00000020,   ///< Emergency stop activated
-    MOTOR_FAULT_WATCHDOG_TIMEOUT = 0x00000040, ///< System watchdog timeout
-    MOTOR_FAULT_POSITION_ERROR = 0x00000080,   ///< Position feedback error
-    MOTOR_FAULT_MOTION_PROFILE_FAILED =
-        0x00000100, ///< Motion profile execution failed
-    MOTOR_FAULT_SYNCHRONIZATION_ERROR =
-        0x00000200, ///< Motor synchronization error
+  // Critical faults (immediate stop required)
+  MOTOR_FAULT_OVERCURRENT = 0x00000001,      ///< Motor overcurrent detected
+  MOTOR_FAULT_OVERVOLTAGE = 0x00000002,      ///< Supply overvoltage
+  MOTOR_FAULT_UNDERVOLTAGE = 0x00000004,     ///< Supply undervoltage
+  MOTOR_FAULT_OVERTEMPERATURE = 0x00000008,  ///< Driver overtemperature
+  MOTOR_FAULT_L6470_FLAG = 0x00000010,       ///< L6470 driver fault flag
+  MOTOR_FAULT_EMERGENCY_STOP = 0x00000020,   ///< Emergency stop activated
+  MOTOR_FAULT_WATCHDOG_TIMEOUT = 0x00000040, ///< System watchdog timeout
+  MOTOR_FAULT_POSITION_ERROR = 0x00000080,   ///< Position feedback error
+  MOTOR_FAULT_MOTION_PROFILE_FAILED =
+      0x00000100, ///< Motion profile execution failed
+  MOTOR_FAULT_SYNCHRONIZATION_ERROR =
+      0x00000200, ///< Motor synchronization error
 
-    // Warning faults (degraded operation)
-    MOTOR_FAULT_SPEED_WARNING = 0x00000400,   ///< Speed approaching limit
-    MOTOR_FAULT_CURRENT_WARNING = 0x00000800, ///< Current approaching limit
-    MOTOR_FAULT_TEMP_WARNING = 0x00001000,    ///< Temperature warning
-    MOTOR_FAULT_VOLTAGE_WARNING = 0x00002000, ///< Voltage warning
-    MOTOR_FAULT_ENCODER_WARNING = 0x00004000, ///< Encoder signal degraded
-    MOTOR_FAULT_COMM_WARNING = 0x00008000,    ///< Communication issues
+  // Warning faults (degraded operation)
+  MOTOR_FAULT_SPEED_WARNING = 0x00000400,   ///< Speed approaching limit
+  MOTOR_FAULT_CURRENT_WARNING = 0x00000800, ///< Current approaching limit
+  MOTOR_FAULT_TEMP_WARNING = 0x00001000,    ///< Temperature warning
+  MOTOR_FAULT_VOLTAGE_WARNING = 0x00002000, ///< Voltage warning
+  MOTOR_FAULT_ENCODER_WARNING = 0x00004000, ///< Encoder signal degraded
+  MOTOR_FAULT_COMM_WARNING = 0x00008000,    ///< Communication issues
 
-    // System faults
-    MOTOR_FAULT_MEMORY_ERROR = 0x00010000,     ///< Memory corruption
-    MOTOR_FAULT_CONFIG_ERROR = 0x00020000,     ///< Configuration invalid
-    MOTOR_FAULT_INIT_ERROR = 0x00040000,       ///< Initialization failed
-    MOTOR_FAULT_SELF_TEST_FAILED = 0x00080000, ///< Self-test failure
+  // System faults
+  MOTOR_FAULT_MEMORY_ERROR = 0x00010000,     ///< Memory corruption
+  MOTOR_FAULT_CONFIG_ERROR = 0x00020000,     ///< Configuration invalid
+  MOTOR_FAULT_INIT_ERROR = 0x00040000,       ///< Initialization failed
+  MOTOR_FAULT_SELF_TEST_FAILED = 0x00080000, ///< Self-test failure
 
-    // Critical fault mask
-    MOTOR_FAULT_CRITICAL_MASK = 0x000003FF,
+  // Critical fault mask
+  MOTOR_FAULT_CRITICAL_MASK = 0x000003FF,
 
-    // All faults mask (cast to avoid enum range warning)
-    MOTOR_FAULT_ALL_MASK = (int)0xFFFFFFFF
+  // All faults mask (cast to avoid enum range warning)
+  MOTOR_FAULT_ALL_MASK = (int)0xFFFFFFFF
 } MotorFaultType_t;
 
 /**
  * @brief System fault types
  */
 typedef enum {
-    SYSTEM_FAULT_NONE = 0x00000000,
+  SYSTEM_FAULT_NONE = 0x00000000,
 
-    // Hardware faults
-    SYSTEM_FAULT_CLOCK_FAILURE = 0x00000001, ///< System clock failure
-    SYSTEM_FAULT_POWER_FAILURE = 0x00000002, ///< Power supply failure
-    SYSTEM_FAULT_GPIO_FAULT = 0x00000004,    ///< GPIO configuration fault
-    SYSTEM_FAULT_SPI_FAULT = 0x00000008,     ///< SPI communication fault
-    SYSTEM_FAULT_UART_FAULT = 0x00000010,    ///< UART communication fault
-    SYSTEM_FAULT_CAN_FAULT = 0x00000020,     ///< CAN communication fault
-    SYSTEM_FAULT_COMM_ERROR = 0x00000040,    ///< General communication error
-    SYSTEM_FAULT_COMM_TIMEOUT = 0x00000080,  ///< Communication timeout
+  // Hardware faults
+  SYSTEM_FAULT_CLOCK_FAILURE = 0x00000001, ///< System clock failure
+  SYSTEM_FAULT_POWER_FAILURE = 0x00000002, ///< Power supply failure
+  SYSTEM_FAULT_GPIO_FAULT = 0x00000004,    ///< GPIO configuration fault
+  SYSTEM_FAULT_SPI_FAULT = 0x00000008,     ///< SPI communication fault
+  SYSTEM_FAULT_UART_FAULT = 0x00000010,    ///< UART communication fault
+  SYSTEM_FAULT_CAN_FAULT = 0x00000020,     ///< CAN communication fault
+  SYSTEM_FAULT_COMM_ERROR = 0x00000040,    ///< General communication error
+  SYSTEM_FAULT_COMM_TIMEOUT = 0x00000080,  ///< Communication timeout
 
-    // Software faults
-    SYSTEM_FAULT_STACK_OVERFLOW = 0x00000100,   ///< Stack overflow detected
-    SYSTEM_FAULT_HEAP_CORRUPTION = 0x00000200,  ///< Heap corruption
-    SYSTEM_FAULT_ASSERT_FAILED = 0x00000400,    ///< Assertion failure
-    SYSTEM_FAULT_RTOS_ERROR = 0x00000800,       ///< RTOS error
-    SYSTEM_FAULT_INIT_ERROR = 0x00001000,       ///< Initialization error
-    SYSTEM_FAULT_SELF_TEST = 0x00002000,        ///< Self-test fault
-    SYSTEM_FAULT_SAFETY_VIOLATION = 0x00004000, ///< Safety violation detected
-    SYSTEM_FAULT_REDUNDANCY_LOST = 0x00008000,  ///< Redundancy system failure
+  // Software faults
+  SYSTEM_FAULT_STACK_OVERFLOW = 0x00000100,   ///< Stack overflow detected
+  SYSTEM_FAULT_HEAP_CORRUPTION = 0x00000200,  ///< Heap corruption
+  SYSTEM_FAULT_ASSERT_FAILED = 0x00000400,    ///< Assertion failure
+  SYSTEM_FAULT_RTOS_ERROR = 0x00000800,       ///< RTOS error
+  SYSTEM_FAULT_INIT_ERROR = 0x00001000,       ///< Initialization error
+  SYSTEM_FAULT_SELF_TEST = 0x00002000,        ///< Self-test fault
+  SYSTEM_FAULT_SAFETY_VIOLATION = 0x00004000, ///< Safety violation detected
+  SYSTEM_FAULT_REDUNDANCY_LOST = 0x00008000,  ///< Redundancy system failure
 
-    // Critical system fault mask
-    SYSTEM_FAULT_CRITICAL_MASK = 0x0000FFFF,
+  // Critical system fault mask
+  SYSTEM_FAULT_CRITICAL_MASK = 0x0000FFFF,
 
-    // All system faults mask (cast to avoid enum range warning)
-    SYSTEM_FAULT_ALL_MASK = (int)0xFFFFFFFF
+  // All system faults mask (cast to avoid enum range warning)
+  SYSTEM_FAULT_ALL_MASK = (int)0xFFFFFFFF
 } SystemFaultType_t;
 
 /**
  * @brief Fault severity levels
  */
 typedef enum {
-    FAULT_SEVERITY_INFO = 0,    ///< Informational only
-    FAULT_SEVERITY_WARNING = 1, ///< Warning - monitor closely
-    FAULT_SEVERITY_ERROR = 2,   ///< Error - action required
-    FAULT_SEVERITY_CRITICAL = 3 ///< Critical - immediate stop
+  FAULT_SEVERITY_INFO = 0,    ///< Informational only
+  FAULT_SEVERITY_WARNING = 1, ///< Warning - monitor closely
+  FAULT_SEVERITY_ERROR = 2,   ///< Error - action required
+  FAULT_SEVERITY_CRITICAL = 3 ///< Critical - immediate stop
 } FaultSeverity_t;
 
 /**
  * @brief Fault record structure
  */
 typedef struct {
-    uint32_t fault_code;      ///< Fault type code
-    FaultSeverity_t severity; ///< Fault severity level
-    uint32_t timestamp;       ///< Time when fault occurred
-    uint32_t count;           ///< Number of occurrences
-    uint32_t motor_id;        ///< Motor ID (if motor-specific)
-    uint32_t additional_data; ///< Additional fault-specific data
-    bool active;              ///< Whether fault is currently active
-    bool acknowledged;        ///< Whether fault has been acknowledged
+  uint32_t fault_code;      ///< Fault type code
+  FaultSeverity_t severity; ///< Fault severity level
+  uint32_t timestamp;       ///< Time when fault occurred
+  uint32_t count;           ///< Number of occurrences
+  uint32_t motor_id;        ///< Motor ID (if motor-specific)
+  uint32_t additional_data; ///< Additional fault-specific data
+  bool active;              ///< Whether fault is currently active
+  bool acknowledged;        ///< Whether fault has been acknowledged
 } FaultRecord_t;
 
 /**
  * @brief Fault monitor configuration
  */
 typedef struct {
-    bool enabled;                  ///< Monitor enabled/disabled
-    uint32_t check_interval_ms;    ///< Monitoring interval
-    uint32_t fault_count;          ///< Total fault count
-    uint32_t critical_fault_count; ///< Critical fault count
-    uint32_t last_check_time;      ///< Last monitoring cycle time
-    uint32_t max_fault_records;    ///< Maximum fault records to keep
-    uint32_t current_fault_count;  ///< Current number of active faults
+  bool enabled;                  ///< Monitor enabled/disabled
+  uint32_t check_interval_ms;    ///< Monitoring interval
+  uint32_t fault_count;          ///< Total fault count
+  uint32_t critical_fault_count; ///< Critical fault count
+  uint32_t last_check_time;      ///< Last monitoring cycle time
+  uint32_t max_fault_records;    ///< Maximum fault records to keep
+  uint32_t current_fault_count;  ///< Current number of active faults
 } FaultMonitorConfig_t;
 
 /* ==========================================================================
@@ -153,16 +153,16 @@ typedef struct {
  * @brief L6470 status register fault flags
  */
 typedef enum {
-    L6470_FAULT_NONE = 0x0000,
-    L6470_FAULT_OVERCURRENT_B = 0x0001,    ///< Bridge B overcurrent
-    L6470_FAULT_OVERCURRENT_A = 0x0002,    ///< Bridge A overcurrent
-    L6470_FAULT_THERMAL_SHUTDOWN = 0x0004, ///< Thermal shutdown
-    L6470_FAULT_THERMAL_WARNING = 0x0008,  ///< Thermal warning
-    L6470_FAULT_UVLO = 0x0010,             ///< Undervoltage lockout
-    L6470_FAULT_STALL_DETECTION = 0x0020,  ///< Stall detection
-    L6470_FAULT_SWITCH_EVENT = 0x0040,     ///< Switch turn-on event
-    L6470_FAULT_COMMAND_ERROR = 0x0080,    ///< Wrong command
-    L6470_FAULT_ALL_MASK = 0x00FF
+  L6470_FAULT_NONE = 0x0000,
+  L6470_FAULT_OVERCURRENT_B = 0x0001,    ///< Bridge B overcurrent
+  L6470_FAULT_OVERCURRENT_A = 0x0002,    ///< Bridge A overcurrent
+  L6470_FAULT_THERMAL_SHUTDOWN = 0x0004, ///< Thermal shutdown
+  L6470_FAULT_THERMAL_WARNING = 0x0008,  ///< Thermal warning
+  L6470_FAULT_UVLO = 0x0010,             ///< Undervoltage lockout
+  L6470_FAULT_STALL_DETECTION = 0x0020,  ///< Stall detection
+  L6470_FAULT_SWITCH_EVENT = 0x0040,     ///< Switch turn-on event
+  L6470_FAULT_COMMAND_ERROR = 0x0080,    ///< Wrong command
+  L6470_FAULT_ALL_MASK = 0x00FF
 } L6470FaultFlags_t;
 
 /* ==========================================================================
@@ -381,35 +381,34 @@ SystemError_t fault_monitor_get_statistics(uint32_t *total_faults,
 /**
  * @brief Quick fault check macro for critical operations
  */
-#define FAULT_CHECK_CRITICAL()                                                \
-    do {                                                                      \
-        if (fault_monitor_has_critical_faults()) {                            \
-            return ERROR_SAFETY_CRITICAL_FAULT;                               \
-        }                                                                     \
-    } while (0)
+#define FAULT_CHECK_CRITICAL()                                                 \
+  do {                                                                         \
+    if (fault_monitor_has_critical_faults()) {                                 \
+      return ERROR_SAFETY_CRITICAL_FAULT;                                      \
+    }                                                                          \
+  } while (0)
 
 /**
  * @brief Record motor fault with automatic severity determination
  */
-#define RECORD_MOTOR_FAULT(motor_id, fault_type, data)                        \
-    do {                                                                      \
-        FaultSeverity_t severity = ((fault_type) & MOTOR_FAULT_CRITICAL_MASK) \
-                                       ? FAULT_SEVERITY_CRITICAL              \
-                                       : FAULT_SEVERITY_ERROR;                \
-        fault_monitor_record_motor_fault((motor_id), (fault_type), severity,  \
-                                         (data));                             \
-    } while (0)
+#define RECORD_MOTOR_FAULT(motor_id, fault_type, data)                         \
+  do {                                                                         \
+    FaultSeverity_t severity = ((fault_type)&MOTOR_FAULT_CRITICAL_MASK)        \
+                                   ? FAULT_SEVERITY_CRITICAL                   \
+                                   : FAULT_SEVERITY_ERROR;                     \
+    fault_monitor_record_motor_fault((motor_id), (fault_type), severity,       \
+                                     (data));                                  \
+  } while (0)
 
 /**
  * @brief Record system fault with automatic severity determination
  */
-#define RECORD_SYSTEM_FAULT(fault_type, data)                                 \
-    do {                                                                      \
-        FaultSeverity_t severity =                                            \
-            ((fault_type) & SYSTEM_FAULT_CRITICAL_MASK)                       \
-                ? FAULT_SEVERITY_CRITICAL                                     \
-                : FAULT_SEVERITY_ERROR;                                       \
-        fault_monitor_record_system_fault((fault_type), severity, (data));    \
-    } while (0)
+#define RECORD_SYSTEM_FAULT(fault_type, data)                                  \
+  do {                                                                         \
+    FaultSeverity_t severity = ((fault_type)&SYSTEM_FAULT_CRITICAL_MASK)       \
+                                   ? FAULT_SEVERITY_CRITICAL                   \
+                                   : FAULT_SEVERITY_ERROR;                     \
+    fault_monitor_record_system_fault((fault_type), severity, (data));         \
+  } while (0)
 
 #endif /* FAULT_MONITOR_H */

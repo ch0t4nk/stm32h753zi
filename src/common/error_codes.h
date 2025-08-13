@@ -69,14 +69,16 @@ typedef enum {
     ERROR_VERSION_MISMATCH,       // 0x100E - Version compatibility error
     ERROR_INSUFFICIENT_RESOURCES, // 0x100F - Insufficient system resources
     ERROR_MEMORY_ALLOCATION,      // 0x1010 - Memory allocation failed
+    ERROR_RETRY_LIMIT_EXCEEDED,   // 0x1011 - Maximum retry attempts exceeded
+    ERROR_CONFIGURATION_INVALID,  // 0x1012 - Invalid configuration detected
 
     // RTOS Error Codes
-    ERROR_QUEUE_FULL,     // 0x1011 - Queue is full, cannot add item
-    ERROR_STACK_OVERFLOW, // 0x1012 - Stack overflow detected
+    ERROR_QUEUE_FULL,     // 0x1013 - Queue is full, cannot add item
+    ERROR_STACK_OVERFLOW, // 0x1014 - Stack overflow detected
 
     // Timer Error Codes
-    ERROR_TIMER_INIT_FAILED,  // 0x1013 - Timer initialization failed
-    ERROR_TIMER_START_FAILED, // 0x1014 - Timer start operation failed
+    ERROR_TIMER_INIT_FAILED,  // 0x1015 - Timer initialization failed
+    ERROR_TIMER_START_FAILED, // 0x1016 - Timer start operation failed
 
     // Motor Control Error Codes - integrated into SystemError_t
     ERROR_MOTOR_INIT_FAILED =

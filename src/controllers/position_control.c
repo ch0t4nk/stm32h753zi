@@ -14,6 +14,7 @@
 #include "drivers/as5600/as5600_driver.h"
 #include "hal_abstraction/hal_abstraction.h"
 #include "motion_profile.h"
+#include "position_safety.h"
 #include "safety/fault_monitor.h"
 #include <math.h>
 #include <stdlib.h>
@@ -215,12 +216,64 @@ SystemError_t position_control_set_target(uint8_t motor_id,
 
     PositionControl_t *ctrl = &position_controllers[motor_id];
 
-    // Validate target position
-    if (abs(target_position) > MAX_POSITION_STEPS) {
+    // Convert steps to degrees for position safety check
+    float target_degrees = (float)target_position * STEPS_TO_DEGREES;
+
+    // Validate target position with safety system
+    PositionValidationResult_t validation_result;
+    SystemError_t safety_result = position_safety_validate_target(
+        motor_id, target_degrees, &validation_result);
+
+    if (safety_result != SYSTEM_OK) {
+        return safety_result;
+    }
+
+    if (!validation_result.position_valid) {
+        return ERROR_POSITION_LIMIT_EXCEEDED;
+    }
+
+    // Enforce position limits
+    float safe_target_degrees;
+    safety_result = position_safety_enforce_limits(motor_id, target_degrees,
+                                                   &safe_target_degrees);
+
+    if (safety_result != SYSTEM_OK) {
+        return safety_result;
+    }
+
+    // Convert back to steps
+    int32_t safe_target_steps =
+        (int32_t)(safe_target_degrees / STEPS_TO_DEGREES);
+
+    // Validate target position (legacy check)
+    if (abs(safe_target_steps) > MAX_POSITION_STEPS) {
         return ERROR_POSITION_OUT_OF_RANGE;
     }
 
-    ctrl->state.target_position = target_position;
+    ctrl->state.target_position = safe_target_steps;
+
+    return SYSTEM_OK;
+}
+
+/**
+ * @brief Get current motor position in degrees
+ * @param motor_id Motor identifier
+ * @param position_deg Pointer to store position in degrees
+ * @return SystemError_t Operation result
+ */
+SystemError_t get_motor_position(uint8_t motor_id, float *position_deg) {
+    if (motor_id >= MAX_MOTORS || !controller_initialized[motor_id]) {
+        return ERROR_MOTOR_INVALID_ID;
+    }
+
+    if (position_deg == NULL) {
+        return ERROR_NULL_POINTER;
+    }
+
+    PositionControl_t *ctrl = &position_controllers[motor_id];
+
+    // Convert steps to degrees
+    *position_deg = (float)ctrl->state.current_position * STEPS_TO_DEGREES;
 
     return SYSTEM_OK;
 }

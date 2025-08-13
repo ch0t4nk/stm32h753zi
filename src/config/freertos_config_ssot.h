@@ -117,48 +117,47 @@
 #define SYSTEM_EVENT_MOTORS_INITIALIZED (1UL << 0)   // Bit 0: Motors ready
 #define SYSTEM_EVENT_SAFETY_CHECKS_PASSED (1UL << 1) // Bit 1: Safety validated
 #define SYSTEM_EVENT_COMM_READY (1UL << 2) // Bit 2: Communication ready
-#define SYSTEM_EVENT_SENSORS_CALIBRATED                                       \
-    (1UL << 3) // Bit 3: Sensor calibration complete
-#define SYSTEM_EVENT_STARTUP_COMPLETE                                         \
-    (1UL << 4) // Bit 4: System startup complete
-#define SYSTEM_EVENT_EMERGENCY_STOP                                           \
-    (1UL << 5) // Bit 5: Emergency stop triggered
-#define SYSTEM_EVENT_MOTION_COMPLETE                                          \
-    (1UL << 6) // Bit 6: Motion sequence complete
-#define SYSTEM_EVENT_HOMING_COMPLETE                                          \
-    (1UL << 7) // Bit 7: Homing operation complete
+#define SYSTEM_EVENT_SENSORS_CALIBRATED                                        \
+  (1UL << 3) // Bit 3: Sensor calibration complete
+#define SYSTEM_EVENT_STARTUP_COMPLETE                                          \
+  (1UL << 4) // Bit 4: System startup complete
+#define SYSTEM_EVENT_EMERGENCY_STOP                                            \
+  (1UL << 5) // Bit 5: Emergency stop triggered
+#define SYSTEM_EVENT_MOTION_COMPLETE                                           \
+  (1UL << 6) // Bit 6: Motion sequence complete
+#define SYSTEM_EVENT_HOMING_COMPLETE                                           \
+  (1UL << 7) // Bit 7: Homing operation complete
 
 /** @brief Communication Event Group bit definitions for protocol coordination
  */
 #define COMM_EVENT_CAN_MESSAGE_READY (1UL << 0) // Bit 0: CAN message pending
 #define COMM_EVENT_UART_TRANSMIT_COMPLETE (1UL << 1) // Bit 1: UART TX complete
 #define COMM_EVENT_UART_RECEIVE_READY (1UL << 2) // Bit 2: UART RX data ready
-#define COMM_EVENT_TELEMETRY_REQUEST                                          \
-    (1UL << 3) // Bit 3: Telemetry data requested
-#define COMM_EVENT_STATUS_UPDATE_REQUIRED                                     \
-    (1UL << 4) // Bit 4: Status update needed
-#define COMM_EVENT_ERROR_REPORT_PENDING                                       \
-    (1UL << 5) // Bit 5: Error report pending
+#define COMM_EVENT_TELEMETRY_REQUEST                                           \
+  (1UL << 3) // Bit 3: Telemetry data requested
+#define COMM_EVENT_STATUS_UPDATE_REQUIRED                                      \
+  (1UL << 4) // Bit 4: Status update needed
+#define COMM_EVENT_ERROR_REPORT_PENDING                                        \
+  (1UL << 5) // Bit 5: Error report pending
 
 /** @brief Motion Event Group bit definitions for coordinated motion control */
-#define MOTION_EVENT_MOTOR1_TARGET_REACHED                                    \
-    (1UL << 0) // Bit 0: Motor 1 at target
-#define MOTION_EVENT_MOTOR2_TARGET_REACHED                                    \
-    (1UL << 1) // Bit 1: Motor 2 at target
-#define MOTION_EVENT_SYNCHRONIZED_MOVE                                        \
-    (1UL << 2) // Bit 2: Coordinated move active
-#define MOTION_EVENT_POSITION_LIMIT_HIT                                       \
-    (1UL << 3) // Bit 3: Position limit reached
+#define MOTION_EVENT_MOTOR1_TARGET_REACHED                                     \
+  (1UL << 0) // Bit 0: Motor 1 at target
+#define MOTION_EVENT_MOTOR2_TARGET_REACHED                                     \
+  (1UL << 1) // Bit 1: Motor 2 at target
+#define MOTION_EVENT_SYNCHRONIZED_MOVE                                         \
+  (1UL << 2) // Bit 2: Coordinated move active
+#define MOTION_EVENT_POSITION_LIMIT_HIT                                        \
+  (1UL << 3)                                    // Bit 3: Position limit reached
 #define MOTION_EVENT_SPEED_LIMIT_HIT (1UL << 4) // Bit 4: Speed limit reached
-#define MOTION_EVENT_ESTOP_MOTION_STOPPED                                     \
-    (1UL << 5) // Bit 5: Emergency stop motion halt
+#define MOTION_EVENT_ESTOP_MOTION_STOPPED                                      \
+  (1UL << 5) // Bit 5: Emergency stop motion halt
 
 /** @brief Event group wait timeouts for different operations */
-#define EVENT_GROUP_WAIT_STARTUP_MS                                           \
-    (5000) // 5 second timeout for startup events
+#define EVENT_GROUP_WAIT_STARTUP_MS                                            \
+  (5000)                                  // 5 second timeout for startup events
 #define EVENT_GROUP_WAIT_MOTION_MS (2000) // 2 second timeout for motion events
-#define EVENT_GROUP_WAIT_COMM_MS                                              \
-    (500) // 500ms timeout for communication events
+#define EVENT_GROUP_WAIT_COMM_MS (500) // 500ms timeout for communication events
 #define EVENT_GROUP_WAIT_EMERGENCY_MS (10) // 10ms timeout for emergency events
 
 // Memory Pool Configuration
@@ -169,28 +168,24 @@
 
 /** @brief Memory pool block counts */
 #define MEMORY_POOL_SMALL_BLOCK_COUNT (16) // 16 small blocks (512 bytes total)
-#define MEMORY_POOL_MEDIUM_BLOCK_COUNT                                        \
-    (8)                                   // 8 medium blocks (1024 bytes total)
-#define MEMORY_POOL_LARGE_BLOCK_COUNT (4) // 4 large blocks (2048 bytes total)
+#define MEMORY_POOL_MEDIUM_BLOCK_COUNT (8) // 8 medium blocks (1024 bytes total)
+#define MEMORY_POOL_LARGE_BLOCK_COUNT (4)  // 4 large blocks (2048 bytes total)
 
 /** @brief Memory pool total allocation sizes */
-#define MEMORY_POOL_SMALL_TOTAL_SIZE                                          \
-    (MEMORY_POOL_SMALL_BLOCK_SIZE * MEMORY_POOL_SMALL_BLOCK_COUNT) // 512 bytes
-#define MEMORY_POOL_MEDIUM_TOTAL_SIZE                                         \
-    (MEMORY_POOL_MEDIUM_BLOCK_SIZE *                                          \
-     MEMORY_POOL_MEDIUM_BLOCK_COUNT) // 1024 bytes
-#define MEMORY_POOL_LARGE_TOTAL_SIZE                                          \
-    (MEMORY_POOL_LARGE_BLOCK_SIZE *                                           \
-     MEMORY_POOL_LARGE_BLOCK_COUNT) // 2048 bytes
-#define MEMORY_POOL_TOTAL_ALLOCATION                                          \
-    (MEMORY_POOL_SMALL_TOTAL_SIZE + MEMORY_POOL_MEDIUM_TOTAL_SIZE +           \
-     MEMORY_POOL_LARGE_TOTAL_SIZE) // 3584 bytes
+#define MEMORY_POOL_SMALL_TOTAL_SIZE                                           \
+  (MEMORY_POOL_SMALL_BLOCK_SIZE * MEMORY_POOL_SMALL_BLOCK_COUNT) // 512 bytes
+#define MEMORY_POOL_MEDIUM_TOTAL_SIZE                                          \
+  (MEMORY_POOL_MEDIUM_BLOCK_SIZE * MEMORY_POOL_MEDIUM_BLOCK_COUNT) // 1024 bytes
+#define MEMORY_POOL_LARGE_TOTAL_SIZE                                           \
+  (MEMORY_POOL_LARGE_BLOCK_SIZE * MEMORY_POOL_LARGE_BLOCK_COUNT) // 2048 bytes
+#define MEMORY_POOL_TOTAL_ALLOCATION                                           \
+  (MEMORY_POOL_SMALL_TOTAL_SIZE + MEMORY_POOL_MEDIUM_TOTAL_SIZE +              \
+   MEMORY_POOL_LARGE_TOTAL_SIZE) // 3584 bytes
 
 /** @brief Memory pool allocation timeouts */
-#define MEMORY_POOL_ALLOC_TIMEOUT_MS                                          \
-    (100) // 100ms timeout for memory allocation
-#define MEMORY_POOL_FREE_TIMEOUT_MS                                           \
-    (10) // 10ms timeout for memory deallocation
+#define MEMORY_POOL_ALLOC_TIMEOUT_MS                                           \
+  (100)                                  // 100ms timeout for memory allocation
+#define MEMORY_POOL_FREE_TIMEOUT_MS (10) // 10ms timeout for memory deallocation
 
 // Task Utilities Configuration
 /** @brief Task statistics collection interval */
@@ -198,14 +193,13 @@
 #define TASK_STATS_HISTORY_SIZE (60)           // Keep 60 seconds of history
 
 /** @brief CPU usage calculation parameters */
-#define CPU_USAGE_CALCULATION_PERIOD_MS                                       \
-    (100) // Calculate CPU usage every 100ms
-#define CPU_USAGE_IDLE_THRESHOLD_PERCENT                                      \
-    (95) // 95% idle threshold for power saving
+#define CPU_USAGE_CALCULATION_PERIOD_MS (100) // Calculate CPU usage every 100ms
+#define CPU_USAGE_IDLE_THRESHOLD_PERCENT                                       \
+  (95) // 95% idle threshold for power saving
 
 /** @brief Stack monitoring parameters */
-#define STACK_MONITOR_CHECK_PERIOD_MS                                         \
-    (5000) // Check stack usage every 5 seconds
+#define STACK_MONITOR_CHECK_PERIOD_MS                                          \
+  (5000) // Check stack usage every 5 seconds
 #define STACK_MONITOR_WARNING_THRESHOLD (80)  // Warn at 80% stack usage
 #define STACK_MONITOR_CRITICAL_THRESHOLD (90) // Critical at 90% stack usage
 
@@ -215,11 +209,11 @@
 
 /** @brief Power management modes for energy optimization */
 typedef enum {
-    POWER_MODE_ACTIVE = 0, // Full performance mode
-    POWER_MODE_QUIET,      // Reduced activity mode
-    POWER_MODE_IDLE,       // Minimal activity mode
-    POWER_MODE_SLEEP,      // Sleep mode with wake on interrupt
-    POWER_MODE_COUNT
+  POWER_MODE_ACTIVE = 0, // Full performance mode
+  POWER_MODE_QUIET,      // Reduced activity mode
+  POWER_MODE_IDLE,       // Minimal activity mode
+  POWER_MODE_SLEEP,      // Sleep mode with wake on interrupt
+  POWER_MODE_COUNT
 } PowerMode_t;
 
 /** @brief Power management timing parameters */
@@ -230,9 +224,8 @@ typedef enum {
 /** @brief Quiet mode task period adjustments (multipliers) */
 #define POWER_QUIET_MOTOR_PERIOD_MULTIPLIER (2)  // 2ms motor control in quiet
 #define POWER_QUIET_SAFETY_PERIOD_MULTIPLIER (2) // 4ms safety checks in quiet
-#define POWER_QUIET_COMM_PERIOD_MULTIPLIER (4) // 40ms CAN, 80ms UART in quiet
-#define POWER_QUIET_TELEMETRY_PERIOD_MULTIPLIER                               \
-    (10) // 100ms telemetry in quiet
+#define POWER_QUIET_COMM_PERIOD_MULTIPLIER (4)   // 40ms CAN, 80ms UART in quiet
+#define POWER_QUIET_TELEMETRY_PERIOD_MULTIPLIER (10) // 100ms telemetry in quiet
 
 /** @brief CPU frequency scaling for power modes */
 #define POWER_ACTIVE_CPU_FREQ_MHZ (480) // Full 480MHz
@@ -408,8 +401,7 @@ _Static_assert(POWER_IDLE_CPU_FREQ_MHZ <= POWER_QUIET_CPU_FREQ_MHZ,
                "Idle mode CPU frequency cannot exceed quiet mode");
 
 // Dynamic Task Tuning Validation
-_Static_assert(DYNAMIC_TUNE_CPU_LOW_THRESHOLD <
-                   DYNAMIC_TUNE_CPU_HIGH_THRESHOLD,
+_Static_assert(DYNAMIC_TUNE_CPU_LOW_THRESHOLD < DYNAMIC_TUNE_CPU_HIGH_THRESHOLD,
                "CPU low threshold must be less than high threshold");
 _Static_assert(DYNAMIC_TUNE_MAX_PERIOD_DECREASE <= 100,
                "Period decrease limit cannot exceed 100%");

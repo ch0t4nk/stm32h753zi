@@ -29,9 +29,8 @@
 /* ==========================================================================
  */
 
-// AS5600 I2C Address
-#define AS5600_I2C_ADDRESS 0x36 // 7-bit address
-#define AS5600_I2C_ADDRESS_8BIT (AS5600_I2C_ADDRESS << 1)
+// AS5600 I2C Address - Use SSOT definitions from hardware_config.h
+// Hardware config defines both 7-bit (0x36) and 8-bit (0x6C) addresses
 
 // Use SSOT hardware configuration for I2C
 #define AS5600_I2C_INSTANCE ENCODER_I2C_INSTANCE

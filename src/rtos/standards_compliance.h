@@ -39,22 +39,22 @@
 
 /// @brief MISRA-C Rule Categories
 typedef enum {
-    MISRA_CATEGORY_REQUIRED,  ///< Required rules (must comply)
-    MISRA_CATEGORY_ADVISORY,  ///< Advisory rules (should comply)
-    MISRA_CATEGORY_MANDATORY, ///< Mandatory rules (shall comply)
-    MISRA_CATEGORY_COUNT
+  MISRA_CATEGORY_REQUIRED,  ///< Required rules (must comply)
+  MISRA_CATEGORY_ADVISORY,  ///< Advisory rules (should comply)
+  MISRA_CATEGORY_MANDATORY, ///< Mandatory rules (shall comply)
+  MISRA_CATEGORY_COUNT
 } MisraRuleCategory_t;
 
 /// @brief MISRA-C Rule Violation Record
 typedef struct {
-    uint16_t rule_number;         ///< MISRA-C rule number (e.g., 15.5)
-    MisraRuleCategory_t category; ///< Rule category
-    const char *file_name;        ///< Source file name
-    uint32_t line_number;         ///< Line number of violation
-    const char *description;      ///< Violation description
-    bool justified;               ///< Violation is justified/documented
-    const char *justification;    ///< Justification text
-    uint32_t timestamp;           ///< When violation was recorded
+  uint16_t rule_number;         ///< MISRA-C rule number (e.g., 15.5)
+  MisraRuleCategory_t category; ///< Rule category
+  const char *file_name;        ///< Source file name
+  uint32_t line_number;         ///< Line number of violation
+  const char *description;      ///< Violation description
+  bool justified;               ///< Violation is justified/documented
+  const char *justification;    ///< Justification text
+  uint32_t timestamp;           ///< When violation was recorded
 } MisraViolationRecord_t;
 
 /**
@@ -65,23 +65,23 @@ typedef struct {
 
 /// @brief Safety Integrity Levels
 typedef enum {
-    SIL_NONE = 0, ///< No safety requirements
-    SIL_1 = 1,    ///< Low safety integrity
-    SIL_2 = 2,    ///< Medium safety integrity (target)
-    SIL_3 = 3,    ///< High safety integrity
-    SIL_4 = 4     ///< Very high safety integrity
+  SIL_NONE = 0, ///< No safety requirements
+  SIL_1 = 1,    ///< Low safety integrity
+  SIL_2 = 2,    ///< Medium safety integrity (target)
+  SIL_3 = 3,    ///< High safety integrity
+  SIL_4 = 4     ///< Very high safety integrity
 } SafetyIntegrityLevel_t;
 
 /// @brief Safety Function Classification
 typedef struct {
-    const char *function_name;        ///< Safety function name
-    SafetyIntegrityLevel_t sil_level; ///< Required SIL level
-    uint32_t function_id;             ///< Unique function identifier
-    bool implemented;                 ///< Implementation status
-    bool verified;                    ///< Verification status
-    bool validated;                   ///< Validation status
-    const char *requirements_ref;     ///< Requirements reference
-    const char *test_case_ref;        ///< Test case reference
+  const char *function_name;        ///< Safety function name
+  SafetyIntegrityLevel_t sil_level; ///< Required SIL level
+  uint32_t function_id;             ///< Unique function identifier
+  bool implemented;                 ///< Implementation status
+  bool verified;                    ///< Verification status
+  bool validated;                   ///< Validation status
+  const char *requirements_ref;     ///< Requirements reference
+  const char *test_case_ref;        ///< Test case reference
 } SafetyFunctionRecord_t;
 
 /**
@@ -92,11 +92,11 @@ typedef struct {
 
 /// @brief Automotive Safety Integrity Levels
 typedef enum {
-    ASIL_NONE = 0, ///< No ASIL requirements
-    ASIL_A = 1,    ///< ASIL A (lowest)
-    ASIL_B = 2,    ///< ASIL B
-    ASIL_C = 3,    ///< ASIL C
-    ASIL_D = 4     ///< ASIL D (highest)
+  ASIL_NONE = 0, ///< No ASIL requirements
+  ASIL_A = 1,    ///< ASIL A (lowest)
+  ASIL_B = 2,    ///< ASIL B
+  ASIL_C = 3,    ///< ASIL C
+  ASIL_D = 4     ///< ASIL D (highest)
 } AutomotiveSafetyLevel_t;
 
 /* ============================================================================
@@ -107,42 +107,42 @@ typedef enum {
 
 /// @brief Requirement Traceability Record
 typedef struct {
-    uint32_t requirement_id;         ///< Unique requirement identifier
-    const char *requirement_text;    ///< Requirement description
-    const char *source_document;     ///< Source document reference
-    const char *implementation_file; ///< Implementation file
-    uint32_t implementation_line;    ///< Implementation line number
-    const char *test_case_ref;       ///< Test case reference
-    const char *verification_method; ///< Verification method
-    bool implemented;                ///< Implementation status
-    bool tested;                     ///< Testing status
-    bool verified;                   ///< Verification status
+  uint32_t requirement_id;         ///< Unique requirement identifier
+  const char *requirement_text;    ///< Requirement description
+  const char *source_document;     ///< Source document reference
+  const char *implementation_file; ///< Implementation file
+  uint32_t implementation_line;    ///< Implementation line number
+  const char *test_case_ref;       ///< Test case reference
+  const char *verification_method; ///< Verification method
+  bool implemented;                ///< Implementation status
+  bool tested;                     ///< Testing status
+  bool verified;                   ///< Verification status
 } RequirementTrace_t;
 
 /// @brief Design Review Record
 typedef struct {
-    uint32_t review_id;          ///< Review identifier
-    const char *review_type;     ///< Type of review (code, design, etc.)
-    const char *reviewer_name;   ///< Reviewer name/identifier
-    const char *file_or_module;  ///< File or module reviewed
-    uint32_t timestamp;          ///< Review timestamp
-    const char *findings;        ///< Review findings
-    const char *recommendations; ///< Recommendations
-    bool approved;               ///< Approval status
+  uint32_t review_id;          ///< Review identifier
+  const char *review_type;     ///< Type of review (code, design, etc.)
+  const char *reviewer_name;   ///< Reviewer name/identifier
+  const char *file_or_module;  ///< File or module reviewed
+  uint32_t timestamp;          ///< Review timestamp
+  const char *findings;        ///< Review findings
+  const char *recommendations; ///< Recommendations
+  bool approved;               ///< Approval status
 } DesignReviewRecord_t;
 
 /// @brief Code Quality Metrics
 typedef struct {
-    uint32_t total_lines_of_code;      ///< Total lines of code
-    uint32_t comment_lines;            ///< Comment lines
-    uint32_t blank_lines;              ///< Blank lines
-    float comment_ratio;               ///< Comment to code ratio
-    uint32_t cyclomatic_complexity;    ///< Maximum cyclomatic complexity
-    uint32_t function_count;           ///< Total number of functions
-    uint32_t average_function_length;  ///< Average function length
-    uint32_t max_function_length;      ///< Maximum function length
-    uint32_t static_analysis_warnings; ///< Static analysis warnings
-    uint32_t misra_violations;         ///< MISRA-C violations
+  uint32_t total_lines_of_code;      ///< Total lines of code
+  uint32_t comment_lines;            ///< Comment lines
+  uint32_t blank_lines;              ///< Blank lines
+  float comment_ratio;               ///< Comment to code ratio
+  uint32_t cyclomatic_complexity;    ///< Maximum cyclomatic complexity
+  uint32_t function_count;           ///< Total number of functions
+  uint32_t average_function_length;  ///< Average function length
+  uint32_t max_function_length;      ///< Maximum function length
+  uint32_t static_analysis_warnings; ///< Static analysis warnings
+  uint32_t misra_violations;         ///< MISRA-C violations
 } CodeQualityMetrics_t;
 
 /* ============================================================================
@@ -153,15 +153,15 @@ typedef struct {
 
 /// @brief Compliance Configuration
 typedef struct {
-    bool misra_checking_enabled;         ///< Enable MISRA-C checking
-    bool sil_validation_enabled;         ///< Enable SIL validation
-    bool asil_validation_enabled;        ///< Enable ASIL validation
-    bool traceability_enabled;           ///< Enable requirement traceability
-    bool automated_reporting_enabled;    ///< Enable automated reporting
-    SafetyIntegrityLevel_t target_sil;   ///< Target SIL level
-    AutomotiveSafetyLevel_t target_asil; ///< Target ASIL level
-    const char *project_identifier;      ///< Project identifier for reports
-    const char *certification_authority; ///< Certification authority
+  bool misra_checking_enabled;         ///< Enable MISRA-C checking
+  bool sil_validation_enabled;         ///< Enable SIL validation
+  bool asil_validation_enabled;        ///< Enable ASIL validation
+  bool traceability_enabled;           ///< Enable requirement traceability
+  bool automated_reporting_enabled;    ///< Enable automated reporting
+  SafetyIntegrityLevel_t target_sil;   ///< Target SIL level
+  AutomotiveSafetyLevel_t target_asil; ///< Target ASIL level
+  const char *project_identifier;      ///< Project identifier for reports
+  const char *certification_authority; ///< Certification authority
 } ComplianceConfiguration_t;
 
 /* ============================================================================
@@ -310,10 +310,10 @@ uint32_t standards_export_compliance_data(const char *export_format,
  * @note Use to document justified MISRA violations
  * @misra Rule 20.10: Preprocessing directives
  */
-#define MISRA_JUSTIFIED(rule, justification)                                  \
-    do {                                                                      \
-        /* MISRA-C Rule rule justified: justification */                      \
-    } while (0)
+#define MISRA_JUSTIFIED(rule, justification)                                   \
+  do {                                                                         \
+    /* MISRA-C Rule rule justified: justification */                           \
+  } while (0)
 
 /**
  * @brief SIL function annotation macro
@@ -322,8 +322,8 @@ uint32_t standards_export_compliance_data(const char *export_format,
  * @note Use to mark safety-critical functions
  * @sil SIL-2: Function marking for traceability
  */
-#define SIL_FUNCTION(level, function_id)                                      \
-    /* SIL-level Function ID: function_id */
+#define SIL_FUNCTION(level, function_id)                                       \
+  /* SIL-level Function ID: function_id */
 
 /**
  * @brief Requirement traceability annotation
@@ -340,14 +340,14 @@ uint32_t standards_export_compliance_data(const char *export_format,
  * @note Use for safety-critical assertions
  * @sil SIL-2: Safety assertions with compliance tracking
  */
-#define SIL_ASSERT(condition, sil_level)                                      \
-    do {                                                                      \
-        if (!(condition)) {                                                   \
-            standards_record_safety_violation(__FILE__, __LINE__, #condition, \
-                                              sil_level);                     \
-            /* Handle safety violation based on SIL level */                  \
-        }                                                                     \
-    } while (0)
+#define SIL_ASSERT(condition, sil_level)                                       \
+  do {                                                                         \
+    if (!(condition)) {                                                        \
+      standards_record_safety_violation(__FILE__, __LINE__, #condition,        \
+                                        sil_level);                            \
+      /* Handle safety violation based on SIL level */                         \
+    }                                                                          \
+  } while (0)
 
 /* ============================================================================
  */

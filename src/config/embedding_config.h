@@ -100,21 +100,21 @@ extern "C" {
 #define DOMAIN_PROJECT_CODE "project_source"
 
 /* Instruction templates for domain optimization */
-#define INSTRUCTION_STM32_HAL                                                 \
-    "Represent the STM32 HAL documentation for finding peripheral "           \
-    "configuration and driver functions:"
-#define INSTRUCTION_MOTOR_CONTROL                                             \
-    "Represent the stepper motor control documentation for finding L6470 "    \
-    "driver functions and configuration:"
-#define INSTRUCTION_SAFETY_SYSTEMS                                            \
-    "Represent the safety system documentation for finding fault detection "  \
-    "and recovery procedures:"
-#define INSTRUCTION_BUILD_SYSTEM                                              \
-    "Represent the build configuration for finding CMake setup and "          \
-    "compilation options:"
-#define INSTRUCTION_PROJECT_CODE                                              \
-    "Represent the embedded C source code for finding HAL abstraction "       \
-    "functions and drivers:"
+#define INSTRUCTION_STM32_HAL                                                  \
+  "Represent the STM32 HAL documentation for finding peripheral "              \
+  "configuration and driver functions:"
+#define INSTRUCTION_MOTOR_CONTROL                                              \
+  "Represent the stepper motor control documentation for finding L6470 "       \
+  "driver functions and configuration:"
+#define INSTRUCTION_SAFETY_SYSTEMS                                             \
+  "Represent the safety system documentation for finding fault detection "     \
+  "and recovery procedures:"
+#define INSTRUCTION_BUILD_SYSTEM                                               \
+  "Represent the build configuration for finding CMake setup and "             \
+  "compilation options:"
+#define INSTRUCTION_PROJECT_CODE                                               \
+  "Represent the embedded C source code for finding HAL abstraction "          \
+  "functions and drivers:"
 
 /* Batch size optimization by domain complexity */
 #define BATCH_SIZE_STM32_HAL_GPU 25     /* Large docs, GPU acceleration */
@@ -142,10 +142,10 @@ extern "C" {
 #define SELECT_ALLOW_FALLBACK (1 << 4)   /* Allow fallback models */
 
 /* Default selection for different use cases */
-#define SELECT_DEVELOPMENT_DEFAULT                                            \
-    (SELECT_OPTIMIZE_QUALITY | SELECT_ALLOW_FALLBACK)
-#define SELECT_PRODUCTION_DEFAULT                                             \
-    (SELECT_OPTIMIZE_SPEED | SELECT_OPTIMIZE_MEMORY)
+#define SELECT_DEVELOPMENT_DEFAULT                                             \
+  (SELECT_OPTIMIZE_QUALITY | SELECT_ALLOW_FALLBACK)
+#define SELECT_PRODUCTION_DEFAULT                                              \
+  (SELECT_OPTIMIZE_SPEED | SELECT_OPTIMIZE_MEMORY)
 #define SELECT_ANALYSIS_DEFAULT (SELECT_OPTIMIZE_QUALITY | SELECT_REQUIRE_GPU)
 
 /**
@@ -189,9 +189,10 @@ extern "C" {
 #define EMBEDDING_CACHE_MAX_SIZE_MB 500   /* Max cache size in MB */
 
 /* Cache invalidation settings */
-#define EMBEDDING_CACHE_TTL_HOURS 24          /* Cache time-to-live */
-#define EMBEDDING_CACHE_CLEANUP_INTERVAL 3600 /* Cleanup interval (seconds)   \
-                                               */
+#define EMBEDDING_CACHE_TTL_HOURS 24 /* Cache time-to-live */
+#define EMBEDDING_CACHE_CLEANUP_INTERVAL                                       \
+  3600 /* Cleanup interval (seconds)                                           \
+        */
 
 /* Cache key configuration */
 #define CACHE_KEY_MAX_LENGTH 256   /* Max cache key length */
@@ -215,9 +216,9 @@ extern "C" {
 #define EMBEDDING_ERROR_NETWORK_FAILURE 0x3005
 
 /* Fallback configuration */
-#define EMBEDDING_ENABLE_MOCK_FALLBACK                                        \
-    1                           /* Enable mock embeddings as last resort */
-#define EMBEDDING_RETRY_COUNT 3 /* Retry attempts for failed operations */
+#define EMBEDDING_ENABLE_MOCK_FALLBACK                                         \
+  1                                  /* Enable mock embeddings as last resort */
+#define EMBEDDING_RETRY_COUNT 3      /* Retry attempts for failed operations */
 #define EMBEDDING_TIMEOUT_SECONDS 30 /* Operation timeout */
 
 /**

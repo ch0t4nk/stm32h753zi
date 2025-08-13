@@ -43,8 +43,8 @@ extern "C" {
  * @brief GPIO pin state enumeration
  */
 typedef enum {
-    HAL_GPIO_STATE_RESET = 0, ///< GPIO pin in low state
-    HAL_GPIO_STATE_SET = 1    ///< GPIO pin in high state
+  HAL_GPIO_STATE_RESET = 0, ///< GPIO pin in low state
+  HAL_GPIO_STATE_SET = 1    ///< GPIO pin in high state
 } HAL_GPIO_State_t;
 
 /**
@@ -82,79 +82,79 @@ typedef enum {
  * @brief GPIO pin configuration structure
  */
 typedef struct {
-    uint32_t pin;       ///< GPIO pin number
-    uint32_t mode;      ///< GPIO mode (input, output, etc.)
-    uint32_t pull;      ///< Pull-up/down configuration
-    uint32_t speed;     ///< GPIO speed setting
-    uint32_t alternate; ///< Alternate function selection
+  uint32_t pin;       ///< GPIO pin number
+  uint32_t mode;      ///< GPIO mode (input, output, etc.)
+  uint32_t pull;      ///< Pull-up/down configuration
+  uint32_t speed;     ///< GPIO speed setting
+  uint32_t alternate; ///< Alternate function selection
 } HAL_GPIO_Config_t;
 
 /**
  * @brief SPI transaction configuration
  */
 typedef struct {
-    uint8_t *tx_data;    ///< Transmit data buffer
-    uint8_t *rx_data;    ///< Receive data buffer
-    uint16_t data_size;  ///< Data size in bytes
-    uint32_t timeout_ms; ///< Transaction timeout
+  uint8_t *tx_data;    ///< Transmit data buffer
+  uint8_t *rx_data;    ///< Receive data buffer
+  uint16_t data_size;  ///< Data size in bytes
+  uint32_t timeout_ms; ///< Transaction timeout
 } HAL_SPI_Transaction_t;
 
 /**
  * @brief I2C transaction configuration
  */
 typedef struct {
-    uint16_t device_address;   ///< I2C device address
-    uint16_t register_address; ///< Register address (if applicable)
-    uint8_t *data;             ///< Data buffer
-    uint16_t data_size;        ///< Data size in bytes
-    uint32_t timeout_ms;       ///< Transaction timeout
-    bool use_register_address; ///< Whether to use register addressing
+  uint16_t device_address;   ///< I2C device address
+  uint16_t register_address; ///< Register address (if applicable)
+  uint8_t *data;             ///< Data buffer
+  uint16_t data_size;        ///< Data size in bytes
+  uint32_t timeout_ms;       ///< Transaction timeout
+  bool use_register_address; ///< Whether to use register addressing
 } HAL_I2C_Transaction_t;
 
 /**
  * @brief Timer configuration structure
  */
 typedef struct {
-    uint32_t frequency_hz; ///< Timer frequency in Hz
-    bool auto_reload;      ///< Auto-reload enable
-    bool interrupt_enable; ///< Interrupt enable
-    uint8_t priority;      ///< Interrupt priority
+  uint32_t frequency_hz; ///< Timer frequency in Hz
+  bool auto_reload;      ///< Auto-reload enable
+  bool interrupt_enable; ///< Interrupt enable
+  uint8_t priority;      ///< Interrupt priority
 } HAL_Timer_Config_t;
 
 /**
  * @brief Peripheral instance identifiers
  */
 typedef enum {
-    HAL_SPI_INSTANCE_1 = 0,
-    HAL_SPI_INSTANCE_2,
-    HAL_SPI_INSTANCE_3,
-    HAL_SPI_INSTANCE_MAX
+  HAL_SPI_INSTANCE_1 = 0,
+  HAL_SPI_INSTANCE_2,
+  HAL_SPI_INSTANCE_3,
+  HAL_SPI_INSTANCE_MAX
 } HAL_SPI_Instance_t;
 
 typedef enum {
-    HAL_I2C_INSTANCE_1 = 0,
-    HAL_I2C_INSTANCE_2,
-    HAL_I2C_INSTANCE_3,
-    HAL_I2C_INSTANCE_MAX
+  HAL_I2C_INSTANCE_1 = 0,
+  HAL_I2C_INSTANCE_2,
+  HAL_I2C_INSTANCE_3,
+  HAL_I2C_INSTANCE_MAX
 } HAL_I2C_Instance_t;
 
 typedef enum {
-    HAL_TIMER_INSTANCE_1 = 0,
-    HAL_TIMER_INSTANCE_2,
-    HAL_TIMER_INSTANCE_3,
-    HAL_TIMER_INSTANCE_MAX
+  HAL_TIMER_INSTANCE_1 = 0,
+  HAL_TIMER_INSTANCE_2,
+  HAL_TIMER_INSTANCE_3,
+  HAL_TIMER_INSTANCE_MAX
 } HAL_Timer_Instance_t;
 
 typedef enum {
-    HAL_GPIO_PORT_A = 0,
-    HAL_GPIO_PORT_B,
-    HAL_GPIO_PORT_C,
-    HAL_GPIO_PORT_D,
-    HAL_GPIO_PORT_E,
-    HAL_GPIO_PORT_F,
-    HAL_GPIO_PORT_G,
-    HAL_GPIO_PORT_H,
-    HAL_GPIO_PORT_MAX
+  HAL_GPIO_PORT_A = 0,
+  HAL_GPIO_PORT_B,
+  HAL_GPIO_PORT_C,
+  HAL_GPIO_PORT_D,
+  HAL_GPIO_PORT_E,
+  HAL_GPIO_PORT_F,
+  HAL_GPIO_PORT_G,
+  HAL_GPIO_PORT_H,
+  HAL_GPIO_PORT_MAX
 } HAL_GPIO_Port_t;
 
 /* ==========================================================================

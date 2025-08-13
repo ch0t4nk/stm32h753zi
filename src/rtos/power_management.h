@@ -43,43 +43,43 @@ extern "C" {
  * @brief Power management state information
  */
 typedef struct {
-    PowerMode_t current_mode;        ///< Current power mode
-    PowerMode_t requested_mode;      ///< Requested power mode
-    uint32_t mode_entry_time;        ///< Time when current mode was entered
-    uint32_t last_activity_time;     ///< Last system activity timestamp
-    uint32_t idle_duration_ms;       ///< Current idle duration
-    uint32_t wake_events_count;      ///< Number of wake events
-    uint32_t mode_transitions_count; ///< Number of mode transitions
-    bool mode_transition_pending;    ///< Mode transition in progress
+  PowerMode_t current_mode;        ///< Current power mode
+  PowerMode_t requested_mode;      ///< Requested power mode
+  uint32_t mode_entry_time;        ///< Time when current mode was entered
+  uint32_t last_activity_time;     ///< Last system activity timestamp
+  uint32_t idle_duration_ms;       ///< Current idle duration
+  uint32_t wake_events_count;      ///< Number of wake events
+  uint32_t mode_transitions_count; ///< Number of mode transitions
+  bool mode_transition_pending;    ///< Mode transition in progress
 } PowerManagementState_t;
 
 /**
  * @brief Power mode configuration
  */
 typedef struct {
-    PowerMode_t mode;                  ///< Power mode identifier
-    uint32_t cpu_frequency_mhz;        ///< CPU frequency for this mode
-    uint16_t motor_period_multiplier;  ///< Motor task period multiplier
-    uint16_t safety_period_multiplier; ///< Safety task period multiplier
-    uint16_t comm_period_multiplier; ///< Communication task period multiplier
-    uint16_t telemetry_period_multiplier; ///< Telemetry task period multiplier
-    bool allow_sleep;                     ///< Allow CPU sleep in this mode
-    bool allow_stop; ///< Allow peripheral stop in this mode
+  PowerMode_t mode;                  ///< Power mode identifier
+  uint32_t cpu_frequency_mhz;        ///< CPU frequency for this mode
+  uint16_t motor_period_multiplier;  ///< Motor task period multiplier
+  uint16_t safety_period_multiplier; ///< Safety task period multiplier
+  uint16_t comm_period_multiplier;   ///< Communication task period multiplier
+  uint16_t telemetry_period_multiplier; ///< Telemetry task period multiplier
+  bool allow_sleep;                     ///< Allow CPU sleep in this mode
+  bool allow_stop;                      ///< Allow peripheral stop in this mode
 } PowerModeConfig_t;
 
 /**
  * @brief Power statistics for monitoring and optimization
  */
 typedef struct {
-    uint32_t time_in_active_ms;         ///< Time spent in active mode
-    uint32_t time_in_quiet_ms;          ///< Time spent in quiet mode
-    uint32_t time_in_idle_ms;           ///< Time spent in idle mode
-    uint32_t time_in_sleep_ms;          ///< Time spent in sleep mode
-    uint32_t total_transitions;         ///< Total mode transitions
-    uint32_t wake_from_motion;          ///< Wake events from motion
-    uint32_t wake_from_communication;   ///< Wake events from communication
-    uint32_t wake_from_safety;          ///< Wake events from safety
-    uint32_t power_savings_estimate_mw; ///< Estimated power savings (mW)
+  uint32_t time_in_active_ms;         ///< Time spent in active mode
+  uint32_t time_in_quiet_ms;          ///< Time spent in quiet mode
+  uint32_t time_in_idle_ms;           ///< Time spent in idle mode
+  uint32_t time_in_sleep_ms;          ///< Time spent in sleep mode
+  uint32_t total_transitions;         ///< Total mode transitions
+  uint32_t wake_from_motion;          ///< Wake events from motion
+  uint32_t wake_from_communication;   ///< Wake events from communication
+  uint32_t wake_from_safety;          ///< Wake events from safety
+  uint32_t power_savings_estimate_mw; ///< Estimated power savings (mW)
 } PowerStatistics_t;
 
 /* ============================================================================

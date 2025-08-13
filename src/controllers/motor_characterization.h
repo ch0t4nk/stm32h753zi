@@ -36,26 +36,26 @@ extern "C" {
 #define CHAR_MAX_TEST_AMPLITUDE_DEG (45.0f) // Maximum test motion amplitude
 #define CHAR_MAX_TEST_FREQUENCY_HZ (50.0f)  // Maximum test frequency
 #define CHAR_MAX_TEST_DURATION_MS (30000) // Maximum test duration (30 seconds)
-#define CHAR_MIN_TEST_SAMPLES                                                 \
-    (100) // Minimum samples for valid characterization
+#define CHAR_MIN_TEST_SAMPLES                                                  \
+  (100) // Minimum samples for valid characterization
 
 // Parameter identification accuracy targets
-#define CHAR_INERTIA_ACCURACY_TARGET                                          \
-    (90.0f) // Inertia identification accuracy (%)
-#define CHAR_FRICTION_ACCURACY_TARGET                                         \
-    (85.0f) // Friction identification accuracy (%)
-#define CHAR_ELECTRICAL_ACCURACY_TARGET                                       \
-    (95.0f) // Electrical parameter accuracy (%)
-#define CHAR_THERMAL_ACCURACY_TARGET                                          \
-    (80.0f) // Thermal characterization accuracy (%)
+#define CHAR_INERTIA_ACCURACY_TARGET                                           \
+  (90.0f) // Inertia identification accuracy (%)
+#define CHAR_FRICTION_ACCURACY_TARGET                                          \
+  (85.0f) // Friction identification accuracy (%)
+#define CHAR_ELECTRICAL_ACCURACY_TARGET                                        \
+  (95.0f) // Electrical parameter accuracy (%)
+#define CHAR_THERMAL_ACCURACY_TARGET                                           \
+  (80.0f) // Thermal characterization accuracy (%)
 
 // Optimization improvement targets (based on ST L6470 documentation)
-#define CHAR_EFFICIENCY_IMPROVEMENT_TARGET                                    \
-    (15.0f) // Target efficiency improvement (%)
-#define CHAR_SETTLING_TIME_IMPROVEMENT_TARGET                                 \
-    (25.0f) // Target settling time improvement (%)
-#define CHAR_OVERSHOOT_REDUCTION_TARGET                                       \
-    (50.0f) // Target overshoot reduction (%)
+#define CHAR_EFFICIENCY_IMPROVEMENT_TARGET                                     \
+  (15.0f) // Target efficiency improvement (%)
+#define CHAR_SETTLING_TIME_IMPROVEMENT_TARGET                                  \
+  (25.0f) // Target settling time improvement (%)
+#define CHAR_OVERSHOOT_REDUCTION_TARGET                                        \
+  (50.0f) // Target overshoot reduction (%)
 
 // ================================================================================================
 // DATA STRUCTURES
@@ -68,43 +68,42 @@ extern "C" {
  * validity indicators for use in control optimization algorithms.
  */
 typedef struct {
-    // === Mechanical Parameters ===
-    float rotor_inertia_kg_m2;    ///< Rotor moment of inertia (kg⋅m²)
-    float viscous_friction_coeff; ///< Viscous friction coefficient (N⋅m⋅s/rad)
-    float static_friction_torque; ///< Static friction torque (N⋅m)
-    float coulomb_friction_torque;  ///< Coulomb friction torque (N⋅m)
-    float mechanical_time_constant; ///< Mechanical time constant (seconds)
+  // === Mechanical Parameters ===
+  float rotor_inertia_kg_m2;    ///< Rotor moment of inertia (kg⋅m²)
+  float viscous_friction_coeff; ///< Viscous friction coefficient (N⋅m⋅s/rad)
+  float static_friction_torque;   ///< Static friction torque (N⋅m)
+  float coulomb_friction_torque;  ///< Coulomb friction torque (N⋅m)
+  float mechanical_time_constant; ///< Mechanical time constant (seconds)
 
-    // === Electrical Parameters ===
-    float winding_resistance_ohm;   ///< Phase winding resistance (Ω)
-    float winding_inductance_h;     ///< Phase winding inductance (H)
-    float back_emf_constant;        ///< Back-EMF constant (V⋅s/rad)
-    float electrical_time_constant; ///< Electrical time constant (seconds)
+  // === Electrical Parameters ===
+  float winding_resistance_ohm;   ///< Phase winding resistance (Ω)
+  float winding_inductance_h;     ///< Phase winding inductance (H)
+  float back_emf_constant;        ///< Back-EMF constant (V⋅s/rad)
+  float electrical_time_constant; ///< Electrical time constant (seconds)
 
-    // === Torque Characteristics ===
-    float torque_constant_nm_a;  ///< Torque constant (N⋅m/A)
-    float holding_torque_nm;     ///< Maximum holding torque (N⋅m)
-    float detent_torque_nm;      ///< Detent torque (N⋅m)
-    float max_no_load_speed_rps; ///< Maximum no-load speed (rev/s)
+  // === Torque Characteristics ===
+  float torque_constant_nm_a;  ///< Torque constant (N⋅m/A)
+  float holding_torque_nm;     ///< Maximum holding torque (N⋅m)
+  float detent_torque_nm;      ///< Detent torque (N⋅m)
+  float max_no_load_speed_rps; ///< Maximum no-load speed (rev/s)
 
-    // === Load-Dependent Parameters ===
-    float load_inertia_estimate_kg_m2; ///< Estimated external load inertia
-                                       ///< (kg⋅m²)
-    float load_friction_estimate;      ///< Estimated external load friction
-    float load_compliance_rad_nm;      ///< Load compliance (rad/N⋅m)
+  // === Load-Dependent Parameters ===
+  float load_inertia_estimate_kg_m2; ///< Estimated external load inertia
+                                     ///< (kg⋅m²)
+  float load_friction_estimate;      ///< Estimated external load friction
+  float load_compliance_rad_nm;      ///< Load compliance (rad/N⋅m)
 
-    // === Thermal Parameters ===
-    float thermal_resistance_c_w;  ///< Thermal resistance (°C/W)
-    float thermal_time_constant_s; ///< Thermal time constant (seconds)
-    float
-        temperature_derating_factor; ///< Performance derating with temperature
+  // === Thermal Parameters ===
+  float thermal_resistance_c_w;      ///< Thermal resistance (°C/W)
+  float thermal_time_constant_s;     ///< Thermal time constant (seconds)
+  float temperature_derating_factor; ///< Performance derating with temperature
 
-    // === Quality and Confidence Metrics ===
-    float parameter_confidence_percent; ///< Overall parameter confidence (%)
-    float identification_accuracy_percent; ///< Parameter identification
-                                           ///< accuracy (%)
-    uint32_t characterization_timestamp;   ///< Timestamp of characterization
-    bool parameters_valid; ///< Parameters are valid and reliable
+  // === Quality and Confidence Metrics ===
+  float parameter_confidence_percent;    ///< Overall parameter confidence (%)
+  float identification_accuracy_percent; ///< Parameter identification
+                                         ///< accuracy (%)
+  uint32_t characterization_timestamp;   ///< Timestamp of characterization
+  bool parameters_valid;                 ///< Parameters are valid and reliable
 
 } MotorPhysicalParameters_t;
 
@@ -115,42 +114,41 @@ typedef struct {
  * for improved performance compared to default SSOT configuration.
  */
 typedef struct {
-    // === L6470 Optimized Parameters ===
-    uint16_t optimal_kval_hold;    ///< Optimized KVAL_HOLD (0-255)
-    uint16_t optimal_kval_run;     ///< Optimized KVAL_RUN (0-255)
-    uint16_t optimal_kval_acc;     ///< Optimized KVAL_ACC (0-255)
-    uint16_t optimal_kval_dec;     ///< Optimized KVAL_DEC (0-255)
-    uint16_t optimal_acceleration; ///< Optimized acceleration rate
-    uint16_t optimal_deceleration; ///< Optimized deceleration rate
-    uint16_t optimal_max_speed;    ///< Optimized maximum speed
-    uint16_t optimal_min_speed;    ///< Optimized minimum speed
+  // === L6470 Optimized Parameters ===
+  uint16_t optimal_kval_hold;    ///< Optimized KVAL_HOLD (0-255)
+  uint16_t optimal_kval_run;     ///< Optimized KVAL_RUN (0-255)
+  uint16_t optimal_kval_acc;     ///< Optimized KVAL_ACC (0-255)
+  uint16_t optimal_kval_dec;     ///< Optimized KVAL_DEC (0-255)
+  uint16_t optimal_acceleration; ///< Optimized acceleration rate
+  uint16_t optimal_deceleration; ///< Optimized deceleration rate
+  uint16_t optimal_max_speed;    ///< Optimized maximum speed
+  uint16_t optimal_min_speed;    ///< Optimized minimum speed
 
-    // === Motion Profile Parameters ===
-    float optimal_jerk_limit; ///< Optimized jerk limitation (deg/s³)
-    float
-        optimal_settling_tolerance; ///< Optimized settling tolerance (degrees)
-    float optimal_velocity_feedforward;     ///< Velocity feedforward gain
-    float optimal_acceleration_feedforward; ///< Acceleration feedforward gain
+  // === Motion Profile Parameters ===
+  float optimal_jerk_limit;         ///< Optimized jerk limitation (deg/s³)
+  float optimal_settling_tolerance; ///< Optimized settling tolerance (degrees)
+  float optimal_velocity_feedforward;     ///< Velocity feedforward gain
+  float optimal_acceleration_feedforward; ///< Acceleration feedforward gain
 
-    // === Adaptive Control Parameters ===
-    bool enable_load_adaptation;      ///< Enable load-adaptive control
-    float load_adaptation_gain;       ///< Load adaptation learning rate
-    bool enable_thermal_compensation; ///< Enable thermal compensation
-    float thermal_compensation_gain;  ///< Thermal compensation gain
+  // === Adaptive Control Parameters ===
+  bool enable_load_adaptation;      ///< Enable load-adaptive control
+  float load_adaptation_gain;       ///< Load adaptation learning rate
+  bool enable_thermal_compensation; ///< Enable thermal compensation
+  float thermal_compensation_gain;  ///< Thermal compensation gain
 
-    // === Performance Predictions ===
-    float predicted_efficiency_improvement;    ///< Predicted efficiency
-                                               ///< improvement (%)
-    float predicted_settling_time_improvement; ///< Predicted settling time
-                                               ///< improvement (%)
-    float predicted_overshoot_reduction; ///< Predicted overshoot reduction (%)
-    float predicted_power_reduction; ///< Predicted power consumption reduction
-                                     ///< (%)
+  // === Performance Predictions ===
+  float predicted_efficiency_improvement;    ///< Predicted efficiency
+                                             ///< improvement (%)
+  float predicted_settling_time_improvement; ///< Predicted settling time
+                                             ///< improvement (%)
+  float predicted_overshoot_reduction; ///< Predicted overshoot reduction (%)
+  float predicted_power_reduction; ///< Predicted power consumption reduction
+                                   ///< (%)
 
-    // === Validation Metrics ===
-    bool parameters_validated; ///< Parameters validated through testing
-    float validation_accuracy_percent; ///< Validation test accuracy (%)
-    uint32_t optimization_timestamp;   ///< Timestamp of optimization
+  // === Validation Metrics ===
+  bool parameters_validated;         ///< Parameters validated through testing
+  float validation_accuracy_percent; ///< Validation test accuracy (%)
+  uint32_t optimization_timestamp;   ///< Timestamp of optimization
 
 } OptimalControlParameters_t;
 
@@ -161,41 +159,39 @@ typedef struct {
  * identified parameters, and optimization recommendations.
  */
 typedef struct {
-    // === Test Information ===
-    uint8_t motor_id; ///< Motor identifier
-    CharacterizationTestType_t
-        test_type;             ///< Type of characterization performed
-    uint32_t test_timestamp;   ///< Test execution timestamp
-    uint32_t test_duration_ms; ///< Actual test duration
+  // === Test Information ===
+  uint8_t motor_id;                     ///< Motor identifier
+  CharacterizationTestType_t test_type; ///< Type of characterization performed
+  uint32_t test_timestamp;              ///< Test execution timestamp
+  uint32_t test_duration_ms;            ///< Actual test duration
 
-    // === Raw Data ===
-    CharacterizationDataSet_t raw_dataset; ///< Complete telemetry dataset
-    uint32_t valid_samples_count; ///< Number of valid samples analyzed
-    float data_quality_average;   ///< Average data quality score
+  // === Raw Data ===
+  CharacterizationDataSet_t raw_dataset; ///< Complete telemetry dataset
+  uint32_t valid_samples_count;          ///< Number of valid samples analyzed
+  float data_quality_average;            ///< Average data quality score
 
-    // === Identified Parameters ===
-    MotorPhysicalParameters_t physical_params; ///< Identified motor parameters
-    OptimalControlParameters_t
-        optimal_params; ///< Optimized control parameters
+  // === Identified Parameters ===
+  MotorPhysicalParameters_t physical_params; ///< Identified motor parameters
+  OptimalControlParameters_t optimal_params; ///< Optimized control parameters
 
-    // === Performance Analysis ===
-    float current_efficiency_percent;  ///< Current system efficiency
-    float current_settling_time_ms;    ///< Current settling time
-    float current_overshoot_percent;   ///< Current overshoot percentage
-    float current_power_consumption_w; ///< Current power consumption
+  // === Performance Analysis ===
+  float current_efficiency_percent;  ///< Current system efficiency
+  float current_settling_time_ms;    ///< Current settling time
+  float current_overshoot_percent;   ///< Current overshoot percentage
+  float current_power_consumption_w; ///< Current power consumption
 
-    // === Optimization Results ===
-    float efficiency_improvement_actual; ///< Actual efficiency improvement
-                                         ///< achieved
-    float settling_improvement_actual;   ///< Actual settling time improvement
-                                         ///< achieved
-    float overshoot_reduction_actual; ///< Actual overshoot reduction achieved
-    float power_reduction_actual;     ///< Actual power reduction achieved
+  // === Optimization Results ===
+  float efficiency_improvement_actual; ///< Actual efficiency improvement
+                                       ///< achieved
+  float settling_improvement_actual;   ///< Actual settling time improvement
+                                       ///< achieved
+  float overshoot_reduction_actual;    ///< Actual overshoot reduction achieved
+  float power_reduction_actual;        ///< Actual power reduction achieved
 
-    // === Recommendations ===
-    char optimization_summary[512]; ///< Human-readable optimization summary
-    char safety_notes[256];         ///< Safety considerations and notes
-    bool ready_for_deployment;      ///< Optimized parameters ready for use
+  // === Recommendations ===
+  char optimization_summary[512]; ///< Human-readable optimization summary
+  char safety_notes[256];         ///< Safety considerations and notes
+  bool ready_for_deployment;      ///< Optimized parameters ready for use
 
 } MotorCharacterizationResults_t;
 
@@ -206,34 +202,33 @@ typedef struct {
  * with safety limits and test protocols.
  */
 typedef struct {
-    // === Test Selection ===
-    bool enable_step_response_test; ///< Enable step response characterization
-    bool enable_frequency_sweep_test; ///< Enable frequency response
-                                      ///< characterization
-    bool
-        enable_load_variation_test; ///< Enable load variation characterization
-    bool enable_thermal_test;       ///< Enable thermal characterization
-    bool enable_efficiency_mapping; ///< Enable efficiency mapping
+  // === Test Selection ===
+  bool enable_step_response_test;   ///< Enable step response characterization
+  bool enable_frequency_sweep_test; ///< Enable frequency response
+                                    ///< characterization
+  bool enable_load_variation_test;  ///< Enable load variation characterization
+  bool enable_thermal_test;         ///< Enable thermal characterization
+  bool enable_efficiency_mapping;   ///< Enable efficiency mapping
 
-    // === Test Parameters ===
-    float step_amplitude_deg;           ///< Step test amplitude (degrees)
-    float frequency_sweep_start_hz;     ///< Frequency sweep start frequency
-    float frequency_sweep_end_hz;       ///< Frequency sweep end frequency
-    uint32_t test_duration_per_type_ms; ///< Duration per test type
-    uint32_t sample_rate_hz;            ///< Data collection sample rate
+  // === Test Parameters ===
+  float step_amplitude_deg;           ///< Step test amplitude (degrees)
+  float frequency_sweep_start_hz;     ///< Frequency sweep start frequency
+  float frequency_sweep_end_hz;       ///< Frequency sweep end frequency
+  uint32_t test_duration_per_type_ms; ///< Duration per test type
+  uint32_t sample_rate_hz;            ///< Data collection sample rate
 
-    // === Safety Configuration ===
-    float safety_current_limit_a;     ///< Safety current limit
-    float safety_speed_limit_dps;     ///< Safety speed limit
-    float safety_temperature_limit_c; ///< Safety temperature limit
-    bool abort_on_first_violation; ///< Abort testing on first safety violation
+  // === Safety Configuration ===
+  float safety_current_limit_a;     ///< Safety current limit
+  float safety_speed_limit_dps;     ///< Safety speed limit
+  float safety_temperature_limit_c; ///< Safety temperature limit
+  bool abort_on_first_violation;    ///< Abort testing on first safety violation
 
-    // === Analysis Configuration ===
-    float parameter_confidence_threshold; ///< Minimum confidence for parameter
-                                          ///< acceptance
-    bool validate_parameters;             ///< Validate identified parameters
-    bool generate_optimization_report;    ///< Generate detailed optimization
-                                          ///< report
+  // === Analysis Configuration ===
+  float parameter_confidence_threshold; ///< Minimum confidence for parameter
+                                        ///< acceptance
+  bool validate_parameters;             ///< Validate identified parameters
+  bool generate_optimization_report;    ///< Generate detailed optimization
+                                        ///< report
 
 } MotorCharacterizationConfig_t;
 
@@ -283,8 +278,7 @@ SystemError_t motor_characterization_run_comprehensive(
  * @return SystemError_t SYSTEM_OK on success, error code on failure
  */
 SystemError_t
-motor_characterization_step_response(uint8_t motor_id,
-                                     float step_amplitude_deg,
+motor_characterization_step_response(uint8_t motor_id, float step_amplitude_deg,
                                      MotorCharacterizationResults_t *results);
 
 /**

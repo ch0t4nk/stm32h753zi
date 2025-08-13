@@ -63,52 +63,52 @@ static bool hal_abstraction_initialized = false;
  * @brief Convert abstraction GPIO port to STM32 GPIO port
  */
 static GPIO_TypeDef *get_stm32_gpio_port(HAL_GPIO_Port_t port) {
-    switch (port) {
-    case HAL_GPIO_PORT_A:
-        return GPIOA;
-    case HAL_GPIO_PORT_B:
-        return GPIOB;
-    case HAL_GPIO_PORT_C:
-        return GPIOC;
-    case HAL_GPIO_PORT_D:
-        return GPIOD;
-    case HAL_GPIO_PORT_E:
-        return GPIOE;
-    case HAL_GPIO_PORT_F:
-        return GPIOF;
-    case HAL_GPIO_PORT_G:
-        return GPIOG;
-    case HAL_GPIO_PORT_H:
-        return GPIOH;
-    default:
-        return NULL;
-    }
+  switch (port) {
+  case HAL_GPIO_PORT_A:
+    return GPIOA;
+  case HAL_GPIO_PORT_B:
+    return GPIOB;
+  case HAL_GPIO_PORT_C:
+    return GPIOC;
+  case HAL_GPIO_PORT_D:
+    return GPIOD;
+  case HAL_GPIO_PORT_E:
+    return GPIOE;
+  case HAL_GPIO_PORT_F:
+    return GPIOF;
+  case HAL_GPIO_PORT_G:
+    return GPIOG;
+  case HAL_GPIO_PORT_H:
+    return GPIOH;
+  default:
+    return NULL;
+  }
 }
 
 /**
  * @brief Convert abstraction SPI instance to STM32 SPI handle
  */
 static SPI_HandleTypeDef *get_stm32_spi_handle(HAL_SPI_Instance_t instance) {
-    switch (instance) {
-    case HAL_SPI_INSTANCE_2:
-        return &hspi2; // L6470 motor drivers
-    default:
-        return NULL;
-    }
+  switch (instance) {
+  case HAL_SPI_INSTANCE_2:
+    return &hspi2; // L6470 motor drivers
+  default:
+    return NULL;
+  }
 }
 
 /**
  * @brief Convert abstraction I2C instance to STM32 I2C handle
  */
 static I2C_HandleTypeDef *get_stm32_i2c_handle(HAL_I2C_Instance_t instance) {
-    switch (instance) {
-    case HAL_I2C_INSTANCE_1:
-        return &hi2c1; // AS5600 encoder 1
-    case HAL_I2C_INSTANCE_2:
-        return &hi2c2; // AS5600 encoder 2
-    default:
-        return NULL;
-    }
+  switch (instance) {
+  case HAL_I2C_INSTANCE_1:
+    return &hi2c1; // AS5600 encoder 1
+  case HAL_I2C_INSTANCE_2:
+    return &hi2c2; // AS5600 encoder 2
+  default:
+    return NULL;
+  }
 }
 
 /**
@@ -116,32 +116,32 @@ static I2C_HandleTypeDef *get_stm32_i2c_handle(HAL_I2C_Instance_t instance) {
  */
 static TIM_HandleTypeDef *
 get_stm32_timer_handle(HAL_Timer_Instance_t instance) {
-    switch (instance) {
-    case HAL_TIMER_INSTANCE_2:
-        return &htim2; // Control loop timer
-    case HAL_TIMER_INSTANCE_3:
-        return &htim3; // General purpose timer
-    default:
-        return NULL;
-    }
+  switch (instance) {
+  case HAL_TIMER_INSTANCE_2:
+    return &htim2; // Control loop timer
+  case HAL_TIMER_INSTANCE_3:
+    return &htim3; // General purpose timer
+  default:
+    return NULL;
+  }
 }
 
 /**
  * @brief Convert HAL status to SystemError_t
  */
 static SystemError_t convert_hal_status(HAL_StatusTypeDef hal_status) {
-    switch (hal_status) {
-    case HAL_OK:
-        return SYSTEM_OK;
-    case HAL_ERROR:
-        return ERROR_HARDWARE_FAILURE;
-    case HAL_BUSY:
-        return ERROR_BUSY;
-    case HAL_TIMEOUT:
-        return ERROR_TIMEOUT;
-    default:
-        return ERROR_UNKNOWN;
-    }
+  switch (hal_status) {
+  case HAL_OK:
+    return SYSTEM_OK;
+  case HAL_ERROR:
+    return ERROR_HARDWARE_FAILURE;
+  case HAL_BUSY:
+    return ERROR_BUSY;
+  case HAL_TIMEOUT:
+    return ERROR_TIMEOUT;
+  default:
+    return ERROR_UNKNOWN;
+  }
 }
 
 /* ==========================================================================
@@ -152,131 +152,131 @@ static SystemError_t convert_hal_status(HAL_StatusTypeDef hal_status) {
 
 SystemError_t HAL_Abstraction_GPIO_Init(HAL_GPIO_Port_t port,
                                         const HAL_GPIO_Config_t *config) {
-    if (config == NULL) {
-        return ERROR_NULL_POINTER;
-    }
+  if (config == NULL) {
+    return ERROR_NULL_POINTER;
+  }
 
-    GPIO_TypeDef *gpio_port = get_stm32_gpio_port(port);
-    if (gpio_port == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  GPIO_TypeDef *gpio_port = get_stm32_gpio_port(port);
+  if (gpio_port == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    // Enable GPIO clock
-    switch (port) {
-    case HAL_GPIO_PORT_A:
-        __HAL_RCC_GPIOA_CLK_ENABLE();
-        break;
-    case HAL_GPIO_PORT_B:
-        __HAL_RCC_GPIOB_CLK_ENABLE();
-        break;
-    case HAL_GPIO_PORT_C:
-        __HAL_RCC_GPIOC_CLK_ENABLE();
-        break;
-    case HAL_GPIO_PORT_D:
-        __HAL_RCC_GPIOD_CLK_ENABLE();
-        break;
-    case HAL_GPIO_PORT_E:
-        __HAL_RCC_GPIOE_CLK_ENABLE();
-        break;
-    case HAL_GPIO_PORT_F:
-        __HAL_RCC_GPIOF_CLK_ENABLE();
-        break;
-    case HAL_GPIO_PORT_G:
-        __HAL_RCC_GPIOG_CLK_ENABLE();
-        break;
-    case HAL_GPIO_PORT_H:
-        __HAL_RCC_GPIOH_CLK_ENABLE();
-        break;
-    default:
-        return ERROR_INVALID_PARAMETER;
-    }
+  // Enable GPIO clock
+  switch (port) {
+  case HAL_GPIO_PORT_A:
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    break;
+  case HAL_GPIO_PORT_B:
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    break;
+  case HAL_GPIO_PORT_C:
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    break;
+  case HAL_GPIO_PORT_D:
+    __HAL_RCC_GPIOD_CLK_ENABLE();
+    break;
+  case HAL_GPIO_PORT_E:
+    __HAL_RCC_GPIOE_CLK_ENABLE();
+    break;
+  case HAL_GPIO_PORT_F:
+    __HAL_RCC_GPIOF_CLK_ENABLE();
+    break;
+  case HAL_GPIO_PORT_G:
+    __HAL_RCC_GPIOG_CLK_ENABLE();
+    break;
+  case HAL_GPIO_PORT_H:
+    __HAL_RCC_GPIOH_CLK_ENABLE();
+    break;
+  default:
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    // Configure GPIO
-    GPIO_InitTypeDef gpio_init = {0};
-    gpio_init.Pin = config->pin;
-    gpio_init.Mode = config->mode;
-    gpio_init.Pull = config->pull;
-    gpio_init.Speed = config->speed;
-    gpio_init.Alternate = config->alternate;
+  // Configure GPIO
+  GPIO_InitTypeDef gpio_init = {0};
+  gpio_init.Pin = config->pin;
+  gpio_init.Mode = config->mode;
+  gpio_init.Pull = config->pull;
+  gpio_init.Speed = config->speed;
+  gpio_init.Alternate = config->alternate;
 
-    HAL_GPIO_Init(gpio_port, &gpio_init);
+  HAL_GPIO_Init(gpio_port, &gpio_init);
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_GPIO_Write(HAL_GPIO_Port_t port, uint32_t pin,
                                          HAL_GPIO_State_t state) {
-    GPIO_TypeDef *gpio_port = get_stm32_gpio_port(port);
-    if (gpio_port == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  GPIO_TypeDef *gpio_port = get_stm32_gpio_port(port);
+  if (gpio_port == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    GPIO_PinState pin_state =
-        (state == HAL_GPIO_STATE_SET) ? GPIO_PIN_SET : GPIO_PIN_RESET;
-    HAL_GPIO_WritePin(gpio_port, pin, pin_state);
+  GPIO_PinState pin_state =
+      (state == HAL_GPIO_STATE_SET) ? GPIO_PIN_SET : GPIO_PIN_RESET;
+  HAL_GPIO_WritePin(gpio_port, pin, pin_state);
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_GPIO_Read(HAL_GPIO_Port_t port, uint32_t pin,
                                         HAL_GPIO_State_t *state) {
-    if (state == NULL) {
-        return ERROR_NULL_POINTER;
-    }
+  if (state == NULL) {
+    return ERROR_NULL_POINTER;
+  }
 
-    GPIO_TypeDef *gpio_port = get_stm32_gpio_port(port);
-    if (gpio_port == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  GPIO_TypeDef *gpio_port = get_stm32_gpio_port(port);
+  if (gpio_port == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    GPIO_PinState pin_state = HAL_GPIO_ReadPin(gpio_port, pin);
-    *state = (pin_state == GPIO_PIN_SET) ? HAL_GPIO_STATE_SET
-                                         : HAL_GPIO_STATE_RESET;
+  GPIO_PinState pin_state = HAL_GPIO_ReadPin(gpio_port, pin);
+  *state =
+      (pin_state == GPIO_PIN_SET) ? HAL_GPIO_STATE_SET : HAL_GPIO_STATE_RESET;
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_GPIO_Toggle(HAL_GPIO_Port_t port, uint32_t pin) {
-    GPIO_TypeDef *gpio_port = get_stm32_gpio_port(port);
-    if (gpio_port == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  GPIO_TypeDef *gpio_port = get_stm32_gpio_port(port);
+  if (gpio_port == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    HAL_GPIO_TogglePin(gpio_port, pin);
+  HAL_GPIO_TogglePin(gpio_port, pin);
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_GPIO_EnableInterrupt(HAL_GPIO_Port_t port,
                                                    uint32_t pin,
                                                    uint32_t trigger_type,
                                                    uint8_t priority) {
-    GPIO_TypeDef *gpio_port = get_stm32_gpio_port(port);
-    if (gpio_port == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  GPIO_TypeDef *gpio_port = get_stm32_gpio_port(port);
+  if (gpio_port == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    // Configure GPIO for interrupt
-    GPIO_InitTypeDef gpio_init = {0};
-    gpio_init.Pin = pin;
-    gpio_init.Mode = trigger_type;
-    gpio_init.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(gpio_port, &gpio_init);
+  // Configure GPIO for interrupt
+  GPIO_InitTypeDef gpio_init = {0};
+  gpio_init.Pin = pin;
+  gpio_init.Mode = trigger_type;
+  gpio_init.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(gpio_port, &gpio_init);
 
-    // Configure NVIC
-    IRQn_Type irqn;
-    if (pin <= GPIO_PIN_4) {
-        irqn = (IRQn_Type)(EXTI0_IRQn + __builtin_ctz(pin));
-    } else if (pin <= GPIO_PIN_9) {
-        irqn = EXTI9_5_IRQn;
-    } else {
-        irqn = EXTI15_10_IRQn;
-    }
+  // Configure NVIC
+  IRQn_Type irqn;
+  if (pin <= GPIO_PIN_4) {
+    irqn = (IRQn_Type)(EXTI0_IRQn + __builtin_ctz(pin));
+  } else if (pin <= GPIO_PIN_9) {
+    irqn = EXTI9_5_IRQn;
+  } else {
+    irqn = EXTI15_10_IRQn;
+  }
 
-    HAL_NVIC_SetPriority(irqn, priority, 0);
-    HAL_NVIC_EnableIRQ(irqn);
+  HAL_NVIC_SetPriority(irqn, priority, 0);
+  HAL_NVIC_EnableIRQ(irqn);
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 /* ==========================================================================
@@ -286,74 +286,74 @@ SystemError_t HAL_Abstraction_GPIO_EnableInterrupt(HAL_GPIO_Port_t port,
  */
 
 SystemError_t HAL_Abstraction_SPI_Init(HAL_SPI_Instance_t instance) {
-    SPI_HandleTypeDef *hspi = get_stm32_spi_handle(instance);
-    if (hspi == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  SPI_HandleTypeDef *hspi = get_stm32_spi_handle(instance);
+  if (hspi == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    // SPI should be initialized by CubeMX/main.c
-    // This function validates that it's ready
-    if (hspi->Instance == NULL) {
-        return ERROR_NOT_INITIALIZED;
-    }
+  // SPI should be initialized by CubeMX/main.c
+  // This function validates that it's ready
+  if (hspi->Instance == NULL) {
+    return ERROR_NOT_INITIALIZED;
+  }
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 SystemError_t
 HAL_Abstraction_SPI_TransmitReceive(HAL_SPI_Instance_t instance,
                                     const HAL_SPI_Transaction_t *transaction) {
-    if (transaction == NULL) {
-        return ERROR_NULL_POINTER;
-    }
+  if (transaction == NULL) {
+    return ERROR_NULL_POINTER;
+  }
 
-    SPI_HandleTypeDef *hspi = get_stm32_spi_handle(instance);
-    if (hspi == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  SPI_HandleTypeDef *hspi = get_stm32_spi_handle(instance);
+  if (hspi == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    HAL_StatusTypeDef status = HAL_SPI_TransmitReceive(
-        hspi, transaction->tx_data, transaction->rx_data,
-        transaction->data_size, transaction->timeout_ms);
+  HAL_StatusTypeDef status =
+      HAL_SPI_TransmitReceive(hspi, transaction->tx_data, transaction->rx_data,
+                              transaction->data_size, transaction->timeout_ms);
 
-    return convert_hal_status(status);
+  return convert_hal_status(status);
 }
 
 SystemError_t HAL_Abstraction_SPI_Transmit(HAL_SPI_Instance_t instance,
                                            const uint8_t *tx_data,
                                            uint16_t data_size,
                                            uint32_t timeout_ms) {
-    if (tx_data == NULL) {
-        return ERROR_NULL_POINTER;
-    }
+  if (tx_data == NULL) {
+    return ERROR_NULL_POINTER;
+  }
 
-    SPI_HandleTypeDef *hspi = get_stm32_spi_handle(instance);
-    if (hspi == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  SPI_HandleTypeDef *hspi = get_stm32_spi_handle(instance);
+  if (hspi == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    HAL_StatusTypeDef status =
-        HAL_SPI_Transmit(hspi, (uint8_t *)tx_data, data_size, timeout_ms);
+  HAL_StatusTypeDef status =
+      HAL_SPI_Transmit(hspi, (uint8_t *)tx_data, data_size, timeout_ms);
 
-    return convert_hal_status(status);
+  return convert_hal_status(status);
 }
 
 SystemError_t HAL_Abstraction_SPI_Receive(HAL_SPI_Instance_t instance,
                                           uint8_t *rx_data, uint16_t data_size,
                                           uint32_t timeout_ms) {
-    if (rx_data == NULL) {
-        return ERROR_NULL_POINTER;
-    }
+  if (rx_data == NULL) {
+    return ERROR_NULL_POINTER;
+  }
 
-    SPI_HandleTypeDef *hspi = get_stm32_spi_handle(instance);
-    if (hspi == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  SPI_HandleTypeDef *hspi = get_stm32_spi_handle(instance);
+  if (hspi == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    HAL_StatusTypeDef status =
-        HAL_SPI_Receive(hspi, rx_data, data_size, timeout_ms);
+  HAL_StatusTypeDef status =
+      HAL_SPI_Receive(hspi, rx_data, data_size, timeout_ms);
 
-    return convert_hal_status(status);
+  return convert_hal_status(status);
 }
 
 /* ==========================================================================
@@ -363,74 +363,72 @@ SystemError_t HAL_Abstraction_SPI_Receive(HAL_SPI_Instance_t instance,
  */
 
 SystemError_t HAL_Abstraction_I2C_Init(HAL_I2C_Instance_t instance) {
-    I2C_HandleTypeDef *hi2c = get_stm32_i2c_handle(instance);
-    if (hi2c == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  I2C_HandleTypeDef *hi2c = get_stm32_i2c_handle(instance);
+  if (hi2c == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    // I2C should be initialized by CubeMX/main.c
-    // This function validates that it's ready
-    if (hi2c->Instance == NULL) {
-        return ERROR_NOT_INITIALIZED;
-    }
+  // I2C should be initialized by CubeMX/main.c
+  // This function validates that it's ready
+  if (hi2c->Instance == NULL) {
+    return ERROR_NOT_INITIALIZED;
+  }
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 SystemError_t
 HAL_Abstraction_I2C_MemWrite(HAL_I2C_Instance_t instance,
                              const HAL_I2C_Transaction_t *transaction) {
-    if (transaction == NULL || transaction->data == NULL) {
-        return ERROR_NULL_POINTER;
-    }
+  if (transaction == NULL || transaction->data == NULL) {
+    return ERROR_NULL_POINTER;
+  }
 
-    I2C_HandleTypeDef *hi2c = get_stm32_i2c_handle(instance);
-    if (hi2c == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  I2C_HandleTypeDef *hi2c = get_stm32_i2c_handle(instance);
+  if (hi2c == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    HAL_StatusTypeDef status;
-    if (transaction->use_register_address) {
-        status =
-            HAL_I2C_Mem_Write(hi2c, transaction->device_address << 1,
-                              transaction->register_address,
-                              I2C_MEMADD_SIZE_8BIT, transaction->data,
-                              transaction->data_size, transaction->timeout_ms);
-    } else {
-        status = HAL_I2C_Master_Transmit(
-            hi2c, transaction->device_address << 1, transaction->data,
-            transaction->data_size, transaction->timeout_ms);
-    }
+  HAL_StatusTypeDef status;
+  if (transaction->use_register_address) {
+    status = HAL_I2C_Mem_Write(hi2c, transaction->device_address << 1,
+                               transaction->register_address,
+                               I2C_MEMADD_SIZE_8BIT, transaction->data,
+                               transaction->data_size, transaction->timeout_ms);
+  } else {
+    status = HAL_I2C_Master_Transmit(hi2c, transaction->device_address << 1,
+                                     transaction->data, transaction->data_size,
+                                     transaction->timeout_ms);
+  }
 
-    return convert_hal_status(status);
+  return convert_hal_status(status);
 }
 
 SystemError_t
 HAL_Abstraction_I2C_MemRead(HAL_I2C_Instance_t instance,
                             const HAL_I2C_Transaction_t *transaction) {
-    if (transaction == NULL || transaction->data == NULL) {
-        return ERROR_NULL_POINTER;
-    }
+  if (transaction == NULL || transaction->data == NULL) {
+    return ERROR_NULL_POINTER;
+  }
 
-    I2C_HandleTypeDef *hi2c = get_stm32_i2c_handle(instance);
-    if (hi2c == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  I2C_HandleTypeDef *hi2c = get_stm32_i2c_handle(instance);
+  if (hi2c == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    HAL_StatusTypeDef status;
-    if (transaction->use_register_address) {
-        status =
-            HAL_I2C_Mem_Read(hi2c, transaction->device_address << 1,
-                             transaction->register_address,
-                             I2C_MEMADD_SIZE_8BIT, transaction->data,
-                             transaction->data_size, transaction->timeout_ms);
-    } else {
-        status = HAL_I2C_Master_Receive(
-            hi2c, transaction->device_address << 1, transaction->data,
-            transaction->data_size, transaction->timeout_ms);
-    }
+  HAL_StatusTypeDef status;
+  if (transaction->use_register_address) {
+    status = HAL_I2C_Mem_Read(hi2c, transaction->device_address << 1,
+                              transaction->register_address,
+                              I2C_MEMADD_SIZE_8BIT, transaction->data,
+                              transaction->data_size, transaction->timeout_ms);
+  } else {
+    status = HAL_I2C_Master_Receive(hi2c, transaction->device_address << 1,
+                                    transaction->data, transaction->data_size,
+                                    transaction->timeout_ms);
+  }
 
-    return convert_hal_status(status);
+  return convert_hal_status(status);
 }
 
 SystemError_t HAL_Abstraction_I2C_Transmit(HAL_I2C_Instance_t instance,
@@ -438,38 +436,38 @@ SystemError_t HAL_Abstraction_I2C_Transmit(HAL_I2C_Instance_t instance,
                                            const uint8_t *tx_data,
                                            uint16_t data_size,
                                            uint32_t timeout_ms) {
-    if (tx_data == NULL) {
-        return ERROR_NULL_POINTER;
-    }
+  if (tx_data == NULL) {
+    return ERROR_NULL_POINTER;
+  }
 
-    I2C_HandleTypeDef *hi2c = get_stm32_i2c_handle(instance);
-    if (hi2c == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  I2C_HandleTypeDef *hi2c = get_stm32_i2c_handle(instance);
+  if (hi2c == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    HAL_StatusTypeDef status = HAL_I2C_Master_Transmit(
-        hi2c, device_address << 1, (uint8_t *)tx_data, data_size, timeout_ms);
+  HAL_StatusTypeDef status = HAL_I2C_Master_Transmit(
+      hi2c, device_address << 1, (uint8_t *)tx_data, data_size, timeout_ms);
 
-    return convert_hal_status(status);
+  return convert_hal_status(status);
 }
 
 SystemError_t HAL_Abstraction_I2C_Receive(HAL_I2C_Instance_t instance,
                                           uint16_t device_address,
                                           uint8_t *rx_data, uint16_t data_size,
                                           uint32_t timeout_ms) {
-    if (rx_data == NULL) {
-        return ERROR_NULL_POINTER;
-    }
+  if (rx_data == NULL) {
+    return ERROR_NULL_POINTER;
+  }
 
-    I2C_HandleTypeDef *hi2c = get_stm32_i2c_handle(instance);
-    if (hi2c == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  I2C_HandleTypeDef *hi2c = get_stm32_i2c_handle(instance);
+  if (hi2c == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    HAL_StatusTypeDef status = HAL_I2C_Master_Receive(
-        hi2c, device_address << 1, rx_data, data_size, timeout_ms);
+  HAL_StatusTypeDef status = HAL_I2C_Master_Receive(
+      hi2c, device_address << 1, rx_data, data_size, timeout_ms);
 
-    return convert_hal_status(status);
+  return convert_hal_status(status);
 }
 
 /* ==========================================================================
@@ -480,57 +478,57 @@ SystemError_t HAL_Abstraction_I2C_Receive(HAL_I2C_Instance_t instance,
 
 SystemError_t HAL_Abstraction_Timer_Init(HAL_Timer_Instance_t instance,
                                          const HAL_Timer_Config_t *config) {
-    if (config == NULL) {
-        return ERROR_NULL_POINTER;
-    }
+  if (config == NULL) {
+    return ERROR_NULL_POINTER;
+  }
 
-    TIM_HandleTypeDef *htim = get_stm32_timer_handle(instance);
-    if (htim == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  TIM_HandleTypeDef *htim = get_stm32_timer_handle(instance);
+  if (htim == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    // Timer should be initialized by CubeMX/main.c
-    // This function validates configuration
-    if (htim->Instance == NULL) {
-        return ERROR_NOT_INITIALIZED;
-    }
+  // Timer should be initialized by CubeMX/main.c
+  // This function validates configuration
+  if (htim->Instance == NULL) {
+    return ERROR_NOT_INITIALIZED;
+  }
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_Timer_Start(HAL_Timer_Instance_t instance) {
-    TIM_HandleTypeDef *htim = get_stm32_timer_handle(instance);
-    if (htim == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  TIM_HandleTypeDef *htim = get_stm32_timer_handle(instance);
+  if (htim == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    HAL_StatusTypeDef status = HAL_TIM_Base_Start_IT(htim);
-    return convert_hal_status(status);
+  HAL_StatusTypeDef status = HAL_TIM_Base_Start_IT(htim);
+  return convert_hal_status(status);
 }
 
 SystemError_t HAL_Abstraction_Timer_Stop(HAL_Timer_Instance_t instance) {
-    TIM_HandleTypeDef *htim = get_stm32_timer_handle(instance);
-    if (htim == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  TIM_HandleTypeDef *htim = get_stm32_timer_handle(instance);
+  if (htim == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    HAL_StatusTypeDef status = HAL_TIM_Base_Stop_IT(htim);
-    return convert_hal_status(status);
+  HAL_StatusTypeDef status = HAL_TIM_Base_Stop_IT(htim);
+  return convert_hal_status(status);
 }
 
 SystemError_t HAL_Abstraction_Timer_GetCounter(HAL_Timer_Instance_t instance,
                                                uint32_t *counter) {
-    if (counter == NULL) {
-        return ERROR_NULL_POINTER;
-    }
+  if (counter == NULL) {
+    return ERROR_NULL_POINTER;
+  }
 
-    TIM_HandleTypeDef *htim = get_stm32_timer_handle(instance);
-    if (htim == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  TIM_HandleTypeDef *htim = get_stm32_timer_handle(instance);
+  if (htim == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    *counter = __HAL_TIM_GET_COUNTER(htim);
-    return SYSTEM_OK;
+  *counter = __HAL_TIM_GET_COUNTER(htim);
+  return SYSTEM_OK;
 }
 
 /* ==========================================================================
@@ -539,24 +537,20 @@ SystemError_t HAL_Abstraction_Timer_GetCounter(HAL_Timer_Instance_t instance,
 /* ==========================================================================
  */
 
-uint32_t HAL_Abstraction_GetTick(void) {
-    return HAL_GetTick();
-}
+uint32_t HAL_Abstraction_GetTick(void) { return HAL_GetTick(); }
 
-void HAL_Abstraction_Delay(uint32_t delay_ms) {
-    HAL_Delay(delay_ms);
-}
+void HAL_Abstraction_Delay(uint32_t delay_ms) { HAL_Delay(delay_ms); }
 
 uint32_t HAL_Abstraction_GetMicroseconds(void) {
-    // Use SysTick for microsecond timing
-    uint32_t tick = HAL_GetTick();
-    uint32_t systick_val = SysTick->VAL;
-    uint32_t systick_load = SysTick->LOAD;
+  // Use SysTick for microsecond timing
+  uint32_t tick = HAL_GetTick();
+  uint32_t systick_val = SysTick->VAL;
+  uint32_t systick_load = SysTick->LOAD;
 
-    // Calculate microseconds within current millisecond
-    uint32_t us_in_tick = ((systick_load - systick_val) * 1000) / systick_load;
+  // Calculate microseconds within current millisecond
+  uint32_t us_in_tick = ((systick_load - systick_val) * 1000) / systick_load;
 
-    return (tick * 1000) + us_in_tick;
+  return (tick * 1000) + us_in_tick;
 }
 
 /* ==========================================================================
@@ -566,18 +560,18 @@ uint32_t HAL_Abstraction_GetMicroseconds(void) {
  */
 
 SystemError_t HAL_Abstraction_Watchdog_Init(uint32_t timeout_ms) {
-    // Watchdog should be initialized by CubeMX/main.c
-    // This function validates that it's ready
-    if (hiwdg.Instance == NULL) {
-        return ERROR_NOT_INITIALIZED;
-    }
+  // Watchdog should be initialized by CubeMX/main.c
+  // This function validates that it's ready
+  if (hiwdg.Instance == NULL) {
+    return ERROR_NOT_INITIALIZED;
+  }
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_Watchdog_Refresh(void) {
-    HAL_StatusTypeDef status = HAL_IWDG_Refresh(&hiwdg);
-    return convert_hal_status(status);
+  HAL_StatusTypeDef status = HAL_IWDG_Refresh(&hiwdg);
+  return convert_hal_status(status);
 }
 
 /* ==========================================================================
@@ -587,43 +581,37 @@ SystemError_t HAL_Abstraction_Watchdog_Refresh(void) {
  */
 
 SystemError_t HAL_Abstraction_Init(void) {
-    if (hal_abstraction_initialized) {
-        return SYSTEM_OK;
-    }
-
-    // Validate that required peripherals are initialized
-    SystemError_t result;
-
-    result = HAL_Abstraction_SPI_Init(HAL_SPI_INSTANCE_2);
-    if (result != SYSTEM_OK) {
-        return result;
-    }
-
-    result = HAL_Abstraction_I2C_Init(HAL_I2C_INSTANCE_1);
-    if (result != SYSTEM_OK) {
-        return result;
-    }
-
-    result = HAL_Abstraction_I2C_Init(HAL_I2C_INSTANCE_2);
-    if (result != SYSTEM_OK) {
-        return result;
-    }
-
-    hal_abstraction_initialized = true;
+  if (hal_abstraction_initialized) {
     return SYSTEM_OK;
+  }
+
+  // Validate that required peripherals are initialized
+  SystemError_t result;
+
+  result = HAL_Abstraction_SPI_Init(HAL_SPI_INSTANCE_2);
+  if (result != SYSTEM_OK) {
+    return result;
+  }
+
+  result = HAL_Abstraction_I2C_Init(HAL_I2C_INSTANCE_1);
+  if (result != SYSTEM_OK) {
+    return result;
+  }
+
+  result = HAL_Abstraction_I2C_Init(HAL_I2C_INSTANCE_2);
+  if (result != SYSTEM_OK) {
+    return result;
+  }
+
+  hal_abstraction_initialized = true;
+  return SYSTEM_OK;
 }
 
-void HAL_Abstraction_EnableInterrupts(void) {
-    __enable_irq();
-}
+void HAL_Abstraction_EnableInterrupts(void) { __enable_irq(); }
 
-void HAL_Abstraction_DisableInterrupts(void) {
-    __disable_irq();
-}
+void HAL_Abstraction_DisableInterrupts(void) { __disable_irq(); }
 
-void HAL_Abstraction_SystemReset(void) {
-    HAL_NVIC_SystemReset();
-}
+void HAL_Abstraction_SystemReset(void) { HAL_NVIC_SystemReset(); }
 
 /* ==========================================================================
  */
@@ -632,97 +620,97 @@ void HAL_Abstraction_SystemReset(void) {
  */
 
 SystemError_t HAL_Abstraction_ConfigureMotorControlHardware(void) {
-    SystemError_t result;
+  SystemError_t result;
 
-    // Configure L6470 SPI CS pin
-    HAL_GPIO_Config_t cs_config = {.pin = MOTOR_SPI_CS_PIN,
-                                   .mode = GPIO_MODE_OUTPUT_PP,
-                                   .pull = GPIO_NOPULL,
-                                   .speed = GPIO_SPEED_FREQ_HIGH,
-                                   .alternate = 0};
-    result = HAL_Abstraction_GPIO_Init(HAL_GPIO_PORT_A, &cs_config);
-    if (result != SYSTEM_OK)
-        return result;
-
-    // Set CS high (inactive)
-    result = HAL_Abstraction_GPIO_Write(HAL_GPIO_PORT_A, MOTOR_SPI_CS_PIN,
-                                        HAL_GPIO_STATE_SET);
-    if (result != SYSTEM_OK)
-        return result;
-
-    // Configure L6470 FLAG pin (input with pull-up)
-    HAL_GPIO_Config_t flag_config = {.pin = MOTOR_FLAG_PIN,
-                                     .mode = GPIO_MODE_INPUT,
-                                     .pull = GPIO_PULLUP,
-                                     .speed = GPIO_SPEED_FREQ_LOW,
-                                     .alternate = 0};
-    result = HAL_Abstraction_GPIO_Init(HAL_GPIO_PORT_A, &flag_config);
-    if (result != SYSTEM_OK)
-        return result;
-
-    // Configure L6470 BUSY pin (input with pull-up)
-    HAL_GPIO_Config_t busy_config = {.pin = MOTOR_BUSY_PIN,
-                                     .mode = GPIO_MODE_INPUT,
-                                     .pull = GPIO_PULLUP,
-                                     .speed = GPIO_SPEED_FREQ_LOW,
-                                     .alternate = 0};
-    result = HAL_Abstraction_GPIO_Init(HAL_GPIO_PORT_A, &busy_config);
-
+  // Configure L6470 SPI CS pin
+  HAL_GPIO_Config_t cs_config = {.pin = MOTOR_SPI_CS_PIN,
+                                 .mode = GPIO_MODE_OUTPUT_PP,
+                                 .pull = GPIO_NOPULL,
+                                 .speed = GPIO_SPEED_FREQ_HIGH,
+                                 .alternate = 0};
+  result = HAL_Abstraction_GPIO_Init(HAL_GPIO_PORT_A, &cs_config);
+  if (result != SYSTEM_OK)
     return result;
+
+  // Set CS high (inactive)
+  result = HAL_Abstraction_GPIO_Write(HAL_GPIO_PORT_A, MOTOR_SPI_CS_PIN,
+                                      HAL_GPIO_STATE_SET);
+  if (result != SYSTEM_OK)
+    return result;
+
+  // Configure L6470 FLAG pin (input with pull-up)
+  HAL_GPIO_Config_t flag_config = {.pin = MOTOR_FLAG_PIN,
+                                   .mode = GPIO_MODE_INPUT,
+                                   .pull = GPIO_PULLUP,
+                                   .speed = GPIO_SPEED_FREQ_LOW,
+                                   .alternate = 0};
+  result = HAL_Abstraction_GPIO_Init(HAL_GPIO_PORT_A, &flag_config);
+  if (result != SYSTEM_OK)
+    return result;
+
+  // Configure L6470 BUSY pin (input with pull-up)
+  HAL_GPIO_Config_t busy_config = {.pin = MOTOR_BUSY_PIN,
+                                   .mode = GPIO_MODE_INPUT,
+                                   .pull = GPIO_PULLUP,
+                                   .speed = GPIO_SPEED_FREQ_LOW,
+                                   .alternate = 0};
+  result = HAL_Abstraction_GPIO_Init(HAL_GPIO_PORT_A, &busy_config);
+
+  return result;
 }
 
 SystemError_t HAL_Abstraction_ConfigureSafetyHardware(void) {
-    SystemError_t result;
+  SystemError_t result;
 
-    // Configure emergency stop button (input with pull-up)
-    HAL_GPIO_Config_t estop_config = {.pin = USER_BUTTON_PIN,
-                                      .mode = GPIO_MODE_IT_FALLING,
-                                      .pull = GPIO_PULLUP,
-                                      .speed = GPIO_SPEED_FREQ_LOW,
-                                      .alternate = 0};
-    result = HAL_Abstraction_GPIO_Init(HAL_GPIO_PORT_C, &estop_config);
-    if (result != SYSTEM_OK)
-        return result;
-
-    // Enable emergency stop interrupt
-    result = HAL_Abstraction_GPIO_EnableInterrupt(
-        HAL_GPIO_PORT_C, USER_BUTTON_PIN, GPIO_MODE_IT_FALLING,
-        0); // Highest priority
-    if (result != SYSTEM_OK)
-        return result;
-
-    // Configure status LEDs
-    HAL_GPIO_Config_t led_config = {.pin = LED_GREEN_PIN,
-                                    .mode = GPIO_MODE_OUTPUT_PP,
-                                    .pull = GPIO_NOPULL,
+  // Configure emergency stop button (input with pull-up)
+  HAL_GPIO_Config_t estop_config = {.pin = USER_BUTTON_PIN,
+                                    .mode = GPIO_MODE_IT_FALLING,
+                                    .pull = GPIO_PULLUP,
                                     .speed = GPIO_SPEED_FREQ_LOW,
                                     .alternate = 0};
-    result = HAL_Abstraction_GPIO_Init(HAL_GPIO_PORT_B, &led_config);
-    if (result != SYSTEM_OK)
-        return result;
-
-    led_config.pin = LED_RED_PIN;
-    result = HAL_Abstraction_GPIO_Init(HAL_GPIO_PORT_B, &led_config);
-
+  result = HAL_Abstraction_GPIO_Init(HAL_GPIO_PORT_C, &estop_config);
+  if (result != SYSTEM_OK)
     return result;
+
+  // Enable emergency stop interrupt
+  result = HAL_Abstraction_GPIO_EnableInterrupt(
+      HAL_GPIO_PORT_C, USER_BUTTON_PIN, GPIO_MODE_IT_FALLING,
+      0); // Highest priority
+  if (result != SYSTEM_OK)
+    return result;
+
+  // Configure status LEDs
+  HAL_GPIO_Config_t led_config = {.pin = LED_GREEN_PIN,
+                                  .mode = GPIO_MODE_OUTPUT_PP,
+                                  .pull = GPIO_NOPULL,
+                                  .speed = GPIO_SPEED_FREQ_LOW,
+                                  .alternate = 0};
+  result = HAL_Abstraction_GPIO_Init(HAL_GPIO_PORT_B, &led_config);
+  if (result != SYSTEM_OK)
+    return result;
+
+  led_config.pin = LED_RED_PIN;
+  result = HAL_Abstraction_GPIO_Init(HAL_GPIO_PORT_B, &led_config);
+
+  return result;
 }
 
 SystemError_t HAL_Abstraction_ConfigureCommunicationHardware(void) {
-    // Communication interfaces (SPI, I2C) are configured by CubeMX
-    // This function validates they are ready for use
-    SystemError_t result;
+  // Communication interfaces (SPI, I2C) are configured by CubeMX
+  // This function validates they are ready for use
+  SystemError_t result;
 
-    result = HAL_Abstraction_SPI_Init(HAL_SPI_INSTANCE_2);
-    if (result != SYSTEM_OK)
-        return result;
-
-    result = HAL_Abstraction_I2C_Init(HAL_I2C_INSTANCE_1);
-    if (result != SYSTEM_OK)
-        return result;
-
-    result = HAL_Abstraction_I2C_Init(HAL_I2C_INSTANCE_2);
-
+  result = HAL_Abstraction_SPI_Init(HAL_SPI_INSTANCE_2);
+  if (result != SYSTEM_OK)
     return result;
+
+  result = HAL_Abstraction_I2C_Init(HAL_I2C_INSTANCE_1);
+  if (result != SYSTEM_OK)
+    return result;
+
+  result = HAL_Abstraction_I2C_Init(HAL_I2C_INSTANCE_2);
+
+  return result;
 }
 
 /* ==========================================================================
@@ -740,79 +728,78 @@ SystemError_t HAL_Abstraction_ConfigureCommunicationHardware(void) {
  */
 
 SystemError_t HAL_Abstraction_AS5600_Init(uint8_t encoder_id) {
-    // FTR-013: AS5600 encoder initialization through actual driver
-    // This function bridges HAL abstraction to actual AS5600 driver
+  // FTR-013: AS5600 encoder initialization through actual driver
+  // This function bridges HAL abstraction to actual AS5600 driver
 
-    SystemError_t result = as5600_init_encoder(encoder_id);
+  SystemError_t result = as5600_init_encoder(encoder_id);
 
-    // HARDWARE_GATING: AS5600 I2C communication requires physical hardware
-    // connection
-    // TODO_HARDWARE: Complete AS5600 I2C wiring and test with actual encoder
-    // hardware STUB_REMOVAL: This implementation replaces previous stub -
-    // FTR-013 progress
+  // HARDWARE_GATING: AS5600 I2C communication requires physical hardware
+  // connection
+  // TODO_HARDWARE: Complete AS5600 I2C wiring and test with actual encoder
+  // hardware STUB_REMOVAL: This implementation replaces previous stub -
+  // FTR-013 progress
 
-    if (result != SYSTEM_OK) {
-        // Log hardware initialization failure for debugging
-        // In production, this would trigger system health monitoring
-        return result;
-    }
+  if (result != SYSTEM_OK) {
+    // Log hardware initialization failure for debugging
+    // In production, this would trigger system health monitoring
+    return result;
+  }
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_AS5600_ReadAngle(uint8_t encoder_id,
                                                float *angle_degrees) {
-    // FTR-013: AS5600 angle reading through actual driver
-    // This function bridges HAL abstraction to actual AS5600 driver
+  // FTR-013: AS5600 angle reading through actual driver
+  // This function bridges HAL abstraction to actual AS5600 driver
 
-    if (angle_degrees == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  if (angle_degrees == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    SystemError_t result =
-        as5600_read_angle_degrees(encoder_id, angle_degrees);
+  SystemError_t result = as5600_read_angle_degrees(encoder_id, angle_degrees);
 
-    // HARDWARE_GATING: AS5600 I2C read operations require physical hardware
-    // connection
-    // TODO_HARDWARE: Verify AS5600 magnet positioning and I2C signal integrity
-    // STUB_REMOVAL: This implementation replaces previous stub - FTR-013
-    // progress
+  // HARDWARE_GATING: AS5600 I2C read operations require physical hardware
+  // connection
+  // TODO_HARDWARE: Verify AS5600 magnet positioning and I2C signal integrity
+  // STUB_REMOVAL: This implementation replaces previous stub - FTR-013
+  // progress
 
-    if (result != SYSTEM_OK) {
-        // Set safe default value on hardware communication failure
-        *angle_degrees = 0.0f;
-        return result;
-    }
+  if (result != SYSTEM_OK) {
+    // Set safe default value on hardware communication failure
+    *angle_degrees = 0.0f;
+    return result;
+  }
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_AS5600_CheckMagnet(uint8_t encoder_id,
                                                  bool *magnet_detected) {
-    // FTR-013: AS5600 magnet detection through actual driver
-    // This function bridges HAL abstraction to actual AS5600 driver
+  // FTR-013: AS5600 magnet detection through actual driver
+  // This function bridges HAL abstraction to actual AS5600 driver
 
-    if (magnet_detected == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  if (magnet_detected == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    SystemError_t result = as5600_check_magnet(encoder_id, magnet_detected);
+  SystemError_t result = as5600_check_magnet(encoder_id, magnet_detected);
 
-    // HARDWARE_GATING: AS5600 magnet detection requires physical hardware with
-    // proper magnet positioning
-    // TODO_HARDWARE: Verify AS5600 magnet strength and positioning for
-    // reliable detection STUB_REMOVAL: This implementation replaces previous
-    // stub - FTR-013 progress SAFETY_CRITICAL: Magnet detection failure could
-    // indicate encoder hardware fault
+  // HARDWARE_GATING: AS5600 magnet detection requires physical hardware with
+  // proper magnet positioning
+  // TODO_HARDWARE: Verify AS5600 magnet strength and positioning for
+  // reliable detection STUB_REMOVAL: This implementation replaces previous
+  // stub - FTR-013 progress SAFETY_CRITICAL: Magnet detection failure could
+  // indicate encoder hardware fault
 
-    if (result != SYSTEM_OK) {
-        // Conservative safety approach: assume no magnet detected on
-        // communication failure
-        *magnet_detected = false;
-        return result;
-    }
+  if (result != SYSTEM_OK) {
+    // Conservative safety approach: assume no magnet detected on
+    // communication failure
+    *magnet_detected = false;
+    return result;
+  }
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 /**
@@ -824,110 +811,110 @@ SystemError_t HAL_Abstraction_AS5600_CheckMagnet(uint8_t encoder_id,
  */
 
 SystemError_t HAL_Abstraction_L6470_Init(uint8_t motor_id) {
-    // FTR-013: L6470 stepper driver initialization through actual driver
-    // This function bridges HAL abstraction to actual L6470 driver
+  // FTR-013: L6470 stepper driver initialization through actual driver
+  // This function bridges HAL abstraction to actual L6470 driver
 
-    SystemError_t result = l6470_init_motor(motor_id);
+  SystemError_t result = l6470_init_motor(motor_id);
 
-    // HARDWARE_GATING: L6470 SPI communication requires physical hardware
-    // connection and power
-    // TODO_HARDWARE: Verify L6470 power supply, SPI wiring, and FLAG/BUSY pin
-    // connections STUB_REMOVAL: This implementation replaces previous stub -
-    // FTR-013 progress SAFETY_CRITICAL: L6470 initialization failure prevents
-    // motor control - system should remain in safe state
+  // HARDWARE_GATING: L6470 SPI communication requires physical hardware
+  // connection and power
+  // TODO_HARDWARE: Verify L6470 power supply, SPI wiring, and FLAG/BUSY pin
+  // connections STUB_REMOVAL: This implementation replaces previous stub -
+  // FTR-013 progress SAFETY_CRITICAL: L6470 initialization failure prevents
+  // motor control - system should remain in safe state
 
-    if (result != SYSTEM_OK) {
-        // Log initialization failure for system health monitoring
-        // Motor control should remain disabled until successful initialization
-        return result;
-    }
+  if (result != SYSTEM_OK) {
+    // Log initialization failure for system health monitoring
+    // Motor control should remain disabled until successful initialization
+    return result;
+  }
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_L6470_GetStatus(uint8_t motor_id,
                                               uint32_t *status) {
-    // FTR-013: L6470 status reading through actual driver
-    // This function bridges HAL abstraction to actual L6470 driver
+  // FTR-013: L6470 status reading through actual driver
+  // This function bridges HAL abstraction to actual L6470 driver
 
-    if (status == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  if (status == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    // L6470 driver uses uint16_t for status, HAL abstraction uses uint32_t
-    uint16_t driver_status = 0;
-    SystemError_t result = l6470_get_status(motor_id, &driver_status);
+  // L6470 driver uses uint16_t for status, HAL abstraction uses uint32_t
+  uint16_t driver_status = 0;
+  SystemError_t result = l6470_get_status(motor_id, &driver_status);
 
-    // HARDWARE_GATING: L6470 status reading requires functional SPI
-    // communication and powered L6470
-    // TODO_HARDWARE: Test L6470 status register reads under various motor
-    // states STUB_REMOVAL: This implementation replaces previous stub -
-    // FTR-013 progress SAFETY_CRITICAL: Status register contains fault flags -
-    // essential for safety monitoring
+  // HARDWARE_GATING: L6470 status reading requires functional SPI
+  // communication and powered L6470
+  // TODO_HARDWARE: Test L6470 status register reads under various motor
+  // states STUB_REMOVAL: This implementation replaces previous stub -
+  // FTR-013 progress SAFETY_CRITICAL: Status register contains fault flags -
+  // essential for safety monitoring
 
-    if (result != SYSTEM_OK) {
-        // Set conservative status on communication failure
-        // Clear all status bits except for communication error indication
-        *status = HAL_SAFETY_STATUS_ALL_FAULTS_CLEAR; // All fault flags set
-                                                      // (safe state)
-        return result;
-    }
+  if (result != SYSTEM_OK) {
+    // Set conservative status on communication failure
+    // Clear all status bits except for communication error indication
+    *status = HAL_SAFETY_STATUS_ALL_FAULTS_CLEAR; // All fault flags set
+                                                  // (safe state)
+    return result;
+  }
 
-    // Convert uint16_t driver status to uint32_t HAL abstraction format
-    *status = (uint32_t)driver_status;
+  // Convert uint16_t driver status to uint32_t HAL abstraction format
+  *status = (uint32_t)driver_status;
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_L6470_GetParameter(uint8_t motor_id,
                                                  uint8_t param,
                                                  uint32_t *value) {
-    // FTR-013: L6470 parameter reading through actual driver
-    // This function bridges HAL abstraction to actual L6470 driver
+  // FTR-013: L6470 parameter reading through actual driver
+  // This function bridges HAL abstraction to actual L6470 driver
 
-    if (value == NULL) {
-        return ERROR_INVALID_PARAMETER;
-    }
+  if (value == NULL) {
+    return ERROR_INVALID_PARAMETER;
+  }
 
-    SystemError_t result = l6470_get_parameter(motor_id, param, value);
+  SystemError_t result = l6470_get_parameter(motor_id, param, value);
 
-    // HARDWARE_GATING: L6470 parameter reading requires functional SPI and
-    // correct register addressing
-    // TODO_HARDWARE: Validate L6470 parameter register access patterns and
-    // timing STUB_REMOVAL: This implementation replaces previous stub -
-    // FTR-013 progress SAFETY_CONSIDERATION: Parameter values affect motor
-    // behavior - validate against SSOT motor config
+  // HARDWARE_GATING: L6470 parameter reading requires functional SPI and
+  // correct register addressing
+  // TODO_HARDWARE: Validate L6470 parameter register access patterns and
+  // timing STUB_REMOVAL: This implementation replaces previous stub -
+  // FTR-013 progress SAFETY_CONSIDERATION: Parameter values affect motor
+  // behavior - validate against SSOT motor config
 
-    if (result != SYSTEM_OK) {
-        // Set safe default parameter value on communication failure
-        *value = 0;
-        return result;
-    }
+  if (result != SYSTEM_OK) {
+    // Set safe default parameter value on communication failure
+    *value = 0;
+    return result;
+  }
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 SystemError_t HAL_Abstraction_L6470_HardStop(uint8_t motor_id) {
-    // FTR-013: L6470 hard stop through actual driver
-    // This function bridges HAL abstraction to actual L6470 driver
-    // SAFETY_CRITICAL: Hard stop is emergency safety function - must succeed
+  // FTR-013: L6470 hard stop through actual driver
+  // This function bridges HAL abstraction to actual L6470 driver
+  // SAFETY_CRITICAL: Hard stop is emergency safety function - must succeed
 
-    SystemError_t result = l6470_hard_stop(motor_id);
+  SystemError_t result = l6470_hard_stop(motor_id);
 
-    // HARDWARE_GATING: L6470 hard stop requires functional SPI communication
-    // TODO_HARDWARE: Test hard stop command timing and verify immediate motor
-    // stopping STUB_REMOVAL: This implementation replaces previous stub -
-    // FTR-013 progress SAFETY_CRITICAL: Hard stop failure is a safety hazard -
-    // system should enter fault state
+  // HARDWARE_GATING: L6470 hard stop requires functional SPI communication
+  // TODO_HARDWARE: Test hard stop command timing and verify immediate motor
+  // stopping STUB_REMOVAL: This implementation replaces previous stub -
+  // FTR-013 progress SAFETY_CRITICAL: Hard stop failure is a safety hazard -
+  // system should enter fault state
 
-    if (result != SYSTEM_OK) {
-        // Hard stop failure is critical - log and potentially trigger
-        // emergency procedures Consider hardware-level motor power
-        // disconnection as backup
-        return result;
-    }
+  if (result != SYSTEM_OK) {
+    // Hard stop failure is critical - log and potentially trigger
+    // emergency procedures Consider hardware-level motor power
+    // disconnection as backup
+    return result;
+  }
 
-    return SYSTEM_OK;
+  return SYSTEM_OK;
 }
 
 #endif /* !UNITY_TESTING */
