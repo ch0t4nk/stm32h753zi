@@ -286,7 +286,10 @@ SystemError_t safety_system_task(void) {
         return SYSTEM_OK;
     }
 
-    // Execute emergency stop in subsystem
+    // Execute emergency stop in subsystem (example: triggered by fault
+    // cascade)
+    EmergencyStopSource_t source = ESTOP_SOURCE_FAULT_CASCADE;
+    uint32_t start_time = HAL_Abstraction_GetTick();
     SystemError_t estop_result = emergency_stop_execute(source);
 
     // Update statistics
@@ -294,7 +297,8 @@ SystemError_t safety_system_task(void) {
     safety_statistics.total_safety_events++;
 
     // Log emergency stop event
-    log_safety_event(SAFETY_EVENT_EMERGENCY_STOP, source, start_time);
+    log_safety_event(SAFETY_EVENT_EMERGENCY_STOP, (uint32_t)source,
+                     start_time);
 
     // Broadcast emergency stop to all systems
     broadcast_emergency_stop();
@@ -490,7 +494,7 @@ SystemError_t handle_safety_violation(MonitorChannel_t channel, float value) {
             }
             log_safety_event(SAFETY_EVENT_OVERCURRENT_STOP, motor_id,
                              *(uint32_t *)&value);
-            result = execute_emergency_stop(ESTOP_SOURCE_OVERCURRENT);
+            result = emergency_stop_execute(ESTOP_SOURCE_OVERCURRENT);
         }
         break;
 
@@ -522,7 +526,7 @@ SystemError_t handle_safety_violation(MonitorChannel_t channel, float value) {
             }
             log_safety_event(SAFETY_EVENT_POSITION_LIMIT_STOP, motor_id,
                              *(uint32_t *)&value);
-            result = execute_emergency_stop(ESTOP_SOURCE_POSITION_LIMIT);
+            result = emergency_stop_execute(ESTOP_SOURCE_POSITION_LIMIT);
         }
         break;
 
@@ -531,13 +535,13 @@ SystemError_t handle_safety_violation(MonitorChannel_t channel, float value) {
         log_safety_event(SAFETY_EVENT_TEMPERATURE_WARNING, 0,
                          *(uint32_t *)&value);
         if (value > MOTOR_TEMP_SHUTDOWN_C) {
-            result = execute_emergency_stop(ESTOP_SOURCE_OVERHEAT);
+            result = emergency_stop_execute(ESTOP_SOURCE_OVERHEAT);
         }
         break;
 
     case MONITOR_SUPPLY_VOLTAGE:
         // Power supply fault: Emergency stop
-        result = execute_emergency_stop(ESTOP_SOURCE_FAULT_CASCADE);
+        result = emergency_stop_execute(ESTOP_SOURCE_FAULT_CASCADE);
         break;
 
     default:
@@ -809,7 +813,7 @@ static void set_safety_state(SafetyState_t new_state) {
 static SystemError_t perform_safety_checks(void) {
     // Check emergency stop button
     if (is_emergency_stop_pressed()) {
-        execute_emergency_stop(ESTOP_SOURCE_BUTTON);
+        emergency_stop_execute(ESTOP_SOURCE_BUTTON);
         return ERROR_SAFETY_EMERGENCY_STOP;
     }
 
