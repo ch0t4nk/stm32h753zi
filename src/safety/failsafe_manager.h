@@ -36,88 +36,88 @@ extern "C" {
  * @brief Fail-safe state enumeration
  */
 typedef enum {
-    FAILSAFE_STATE_INIT = 0,       ///< System initialization and self-test
-    FAILSAFE_STATE_SAFE,           ///< Normal operation - all systems OK
-    FAILSAFE_STATE_WARNING,        ///< Warning condition - attempt recovery
-    FAILSAFE_STATE_FAULT,          ///< Fault condition - safe stop and hold
-    FAILSAFE_STATE_EMERGENCY,      ///< Emergency stop active
-    FAILSAFE_STATE_CRITICAL_FAULT, ///< Critical fault - hardware fail-safe
-    FAILSAFE_STATE_COUNT
+  FAILSAFE_STATE_INIT = 0,       ///< System initialization and self-test
+  FAILSAFE_STATE_SAFE,           ///< Normal operation - all systems OK
+  FAILSAFE_STATE_WARNING,        ///< Warning condition - attempt recovery
+  FAILSAFE_STATE_FAULT,          ///< Fault condition - safe stop and hold
+  FAILSAFE_STATE_EMERGENCY,      ///< Emergency stop active
+  FAILSAFE_STATE_CRITICAL_FAULT, ///< Critical fault - hardware fail-safe
+  FAILSAFE_STATE_COUNT
 } FailsafeState_t;
 
 /**
  * @brief Fail-safe trigger source
  */
 typedef enum {
-    FAILSAFE_TRIGGER_NONE = 0,           ///< No trigger
-    FAILSAFE_TRIGGER_EMERGENCY_STOP,     ///< Emergency stop triggered
-    FAILSAFE_TRIGGER_TIMING_VIOLATION,   ///< Real-time timing violation
-    FAILSAFE_TRIGGER_POSITION_LIMIT,     ///< Position limit exceeded
-    FAILSAFE_TRIGGER_OVERCURRENT,        ///< Motor overcurrent detected
-    FAILSAFE_TRIGGER_OVERTEMPERATURE,    ///< System overtemperature
-    FAILSAFE_TRIGGER_COMMUNICATION_LOSS, ///< Communication timeout
-    FAILSAFE_TRIGGER_SENSOR_FAULT,       ///< Sensor validation failure
-    FAILSAFE_TRIGGER_WATCHDOG_TIMEOUT,   ///< Watchdog timeout
-    FAILSAFE_TRIGGER_POWER_FAULT,        ///< Power supply fault
-    FAILSAFE_TRIGGER_SYSTEM_FAULT,       ///< General system fault
-    FAILSAFE_TRIGGER_COUNT
+  FAILSAFE_TRIGGER_NONE = 0,           ///< No trigger
+  FAILSAFE_TRIGGER_EMERGENCY_STOP,     ///< Emergency stop triggered
+  FAILSAFE_TRIGGER_TIMING_VIOLATION,   ///< Real-time timing violation
+  FAILSAFE_TRIGGER_POSITION_LIMIT,     ///< Position limit exceeded
+  FAILSAFE_TRIGGER_OVERCURRENT,        ///< Motor overcurrent detected
+  FAILSAFE_TRIGGER_OVERTEMPERATURE,    ///< System overtemperature
+  FAILSAFE_TRIGGER_COMMUNICATION_LOSS, ///< Communication timeout
+  FAILSAFE_TRIGGER_SENSOR_FAULT,       ///< Sensor validation failure
+  FAILSAFE_TRIGGER_WATCHDOG_TIMEOUT,   ///< Watchdog timeout
+  FAILSAFE_TRIGGER_POWER_FAULT,        ///< Power supply fault
+  FAILSAFE_TRIGGER_SYSTEM_FAULT,       ///< General system fault
+  FAILSAFE_TRIGGER_COUNT
 } FailsafeTrigger_t;
 
 /**
  * @brief Fail-safe action type
  */
 typedef enum {
-    FAILSAFE_ACTION_NONE = 0,          ///< No action required
-    FAILSAFE_ACTION_WARNING_INDICATOR, ///< Activate warning indicators
-    FAILSAFE_ACTION_REDUCE_SPEED,      ///< Reduce motor speed
-    FAILSAFE_ACTION_CONTROLLED_STOP,   ///< Controlled deceleration stop
-    FAILSAFE_ACTION_IMMEDIATE_STOP,    ///< Immediate motor stop
-    FAILSAFE_ACTION_POWER_DISCONNECT,  ///< Disconnect motor power
-    FAILSAFE_ACTION_EMERGENCY_STOP,    ///< Execute emergency stop sequence
-    FAILSAFE_ACTION_SYSTEM_RESET,      ///< System reset required
-    FAILSAFE_ACTION_COUNT
+  FAILSAFE_ACTION_NONE = 0,          ///< No action required
+  FAILSAFE_ACTION_WARNING_INDICATOR, ///< Activate warning indicators
+  FAILSAFE_ACTION_REDUCE_SPEED,      ///< Reduce motor speed
+  FAILSAFE_ACTION_CONTROLLED_STOP,   ///< Controlled deceleration stop
+  FAILSAFE_ACTION_IMMEDIATE_STOP,    ///< Immediate motor stop
+  FAILSAFE_ACTION_POWER_DISCONNECT,  ///< Disconnect motor power
+  FAILSAFE_ACTION_EMERGENCY_STOP,    ///< Execute emergency stop sequence
+  FAILSAFE_ACTION_SYSTEM_RESET,      ///< System reset required
+  FAILSAFE_ACTION_COUNT
 } FailsafeAction_t;
 
 /**
  * @brief Fail-safe state configuration
  */
 typedef struct {
-    FailsafeState_t state;            ///< State identifier
-    uint32_t max_duration_ms;         ///< Maximum time in this state
-    FailsafeAction_t entry_action;    ///< Action on entering state
-    FailsafeAction_t periodic_action; ///< Periodic action while in state
-    FailsafeAction_t exit_action;     ///< Action on exiting state
-    bool allow_automatic_recovery;    ///< Allow automatic recovery from state
-    const char *description;          ///< State description
+  FailsafeState_t state;            ///< State identifier
+  uint32_t max_duration_ms;         ///< Maximum time in this state
+  FailsafeAction_t entry_action;    ///< Action on entering state
+  FailsafeAction_t periodic_action; ///< Periodic action while in state
+  FailsafeAction_t exit_action;     ///< Action on exiting state
+  bool allow_automatic_recovery;    ///< Allow automatic recovery from state
+  const char *description;          ///< State description
 } FailsafeStateConfig_t;
 
 /**
  * @brief Fail-safe manager context
  */
 typedef struct {
-    bool initialized;                ///< Manager initialized
-    FailsafeState_t current_state;   ///< Current fail-safe state
-    FailsafeState_t previous_state;  ///< Previous fail-safe state
-    FailsafeTrigger_t last_trigger;  ///< Last trigger that caused state change
-    uint32_t state_entry_time;       ///< Time when current state was entered
-    uint32_t total_fault_count;      ///< Total number of faults
-    uint32_t recovery_attempt_count; ///< Number of recovery attempts
-    uint32_t emergency_stop_count;   ///< Number of emergency stops
-    bool manual_reset_required;      ///< Manual reset required to continue
-    bool hardware_failsafe_active;   ///< Hardware fail-safe is active
+  bool initialized;                ///< Manager initialized
+  FailsafeState_t current_state;   ///< Current fail-safe state
+  FailsafeState_t previous_state;  ///< Previous fail-safe state
+  FailsafeTrigger_t last_trigger;  ///< Last trigger that caused state change
+  uint32_t state_entry_time;       ///< Time when current state was entered
+  uint32_t total_fault_count;      ///< Total number of faults
+  uint32_t recovery_attempt_count; ///< Number of recovery attempts
+  uint32_t emergency_stop_count;   ///< Number of emergency stops
+  bool manual_reset_required;      ///< Manual reset required to continue
+  bool hardware_failsafe_active;   ///< Hardware fail-safe is active
 } FailsafeManagerContext_t;
 
 /**
  * @brief Fail-safe system status
  */
 typedef struct {
-    FailsafeState_t current_state;     ///< Current state
-    uint32_t time_in_state_ms;         ///< Time in current state
-    FailsafeTrigger_t active_triggers; ///< Currently active triggers (bitmask)
-    bool recovery_possible;            ///< Recovery is possible
-    bool manual_intervention_required; ///< Manual intervention required
-    uint8_t fault_severity_level;      ///< Fault severity (0-10)
-    const char *state_description;     ///< Human-readable state description
+  FailsafeState_t current_state;     ///< Current state
+  uint32_t time_in_state_ms;         ///< Time in current state
+  FailsafeTrigger_t active_triggers; ///< Currently active triggers (bitmask)
+  bool recovery_possible;            ///< Recovery is possible
+  bool manual_intervention_required; ///< Manual intervention required
+  uint8_t fault_severity_level;      ///< Fault severity (0-10)
+  const char *state_description;     ///< Human-readable state description
 } FailsafeStatus_t;
 
 /* ==========================================================================

@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "1.0.0",
-    "last_updated": "2025-08-12T23:10:47.741566Z",
-    "total_features": 16,
-    "completed_features": 13,
+    "last_updated": "2025-08-13T19:29:23.881939Z",
+    "total_features": 17,
+    "completed_features": 12,
     "in_progress_features": 1,
     "planned_features": 4,
     "urgent_features": 3,
@@ -31,6 +31,38 @@
     "3.0": "Advanced Capabilities"
   },
   "features": {
+    "FTR-018": {
+      "id": "FTR-018",
+      "name": "Feature Tracker: Rich Implementation/Test/Doc Tracking",
+      "status": "PLANNED",
+      "phase": "3.0",
+      "priority": "MEDIUM",
+      "category": "documentation",
+      "description": "Add support to the feature tracker CLI for tracking implementation files, test files, and documentation files per feature, enabling full traceability and compliance with feature-management and development-workflow instructions.",
+      "acceptance_criteria": [
+        "CLI supports --implementation-files, --test-files, --documentation fields.",
+        "Feature registry schema updated.",
+        "STATUS.md and reports reflect new fields.",
+        "Backward compatibility maintained.",
+        "Documentation and usage examples provided."
+      ],
+      "implementation_files": [],
+      "test_files": [],
+      "documentation": [
+        ".github/instructions/feature-management.instructions.md",
+        ".github/instructions/development-workflow.instructions.md"
+      ],
+      "dependencies": [],
+      "dependents": [],
+      "blockers": [],
+      "completion_date": null,
+      "effort_estimate_hours": 8,
+      "effort_actual_hours": 0,
+      "commits": [],
+      "notes": [
+        "Requested after safety system integration review. Enables better workflow compliance and traceability."
+      ]
+    },
     "FTR-001": {
       "id": "FTR-001",
       "name": "Optimization Telemetry System",
@@ -655,6 +687,41 @@
         "high_priority_gaps": 2,
         "estimated_implementation_weeks": 6
       }
+    },
+    "FTR-017": {
+      "id": "FTR-017",
+      "name": "Edge Case and Error Handling Test Expansion",
+      "status": "COMPLETE",
+      "phase": "1.4",
+      "priority": "HIGH",
+      "category": "testing",
+      "description": "Comprehensive expansion of unit tests for edge cases and error handling in core software, comms, HAL abstraction, and simulation/testing framework. Ensures robust validation of all error paths and boundary conditions.",
+      "acceptance_criteria": [
+        "Unit tests for all major edge cases in motion profile, comm protocol, HAL abstraction, and simulation framework",
+        "Null pointer, invalid parameter, and boundary condition coverage",
+        "All new tests tracked in feature registry and STATUS.md",
+        "No regression in existing test suites"
+      ],
+      "implementation_files": [
+        "tests/unit/test_motion_profile_edge_cases.c",
+        "tests/unit/test_comm_protocol_edge_cases.c",
+        "tests/unit/test_hal_abstraction_edge_cases.c",
+        "tests/unit/test_simulation_framework_edge_cases.c"
+      ],
+      "test_files": [
+        "tests/unit/test_motion_profile_edge_cases.c",
+        "tests/unit/test_comm_protocol_edge_cases.c",
+        "tests/unit/test_hal_abstraction_edge_cases.c",
+        "tests/unit/test_simulation_framework_edge_cases.c"
+      ],
+      "documentation": [],
+      "dependencies": [],
+      "dependents": [],
+      "blockers": [],
+      "completion_date": "2025-08-13",
+      "effort_estimate_hours": 8,
+      "effort_actual_hours": 0,
+      "commits": []
     }
   }
 }

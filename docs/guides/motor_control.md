@@ -1,3 +1,4 @@
+# Documentation Owner: GitHub Copilot (auto-assigned)
 # Motor Control Developer Guide
 
 ## Overview

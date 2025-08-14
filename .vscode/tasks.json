@@ -68,7 +68,15 @@
     {
       "label": "Flash STM32H753ZI",
       "type": "shell",
-      "command": "openocd -f interface/stlink.cfg -f target/stm32h7x.cfg -c \"program build/stm32h753_ihm02a1.elf verify reset exit\"",
+      "command": "openocd",
+      "args": [
+        "-f",
+        "interface/stlink.cfg",
+        "-f",
+        "target/stm32h7x.cfg",
+        "-c",
+        "program build/Debug/stm32h753_ihm02a1.elf verify reset exit"
+      ],
       "group": "build",
       "dependsOn": "Build (CMake)",
       "options": {

@@ -37,89 +37,88 @@ extern "C" {
  * @brief Position limit types
  */
 typedef enum {
-    POSITION_LIMIT_SOFT_MIN = 0, ///< Soft minimum position limit
-    POSITION_LIMIT_SOFT_MAX,     ///< Soft maximum position limit
-    POSITION_LIMIT_HARD_MIN,     ///< Hard minimum position limit
-    POSITION_LIMIT_HARD_MAX,     ///< Hard maximum position limit
-    POSITION_LIMIT_COUNT
+  POSITION_LIMIT_SOFT_MIN = 0, ///< Soft minimum position limit
+  POSITION_LIMIT_SOFT_MAX,     ///< Soft maximum position limit
+  POSITION_LIMIT_HARD_MIN,     ///< Hard minimum position limit
+  POSITION_LIMIT_HARD_MAX,     ///< Hard maximum position limit
+  POSITION_LIMIT_COUNT
 } PositionLimitType_t;
 
 /**
  * @brief Position safety violation type
  */
 typedef enum {
-    POSITION_VIOLATION_NONE = 0,      ///< No violation
-    POSITION_VIOLATION_SOFT_MIN,      ///< Soft minimum limit exceeded
-    POSITION_VIOLATION_SOFT_MAX,      ///< Soft maximum limit exceeded
-    POSITION_VIOLATION_HARD_MIN,      ///< Hard minimum limit exceeded
-    POSITION_VIOLATION_HARD_MAX,      ///< Hard maximum limit exceeded
-    POSITION_VIOLATION_RUNAWAY,       ///< Position runaway detected
-    POSITION_VIOLATION_ENCODER_FAULT, ///< Encoder fault/validation failure
-    POSITION_VIOLATION_COUNT
+  POSITION_VIOLATION_NONE = 0,      ///< No violation
+  POSITION_VIOLATION_SOFT_MIN,      ///< Soft minimum limit exceeded
+  POSITION_VIOLATION_SOFT_MAX,      ///< Soft maximum limit exceeded
+  POSITION_VIOLATION_HARD_MIN,      ///< Hard minimum limit exceeded
+  POSITION_VIOLATION_HARD_MAX,      ///< Hard maximum limit exceeded
+  POSITION_VIOLATION_RUNAWAY,       ///< Position runaway detected
+  POSITION_VIOLATION_ENCODER_FAULT, ///< Encoder fault/validation failure
+  POSITION_VIOLATION_COUNT
 } PositionViolationType_t;
 
 /**
  * @brief Position safety configuration for a single motor
  */
 typedef struct {
-    bool enabled;                ///< Position safety enabled for this motor
-    float soft_min_deg;          ///< Soft minimum position (degrees)
-    float soft_max_deg;          ///< Soft maximum position (degrees)
-    float hard_min_deg;          ///< Hard minimum position (degrees)
-    float hard_max_deg;          ///< Hard maximum position (degrees)
-    float warning_margin_deg;    ///< Warning margin before limit (degrees)
-    float max_velocity_dps;      ///< Maximum allowed velocity (deg/sec)
-    float runaway_threshold_deg; ///< Position runaway threshold (degrees)
-    uint32_t runaway_timeout_ms; ///< Time threshold for runaway detection
-    bool enforce_soft_limits;    ///< Enforce soft limits with controlled stop
-    bool enforce_hard_limits;    ///< Enforce hard limits with immediate stop
+  bool enabled;                ///< Position safety enabled for this motor
+  float soft_min_deg;          ///< Soft minimum position (degrees)
+  float soft_max_deg;          ///< Soft maximum position (degrees)
+  float hard_min_deg;          ///< Hard minimum position (degrees)
+  float hard_max_deg;          ///< Hard maximum position (degrees)
+  float warning_margin_deg;    ///< Warning margin before limit (degrees)
+  float max_velocity_dps;      ///< Maximum allowed velocity (deg/sec)
+  float runaway_threshold_deg; ///< Position runaway threshold (degrees)
+  uint32_t runaway_timeout_ms; ///< Time threshold for runaway detection
+  bool enforce_soft_limits;    ///< Enforce soft limits with controlled stop
+  bool enforce_hard_limits;    ///< Enforce hard limits with immediate stop
 } PositionSafetyConfig_t;
 
 /**
  * @brief Position safety status for a single motor
  */
 typedef struct {
-    bool initialized;                  ///< Position safety initialized
-    float current_position_deg;        ///< Current position (degrees)
-    float last_position_deg;           ///< Last recorded position (degrees)
-    float velocity_dps;                ///< Current velocity (deg/sec)
-    uint32_t last_update_time;         ///< Last position update timestamp
-    PositionViolationType_t violation; ///< Current violation type
-    uint32_t violation_count;          ///< Total violation count
-    uint32_t soft_limit_violations;    ///< Soft limit violation count
-    uint32_t hard_limit_violations;    ///< Hard limit violation count
-    bool position_valid;               ///< Position reading is valid
-    bool limits_active;                ///< Position limits are active
-    bool runaway_detected;             ///< Position runaway detected
-    uint32_t last_violation_time;      ///< Last violation timestamp
+  bool initialized;                  ///< Position safety initialized
+  float current_position_deg;        ///< Current position (degrees)
+  float last_position_deg;           ///< Last recorded position (degrees)
+  float velocity_dps;                ///< Current velocity (deg/sec)
+  uint32_t last_update_time;         ///< Last position update timestamp
+  PositionViolationType_t violation; ///< Current violation type
+  uint32_t violation_count;          ///< Total violation count
+  uint32_t soft_limit_violations;    ///< Soft limit violation count
+  uint32_t hard_limit_violations;    ///< Hard limit violation count
+  bool position_valid;               ///< Position reading is valid
+  bool limits_active;                ///< Position limits are active
+  bool runaway_detected;             ///< Position runaway detected
+  uint32_t last_violation_time;      ///< Last violation timestamp
 } PositionSafetyStatus_t;
 
 /**
  * @brief Position safety system context
  */
 typedef struct {
-    bool system_initialized; ///< System initialized
-    PositionSafetyConfig_t
-        motor_config[MAX_MOTORS]; ///< Per-motor configuration
-    PositionSafetyStatus_t motor_status[MAX_MOTORS]; ///< Per-motor status
-    uint32_t total_violations;  ///< Total system violations
-    uint32_t emergency_stops;   ///< Emergency stops due to position
-    bool global_limits_enabled; ///< Global position limits enabled
-    uint32_t system_start_time; ///< System start timestamp
+  bool system_initialized;                         ///< System initialized
+  PositionSafetyConfig_t motor_config[MAX_MOTORS]; ///< Per-motor configuration
+  PositionSafetyStatus_t motor_status[MAX_MOTORS]; ///< Per-motor status
+  uint32_t total_violations;                       ///< Total system violations
+  uint32_t emergency_stops;   ///< Emergency stops due to position
+  bool global_limits_enabled; ///< Global position limits enabled
+  uint32_t system_start_time; ///< System start timestamp
 } PositionSafetyContext_t;
 
 /**
  * @brief Position validation result
  */
 typedef struct {
-    bool position_valid;               ///< Position is within all limits
-    bool soft_limit_ok;                ///< Within soft limits
-    bool hard_limit_ok;                ///< Within hard limits
-    bool velocity_ok;                  ///< Velocity within limits
-    bool runaway_ok;                   ///< No runaway detected
-    PositionViolationType_t violation; ///< Violation type if any
-    float distance_to_limit_deg;       ///< Distance to nearest limit
-    PositionLimitType_t nearest_limit; ///< Type of nearest limit
+  bool position_valid;               ///< Position is within all limits
+  bool soft_limit_ok;                ///< Within soft limits
+  bool hard_limit_ok;                ///< Within hard limits
+  bool velocity_ok;                  ///< Velocity within limits
+  bool runaway_ok;                   ///< No runaway detected
+  PositionViolationType_t violation; ///< Violation type if any
+  float distance_to_limit_deg;       ///< Distance to nearest limit
+  PositionLimitType_t nearest_limit; ///< Type of nearest limit
 } PositionValidationResult_t;
 
 /* ==========================================================================
@@ -329,8 +328,8 @@ position_safety_controlled_stop(uint8_t motor_id,
 
 /// @brief Position update frequency requirements
 #define POSITION_SAFETY_MIN_UPDATE_RATE_HZ (100)
-#define POSITION_SAFETY_MAX_UPDATE_INTERVAL_MS                                \
-    (1000 / POSITION_SAFETY_MIN_UPDATE_RATE_HZ)
+#define POSITION_SAFETY_MAX_UPDATE_INTERVAL_MS                                 \
+  (1000 / POSITION_SAFETY_MIN_UPDATE_RATE_HZ)
 
 /// @brief Position validation tolerances
 #define POSITION_SAFETY_TOLERANCE_DEG (0.1f)

@@ -34,37 +34,37 @@ extern "C" {
  * @brief High-precision timing configuration
  */
 typedef struct {
-    bool initialized;            ///< Timing system initialized
-    uint32_t timer_frequency_hz; ///< Timer frequency in Hz
-    uint32_t max_measurement_us; ///< Maximum measurable time in microseconds
-    uint32_t measurement_count;  ///< Total measurements taken
-    uint32_t overrun_count;      ///< Timing overrun count
+  bool initialized;            ///< Timing system initialized
+  uint32_t timer_frequency_hz; ///< Timer frequency in Hz
+  uint32_t max_measurement_us; ///< Maximum measurable time in microseconds
+  uint32_t measurement_count;  ///< Total measurements taken
+  uint32_t overrun_count;      ///< Timing overrun count
 } TimingPrecisionConfig_t;
 
 /**
  * @brief Timing measurement result
  */
 typedef struct {
-    uint32_t start_time_us; ///< Start timestamp in microseconds
-    uint32_t end_time_us;   ///< End timestamp in microseconds
-    uint32_t duration_us;   ///< Measured duration in microseconds
-    bool valid;             ///< Measurement is valid
-    bool overrun;           ///< Timing overrun detected
+  uint32_t start_time_us; ///< Start timestamp in microseconds
+  uint32_t end_time_us;   ///< End timestamp in microseconds
+  uint32_t duration_us;   ///< Measured duration in microseconds
+  bool valid;             ///< Measurement is valid
+  bool overrun;           ///< Timing overrun detected
 } TimingMeasurement_t;
 
 /**
  * @brief Safety timing validation results
  */
 typedef struct {
-    uint32_t emergency_stop_time_us;     ///< Last emergency stop response time
-    uint32_t max_emergency_stop_time_us; ///< Maximum emergency stop time seen
-    uint32_t control_loop_time_us;       ///< Last control loop execution time
-    uint32_t max_control_loop_time_us;   ///< Maximum control loop time seen
-    uint32_t safety_check_time_us;       ///< Last safety check time
-    uint32_t max_safety_check_time_us;   ///< Maximum safety check time seen
-    bool emergency_stop_compliant;       ///< Emergency stop within limits
-    bool control_loop_compliant;         ///< Control loop within limits
-    bool safety_check_compliant;         ///< Safety checks within limits
+  uint32_t emergency_stop_time_us;     ///< Last emergency stop response time
+  uint32_t max_emergency_stop_time_us; ///< Maximum emergency stop time seen
+  uint32_t control_loop_time_us;       ///< Last control loop execution time
+  uint32_t max_control_loop_time_us;   ///< Maximum control loop time seen
+  uint32_t safety_check_time_us;       ///< Last safety check time
+  uint32_t max_safety_check_time_us;   ///< Maximum safety check time seen
+  bool emergency_stop_compliant;       ///< Emergency stop within limits
+  bool control_loop_compliant;         ///< Control loop within limits
+  bool safety_check_compliant;         ///< Safety checks within limits
 } SafetyTimingResults_t;
 
 /* ==========================================================================
@@ -170,22 +170,22 @@ SystemError_t timing_get_config(TimingPrecisionConfig_t *config);
  * @brief Validate emergency stop timing compliance
  * @param time_us Time in microseconds
  */
-#define TIMING_VALIDATE_EMERGENCY_STOP(time_us)                               \
-    ((time_us) <= TIMING_EMERGENCY_STOP_MAX_US)
+#define TIMING_VALIDATE_EMERGENCY_STOP(time_us)                                \
+  ((time_us) <= TIMING_EMERGENCY_STOP_MAX_US)
 
 /**
  * @brief Validate control loop timing compliance
  * @param time_us Time in microseconds
  */
-#define TIMING_VALIDATE_CONTROL_LOOP(time_us)                                 \
-    ((time_us) <= TIMING_CONTROL_LOOP_MAX_US)
+#define TIMING_VALIDATE_CONTROL_LOOP(time_us)                                  \
+  ((time_us) <= TIMING_CONTROL_LOOP_MAX_US)
 
 /**
  * @brief Validate safety check timing compliance
  * @param time_us Time in microseconds
  */
-#define TIMING_VALIDATE_SAFETY_CHECK(time_us)                                 \
-    ((time_us) <= TIMING_SAFETY_CHECK_MAX_US)
+#define TIMING_VALIDATE_SAFETY_CHECK(time_us)                                  \
+  ((time_us) <= TIMING_SAFETY_CHECK_MAX_US)
 
 /* ==========================================================================
  */

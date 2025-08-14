@@ -78,7 +78,7 @@ cmake --build build --target update-status-preview                         # Pre
 
 ### For Developers
 1. **[API Reference](html/html/index.html)** - Generated Doxygen documentation
-2. **[Safety Systems Guide](guides/safety_systems.md)** - Critical safety implementation
+2. **[Safety Systems Guide](archives/guides/safety_systems.md)** *(archived)* - Critical safety implementation
 3. **[Motor Control Guide](guides/motor_control.md)** - L6470 and motion control
 4. **[Build Instructions](../README.md)** - Setup and compilation
 
@@ -90,7 +90,7 @@ cmake --build build --target update-status-preview                         # Pre
 ## 📖 **Documentation Categories**
 
 ### 🛡️ **Safety Documentation**
-- **[Safety Systems Guide](guides/safety_systems.md)** - Emergency stop, fault detection, watchdog
+- **[Safety Systems Guide](archives/guides/safety_systems.md)** *(archived)* - Emergency stop, fault detection, watchdog
 - **[Safety Validation Procedures](validation/safety_validation.md)** - Comprehensive safety testing
 - **[Emergency Stop Testing](testing/emergency_stop_testing.md)** - Response time validation
 
@@ -101,7 +101,7 @@ cmake --build build --target update-status-preview                         # Pre
 - **[FreeRTOS Guides](guides/)** - Complete RTOS documentation suite
   - **[RTOS API Reference](guides/RTOS_API_REFERENCE.md)** - FreeRTOS API documentation
   - **[RTOS Quick Reference](guides/RTOS_QUICK_REFERENCE.md)** - Common RTOS patterns
-  - **[RTOS Troubleshooting](guides/RTOS_TROUBLESHOOTING_GUIDE.md)** - Debug and optimization
+    - **[RTOS Troubleshooting](archives/guides/RTOS_TROUBLESHOOTING_GUIDE.md)** *(archived)* - Debug and optimization
   - **[Advanced RTOS Features](guides/ADVANCED_RTOS_FEATURES_COMPREHENSIVE_GUIDE.md)** - Advanced capabilities
 
 ### 🔧 **API Documentation**

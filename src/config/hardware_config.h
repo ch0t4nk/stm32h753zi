@@ -35,11 +35,11 @@
 #define MCU_CORE_FREQUENCY_HZ 480000000UL
 #define MCU_PACKAGE "LQFP144"
 
-/* STM32H7 Clock Configuration (SSOT) - Validated against official docs */
+/* STM32H7 Clock Configuration (SSOT) - Corrected for 8MHz HSE */
 #define SYSTEM_CLOCK_HSE_HZ                                                   \
-    25000000UL                  // External crystal on Nucleo-144 (validated)
-#define SYSTEM_CLOCK_PLL_M 5    // HSE prescaler: 25MHz/5 = 5MHz
-#define SYSTEM_CLOCK_PLL_N 192  // PLL multiplier: 5MHz*192 = 960MHz
+    8000000UL                   // External crystal on Nucleo-144 (8MHz actual)
+#define SYSTEM_CLOCK_PLL_M 2    // HSE prescaler: 8MHz/2 = 4MHz
+#define SYSTEM_CLOCK_PLL_N 240  // PLL multiplier: 4MHz*240 = 960MHz
 #define SYSTEM_CLOCK_PLL_P 2    // SYSCLK divider: 960MHz/2 = 480MHz
 #define SYSTEM_CLOCK_AHB_DIV 2  // AHB prescaler: 480MHz/2 = 240MHz
 #define SYSTEM_CLOCK_APB1_DIV 2 // APB1 prescaler: 240MHz/2 = 120MHz

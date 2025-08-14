@@ -29,6 +29,12 @@ extern "C" {
 
 /* Includes
  * ------------------------------------------------------------------*/
+/* USER CODE BEGIN HSE_VALUE */
+/* Define HSE_VALUE before including HAL to override default 25MHz */
+#define HSE_VALUE                                                             \
+    8000000UL /*!< Value of the External oscillator in Hz - STM32H753ZI       \
+                 Nucleo-144 uses 8MHz */
+/* USER CODE END HSE_VALUE */
 #include "stm32h7xx_hal.h"
 
 #include "stm32h7xx_nucleo.h"

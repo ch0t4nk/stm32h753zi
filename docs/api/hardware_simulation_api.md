@@ -899,4 +899,4 @@ void test_power_management(void) {
 - [AS5600 Driver API](as5600_driver_api.md)
 - [L6470 Driver API](l6470_driver_api.md)
 - [HAL Abstraction Guide](../guides/hal_abstraction_guide.md)
-- [Testing Framework Guide](../guides/testing_framework_guide.md)
+- [Testing Framework Guide](../archives/guides/testing_framework_guide.md) *(archived)*

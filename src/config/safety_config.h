@@ -82,8 +82,7 @@
 #define MOTOR_TEMP_HYSTERESIS_C 5.0f // Temperature hysteresis
 
 // Position Safety Limits
-#define MOTOR_POSITION_ERROR_MAX_DEG                                          \
-    5.0f // Maximum position error before fault
+#define MOTOR_POSITION_ERROR_MAX_DEG 5.0f // Maximum position error before fault
 #define MOTOR_POSITION_ERROR_TIME_MS 1000 // Time at max error before fault
 #define MOTOR_RUNAWAY_THRESHOLD_DEG 10.0f // Runaway detection threshold
 #define MOTOR_RUNAWAY_TIME_MS 500         // Time to detect runaway
@@ -108,18 +107,18 @@
 #define ENCODER_COMM_FAILURE_TIME_MS 1000 // Consecutive failure time to fault
 
 // Encoder Data Validation
-#define ENCODER_ANGLE_JUMP_THRESHOLD_DEG                                      \
-    30.0f                                // Maximum single-sample angle change
+#define ENCODER_ANGLE_JUMP_THRESHOLD_DEG                                       \
+  30.0f                                  // Maximum single-sample angle change
 #define ENCODER_NOISE_THRESHOLD_DEG 0.1f // Noise level threshold
-#define ENCODER_STUCK_TIME_MS                                                 \
-    5000 // Time without change to detect stuck encoder
+#define ENCODER_STUCK_TIME_MS                                                  \
+  5000                            // Time without change to detect stuck encoder
 #define ENCODER_AGC_MIN_VALUE 128 // AS5600 AGC minimum valid value
 #define ENCODER_AGC_MAX_VALUE 255 // AS5600 AGC maximum valid value
 
 // Encoder-Motor Correlation Checks
 #define ENCODER_MOTOR_CORRELATION_MIN 0.95f // Minimum correlation coefficient
-#define ENCODER_MOTOR_DEVIATION_MAX_DEG                                       \
-    2.0f // Maximum deviation between encoder and steps
+#define ENCODER_MOTOR_DEVIATION_MAX_DEG                                        \
+  2.0f // Maximum deviation between encoder and steps
 #define ENCODER_CALIBRATION_SAMPLES 100 // Samples for correlation calculation
 
 /* ==========================================================================
@@ -139,8 +138,8 @@
 // CAN Bus Safety Parameters
 #define CAN_HEARTBEAT_TIMEOUT_MS 3000 // CAN heartbeat timeout
 #define CAN_ERROR_PASSIVE_MAX 10      // Max CAN error passive states
-#define CAN_BUS_OFF_RECOVERY_TIME_MS                                          \
-    30000                        // Time before bus-off recovery attempt
+#define CAN_BUS_OFF_RECOVERY_TIME_MS                                           \
+  30000                          // Time before bus-off recovery attempt
 #define CAN_MESSAGE_QUEUE_MAX 32 // Maximum queued messages
 
 // Ethernet Safety Parameters
@@ -189,8 +188,7 @@
 
 // Emergency Stop Timing
 #define ESTOP_REACTION_TIME_MS 10 // Maximum E-stop reaction time
-#define ESTOP_DEBOUNCE_TIME_MS                                                \
-    50 // E-stop button debounce time (matches tests)
+#define ESTOP_DEBOUNCE_TIME_MS 50 // E-stop button debounce time (matches tests)
 #define ESTOP_MOTOR_STOP_TIME_MS 100       // Time to fully stop motors
 #define ESTOP_RESET_DELAY_MS 5000          // Delay before E-stop can be reset
 #define ESTOP_RESET_CONFIRMATION_TIME 2000 // Time to confirm E-stop reset
@@ -210,24 +208,24 @@
 // machine implementation
 
 typedef enum {
-    SAFETY_STATE_UNKNOWN = 0,    // Initial/unknown state
-    SAFETY_STATE_SAFE,           // Normal safe operation
-    SAFETY_STATE_WARNING,        // Warning condition detected
-    SAFETY_STATE_FAULT,          // Fault condition - motors stopped
-    SAFETY_STATE_EMERGENCY_STOP, // Emergency stop activated
-    SAFETY_STATE_MAINTENANCE,    // Maintenance mode
-    SAFETY_STATE_RECOVERY,       // Fault recovery in progress
-    SAFETY_STATE_COUNT           // Number of states
+  SAFETY_STATE_UNKNOWN = 0,    // Initial/unknown state
+  SAFETY_STATE_SAFE,           // Normal safe operation
+  SAFETY_STATE_WARNING,        // Warning condition detected
+  SAFETY_STATE_FAULT,          // Fault condition - motors stopped
+  SAFETY_STATE_EMERGENCY_STOP, // Emergency stop activated
+  SAFETY_STATE_MAINTENANCE,    // Maintenance mode
+  SAFETY_STATE_RECOVERY,       // Fault recovery in progress
+  SAFETY_STATE_COUNT           // Number of states
 } SafetyState_t;
 
 typedef enum {
-    SAFETY_LEVEL_NONE = 0,  // No safety restrictions
-    SAFETY_LEVEL_LOW,       // Low safety restrictions
-    SAFETY_LEVEL_MEDIUM,    // Medium safety restrictions
-    SAFETY_LEVEL_HIGH,      // High safety restrictions
-    SAFETY_LEVEL_CRITICAL,  // Critical safety restrictions
-    SAFETY_LEVEL_EMERGENCY, // Emergency safety level
-    SAFETY_LEVEL_COUNT      // Number of levels
+  SAFETY_LEVEL_NONE = 0,  // No safety restrictions
+  SAFETY_LEVEL_LOW,       // Low safety restrictions
+  SAFETY_LEVEL_MEDIUM,    // Medium safety restrictions
+  SAFETY_LEVEL_HIGH,      // High safety restrictions
+  SAFETY_LEVEL_CRITICAL,  // Critical safety restrictions
+  SAFETY_LEVEL_EMERGENCY, // Emergency safety level
+  SAFETY_LEVEL_COUNT      // Number of levels
 } SafetyLevel_t;
 
 /* ==========================================================================
@@ -239,33 +237,33 @@ typedef enum {
 // handling priorities
 
 typedef enum {
-    SAFETY_FAULT_NONE = 0x00000000, // No fault
+  SAFETY_FAULT_NONE = 0x00000000, // No fault
 
-    // Critical Faults (Immediate E-stop)
-    SAFETY_FAULT_ESTOP_BUTTON = 0x00000001, // Emergency stop button pressed
-    SAFETY_FAULT_MOTOR_OVERCURRENT = 0x00000002, // Motor overcurrent
-    SAFETY_FAULT_MOTOR_OVERHEAT = 0x00000004,    // Motor overheating
-    SAFETY_FAULT_POWER_OVERVOLT = 0x00000008,    // Power supply overvoltage
-    SAFETY_FAULT_MCU_OVERHEAT = 0x00000010,      // MCU overheating
+  // Critical Faults (Immediate E-stop)
+  SAFETY_FAULT_ESTOP_BUTTON = 0x00000001,      // Emergency stop button pressed
+  SAFETY_FAULT_MOTOR_OVERCURRENT = 0x00000002, // Motor overcurrent
+  SAFETY_FAULT_MOTOR_OVERHEAT = 0x00000004,    // Motor overheating
+  SAFETY_FAULT_POWER_OVERVOLT = 0x00000008,    // Power supply overvoltage
+  SAFETY_FAULT_MCU_OVERHEAT = 0x00000010,      // MCU overheating
 
-    // Serious Faults (Stop motors, allow restart)
-    SAFETY_FAULT_ENCODER_LOST = 0x00000100,   // Encoder communication lost
-    SAFETY_FAULT_MOTOR_STALL = 0x00000200,    // Motor stall detected
-    SAFETY_FAULT_POSITION_ERROR = 0x00000400, // Position error too large
-    SAFETY_FAULT_POWER_BROWNOUT = 0x00000800, // Power supply brownout
-    SAFETY_FAULT_WATCHDOG = 0x00001000,       // Watchdog timeout
+  // Serious Faults (Stop motors, allow restart)
+  SAFETY_FAULT_ENCODER_LOST = 0x00000100,   // Encoder communication lost
+  SAFETY_FAULT_MOTOR_STALL = 0x00000200,    // Motor stall detected
+  SAFETY_FAULT_POSITION_ERROR = 0x00000400, // Position error too large
+  SAFETY_FAULT_POWER_BROWNOUT = 0x00000800, // Power supply brownout
+  SAFETY_FAULT_WATCHDOG = 0x00001000,       // Watchdog timeout
 
-    // Warning Faults (Continue with restrictions)
-    SAFETY_FAULT_COMM_TIMEOUT = 0x00010000,  // Communication timeout
-    SAFETY_FAULT_ENCODER_NOISE = 0x00020000, // Encoder noise detected
-    SAFETY_FAULT_CPU_OVERLOAD = 0x00040000,  // CPU overload
-    SAFETY_FAULT_MEMORY_LOW = 0x00080000,    // Low memory
-    SAFETY_FAULT_TEMP_WARNING = 0x00100000,  // Temperature warning
+  // Warning Faults (Continue with restrictions)
+  SAFETY_FAULT_COMM_TIMEOUT = 0x00010000,  // Communication timeout
+  SAFETY_FAULT_ENCODER_NOISE = 0x00020000, // Encoder noise detected
+  SAFETY_FAULT_CPU_OVERLOAD = 0x00040000,  // CPU overload
+  SAFETY_FAULT_MEMORY_LOW = 0x00080000,    // Low memory
+  SAFETY_FAULT_TEMP_WARNING = 0x00100000,  // Temperature warning
 
-    // System Faults
-    SAFETY_FAULT_INITIALIZATION = 0x01000000, // System initialization failure
-    SAFETY_FAULT_CONFIGURATION = 0x02000000,  // Configuration error
-    SAFETY_FAULT_COMMUNICATION = 0x04000000   // General communication fault
+  // System Faults
+  SAFETY_FAULT_INITIALIZATION = 0x01000000, // System initialization failure
+  SAFETY_FAULT_CONFIGURATION = 0x02000000,  // Configuration error
+  SAFETY_FAULT_COMMUNICATION = 0x04000000   // General communication fault
 } SafetyFaultFlags_t;
 
 /* ==========================================================================
@@ -292,8 +290,8 @@ typedef enum {
 #define SAFETY_CHECK_SLOW_PERIOD 100   // Slow checks every 100ms
 
 // Safety Monitor Timer Configuration (SSOT)
-#define SAFETY_MONITOR_PERIOD_TICKS                                           \
-    ((uint32_t)(100 - 1)) // 100μs period for safety monitor timer (TIM3)
+#define SAFETY_MONITOR_PERIOD_TICKS                                            \
+  ((uint32_t)(100 - 1)) // 100μs period for safety monitor timer (TIM3)
 
 /* ==========================================================================
  */

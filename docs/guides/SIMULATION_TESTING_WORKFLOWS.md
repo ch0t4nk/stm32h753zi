@@ -1,3 +1,4 @@
+# Documentation Owner: GitHub Copilot (auto-assigned)
 # Simulation Testing Workflows
 
 ## Overview
@@ -32,10 +33,6 @@ void test_basic_motion(void) {
     TEST_ASSERT_EQUAL(SYSTEM_OK, l6470_init(0));
     TEST_ASSERT_EQUAL(SYSTEM_OK, as5600_init(0));
     
-    // Test relative movement
-    l6470_move(0, 1000);  // Move 1000 steps
-    
-    // Wait for movement completion (simulated)
     while (l6470_is_busy(0)) {
         motor_simulation_update(10);  // 10ms simulation steps
     }
@@ -63,7 +60,6 @@ void test_position_control_loop(void) {
         
         // Simple proportional control
         int32_t move_steps = error / 4;  // P-gain = 0.25
-        
         if (abs(move_steps) > 100) {
             move_steps = (move_steps > 0) ? 100 : -100;  // Limit step size
         }
@@ -343,6 +339,6 @@ assert(end_pos == start_pos + 100);
 5. **Document Results**: Keep records of test metrics and performance data
 
 ## Related Documentation
-- [Simulation Framework Guide](SIMULATION_FRAMEWORK_GUIDE.md)
+- [Simulation Framework Guide](../archives/guides/SIMULATION_FRAMEWORK_GUIDE.md) *(archived)*
 - [HAL Abstraction Guide](hal_abstraction_guide.md)
-- [Testing Framework Guide](testing_framework_guide.md)
+- [Testing Framework Guide](../archives/guides/testing_framework_guide.md) *(archived)*

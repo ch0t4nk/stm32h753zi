@@ -162,8 +162,8 @@ graph LR
 ### **Development Resources**
 - 📘 **[Developer Guide](../guides/quick_start.md)** - Complete setup and usage guide
 - 🏗️ **[Build System](../guides/cmake_build_guide.md)** - ARM GCC cross-compilation
-- 🧪 **[Testing Framework](../guides/testing_framework_guide.md)** - Unit and integration testing
-- 🛡️ **[Safety Systems](../guides/safety_systems.md)** - Safety implementation guide
+- 🧪 **[Testing Framework](../archives/guides/testing_framework_guide.md)** *(archived)* - Unit and integration testing
+- 🛡️ **[Safety Systems](../archives/guides/safety_systems.md)** *(archived)* - Safety implementation guide
 
 ### **Generated API Documentation** (Doxygen)
 - 📖 **[HTML API Reference](../html/index.html)** - Complete ARM_CM7 API documentation

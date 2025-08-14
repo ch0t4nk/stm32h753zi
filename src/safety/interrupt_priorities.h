@@ -36,38 +36,38 @@ extern "C" {
  * @note Lower numbers = higher priority (ARM Cortex-M convention)
  */
 typedef enum {
-    INTERRUPT_PRIORITY_EMERGENCY_STOP = 0,      ///< Emergency stop (highest)
-    INTERRUPT_PRIORITY_SAFETY_CRITICAL = 1,     ///< Safety-critical systems
-    INTERRUPT_PRIORITY_REAL_TIME_CONTROL = 2,   ///< Real-time control loop
-    INTERRUPT_PRIORITY_MOTOR_COMMUNICATION = 3, ///< Motor driver communication
-    INTERRUPT_PRIORITY_SENSOR_FEEDBACK = 4,     ///< Sensor feedback (encoders)
-    INTERRUPT_PRIORITY_COMMUNICATION = 5,       ///< General communication
-    INTERRUPT_PRIORITY_SYSTEM_MANAGEMENT = 6,   ///< System management
-    INTERRUPT_PRIORITY_BACKGROUND = 7,          ///< Background tasks (lowest)
-    INTERRUPT_PRIORITY_MAX = 8
+  INTERRUPT_PRIORITY_EMERGENCY_STOP = 0,      ///< Emergency stop (highest)
+  INTERRUPT_PRIORITY_SAFETY_CRITICAL = 1,     ///< Safety-critical systems
+  INTERRUPT_PRIORITY_REAL_TIME_CONTROL = 2,   ///< Real-time control loop
+  INTERRUPT_PRIORITY_MOTOR_COMMUNICATION = 3, ///< Motor driver communication
+  INTERRUPT_PRIORITY_SENSOR_FEEDBACK = 4,     ///< Sensor feedback (encoders)
+  INTERRUPT_PRIORITY_COMMUNICATION = 5,       ///< General communication
+  INTERRUPT_PRIORITY_SYSTEM_MANAGEMENT = 6,   ///< System management
+  INTERRUPT_PRIORITY_BACKGROUND = 7,          ///< Background tasks (lowest)
+  INTERRUPT_PRIORITY_MAX = 8
 } InterruptPriority_t;
 
 /**
  * @brief Interrupt configuration structure
  */
 typedef struct {
-    IRQn_Type irq_number;         ///< Interrupt request number
-    InterruptPriority_t priority; ///< Interrupt priority level
-    uint8_t sub_priority;         ///< Sub-priority within same level
-    bool enabled;                 ///< Interrupt enabled
-    const char *description;      ///< Interrupt description
+  IRQn_Type irq_number;         ///< Interrupt request number
+  InterruptPriority_t priority; ///< Interrupt priority level
+  uint8_t sub_priority;         ///< Sub-priority within same level
+  bool enabled;                 ///< Interrupt enabled
+  const char *description;      ///< Interrupt description
 } InterruptConfig_t;
 
 /**
  * @brief Interrupt priority validation results
  */
 typedef struct {
-    bool emergency_stop_highest;   ///< Emergency stop has highest priority
-    bool real_time_protected;      ///< Real-time tasks properly prioritized
-    bool communication_isolated;   ///< Communication properly isolated
-    bool priority_gaps_valid;      ///< No priority gaps that affect safety
-    uint8_t total_interrupts;      ///< Total configured interrupts
-    uint8_t safety_critical_count; ///< Number of safety-critical interrupts
+  bool emergency_stop_highest;   ///< Emergency stop has highest priority
+  bool real_time_protected;      ///< Real-time tasks properly prioritized
+  bool communication_isolated;   ///< Communication properly isolated
+  bool priority_gaps_valid;      ///< No priority gaps that affect safety
+  uint8_t total_interrupts;      ///< Total configured interrupts
+  uint8_t safety_critical_count; ///< Number of safety-critical interrupts
 } InterruptPriorityValidation_t;
 
 /* ==========================================================================
@@ -210,14 +210,14 @@ SystemError_t configure_system_communication_interrupts(void);
 /**
  * @brief Check if interrupt priority is safety-critical
  */
-#define IS_SAFETY_CRITICAL_PRIORITY(priority)                                 \
-    ((priority) <= INTERRUPT_PRIORITY_SAFETY_CRITICAL)
+#define IS_SAFETY_CRITICAL_PRIORITY(priority)                                  \
+  ((priority) <= INTERRUPT_PRIORITY_SAFETY_CRITICAL)
 
 /**
  * @brief Check if interrupt priority is real-time
  */
-#define IS_REAL_TIME_PRIORITY(priority)                                       \
-    ((priority) <= INTERRUPT_PRIORITY_REAL_TIME_CONTROL)
+#define IS_REAL_TIME_PRIORITY(priority)                                        \
+  ((priority) <= INTERRUPT_PRIORITY_REAL_TIME_CONTROL)
 
 /**
  * @brief Validate priority level range

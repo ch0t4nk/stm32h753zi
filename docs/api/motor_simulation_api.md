@@ -811,5 +811,5 @@ void test_fault_handling(void) {
 - [Hardware Simulation API](hardware_simulation_api.md)
 - [AS5600 Driver API](as5600_driver_api.md)
 - [L6470 Driver API](l6470_driver_api.md)
-- [Testing Framework Guide](../guides/testing_framework_guide.md)
-- [Simulation Framework Guide](../guides/SIMULATION_FRAMEWORK_GUIDE.md)
+- [Testing Framework Guide](../archives/guides/testing_framework_guide.md) *(archived)*
+- [Simulation Framework Guide](../archives/guides/SIMULATION_FRAMEWORK_GUIDE.md) *(archived)*

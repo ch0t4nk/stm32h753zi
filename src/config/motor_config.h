@@ -69,26 +69,26 @@
 #define MOTOR_DEGREES_PER_STEP (360.0f / MOTOR_TOTAL_STEPS)
 
 // Motor time constants (for characterization)
-#define MOTOR_TYPICAL_MECHANICAL_TIME_CONSTANT_S                              \
-    ((timestamp_ms_t)0.1f) // 100ms typical mechanical time constant
-#define MOTOR_TYPICAL_ELECTRICAL_TIME_CONSTANT_S                              \
-    ((timestamp_ms_t)0.002f) // 2ms typical electrical time constant
-#define MOTOR_CHARACTERIZATION_SWEEP_AMPLITUDE_DEG                            \
-    ((angle_deg_t)5.0f) // 5 degree amplitude for safety
-#define MOTOR_CHARACTERIZATION_SAMPLE_DELAY_MS                                \
-    ((timestamp_ms_t)1) // 1ms delay for 1kHz sampling rate
+#define MOTOR_TYPICAL_MECHANICAL_TIME_CONSTANT_S                               \
+  ((timestamp_ms_t)0.1f) // 100ms typical mechanical time constant
+#define MOTOR_TYPICAL_ELECTRICAL_TIME_CONSTANT_S                               \
+  ((timestamp_ms_t)0.002f) // 2ms typical electrical time constant
+#define MOTOR_CHARACTERIZATION_SWEEP_AMPLITUDE_DEG                             \
+  ((angle_deg_t)5.0f) // 5 degree amplitude for safety
+#define MOTOR_CHARACTERIZATION_SAMPLE_DELAY_MS                                 \
+  ((timestamp_ms_t)1) // 1ms delay for 1kHz sampling rate
 
 // Real-time control timing constants (SSOT)
-#define MOTOR_CONTROL_LOOP_PERIOD_TICKS                                       \
-    ((timestamp_ms_t)(1000 - 1)) // 1ms period for timer
-#define MOTOR_POSITION_CONTROL_TIMESTEP_MS                                    \
-    ((timestamp_ms_t)1) // 1ms time step for position control
-#define MOTOR_MULTI_MOTOR_TIMESTEP_MS                                         \
-    ((timestamp_ms_t)2) // 2ms time step (500Hz) for coordination
+#define MOTOR_CONTROL_LOOP_PERIOD_TICKS                                        \
+  ((timestamp_ms_t)(1000 - 1)) // 1ms period for timer
+#define MOTOR_POSITION_CONTROL_TIMESTEP_MS                                     \
+  ((timestamp_ms_t)1) // 1ms time step for position control
+#define MOTOR_MULTI_MOTOR_TIMESTEP_MS                                          \
+  ((timestamp_ms_t)2) // 2ms time step (500Hz) for coordination
 
 // Demo timing constants (SSOT)
-#define DEMO_TIMER_PERIOD_1MS                                                 \
-    ((timestamp_ms_t)1000) // 1ms period for demo timer
+#define DEMO_TIMER_PERIOD_1MS                                                  \
+  ((timestamp_ms_t)1000) // 1ms period for demo timer
 
 // Motor mechanical limits
 #define MOTOR_MAX_SPEED_RPM 100.0f   // Maximum safe speed
@@ -101,10 +101,10 @@
 #define MOTOR_MAX_TEMPERATURE_C 85.0f // Maximum motor temperature
 
 // Speed conversion constants
-#define MOTOR_MAX_SPEED_DPS                                                   \
-    (MOTOR_MAX_SPEED_RPM * 6.0f) // Convert RPM to degrees/second
-#define MOTOR_MIN_SPEED_DPS                                                   \
-    (MOTOR_MIN_SPEED_RPM * 6.0f) // Convert RPM to degrees/second
+#define MOTOR_MAX_SPEED_DPS                                                    \
+  (MOTOR_MAX_SPEED_RPM * 6.0f) // Convert RPM to degrees/second
+#define MOTOR_MIN_SPEED_DPS                                                    \
+  (MOTOR_MIN_SPEED_RPM * 6.0f) // Convert RPM to degrees/second
 
 // Control loop timing
 #define MOTOR_CONTROL_LOOP_PERIOD_MS 20 // 50Hz control loop (20ms period)
@@ -140,8 +140,8 @@
 #define L6470_SAFE_DEFAULT_DEC L6470_DEC // Safe default deceleration
 #define L6470_SAFE_DEFAULT_MAX_SPEED L6470_MAX_SPEED // Safe default max speed
 #define L6470_SAFE_DEFAULT_OCD_TH 0x8 // Safe overcurrent threshold
-#define L6470_SAFE_DEFAULT_KVAL_RUN                                           \
-    L6470_KVAL_RUN // Safe default running current
+#define L6470_SAFE_DEFAULT_KVAL_RUN                                            \
+  L6470_KVAL_RUN // Safe default running current
 
 // Current Control (KVAL registers)
 #define L6470_KVAL_HOLD 0x29 // Holding current (25% of max)
@@ -193,8 +193,8 @@
 /* ==========================================================================
  */
 // Physical and safety limits
-#define MOTOR_MAX_POSITION_STEPS                                              \
-    (200 * 16 * 360) // 200 steps/rev * 16 microsteps * 360°
+#define MOTOR_MAX_POSITION_STEPS                                               \
+  (200 * 16 * 360) // 200 steps/rev * 16 microsteps * 360°
 #define MOTOR_MAX_SPEED_STEPS_PER_SEC 3200 // Maximum speed in steps/sec
 #define MOTOR_MAX_CURRENT_MA 1000          // Maximum current in milliamps
 // NOTE: MOTOR_CURRENT_MA defined above as 1000mA - using that value for normal
@@ -271,9 +271,8 @@
 // Status register and data bit masks (from L6470 datasheet)
 #define L6470_STATUS_MASK_16BIT 0xFFFF     // 16-bit status register mask
 #define L6470_POSITION_MASK_22BIT 0x3FFFFF // 22-bit position value mask
-#define L6470_DATA_MASK_24BIT                                                 \
-    0xFFFFFF                 // 24-bit data mask for 3-byte operations
-#define L6470_BYTE_MASK 0xFF // 8-bit byte mask for SPI operations
+#define L6470_DATA_MASK_24BIT 0xFFFFFF // 24-bit data mask for 3-byte operations
+#define L6470_BYTE_MASK 0xFF           // 8-bit byte mask for SPI operations
 #define L6470_STATUS_STUB_VALUE 0xDEAD // Mock status value for testing
 
 // Direction control bits (from L6470 datasheet)
@@ -290,8 +289,8 @@
 /* ==========================================================================
  */
 // Standard test patterns for HAL abstraction validation
-#define HAL_MOCK_TEST_PATTERN_BASE                                            \
-    0xA5 // Primary test pattern (alternating bits)
+#define HAL_MOCK_TEST_PATTERN_BASE                                             \
+  0xA5 // Primary test pattern (alternating bits)
 #define HAL_MOCK_TEST_PATTERN_ALT 0x5A  // Alternate test pattern (inverted)
 #define HAL_MOCK_TEST_PATTERN_INIT 0x00 // Initial test state pattern
 
@@ -354,24 +353,24 @@
 // machine implementation
 
 typedef enum {
-    MOTOR_STATE_UNINITIALIZED = 0, // Motor not initialized
-    MOTOR_STATE_IDLE,              // Motor stopped and ready
-    MOTOR_STATE_ACCELERATING,      // Motor accelerating to target speed
-    MOTOR_STATE_RUNNING,           // Motor running at constant speed
-    MOTOR_STATE_DECELERATING,      // Motor decelerating to stop
-    MOTOR_STATE_HOMING,            // Motor performing homing sequence
-    MOTOR_STATE_FAULT,             // Motor in fault state
-    MOTOR_STATE_EMERGENCY_STOP,    // Emergency stop activated
-    MOTOR_STATE_COUNT              // Number of states (for validation)
+  MOTOR_STATE_UNINITIALIZED = 0, // Motor not initialized
+  MOTOR_STATE_IDLE,              // Motor stopped and ready
+  MOTOR_STATE_ACCELERATING,      // Motor accelerating to target speed
+  MOTOR_STATE_RUNNING,           // Motor running at constant speed
+  MOTOR_STATE_DECELERATING,      // Motor decelerating to stop
+  MOTOR_STATE_HOMING,            // Motor performing homing sequence
+  MOTOR_STATE_FAULT,             // Motor in fault state
+  MOTOR_STATE_EMERGENCY_STOP,    // Emergency stop activated
+  MOTOR_STATE_COUNT              // Number of states (for validation)
 } MotorState_t;
 
 typedef enum {
-    MOTOR_MODE_OPEN_LOOP = 0,    // Open-loop stepper control
-    MOTOR_MODE_CLOSED_LOOP,      // Closed-loop with encoder feedback
-    MOTOR_MODE_TORQUE_CONTROL,   // Torque control mode
-    MOTOR_MODE_SPEED_CONTROL,    // Speed control mode
-    MOTOR_MODE_POSITION_CONTROL, // Position control mode
-    MOTOR_MODE_COUNT             // Number of modes
+  MOTOR_MODE_OPEN_LOOP = 0,    // Open-loop stepper control
+  MOTOR_MODE_CLOSED_LOOP,      // Closed-loop with encoder feedback
+  MOTOR_MODE_TORQUE_CONTROL,   // Torque control mode
+  MOTOR_MODE_SPEED_CONTROL,    // Speed control mode
+  MOTOR_MODE_POSITION_CONTROL, // Position control mode
+  MOTOR_MODE_COUNT             // Number of modes
 } MotorControlMode_t;
 
 /* ==========================================================================
@@ -417,10 +416,10 @@ typedef enum {
 // ============================================================================
 
 // L6470 Speed Calculation Constants - keeping only one set
-#define L6470_SPEED_SCALE_FACTOR_HEX                                          \
-    0x100 // 256 decimal - speed calculation scaling factor
-#define L6470_SPEED_CALC_DIVISOR                                              \
-    0x3FF // 1023 decimal - speed calculation divisor
+#define L6470_SPEED_SCALE_FACTOR_HEX                                           \
+  0x100 // 256 decimal - speed calculation scaling factor
+#define L6470_SPEED_CALC_DIVISOR                                               \
+  0x3FF // 1023 decimal - speed calculation divisor
 // Note: L6470_SPEED_SCALE_FACTOR and L6470_MAX_SPEED_VALUE already defined
 // above
 

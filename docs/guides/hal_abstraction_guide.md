@@ -1,3 +1,4 @@
+# Documentation Owner: GitHub Copilot (auto-assigned)
 # HAL Abstraction Layer Guide
 
 ## Overview

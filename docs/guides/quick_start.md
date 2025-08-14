@@ -1,3 +1,4 @@
+# Documentation Owner: GitHub Copilot (auto-assigned)
 # Quick Start Guide - ARM_CM7 Production System
 
 ## Overview

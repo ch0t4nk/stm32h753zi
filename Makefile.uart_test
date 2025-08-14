@@ -1,0 +1,123 @@
+# Simple Makefile for STM32H753ZI UART test
+# This builds a minimal firmware for hardware validation
+
+# Target
+TARGET = uart_test
+
+# Tools
+PREFIX = arm-none-eabi-
+CC = $(PREFIX)gcc
+OBJCOPY = $(PREFIX)objcopy
+SIZE = $(PREFIX)size
+
+# MCU Configuration
+MCU = -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=hard
+
+# Directories
+BUILD_DIR = build_uart_test
+SRC_DIR = .
+DRIVERS_DIR = drivers/STM32H7xx_HAL_Driver
+CMSIS_DIR = drivers/CMSIS
+CORE_DIR = Core
+
+# Include paths
+INCLUDES = \
+    -I$(SRC_DIR)/src/config \
+    -I$(SRC_DIR)/src/application \
+    -I$(DRIVERS_DIR)/Inc \
+    -I$(CMSIS_DIR)/Device/ST/STM32H7xx/Include \
+    -I$(CMSIS_DIR)/Include \
+    -I$(CORE_DIR)/Inc
+
+# Source files
+SOURCES = \
+    src/application/uart_test.c \
+    $(CORE_DIR)/Src/system_stm32h7xx.c \
+    $(CORE_DIR)/Src/stm32h7xx_hal_msp.c \
+    $(DRIVERS_DIR)/Src/stm32h7xx_hal.c \
+    $(DRIVERS_DIR)/Src/stm32h7xx_hal_rcc.c \
+    $(DRIVERS_DIR)/Src/stm32h7xx_hal_rcc_ex.c \
+    $(DRIVERS_DIR)/Src/stm32h7xx_hal_cortex.c \
+    $(DRIVERS_DIR)/Src/stm32h7xx_hal_gpio.c \
+    $(DRIVERS_DIR)/Src/stm32h7xx_hal_uart.c \
+    $(DRIVERS_DIR)/Src/stm32h7xx_hal_uart_ex.c \
+    $(DRIVERS_DIR)/Src/stm32h7xx_hal_dma.c \
+    $(DRIVERS_DIR)/Src/stm32h7xx_hal_dma_ex.c \
+    $(DRIVERS_DIR)/Src/stm32h7xx_hal_mdma.c \
+    $(DRIVERS_DIR)/Src/stm32h7xx_hal_pwr.c \
+    $(DRIVERS_DIR)/Src/stm32h7xx_hal_pwr_ex.c
+
+# Startup file
+STARTUP = startup_stm32h753xx.s
+
+# Linker script
+LDSCRIPT = STM32H753XX_FLASH.ld
+
+# Defines
+DEFINES = \
+    -DSTM32H753xx \
+    -DUSE_HAL_DRIVER \
+    -DARM_MATH_CM7
+
+# Compiler flags
+CFLAGS = $(MCU) $(DEFINES) $(INCLUDES) -Wall -Wextra -Og -g3 -ggdb \
+         -fdata-sections -ffunction-sections -MMD -MP
+
+# Linker flags
+LDFLAGS = $(MCU) -specs=nano.specs -specs=nosys.specs -T$(LDSCRIPT) \
+          -Wl,--gc-sections -Wl,--print-memory-usage
+
+# Object files
+OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(SOURCES:.c=.o)))
+OBJECTS += $(BUILD_DIR)/$(notdir $(STARTUP:.s=.o))
+
+# Default target
+all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
+
+# Create build directory
+$(BUILD_DIR):
+	mkdir -p $@
+
+# Compile C sources
+$(BUILD_DIR)/%.o: src/application/%.c | $(BUILD_DIR)
+	$(CC) -c $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/%.o: $(CORE_DIR)/Src/%.c | $(BUILD_DIR)
+	$(CC) -c $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/%.o: $(DRIVERS_DIR)/Src/%.c | $(BUILD_DIR)
+	$(CC) -c $(CFLAGS) $< -o $@
+
+# Compile startup file
+$(BUILD_DIR)/%.o: %.s | $(BUILD_DIR)
+	$(CC) -c $(CFLAGS) $< -o $@
+
+# Link
+$(BUILD_DIR)/$(TARGET).elf: $(OBJECTS)
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
+	$(SIZE) $@
+
+# Generate hex file
+$(BUILD_DIR)/$(TARGET).hex: $(BUILD_DIR)/$(TARGET).elf
+	$(OBJCOPY) -O ihex $< $@
+
+# Generate binary file
+$(BUILD_DIR)/$(TARGET).bin: $(BUILD_DIR)/$(TARGET).elf
+	$(OBJCOPY) -O binary -S $< $@
+
+# Flash the firmware
+flash: $(BUILD_DIR)/$(TARGET).elf
+	openocd -f interface/stlink.cfg -f target/stm32h7x.cfg \
+		-c "program $(BUILD_DIR)/$(TARGET).elf verify reset exit"
+
+# Clean
+clean:
+	rm -rf $(BUILD_DIR)
+
+# Serial monitor using screen (Linux)
+monitor:
+	@echo "Starting serial monitor on /dev/ttyACM0 at 115200 baud"
+	@echo "Press Ctrl+A then K to exit"
+	screen /dev/ttyACM0 115200
+
+.PHONY: all clean flash monitor

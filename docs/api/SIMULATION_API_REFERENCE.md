@@ -615,7 +615,7 @@ for (int i = 0; i < 100; i++) {
 ```
 
 ## Related Documentation
-- [Simulation Framework Guide](../guides/SIMULATION_FRAMEWORK_GUIDE.md)
+- [Simulation Framework Guide](../archives/guides/SIMULATION_FRAMEWORK_GUIDE.md) *(archived)*
 - [Simulation Testing Workflows](../guides/SIMULATION_TESTING_WORKFLOWS.md)
 - [HAL Abstraction Guide](../guides/hal_abstraction_guide.md)
 - [L6470 Driver API](l6470_driver_api.md)

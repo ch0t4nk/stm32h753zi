@@ -97,26 +97,26 @@
  * @brief AS5600 device handle structure
  */
 typedef struct {
-    uint8_t encoder_id;      // Encoder ID (0 or 1)
-    I2C_HandleTypeDef *hi2c; // I2C handle from SSOT config
-    uint8_t i2c_address;     // Device I2C address
+  uint8_t encoder_id;      // Encoder ID (0 or 1)
+  I2C_HandleTypeDef *hi2c; // I2C handle from SSOT config
+  uint8_t i2c_address;     // Device I2C address
 
-    // MCSDK Integration
+  // MCSDK Integration
 #if CLOSED_LOOP_FEEDBACK
-    void *feedback_handle; // Feedback controller handle
+  void *feedback_handle; // Feedback controller handle
 #endif
 
-    // Current state
-    uint16_t raw_angle;      // Raw angle reading (0-4095)
-    uint16_t filtered_angle; // Filtered angle reading
-    float angle_degrees;     // Angle in degrees (0-360)
-    uint8_t status;          // Device status
-    bool magnet_detected;    // Magnet detection flag
-    bool initialized;        // Initialization flag
+  // Current state
+  uint16_t raw_angle;      // Raw angle reading (0-4095)
+  uint16_t filtered_angle; // Filtered angle reading
+  float angle_degrees;     // Angle in degrees (0-360)
+  uint8_t status;          // Device status
+  bool magnet_detected;    // Magnet detection flag
+  bool initialized;        // Initialization flag
 
-    // Calibration data
-    uint16_t zero_position; // Zero position offset
-    uint16_t max_position;  // Maximum position limit
+  // Calibration data
+  uint16_t zero_position; // Zero position offset
+  uint16_t max_position;  // Maximum position limit
 
 } AS5600_HandleTypeDef;
 
@@ -155,8 +155,8 @@ HAL_StatusTypeDef AS5600_DeviceInit(AS5600_HandleTypeDef *handle,
  * @param value Pointer to store read value
  * @return HAL_StatusTypeDef HAL_OK if successful
  */
-HAL_StatusTypeDef AS5600_ReadRegister(AS5600_HandleTypeDef *handle,
-                                      uint8_t reg, uint8_t *value);
+HAL_StatusTypeDef AS5600_ReadRegister(AS5600_HandleTypeDef *handle, uint8_t reg,
+                                      uint8_t *value);
 
 /**
  * @brief Write register to AS5600
@@ -341,8 +341,7 @@ bool as5600_is_initialized(void);
  * @param error_count Pointer to store error count
  * @return SystemError_t System error code
  */
-SystemError_t as5600_get_error_count(uint8_t encoder_id,
-                                     uint32_t *error_count);
+SystemError_t as5600_get_error_count(uint8_t encoder_id, uint32_t *error_count);
 
 /**
  * @brief Set encoder zero position reference

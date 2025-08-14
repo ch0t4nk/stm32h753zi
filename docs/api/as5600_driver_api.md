@@ -1220,4 +1220,4 @@ void calibration_example(void) {
 - [Hardware Simulation API](hardware_simulation_api.md)
 - [L6470 Driver API](l6470_driver_api.md)
 - [HAL Abstraction Guide](../guides/hal_abstraction_guide.md)
-- [Testing Framework Guide](../guides/testing_framework_guide.md)
+- [Testing Framework Guide](../archives/guides/testing_framework_guide.md) *(archived)*

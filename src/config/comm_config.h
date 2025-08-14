@@ -152,7 +152,8 @@
 #define ETH_NETMASK "255.255.255.0"
 #define ETH_GATEWAY "192.168.1.1"
 #define ETH_DNS_SERVER "8.8.8.8"
-#define ETH_MAC_ADDR {0x02, 0x00, 0x00, 0x12, 0x34, 0x56}
+#define ETH_MAC_ADDR                                                           \
+  { 0x02, 0x00, 0x00, 0x12, 0x34, 0x56 }
 
 // TCP Server Configuration
 #define TCP_SERVER_PORT 8000
@@ -247,8 +248,8 @@
 // details
 
 // JSON Message Templates (for UART/TCP)
-#define JSON_MOTOR_STATUS_FMT                                                 \
-    "{\"motor\":%d,\"angle\":%.2f,\"speed\":%.2f,\"status\":%d}"
+#define JSON_MOTOR_STATUS_FMT                                                  \
+  "{\"motor\":%d,\"angle\":%.2f,\"speed\":%.2f,\"status\":%d}"
 #define JSON_COMMAND_FMT "{\"cmd\":\"%s\",\"motor\":%d,\"value\":%.2f}"
 #define JSON_ERROR_FMT "{\"error\":%d,\"msg\":\"%s\",\"timestamp\":%lu}"
 
