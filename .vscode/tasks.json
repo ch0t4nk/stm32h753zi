@@ -389,11 +389,31 @@
     {
       "label": "STATUS: Quick Update",
       "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python",
-      "args": [
-        "scripts/auto_update_status.py",
-        "--verbose"
-      ],
+      "windows": {
+        "command": "powershell",
+        "args": [
+          "-ExecutionPolicy", "Bypass",
+          "-File", "scripts\\run_python.ps1",
+          "scripts\\auto_update_status.py",
+          "--verbose"
+        ]
+      },
+      "linux": {
+        "command": "bash",
+        "args": [
+          "scripts/run_python.sh",
+          "scripts/auto_update_status.py",
+          "--verbose"
+        ]
+      },
+      "osx": {
+        "command": "bash",
+        "args": [
+          "scripts/run_python.sh",
+          "scripts/auto_update_status.py",
+          "--verbose"
+        ]
+      },
       "group": "build",
       "options": {
         "cwd": "${workspaceFolder}"
@@ -411,13 +431,37 @@
     {
       "label": "STATUS: Build + Update",
       "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python",
-      "args": [
-        "scripts/auto_update_status.py",
-        "--source",
-        "build",
-        "--verbose"
-      ],
+      "windows": {
+        "command": "powershell",
+        "args": [
+          "-Command",
+          ".\\scripts\\run_python.ps1",
+          "scripts\\auto_update_status.py",
+          "--source",
+          "build",
+          "--verbose"
+        ]
+      },
+      "linux": {
+        "command": "bash",
+        "args": [
+          "./scripts/run_python.sh",
+          "scripts/auto_update_status.py",
+          "--source",
+          "build",
+          "--verbose"
+        ]
+      },
+      "osx": {
+        "command": "bash",
+        "args": [
+          "./scripts/run_python.sh",
+          "scripts/auto_update_status.py",
+          "--source",
+          "build",
+          "--verbose"
+        ]
+      },
       "group": "build",
       "dependsOn": "Build (CMake)",
       "dependsOrder": "sequence",

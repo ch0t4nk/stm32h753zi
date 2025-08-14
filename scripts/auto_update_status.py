@@ -46,7 +46,7 @@ class StatusUpdater:
                     workspace_root = str(current_path)
                     break
                 current_path = current_path.parent
-        
+
         self.workspace = Path(workspace_root).resolve()
         self.status_file = self.workspace / "STATUS.md"
         self.verbose = verbose

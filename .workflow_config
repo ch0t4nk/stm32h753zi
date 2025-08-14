@@ -1,0 +1,17 @@
+{
+  "validate_venv": true,
+  "validate_python": true,
+  "detect_platform": true,
+  "validate_build_env": false,
+  "load_functions": true,
+  "create_aliases": true,
+  "auto_activate_venv": true,
+  "check_dependencies": false,
+  "validate_git_hooks": false,
+  "validate_ssot": false,
+  "verbose_logging": false,
+  "continue_on_error": true,
+  "show_timing": false,
+  "validation_timeout_ms": 500,
+  "mode": "standard"
+}

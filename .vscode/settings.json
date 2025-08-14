@@ -71,13 +71,14 @@
             "svdFile": "${workspaceFolder}/00_reference/ST_Assets/stm32h7-svd_2.8/STM32H753.svd"
         }
     ],
-    // Python configuration for this workspace
+    // Python configuration for this workspace (Cross-platform compatible)
     "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
     "python.terminal.activateEnvironment": true,
     "python.terminal.activateEnvInCurrentTerminal": true,
     "python.analysis.extraPaths": [
         "${workspaceFolder}/scripts",
-        "${workspaceFolder}/.venv/lib/python3.10/site-packages"
+        "${workspaceFolder}/.venv/lib/python3.10/site-packages",
+        "${workspaceFolder}/.venv/Lib/site-packages"
     ],
     "python.envFile": "${workspaceFolder}/.env",
     // Doxygen configuration for this workspace
@@ -91,13 +92,23 @@
     "typescript.surveys.enabled": false,
     "extensions.autoCheckUpdates": false,
     "extensions.autoUpdate": false,
-    // Terminal configuration for this workspace
+    // Terminal configuration for this workspace (Cross-platform compatible)
     "terminal.integrated.cwd": "${workspaceFolder}",
     "terminal.integrated.env.linux": {
         "VIRTUAL_ENV": "${workspaceFolder}/.venv",
         "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
     },
+    "terminal.integrated.env.windows": {
+        "VIRTUAL_ENV": "${workspaceFolder}/.venv",
+        "PATH": "${workspaceFolder}/.venv/Scripts;${workspaceFolder}/.venv/bin;${env:PATH}"
+    },
+    "terminal.integrated.env.osx": {
+        "VIRTUAL_ENV": "${workspaceFolder}/.venv",
+        "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+    },
     "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.defaultProfile.osx": "zsh",
     "terminal.integrated.profiles.linux": {
         "bash": {
             "path": "/bin/bash",
@@ -120,6 +131,57 @@
             "path": "/bin/sh",
             "args": [],
             "icon": "terminal"
+        }
+    },
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell",
+            "args": [
+                "-NoExit",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}/.vscode/powershell_profile.ps1"
+            ]
+        },
+        "Command Prompt": {
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe",
+                "${env:windir}\\System32\\cmd.exe"
+            ],
+            "args": [],
+            "icon": "terminal-cmd"
+        },
+        "Git Bash": {
+            "source": "Git Bash",
+            "icon": "terminal-bash"
+        }
+    },
+    "terminal.integrated.profiles.osx": {
+        "bash": {
+            "path": "bash",
+            "args": [
+                "--init-file",
+                "${workspaceFolder}/.vscode/bash_profile.sh"
+            ],
+            "icon": "terminal-bash"
+        },
+        "zsh": {
+            "path": "zsh",
+            "args": [
+                "-l"
+            ],
+            "icon": "terminal"
+        },
+        "PowerShell": {
+            "path": "/usr/local/bin/pwsh",
+            "args": [
+                "-NoExit",
+                "-File",
+                "${workspaceFolder}/.vscode/powershell_profile.ps1"
+            ],
+            "icon": "terminal-powershell"
         }
     },
     // Shell integration configuration for command detection
