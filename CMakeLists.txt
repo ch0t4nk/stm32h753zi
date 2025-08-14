@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.15)
 
+# Set CMake policies to suppress warnings
+if(POLICY CMP0109)
+    cmake_policy(SET CMP0109 NEW)  # find_program() requires permission to execute but not to read
+endif()
+
 # STM32H753ZI Motor Control Project
 project(stm32h753_ihm02a1
     VERSION 1.0.0
@@ -55,11 +60,21 @@ option(BUILD_DOCUMENTATION "Build documentation with Doxygen" OFF)
 
 # Find Python3 early for STATUS.md automation and other tools
 # Prefer virtual environment Python for consistency
-find_program(PYTHON3_EXE NAMES 
-    "${CMAKE_SOURCE_DIR}/.venv/bin/python3"
-    "${CMAKE_SOURCE_DIR}/.venv/bin/python"
-    "python3"
-)
+if(WIN32)
+    find_program(PYTHON3_EXE NAMES 
+        "${CMAKE_SOURCE_DIR}/.venv/Scripts/python.exe"
+        "python.exe"
+        "python3.exe"
+        "python"
+    )
+else()
+    find_program(PYTHON3_EXE NAMES 
+        "${CMAKE_SOURCE_DIR}/.venv/bin/python3"
+        "${CMAKE_SOURCE_DIR}/.venv/bin/python"
+        "python3"
+        "python"
+    )
+endif()
 if(PYTHON3_EXE)
     message(STATUS "python3 found for automation: ${PYTHON3_EXE}")
 else()
@@ -188,7 +203,7 @@ add_executable(${PROJECT_NAME} ${SOURCES} ${STARTUP_FILE})
 
 # Set target properties
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    LINK_FLAGS "-Wl,--gc-sections -Wl,--print-memory-usage -Wl,-Map=${CMAKE_BINARY_DIR}/${PROJECT_NAME}.map -lc -lm -lnosys"
+    LINK_FLAGS "-Wl,--gc-sections -Wl,--print-memory-usage -Wl,-Map=\"${CMAKE_BINARY_DIR}/${PROJECT_NAME}.map\" -lc -lm -lnosys"
 )
 
 # Link libraries
@@ -212,7 +227,7 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 # STATUS.md automation - Phase 2: Post-build status update
 if(PYTHON3_EXE)
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/auto_update_status.py --source build
+        COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/auto_update_status.py --source build --workspace ${CMAKE_SOURCE_DIR}
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         COMMENT "Updating STATUS.md with build metrics"
         VERBATIM

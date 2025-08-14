@@ -26,7 +26,25 @@
     {
       "label": "Build (CMake)",
       "type": "shell",
-      "command": "./scripts/fix_cmake.sh",
+      "windows": {
+        "command": "powershell",
+        "args": [
+          "-Command",
+          ".\\scripts\\fix_cmake.ps1"
+        ]
+      },
+      "linux": {
+        "command": "bash",
+        "args": [
+          "./scripts/fix_cmake.sh"
+        ]
+      },
+      "osx": {
+        "command": "bash",
+        "args": [
+          "./scripts/fix_cmake.sh"
+        ]
+      },
       "group": {
         "kind": "build",
         "isDefault": true
@@ -120,7 +138,18 @@
     {
       "label": "Validate SSOT",
       "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python scripts/validate_ssot.py",
+      "windows": {
+        "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+        "args": ["scripts/validate_ssot.py"]
+      },
+      "linux": {
+        "command": "${workspaceFolder}/.venv/bin/python",
+        "args": ["scripts/validate_ssot.py"]
+      },
+      "osx": {
+        "command": "${workspaceFolder}/.venv/bin/python", 
+        "args": ["scripts/validate_ssot.py"]
+      },
       "group": "test",
       "options": {
         "cwd": "${workspaceFolder}"
@@ -135,7 +164,25 @@
     {
       "label": "Validate Build Environment",
       "type": "shell",
-      "command": "./scripts/validate_build_env.sh",
+      "windows": {
+        "command": "powershell",
+        "args": [
+          "-Command",
+          "Write-Host 'Validating Windows build environment...'; if (Get-Command arm-none-eabi-gcc -ErrorAction SilentlyContinue) { Write-Host '✅ ARM GCC found' } else { Write-Host '⚠️ ARM GCC not found in PATH' }; if (Test-Path '.venv\\Scripts\\Activate.ps1') { Write-Host '✅ Virtual environment found' } else { Write-Host '❌ Virtual environment missing' }"
+        ]
+      },
+      "linux": {
+        "command": "bash",
+        "args": [
+          "./scripts/validate_build_env.sh"
+        ]
+      },
+      "osx": {
+        "command": "bash",
+        "args": [
+          "./scripts/validate_build_env.sh"
+        ]
+      },
       "group": "test",
       "options": {
         "cwd": "${workspaceFolder}",
@@ -169,7 +216,18 @@
     {
       "label": "Update STATUS.md",
       "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python scripts/auto_update_status.py --verbose",
+      "windows": {
+        "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+        "args": ["scripts/auto_update_status.py", "--verbose"]
+      },
+      "linux": {
+        "command": "${workspaceFolder}/.venv/bin/python",
+        "args": ["scripts/auto_update_status.py", "--verbose"]
+      },
+      "osx": {
+        "command": "${workspaceFolder}/.venv/bin/python",
+        "args": ["scripts/auto_update_status.py", "--verbose"]
+      },
       "group": "build",
       "options": {
         "cwd": "${workspaceFolder}"
@@ -185,7 +243,18 @@
     {
       "label": "Update STATUS.md (Build Triggered)",
       "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python scripts/auto_update_status.py --source build --verbose",
+      "windows": {
+        "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+        "args": ["scripts/auto_update_status.py", "--source", "build", "--verbose"]
+      },
+      "linux": {
+        "command": "${workspaceFolder}/.venv/bin/python",
+        "args": ["scripts/auto_update_status.py", "--source", "build", "--verbose"]
+      },
+      "osx": {
+        "command": "${workspaceFolder}/.venv/bin/python",
+        "args": ["scripts/auto_update_status.py", "--source", "build", "--verbose"]
+      },
       "group": "build",
       "options": {
         "cwd": "${workspaceFolder}"
@@ -201,7 +270,18 @@
     {
       "label": "Update STATUS.md (Preview)",
       "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python scripts/auto_update_status.py --dry-run --verbose",
+      "windows": {
+        "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+        "args": ["scripts/auto_update_status.py", "--dry-run", "--verbose"]
+      },
+      "linux": {
+        "command": "${workspaceFolder}/.venv/bin/python",
+        "args": ["scripts/auto_update_status.py", "--dry-run", "--verbose"]
+      },
+      "osx": {
+        "command": "${workspaceFolder}/.venv/bin/python",
+        "args": ["scripts/auto_update_status.py", "--dry-run", "--verbose"]
+      },
       "group": "test",
       "options": {
         "cwd": "${workspaceFolder}"
@@ -403,10 +483,28 @@
     {
       "label": "🚀 WORKFLOW: Before Work",
       "type": "shell",
-      "command": "./scripts/workflow.sh",
-      "args": [
-        "before"
-      ],
+      "windows": {
+        "command": "powershell",
+        "args": [
+          "-Command",
+          ".\\scripts\\workflow.ps1",
+          "before"
+        ]
+      },
+      "linux": {
+        "command": "bash",
+        "args": [
+          "./scripts/workflow.sh",
+          "before"
+        ]
+      },
+      "osx": {
+        "command": "bash", 
+        "args": [
+          "./scripts/workflow.sh",
+          "before"
+        ]
+      },
       "group": "build",
       "options": {
         "cwd": "${workspaceFolder}",
@@ -428,10 +526,28 @@
     {
       "label": "🔄 WORKFLOW: During Work (Build + Update)",
       "type": "shell",
-      "command": "./scripts/workflow.sh",
-      "args": [
-        "during"
-      ],
+      "windows": {
+        "command": "powershell",
+        "args": [
+          "-Command",
+          ".\\scripts\\workflow.ps1",
+          "during"
+        ]
+      },
+      "linux": {
+        "command": "bash",
+        "args": [
+          "./scripts/workflow.sh",
+          "during"
+        ]
+      },
+      "osx": {
+        "command": "bash",
+        "args": [
+          "./scripts/workflow.sh", 
+          "during"
+        ]
+      },
       "group": {
         "kind": "build",
         "isDefault": false
@@ -458,10 +574,28 @@
     {
       "label": "✅ WORKFLOW: After Work (Prepare Commit)",
       "type": "shell",
-      "command": "./scripts/workflow.sh",
-      "args": [
-        "after"
-      ],
+      "windows": {
+        "command": "powershell",
+        "args": [
+          "-Command",
+          ".\\scripts\\workflow.ps1",
+          "after"
+        ]
+      },
+      "linux": {
+        "command": "bash",
+        "args": [
+          "./scripts/workflow.sh",
+          "after"
+        ]
+      },
+      "osx": {
+        "command": "bash",
+        "args": [
+          "./scripts/workflow.sh",
+          "after"
+        ]
+      },
       "group": "build",
       "options": {
         "cwd": "${workspaceFolder}",
@@ -631,6 +765,56 @@
         "scripts/semantic_search.py"
       ],
       "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🐧 WSL2: Build Host Tests",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        ".\\scripts\\build_wsl2_host_tests.ps1"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🏃 WSL2: Quick Test Run",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        ".\\scripts\\wsl2_quick_test.ps1"
+      ],
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
       "options": {
         "cwd": "${workspaceFolder}"
       },

@@ -5,6 +5,18 @@
 
 set -e  # Exit on error
 
+# 0. OS Detection - Auto-redirect to PowerShell version if on Windows
+if [[ "$OSTYPE" == "msys"* ]] || [[ "$OSTYPE" == "cygwin"* ]] || [[ -n "$WINDIR" ]] || [[ -n "$SYSTEMROOT" ]]; then
+    echo "🪟 Windows environment detected - redirecting to PowerShell version..."
+    if [ -f "scripts/fix_cmake.ps1" ]; then
+        powershell.exe -ExecutionPolicy Bypass -File "scripts/fix_cmake.ps1"
+        exit $?
+    else
+        echo "❌ PowerShell version not found at scripts/fix_cmake.ps1"
+        echo "💡 Running Linux version on Windows (may have path issues)"
+    fi
+fi
+
 echo "🔧 STM32H753ZI CMake Quick Fix"
 echo "=============================="
 

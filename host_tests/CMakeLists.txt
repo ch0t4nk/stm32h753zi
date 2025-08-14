@@ -10,9 +10,17 @@ project(stm32h753_host_tests LANGUAGES C)
 set(CMAKE_BUILD_TYPE Debug)
 
 # Host-specific compiler flags
-set(CMAKE_C_FLAGS 
-    "-Wall -Wextra -Wpedantic -g -O0 -DSIMULATION_ENABLED=1 -DTEST_MODE=1 -DHOST_TESTING=1 -DUNITY_TESTING=1 -DSTM32H753xx -DUSE_HAL_DRIVER -DHOST_TEST_BUILD=1"
-)
+if(MSVC)
+    # Visual Studio compiler flags
+    set(CMAKE_C_FLAGS 
+        "/W4 /Od /Zi /DSIMULATION_ENABLED=1 /DTEST_MODE=1 /DHOST_TESTING=1 /DUNITY_TESTING=1 /DSTM32H753xx /DUSE_HAL_DRIVER /DHOST_TEST_BUILD=1"
+    )
+else()
+    # GCC compiler flags  
+    set(CMAKE_C_FLAGS 
+        "-Wall -Wextra -Wpedantic -g -O0 -DSIMULATION_ENABLED=1 -DTEST_MODE=1 -DHOST_TESTING=1 -DUNITY_TESTING=1 -DSTM32H753xx -DUSE_HAL_DRIVER -DHOST_TEST_BUILD=1"
+    )
+endif()
 
 # Use local Unity testing framework
 set(UNITY_SOURCE_DIR ${CMAKE_SOURCE_DIR}/../external/unity)
@@ -51,11 +59,17 @@ function(add_host_test test_name test_source)
         target_link_libraries(${test_name} unity_host)
         
         # Host compilation flags (no ARM cross-compilation)
-        target_compile_options(${test_name} PRIVATE
-            -Wall -Wextra -Wpedantic -Wno-unused-parameter
-            -fdata-sections -ffunction-sections
-            -Og -g3 -ggdb -std=gnu11
-        )
+        if(MSVC)
+            target_compile_options(${test_name} PRIVATE
+                /W4 /Od /Zi
+            )
+        else()
+            target_compile_options(${test_name} PRIVATE
+                -Wall -Wextra -Wpedantic -Wno-unused-parameter
+                -fdata-sections -ffunction-sections
+                -Og -g3 -ggdb -std=gnu11
+            )
+        endif()
         
         # Host testing definitions
         target_compile_definitions(${test_name} PRIVATE
@@ -103,6 +117,9 @@ add_host_test(test_safety_systems_hal_abstracted_host
     ${TEST_MOCKS_DIR}/mock_hal_abstraction.c
     ${TEST_MOCKS_DIR}/mock_drivers.c
     ${CMAKE_SOURCE_DIR}/../src/safety/emergency_stop_abstracted.c
+    ${CMAKE_SOURCE_DIR}/../src/safety/safety_system.c
+    ${CMAKE_SOURCE_DIR}/../src/safety/fault_monitor.c
+    ${CMAKE_SOURCE_DIR}/../src/safety/watchdog_manager.c
 )
 
 # Enable CTest framework for host testing

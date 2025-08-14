@@ -21,6 +21,7 @@ Date: August 5, 2025
 """
 
 import argparse
+import os
 import re
 import subprocess
 import sys
@@ -33,8 +34,19 @@ class StatusUpdater:
     """Core STATUS.md automation engine"""
 
     def __init__(
-        self, workspace_root: str = "/workspaces/code", verbose: bool = False
+        self, workspace_root: str | None = None, verbose: bool = False
     ):
+        if workspace_root is None:
+            # Auto-detect workspace root
+            workspace_root = os.getcwd()
+            # Look for STATUS.md in current directory or parent directories
+            current_path = Path(workspace_root).resolve()
+            while current_path.parent != current_path:
+                if (current_path / "STATUS.md").exists():
+                    workspace_root = str(current_path)
+                    break
+                current_path = current_path.parent
+        
         self.workspace = Path(workspace_root).resolve()
         self.status_file = self.workspace / "STATUS.md"
         self.verbose = verbose
@@ -573,8 +585,8 @@ Examples:
     )
     parser.add_argument(
         "--workspace",
-        default="/workspaces/code",
-        help="Workspace root directory",
+        default=None,
+        help="Workspace root directory (auto-detected if not specified)",
     )
 
     # Git hook specific arguments

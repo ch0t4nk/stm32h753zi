@@ -6,7 +6,12 @@
  *
  * This file provides minimal implementations of system calls required by
  * newlib C library for bare-metal embedded systems.
+ *
+ * NOTE: Using --specs=nosys.specs in linker, so these are disabled
+ * to avoid conflicts with libnosys implementations.
  */
+
+#if 0 // Disabled to use libnosys implementations
 
 #include <errno.h>
 #include <sys/stat.h>
@@ -141,3 +146,5 @@ int _kill(int pid, int sig) {
   errno = ENOSYS;
   return -1;
 }
+
+#endif // Disabled syscalls - using libnosys
