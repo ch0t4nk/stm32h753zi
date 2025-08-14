@@ -21,6 +21,61 @@
 
 **See `STATUS.md` for detailed completion status and deployment readiness.**
 
+## 🎯 Dual SSOT (Single Source of Truth) Architecture
+
+This project implements a **dual SSOT architecture** that separates firmware configuration from development environment management for optimal flexibility and maintainability:
+
+### 1. 🔧 Firmware SSOT (`src/config/`)
+**Purpose**: Controls STM32H753ZI hardware behavior and motor control parameters  
+**Scope**: Production firmware configuration, safety-critical settings, hardware abstraction  
+
+- **Hardware**: `src/config/hardware_config.h` - Pin assignments, peripheral mappings
+- **Communication**: `src/config/comm_config.h` - Protocol parameters, timing, addresses  
+- **Motor Control**: `src/config/motor_config.h` - L6470 settings, motion limits
+- **Safety Systems**: `src/config/safety_config.h` - Watchdog, fault thresholds
+- **Build Metadata**: `src/config/build_config.h` - Version, compilation flags
+- **Documentation**: `src/config/documentation_config.h` - Documentation paths, indexes
+
+### 2. ⚙️ Workflow SSOT (`src/config/workflow_config.h`)
+**Purpose**: Controls development environment complexity and validation behavior  
+**Scope**: Developer experience, cross-platform compatibility, validation depth control  
+
+**Four Preset Modes:**
+- **MINIMAL**: Fastest startup, minimal checks (CI/CD, experienced developers)
+- **STANDARD**: Balanced validation and performance (daily development)
+- **THOROUGH**: Full validation and convenience features (new developers, critical work)
+- **DEBUG**: Maximum verbosity and validation (troubleshooting, investigation)
+
+**Key Benefits:**
+- **Selective Complexity**: Enable/disable validation patterns individually
+- **Cross-Platform**: Identical behavior on Windows/Linux/macOS
+- **User-Adaptive**: New users get guidance, experts get speed
+- **Zero Breaking Changes**: All existing workflows continue to work
+
+**Mode Switching:**
+```powershell
+# PowerShell (Windows)
+python scripts/workflow_config.py mode minimal    # Fast mode for CI/CD
+python scripts/workflow_config.py mode standard   # Default development
+python scripts/workflow_config.py mode thorough   # Full guidance for complex work
+python scripts/workflow_config.py mode debug      # Maximum verbosity for troubleshooting
+
+# Use SSOT-aware execution for all Python operations
+scripts/run_python_configurable.ps1 scripts/auto_update_status.py --verbose
+```
+
+```bash
+# Bash (Linux/macOS)
+.venv/bin/python scripts/workflow_config.py mode standard
+.venv/bin/python scripts/auto_update_status.py --verbose
+```
+
+### SSOT Design Principles
+- **Firmware SSOT**: Never hardcode hardware constants - always reference centralized headers
+- **Workflow SSOT**: Development environment adapts to user experience level and task complexity
+- **Cross-Reference**: Both SSOT systems validate each other and maintain consistency
+- **Safety-First**: Firmware SSOT ensures fail-safe behavior, Workflow SSOT prevents configuration errors
+
 ## 🎯 **COMPLETE SYSTEM CAPABILITIES**
 
 **Motor Control Performance:**
@@ -39,13 +94,28 @@
 - ✅ **STM32H753ZI platform** with complete HAL abstraction layer
 - ✅ **Platform-independent design** enabling multi-target deployment
 - ✅ **Comprehensive simulation framework** for hardware-free testing
-- ✅ **SSOT configuration management** throughout entire system
+- ✅ **Dual SSOT configuration management** throughout entire system
 
 **Production Metrics:**
 - **Firmware Size**: 18.7KB (0.89% flash usage) - Highly optimized
 - **Memory Efficiency**: <5KB RAM usage (0.50% of available)
 - **Build System**: 149 files successfully compiled, production-ready
 - **Code Quality**: 5,647+ lines of validated production code
+
+## 🏗️ Architecture Overview
+
+### Primary Framework: X-CUBE-SPN2
+- **Core Architecture**: X-CUBE-SPN2 stepper motor expansion package
+- **Hardware Support**: Native X-NUCLEO-IHM02A1 shield with dual L6470 drivers
+- **Advantages**: Native stepper support, no algorithm limitations, perfect IHM02A1 integration
+
+### Enhancement Layer: MCSDK 6.4.1 (Selective)
+- **Advanced Algorithms**: Position control, motion profiling, safety systems
+- **Development Tools**: Motor Control Workbench, real-time monitoring
+- **Enhanced Features**: Dual sensor support, speed overshoot mitigation
+- **Integration**: Selective adoption of MCSDK capabilities within SPN2 framework
+
+For complete integration details, see: **[docs/MCSDK_INTEGRATION_PLAN.md](docs/MCSDK_INTEGRATION_PLAN.md)**
 
 ## 🤖 Production Development Infrastructure
 This project includes **enterprise-grade development automation**:
@@ -86,6 +156,15 @@ The project provides **streamlined automation** for enhanced productivity:
 # STATUS.md automatically updates after every commit via Git hooks
 git commit -m "feat: add new driver"  # ← Triggers automatic STATUS.md update
 
+# Dual SSOT Workflow Configuration Management
+# PowerShell (Windows)
+python scripts/workflow_config.py mode standard      # Set balanced development mode
+scripts/run_python_configurable.ps1 scripts/auto_update_status.py --verbose
+
+# Bash (Linux/macOS)  
+.venv/bin/python scripts/workflow_config.py mode thorough  # Full validation for complex work
+.venv/bin/python scripts/auto_update_status.py --verbose
+
 # Development monitoring and status management
 /workspaces/code/.venv/bin/python3 scripts/status_monitor.py --status-bar  # VS Code format
 /workspaces/code/.venv/bin/python3 scripts/status_monitor.py --json        # JSON format
@@ -96,8 +175,9 @@ cmake --build build --target update-status         # Manual STATUS.md update
 cmake --build build --target update-status-preview # Preview changes
 ./scripts/demo_status_integration.sh               # Complete workflow demo
 
-# Validation and testing
-python3 scripts/validate_ssot.py                   # SSOT compliance check
+# Validation and testing (both SSOT systems)
+python3 scripts/validate_ssot.py                   # Firmware SSOT compliance check
+python3 scripts/workflow_config.py validate        # Workflow SSOT validation
 python3 scripts/link_validator.py                  # Documentation links
 ```
 

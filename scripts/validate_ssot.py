@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 # SSOT Documentation Configuration - matches documentation_config.h
-WORKSPACE_ROOT = Path("/workspaces/code")
+WORKSPACE_ROOT = Path.cwd()  # Use current working directory instead of hardcoded path
 DOC_INDEXES_DIR = WORKSPACE_ROOT / "docs" / "indexes"
 DOC_INDEX_STM32H7_FULL = (
     WORKSPACE_ROOT / "docs" / "indexes" / "STM32H7_FULL_INDEX.json"
@@ -34,14 +34,24 @@ def find_hardcoded_values(file_path: str) -> List[Dict]:
     """Find potential hardcoded values that should be in SSOT."""
     hardcoded_patterns = [
         # Production-ready SSOT validation - focus only on critical violations
-        
         # Critical: Large hex addresses that should be in config (but exclude small register operations)
-        (r"(?<!0x[0-9A-Fa-f])0x[0-9A-Fa-f]{4,}(?![0-9A-Fa-f])(?!.*SSOT|.*config\.h|.*L6470_|.*AS5600_|.*CRC16_|.*MSG_|.*INVALID_|.*GPIO_PIN|.*HAL_)", "Large hex addresses should be in config headers"),
-        
-        # Critical: Communication parameters  
-        (r"[0-9]+\s*[Kk]?[Bb]ps(?!.*SSOT|.*config\.h)", "Baud rates should be in comm_config.h"),
-        (r"192\.168\.\d+\.\d+(?!.*SSOT|.*config\.h)", "IP addresses should be in comm_config.h"),
-        (r"[0-9]+\s*[Rr][Pp][Mm](?!.*SSOT|.*config\.h)", "Motor speeds should be in motor_config.h"),
+        (
+            r"(?<!0x[0-9A-Fa-f])0x[0-9A-Fa-f]{4,}(?![0-9A-Fa-f])(?!.*SSOT|.*config\.h|.*L6470_|.*AS5600_|.*CRC16_|.*MSG_|.*INVALID_|.*GPIO_PIN|.*HAL_)",
+            "Large hex addresses should be in config headers",
+        ),
+        # Critical: Communication parameters
+        (
+            r"[0-9]+\s*[Kk]?[Bb]ps(?!.*SSOT|.*config\.h)",
+            "Baud rates should be in comm_config.h",
+        ),
+        (
+            r"192\.168\.\d+\.\d+(?!.*SSOT|.*config\.h)",
+            "IP addresses should be in comm_config.h",
+        ),
+        (
+            r"[0-9]+\s*[Rr][Pp][Mm](?!.*SSOT|.*config\.h)",
+            "Motor speeds should be in motor_config.h",
+        ),
     ]
 
     violations = []
@@ -58,41 +68,73 @@ def find_hardcoded_values(file_path: str) -> List[Dict]:
                 # Skip lines that are defining the constants (in config files)
                 if "#define" in line and "config" in str(file_path).lower():
                     continue
-                
+
                 # Skip lines that properly use SSOT constants (comprehensive)
-                if any(const in line for const in ["MOTOR_", "L6470_", "AS5600_", "CRC16_", "INVALID_DEVICE_ID", "DEMO_TIMER_", "HARDWARE_", "COMM_", "SAFETY_"]):
+                if any(
+                    const in line
+                    for const in [
+                        "MOTOR_",
+                        "L6470_",
+                        "AS5600_",
+                        "CRC16_",
+                        "INVALID_DEVICE_ID",
+                        "DEMO_TIMER_",
+                        "HARDWARE_",
+                        "COMM_",
+                        "SAFETY_",
+                    ]
+                ):
                     continue
-                
+
                 # Skip lines with explicit type casting (showing proper SSOT usage)
-                if re.search(r'\([a-zA-Z_]+\)', line) and any(const in line for const in ["MOTOR_", "DEMO_", "HARDWARE_", "COMM_"]):
+                if re.search(r"\([a-zA-Z_]+\)", line) and any(
+                    const in line
+                    for const in ["MOTOR_", "DEMO_", "HARDWARE_", "COMM_"]
+                ):
                     continue
-                
+
                 # Skip STM32 HAL constants (these should NOT be moved to SSOT)
-                if any(hal_const in line for hal_const in ["GPIO_PIN_", "HAL_", "TIM", "EXTI", "NVIC_", "__HAL_"]):
+                if any(
+                    hal_const in line
+                    for hal_const in [
+                        "GPIO_PIN_",
+                        "HAL_",
+                        "TIM",
+                        "EXTI",
+                        "NVIC_",
+                        "__HAL_",
+                    ]
+                ):
                     continue
-                
+
                 # Skip mathematical constants and standard values
-                if any(std_val in line for std_val in ["0.0f", "1.0f", "0x00", "0xFF", "NULL"]):
+                if any(
+                    std_val in line
+                    for std_val in ["0.0f", "1.0f", "0x00", "0xFF", "NULL"]
+                ):
                     continue
-                
+
                 # PRODUCTION: Skip type casting - this is normal in embedded C
-                if re.search(r'\(uint\d+_t\)', line):
+                if re.search(r"\(uint\d+_t\)", line):
                     continue
-                
-                # PRODUCTION: Skip time values in comments - documentation is acceptable  
-                if '//' in line and re.search(r'\d+\s*ms|\d+ms', line):
+
+                # PRODUCTION: Skip time values in comments - documentation is acceptable
+                if "//" in line and re.search(r"\d+\s*ms|\d+ms", line):
                     continue
-                
+
                 # PRODUCTION: Skip period multipliers - these are mathematical ratios
-                if 'period_multiplier' in line and re.search(r'[0-9]+', line):
+                if "period_multiplier" in line and re.search(r"[0-9]+", line):
                     continue
-                
+
                 # PRODUCTION: Skip modulo operations - acceptable mathematical operations
-                if re.search(r'%\s*\d+', line):
+                if re.search(r"%\s*\d+", line):
                     continue
-                
+
                 # PRODUCTION: Skip small hex values in driver code (register operations)
-                if ('driver' in str(file_path).lower() or 'l6470' in str(file_path).lower()) and re.search(r'0x[0-9A-F]{1,3}(?![0-9A-F])', line):
+                if (
+                    "driver" in str(file_path).lower()
+                    or "l6470" in str(file_path).lower()
+                ) and re.search(r"0x[0-9A-F]{1,3}(?![0-9A-F])", line):
                     continue
 
                 for pattern, description in hardcoded_patterns:
@@ -280,7 +322,9 @@ def generate_report(
     doc_structure_errors: Optional[List[str]] = None,
     instruction_ref_errors: Optional[List[str]] = None,
     doc_path_errors: Optional[List[str]] = None,
+    workflow_errors: Optional[List[str]] = None,
     include_docs: bool = False,
+    include_workflow: bool = False,
 ) -> None:
     """Generate validation report."""
     print("🔍 SSOT Validation Report for STM32H753ZI Project")
@@ -331,6 +375,16 @@ def generate_report(
                 print(f"   📂 {error}")
         else:
             print("✅ No hardcoded documentation paths found")
+
+    # Workflow SSOT validation (if requested)
+    if include_workflow:
+        print("\n⚙️ Workflow SSOT Validation:")
+        if workflow_errors:
+            print(f"❌ Found {len(workflow_errors)} workflow SSOT issues:")
+            for error in workflow_errors:
+                print(f"   🔧 {error}")
+        else:
+            print("✅ Workflow SSOT configuration is valid")
 
     # Check for hardcoded values
     if violations:
@@ -394,11 +448,36 @@ def generate_report(
         + len(inconsistencies)
     )
 
+    # Add workflow errors to total if workflow validation was requested
+    if include_workflow and workflow_errors:
+        total_issues += len(workflow_errors)
+
+    # Add documentation errors to total if doc validation was requested
+    if include_docs:
+        if doc_structure_errors:
+            total_issues += len(doc_structure_errors)
+        if instruction_ref_errors:
+            total_issues += len(instruction_ref_errors)
+        if doc_path_errors:
+            total_issues += len(doc_path_errors)
+
     print("\n📊 Summary:")
     print(f"   • Missing SSOT files: {len(missing_files)}")
     print(f"   • Hardcoded value violations: {len(violations)}")
     print(f"   • Include dependency issues: {len(include_violations)}")
     print(f"   • Configuration inconsistencies: {len(inconsistencies)}")
+    if include_workflow:
+        workflow_count = len(workflow_errors) if workflow_errors else 0
+        print(f"   • Workflow SSOT issues: {workflow_count}")
+    if include_docs:
+        doc_count = 0
+        if doc_structure_errors:
+            doc_count += len(doc_structure_errors)
+        if instruction_ref_errors:
+            doc_count += len(instruction_ref_errors)
+        if doc_path_errors:
+            doc_count += len(doc_path_errors)
+        print(f"   • Documentation issues: {doc_count}")
     print(f"   • Total issues found: {total_issues}")
 
     if total_issues == 0:
@@ -506,7 +585,8 @@ def validate_documentation_paths() -> List[str]:
                 r'\.github/instructions/[^"\']+',
                 "Should use INSTRUCTION_* constants",
             ),  # noqa: E501
-            (r'00_reference/[^"\']+', "Should use REFERENCE_* constants"),
+            # NOTE: 00_reference is intentionally excluded - it's read-only reference material
+            # that should NOT be integrated into our SSOT system
         ]
 
         for script_file in script_files:
@@ -534,6 +614,70 @@ def validate_documentation_paths() -> List[str]:
     return errors
 
 
+def validate_workflow_ssot() -> List[str]:
+    """Validate workflow SSOT configuration consistency"""
+    errors = []
+
+    # Check if workflow_config.h exists
+    workflow_config_path = Path("src/config/workflow_config.h")
+    if not workflow_config_path.exists():
+        errors.append(
+            "Missing workflow_config.h - workflow SSOT header not found"
+        )
+        return errors
+
+    # Check if workflow_config.py script exists
+    workflow_script_path = Path("scripts/workflow_config.py")
+    if not workflow_script_path.exists():
+        errors.append(
+            "Missing scripts/workflow_config.py - workflow management script not found"
+        )
+        return errors
+
+    # Check if .workflow_config file can be read (basic validation)
+    try:
+        config_file = Path(".workflow_config")
+        if config_file.exists():
+            with open(config_file, "r") as f:
+                content = f.read().strip()
+                # Check if it's valid JSON format
+                import json
+
+                try:
+                    json.loads(content)
+                except json.JSONDecodeError as e:
+                    errors.append(
+                        f"Invalid JSON in .workflow_config: {str(e)}"
+                    )
+    except Exception as e:
+        errors.append(f"Cannot read workflow configuration: {str(e)}")
+
+    # Check for SSOT-aware scripts
+    ssot_aware_script = Path("scripts/run_python_configurable.ps1")
+    if not ssot_aware_script.exists():
+        errors.append("Missing SSOT-aware PowerShell wrapper script")
+
+    # Validate workflow_config.h has required constants
+    try:
+        with open(workflow_config_path, "r", encoding="utf-8") as f:
+            config_content = f.read()
+            required_constants = [
+                "WORKFLOW_MODE",
+                "WORKFLOW_VALIDATE_VENV",
+                "WORKFLOW_VERBOSE_LOGGING",
+                "WorkflowMode_t",
+            ]
+            for constant in required_constants:
+                if constant not in config_content:
+                    errors.append(
+                        f"Missing required constant in workflow_config.h: {constant}"
+                    )
+    except Exception as e:
+        errors.append(f"Cannot validate workflow_config.h: {str(e)}")
+
+    return errors
+
+
 def main():
     """Main validation function."""
     parser = argparse.ArgumentParser(description="Validate SSOT compliance")
@@ -541,6 +685,11 @@ def main():
         "--include-docs",
         action="store_true",
         help="Include documentation structure validation",
+    )
+    parser.add_argument(
+        "--include-workflow",
+        action="store_true",
+        help="Include workflow SSOT validation",
     )
     args = parser.parse_args()
 
@@ -562,7 +711,7 @@ def main():
             # Skip config files (they're allowed to have these values)
             if "config" in str(file_path):
                 continue
-            
+
             # Skip vendor CMSIS files (ST-provided templates)
             if "CMSIS/Device/ST/STM32H7xx" in str(file_path):
                 continue
@@ -570,13 +719,17 @@ def main():
                 continue
             if "/hal/" in str(file_path) and "/Templates/" in str(file_path):
                 continue
-                
+
             # Skip optimization files (these contain algorithm constants that are appropriate)
-            if "optimization" in str(file_path) or "efficiency" in str(file_path):
+            if "optimization" in str(file_path) or "efficiency" in str(
+                file_path
+            ):
                 continue
-                
+
             # Skip files that are primarily STM32 HAL integration (acceptable hardcoded values)
-            if "hal_abstraction" in str(file_path) and ("stm32h7" in str(file_path) or "mock" in str(file_path)):
+            if "hal_abstraction" in str(file_path) and (
+                "stm32h7" in str(file_path) or "mock" in str(file_path)
+            ):
                 continue
 
             violations = find_hardcoded_values(str(file_path))
@@ -599,6 +752,12 @@ def main():
         instruction_ref_errors = validate_instruction_references()
         doc_path_errors = validate_documentation_paths()
 
+    # Workflow SSOT validation (if requested)
+    workflow_errors = []
+    if args.include_workflow:
+        print("⚙️ Validating workflow SSOT configuration...")
+        workflow_errors = validate_workflow_ssot()
+
     # Generate enhanced report
     generate_report(
         all_violations,
@@ -608,7 +767,9 @@ def main():
         doc_structure_errors,
         instruction_ref_errors,
         doc_path_errors,
+        workflow_errors,
         args.include_docs,
+        args.include_workflow,
     )
 
     # Return exit code based on findings
@@ -620,6 +781,7 @@ def main():
         + len(doc_structure_errors)
         + len(instruction_ref_errors)
         + len(doc_path_errors)
+        + len(workflow_errors)
     )
     return 1 if total_issues > 0 else 0
 
