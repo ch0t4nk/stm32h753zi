@@ -70,12 +70,14 @@
 /* ==========================================================================
  */
 
-/** @brief Target system clock frequency (SYSCLK) - STM32H753ZI Revision V supports 480MHz */
+/** @brief Target system clock frequency (SYSCLK) - STM32H753ZI Revision V
+ * supports 480MHz */
 #define TARGET_SYSCLK_FREQUENCY_HZ                                            \
     480000000UL // 480 MHz (maximum for Revision V with VOS0)
 
 /** @brief Target AHB clock frequency (HCLK) */
-#define TARGET_HCLK_FREQUENCY_HZ 240000000UL // 240 MHz (SYSCLK/2 for optimal performance)
+#define TARGET_HCLK_FREQUENCY_HZ                                              \
+    240000000UL // 240 MHz (SYSCLK/2 for optimal performance)
 
 /** @brief Target APB1 clock frequency (PCLK1) */
 #define TARGET_PCLK1_FREQUENCY_HZ 120000000UL // 120 MHz (HCLK/2)
@@ -113,11 +115,11 @@
 
 /** @brief Primary PLL (PLL1) configuration for HSE source (requires solder
  * bridge changes) */
-#define PLL1_HSE_M_DIVIDER 1     // HSE/1 = 8MHz
+#define PLL1_HSE_M_DIVIDER 1      // HSE/1 = 8MHz
 #define PLL1_HSE_N_MULTIPLIER 120 // 8MHz*120 = 960MHz VCO
-#define PLL1_HSE_P_DIVIDER 2     // 960MHz/2 = 480MHz SYSCLK
-#define PLL1_HSE_Q_DIVIDER 4     // 960MHz/4 = 240MHz
-#define PLL1_HSE_R_DIVIDER 2     // 960MHz/2 = 480MHz
+#define PLL1_HSE_P_DIVIDER 2      // 960MHz/2 = 480MHz SYSCLK
+#define PLL1_HSE_Q_DIVIDER 4      // 960MHz/4 = 240MHz
+#define PLL1_HSE_R_DIVIDER 2      // 960MHz/2 = 480MHz
 
 /* ==========================================================================
  */
@@ -275,7 +277,8 @@ HAL_StatusTypeDef Clock_MonitorStability(void);
 
 // Validate target frequencies are achievable
 #if TARGET_SYSCLK_FREQUENCY_HZ > 480000000UL
-#error "Target SYSCLK frequency exceeds STM32H753ZI maximum (480 MHz with VOS0)"
+#error                                                                        \
+    "Target SYSCLK frequency exceeds STM32H753ZI maximum (480 MHz with VOS0)"
 #endif
 
 #if TARGET_HCLK_FREQUENCY_HZ > TARGET_SYSCLK_FREQUENCY_HZ

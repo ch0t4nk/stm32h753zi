@@ -209,8 +209,8 @@ HAL_StatusTypeDef Clock_ValidateConfiguration(void) {
     uint32_t pclk2 = Clock_GetAPB2Frequency();
 
     // Validate frequencies are within specifications
-    if (sysclk > 240000000UL) {
-        CLOCK_DEBUG_PRINT("SYSCLK exceeds maximum (240 MHz): %lu Hz", sysclk);
+    if (sysclk > 480000000UL) {
+        CLOCK_DEBUG_PRINT("SYSCLK exceeds maximum (480 MHz): %lu Hz", sysclk);
         return HAL_ERROR;
     }
 
@@ -427,34 +427,83 @@ static HAL_StatusTypeDef Clock_ConfigurePLL_HSE(void) {
 }
 
 /**
- * @brief Configure PLL1 with HSI source
+ * @brief Configure PLL1 with HSI source using direct register programming
+ * @note This bypasses HAL_RCC_OscConfig() which appears to have issues
  */
 static HAL_StatusTypeDef Clock_ConfigurePLL_HSI(void) {
-    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+    CLOCK_DEBUG_PRINT("Configuring PLL1 with direct register programming...");
 
-    RCC_OscInitStruct.OscillatorType =
-        RCC_OSCILLATORTYPE_NONE; // Don't change oscillators
-    RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-    RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-    RCC_OscInitStruct.PLL.PLLM = PLL1_HSI_M_DIVIDER;
-    RCC_OscInitStruct.PLL.PLLN = PLL1_HSI_N_MULTIPLIER;
-    RCC_OscInitStruct.PLL.PLLP = PLL1_HSI_P_DIVIDER;
-    RCC_OscInitStruct.PLL.PLLQ = PLL1_HSI_Q_DIVIDER;
-    RCC_OscInitStruct.PLL.PLLR = PLL1_HSI_R_DIVIDER;
-    RCC_OscInitStruct.PLL.PLLRGE =
-        RCC_PLL1VCIRANGE_3; // 8-16MHz VCO input range (HSI/4 = 16MHz)
-    RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE; // Wide VCO (192-960MHz)
-    RCC_OscInitStruct.PLL.PLLFRACN = 0;
-
-    HAL_StatusTypeDef status = HAL_RCC_OscConfig(&RCC_OscInitStruct);
-
-    if (status == HAL_OK) {
-        CLOCK_DEBUG_PRINT("PLL1 (HSI) configured successfully");
-    } else {
-        CLOCK_DEBUG_PRINT("PLL1 (HSI) configuration failed");
+    // Ensure HSI is ready
+    if (!__HAL_RCC_GET_FLAG(RCC_FLAG_HSIRDY)) {
+        CLOCK_DEBUG_PRINT("HSI not ready for PLL configuration");
+        return HAL_ERROR;
     }
 
-    return status;
+    // Step 1: Disable PLL1 if it's running
+    RCC->CR &= ~RCC_CR_PLL1ON;
+
+    // Wait for PLL1 to be disabled
+    uint32_t timeout = HAL_GetTick() + PLL_LOCK_TIMEOUT_MS;
+    while ((RCC->CR & RCC_CR_PLL1RDY) && (HAL_GetTick() < timeout)) {
+        // Wait for PLL to stop
+    }
+
+    if (RCC->CR & RCC_CR_PLL1RDY) {
+        CLOCK_DEBUG_PRINT("PLL1 failed to stop");
+        return HAL_ERROR;
+    }
+
+    // Step 2: Configure PLL1 source to HSI
+    RCC->PLLCKSELR &= ~RCC_PLLCKSELR_PLLSRC;
+    RCC->PLLCKSELR |= RCC_PLLCKSELR_PLLSRC_HSI; // HSI source
+
+    // Set PLLM divider for HSI source
+    RCC->PLLCKSELR &= ~RCC_PLLCKSELR_DIVM1;
+    RCC->PLLCKSELR |= ((PLL1_HSI_M_DIVIDER << RCC_PLLCKSELR_DIVM1_Pos) &
+                       RCC_PLLCKSELR_DIVM1);
+
+    // Step 3: Configure PLL1 dividers (N, P, Q, R)
+    RCC->PLL1DIVR =
+        (((PLL1_HSI_N_MULTIPLIER - 1) << RCC_PLL1DIVR_N1_Pos) &
+         RCC_PLL1DIVR_N1) |
+        (((PLL1_HSI_P_DIVIDER - 1) << RCC_PLL1DIVR_P1_Pos) & RCC_PLL1DIVR_P1) |
+        (((PLL1_HSI_Q_DIVIDER - 1) << RCC_PLL1DIVR_Q1_Pos) & RCC_PLL1DIVR_Q1) |
+        (((PLL1_HSI_R_DIVIDER - 1) << RCC_PLL1DIVR_R1_Pos) & RCC_PLL1DIVR_R1);
+
+    // Step 4: Configure PLL1 frequency ranges
+    RCC->PLLCFGR &= ~RCC_PLLCFGR_PLL1RGE;
+    RCC->PLLCFGR |= RCC_PLLCFGR_PLL1RGE_3; // 8-16MHz range for HSI/4=16MHz
+
+    // Configure PLL1 VCO range for 960MHz
+    RCC->PLLCFGR |= RCC_PLLCFGR_PLL1VCOSEL; // Wide VCO range (192-960MHz)
+
+    // Step 5: Enable PLL1P output (required for SYSCLK)
+    RCC->PLLCFGR |= RCC_PLLCFGR_DIVP1EN;
+
+    // Step 6: Enable PLL1
+    RCC->CR |= RCC_CR_PLL1ON;
+
+    // Step 7: Wait for PLL1 to lock
+    timeout = HAL_GetTick() + PLL_LOCK_TIMEOUT_MS;
+    while (!(RCC->CR & RCC_CR_PLL1RDY) && (HAL_GetTick() < timeout)) {
+        // Wait for PLL to lock
+    }
+
+    if (!(RCC->CR & RCC_CR_PLL1RDY)) {
+        CLOCK_DEBUG_PRINT("PLL1 failed to lock after direct programming");
+        return HAL_ERROR;
+    }
+
+    CLOCK_DEBUG_PRINT("PLL1 direct register configuration successful");
+    CLOCK_DEBUG_PRINT(
+        "PLL1 VCO: %lu MHz, SYSCLK: %lu MHz",
+        (HSI_FREQUENCY_HZ / PLL1_HSI_M_DIVIDER * PLL1_HSI_N_MULTIPLIER) /
+            1000000,
+        (HSI_FREQUENCY_HZ / PLL1_HSI_M_DIVIDER * PLL1_HSI_N_MULTIPLIER /
+         PLL1_HSI_P_DIVIDER) /
+            1000000);
+
+    return HAL_OK;
 }
 
 /**
@@ -465,7 +514,8 @@ static HAL_StatusTypeDef Clock_ConfigureSystemClocks(void) {
 
     // Enable VOS0 voltage scaling for 480MHz operation
     __HAL_PWR_VOLTAGESCALING_CONFIG(VOLTAGE_SCALE_CONFIG);
-    while (!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
+    while (!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {
+    }
 
     RCC_ClkInitStruct.ClockType =
         RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 |
@@ -487,11 +537,16 @@ static HAL_StatusTypeDef Clock_ConfigureSystemClocks(void) {
         // Normal mode - use PLL for 480MHz operation
         RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
         RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
-        RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV2;  // 240MHz HCLK (480MHz/2)
-        RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV2; // 120MHz APB3 (240MHz/2)
-        RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV2; // 120MHz APB1 (240MHz/2)
-        RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2; // 120MHz APB2 (240MHz/2)
-        RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2; // 120MHz APB4 (240MHz/2)
+        RCC_ClkInitStruct.AHBCLKDivider =
+            RCC_HCLK_DIV2; // 240MHz HCLK (480MHz/2)
+        RCC_ClkInitStruct.APB3CLKDivider =
+            RCC_APB3_DIV2; // 120MHz APB3 (240MHz/2)
+        RCC_ClkInitStruct.APB1CLKDivider =
+            RCC_APB1_DIV2; // 120MHz APB1 (240MHz/2)
+        RCC_ClkInitStruct.APB2CLKDivider =
+            RCC_APB2_DIV2; // 120MHz APB2 (240MHz/2)
+        RCC_ClkInitStruct.APB4CLKDivider =
+            RCC_APB4_DIV2; // 120MHz APB4 (240MHz/2)
 
         // Use FLASH_LATENCY_4 for 480MHz @ VOS0
         return HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_480MHZ);
