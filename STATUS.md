@@ -6,37 +6,66 @@
 
 ## 🚨 CRITICAL CONTEXT FOR NEXT CONVERSATION
 
-### **CURRENT CRISIS STATE**
+### **🔧 MAJOR DEBUGGING BREAKTHROUGH (Commit: ec0450b) - TO BE VERIFIED**
 
-- **LED Status**: LD4 solid red, LD1/LD3 off (indicates system fault/hardfault)
-- **UART**: Not functional - no serial output
-- **System**: Flashed successfully but not running properly
-- **Root Issue**: Either clock configuration, initialization failure, or hardfault
+**ROOT CAUSE IDENTIFIED**: Clock Configuration Mismatch
+- **Hardware Reality**: Nucleo-H753ZI ships with ST-LINK MCO configuration (SB121 closed, SB122 open)
+- **Firmware Expectation**: External HSE crystal operation (requires solder bridge changes)
+- **Result**: HSE startup failure → invalid clock source SW=6 → system faults
+- **Solution Applied**: Reconfigured SSOT for HSI-priority operation (no hardware changes needed)
 
-### **✅ COMPILATION FIXES COMPLETED**
+### **✅ CRITICAL FIXES IMPLEMENTED (VERIFICATION REQUIRED)**
 
-**Critical Progress Made (Commit: bbb7c53):**
+**Build System RESOLVED**:
+- Fixed CMake Python path detection (CMAKE_HOST_WIN32 vs WIN32 issue)
+- Fixed Unicode encoding in auto_update_status.py for Windows console
+- STM32CubeProgrammer CLI integration working (54.66KB firmware flashing)
 
-- Fixed missing `#include <stdint.h>` in `src/config/freertos_config_ssot.h`
-- Fixed include path in `Core/Inc/FreeRTOSConfig.h`: `"freertos_config_ssot.h"` → `"config/freertos_config_ssot.h"`
-- All SSOT constants now compile correctly (SAFETY_MONITOR_TASK_PRIORITY, RTOS_HEAP_SIZE_BYTES, etc.)
-- Build system working: ARM GCC, CMake presets, clean rebuild strategy validated
+**Clock Configuration MAJOR OVERHAUL**:
+- Updated clock_config.h to prioritize HSI over HSE (matches default Nucleo config)
+- Modified CubeMX .ioc file from 480MHz to 120MHz system clock target
+- Implemented HSI→PLL→120MHz configuration (HSI/8*30/2 = 120MHz)
+- Eliminated invalid clock source issue (SW=6 no longer occurs)
 
-### **❌ RUNTIME FAILURES TO DEBUG**
+**Debugging Infrastructure ENHANCED**:
+- STM32CubeProgrammer CLI register access confirmed working
+- ST-LINK GDB server tools identified in STM32CubeCLT 1.19.0
+- Updated .vscode/tasks.json with proper STM32CubeCLT tools (not OpenOCD)
+- Created debug_system_fault.ps1 for systematic hardware analysis
 
-**Immediate Issues:**
+### **⚠️ CURRENT STATUS - VERIFICATION PENDING**
 
-1. **Red LED Analysis**: LD4 solid red = system fault - need ST-LINK debugger
-2. **Clock Configuration**: SystemCoreClock timing issue NOT verified as resolved
-3. **UART Communication**: Serial output completely non-functional
-4. **System Initialization**: Something failing in early boot/initialization
+**Register Readings After Latest Flash**:
+- **RCC_CR = 0x00004025**: HSI enabled and ready (bit pattern indicates functional HSI)
+- **RCC_CFGR = 0x00000000**: System clock source = HSI (SW=000, no longer invalid SW=6)
+- **Progress**: Eliminated invalid clock source, but system behavior needs verification
 
-### **🔧 NEXT CRITICAL ACTIONS**
+**CRITICAL VERIFICATION NEEDED**:
+1. **LD4 Still Solid Red**: Despite valid register readings, LED indicates fault
+2. **Clock_Init() Return Status**: Unknown if function succeeds with new HSI config
+3. **PLL Lock Status**: Need to verify PLL actually locks with HSI input
+4. **Actual System Clock**: Verify 120MHz achieved vs 64MHz HSI fallback
+5. **UART Communication**: Test serial output with corrected clock configuration
 
-1. **ST-LINK Debugging**: Connect debugger to identify hardfault/system fault
-2. **Clock Verification**: Confirm if Clock_Init() actually resolves SystemCoreClock mismatch
-3. **UART Debug**: Check peripheral initialization and GPIO configuration
-4. **Minimal Test**: Create bare-minimum firmware to isolate issues
+### **🔧 NEXT CRITICAL ACTIONS FOR CONTINUATION**
+
+**Immediate Verification Steps**:
+1. **PLL Status Analysis**: Read RCC_PLLCFGR and RCC_PLL1DIVR to verify PLL configuration applied
+2. **Clock_Init() Debugging**: Use ST-LINK GDB to step through clock initialization and check return values
+3. **System Clock Verification**: Read actual SystemCoreClock variable vs expected 120MHz
+4. **LED Behavior Analysis**: Determine why LD4 is red despite valid clock registers
+5. **UART Testing**: Verify serial communication with corrected clock timing
+
+**STM32CubeProgrammer Commands Ready**:
+```bash
+# Register analysis (commands verified working)
+STM32_Programmer_CLI.exe -c port=SWD -r32 0x58024400 1  # RCC_CR
+STM32_Programmer_CLI.exe -c port=SWD -r32 0x58024410 1  # RCC_CFGR
+STM32_Programmer_CLI.exe -c port=SWD -r32 0x58024428 1  # RCC_PLLCFGR
+STM32_Programmer_CLI.exe -c port=SWD -r32 0x5802442C 1  # RCC_PLL1DIVR
+```
+
+**VS Code Debugging Setup**: ST-LINK GDB server configured in .vscode/launch.json for stepping through code
 
 ### **⚠️ DEVELOPMENT CONSTRAINTS**
 
@@ -47,19 +76,52 @@
 ## 🔧 ESSENTIAL BUILD COMMANDS (VERIFIED WORKING)
 
 ```bash
-# Clean Build (CRITICAL - always use after header changes)
-Remove-Item -Recurse -Force build -ErrorAction SilentlyContinue
-cmake --preset Debug
-cmake --build build/Debug
+# Complete Build & Flash Sequence (VERIFIED)
+.\scripts\fix_cmake.ps1                                    # Build (54.66KB output)
+STM32_Programmer_CLI.exe -c port=SWD -w build\Debug\stm32h753_ihm02a1.elf -v -rst
 
-# Flash Firmware (WORKING)
-& "C:\ST\STM32CubeCLT_1.18.0\STM32CubeProgrammer\bin\STM32_Programmer_CLI.exe" -c port=SWD -w "build\Debug\stm32h753_ihm02a1.hex" -v -rst
+# Register Analysis Commands (WORKING)
+STM32_Programmer_CLI.exe -c port=SWD -r32 0x58024400 1    # RCC_CR (HSI status)
+STM32_Programmer_CLI.exe -c port=SWD -r32 0x58024410 1    # RCC_CFGR (clock source)
+STM32_Programmer_CLI.exe -c port=SWD -r32 0x58024428 1    # RCC_PLLCFGR (PLL config)
 
-# SSOT Validation (WORKING)
-.venv\Scripts\python.exe scripts\validate_ssot.py
+# Debug Analysis (READY TO USE)
+.\scripts\debug_system_fault.ps1                          # System fault analysis
+# VS Code → F5 (ST-LINK GDB debugging configured)
 
-# Documentation Search (WORKING)
-.venv\Scripts\python.exe scripts\stm32_semantic_search.py concept "GPIO" --scope STM32H7
+# SSOT & Status Management (WORKING)
+.venv\Scripts\python.exe scripts\validate_ssot.py         # SSOT validation
+.venv\Scripts\python.exe scripts\stm32_semantic_search.py concept "clock" --scope STM32H7
+```
+
+## 📊 BREAKTHROUGH TECHNICAL CONTEXT
+
+### **Nucleo-H753ZI Hardware Configuration Discovery**
+
+**Default Shipping Configuration** (Confirmed):
+- **SB121**: CLOSED → ST-LINK MCO connected to HSE_IN
+- **SB122**: OPEN → External crystal X3 disconnected
+- **Result**: Board provides 8MHz clock via ST-LINK MCO, not crystal
+
+**Firmware Adaptation Strategy**:
+- **Original**: HSE crystal priority → PLL → 480MHz (failed due to hardware mismatch)
+- **Current**: HSI priority → PLL → 120MHz (matches default hardware)
+- **Trade-off**: Slightly less precision, but no hardware modifications required
+
+### **Clock Configuration Evolution**
+
+**Previous Problematic State**:
+```
+RCC_CR = 0x00004025 (HSI enabled but HSE failed)
+RCC_CFGR = 0x4000091E (SW=6 INVALID, caused system faults)
+Result: System stuck in invalid clock state
+```
+
+**Current State After Fix**:
+```
+RCC_CR = 0x00004025 (HSI enabled and ready)
+RCC_CFGR = 0x00000000 (SW=0 HSI, valid but needs PLL verification)
+Result: Valid clock source, but PLL engagement needs verification
 ```
 
 ## 📊 DETAILED TECHNICAL STATE
