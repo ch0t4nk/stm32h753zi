@@ -401,9 +401,10 @@
     "markdown.extension.toc.updateOnSave": true,
     "markdown.extension.preview.autoShowPreviewToSide": false,
     // CMake path configuration - use STM32CubeCLT CMake on Windows
-    "cmake.cmakePath": "C:\\ST\\STM32CubeCLT_1.18.0\\CMake\\bin\\cmake.exe",
+    "cmake.cmakePath": "cube-cmake",
     "cmake.configureArgs": [
-        "-DCMAKE_TOOLCHAIN_FILE=${workspaceFolder}/cmake/arm-none-eabi-gcc.cmake"
+        "-DCMAKE_TOOLCHAIN_FILE=${workspaceFolder}/cmake/arm-none-eabi-gcc.cmake",
+        "-DCMAKE_COMMAND=cube-cmake"
     ],
     "chat.agent.maxRequests": 50,
     "github.copilot.selectedCompletionModel": "claude-sonnet-4",

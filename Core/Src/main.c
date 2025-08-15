@@ -124,10 +124,10 @@ int main(void) {
     /* USER CODE END Init */
 
     /* Configure the system clock using centralized SSOT */
-    SystemClock_Config();
-    /*if (Clock_Init() != HAL_OK) {
+    /*SystemClock_Config();*/
+    if (Clock_Init() != HAL_OK) {
         Error_Handler();
-    }*/
+    }
 
     /* USER CODE BEGIN SysInit */
 

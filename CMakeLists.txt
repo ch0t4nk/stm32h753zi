@@ -59,17 +59,24 @@ option(ENABLE_STATIC_ANALYSIS "Enable static analysis tools" OFF)
 option(BUILD_DOCUMENTATION "Build documentation with Doxygen" OFF)
 
 # Find Python3 early for STATUS.md automation and other tools
-# Prefer virtual environment Python for consistency
-if(WIN32)
-    find_program(PYTHON3_EXE NAMES 
-        "${CMAKE_SOURCE_DIR}/.venv/Scripts/python.exe"
-        "python.exe"
-        "python3.exe"
-        "python"
-        PATHS ENV PATH NO_DEFAULT_PATH
-    )
-    # Fallback to system Python if venv not found
-    if(NOT PYTHON3_EXE)
+# Use explicit Windows path for virtual environment
+# CRITICAL: Clear cache first to override any old Linux paths
+unset(PYTHON3_EXE CACHE)
+message(STATUS "DEBUG: WIN32=${WIN32}")
+message(STATUS "DEBUG: CMAKE_HOST_WIN32=${CMAKE_HOST_WIN32}")
+message(STATUS "DEBUG: CMAKE_HOST_SYSTEM_NAME=${CMAKE_HOST_SYSTEM_NAME}")
+message(STATUS "DEBUG: CMAKE_SYSTEM_NAME=${CMAKE_SYSTEM_NAME}")
+if(CMAKE_HOST_WIN32)
+    message(STATUS "DEBUG: Using CMAKE_HOST_WIN32 for detection")
+    # Windows: Use explicit path to working virtual environment Python
+    set(PYTHON3_EXE "${CMAKE_SOURCE_DIR}/.venv/Scripts/python.exe")
+    message(STATUS "DEBUG: Set PYTHON3_EXE to: ${PYTHON3_EXE}")
+    message(STATUS "DEBUG: File exists check: ${CMAKE_SOURCE_DIR}/.venv/Scripts/python.exe")
+    if(EXISTS "${CMAKE_SOURCE_DIR}/.venv/Scripts/python.exe")
+        message(STATUS "DEBUG: Windows Python exists - using it")
+    else()
+        message(STATUS "DEBUG: Windows Python NOT found - using fallback")
+        # Fallback to system Python if venv not found
         find_program(PYTHON3_EXE NAMES 
             "python.exe"
             "python3.exe"
@@ -77,6 +84,7 @@ if(WIN32)
         )
     endif()
 else()
+    # Linux/macOS: Use standard virtual environment paths
     find_program(PYTHON3_EXE NAMES 
         "${CMAKE_SOURCE_DIR}/.venv/bin/python3"
         "${CMAKE_SOURCE_DIR}/.venv/bin/python"

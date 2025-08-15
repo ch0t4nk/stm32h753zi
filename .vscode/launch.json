@@ -2,12 +2,48 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug STM32H753ZI (OpenOCD)",
+            "name": "Debug STM32H753ZI (ST-LINK GDB)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "stlink",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/Debug/stm32h753_ihm02a1.elf",
+            "gdbPath": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gdb.exe",
+            "serverpath": "C:\\ST\\STM32CubeCLT_1.19.0\\STLink-gdb-server\\bin\\ST-LINK_gdbserver.exe",
+            "serverArgs": [
+                "-p",
+                "61234",
+                "-l",
+                "1",
+                "-d"
+            ],
+            "svdFile": "${workspaceFolder}/00_reference/ST_Assets/stm32h7-svd_2.8/STM32H753.svd",
+            "runToEntryPoint": "main",
+            "showDevDebugOutput": "parsed",
+            "device": "STM32H753ZI",
+            "interface": "swd",
+            "swoConfig": {
+                "enabled": true,
+                "cpuFrequency": 240000000,
+                "swoFrequency": 2000000,
+                "source": "probe",
+                "decoders": [
+                    {
+                        "type": "console",
+                        "label": "ITM",
+                        "port": 0
+                    }
+                ]
+            },
+            "preLaunchTask": "Build (CMake)"
+        },
+        {
+            "name": "Debug STM32H753ZI (OpenOCD - Legacy)",
             "type": "cortex-debug",
             "request": "launch",
             "servertype": "openocd",
             "cwd": "${workspaceFolder}",
-            "executable": "${workspaceFolder}/build/stm32h753_ihm02a1.elf",
+            "executable": "${workspaceFolder}/build/Debug/stm32h753_ihm02a1.elf",
             "configFiles": [
                 "interface/stlink.cfg",
                 "target/stm32h7x.cfg"
@@ -34,17 +70,38 @@
             "preLaunchTask": "Build (CMake)"
         },
         {
+            "name": "Attach STM32H753ZI (ST-LINK)",
+            "type": "cortex-debug",
+            "request": "attach",
+            "servertype": "stlink",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/Debug/stm32h753_ihm02a1.elf",
+            "gdbPath": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gdb.exe",
+            "serverpath": "C:\\ST\\STM32CubeCLT_1.19.0\\STLink-gdb-server\\bin\\ST-LINK_gdbserver.exe",
+            "serverArgs": [
+                "-p",
+                "61234",
+                "-l",
+                "1",
+                "-d"
+            ],
+            "svdFile": "${workspaceFolder}/00_reference/ST_Assets/stm32h7-svd_2.8/STM32H753.svd",
+            "showDevDebugOutput": "parsed",
+            "device": "STM32H753ZI",
+            "interface": "swd"
+        },
+        {
             "name": "Debug STM32H753ZI (GDB)",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/stm32h753_ihm02a1.elf",
+            "program": "${workspaceFolder}/build/Debug/stm32h753_ihm02a1.elf",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "/usr/bin/gdb-multiarch",
+            "miDebuggerPath": "C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gdb.exe",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",

@@ -484,14 +484,14 @@ static HAL_StatusTypeDef Clock_ConfigureSystemClocks(void) {
         // Normal mode - use PLL
         RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
         RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
-        RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV1;  // 240MHz HCLK
-        RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV2; // 120MHz APB3
-        RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV2; // 120MHz APB1
-        RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2; // 120MHz APB2
-        RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2; // 120MHz APB4
+        RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV1;  // 120MHz HCLK
+        RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV2; // 60MHz APB3
+        RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV2; // 60MHz APB1
+        RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2; // 60MHz APB2
+        RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2; // 60MHz APB4
 
-        // Use appropriate flash latency for 240MHz
-        return HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2);
+        // Use appropriate flash latency for 120MHz
+        return HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1);
     }
 }
 

@@ -86,15 +86,39 @@
     {
       "label": "Flash STM32H753ZI",
       "type": "shell",
-      "command": "openocd",
-      "args": [
-        "-f",
-        "interface/stlink.cfg",
-        "-f",
-        "target/stm32h7x.cfg",
-        "-c",
-        "program build/Debug/stm32h753_ihm02a1.elf verify reset exit"
-      ],
+      "windows": {
+        "command": "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
+        "args": [
+          "-c",
+          "port=SWD",
+          "-w",
+          "build/Debug/stm32h753_ihm02a1.hex",
+          "-v",
+          "-rst"
+        ]
+      },
+      "linux": {
+        "command": "openocd",
+        "args": [
+          "-f",
+          "interface/stlink.cfg",
+          "-f",
+          "target/stm32h7x.cfg",
+          "-c",
+          "program build/Debug/stm32h753_ihm02a1.elf verify reset exit"
+        ]
+      },
+      "osx": {
+        "command": "openocd",
+        "args": [
+          "-f",
+          "interface/stlink.cfg",
+          "-f",
+          "target/stm32h7x.cfg",
+          "-c",
+          "program build/Debug/stm32h753_ihm02a1.elf verify reset exit"
+        ]
+      },
       "group": "build",
       "dependsOn": "Build (CMake)",
       "options": {
@@ -140,15 +164,21 @@
       "type": "shell",
       "windows": {
         "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
-        "args": ["scripts/validate_ssot.py"]
+        "args": [
+          "scripts/validate_ssot.py"
+        ]
       },
       "linux": {
         "command": "${workspaceFolder}/.venv/bin/python",
-        "args": ["scripts/validate_ssot.py"]
+        "args": [
+          "scripts/validate_ssot.py"
+        ]
       },
       "osx": {
-        "command": "${workspaceFolder}/.venv/bin/python", 
-        "args": ["scripts/validate_ssot.py"]
+        "command": "${workspaceFolder}/.venv/bin/python",
+        "args": [
+          "scripts/validate_ssot.py"
+        ]
       },
       "group": "test",
       "options": {
@@ -218,15 +248,24 @@
       "type": "shell",
       "windows": {
         "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
-        "args": ["scripts/auto_update_status.py", "--verbose"]
+        "args": [
+          "scripts/auto_update_status.py",
+          "--verbose"
+        ]
       },
       "linux": {
         "command": "${workspaceFolder}/.venv/bin/python",
-        "args": ["scripts/auto_update_status.py", "--verbose"]
+        "args": [
+          "scripts/auto_update_status.py",
+          "--verbose"
+        ]
       },
       "osx": {
         "command": "${workspaceFolder}/.venv/bin/python",
-        "args": ["scripts/auto_update_status.py", "--verbose"]
+        "args": [
+          "scripts/auto_update_status.py",
+          "--verbose"
+        ]
       },
       "group": "build",
       "options": {
@@ -245,15 +284,30 @@
       "type": "shell",
       "windows": {
         "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
-        "args": ["scripts/auto_update_status.py", "--source", "build", "--verbose"]
+        "args": [
+          "scripts/auto_update_status.py",
+          "--source",
+          "build",
+          "--verbose"
+        ]
       },
       "linux": {
         "command": "${workspaceFolder}/.venv/bin/python",
-        "args": ["scripts/auto_update_status.py", "--source", "build", "--verbose"]
+        "args": [
+          "scripts/auto_update_status.py",
+          "--source",
+          "build",
+          "--verbose"
+        ]
       },
       "osx": {
         "command": "${workspaceFolder}/.venv/bin/python",
-        "args": ["scripts/auto_update_status.py", "--source", "build", "--verbose"]
+        "args": [
+          "scripts/auto_update_status.py",
+          "--source",
+          "build",
+          "--verbose"
+        ]
       },
       "group": "build",
       "options": {
@@ -272,15 +326,27 @@
       "type": "shell",
       "windows": {
         "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
-        "args": ["scripts/auto_update_status.py", "--dry-run", "--verbose"]
+        "args": [
+          "scripts/auto_update_status.py",
+          "--dry-run",
+          "--verbose"
+        ]
       },
       "linux": {
         "command": "${workspaceFolder}/.venv/bin/python",
-        "args": ["scripts/auto_update_status.py", "--dry-run", "--verbose"]
+        "args": [
+          "scripts/auto_update_status.py",
+          "--dry-run",
+          "--verbose"
+        ]
       },
       "osx": {
         "command": "${workspaceFolder}/.venv/bin/python",
-        "args": ["scripts/auto_update_status.py", "--dry-run", "--verbose"]
+        "args": [
+          "scripts/auto_update_status.py",
+          "--dry-run",
+          "--verbose"
+        ]
       },
       "group": "test",
       "options": {
@@ -392,8 +458,10 @@
       "windows": {
         "command": "powershell",
         "args": [
-          "-ExecutionPolicy", "Bypass",
-          "-File", "scripts\\run_python.ps1",
+          "-ExecutionPolicy",
+          "Bypass",
+          "-File",
+          "scripts\\run_python.ps1",
           "scripts\\auto_update_status.py",
           "--verbose"
         ]
@@ -543,7 +611,7 @@
         ]
       },
       "osx": {
-        "command": "bash", 
+        "command": "bash",
         "args": [
           "./scripts/workflow.sh",
           "before"
@@ -588,7 +656,7 @@
       "osx": {
         "command": "bash",
         "args": [
-          "./scripts/workflow.sh", 
+          "./scripts/workflow.sh",
           "during"
         ]
       },
@@ -871,6 +939,141 @@
         "clear": true
       },
       "problemMatcher": []
+    },
+    {
+      "label": "🔧 DEBUG: Connect ST-LINK",
+      "type": "shell",
+      "windows": {
+        "command": "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
+        "args": [
+          "-c",
+          "port=SWD",
+          "freq=4000",
+          "ap=0",
+          "mode=UR"
+        ]
+      },
+      "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new"
+      }
+    },
+    {
+      "label": "🔍 DEBUG: Read System Fault Status",
+      "type": "shell",
+      "windows": {
+        "command": "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
+        "args": [
+          "-c",
+          "port=SWD",
+          "-r32",
+          "0xE000ED28",
+          "1",
+          "-r32",
+          "0xE000ED2C",
+          "1",
+          "-r32",
+          "0xE000ED30",
+          "1"
+        ]
+      },
+      "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new"
+      }
+    },
+    {
+      "label": "🔍 DEBUG: Read RCC Clock Status",
+      "type": "shell",
+      "windows": {
+        "command": "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
+        "args": [
+          "-c",
+          "port=SWD",
+          "-r32",
+          "0x58024400",
+          "1",
+          "-r32",
+          "0x58024404",
+          "1",
+          "-r32",
+          "0x58024408",
+          "1",
+          "-r32",
+          "0x5802440C",
+          "1"
+        ]
+      },
+      "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new"
+      }
+    },
+    {
+      "label": "🔄 DEBUG: Reset and Halt",
+      "type": "shell",
+      "windows": {
+        "command": "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
+        "args": [
+          "-c",
+          "port=SWD",
+          "-rst",
+          "-halt"
+        ]
+      },
+      "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new"
+      }
+    },
+    {
+      "label": "🚨 DEBUG: Full System Fault Analysis",
+      "type": "shell",
+      "windows": {
+        "command": "powershell",
+        "args": [
+          "-ExecutionPolicy",
+          "Bypass",
+          "-File",
+          "scripts\\debug_system_fault.ps1",
+          "-Verbose",
+          "-FullAnalysis"
+        ]
+      },
+      "group": "test",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new"
+      }
     }
   ]
 }

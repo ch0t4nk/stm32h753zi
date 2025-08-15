@@ -1345,6 +1345,26 @@ build CMakeFiles/stm32h753_ihm02a1.dir/src/communication/comm_protocol.c.obj: C_
   TARGET_COMPILE_PDB = CMakeFiles\stm32h753_ihm02a1.dir\
   TARGET_PDB = stm32h753_ihm02a1.pdb
 
+build CMakeFiles/stm32h753_ihm02a1.dir/src/config/clock_config.c.obj: C_COMPILER__stm32h753_ihm02a1_unscanned_Debug C$:/repos/Nucleo-H753ZI$ Project/code/src/config/clock_config.c || cmake_object_order_depends_target_stm32h753_ihm02a1
+  DEFINES = -DARM_MATH_CM7 -DDATA_CACHE_ENABLE=1 -DDEBUG=1 -DFIRMWARE_BUILD=1 -DINSTRUCTION_CACHE_ENABLE=1 -DPREFETCH_ENABLE=1 -DSIMULATION_MODE=1 -DSTM32H753xx -DUSE_FREERTOS=1 -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles\stm32h753_ihm02a1.dir\src\config\clock_config.c.obj.d
+  FLAGS = -O0 -g -Xclang -gcodeview -std=gnu11 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wjump-misses-init -Wdouble-promotion -Wshadow -fdata-sections -ffunction-sections -Og -g3 -ggdb -DDEBUG
+  INCLUDES = -I"C:/repos/Nucleo-H753ZI Project/code/src" -I"C:/repos/Nucleo-H753ZI Project/code/src/config" -I"C:/repos/Nucleo-H753ZI Project/code/src/common" -I"C:/repos/Nucleo-H753ZI Project/code/src/drivers" -I"C:/repos/Nucleo-H753ZI Project/code/src/controllers" -I"C:/repos/Nucleo-H753ZI Project/code/src/safety" -I"C:/repos/Nucleo-H753ZI Project/code/src/communication" -I"C:/repos/Nucleo-H753ZI Project/code/src/application" -I"C:/repos/Nucleo-H753ZI Project/code/src/optimization" -I"C:/repos/Nucleo-H753ZI Project/code/src/hal_abstraction" -I"C:/repos/Nucleo-H753ZI Project/code/Core/Inc" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/STM32H7xx_HAL_Driver/Inc" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/STM32H7xx_HAL_Driver/Inc/Legacy" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/CMSIS/Device/ST/STM32H7xx/Include" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/CMSIS/Include" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/BSP/STM32H7xx_Nucleo" -I"C:/repos/Nucleo-H753ZI Project/code/00_reference/stm32h7xx_nucleo_bsp_md" -I"C:/repos/Nucleo-H753ZI Project/code/Middlewares/Third_Party/FreeRTOS/Source/include" -I"C:/repos/Nucleo-H753ZI Project/code/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1" -I"C:/repos/Nucleo-H753ZI Project/code/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2"
+  OBJECT_DIR = CMakeFiles\stm32h753_ihm02a1.dir
+  OBJECT_FILE_DIR = CMakeFiles\stm32h753_ihm02a1.dir\src\config
+  TARGET_COMPILE_PDB = CMakeFiles\stm32h753_ihm02a1.dir\
+  TARGET_PDB = stm32h753_ihm02a1.pdb
+
+build CMakeFiles/stm32h753_ihm02a1.dir/src/config/hardware_detection.c.obj: C_COMPILER__stm32h753_ihm02a1_unscanned_Debug C$:/repos/Nucleo-H753ZI$ Project/code/src/config/hardware_detection.c || cmake_object_order_depends_target_stm32h753_ihm02a1
+  DEFINES = -DARM_MATH_CM7 -DDATA_CACHE_ENABLE=1 -DDEBUG=1 -DFIRMWARE_BUILD=1 -DINSTRUCTION_CACHE_ENABLE=1 -DPREFETCH_ENABLE=1 -DSIMULATION_MODE=1 -DSTM32H753xx -DUSE_FREERTOS=1 -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles\stm32h753_ihm02a1.dir\src\config\hardware_detection.c.obj.d
+  FLAGS = -O0 -g -Xclang -gcodeview -std=gnu11 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wjump-misses-init -Wdouble-promotion -Wshadow -fdata-sections -ffunction-sections -Og -g3 -ggdb -DDEBUG
+  INCLUDES = -I"C:/repos/Nucleo-H753ZI Project/code/src" -I"C:/repos/Nucleo-H753ZI Project/code/src/config" -I"C:/repos/Nucleo-H753ZI Project/code/src/common" -I"C:/repos/Nucleo-H753ZI Project/code/src/drivers" -I"C:/repos/Nucleo-H753ZI Project/code/src/controllers" -I"C:/repos/Nucleo-H753ZI Project/code/src/safety" -I"C:/repos/Nucleo-H753ZI Project/code/src/communication" -I"C:/repos/Nucleo-H753ZI Project/code/src/application" -I"C:/repos/Nucleo-H753ZI Project/code/src/optimization" -I"C:/repos/Nucleo-H753ZI Project/code/src/hal_abstraction" -I"C:/repos/Nucleo-H753ZI Project/code/Core/Inc" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/STM32H7xx_HAL_Driver/Inc" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/STM32H7xx_HAL_Driver/Inc/Legacy" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/CMSIS/Device/ST/STM32H7xx/Include" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/CMSIS/Include" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/BSP/STM32H7xx_Nucleo" -I"C:/repos/Nucleo-H753ZI Project/code/00_reference/stm32h7xx_nucleo_bsp_md" -I"C:/repos/Nucleo-H753ZI Project/code/Middlewares/Third_Party/FreeRTOS/Source/include" -I"C:/repos/Nucleo-H753ZI Project/code/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1" -I"C:/repos/Nucleo-H753ZI Project/code/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2"
+  OBJECT_DIR = CMakeFiles\stm32h753_ihm02a1.dir
+  OBJECT_FILE_DIR = CMakeFiles\stm32h753_ihm02a1.dir\src\config
+  TARGET_COMPILE_PDB = CMakeFiles\stm32h753_ihm02a1.dir\
+  TARGET_PDB = stm32h753_ihm02a1.pdb
+
 build CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/motion_profile.c.obj: C_COMPILER__stm32h753_ihm02a1_unscanned_Debug C$:/repos/Nucleo-H753ZI$ Project/code/src/controllers/motion_profile.c || cmake_object_order_depends_target_stm32h753_ihm02a1
   DEFINES = -DARM_MATH_CM7 -DDATA_CACHE_ENABLE=1 -DDEBUG=1 -DFIRMWARE_BUILD=1 -DINSTRUCTION_CACHE_ENABLE=1 -DPREFETCH_ENABLE=1 -DSIMULATION_MODE=1 -DSTM32H753xx -DUSE_FREERTOS=1 -DUSE_HAL_DRIVER
   DEP_FILE = CMakeFiles\stm32h753_ihm02a1.dir\src\controllers\motion_profile.c.obj.d
@@ -1442,6 +1462,16 @@ build CMakeFiles/stm32h753_ihm02a1.dir/src/drivers/l6470/l6470_driver.c.obj: C_C
   INCLUDES = -I"C:/repos/Nucleo-H753ZI Project/code/src" -I"C:/repos/Nucleo-H753ZI Project/code/src/config" -I"C:/repos/Nucleo-H753ZI Project/code/src/common" -I"C:/repos/Nucleo-H753ZI Project/code/src/drivers" -I"C:/repos/Nucleo-H753ZI Project/code/src/controllers" -I"C:/repos/Nucleo-H753ZI Project/code/src/safety" -I"C:/repos/Nucleo-H753ZI Project/code/src/communication" -I"C:/repos/Nucleo-H753ZI Project/code/src/application" -I"C:/repos/Nucleo-H753ZI Project/code/src/optimization" -I"C:/repos/Nucleo-H753ZI Project/code/src/hal_abstraction" -I"C:/repos/Nucleo-H753ZI Project/code/Core/Inc" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/STM32H7xx_HAL_Driver/Inc" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/STM32H7xx_HAL_Driver/Inc/Legacy" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/CMSIS/Device/ST/STM32H7xx/Include" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/CMSIS/Include" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/BSP/STM32H7xx_Nucleo" -I"C:/repos/Nucleo-H753ZI Project/code/00_reference/stm32h7xx_nucleo_bsp_md" -I"C:/repos/Nucleo-H753ZI Project/code/Middlewares/Third_Party/FreeRTOS/Source/include" -I"C:/repos/Nucleo-H753ZI Project/code/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1" -I"C:/repos/Nucleo-H753ZI Project/code/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2"
   OBJECT_DIR = CMakeFiles\stm32h753_ihm02a1.dir
   OBJECT_FILE_DIR = CMakeFiles\stm32h753_ihm02a1.dir\src\drivers\l6470
+  TARGET_COMPILE_PDB = CMakeFiles\stm32h753_ihm02a1.dir\
+  TARGET_PDB = stm32h753_ihm02a1.pdb
+
+build CMakeFiles/stm32h753_ihm02a1.dir/src/enhanced_clock_config.c.obj: C_COMPILER__stm32h753_ihm02a1_unscanned_Debug C$:/repos/Nucleo-H753ZI$ Project/code/src/enhanced_clock_config.c || cmake_object_order_depends_target_stm32h753_ihm02a1
+  DEFINES = -DARM_MATH_CM7 -DDATA_CACHE_ENABLE=1 -DDEBUG=1 -DFIRMWARE_BUILD=1 -DINSTRUCTION_CACHE_ENABLE=1 -DPREFETCH_ENABLE=1 -DSIMULATION_MODE=1 -DSTM32H753xx -DUSE_FREERTOS=1 -DUSE_HAL_DRIVER
+  DEP_FILE = CMakeFiles\stm32h753_ihm02a1.dir\src\enhanced_clock_config.c.obj.d
+  FLAGS = -O0 -g -Xclang -gcodeview -std=gnu11 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=hard -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wjump-misses-init -Wdouble-promotion -Wshadow -fdata-sections -ffunction-sections -Og -g3 -ggdb -DDEBUG
+  INCLUDES = -I"C:/repos/Nucleo-H753ZI Project/code/src" -I"C:/repos/Nucleo-H753ZI Project/code/src/config" -I"C:/repos/Nucleo-H753ZI Project/code/src/common" -I"C:/repos/Nucleo-H753ZI Project/code/src/drivers" -I"C:/repos/Nucleo-H753ZI Project/code/src/controllers" -I"C:/repos/Nucleo-H753ZI Project/code/src/safety" -I"C:/repos/Nucleo-H753ZI Project/code/src/communication" -I"C:/repos/Nucleo-H753ZI Project/code/src/application" -I"C:/repos/Nucleo-H753ZI Project/code/src/optimization" -I"C:/repos/Nucleo-H753ZI Project/code/src/hal_abstraction" -I"C:/repos/Nucleo-H753ZI Project/code/Core/Inc" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/STM32H7xx_HAL_Driver/Inc" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/STM32H7xx_HAL_Driver/Inc/Legacy" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/CMSIS/Device/ST/STM32H7xx/Include" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/CMSIS/Include" -I"C:/repos/Nucleo-H753ZI Project/code/drivers/BSP/STM32H7xx_Nucleo" -I"C:/repos/Nucleo-H753ZI Project/code/00_reference/stm32h7xx_nucleo_bsp_md" -I"C:/repos/Nucleo-H753ZI Project/code/Middlewares/Third_Party/FreeRTOS/Source/include" -I"C:/repos/Nucleo-H753ZI Project/code/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1" -I"C:/repos/Nucleo-H753ZI Project/code/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2"
+  OBJECT_DIR = CMakeFiles\stm32h753_ihm02a1.dir
+  OBJECT_FILE_DIR = CMakeFiles\stm32h753_ihm02a1.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\stm32h753_ihm02a1.dir\
   TARGET_PDB = stm32h753_ihm02a1.pdb
 
@@ -1693,7 +1723,7 @@ build CMakeFiles/stm32h753_ihm02a1.dir/startup_stm32h753xx.s.obj: ASM_COMPILER__
 #############################################
 # Link the executable stm32h753_ihm02a1.exe
 
-build stm32h753_ihm02a1.exe: C_EXECUTABLE_LINKER__stm32h753_ihm02a1_Debug CMakeFiles/stm32h753_ihm02a1.dir/Core/Src/main.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Core/Src/stm32h7xx_hal_msp.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Core/Src/stm32h7xx_it.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Core/Src/system_stm32h7xx.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/BSP/STM32H7xx_Nucleo/stm32h7xx_nucleo.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_adc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_adc_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cec.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_comp.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cordic.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cryp.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cryp_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dac.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dac_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dcmi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dfsdm.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dfsdm_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma2d.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dsi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dts.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_eth.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_eth_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_exti.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_fdcan.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_fmac.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gfxmmu.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_hash.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_hash_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_hcd.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_hrtim.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_hsem.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2s.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2s_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_irda.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_iwdg.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_jpeg.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_lptim.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ltdc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ltdc_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mdios.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mdma.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mmc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mmc_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_nand.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_nor.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_opamp.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_opamp_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ospi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_otfdec.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pcd.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pcd_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pssi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_qspi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ramecc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rng.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rng_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sd.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sd_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sdio.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sdram.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_smartcard.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_smartcard_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_smbus.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_smbus_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spdifrx.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sram.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_swpmi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_wwdg.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_adc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_bdma.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_comp.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_cordic.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_crc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_crs.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_dac.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_delayblock.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_dma.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_dma2d.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_exti.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmac.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_gpio.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_hrtim.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_i2c.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_lptim.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_lpuart.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_mdma.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_opamp.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_pwr.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_rcc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_rng.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_rtc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_sdmmc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_spi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_swpmi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_tim.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_usart.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_usb.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_utils.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/application/main_application.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/common/syscalls.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/communication/comm_protocol.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/motion_profile.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/motor_characterization.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/motor_controller.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/multi_motor_coordinator.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/position_control.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/position_safety.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/real_time_control.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/timing_precision.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/drivers/as5600/as5600_driver.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/drivers/l6470/l6470_driver.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/hal_abstraction/hal_abstraction_stm32h7.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/optimization/motor_efficiency_optimizer.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/optimization/optimization_compatibility.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/rtos/power_management.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/rtos/rtos_tasks.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/safety/emergency_stop_abstracted.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/safety/failsafe_manager.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/safety/fault_monitor.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/safety/interrupt_priorities.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/safety/l6470_fault_monitor.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/safety/safety_system.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/safety/watchdog_manager.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/telemetry/optimization_telemetry.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj CMakeFiles/stm32h753_ihm02a1.dir/startup_stm32h753xx.s.obj
+build stm32h753_ihm02a1.exe: C_EXECUTABLE_LINKER__stm32h753_ihm02a1_Debug CMakeFiles/stm32h753_ihm02a1.dir/Core/Src/main.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Core/Src/stm32h7xx_hal_msp.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Core/Src/stm32h7xx_it.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Core/Src/system_stm32h7xx.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/BSP/STM32H7xx_Nucleo/stm32h7xx_nucleo.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_adc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_adc_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cec.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_comp.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cordic.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cryp.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cryp_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dac.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dac_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dcmi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dfsdm.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dfsdm_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma2d.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dsi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dts.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_eth.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_eth_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_exti.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_fdcan.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_fmac.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gfxmmu.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_hash.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_hash_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_hcd.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_hrtim.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_hsem.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2s.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2s_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_irda.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_iwdg.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_jpeg.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_lptim.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ltdc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ltdc_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mdios.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mdma.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mmc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mmc_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_nand.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_nor.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_opamp.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_opamp_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ospi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_otfdec.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pcd.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pcd_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pssi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_qspi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ramecc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rng.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rng_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sai_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sd.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sd_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sdio.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sdram.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_smartcard.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_smartcard_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_smbus.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_smbus_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spdifrx.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sram.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_swpmi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart_ex.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_wwdg.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_adc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_bdma.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_comp.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_cordic.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_crc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_crs.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_dac.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_delayblock.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_dma.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_dma2d.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_exti.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmac.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_gpio.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_hrtim.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_i2c.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_lptim.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_lpuart.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_mdma.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_opamp.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_pwr.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_rcc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_rng.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_rtc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_sdmmc.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_spi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_swpmi.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_tim.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_usart.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_usb.c.obj CMakeFiles/stm32h753_ihm02a1.dir/drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_utils.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/application/main_application.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/common/syscalls.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/communication/comm_protocol.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/config/clock_config.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/config/hardware_detection.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/motion_profile.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/motor_characterization.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/motor_controller.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/multi_motor_coordinator.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/position_control.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/position_safety.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/real_time_control.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/controllers/timing_precision.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/drivers/as5600/as5600_driver.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/drivers/l6470/l6470_driver.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/enhanced_clock_config.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/hal_abstraction/hal_abstraction_stm32h7.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/optimization/motor_efficiency_optimizer.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/optimization/optimization_compatibility.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/rtos/power_management.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/rtos/rtos_tasks.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/safety/emergency_stop_abstracted.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/safety/failsafe_manager.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/safety/fault_monitor.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/safety/interrupt_priorities.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/safety/l6470_fault_monitor.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/safety/safety_system.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/safety/watchdog_manager.c.obj CMakeFiles/stm32h753_ihm02a1.dir/src/telemetry/optimization_telemetry.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj CMakeFiles/stm32h753_ihm02a1.dir/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj CMakeFiles/stm32h753_ihm02a1.dir/startup_stm32h753xx.s.obj
   FLAGS = -O0 -g -Xclang -gcodeview -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd
   LINK_FLAGS = -Xlinker /subsystem:console -Wl,--gc-sections -Wl,--print-memory-usage -Wl,-Map="C:/repos/Nucleo-H753ZI Project/code/stm32h753_ihm02a1.map" -lc -lm -lnosys
   LINK_LIBRARIES = -lm.lib  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 -loldnames
@@ -1915,7 +1945,7 @@ build all-enhanced: phony CMakeFiles/all-enhanced analyze stm32h753_ihm02a1.exe
 # Utility command for test
 
 build CMakeFiles/test.util: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe --force-new-ctest-process "
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe --force-new-ctest-process "
   DESC = Running tests...
   pool = console
   restat = 1
@@ -1939,7 +1969,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\cmake.exe --regenerate-during-build -S"C:\repos\Nucleo-H753ZI Project\code" -B"C:\repos\Nucleo-H753ZI Project\code""
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\cmake.exe --regenerate-during-build -S"C:\repos\Nucleo-H753ZI Project\code" -B"C:\repos\Nucleo-H753ZI Project\code""
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -1957,7 +1987,7 @@ build CMakeFiles/generate_schemas | ${cmake_ninja_workdir}CMakeFiles/generate_sc
 # Custom command for src\config\as5600_registers_generated.h
 
 build src/config/as5600_registers_generated.h | ${cmake_ninja_workdir}src/config/as5600_registers_generated.h: CUSTOM_COMMAND schemas/as5600_registers.yaml scripts/schema_generator.py
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\Python313\python.exe "C:/repos/Nucleo-H753ZI Project/code/scripts/schema_generator.py" "C:/repos/Nucleo-H753ZI Project/code/schemas/as5600_registers.yaml""
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && python "C:/repos/Nucleo-H753ZI Project/code/scripts/schema_generator.py" "C:/repos/Nucleo-H753ZI Project/code/schemas/as5600_registers.yaml""
   DESC = Generating AS5600 register headers from schema
   restat = 1
 
@@ -1966,7 +1996,7 @@ build src/config/as5600_registers_generated.h | ${cmake_ninja_workdir}src/config
 # Custom command for src\config\l6470_registers_generated.h
 
 build src/config/l6470_registers_generated.h | ${cmake_ninja_workdir}src/config/l6470_registers_generated.h: CUSTOM_COMMAND schemas/l6470_registers.yaml scripts/schema_generator.py
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\Python313\python.exe "C:/repos/Nucleo-H753ZI Project/code/scripts/schema_generator.py" "C:/repos/Nucleo-H753ZI Project/code/schemas/l6470_registers.yaml""
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && python "C:/repos/Nucleo-H753ZI Project/code/scripts/schema_generator.py" "C:/repos/Nucleo-H753ZI Project/code/schemas/l6470_registers.yaml""
   DESC = Generating L6470 register headers from schema
   restat = 1
 
@@ -1991,7 +2021,7 @@ build CMakeFiles/update-status-preview | ${cmake_ninja_workdir}CMakeFiles/update
 # Custom command for CMakeFiles\Experimental
 
 build CMakeFiles/Experimental | ${cmake_ninja_workdir}CMakeFiles/Experimental: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D Experimental"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D Experimental"
   pool = console
 
 
@@ -1999,7 +2029,7 @@ build CMakeFiles/Experimental | ${cmake_ninja_workdir}CMakeFiles/Experimental: C
 # Custom command for CMakeFiles\Nightly
 
 build CMakeFiles/Nightly | ${cmake_ninja_workdir}CMakeFiles/Nightly: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D Nightly"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D Nightly"
   pool = console
 
 
@@ -2007,7 +2037,7 @@ build CMakeFiles/Nightly | ${cmake_ninja_workdir}CMakeFiles/Nightly: CUSTOM_COMM
 # Custom command for CMakeFiles\Continuous
 
 build CMakeFiles/Continuous | ${cmake_ninja_workdir}CMakeFiles/Continuous: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D Continuous"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D Continuous"
   pool = console
 
 
@@ -2015,7 +2045,7 @@ build CMakeFiles/Continuous | ${cmake_ninja_workdir}CMakeFiles/Continuous: CUSTO
 # Custom command for CMakeFiles\NightlyMemoryCheck
 
 build CMakeFiles/NightlyMemoryCheck | ${cmake_ninja_workdir}CMakeFiles/NightlyMemoryCheck: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D NightlyMemoryCheck"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D NightlyMemoryCheck"
   pool = console
 
 
@@ -2023,7 +2053,7 @@ build CMakeFiles/NightlyMemoryCheck | ${cmake_ninja_workdir}CMakeFiles/NightlyMe
 # Custom command for CMakeFiles\NightlyStart
 
 build CMakeFiles/NightlyStart | ${cmake_ninja_workdir}CMakeFiles/NightlyStart: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D NightlyStart"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D NightlyStart"
   pool = console
 
 
@@ -2031,7 +2061,7 @@ build CMakeFiles/NightlyStart | ${cmake_ninja_workdir}CMakeFiles/NightlyStart: C
 # Custom command for CMakeFiles\NightlyUpdate
 
 build CMakeFiles/NightlyUpdate | ${cmake_ninja_workdir}CMakeFiles/NightlyUpdate: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D NightlyUpdate"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D NightlyUpdate"
   pool = console
 
 
@@ -2039,7 +2069,7 @@ build CMakeFiles/NightlyUpdate | ${cmake_ninja_workdir}CMakeFiles/NightlyUpdate:
 # Custom command for CMakeFiles\NightlyConfigure
 
 build CMakeFiles/NightlyConfigure | ${cmake_ninja_workdir}CMakeFiles/NightlyConfigure: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D NightlyConfigure"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D NightlyConfigure"
   pool = console
 
 
@@ -2047,7 +2077,7 @@ build CMakeFiles/NightlyConfigure | ${cmake_ninja_workdir}CMakeFiles/NightlyConf
 # Custom command for CMakeFiles\NightlyBuild
 
 build CMakeFiles/NightlyBuild | ${cmake_ninja_workdir}CMakeFiles/NightlyBuild: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D NightlyBuild"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D NightlyBuild"
   pool = console
 
 
@@ -2055,7 +2085,7 @@ build CMakeFiles/NightlyBuild | ${cmake_ninja_workdir}CMakeFiles/NightlyBuild: C
 # Custom command for CMakeFiles\NightlyTest
 
 build CMakeFiles/NightlyTest | ${cmake_ninja_workdir}CMakeFiles/NightlyTest: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D NightlyTest"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D NightlyTest"
   pool = console
 
 
@@ -2063,7 +2093,7 @@ build CMakeFiles/NightlyTest | ${cmake_ninja_workdir}CMakeFiles/NightlyTest: CUS
 # Custom command for CMakeFiles\NightlyCoverage
 
 build CMakeFiles/NightlyCoverage | ${cmake_ninja_workdir}CMakeFiles/NightlyCoverage: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D NightlyCoverage"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D NightlyCoverage"
   pool = console
 
 
@@ -2071,7 +2101,7 @@ build CMakeFiles/NightlyCoverage | ${cmake_ninja_workdir}CMakeFiles/NightlyCover
 # Custom command for CMakeFiles\NightlyMemCheck
 
 build CMakeFiles/NightlyMemCheck | ${cmake_ninja_workdir}CMakeFiles/NightlyMemCheck: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D NightlyMemCheck"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D NightlyMemCheck"
   pool = console
 
 
@@ -2079,7 +2109,7 @@ build CMakeFiles/NightlyMemCheck | ${cmake_ninja_workdir}CMakeFiles/NightlyMemCh
 # Custom command for CMakeFiles\NightlySubmit
 
 build CMakeFiles/NightlySubmit | ${cmake_ninja_workdir}CMakeFiles/NightlySubmit: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D NightlySubmit"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D NightlySubmit"
   pool = console
 
 
@@ -2087,7 +2117,7 @@ build CMakeFiles/NightlySubmit | ${cmake_ninja_workdir}CMakeFiles/NightlySubmit:
 # Custom command for CMakeFiles\ExperimentalStart
 
 build CMakeFiles/ExperimentalStart | ${cmake_ninja_workdir}CMakeFiles/ExperimentalStart: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ExperimentalStart"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ExperimentalStart"
   pool = console
 
 
@@ -2095,7 +2125,7 @@ build CMakeFiles/ExperimentalStart | ${cmake_ninja_workdir}CMakeFiles/Experiment
 # Custom command for CMakeFiles\ExperimentalUpdate
 
 build CMakeFiles/ExperimentalUpdate | ${cmake_ninja_workdir}CMakeFiles/ExperimentalUpdate: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ExperimentalUpdate"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ExperimentalUpdate"
   pool = console
 
 
@@ -2103,7 +2133,7 @@ build CMakeFiles/ExperimentalUpdate | ${cmake_ninja_workdir}CMakeFiles/Experimen
 # Custom command for CMakeFiles\ExperimentalConfigure
 
 build CMakeFiles/ExperimentalConfigure | ${cmake_ninja_workdir}CMakeFiles/ExperimentalConfigure: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ExperimentalConfigure"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ExperimentalConfigure"
   pool = console
 
 
@@ -2111,7 +2141,7 @@ build CMakeFiles/ExperimentalConfigure | ${cmake_ninja_workdir}CMakeFiles/Experi
 # Custom command for CMakeFiles\ExperimentalBuild
 
 build CMakeFiles/ExperimentalBuild | ${cmake_ninja_workdir}CMakeFiles/ExperimentalBuild: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ExperimentalBuild"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ExperimentalBuild"
   pool = console
 
 
@@ -2119,7 +2149,7 @@ build CMakeFiles/ExperimentalBuild | ${cmake_ninja_workdir}CMakeFiles/Experiment
 # Custom command for CMakeFiles\ExperimentalTest
 
 build CMakeFiles/ExperimentalTest | ${cmake_ninja_workdir}CMakeFiles/ExperimentalTest: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ExperimentalTest"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ExperimentalTest"
   pool = console
 
 
@@ -2127,7 +2157,7 @@ build CMakeFiles/ExperimentalTest | ${cmake_ninja_workdir}CMakeFiles/Experimenta
 # Custom command for CMakeFiles\ExperimentalCoverage
 
 build CMakeFiles/ExperimentalCoverage | ${cmake_ninja_workdir}CMakeFiles/ExperimentalCoverage: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ExperimentalCoverage"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ExperimentalCoverage"
   pool = console
 
 
@@ -2135,7 +2165,7 @@ build CMakeFiles/ExperimentalCoverage | ${cmake_ninja_workdir}CMakeFiles/Experim
 # Custom command for CMakeFiles\ExperimentalMemCheck
 
 build CMakeFiles/ExperimentalMemCheck | ${cmake_ninja_workdir}CMakeFiles/ExperimentalMemCheck: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ExperimentalMemCheck"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ExperimentalMemCheck"
   pool = console
 
 
@@ -2143,7 +2173,7 @@ build CMakeFiles/ExperimentalMemCheck | ${cmake_ninja_workdir}CMakeFiles/Experim
 # Custom command for CMakeFiles\ExperimentalSubmit
 
 build CMakeFiles/ExperimentalSubmit | ${cmake_ninja_workdir}CMakeFiles/ExperimentalSubmit: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ExperimentalSubmit"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ExperimentalSubmit"
   pool = console
 
 
@@ -2151,7 +2181,7 @@ build CMakeFiles/ExperimentalSubmit | ${cmake_ninja_workdir}CMakeFiles/Experimen
 # Custom command for CMakeFiles\ContinuousStart
 
 build CMakeFiles/ContinuousStart | ${cmake_ninja_workdir}CMakeFiles/ContinuousStart: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ContinuousStart"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ContinuousStart"
   pool = console
 
 
@@ -2159,7 +2189,7 @@ build CMakeFiles/ContinuousStart | ${cmake_ninja_workdir}CMakeFiles/ContinuousSt
 # Custom command for CMakeFiles\ContinuousUpdate
 
 build CMakeFiles/ContinuousUpdate | ${cmake_ninja_workdir}CMakeFiles/ContinuousUpdate: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ContinuousUpdate"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ContinuousUpdate"
   pool = console
 
 
@@ -2167,7 +2197,7 @@ build CMakeFiles/ContinuousUpdate | ${cmake_ninja_workdir}CMakeFiles/ContinuousU
 # Custom command for CMakeFiles\ContinuousConfigure
 
 build CMakeFiles/ContinuousConfigure | ${cmake_ninja_workdir}CMakeFiles/ContinuousConfigure: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ContinuousConfigure"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ContinuousConfigure"
   pool = console
 
 
@@ -2175,7 +2205,7 @@ build CMakeFiles/ContinuousConfigure | ${cmake_ninja_workdir}CMakeFiles/Continuo
 # Custom command for CMakeFiles\ContinuousBuild
 
 build CMakeFiles/ContinuousBuild | ${cmake_ninja_workdir}CMakeFiles/ContinuousBuild: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ContinuousBuild"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ContinuousBuild"
   pool = console
 
 
@@ -2183,7 +2213,7 @@ build CMakeFiles/ContinuousBuild | ${cmake_ninja_workdir}CMakeFiles/ContinuousBu
 # Custom command for CMakeFiles\ContinuousTest
 
 build CMakeFiles/ContinuousTest | ${cmake_ninja_workdir}CMakeFiles/ContinuousTest: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ContinuousTest"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ContinuousTest"
   pool = console
 
 
@@ -2191,7 +2221,7 @@ build CMakeFiles/ContinuousTest | ${cmake_ninja_workdir}CMakeFiles/ContinuousTes
 # Custom command for CMakeFiles\ContinuousCoverage
 
 build CMakeFiles/ContinuousCoverage | ${cmake_ninja_workdir}CMakeFiles/ContinuousCoverage: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ContinuousCoverage"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ContinuousCoverage"
   pool = console
 
 
@@ -2199,7 +2229,7 @@ build CMakeFiles/ContinuousCoverage | ${cmake_ninja_workdir}CMakeFiles/Continuou
 # Custom command for CMakeFiles\ContinuousMemCheck
 
 build CMakeFiles/ContinuousMemCheck | ${cmake_ninja_workdir}CMakeFiles/ContinuousMemCheck: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ContinuousMemCheck"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ContinuousMemCheck"
   pool = console
 
 
@@ -2207,7 +2237,7 @@ build CMakeFiles/ContinuousMemCheck | ${cmake_ninja_workdir}CMakeFiles/Continuou
 # Custom command for CMakeFiles\ContinuousSubmit
 
 build CMakeFiles/ContinuousSubmit | ${cmake_ninja_workdir}CMakeFiles/ContinuousSubmit: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe -D ContinuousSubmit"
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe -D ContinuousSubmit"
   pool = console
 
 
@@ -2396,7 +2426,7 @@ build tests/test_optimization_telemetry.exe: C_EXECUTABLE_LINKER__test_optimizat
 # Utility command for test
 
 build tests/CMakeFiles/test.util: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code\tests" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\ctest.exe --force-new-ctest-process "
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code\tests" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\ctest.exe --force-new-ctest-process "
   DESC = Running tests...
   pool = console
   restat = 1
@@ -2420,7 +2450,7 @@ build tests/edit_cache: phony tests/CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build tests/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code\tests" && C:\ST\STM32CubeCLT_1.18.0\CMake\bin\cmake.exe --regenerate-during-build -S"C:\repos\Nucleo-H753ZI Project\code" -B"C:\repos\Nucleo-H753ZI Project\code""
+  COMMAND = cmd.exe /C "cd /D "C:\repos\Nucleo-H753ZI Project\code\tests" && C:\ST\STM32CubeCLT_1.19.0\CMake\bin\cmake.exe --regenerate-during-build -S"C:\repos\Nucleo-H753ZI Project\code" -B"C:\repos\Nucleo-H753ZI Project\code""
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -2468,14 +2498,14 @@ build tests/all: phony tests/unity.lib tests/test_safety_systems_hal_abstracted.
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeASMInformation.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeCInformation.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeGenericSystem.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeRCInformation.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CTest.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CTestTargets.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CTestUseLaunchers.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Compiler/Clang-ASM.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Compiler/Clang-C.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Compiler/Clang.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/DartConfiguration.tcl.in C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Clang-ASM.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Clang-C.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Clang.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Initialize.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Platform/Windows.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/3.28.1/CMakeASMCompiler.cmake CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeRCCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake CMakeLists.txt tests/CMakeLists.txt
+build build.ninja: RERUN_CMAKE | C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeASMInformation.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeCInformation.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeGenericSystem.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeRCInformation.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CTest.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CTestTargets.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CTestUseLaunchers.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Compiler/Clang-ASM.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Compiler/Clang-C.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Compiler/Clang.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/DartConfiguration.tcl.in C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Clang-ASM.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Clang-C.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Clang.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Initialize.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Platform/Windows.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/3.28.1/CMakeASMCompiler.cmake CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeRCCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake CMakeLists.txt tests/CMakeLists.txt
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeASMInformation.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeCInformation.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeGenericSystem.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeRCInformation.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CTest.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CTestTargets.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/CTestUseLaunchers.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Compiler/Clang-ASM.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Compiler/Clang-C.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Compiler/Clang.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/DartConfiguration.tcl.in C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Clang-ASM.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Clang-C.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Clang.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Initialize.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Platform/Windows.cmake C$:/ST/STM32CubeCLT_1.18.0/CMake/share/cmake-3.28/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/3.28.1/CMakeASMCompiler.cmake CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeRCCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake CMakeLists.txt tests/CMakeLists.txt: phony
+build C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeASMInformation.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeCInformation.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeGenericSystem.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeRCInformation.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CTest.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CTestTargets.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CTestUseLaunchers.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Compiler/Clang-ASM.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Compiler/Clang-C.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Compiler/Clang.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/DartConfiguration.tcl.in C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Clang-ASM.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Clang-C.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Clang.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Platform/Windows-Initialize.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Platform/Windows.cmake C$:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/Platform/WindowsPaths.cmake CMakeCache.txt CMakeFiles/3.28.1/CMakeASMCompiler.cmake CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeRCCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake CMakeLists.txt tests/CMakeLists.txt: phony
 
 
 #############################################

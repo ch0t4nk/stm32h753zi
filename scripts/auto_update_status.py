@@ -29,6 +29,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Tuple
 
+# Fix Windows console encoding for Unicode emojis
+if sys.platform == "win32":
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+
 
 class StatusUpdater:
     """Core STATUS.md automation engine"""

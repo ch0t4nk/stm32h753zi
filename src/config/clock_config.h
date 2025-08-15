@@ -31,7 +31,8 @@
 
 /** @brief HSE crystal frequency on STM32H753ZI Nucleo (CRITICAL: Must match
  * hardware) */
-#define HSE_CRYSTAL_FREQUENCY_HZ 8000000UL // 8 MHz crystal on Nucleo-H753ZI
+#define HSE_CRYSTAL_FREQUENCY_HZ                                              \
+    8000000UL // 8 MHz from ST-LINK MCO on Nucleo-H753ZI
 
 /** @brief HSI internal oscillator frequency (STM32H7 specification) */
 #define HSI_FREQUENCY_HZ 64000000UL // 64 MHz HSI
@@ -52,22 +53,23 @@
  */
 
 /** @brief Target system clock frequency (SYSCLK) */
-#define TARGET_SYSCLK_FREQUENCY_HZ 240000000UL // 240 MHz (max for STM32H753ZI)
+#define TARGET_SYSCLK_FREQUENCY_HZ                                            \
+    120000000UL // 120 MHz (safe startup frequency)
 
 /** @brief Target AHB clock frequency (HCLK) */
-#define TARGET_HCLK_FREQUENCY_HZ 240000000UL // 240 MHz (same as SYSCLK)
+#define TARGET_HCLK_FREQUENCY_HZ 120000000UL // 120 MHz (same as SYSCLK)
 
 /** @brief Target APB1 clock frequency (PCLK1) */
-#define TARGET_PCLK1_FREQUENCY_HZ 120000000UL // 120 MHz (HCLK/2)
+#define TARGET_PCLK1_FREQUENCY_HZ 60000000UL // 60 MHz (HCLK/2)
 
 /** @brief Target APB2 clock frequency (PCLK2) */
-#define TARGET_PCLK2_FREQUENCY_HZ 120000000UL // 120 MHz (HCLK/2)
+#define TARGET_PCLK2_FREQUENCY_HZ 60000000UL // 60 MHz (HCLK/2)
 
 /** @brief Target APB3 clock frequency (PCLK3) */
-#define TARGET_PCLK3_FREQUENCY_HZ 120000000UL // 120 MHz (HCLK/2)
+#define TARGET_PCLK3_FREQUENCY_HZ 60000000UL // 60 MHz (HCLK/2)
 
 /** @brief Target APB4 clock frequency (PCLK4) */
-#define TARGET_PCLK4_FREQUENCY_HZ 120000000UL // 120 MHz (HCLK/2)
+#define TARGET_PCLK4_FREQUENCY_HZ 60000000UL // 60 MHz (HCLK/2)
 
 /* ==========================================================================
  */
@@ -83,19 +85,21 @@
 #define PLL_VCO_MIN_HZ 192000000UL // 192 MHz minimum
 #define PLL_VCO_MAX_HZ 960000000UL // 960 MHz maximum
 
-/** @brief Primary PLL (PLL1) configuration for HSE source */
-#define PLL1_HSE_M_DIVIDER 1     // HSE/1 = 8MHz
-#define PLL1_HSE_N_MULTIPLIER 60 // 8MHz*60 = 480MHz VCO
-#define PLL1_HSE_P_DIVIDER 2     // 480MHz/2 = 240MHz SYSCLK
-#define PLL1_HSE_Q_DIVIDER 4     // 480MHz/4 = 120MHz
-#define PLL1_HSE_R_DIVIDER 2     // 480MHz/2 = 240MHz
+/** @brief Primary PLL (PLL1) configuration for HSI source (preferred for
+ * default Nucleo) */
+#define PLL1_HSI_M_DIVIDER 8     // HSI/8 = 8MHz
+#define PLL1_HSI_N_MULTIPLIER 30 // 8MHz*30 = 240MHz VCO
+#define PLL1_HSI_P_DIVIDER 2     // 240MHz/2 = 120MHz SYSCLK
+#define PLL1_HSI_Q_DIVIDER 4     // 240MHz/4 = 60MHz
+#define PLL1_HSI_R_DIVIDER 2     // 240MHz/2 = 120MHz
 
-/** @brief Primary PLL (PLL1) configuration for HSI source (fallback) */
-#define PLL1_HSI_M_DIVIDER 4     // HSI/4 = 16MHz
-#define PLL1_HSI_N_MULTIPLIER 30 // 16MHz*30 = 480MHz VCO
-#define PLL1_HSI_P_DIVIDER 2     // 480MHz/2 = 240MHz SYSCLK
-#define PLL1_HSI_Q_DIVIDER 4     // 480MHz/4 = 120MHz
-#define PLL1_HSI_R_DIVIDER 2     // 480MHz/2 = 240MHz
+/** @brief Primary PLL (PLL1) configuration for HSE source (requires solder
+ * bridge changes) */
+#define PLL1_HSE_M_DIVIDER 2     // HSE/2 = 4MHz
+#define PLL1_HSE_N_MULTIPLIER 60 // 4MHz*60 = 240MHz VCO
+#define PLL1_HSE_P_DIVIDER 2     // 240MHz/2 = 120MHz SYSCLK
+#define PLL1_HSE_Q_DIVIDER 4     // 240MHz/4 = 60MHz
+#define PLL1_HSE_R_DIVIDER 2     // 240MHz/2 = 120MHz
 
 /* ==========================================================================
  */
@@ -124,17 +128,18 @@
 
 /** @brief Clock source enumeration */
 typedef enum {
-    CLOCK_SOURCE_HSE = 0, /**< HSE crystal (preferred) */
-    CLOCK_SOURCE_HSI,     /**< HSI internal oscillator (fallback) */
+    CLOCK_SOURCE_HSI = 0, /**< HSI internal oscillator (preferred for Nucleo
+                             default config) */
+    CLOCK_SOURCE_HSE,     /**< HSE crystal (requires solder bridge changes) */
     CLOCK_SOURCE_CSI,     /**< CSI internal oscillator (emergency) */
     CLOCK_SOURCE_INVALID  /**< Invalid/unknown source */
 } ClockSource_t;
 
 /** @brief Clock source priority order (0 = highest priority) */
 #define CLOCK_SOURCE_PRIORITY_1                                               \
-    CLOCK_SOURCE_HSE // HSE preferred (most accurate)
+    CLOCK_SOURCE_HSI // HSI preferred (works with default Nucleo config)
 #define CLOCK_SOURCE_PRIORITY_2                                               \
-    CLOCK_SOURCE_HSI // HSI fallback (good performance)
+    CLOCK_SOURCE_HSE // HSE fallback (requires solder bridge changes)
 #define CLOCK_SOURCE_PRIORITY_3                                               \
     CLOCK_SOURCE_CSI // CSI emergency (minimal performance)
 
