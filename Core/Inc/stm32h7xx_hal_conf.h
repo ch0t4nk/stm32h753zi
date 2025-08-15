@@ -113,9 +113,9 @@ extern "C" {
  */
 #if !defined(HSE_VALUE)
 #define HSE_VALUE                                                             \
-    (25000000UL) /*!< Value of the External oscillator in Hz : FPGA case      \
-                    fixed to 60MHZ */
-#endif           /* HSE_VALUE */
+    (8000000UL) /*!< Value of the External oscillator in Hz : Nucleo-H753ZI   \
+                   has 8MHz crystal */
+#endif          /* HSE_VALUE */
 
 #if !defined(HSE_STARTUP_TIMEOUT)
 #define HSE_STARTUP_TIMEOUT (100UL) /*!< Time out for HSE start up, in ms */

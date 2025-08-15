@@ -1,0 +1,194 @@
+{
+  "timestamp": "2024-12-19",
+  "device": "STM32H753ZI",
+  "board": "NUCLEO-H753ZI",
+  "rcc_base_address": "0x58024400",
+  "registers_found": [
+    "CR",
+    "HSICFGR",
+    "CRRCR",
+    "CSICFGR",
+    "CFGR",
+    "D1CFGR",
+    "D2CFGR",
+    "D3CFGR",
+    "PLLCKSELR",
+    "PLLCFGR",
+    "PLL1DIVR",
+    "PLL1FRACR",
+    "PLL2DIVR",
+    "PLL2FRACR",
+    "PLL3DIVR",
+    "PLL3FRACR"
+  ],
+  "analysis": {
+    "CR": {
+      "raw_value": "0x00004025",
+      "fields": {
+        "HSION": 1,
+        "HSIKERON": 0,
+        "HSIRDY": 1,
+        "HSIDIV": 0,
+        "HSIDIVF": 1,
+        "CSION": 0,
+        "CSIRDY": 0,
+        "CSIKERON": 0,
+        "RC48ON": 0,
+        "RC48RDY": 0,
+        "D1CKRDY": 1,
+        "D2CKRDY": 0,
+        "HSEON": 0,
+        "HSERDY": 0,
+        "HSEBYP": 0,
+        "HSECSSON": 0,
+        "PLL1ON": 0,
+        "PLL1RDY": 0,
+        "PLL2ON": 0,
+        "PLL2RDY": 0,
+        "PLL3ON": 0,
+        "PLL3RDY": 0
+      },
+      "status": "HSI_READY",
+      "warnings": [],
+      "compliance": true
+    },
+    "CFGR": {
+      "raw_value": "0x00000000",
+      "fields": {
+        "SW": 0,
+        "SWS": 0,
+        "STOPWUCK": 0,
+        "STOPKERWUCK": 0,
+        "RTCPRE": 0,
+        "HRTIMSEL": 0,
+        "TIMPRE": 0,
+        "MCO1PRE": 0,
+        "MCO1SEL": 0,
+        "MCO2PRE": 0,
+        "MCO2SEL": 0
+      },
+      "system_clock_source": "HSI",
+      "warnings": [],
+      "compliance": true,
+      "system_clock_status": "HSI"
+    },
+    "PLLCKSELR": {
+      "raw_value": "0x000003C8",
+      "fields": {
+        "PLLSRC": 0,
+        "DIVM1": 60,
+        "DIVM2": 0,
+        "DIVM3": 0
+      },
+      "pll_sources": {
+        "source": "HSI",
+        "PLL1_VCO_input": 1066666.6666666667,
+        "PLL2_VCO_input": 0,
+        "PLL3_VCO_input": 0
+      },
+      "warnings": [
+        "PLL2 prescaler DIVM2=0 (division by zero)",
+        "PLL2 VCO input 0.0 MHz outside valid range (1.0-16.0 MHz)",
+        "PLL3 prescaler DIVM3=0 (division by zero)",
+        "PLL3 VCO input 0.0 MHz outside valid range (1.0-16.0 MHz)"
+      ],
+      "compliance": false
+    },
+    "PLLCFGR": {
+      "raw_value": "0x00000000",
+      "fields": {
+        "PLL1FRACEN": 0,
+        "PLL1VCOSEL": 0,
+        "PLL1RGE": 0,
+        "PLL2FRACEN": 0,
+        "PLL2VCOSEL": 0,
+        "PLL2RGE": 0,
+        "PLL3FRACEN": 0,
+        "PLL3VCOSEL": 0,
+        "PLL3RGE": 0,
+        "DIVP1EN": 0,
+        "DIVQ1EN": 0,
+        "DIVR1EN": 0,
+        "DIVP2EN": 0,
+        "DIVQ2EN": 0,
+        "DIVR2EN": 0,
+        "DIVP3EN": 0,
+        "DIVQ3EN": 0,
+        "DIVR3EN": 0
+      },
+      "pll_config": {
+        "PLL1": {
+          "input_range": "1-2 MHz",
+          "vco_range": "Wide VCO (150-836 MHz)",
+          "fractional_enabled": false,
+          "outputs_enabled": {
+            "P": false,
+            "Q": false,
+            "R": false
+          }
+        },
+        "PLL2": {
+          "input_range": "1-2 MHz",
+          "vco_range": "Wide VCO (150-836 MHz)",
+          "fractional_enabled": false,
+          "outputs_enabled": {
+            "P": false,
+            "Q": false,
+            "R": false
+          }
+        },
+        "PLL3": {
+          "input_range": "1-2 MHz",
+          "vco_range": "Wide VCO (150-836 MHz)",
+          "fractional_enabled": false,
+          "outputs_enabled": {
+            "P": false,
+            "Q": false,
+            "R": false
+          }
+        }
+      },
+      "warnings": [],
+      "compliance": true
+    },
+    "PLL1DIVR": {
+      "raw_value": "0x00000000",
+      "fields": {
+        "DIVN1": 0,
+        "DIVP1": 0,
+        "DIVQ1": 0,
+        "DIVR1": 0
+      },
+      "output_frequencies": {
+        "VCO": 1066666.6666666667
+      },
+      "warnings": [
+        "PLL1 VCO frequency 1.1 MHz outside valid range (150.0-836.0 MHz)",
+        "PLL1 DIVP = 0 (division by zero)",
+        "PLL1 DIVQ = 0 (division by zero)",
+        "PLL1 DIVR = 0 (division by zero)"
+      ],
+      "compliance": false
+    }
+  },
+  "overall_status": "CRITICAL_ISSUES",
+  "critical_issues": [
+    "PLLCKSELR non-compliant",
+    "PLL1DIVR non-compliant"
+  ],
+  "warnings": [
+    "PLLCKSELR: PLL2 prescaler DIVM2=0 (division by zero)",
+    "PLLCKSELR: PLL2 VCO input 0.0 MHz outside valid range (1.0-16.0 MHz)",
+    "PLLCKSELR: PLL3 prescaler DIVM3=0 (division by zero)",
+    "PLLCKSELR: PLL3 VCO input 0.0 MHz outside valid range (1.0-16.0 MHz)",
+    "PLL1DIVR: PLL1 VCO frequency 1.1 MHz outside valid range (150.0-836.0 MHz)",
+    "PLL1DIVR: PLL1 DIVP = 0 (division by zero)",
+    "PLL1DIVR: PLL1 DIVQ = 0 (division by zero)",
+    "PLL1DIVR: PLL1 DIVR = 0 (division by zero)"
+  ],
+  "compliance_summary": {
+    "registers_compliant": 3,
+    "registers_total": 5,
+    "overall_compliant": false
+  }
+}

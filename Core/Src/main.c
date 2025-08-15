@@ -20,14 +20,15 @@
  * ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "config/freertos_config_ssot.h"
 
 /* Private includes
  * ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "application/main_application.h"
-#include "config/freertos_config_ssot.h"
+#include "common/error_codes.h"
+#include "config/clock_config.h"
 #include "rtos/rtos_tasks.h"
-#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef
@@ -122,8 +123,11 @@ int main(void) {
 
     /* USER CODE END Init */
 
-    /* Configure the system clock */
+    /* Configure the system clock using centralized SSOT */
     SystemClock_Config();
+    /*if (Clock_Init() != HAL_OK) {
+        Error_Handler();
+    }*/
 
     /* USER CODE BEGIN SysInit */
 
@@ -131,6 +135,13 @@ int main(void) {
 
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
+
+    /* Early LED initialization for debugging */
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,
+                      GPIO_PIN_SET); // LD1 Green ON = System alive
+    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_1, GPIO_PIN_RESET);  // LD2 Blue OFF
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_RESET); // LD3 Yellow OFF
+
     MX_FDCAN1_Init();
     MX_I2C1_Init();
     MX_I2C2_Init();
@@ -185,28 +196,7 @@ int main(void) {
     }
 
     printf("Main: RTOS tasks initialized successfully!\r\n");
-    printf("Main: FreeRTOS scheduler will start with the following "
-           "configuration:\r\n");
-    printf("  - Safety Monitor: Priority %d (HIGHEST), %d words stack, %d ms "
-           "period\r\n",
-           SAFETY_MONITOR_TASK_PRIORITY, SAFETY_MONITOR_TASK_STACK_SIZE,
-           SAFETY_CHECK_PERIOD_MS);
-    printf("  - Motor Control: Priority %d, %d words stack, %d ms period\r\n",
-           MOTOR_CONTROL_TASK_PRIORITY, MOTOR_CONTROL_TASK_STACK_SIZE,
-           MOTOR_CONTROL_PERIOD_MS);
-    printf(
-        "  - CAN Communication: Priority %d, %d words stack, %d ms period\r\n",
-        CAN_COMM_TASK_PRIORITY, CAN_COMM_TASK_STACK_SIZE, CAN_POLL_PERIOD_MS);
-    printf("  - UART Communication: Priority %d, %d words stack, %d ms "
-           "period\r\n",
-           UART_COMM_TASK_PRIORITY, UART_COMM_TASK_STACK_SIZE,
-           UART_POLL_PERIOD_MS);
-    printf("  - Telemetry: Priority %d, %d words stack, %d ms period\r\n",
-           TELEMETRY_TASK_PRIORITY, TELEMETRY_TASK_STACK_SIZE,
-           TELEMETRY_PERIOD_MS);
-    printf("  - Default Task: Priority %ld (lowest), %lu words stack\r\n",
-           (long)tskIDLE_PRIORITY,
-           (unsigned long)defaultTask_attributes.stack_size);
+    printf("Main: FreeRTOS scheduler configuration loaded from SSOT.\r\n");
     printf("Main: Starting FreeRTOS scheduler...\r\n");
 
     /* USER CODE END RTOS_THREADS */
@@ -263,45 +253,54 @@ void SystemClock_Config(void) {
     HAL_PWREx_ConfigSupply(PWR_LDO_SUPPLY);
 
     /** Configure the main internal regulator output voltage
+     * NOTE: VOS1 for maximum performance (480MHz), avoiding VOS0 due to errata
      */
-    __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE2);
+    __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
     while (!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {
     }
 
     /** Initializes the RCC Oscillators according to the specified parameters
      * in the RCC_OscInitTypeDef structure.
+     * HSE = 8MHz on NUCLEO-H753ZI (ST-LINK MCO)
      */
     RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
     RCC_OscInitStruct.HSEState = RCC_HSE_ON;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-    RCC_OscInitStruct.PLL.PLLM = 2; // 8MHz/2 = 4MHz (corrected for 8MHz HSE)
+    RCC_OscInitStruct.PLL.PLLM =
+        4; // 8MHz/4 = 2MHz VCO input (within 1-16MHz range)
     RCC_OscInitStruct.PLL.PLLN =
-        240; // 4MHz*240 = 960MHz VCO (corrected for 8MHz HSE)
-    RCC_OscInitStruct.PLL.PLLP = 2; // 960MHz/2 = 480MHz SYSCLK
-    RCC_OscInitStruct.PLL.PLLQ = 4;
-    RCC_OscInitStruct.PLL.PLLR = 2;
-    RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_2;
-    RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
+        240; // 2MHz*240 = 480MHz VCO (within 192-836MHz wide range)
+    RCC_OscInitStruct.PLL.PLLP =
+        2; // 480MHz/2 = 240MHz SYSCLK (PLLP must be even!)
+    RCC_OscInitStruct.PLL.PLLQ = 4; // 480MHz/4 = 120MHz for USB/SDMMC
+    RCC_OscInitStruct.PLL.PLLR = 2; // 480MHz/2 = 240MHz for other peripherals
+    RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_1; // 1-2MHz VCI range
+    RCC_OscInitStruct.PLL.PLLVCOSEL =
+        RCC_PLL1VCOWIDE; // Wide VCO range (192-836MHz)
     RCC_OscInitStruct.PLL.PLLFRACN = 0;
     if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
         Error_Handler();
     }
 
     /** Initializes the CPU, AHB and APB buses clocks
+     * SYSCLK = 240MHz (maximum stable for H753ZI)
+     * HCLK = 240MHz (SYSCLK/1)
+     * APB clocks = 120MHz (HCLK/2 for peripheral compatibility)
      */
     RCC_ClkInitStruct.ClockType =
         RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 |
         RCC_CLOCKTYPE_PCLK2 | RCC_CLOCKTYPE_D3PCLK1 | RCC_CLOCKTYPE_D1PCLK1;
     RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
     RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
-    RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV2;
-    RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV2;
-    RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV2;
-    RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2;
-    RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
+    RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV1;  // 240/1 = 240MHz HCLK
+    RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV2; // 240/2 = 120MHz APB3
+    RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV2; // 240/2 = 120MHz APB1
+    RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2; // 240/2 = 120MHz APB2
+    RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2; // 240/2 = 120MHz APB4
 
+    // Flash latency for 240MHz operation at VOS1
     if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK) {
         Error_Handler();
     }
@@ -561,9 +560,18 @@ void StartDefaultTask(void *argument) {
             size_t min_ever_free = xPortGetMinimumEverFreeHeapSize();
             TickType_t uptime = xTaskGetTickCount();
 
+            // DEBUG: Check actual system clock
+            uint32_t actual_sysclk = HAL_RCC_GetSysClockFreq();
+            uint32_t hclk_freq = HAL_RCC_GetHCLKFreq();
+            uint32_t configured_cpu_clock = SystemCoreClock;
+
             printf("DefaultTask: System Health - Uptime: %lu ms, Heap Free: "
                    "%u/%u bytes, Idle Cycles: %lu\r\n",
                    uptime, free_heap, min_ever_free, idle_cycles);
+
+            printf("DEBUG CLOCKS: SystemCoreClock=%lu Hz, Actual SYSCLK=%lu "
+                   "Hz, HCLK=%lu Hz\r\n",
+                   configured_cpu_clock, actual_sysclk, hclk_freq);
 
             // Check for low memory conditions
             if (free_heap < (RTOS_HEAP_SIZE_BYTES / 8)) {
@@ -577,9 +585,10 @@ void StartDefaultTask(void *argument) {
                 LED_GREEN); // Toggle green LED to show system is alive
         }
 
+        // TEMPORARY DEBUG: Use longer delay to see if timing is wrong
         // 1ms delay - allows other tasks to run and provides 1kHz idle task
         // frequency
-        osDelay(1);
+        osDelay(100); // DEBUG: 100ms instead of 1ms to slow down LED
     }
     /* USER CODE END 5 */
 }

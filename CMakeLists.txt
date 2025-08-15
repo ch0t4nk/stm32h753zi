@@ -66,7 +66,16 @@ if(WIN32)
         "python.exe"
         "python3.exe"
         "python"
+        PATHS ENV PATH NO_DEFAULT_PATH
     )
+    # Fallback to system Python if venv not found
+    if(NOT PYTHON3_EXE)
+        find_program(PYTHON3_EXE NAMES 
+            "python.exe"
+            "python3.exe"
+            "python"
+        )
+    endif()
 else()
     find_program(PYTHON3_EXE NAMES 
         "${CMAKE_SOURCE_DIR}/.venv/bin/python3"
@@ -129,7 +138,7 @@ add_compile_definitions(
 # Auto-generated register headers from schemas
 add_custom_command(
     OUTPUT ${CMAKE_SOURCE_DIR}/src/config/l6470_registers_generated.h
-    COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/schema_generator.py 
+    COMMAND python ${CMAKE_SOURCE_DIR}/scripts/schema_generator.py 
             ${CMAKE_SOURCE_DIR}/schemas/l6470_registers.yaml
     DEPENDS ${CMAKE_SOURCE_DIR}/schemas/l6470_registers.yaml
             ${CMAKE_SOURCE_DIR}/scripts/schema_generator.py
@@ -139,7 +148,7 @@ add_custom_command(
 
 add_custom_command(
     OUTPUT ${CMAKE_SOURCE_DIR}/src/config/as5600_registers_generated.h
-    COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/schema_generator.py 
+    COMMAND python ${CMAKE_SOURCE_DIR}/scripts/schema_generator.py 
             ${CMAKE_SOURCE_DIR}/schemas/as5600_registers.yaml
     DEPENDS ${CMAKE_SOURCE_DIR}/schemas/as5600_registers.yaml
             ${CMAKE_SOURCE_DIR}/scripts/schema_generator.py
@@ -164,6 +173,7 @@ file(GLOB_RECURSE SOURCES
     "src/safety/*.c"             # Safety systems (emergency stop, watchdog, fault monitoring)
     "src/communication/*.c"      # Communication protocols (UART, CAN)
     "src/application/main_application.c"  # Main application logic (exclude duplicate main.c)
+    "src/config/hardware_detection.c"   # Hardware detection and presence validation
     "src/rtos/*.c"               # RTOS task implementations for Phase 5A
     "src/telemetry/*.c"          # Optimization telemetry for motor characterization
     "src/optimization/*.c"       # Motor efficiency optimization algorithms (FTR-009)
@@ -174,6 +184,8 @@ file(GLOB_RECURSE SOURCES
     "Core/Src/stm32h7xx_it.c"
     "Core/Src/system_stm32h7xx.c"
     "Core/Src/main.c"            # STM32CubeMX generated main file
+    "src/enhanced_clock_config.c" # Enhanced HSE clock configuration
+    "src/config/clock_config.c"   # Centralized clock configuration SSOT
 )
 
 # Add FreeRTOS source files when using RTOS

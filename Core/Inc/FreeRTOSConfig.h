@@ -35,7 +35,8 @@
 
 /* USER CODE BEGIN Includes */
 /* Section where include file can be added */
-#include "freertos_config_ssot.h"
+#include "config/clock_config.h"
+#include "config/freertos_config_ssot.h"
 /* USER CODE END Includes */
 
 /* Ensure definitions are only used by the compiler, and not by the assembler.
@@ -58,7 +59,7 @@ void xPortSysTickHandler(void);
 #define configUSE_IDLE_HOOK 0
 #define configUSE_TICK_HOOK 0
 #define configCPU_CLOCK_HZ (SystemCoreClock)
-#define configTICK_RATE_HZ ((TickType_t)1000)
+#define configTICK_RATE_HZ ((TickType_t)FREERTOS_TICK_RATE_HZ)
 #define configMAX_PRIORITIES (56)
 #define configMINIMAL_STACK_SIZE ((uint16_t)128)
 #define configTOTAL_HEAP_SIZE ((size_t)15360)
