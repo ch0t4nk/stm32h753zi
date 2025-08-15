@@ -48,28 +48,46 @@
 
 /* ==========================================================================
  */
-/* Target System Clock Frequencies (SSOT)                                    */
+/* Voltage Scaling Configuration for 480MHz Operation (SSOT)                */
 /* ==========================================================================
  */
 
-/** @brief Target system clock frequency (SYSCLK) */
+/** @brief Voltage scaling configuration for 480MHz operation
+ * @note VOS0 (Scale 0) is required for 480MHz operation on Revision V silicon
+ * @note This requires STM32H753ZI with Revision V or later silicon
+ */
+#define VOLTAGE_SCALE_CONFIG PWR_REGULATOR_VOLTAGE_SCALE0 // VOS0 for 480MHz
+
+/** @brief Enable overdrive mode for maximum performance */
+#define ENABLE_OVERDRIVE_MODE 1
+
+/** @brief Flash latency configuration for 480MHz @ VOS0 */
+#define FLASH_LATENCY_480MHZ FLASH_LATENCY_4 // 4 wait states for 480MHz
+
+/* ==========================================================================
+ */
+/* Target System Clock Frequencies (SSOT) - UPDATED FOR 480MHz OPERATION     */
+/* ==========================================================================
+ */
+
+/** @brief Target system clock frequency (SYSCLK) - STM32H753ZI Revision V supports 480MHz */
 #define TARGET_SYSCLK_FREQUENCY_HZ                                            \
-    120000000UL // 120 MHz (safe startup frequency)
+    480000000UL // 480 MHz (maximum for Revision V with VOS0)
 
 /** @brief Target AHB clock frequency (HCLK) */
-#define TARGET_HCLK_FREQUENCY_HZ 120000000UL // 120 MHz (same as SYSCLK)
+#define TARGET_HCLK_FREQUENCY_HZ 240000000UL // 240 MHz (SYSCLK/2 for optimal performance)
 
 /** @brief Target APB1 clock frequency (PCLK1) */
-#define TARGET_PCLK1_FREQUENCY_HZ 60000000UL // 60 MHz (HCLK/2)
+#define TARGET_PCLK1_FREQUENCY_HZ 120000000UL // 120 MHz (HCLK/2)
 
 /** @brief Target APB2 clock frequency (PCLK2) */
-#define TARGET_PCLK2_FREQUENCY_HZ 60000000UL // 60 MHz (HCLK/2)
+#define TARGET_PCLK2_FREQUENCY_HZ 120000000UL // 120 MHz (HCLK/2)
 
 /** @brief Target APB3 clock frequency (PCLK3) */
-#define TARGET_PCLK3_FREQUENCY_HZ 60000000UL // 60 MHz (HCLK/2)
+#define TARGET_PCLK3_FREQUENCY_HZ 120000000UL // 120 MHz (HCLK/2)
 
 /** @brief Target APB4 clock frequency (PCLK4) */
-#define TARGET_PCLK4_FREQUENCY_HZ 60000000UL // 60 MHz (HCLK/2)
+#define TARGET_PCLK4_FREQUENCY_HZ 120000000UL // 120 MHz (HCLK/2)
 
 /* ==========================================================================
  */
@@ -87,19 +105,19 @@
 
 /** @brief Primary PLL (PLL1) configuration for HSI source (preferred for
  * default Nucleo) */
-#define PLL1_HSI_M_DIVIDER 8     // HSI/8 = 8MHz
-#define PLL1_HSI_N_MULTIPLIER 30 // 8MHz*30 = 240MHz VCO
-#define PLL1_HSI_P_DIVIDER 2     // 240MHz/2 = 120MHz SYSCLK
-#define PLL1_HSI_Q_DIVIDER 4     // 240MHz/4 = 60MHz
-#define PLL1_HSI_R_DIVIDER 2     // 240MHz/2 = 120MHz
+#define PLL1_HSI_M_DIVIDER 4     // HSI/4 = 16MHz
+#define PLL1_HSI_N_MULTIPLIER 60 // 16MHz*60 = 960MHz VCO
+#define PLL1_HSI_P_DIVIDER 2     // 960MHz/2 = 480MHz SYSCLK
+#define PLL1_HSI_Q_DIVIDER 4     // 960MHz/4 = 240MHz
+#define PLL1_HSI_R_DIVIDER 2     // 960MHz/2 = 480MHz
 
 /** @brief Primary PLL (PLL1) configuration for HSE source (requires solder
  * bridge changes) */
-#define PLL1_HSE_M_DIVIDER 2     // HSE/2 = 4MHz
-#define PLL1_HSE_N_MULTIPLIER 60 // 4MHz*60 = 240MHz VCO
-#define PLL1_HSE_P_DIVIDER 2     // 240MHz/2 = 120MHz SYSCLK
-#define PLL1_HSE_Q_DIVIDER 4     // 240MHz/4 = 60MHz
-#define PLL1_HSE_R_DIVIDER 2     // 240MHz/2 = 120MHz
+#define PLL1_HSE_M_DIVIDER 1     // HSE/1 = 8MHz
+#define PLL1_HSE_N_MULTIPLIER 120 // 8MHz*120 = 960MHz VCO
+#define PLL1_HSE_P_DIVIDER 2     // 960MHz/2 = 480MHz SYSCLK
+#define PLL1_HSE_Q_DIVIDER 4     // 960MHz/4 = 240MHz
+#define PLL1_HSE_R_DIVIDER 2     // 960MHz/2 = 480MHz
 
 /* ==========================================================================
  */
@@ -256,8 +274,8 @@ HAL_StatusTypeDef Clock_MonitorStability(void);
 #endif
 
 // Validate target frequencies are achievable
-#if TARGET_SYSCLK_FREQUENCY_HZ > 240000000UL
-#error "Target SYSCLK frequency exceeds STM32H753ZI maximum (240 MHz)"
+#if TARGET_SYSCLK_FREQUENCY_HZ > 480000000UL
+#error "Target SYSCLK frequency exceeds STM32H753ZI maximum (480 MHz with VOS0)"
 #endif
 
 #if TARGET_HCLK_FREQUENCY_HZ > TARGET_SYSCLK_FREQUENCY_HZ

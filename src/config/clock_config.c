@@ -411,7 +411,7 @@ static HAL_StatusTypeDef Clock_ConfigurePLL_HSE(void) {
     RCC_OscInitStruct.PLL.PLLQ = PLL1_HSE_Q_DIVIDER;
     RCC_OscInitStruct.PLL.PLLR = PLL1_HSE_R_DIVIDER;
     RCC_OscInitStruct.PLL.PLLRGE =
-        RCC_PLL1VCIRANGE_2; // 4-8MHz VCO input range
+        RCC_PLL1VCIRANGE_2; // 4-8MHz VCO input range (HSE/1 = 8MHz)
     RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE; // Wide VCO (192-960MHz)
     RCC_OscInitStruct.PLL.PLLFRACN = 0;
 
@@ -442,7 +442,7 @@ static HAL_StatusTypeDef Clock_ConfigurePLL_HSI(void) {
     RCC_OscInitStruct.PLL.PLLQ = PLL1_HSI_Q_DIVIDER;
     RCC_OscInitStruct.PLL.PLLR = PLL1_HSI_R_DIVIDER;
     RCC_OscInitStruct.PLL.PLLRGE =
-        RCC_PLL1VCIRANGE_3; // 8-16MHz VCO input range
+        RCC_PLL1VCIRANGE_3; // 8-16MHz VCO input range (HSI/4 = 16MHz)
     RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE; // Wide VCO (192-960MHz)
     RCC_OscInitStruct.PLL.PLLFRACN = 0;
 
@@ -458,10 +458,14 @@ static HAL_StatusTypeDef Clock_ConfigurePLL_HSI(void) {
 }
 
 /**
- * @brief Configure system clocks (AHB, APB prescalers)
+ * @brief Configure system clocks (AHB, APB prescalers) for 480MHz operation
  */
 static HAL_StatusTypeDef Clock_ConfigureSystemClocks(void) {
     RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+    // Enable VOS0 voltage scaling for 480MHz operation
+    __HAL_PWR_VOLTAGESCALING_CONFIG(VOLTAGE_SCALE_CONFIG);
+    while (!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
 
     RCC_ClkInitStruct.ClockType =
         RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 |
@@ -480,17 +484,17 @@ static HAL_StatusTypeDef Clock_ConfigureSystemClocks(void) {
         // Use FLASH_LATENCY_0 for low frequency
         return HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0);
     } else {
-        // Normal mode - use PLL
+        // Normal mode - use PLL for 480MHz operation
         RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
         RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
-        RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV1;  // 120MHz HCLK
-        RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV2; // 60MHz APB3
-        RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV2; // 60MHz APB1
-        RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2; // 60MHz APB2
-        RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2; // 60MHz APB4
+        RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV2;  // 240MHz HCLK (480MHz/2)
+        RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV2; // 120MHz APB3 (240MHz/2)
+        RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV2; // 120MHz APB1 (240MHz/2)
+        RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2; // 120MHz APB2 (240MHz/2)
+        RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2; // 120MHz APB4 (240MHz/2)
 
-        // Use appropriate flash latency for 120MHz
-        return HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1);
+        // Use FLASH_LATENCY_4 for 480MHz @ VOS0
+        return HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_480MHZ);
     }
 }
 
