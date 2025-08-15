@@ -104,14 +104,13 @@ HAL_StatusTypeDef Clock_Init(void) {
     }
 
     // CRITICAL: Update SystemCoreClock variable
+    clock_initialized = true; // Set before Clock_UpdateSystemClock() call
     status = Clock_UpdateSystemClock();
     if (status != HAL_OK) {
         CLOCK_DEBUG_PRINT("SystemCoreClock update failed!");
         Error_Handler();
         return HAL_ERROR;
     }
-
-    clock_initialized = true;
     Clock_UpdateHealthStatus();
 
     CLOCK_DEBUG_PRINT("Clock initialization complete");
