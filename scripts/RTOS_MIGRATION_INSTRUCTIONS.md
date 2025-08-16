@@ -26,3 +26,29 @@ Download from: https://www.st.com/en/embedded-software/stm32cubeh7.html
 #### Step 3: Replace HAL Components
 
 File mapping:
+- `STM32CubeH7/Drivers/CMSIS/` -> `drivers/CMSIS/`
+- `STM32CubeH7/Drivers/STM32H7xx_HAL_Driver/` -> `drivers/STM32H7xx_HAL_Driver/`
+
+#### Step 4: Update Configuration
+
+Configuration changes:
+- Core/Inc/stm32h7xx_hal_conf.h: Set USE_RTOS=1
+- Core/Inc/FreeRTOSConfig.h: Verify RTOS configuration
+- CMakeLists.txt: Update HAL source files if needed
+
+#### Step 5: Validate Build
+
+### Critical Validation
+
+After migration, verify:
+- [ ] Check CMSIS Core version = v5.4.0
+- [ ] Verify HAL has no USE_RTOS constraint
+- [ ] Confirm FreeRTOS builds successfully
+- [ ] Test RTOS task scheduling
+
+### Emergency Rollback
+```bash
+git checkout pre-rtos-upgrade
+cp -r drivers_backup_pre_rtos/* drivers/
+cp -r config_backup_pre_rtos/* Core/Inc/
+```

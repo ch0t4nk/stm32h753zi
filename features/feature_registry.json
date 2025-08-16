@@ -1,15 +1,16 @@
 {
   "metadata": {
     "version": "1.0.0",
-    "last_updated": "2025-08-13T19:29:23.881939Z",
-    "total_features": 17,
+    "last_updated": "2025-08-15T21:57:00Z",
+    "total_features": 18,
     "completed_features": 12,
     "in_progress_features": 1,
-    "planned_features": 4,
-    "urgent_features": 3,
+    "planned_features": 5,
+    "urgent_features": 4,
     "blocking_issues": [
       "FTR-014: Git push blocked by 917.71MB semantic database file",
-      "FTR-014: Semantic database staleness affecting development accuracy"
+      "FTR-014: Semantic database staleness affecting development accuracy",
+      "FTR-019: HAL V1.11.5 hard-coded RTOS constraint blocking FreeRTOS integration"
     ]
   },
   "categories": {
@@ -722,6 +723,56 @@
       "effort_estimate_hours": 8,
       "effort_actual_hours": 0,
       "commits": []
+    },
+    "FTR-019": {
+      "id": "FTR-019",
+      "name": "RTOS HAL Migration Implementation",
+      "status": "PLANNED",
+      "phase": "2.1",
+      "priority": "CRITICAL",
+      "category": "rtos",
+      "description": "Implement complete STM32CubeH7 V1.12.1 HAL upgrade to remove RTOS constraint and enable FreeRTOS integration following comprehensive analysis in commit a4db30c. This addresses the root cause blocking issue in HAL V1.11.5 line 90 '#error USE_RTOS should be 0'.",
+      "acceptance_criteria": [
+        "HAL upgraded to v1.12.x with RTOS constraint completely removed",
+        "CMSIS Core upgraded to v5.4.0 (STM32CubeH7 standard)",
+        "CMSIS Device upgraded to v1.11.x for compatibility",
+        "FreeRTOS compilation successful with USE_RTOS=1",
+        "All existing functionality preserved and validated",
+        "Version consistency validated via check_rtos_compatibility.py",
+        "Build system compatibility maintained",
+        "No functionality disabled or workarounds used"
+      ],
+      "implementation_files": [
+        "drivers/STM32H7xx_HAL_Driver/",
+        "drivers/CMSIS/",
+        "Core/Inc/stm32h7xx_hal_conf.h",
+        "CMakeLists.txt"
+      ],
+      "test_files": [
+        "tests/unit/test_rtos_integration.c",
+        "tests/integration/test_hal_rtos_compatibility.c"
+      ],
+      "documentation": [
+        "scripts/RTOS_MIGRATION_INSTRUCTIONS.md",
+        "scripts/rtos_migration_plan.json"
+      ],
+      "dependencies": [
+        "Complete RTOS analysis (commit a4db30c)"
+      ],
+      "dependents": [
+        "FTR-020: RTOS Task Architecture Implementation",
+        "FTR-021: Thread-Safe Communication Protocols"
+      ],
+      "blockers": [
+        "HAL V1.11.5 hard-coded RTOS constraint",
+        "CMSIS version inconsistency below STM32CubeH7 standard"
+      ],
+      "completion_date": null,
+      "effort_estimate_hours": 16,
+      "effort_actual_hours": 0,
+      "commits": [
+        "a4db30c: Complete RTOS compatibility analysis and migration planning"
+      ]
     }
   }
 }

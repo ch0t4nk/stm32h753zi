@@ -36,6 +36,11 @@
 #define MAX_FAULT_RECORDS 64       // Maximum fault records to store
 #define FAULT_CHECK_INTERVAL_MS 50 // Fault check interval
 
+// STM32H7 Silicon Revision IDs (SSOT)
+#define STM32H7_REV_ID_Y 0x1000
+#define STM32H7_REV_ID_V 0x1003
+#define STM32H7_REV_ID_FUTURE_MIN 0x1004
+
 /* ==========================================================================
  */
 /* Watchdog Timer Configuration (SSOT)                                       */

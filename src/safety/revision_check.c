@@ -8,6 +8,8 @@
 #include "revision_check.h"
 #include <stdio.h>
 
+#include "config/safety_config.h" // For STM32H7_REV_ID_Y, STM32H7_REV_ID_V
+
 /* Private variables */
 static STM32H7_Revision_t detected_revision = STM32H7_REV_UNKNOWN;
 static bool revision_detected = false;
@@ -54,28 +56,22 @@ STM32H7_Revision_t Revision_Detect(void) {
     // Decode revision based on REV_ID
     // Based on STM32H7 reference manual and errata sheets
     switch (rev_id) {
-    case 0x1000: // Revision Y
-        printf("[REVISION] Detected Revision Y (0x1000) - 400MHz max, VOS0 "
-               "unavailable\r\n");
+    case STM32H7_REV_ID_Y: // Revision Y
+        printf("[REVISION] Detected Revision Y (0x%04X) - 400MHz max, VOS0 unavailable\r\n", STM32H7_REV_ID_Y);
         detected_revision = STM32H7_REV_Y;
         break;
 
-    case 0x1003: // Revision V
-        printf("[REVISION] Detected Revision V (0x1003) - 480MHz capable with "
-               "VOS0\r\n");
+    case STM32H7_REV_ID_V: // Revision V
+        printf("[REVISION] Detected Revision V (0x%04X) - 480MHz capable with VOS0\r\n", STM32H7_REV_ID_V);
         detected_revision = STM32H7_REV_V;
         break;
 
     default:
-        if (rev_id > 0x1003) {
-            printf("[REVISION] Detected future revision (0x%04lX) - assuming "
-                   "480MHz capable\r\n",
-                   rev_id);
+        if (rev_id >= STM32H7_REV_ID_FUTURE_MIN) {
+            printf("[REVISION] Detected future revision (0x%04lX) - assuming 480MHz capable\r\n", rev_id);
             detected_revision = STM32H7_REV_FUTURE;
         } else {
-            printf("[REVISION] WARNING: Unknown revision 0x%04lX - assuming "
-                   "conservative limits\r\n",
-                   rev_id);
+            printf("[REVISION] WARNING: Unknown revision 0x%04lX - assuming conservative limits\r\n", rev_id);
             detected_revision = STM32H7_REV_Y; // Conservative fallback
         }
         break;
