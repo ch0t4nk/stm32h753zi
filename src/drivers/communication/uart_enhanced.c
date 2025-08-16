@@ -11,6 +11,7 @@
  */
 
 #include "uart_enhanced.h"
+#include "config/comm_config.h"
 #include <stdio.h>
 #include <string.h>
 

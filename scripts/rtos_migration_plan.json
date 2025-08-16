@@ -1,0 +1,74 @@
+{
+  "migration_type": "STM32CubeH7_V1.12.1_RTOS_Compatible",
+  "target_versions": {
+    "cmsis_core": "v5.4.0",
+    "cmsis_device": "v1.11.x",
+    "hal_driver": "v1.12.x",
+    "firmware_package": "STM32CubeH7_V1.12.1"
+  },
+  "backup_strategy": {
+    "current_drivers": "drivers_backup_pre_rtos/",
+    "current_config": "config_backup_pre_rtos/",
+    "git_branch": "pre-rtos-upgrade"
+  },
+  "migration_steps": [
+    {
+      "step": 1,
+      "action": "Backup Current State",
+      "commands": [
+        "git checkout -b pre-rtos-upgrade",
+        "git add -A && git commit -m 'Backup before RTOS HAL upgrade'",
+        "cp -r drivers/ drivers_backup_pre_rtos/",
+        "cp -r Core/Inc/ config_backup_pre_rtos/"
+      ]
+    },
+    {
+      "step": 2,
+      "action": "Download STM32CubeH7 V1.12.1",
+      "source": "https://www.st.com/en/embedded-software/stm32cubeh7.html",
+      "extract_components": [
+        "Drivers/CMSIS/",
+        "Drivers/STM32H7xx_HAL_Driver/",
+        "Projects/NUCLEO-H743ZI/Templates/"
+      ]
+    },
+    {
+      "step": 3,
+      "action": "Replace HAL Components",
+      "file_mapping": {
+        "STM32CubeH7/Drivers/CMSIS/": "drivers/CMSIS/",
+        "STM32CubeH7/Drivers/STM32H7xx_HAL_Driver/": "drivers/STM32H7xx_HAL_Driver/"
+      }
+    },
+    {
+      "step": 4,
+      "action": "Update Configuration",
+      "config_changes": [
+        "Core/Inc/stm32h7xx_hal_conf.h: Set USE_RTOS=1",
+        "Core/Inc/FreeRTOSConfig.h: Verify RTOS configuration",
+        "CMakeLists.txt: Update HAL source files if needed"
+      ]
+    },
+    {
+      "step": 5,
+      "action": "Validate Build",
+      "validation_commands": [
+        "cmake --build build --target clean",
+        "cmake --build build",
+        "python scripts/check_rtos_compatibility.py"
+      ]
+    }
+  ],
+  "critical_files_to_update": [
+    "drivers/CMSIS/Include/cmsis_version.h",
+    "drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h7xx.h",
+    "drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h",
+    "Core/Inc/stm32h7xx_hal_conf.h"
+  ],
+  "verification_tests": [
+    "Check CMSIS Core version = v5.4.0",
+    "Verify HAL has no USE_RTOS constraint",
+    "Confirm FreeRTOS builds successfully",
+    "Test RTOS task scheduling"
+  ]
+}

@@ -21,7 +21,8 @@
 /* UART handle */
 UART_HandleTypeDef huart3;
 
-/* FDCAN handle declaration (needed for interrupt handlers in stm32h7xx_it.c) */
+/* FDCAN handle declaration (needed for interrupt handlers in stm32h7xx_it.c)
+ */
 /* Note: FDCAN not used in UART test but handle required for linking */
 FDCAN_HandleTypeDef hfdcan1;
 
@@ -139,9 +140,11 @@ void UART_Init(void) {
 }
 
 /**
- * @brief Retarget printf to UART - NOTE: Using BSP implementation to avoid conflict
+ * @brief Retarget printf to UART - NOTE: Using BSP implementation to avoid
+ * conflict
  */
-// int __io_putchar(int ch) - REMOVED: Using BSP version to avoid multiple definition
+// int __io_putchar(int ch) - REMOVED: Using BSP version to avoid multiple
+// definition
 
 /**
  * @brief Error Handler with LED indication
@@ -244,4 +247,5 @@ int main(void) {
     }
 }
 
-/* HAL_MspInit - REMOVED: Using Core/Src/stm32h7xx_hal_msp.c version to avoid conflict */
+/* HAL_MspInit - REMOVED: Using Core/Src/stm32h7xx_hal_msp.c version to avoid
+ * conflict */

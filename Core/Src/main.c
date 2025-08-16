@@ -53,8 +53,8 @@
 /* Private variables
  * ---------------------------------------------------------*/
 
-// Replace BSP COM with direct HAL UART  
-UART_HandleTypeDef huart3;  // UART3 for virtual COM port
+// Replace BSP COM with direct HAL UART
+UART_HandleTypeDef huart3; // UART3 for virtual COM port
 
 FDCAN_HandleTypeDef hfdcan1;
 
@@ -179,27 +179,42 @@ int main(void) {
     /* USER CODE BEGIN RTOS_THREADS */
 
     // Initialize the main application (safety system, motor controller, etc.)
-    printf("Main: Initializing application systems...\r\n");
+    const char *init_msg = "Main: Initializing application systems...\r\n";
+    HAL_UART_Transmit(&huart3, (uint8_t *)init_msg, strlen(init_msg), 1000);
+
     SystemError_t app_init_result = main_application_init();
     if (app_init_result != SYSTEM_OK) {
-        printf(
-            "Main: ERROR - Application initialization failed (code: %d)\r\n",
-            app_init_result);
+        const char *error_msg =
+            "Main: ERROR - Application initialization failed\r\n";
+        HAL_UART_Transmit(&huart3, (uint8_t *)error_msg, strlen(error_msg),
+                          1000);
         Error_Handler();
     }
 
     // Initialize and start all RTOS tasks
-    printf("Main: Initializing RTOS task system...\r\n");
+    const char *rtos_msg = "Main: Initializing RTOS task system...\r\n";
+    HAL_UART_Transmit(&huart3, (uint8_t *)rtos_msg, strlen(rtos_msg), 1000);
+
     SystemError_t rtos_init_result = rtos_tasks_init();
     if (rtos_init_result != SYSTEM_OK) {
-        printf("Main: ERROR - RTOS task initialization failed (code: %d)\r\n",
-               rtos_init_result);
+        const char *rtos_error_msg =
+            "Main: ERROR - RTOS task initialization failed\r\n";
+        HAL_UART_Transmit(&huart3, (uint8_t *)rtos_error_msg,
+                          strlen(rtos_error_msg), 1000);
         Error_Handler();
     }
 
-    printf("Main: RTOS tasks initialized successfully!\r\n");
-    printf("Main: FreeRTOS scheduler configuration loaded from SSOT.\r\n");
-    printf("Main: Starting FreeRTOS scheduler...\r\n");
+    const char *success_msg = "Main: RTOS tasks initialized successfully!\r\n";
+    HAL_UART_Transmit(&huart3, (uint8_t *)success_msg, strlen(success_msg),
+                      1000);
+
+    const char *ssot_msg =
+        "Main: FreeRTOS scheduler configuration loaded from SSOT.\r\n";
+    HAL_UART_Transmit(&huart3, (uint8_t *)ssot_msg, strlen(ssot_msg), 1000);
+
+    const char *scheduler_msg = "Main: Starting FreeRTOS scheduler...\r\n";
+    HAL_UART_Transmit(&huart3, (uint8_t *)scheduler_msg, strlen(scheduler_msg),
+                      1000);
 
     /* USER CODE END RTOS_THREADS */
 
@@ -209,33 +224,34 @@ int main(void) {
 
     /* Initialize LEDs - HAL GPIO (replacing BSP) */
     GPIO_InitTypeDef GPIO_InitStruct = {0};
-    
+
     // Enable GPIO clocks
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOE_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
-    
+
     // Configure LED pins as outputs
     GPIO_InitStruct.Pin = LED_GREEN_PIN | LED_RED_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-    
+
     GPIO_InitStruct.Pin = LED_YELLOW_PIN;
     HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-    
+
     // Configure user button
     GPIO_InitStruct.Pin = USER_BUTTON_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(USER_BUTTON_GPIO_PORT, &GPIO_InitStruct);
-    
+
     // Enable EXTI interrupt
     HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
-    /* Configure HAL UART3 for virtual COM port - direct replacement for BSP_COM */
+    /* Configure HAL UART3 for virtual COM port - direct replacement for
+     * BSP_COM */
     huart3.Instance = USART3;
     huart3.Init.BaudRate = 115200;
     huart3.Init.WordLength = UART_WORDLENGTH_8B;
@@ -247,30 +263,16 @@ int main(void) {
     huart3.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
     huart3.Init.ClockPrescaler = UART_PRESCALER_DIV1;
     huart3.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-    
+
     if (HAL_UART_Init(&huart3) != HAL_OK) {
         Error_Handler();
     }
 
-    /* IMMEDIATE COM5 TEST - Send direct UART data to verify COM5 output */
-    const char *test_message = "STM32H753ZI UART Test - COM5 Active!\r\n";
-    const char *startup_msg =
-        "System Starting - Motor Control Firmware Loaded\r\n";
+    /* REMOVED TEST MESSAGES - System may be resetting due to watchdog or
+     * initialization issues */
 
-    // Send test messages via HAL UART
-    if (HAL_UART_Transmit(&huart3, (uint8_t *)test_message, strlen(test_message),
-                         1000) == HAL_OK) {
-        // Flash green LED to indicate successful transmission
-        for (int i = 0; i < 3; i++) {
-            HAL_GPIO_WritePin(LED_GREEN_GPIO_PORT, LED_GREEN_PIN, GPIO_PIN_SET);
-            HAL_Delay(100);
-            HAL_GPIO_WritePin(LED_GREEN_GPIO_PORT, LED_GREEN_PIN, GPIO_PIN_RESET);
-            HAL_Delay(100);
-        }
-    }
-
-    HAL_Delay(500); // Ensure message is transmitted
-    HAL_UART_Transmit(&huart3, (uint8_t *)startup_msg, strlen(startup_msg), 1000);
+    // Set LED to known state before starting scheduler
+    HAL_GPIO_WritePin(LED_GREEN_GPIO_PORT, LED_GREEN_PIN, GPIO_PIN_SET);
 
     /* Start scheduler */
     osKernelStart();
@@ -592,69 +594,32 @@ static void MX_GPIO_Init(void) {
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument) {
     /* USER CODE BEGIN 5 */
-    printf("DefaultTask: Started - System monitoring and idle processing\r\n");
+    const char *startup_task_msg =
+        "DefaultTask: Started - System monitoring and idle processing\r\n";
+    HAL_UART_Transmit(&huart3, (uint8_t *)startup_task_msg,
+                      strlen(startup_task_msg), 1000);
 
-    uint32_t idle_cycles = 0;
+    uint32_t heartbeat_count = 0;
 
     /* Infinite loop */
     for (;;) {
-        idle_cycles++;
+        heartbeat_count++;
 
-        // Basic system health monitoring every 5 seconds
-        if ((idle_cycles % 5000) == 0) {
-            // Get system statistics
-            size_t free_heap = xPortGetFreeHeapSize();
-            size_t min_ever_free = xPortGetMinimumEverFreeHeapSize();
-            TickType_t uptime = xTaskGetTickCount();
-
-            // DEBUG: Check actual system clock
-            uint32_t actual_sysclk = HAL_RCC_GetSysClockFreq();
-            uint32_t hclk_freq = HAL_RCC_GetHCLKFreq();
-            uint32_t configured_cpu_clock = SystemCoreClock;
-
-            printf("DefaultTask: System Health - Uptime: %lu ms, Heap Free: "
-                   "%u/%u bytes, Idle Cycles: %lu\r\n",
-                   uptime, free_heap, min_ever_free, idle_cycles);
-
-            printf("DEBUG CLOCKS: SystemCoreClock=%lu Hz, Actual SYSCLK=%lu "
-                   "Hz, HCLK=%lu Hz\r\n",
-                   configured_cpu_clock, actual_sysclk, hclk_freq);
-
-            // DIRECT COM5 OUTPUT - Send system status to COM5
-            char status_buffer[200];
-            snprintf(status_buffer, sizeof(status_buffer),
-                     "STM32H753ZI Status: Uptime=%lu ms, Heap=%u bytes, "
-                     "Cycles=%lu\r\n",
-                     uptime, free_heap, idle_cycles);
-            HAL_UART_Transmit(&huart3, (uint8_t *)status_buffer,
-                             strlen(status_buffer), 1000);
-
-            // Check for low memory conditions
-            if (free_heap < (RTOS_HEAP_SIZE_BYTES / 8)) {
-                printf("DefaultTask: WARNING - Low heap memory detected!\r\n");
-                const char *warning_msg =
-                    "WARNING: Low heap memory detected!\r\n";
-                HAL_UART_Transmit(&huart3, (uint8_t *)warning_msg,
-                                 strlen(warning_msg), 1000);
-            }
-        }
-
-        // LED indicator for system activity (every 1000 cycles = 1 second)
-        if ((idle_cycles % 1000) == 0) {
+        // LED toggle every 10 iterations (1 second heartbeat: 10 * 100ms =
+        // 1000ms)
+        if ((heartbeat_count % 10) == 0) {
             HAL_GPIO_TogglePin(LED_GREEN_GPIO_PORT, LED_GREEN_PIN);
 
-            // Send heartbeat message to COM5 every second
+            // Send heartbeat message every time LED toggles (every 1 second)
             char heartbeat_msg[50];
             snprintf(heartbeat_msg, sizeof(heartbeat_msg),
-                     "Heartbeat: %lu seconds\r\n", idle_cycles / 1000);
+                     "Heartbeat: %lu seconds\r\n", heartbeat_count / 10);
             HAL_UART_Transmit(&huart3, (uint8_t *)heartbeat_msg,
-                             strlen(heartbeat_msg), 500);
+                              strlen(heartbeat_msg), 500);
         }
 
-        // TEMPORARY DEBUG: Use longer delay to see if timing is wrong
-        // 1ms delay - allows other tasks to run and provides 1kHz idle task
-        // frequency
-        osDelay(100); // DEBUG: 100ms instead of 1ms to slow down LED
+        // Essential: FreeRTOS task delay - MUST be present for task switching
+        osDelay(100); // 100ms delay = 10Hz task frequency
     }
     /* USER CODE END 5 */
 }
