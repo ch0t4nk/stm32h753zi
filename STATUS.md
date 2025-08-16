@@ -3,22 +3,22 @@
 **Last Updated**: August 16, 2025
 **Status**: 🚩 **RTOS MIGRATION COMPLETE**
 **Deployment**: 🚀 **PRODUCTION-READY FOUNDATION**
-**AI Infrastructure**: ✅ **Semantic Search Operational**
+**AI Infrastructure**: ❌ **Semantic Search Decommissioned**
 
 ---
 
 ## Context Transfer & Continuity (for Copilot/Automation)
 
-**Current Branch**: pre-rtos-upgrade-phase1
-**Recent Manual Edits**: src/config/motor_config.h, src/hal_abstraction/hal_abstraction.h, features/feature_registry.json, STATUS.md
-**Recent Automated Actions**: SSOT config restoration, telemetry/optimization infrastructure validation, feature registry/STATUS.md update, test folder audit
+**Current Branch**: main
+**Recent Manual Edits**: src/safety/emergency_stop_abstracted.h (modernized, SSOT-compliant), src/config/motor_config.h, src/hal_abstraction/hal_abstraction.h, features/feature_registry.json, STATUS.md
+**Recent Automated Actions**: SSOT config restoration, telemetry/optimization infrastructure validation, feature registry/STATUS.md update, test folder audit, emergency stop abstraction modernization
 **Build System**: CMake, ARM GCC, Debug preset, FreeRTOS (CMSIS_V2), STM32CubeMX minimal config
 **SSOT Compliance**: All config/SSOT headers restored and validated, no hardcoded values, dual SSOT enforced (firmware/workflow)
 **Telemetry State**: Infrastructure present, core logic incomplete (see FTR-020)
 **Test System**: Test folder well-structured, CTest not yet integrated, many tests present but some disabled or not implemented
-**Feature Tracking**: Automated, FTR-020 created for telemetry completion, all features tracked in feature_registry.json
+**Feature Tracking**: Automated, FTR-020 (Production Telemetry System Completion) in progress, all features tracked in feature_registry.json
 **Recent Build**: Successful, all missing types/macros restored, no critical errors
-**Current Focus**: Telemetry system completion, hardware integration, test system enablement
+**Current Focus**: Telemetry system completion (FTR-020), hardware integration, test system enablement, safety/estop modernization
 
 ---
 
@@ -40,10 +40,11 @@
 - **Phase 1.4**: Safety compliance (95%+ achieved, production safety validation)
 - **Phase 2.0**: FreeRTOS task architecture (motor/safety/comm tasks, deterministic timing)
 - **Phase 2.1**: RTOS migration (STM32CubeH7 V1.12.1 HAL upgrade, RTOS constraint removed, FreeRTOS integration validated)
+- **2025-08-16**: Emergency stop abstraction modernized (SSOT-compliant, HAL-abstracted API)
 
 ## 🔄 Current Work & Next Steps
 
-- **FTR-020: Production Telemetry System Completion** (PLANNED, Phase 1.4, HIGH)
+- **FTR-020: Production Telemetry System Completion** (IN_PROGRESS, Phase 1.4, HIGH)
 
   - Complete all missing telemetry logic (acquisition, processing, reporting)
   - Implement telemetry dashboard/reporting interface
@@ -53,7 +54,7 @@
   - Remove all stubs and incomplete logic from production build
   - See feature_registry.json for full acceptance criteria
 
-- **Recent Work**: RTOS HAL migration, CubeMX/HAL/FreeRTOS upgrade, build system validation, SSOT enforcement, STATUS.md and feature tracking update
+- **Recent Work**: RTOS HAL migration, CubeMX/HAL/FreeRTOS upgrade, build system validation, SSOT enforcement, STATUS.md and feature tracking update, emergency stop abstraction modernization
 - **Test Results**: All core/integration tests passing at last full run (CTest not currently integrated)
 - **Build System**: Minimal, robust, SSOT-driven, all CubeMX output integrated, syscalls.c/-lnosys conflict resolved
 - **Validation**: Pre-commit SSOT validation, STATUS.md compliance, feature tracking automation
@@ -61,16 +62,18 @@
 
 ## 🧠 Technical Context for Copilot/Automation
 
-- **Branch**: pre-rtos-upgrade-phase1
-- **Recent Manual Edits**: src/config/motor_config.h, src/hal_abstraction/hal_abstraction.h, features/feature_registry.json, STATUS.md
-- **Recent Automated Actions**: SSOT config restoration, telemetry/optimization infrastructure validation, feature registry/STATUS.md update, test folder audit
+- **Branch**: main
+- **Emergency Stop Abstraction**: Modernized, SSOT-compliant, HAL-abstracted API (src/safety/emergency_stop_abstracted.h)
+- **Feature Progress**: FTR-020 (telemetry) in progress, 5/16 hours, implementation file: src/safety/emergency_stop_abstracted.h
+- **Recent Manual Edits**: src/safety/emergency_stop_abstracted.h (modernized, SSOT-compliant), src/config/motor_config.h, src/hal_abstraction/hal_abstraction.h, features/feature_registry.json, STATUS.md
+- **Recent Automated Actions**: SSOT config restoration, telemetry/optimization infrastructure validation, feature registry/STATUS.md update, test folder audit, emergency stop abstraction modernization
 - **Build System**: CMake, ARM GCC, Debug preset, FreeRTOS (CMSIS_V2), STM32CubeMX minimal config
 - **SSOT Compliance**: All config/SSOT headers restored and validated, no hardcoded values, dual SSOT enforced (firmware/workflow)
 - **Telemetry State**: Infrastructure present, core logic incomplete (see FTR-020)
 - **Test System**: Test folder well-structured, CTest not yet integrated, many tests present but some disabled or not implemented
-- **Feature Tracking**: Automated, FTR-020 created for telemetry completion, all features tracked in feature_registry.json
-- **Recent Build**: Successful, all missing types/macros restored, no critical errors
-- **Current Focus**: Telemetry system completion, hardware integration, test system enablement
+- **Feature Tracking**: Automated, FTR-020 (Production Telemetry System Completion) in progress, all features tracked in feature_registry.json
+- **Recent Build**: Successful, all missing types/macros restored, no critical errors, emergency stop abstraction API modernized
+- **Current Focus**: Telemetry system completion (FTR-020), hardware integration, test system enablement, safety/estop modernization
 
 ## ⏭️ Next Steps
 
@@ -105,7 +108,7 @@
 - **HAL Abstraction**: Platform-independent, mock/real drivers
 - **FreeRTOS**: CMSIS_V2, deterministic, validated
 - **Safety**: 5 watchdogs, multi-level faults, event log
-- **Semantic Search**: ChromaDB + Instructor-XL, 77,938 docs, <2s query
+- **Semantic Search**: ❌ Decommissioned (feature closed, will be removed from workspace)
 
 ## 🔗 Quick References
 

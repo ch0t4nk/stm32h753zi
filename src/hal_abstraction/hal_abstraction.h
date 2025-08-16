@@ -1,3 +1,13 @@
+
+// SSOT: GPIO pin state abstraction
+#ifndef HAL_GPIO_STATE_T_DEFINED
+#define HAL_GPIO_STATE_T_DEFINED
+typedef enum {
+    HAL_GPIO_STATE_RESET = 0, ///< Pin logic low (reset)
+    HAL_GPIO_STATE_SET = 1    ///< Pin logic high (set)
+} HAL_GPIO_State_t;
+#endif
+
 /**
  * @file hal_abstraction.h
  * @brief Hardware Abstraction Layer (HAL) Interface for STM32H753ZI
