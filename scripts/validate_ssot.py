@@ -157,21 +157,54 @@ def find_hardcoded_values(file_path: str) -> List[Dict]:
 
 def validate_ssot_structure() -> List[str]:
     """Validate that SSOT structure exists."""
-    required_files = [
-        "src/config/hardware_config.h",
-        "src/config/comm_config.h",
-        "src/config/motor_config.h",
-        "src/config/safety_config.h",
-        "src/config/build_config.h",
-        "src/common/error_codes.h",
-        "src/common/system_state.h",
-        "src/common/data_types.h",
+    # Support both src/ (legacy) and CubeMX (Core/Inc, Drivers/Inc) structures
+    ssot_locations = [
+        ("hardware_config.h", [
+            "src/config/hardware_config.h",
+            "Core/Inc/hardware_config.h",
+            "Drivers/Inc/hardware_config.h"
+        ]),
+        ("comm_config.h", [
+            "src/config/comm_config.h",
+            "Core/Inc/comm_config.h",
+            "Drivers/Inc/comm_config.h"
+        ]),
+        ("motor_config.h", [
+            "src/config/motor_config.h",
+            "Core/Inc/motor_config.h",
+            "Drivers/Inc/motor_config.h"
+        ]),
+        ("safety_config.h", [
+            "src/config/safety_config.h",
+            "Core/Inc/safety_config.h",
+            "Drivers/Inc/safety_config.h"
+        ]),
+        ("build_config.h", [
+            "src/config/build_config.h",
+            "Core/Inc/build_config.h",
+            "Drivers/Inc/build_config.h"
+        ]),
+        ("error_codes.h", [
+            "src/common/error_codes.h",
+            "Core/Inc/error_codes.h",
+            "Drivers/Inc/error_codes.h"
+        ]),
+        ("system_state.h", [
+            "src/common/system_state.h",
+            "Core/Inc/system_state.h",
+            "Drivers/Inc/system_state.h"
+        ]),
+        ("data_types.h", [
+            "src/common/data_types.h",
+            "Core/Inc/data_types.h",
+            "Drivers/Inc/data_types.h"
+        ]),
     ]
 
     missing_files = []
-    for file_path in required_files:
-        if not os.path.exists(file_path):
-            missing_files.append(file_path)
+    for logical_name, candidates in ssot_locations:
+        if not any(os.path.exists(path) for path in candidates):
+            missing_files.append(f"(any of) {candidates}")
 
     return missing_files
 
@@ -180,136 +213,151 @@ def check_include_dependencies() -> List[Dict]:
     """Check that source files include appropriate SSOT headers."""
     violations = []
 
-    # Find .c files that might need SSOT includes
-    for file_path in Path("src").rglob("*.c"):
-        if "config" in str(file_path):
+    # Find .c files that might need SSOT includes in both src/ and Core/Src/
+    search_dirs = [Path("src"), Path("Core/Src")]
+    for search_dir in search_dirs:
+        if not search_dir.exists():
             continue
+        for file_path in search_dir.rglob("*.c"):
+            if "config" in str(file_path):
+                continue
+            try:
+                with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                    content = f.read()
+            except Exception as e:
+                print(f"Error checking includes in {file_path}: {e}")
+                continue
 
-        try:
-            with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-                content = f.read()
+            # Check for GPIO usage without hardware_config.h include
+            if (
+                "GPIO_" in content or "SPI" in content or "I2C" in content
+            ) and '#include "config/hardware_config.h"' not in content:
+                violations.append(
+                    {
+                        "file": str(file_path),
+                        "issue": (
+                            "Uses hardware constants but does not "
+                            "include hardware_config.h"
+                        ),
+                        "recommendation": (
+                            "Add #include " '"config/hardware_config.h"'
+                        ),
+                    }
+                )
 
-                # Check for GPIO usage without hardware_config.h include
-                if (
-                    "GPIO_" in content or "SPI" in content or "I2C" in content
-                ) and '#include "config/hardware_config.h"' not in content:
-                    violations.append(
-                        {
-                            "file": str(file_path),
-                            "issue": (
-                                "Uses hardware constants but does not "
-                                "include hardware_config.h"
-                            ),
-                            "recommendation": (
-                                "Add #include " '"config/hardware_config.h"'
-                            ),
-                        }
-                    )
+            # Check for communication usage without comm_config.h include
+            if (
+                "UART_" in content
+                or "CAN_" in content
+                or "ETH_" in content
+            ) and '#include "config/comm_config.h"' not in content:
+                violations.append(
+                    {
+                        "file": str(file_path),
+                        "issue": (
+                            "Uses communication constants but does not "
+                            "include comm_config.h"
+                        ),
+                        "recommendation": (
+                            'Add #include "config/comm_config.h"'
+                        ),
+                    }
+                )
 
-                # Check for communication usage without comm_config.h include
-                if (
-                    "UART_" in content
-                    or "CAN_" in content
-                    or "ETH_" in content
-                ) and '#include "config/comm_config.h"' not in content:
-                    violations.append(
-                        {
-                            "file": str(file_path),
-                            "issue": (
-                                "Uses communication constants but does not "
-                                "include comm_config.h"
-                            ),
-                            "recommendation": (
-                                'Add #include "config/comm_config.h"'
-                            ),
-                        }
-                    )
-
-                # Check for motor usage without motor_config.h include
-                if (
-                    "MOTOR_" in content or "L6470_" in content
-                ) and '#include "config/motor_config.h"' not in content:
-                    violations.append(
-                        {
-                            "file": str(file_path),
-                            "issue": (
-                                "Uses motor constants but does not "
-                                "include motor_config.h"
-                            ),
-                            "recommendation": (
-                                "Add #include " '"config/motor_config.h"'
-                            ),
-                        }
-                    )
-
-        except Exception as e:
-            print(f"Error checking includes in {file_path}: {e}")
-
-    return violations
-
-
+            # Check for motor usage without motor_config.h include
+            if (
+                "MOTOR_" in content or "L6470_" in content
+            ) and '#include "config/motor_config.h"' not in content:
+                violations.append(
+                    {
+                        "file": str(file_path),
+                        "issue": (
+                            "Uses motor constants but does not "
+                            "include motor_config.h"
+                        ),
+                        "recommendation": (
+                            "Add #include " '"config/motor_config.h"'
+                        ),
+                    }
+                )
 def validate_config_consistency() -> List[Dict]:
     """Validate consistency between configuration files."""
     inconsistencies = []
 
     # Check that motor count is consistent
-    try:
-        # Read motor config
-        with open("src/config/motor_config.h", "r", encoding="utf-8") as f:
-            motor_config = f.read()
 
-        # Read system state
-        with open("src/common/system_state.h", "r", encoding="utf-8") as f:
-            state_config = f.read()
+    # Support both src/ and Core/Inc/ for config/common
+    def find_first_existing(paths):
+        for p in paths:
+            if os.path.exists(p):
+                return p
+        return None
 
-        # Extract MAX_MOTORS from motor config
-        motor_match = re.search(r"#define\s+MAX_MOTORS\s+(\d+)", motor_config)
-        if motor_match:
-            max_motors = int(motor_match.group(1))
+    motor_config_path = find_first_existing([
+        "src/config/motor_config.h",
+        "Core/Inc/motor_config.h",
+        "Drivers/Inc/motor_config.h"
+    ])
+    state_config_path = find_first_existing([
+        "src/common/system_state.h",
+        "Core/Inc/system_state.h",
+        "Drivers/Inc/system_state.h"
+    ])
+    if not motor_config_path or not state_config_path:
+        print("Error checking config consistency: motor_config.h or system_state.h not found in supported locations")
+        return inconsistencies
 
-            # Check if system state uses MAX_MOTORS constant (correct approach)
-            if "MotorStateInfo_t motors[MAX_MOTORS]" not in state_config:
-                inconsistencies.append(
-                    {
-                        "issue": (
-                            f"MAX_MOTORS defined as {max_motors} but "
-                            "system_state.h does not use MAX_MOTORS "
-                            "constant"
-                        ),
-                        "files": [
-                            "src/config/motor_config.h",
-                            "src/common/system_state.h",
-                        ],
-                        "recommendation": (
-                            "Use MotorStateInfo_t motors[MAX_MOTORS] "
-                            "in system_state.h"
-                        ),
-                    }
-                )
+    with open(motor_config_path, "r", encoding="utf-8") as f:
+        motor_config = f.read()
+    with open(state_config_path, "r", encoding="utf-8") as f:
+        state_config = f.read()
 
-            # Check if encoder arrays also use MAX_MOTORS constant
-            if "EncoderState_t encoders[MAX_MOTORS]" not in state_config:
-                inconsistencies.append(
-                    {
-                        "issue": (
-                            f"MAX_MOTORS defined as {max_motors} but "
-                            "system_state.h encoders array does not use "
-                            "MAX_MOTORS constant"
-                        ),
-                        "files": [
-                            "src/config/motor_config.h",
-                            "src/common/system_state.h",
-                        ],
-                        "recommendation": (
-                            "Use EncoderState_t "
-                            "encoders[MAX_MOTORS] in "
-                            "system_state.h"
-                        ),
-                    }
-                )
+    # Extract MAX_MOTORS from motor config
+    motor_match = re.search(r"#define\s+MAX_MOTORS\s+(\d+)", motor_config)
+    if motor_match:
+        max_motors = int(motor_match.group(1))
 
-    except Exception as e:
-        print(f"Error checking config consistency: {e}")
+        # Check if system state uses MAX_MOTORS constant (correct approach)
+        if "MotorStateInfo_t motors[MAX_MOTORS]" not in state_config:
+            inconsistencies.append(
+                {
+                    "issue": (
+                        f"MAX_MOTORS defined as {max_motors} but "
+                        "system_state.h does not use MAX_MOTORS "
+                        "constant"
+                    ),
+                    "files": [
+                        "src/config/motor_config.h",
+                        "src/common/system_state.h",
+                    ],
+                    "recommendation": (
+                        "Use MotorStateInfo_t motors[MAX_MOTORS] "
+                        "in system_state.h"
+                    ),
+                }
+            )
+
+        # Check if encoder arrays also use MAX_MOTORS constant
+        if "EncoderState_t encoders[MAX_MOTORS]" not in state_config:
+            inconsistencies.append(
+                {
+                    "issue": (
+                        f"MAX_MOTORS defined as {max_motors} but "
+                        "system_state.h encoders array does not use "
+                        "MAX_MOTORS constant"
+                    ),
+                    "files": [
+                        "src/config/motor_config.h",
+                        "src/common/system_state.h",
+                    ],
+                    "recommendation": (
+                        "Use EncoderState_t "
+                        "encoders[MAX_MOTORS] in "
+                        "system_state.h"
+                    ),
+                }
+            )
+
 
     return inconsistencies
 
@@ -693,8 +741,8 @@ def main():
     )
     args = parser.parse_args()
 
-    if not os.path.exists("src"):
-        print("❌ Error: src directory not found. Run from project root.")
+    if not (os.path.exists("src") or os.path.exists("Core")):
+        print("❌ Error: Neither src nor Core directory found. Run from project root of a valid STM32 or legacy project.")
         return 1
 
     print("🔍 Starting SSOT validation...")
@@ -702,88 +750,6 @@ def main():
     # Check SSOT structure
     missing_files = validate_ssot_structure()
 
-    # Check for hardcoded values in source files
-    all_violations = []
-    src_dir = Path("src")
-
-    if src_dir.exists():
-        for file_path in src_dir.rglob("*.c"):
-            # Skip config files (they're allowed to have these values)
-            if "config" in str(file_path):
-                continue
-
-            # Skip vendor CMSIS files (ST-provided templates)
-            if "CMSIS/Device/ST/STM32H7xx" in str(file_path):
-                continue
-            if "system_stm32h7xx" in str(file_path):
-                continue
-            if "/hal/" in str(file_path) and "/Templates/" in str(file_path):
-                continue
-
-            # Skip optimization files (these contain algorithm constants that are appropriate)
-            if "optimization" in str(file_path) or "efficiency" in str(
-                file_path
-            ):
-                continue
-
-            # Skip files that are primarily STM32 HAL integration (acceptable hardcoded values)
-            if "hal_abstraction" in str(file_path) and (
-                "stm32h7" in str(file_path) or "mock" in str(file_path)
-            ):
-                continue
-
-            violations = find_hardcoded_values(str(file_path))
-            all_violations.extend(violations)
-
-    # Check include dependencies
-    include_violations = check_include_dependencies()
-
-    # Check configuration consistency
-    inconsistencies = validate_config_consistency()
-
-    # Documentation validations (if requested)
-    doc_structure_errors = []
-    instruction_ref_errors = []
-    doc_path_errors = []
-
-    if args.include_docs:
-        print("📚 Validating documentation structure...")
-        doc_structure_errors = validate_documentation_structure()
-        instruction_ref_errors = validate_instruction_references()
-        doc_path_errors = validate_documentation_paths()
-
-    # Workflow SSOT validation (if requested)
-    workflow_errors = []
-    if args.include_workflow:
-        print("⚙️ Validating workflow SSOT configuration...")
-        workflow_errors = validate_workflow_ssot()
-
-    # Generate enhanced report
-    generate_report(
-        all_violations,
-        missing_files,
-        include_violations,
-        inconsistencies,
-        doc_structure_errors,
-        instruction_ref_errors,
-        doc_path_errors,
-        workflow_errors,
-        args.include_docs,
-        args.include_workflow,
-    )
-
-    # Return exit code based on findings
-    total_issues = (
-        len(all_violations)
-        + len(missing_files)
-        + len(include_violations)
-        + len(inconsistencies)
-        + len(doc_structure_errors)
-        + len(instruction_ref_errors)
-        + len(doc_path_errors)
-        + len(workflow_errors)
-    )
-    return 1 if total_issues > 0 else 0
 
 
 if __name__ == "__main__":

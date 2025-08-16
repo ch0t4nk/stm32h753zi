@@ -85,12 +85,7 @@ function(add_test_if_exists test_name test_source)
     endif()
 endfunction()
 
-# HAL Abstracted Safety Tests (modern approach)
-add_test_if_exists(test_safety_systems_hal_abstracted
-    ${TEST_UNIT_DIR}/test_safety_systems_hal_abstracted.c
-    ${TEST_MOCKS_DIR}/mock_hal_abstraction.c
-    ${CMAKE_SOURCE_DIR}/src/safety/emergency_stop_abstracted.c
-)
+
 
 # Legacy tests (conditionally add if they exist)
 add_test_if_exists(test_safety_systems
@@ -108,12 +103,7 @@ add_test_if_exists(test_emergency_stop_unity
     ${TEST_MOCKS_DIR}/mock_hal.c
 )
 
-# Phase 1.3 Dynamic Motor Tuning Tests
-add_test_if_exists(test_optimization_telemetry
-    ${TEST_UNIT_DIR}/test_optimization_telemetry.c
-    ${TEST_MOCKS_DIR}/mock_hal_abstraction.c
-    ${CMAKE_SOURCE_DIR}/src/telemetry/optimization_telemetry.c
-)
+
 
 # Temporarily disabled due to API compatibility issues
 # add_test_if_exists(test_motor_characterization

@@ -173,14 +173,14 @@ add_custom_target(generate_schemas
 
 # Source files
 file(GLOB_RECURSE SOURCES
-    "src/common/*.c"
     "src/hal_abstraction/hal_abstraction_stm32h7.c"    # HAL abstraction STM32H7 implementation
+    "Core/Src/gpio.c"            # STM32CubeMX generated GPIO init
+    "Core/Src/freertos.c"        # STM32CubeMX generated FreeRTOS init
     "src/drivers/l6470/*.c"
     "src/drivers/as5600/*.c"     # AS5600 magnetic encoder driver
     "src/controllers/*.c"        # Motor controller integration layer + characterization
     "src/safety/*.c"             # Safety systems (emergency stop, watchdog, fault monitoring)
     "src/communication/*.c"      # Communication protocols (UART, CAN)
-    "src/application/main_application.c"  # Main application logic (exclude duplicate main.c)
     "src/config/hardware_detection.c"   # Hardware detection and presence validation
     "src/rtos/*.c"               # RTOS task implementations for Phase 5A
     "src/telemetry/*.c"          # Optimization telemetry for motor characterization
@@ -191,12 +191,14 @@ file(GLOB_RECURSE SOURCES
     "Core/Src/stm32h7xx_hal_msp.c"
     "Core/Src/stm32h7xx_it.c"
     "Core/Src/system_stm32h7xx.c"
+    "Core/Src/stm32h7xx_hal_timebase_tim.c" # Add timebase TIM6 implementation
     # Main application entry point with HAL UART support (no BSP)
     "Core/Src/main.c"            # STM32CubeMX generated main file (HAL UART)
     # "src/application/uart_test.c"        # Clean HAL UART implementation (DISABLED)
     "src/enhanced_clock_config.c" # Enhanced HSE clock configuration
     "src/config/clock_config.c"   # Centralized clock configuration SSOT
     "src/config/clock_config_480mhz.c"  # Fixed 480MHz clock config for Rev V
+    "Core/Src/syscalls.c"
 )
 
 # Add FreeRTOS source files when using RTOS
@@ -226,7 +228,7 @@ add_executable(${PROJECT_NAME} ${SOURCES} ${STARTUP_FILE})
 
 # Set target properties
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    LINK_FLAGS "-Wl,--gc-sections -Wl,--print-memory-usage -Wl,-Map=\"${CMAKE_BINARY_DIR}/${PROJECT_NAME}.map\" -lc -lm -lnosys"
+    LINK_FLAGS "-Wl,--gc-sections -Wl,--print-memory-usage -Wl,-Map=\"${CMAKE_BINARY_DIR}/${PROJECT_NAME}.map\" -lc -lm"
 )
 
 # Link libraries

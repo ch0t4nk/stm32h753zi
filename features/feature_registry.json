@@ -1,10 +1,10 @@
 {
   "metadata": {
     "version": "1.0.0",
-    "last_updated": "2025-08-15T21:57:00Z",
-    "total_features": 18,
+    "last_updated": "2025-08-16T10:52:57.362147Z",
+    "total_features": 19,
     "completed_features": 12,
-    "in_progress_features": 1,
+    "in_progress_features": 2,
     "planned_features": 5,
     "urgent_features": 4,
     "blocking_issues": [
@@ -727,7 +727,7 @@
     "FTR-019": {
       "id": "FTR-019",
       "name": "RTOS HAL Migration Implementation",
-      "status": "PLANNED",
+      "status": "IN_PROGRESS",
       "phase": "2.1",
       "priority": "CRITICAL",
       "category": "rtos",

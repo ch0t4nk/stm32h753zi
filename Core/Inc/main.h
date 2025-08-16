@@ -29,16 +29,9 @@ extern "C" {
 
 /* Includes
  * ------------------------------------------------------------------*/
-/* USER CODE BEGIN HSE_VALUE */
-/* Define HSE_VALUE before including HAL to override default 25MHz */
-#define HSE_VALUE                                                             \
-    8000000UL /*!< Value of the External oscillator in Hz - STM32H753ZI       \
-                 Nucleo-144 uses 8MHz */
-/* USER CODE END HSE_VALUE */
 #include "stm32h7xx_hal.h"
 
-// #include "stm32h7xx_nucleo.h"  // BSP removed - using direct HAL
-#include <stdio.h>
+#include "stm32h7xx_nucleo.h"
 
 /* Private includes
  * ----------------------------------------------------------*/
@@ -68,26 +61,16 @@ extern "C" {
  * ---------------------------------------------*/
 void Error_Handler(void);
 
+void MX_FREERTOS_Init(void);
+
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
 
 /* Private defines
  * -----------------------------------------------------------*/
-/* HSE_VALUE defined in stm32h7xx_hal_conf.h - do not redefine here */
 
 /* USER CODE BEGIN Private defines */
-
-// STM32H753ZI Nucleo-144 GPIO definitions (replacing BSP)
-#define LED_GREEN_PIN GPIO_PIN_0
-#define LED_GREEN_GPIO_PORT GPIOB
-#define LED_YELLOW_PIN GPIO_PIN_1
-#define LED_YELLOW_GPIO_PORT GPIOE
-#define LED_RED_PIN GPIO_PIN_14
-#define LED_RED_GPIO_PORT GPIOB
-
-#define USER_BUTTON_PIN GPIO_PIN_13
-#define USER_BUTTON_GPIO_PORT GPIOC
 
 /* USER CODE END Private defines */
 
