@@ -187,13 +187,16 @@ file(GLOB_RECURSE SOURCES
     "src/optimization/*.c"       # Motor efficiency optimization algorithms (FTR-009)
     # "src/simulation/*.c"         # Motor/encoder simulation framework - TEMPORARILY DISABLED for safety integration
     "drivers/STM32H7xx_HAL_Driver/Src/*.c"
-    "drivers/BSP/STM32H7xx_Nucleo/*.c"  # Nucleo board support package
+    # "drivers/BSP/STM32H7xx_Nucleo/*.c"  # BSP removed - using direct HAL UART instead
     "Core/Src/stm32h7xx_hal_msp.c"
     "Core/Src/stm32h7xx_it.c"
     "Core/Src/system_stm32h7xx.c"
-    "Core/Src/main.c"            # STM32CubeMX generated main file
+    # Main application entry point with HAL UART support (no BSP)
+    "Core/Src/main.c"            # STM32CubeMX generated main file (HAL UART)
+    # "src/application/uart_test.c"        # Clean HAL UART implementation (DISABLED)
     "src/enhanced_clock_config.c" # Enhanced HSE clock configuration
     "src/config/clock_config.c"   # Centralized clock configuration SSOT
+    "src/config/clock_config_480mhz.c"  # Fixed 480MHz clock config for Rev V
 )
 
 # Add FreeRTOS source files when using RTOS

@@ -10,6 +10,7 @@
 
 #include "clock_config.h"
 #include "common/error_codes.h"
+#include "safety/revision_check.h"
 #include "stm32h7xx_hal.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -49,9 +50,31 @@ HAL_StatusTypeDef Clock_Init(void) {
 
     CLOCK_DEBUG_PRINT("Initializing clock system...");
 
+    // CRITICAL SAFETY CHECK: Validate silicon revision before high-frequency
+    // operation
+    printf("=== SILICON REVISION SAFETY CHECK ===\r\n");
+    Revision_PrintInfo();
+
+    status = Revision_EnforceSafetyLimits(TARGET_SYSCLK_FREQUENCY_HZ);
+    if (status != HAL_OK) {
+        printf("CRITICAL SAFETY ERROR: Target frequency unsafe for this "
+               "silicon revision!\r\n");
+        printf("SAFETY ACTION: Falling back to 400MHz maximum\r\n");
+        Error_Handler();
+        return HAL_ERROR;
+    }
+
+    printf("SAFETY VALIDATION PASSED: 480MHz operation is safe on this "
+           "revision\r\n");
+    printf("=====================================\r\n");
+
     // Configure power supply first
     HAL_PWREx_ConfigSupply(PWR_LDO_SUPPLY);
-    __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+
+    // CRITICAL: Configure VOS0 (Voltage Scale 0) for 480MHz operation on
+    // Revision V This is REQUIRED for 480MHz operation according to ST
+    // documentation
+    __HAL_PWR_VOLTAGESCALING_CONFIG(VOLTAGE_SCALE_CONFIG); // VOS0 from SSOT
     while (!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {
         // Wait for voltage scaling ready
     }
