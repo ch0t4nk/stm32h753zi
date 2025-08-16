@@ -29,28 +29,32 @@ add_compile_definitions(
 )
 
 # Compiler flags for STM32H753ZI (Cortex-M7)
-add_compile_options(
-    -mcpu=cortex-m7
-    -mthumb
-    -mfpu=fpv5-d16
-    -mfloat-abi=hard
-    -Wall
-    -Wextra
-    -Wpedantic
-    -Wno-unused-parameter
-    -Wduplicated-cond
-    -Wduplicated-branches
-    -Wlogical-op
-    -Wnull-dereference
-    -Wjump-misses-init
-    -Wdouble-promotion
-    -Wshadow
-    -fdata-sections
-    -ffunction-sections
-    -Og
-    -g3
-    -ggdb
-)
+
+# Only add GCC/Clang-specific flags for those compilers
+if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(
+        -mcpu=cortex-m7
+        -mthumb
+        -mfpu=fpv5-d16
+        -mfloat-abi=hard
+        -Wall
+        -Wextra
+        -Wpedantic
+        -Wno-unused-parameter
+        -Wduplicated-cond
+        -Wduplicated-branches
+        -Wlogical-op
+        -Wnull-dereference
+        -Wjump-misses-init
+        -Wdouble-promotion
+        -Wshadow
+        -fdata-sections
+        -ffunction-sections
+        -Og
+        -g3
+        -ggdb
+    )
+endif()
 
 # Enable testing and add additional options for analysis builds
 option(ENABLE_TESTING "Enable unit testing" ON)
