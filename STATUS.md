@@ -45,7 +45,6 @@
 ## 🔄 Current Work & Next Steps
 
 - **FTR-020: Production Telemetry System Completion** (IN_PROGRESS, Phase 1.4, HIGH)
-
   - Complete all missing telemetry logic (acquisition, processing, reporting)
   - Implement telemetry dashboard/reporting interface
   - Integrate with FreeRTOS and safety monitoring
@@ -85,7 +84,7 @@
 6. Field deployment and monitoring
 7. Begin advanced feature development (trajectory planning, industrial comms, AI optimization)
 
-## 🧠 Notes & Observations
+## 📝 Notes & Observations
 
 - RTOS migration root cause resolved (HAL V1.11.5 constraint removed, now V1.12.1)
 - All technical/workflow context transferred and validated
@@ -104,7 +103,7 @@
 
 ## 🎯 Architecture Status
 
-- **Dual SSOT**: src/config/\* (firmware), src/config/workflow_config.h (workflow)
+- **Dual SSOT**: src/config/* (firmware), src/config/workflow_config.h (workflow)
 - **HAL Abstraction**: Platform-independent, mock/real drivers
 - **FreeRTOS**: CMSIS_V2, deterministic, validated
 - **Safety**: 5 watchdogs, multi-level faults, event log
@@ -126,4 +125,5 @@
 - **Real-time Monitoring**: Live build/git status, optimized process
 - **VS Code Integration**: Enhanced tasks for build+update, preview
 - **Smart Detection**: Merge commit handling, build context analysis
+- **Performance**: <1s git response, filesystem-first checking
 - **Performance**: <1s git response, filesystem-first checking

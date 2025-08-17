@@ -76,7 +76,8 @@
       "commits": [],
       "notes": [
         "FTR-001 provides the infrastructure but is not a complete production feature.",
-        "This feature delivers a fully validated, production-ready telemetry system with all missing logic implemented."
+        "This feature delivers a fully validated, production-ready telemetry system with all missing logic implemented.",
+        "Next: Complete all missing telemetry logic, reporting, and test coverage; integrate CTest/unit/integration tests; hardware validation; encoder calibration; performance optimization; field deployment; begin advanced features."
       ]
     },
     "FTR-018": {
