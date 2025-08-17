@@ -45,6 +45,7 @@
 ## 🔄 Current Work & Next Steps
 
 - **FTR-020: Production Telemetry System Completion** (IN_PROGRESS, Phase 1.4, HIGH)
+
   - Complete all missing telemetry logic (acquisition, processing, reporting)
   - Implement telemetry dashboard/reporting interface
   - Integrate with FreeRTOS and safety monitoring
@@ -103,7 +104,7 @@
 
 ## 🎯 Architecture Status
 
-- **Dual SSOT**: src/config/* (firmware), src/config/workflow_config.h (workflow)
+- **Dual SSOT**: src/config/\* (firmware), src/config/workflow_config.h (workflow)
 - **HAL Abstraction**: Platform-independent, mock/real drivers
 - **FreeRTOS**: CMSIS_V2, deterministic, validated
 - **Safety**: 5 watchdogs, multi-level faults, event log

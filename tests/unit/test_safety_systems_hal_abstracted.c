@@ -9,12 +9,14 @@
  * version that fully uses the HAL abstraction layer.
  */
 
-#include "common/error_codes.h"
+#include "config/error_codes.h"
 #include "config/safety_config.h"
 #include "hal_abstraction/hal_abstraction.h"
 #include "mock_hal_abstraction.h"
 #include "safety/emergency_stop_abstracted.h"
 #include "unity.h"
+#include <stdbool.h>
+#include <stdint.h>
 #include <string.h>
 
 /* ==========================================================================
@@ -51,8 +53,8 @@ void test_emergency_stop_init_success(void) {
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
 
     // Verify system is in armed state
-    EmergencyStopState_t state = emergency_stop_get_state();
-    TEST_ASSERT_EQUAL(EMERGENCY_STOP_ARMED, state);
+    EstopState_t state = estop_get_state();
+    TEST_ASSERT_EQUAL(ESTOP_STATE_ARMED, state);
 
     // Verify GPIO pins were configured
     MockHAL_State_t *mock_state = MockHAL_GetState();
@@ -94,8 +96,8 @@ void test_emergency_stop_button_press(void) {
     }
 
     // Verify emergency stop was triggered
-    EmergencyStopState_t state = emergency_stop_get_state();
-    TEST_ASSERT_EQUAL(EMERGENCY_STOP_TRIGGERED, state);
+    EstopState_t state = estop_get_state();
+    TEST_ASSERT_EQUAL(ESTOP_STATE_TRIGGERED, state);
 
     // Verify safety relays were activated
     MockHAL_State_t *mock_state = MockHAL_GetState();
@@ -126,8 +128,8 @@ void test_emergency_stop_button_debounce(void) {
     emergency_stop_process();
 
     // Verify emergency stop was NOT triggered
-    EmergencyStopState_t state = emergency_stop_get_state();
-    TEST_ASSERT_EQUAL(EMERGENCY_STOP_ARMED, state);
+    EstopState_t state = estop_get_state();
+    TEST_ASSERT_EQUAL(ESTOP_STATE_ARMED, state);
 }
 
 void test_emergency_stop_timing_requirement(void) {
@@ -149,7 +151,7 @@ void test_emergency_stop_timing_requirement(void) {
     TEST_ASSERT_LESS_THAN(100, response_time);
 
     // Verify emergency stop was triggered
-    TEST_ASSERT_EQUAL(EMERGENCY_STOP_TRIGGERED, emergency_stop_get_state());
+    TEST_ASSERT_EQUAL(ESTOP_STATE_TRIGGERED, estop_get_state());
 }
 
 /* ==========================================================================
@@ -159,31 +161,29 @@ void test_emergency_stop_timing_requirement(void) {
  */
 
 void test_emergency_stop_software_trigger(void) {
-    SystemError_t result = emergency_stop_execute(ESTOP_SOURCE_SOFTWARE);
+    SystemError_t result = estop_trigger(ESTOP_SRC_SOFTWARE);
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
 
     // Verify state change
-    EmergencyStopState_t state = emergency_stop_get_state();
-    TEST_ASSERT_EQUAL(EMERGENCY_STOP_TRIGGERED, state);
+    EstopState_t state = estop_get_state();
+    TEST_ASSERT_EQUAL(ESTOP_STATE_TRIGGERED, state);
 
     // Verify source is recorded
-    EmergencyStopSource_t source = emergency_stop_get_last_source();
-    TEST_ASSERT_EQUAL(ESTOP_SOURCE_SOFTWARE, source);
+    EstopSource_t source = estop_last_source();
+    TEST_ASSERT_EQUAL(ESTOP_SRC_SOFTWARE, source);
 }
 
 void test_emergency_stop_multiple_sources(void) {
     // Trigger from motor fault
-    emergency_stop_execute(ESTOP_SOURCE_MOTOR_FAULT);
-    TEST_ASSERT_EQUAL(ESTOP_SOURCE_MOTOR_FAULT,
-                      emergency_stop_get_last_source());
+    estop_trigger(ESTOP_SRC_MOTOR_FAULT);
+    TEST_ASSERT_EQUAL(ESTOP_SRC_MOTOR_FAULT, estop_last_source());
 
     // Additional trigger from different source
-    emergency_stop_execute(ESTOP_SOURCE_ENCODER_FAULT);
-    TEST_ASSERT_EQUAL(ESTOP_SOURCE_ENCODER_FAULT,
-                      emergency_stop_get_last_source());
+    estop_trigger(ESTOP_SRC_ENCODER_FAULT);
+    TEST_ASSERT_EQUAL(ESTOP_SRC_ENCODER_FAULT, estop_last_source());
 
     // State should remain triggered
-    TEST_ASSERT_EQUAL(EMERGENCY_STOP_TRIGGERED, emergency_stop_get_state());
+    TEST_ASSERT_EQUAL(ESTOP_STATE_TRIGGERED, estop_get_state());
 }
 
 /* ==========================================================================
@@ -194,18 +194,17 @@ void test_emergency_stop_multiple_sources(void) {
 
 void test_emergency_stop_reset_success(void) {
     // Trigger emergency stop
-    emergency_stop_execute(ESTOP_SOURCE_SOFTWARE);
-    TEST_ASSERT_EQUAL(EMERGENCY_STOP_TRIGGERED, emergency_stop_get_state());
+    estop_trigger(ESTOP_SRC_SOFTWARE);
+    TEST_ASSERT_EQUAL(ESTOP_STATE_TRIGGERED, estop_get_state());
 
     // Ensure button is not pressed
     MockHAL_SetGPIOState(ESTOP_BUTTON_PORT, ESTOP_BUTTON_PIN,
                          HAL_GPIO_STATE_SET);
 
     // Initiate reset
-    SystemError_t result = emergency_stop_reset();
+    SystemError_t result = estop_reset();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
-    TEST_ASSERT_EQUAL(EMERGENCY_STOP_RESET_PENDING,
-                      emergency_stop_get_state());
+    TEST_ASSERT_EQUAL(ESTOP_STATE_RESET_PENDING, estop_get_state());
 
     // Wait for reset delay
     for (int i = 0; i < 1100; i++) { // 1100ms > 1000ms reset delay
@@ -214,7 +213,7 @@ void test_emergency_stop_reset_success(void) {
     }
 
     // Verify system returned to armed state
-    TEST_ASSERT_EQUAL(EMERGENCY_STOP_ARMED, emergency_stop_get_state());
+    TEST_ASSERT_EQUAL(ESTOP_STATE_ARMED, estop_get_state());
 
     // Verify safety relays were deactivated
     MockHAL_State_t *mock_state = MockHAL_GetState();
@@ -244,11 +243,11 @@ void test_emergency_stop_reset_button_pressed(void) {
 
 void test_emergency_stop_reset_not_triggered(void) {
     // Attempt reset when not triggered (should fail)
-    SystemError_t result = emergency_stop_reset();
+    SystemError_t result = estop_reset();
     TEST_ASSERT_EQUAL(ERROR_INVALID_STATE, result);
 
     // State should remain armed
-    TEST_ASSERT_EQUAL(EMERGENCY_STOP_ARMED, emergency_stop_get_state());
+    TEST_ASSERT_EQUAL(ESTOP_STATE_ARMED, estop_get_state());
 }
 
 /* ==========================================================================
@@ -276,7 +275,7 @@ void test_emergency_stop_led_heartbeat_armed(void) {
 
 void test_emergency_stop_led_triggered_state(void) {
     // Trigger emergency stop
-    emergency_stop_execute(ESTOP_SOURCE_SOFTWARE);
+    estop_trigger(ESTOP_SRC_SOFTWARE);
 
     // Process
     emergency_stop_process();
@@ -294,7 +293,7 @@ void test_emergency_stop_led_triggered_state(void) {
  */
 
 void test_emergency_stop_self_test_success(void) {
-    SystemError_t result = emergency_stop_self_test();
+    SystemError_t result = estop_self_test();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
 
     // Verify that GPIO operations were performed during self-test
@@ -309,7 +308,7 @@ void test_emergency_stop_self_test_gpio_failure(void) {
     // Inject GPIO failure
     MockHAL_InjectFault(MOCK_FAULT_GPIO_WRITE, true);
 
-    SystemError_t result = emergency_stop_self_test();
+    SystemError_t result = estop_self_test();
     TEST_ASSERT_NOT_EQUAL(SYSTEM_OK, result);
 }
 
@@ -323,25 +322,24 @@ void test_emergency_stop_statistics(void) {
     uint32_t trigger_count, last_trigger_time;
 
     // Get initial statistics
-    SystemError_t result =
-        emergency_stop_get_statistics(&trigger_count, &last_trigger_time);
+    SystemError_t result = estop_get_stats(&trigger_count, &last_trigger_time);
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
     TEST_ASSERT_EQUAL(0, trigger_count);
 
     // Trigger emergency stop
-    emergency_stop_execute(ESTOP_SOURCE_SOFTWARE);
+    estop_trigger(ESTOP_SRC_SOFTWARE);
 
     // Check updated statistics
-    result = emergency_stop_get_statistics(&trigger_count, &last_trigger_time);
+    result = estop_get_stats(&trigger_count, &last_trigger_time);
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
     TEST_ASSERT_EQUAL(1, trigger_count);
     TEST_ASSERT_NOT_EQUAL(0, last_trigger_time);
 
     // Trigger again
-    emergency_stop_execute(ESTOP_SOURCE_MOTOR_FAULT);
+    estop_trigger(ESTOP_SRC_MOTOR_FAULT);
 
     // Check statistics again
-    result = emergency_stop_get_statistics(&trigger_count, &last_trigger_time);
+    result = estop_get_stats(&trigger_count, &last_trigger_time);
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
     TEST_ASSERT_EQUAL(2, trigger_count);
 }
@@ -353,14 +351,14 @@ void test_emergency_stop_statistics(void) {
  */
 
 void test_emergency_stop_health_check_success(void) {
-    SystemError_t result = emergency_stop_check_health();
+    SystemError_t result = estop_check_health();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
 }
 
 void test_emergency_stop_health_check_not_initialized(void) {
     MockHAL_Reset(); // This will make the system appear uninitialized
 
-    SystemError_t result = emergency_stop_check_health();
+    SystemError_t result = estop_check_health();
     TEST_ASSERT_EQUAL(ERROR_NOT_INITIALIZED, result);
 }
 
@@ -468,7 +466,7 @@ void test_hal_abstraction_integration_emergency_stop_full_cycle(void) {
     // abstraction
 
     // 1. Initialize system (already done in setUp)
-    TEST_ASSERT_EQUAL(EMERGENCY_STOP_ARMED, emergency_stop_get_state());
+    TEST_ASSERT_EQUAL(ESTOP_STATE_ARMED, estop_get_state());
 
     // 2. Simulate button press
     MockHAL_SetGPIOState(ESTOP_BUTTON_PORT, ESTOP_BUTTON_PIN,
@@ -477,32 +475,31 @@ void test_hal_abstraction_integration_emergency_stop_full_cycle(void) {
     // 3. Process for debounce time
     for (int i = 0; i < 60; i++) {
         HAL_Abstraction_Delay(1);
-        emergency_stop_process();
+        estop_process();
     }
 
     // 4. Verify emergency stop triggered
-    TEST_ASSERT_EQUAL(EMERGENCY_STOP_TRIGGERED, emergency_stop_get_state());
-    TEST_ASSERT_TRUE(emergency_stop_is_active());
+    TEST_ASSERT_EQUAL(ESTOP_STATE_TRIGGERED, estop_get_state());
+    TEST_ASSERT_TRUE(estop_is_active());
 
     // 5. Release button
     MockHAL_SetGPIOState(ESTOP_BUTTON_PORT, ESTOP_BUTTON_PIN,
                          HAL_GPIO_STATE_SET);
 
     // 6. Initiate reset
-    SystemError_t result = emergency_stop_reset();
+    SystemError_t result = estop_reset();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
-    TEST_ASSERT_EQUAL(EMERGENCY_STOP_RESET_PENDING,
-                      emergency_stop_get_state());
+    TEST_ASSERT_EQUAL(ESTOP_STATE_RESET_PENDING, estop_get_state());
 
     // 7. Wait for reset delay
     for (int i = 0; i < 1100; i++) {
         HAL_Abstraction_Delay(1);
-        emergency_stop_process();
+        estop_process();
     }
 
     // 8. Verify system returned to armed state
-    TEST_ASSERT_EQUAL(EMERGENCY_STOP_ARMED, emergency_stop_get_state());
-    TEST_ASSERT_FALSE(emergency_stop_is_active());
+    TEST_ASSERT_EQUAL(ESTOP_STATE_ARMED, estop_get_state());
+    TEST_ASSERT_FALSE(estop_is_active());
 
     // 9. Verify all GPIO operations were successful
     MockHAL_State_t *mock_state = MockHAL_GetState();
@@ -524,15 +521,15 @@ void test_hal_abstraction_integration_emergency_stop_full_cycle(void) {
 
 void test_safety_system_state_integration(void) {
     // Test that safety state changes are properly integrated
-    
+
     // Reset and initialize safety system
     MockHAL_Reset();
     SystemError_t result = safety_system_init();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
-    
+
     // Verify safety system is operational
     TEST_ASSERT_TRUE(safety_system_is_operational());
-    
+
     // Run safety system task and verify no errors
     result = safety_system_task();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
@@ -540,43 +537,43 @@ void test_safety_system_state_integration(void) {
 
 void test_emergency_stop_broadcast(void) {
     // Test that emergency stop broadcast is triggered correctly
-    
+
     MockHAL_Reset();
     emergency_stop_init();
-    
+
     // Verify initial state
     TEST_ASSERT_FALSE(emergency_stop_is_active());
-    
+
     // Trigger emergency stop and verify broadcast occurs
     // This tests the integration with the broadcast function
     emergency_stop_trigger(ESTOP_SOURCE_SOFTWARE);
-    
+
     // Verify emergency stop is active
     TEST_ASSERT_TRUE(emergency_stop_is_active());
-    
+
     // The broadcast function should have been called internally
     // This validates that the integration is working
 }
 
 void test_safety_monitoring_health_checks(void) {
     // Test enhanced safety monitoring health checks
-    
+
     MockHAL_Reset();
     SystemError_t result = safety_system_init();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
-    
+
     // Test that safety system task performs health checks
     result = safety_system_task();
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
-    
+
     // Test fault monitoring integration
     result = fault_monitor_check();
     // Should succeed with mocked HAL
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
-    
+
     // Test watchdog health checking
     result = watchdog_check_health();
-    // Should succeed with mocked HAL  
+    // Should succeed with mocked HAL
     TEST_ASSERT_EQUAL(SYSTEM_OK, result);
 }
 
@@ -631,7 +628,7 @@ int main(void) {
 
     // Integration Tests
     RUN_TEST(test_hal_abstraction_integration_emergency_stop_full_cycle);
-    
+
     // Safety System Integration Tests (New)
     RUN_TEST(test_safety_system_state_integration);
     RUN_TEST(test_emergency_stop_broadcast);

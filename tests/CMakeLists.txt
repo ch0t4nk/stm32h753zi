@@ -1,3 +1,34 @@
+
+# Define add_test_if_exists function before use
+function(add_test_if_exists test_name test_source)
+    if(EXISTS "${test_source}")
+        message(STATUS "Adding test: ${test_name} (source: ${test_source})")
+        add_executable(${test_name} ${test_source} ${ARGN})
+        target_link_libraries(${test_name} unity)
+        # Use host compilation for tests, not ARM cross-compilation
+        target_compile_options(${test_name} PRIVATE
+            # Remove ARM-specific flags and use host compiler settings
+            -Wall -Wextra -Wpedantic -Wno-unused-parameter
+            -fdata-sections -ffunction-sections
+            -Og -g3 -ggdb -std=gnu11
+        )
+        target_compile_definitions(${test_name} PRIVATE
+            # Keep STM32 definitions for compatibility but remove ARM-specific ones
+            STM32H753xx
+            USE_HAL_DRIVER
+            UNITY_TESTING
+            UNIT_TESTING_MODE
+            # Remove ARM-specific definitions that don't apply to host tests
+        )
+        add_test(NAME ${test_name} COMMAND ${test_name})
+    else()
+        message(STATUS "Skipping test: ${test_name} (source not found: ${test_source})")
+    endif()
+endfunction()
+
+# Add optimization telemetry test
+add_test_if_exists(test_optimization_telemetry ${TEST_UNIT_DIR}/test_optimization_telemetry.c)
+cmake_minimum_required(VERSION 3.15)
 cmake_minimum_required(VERSION 3.15)
 
 # Test configuration
@@ -87,11 +118,23 @@ endfunction()
 
 
 
-# Legacy tests (conditionally add if they exist)
-add_test_if_exists(test_safety_systems
-    ${TEST_UNIT_DIR}/test_safety_systems.c
-    ${TEST_MOCKS_DIR}/mock_hal.c
+
+# HAL-abstracted safety system tests (preferred)
+add_test_if_exists(test_safety_systems_hal_abstracted
+    ${TEST_UNIT_DIR}/test_safety_systems_hal_abstracted.c
 )
+
+# Programmable mock safety event simulation tests
+add_test_if_exists(test_mock_safety_events
+    ${CMAKE_CURRENT_SOURCE_DIR}/test_mock_safety_events.c
+    ${TEST_MOCKS_DIR}/mock_hal_abstraction.c
+)
+
+# Legacy safety system tests (archived, not built)
+# add_test_if_exists(test_safety_systems
+#     ${TEST_UNIT_DIR}/test_safety_systems.c
+#     ${TEST_MOCKS_DIR}/mock_hal.c
+# )
 
 add_test_if_exists(test_basic_safety
     ${TEST_UNIT_DIR}/test_basic_safety.c

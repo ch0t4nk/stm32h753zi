@@ -56,4 +56,47 @@
 
 // ...existing code...
 
+/* ==========================================================================
+ * Legacy-compatible E-Stop and Safety Relay Pin Macros for Test Compatibility
+ * These are required for test and mock code that expects the old macro names.
+ * All values are mapped to the correct HAL abstraction enums and indices.
+ * ==========================================================================
+ */
+#ifndef ESTOP_BUTTON_PORT
+#define ESTOP_BUTTON_PORT HAL_GPIO_PORT_C
+#endif
+#ifndef ESTOP_BUTTON_PIN
+#define ESTOP_BUTTON_PIN 13
+#endif
+#ifndef ESTOP_BUTTON_PIN_INDEX
+#define ESTOP_BUTTON_PIN_INDEX 13
+#endif
+#ifndef ESTOP_LED_PORT
+#define ESTOP_LED_PORT HAL_GPIO_PORT_B
+#endif
+#ifndef ESTOP_LED_PIN
+#define ESTOP_LED_PIN 14
+#endif
+#ifndef ESTOP_LED_PIN_INDEX
+#define ESTOP_LED_PIN_INDEX 14
+#endif
+#ifndef SAFETY_RELAY1_PORT
+#define SAFETY_RELAY1_PORT HAL_GPIO_PORT_C
+#endif
+#ifndef SAFETY_RELAY1_PIN
+#define SAFETY_RELAY1_PIN 4
+#endif
+#ifndef SAFETY_RELAY1_PIN_INDEX
+#define SAFETY_RELAY1_PIN_INDEX 4
+#endif
+#ifndef SAFETY_RELAY2_PORT
+#define SAFETY_RELAY2_PORT HAL_GPIO_PORT_C
+#endif
+#ifndef SAFETY_RELAY2_PIN
+#define SAFETY_RELAY2_PIN 5
+#endif
+#ifndef SAFETY_RELAY2_PIN_INDEX
+#define SAFETY_RELAY2_PIN_INDEX 5
+#endif
+
 #endif /* HARDWARE_CONFIG_H */

@@ -13,52 +13,84 @@
 #ifndef TELEMETRY_DASHBOARD_H
 #define TELEMETRY_DASHBOARD_H
 
+/* ============================================================================
+ */
+/* Includes */
+/* ============================================================================
+ */
+
+#include <stdbool.h>
+#include <stdint.h>
+
 #include "common/error_codes.h"
 #include "config/freertos_config_ssot.h"
 #include "rtos/dynamic_task_tuning.h"
 #include "rtos/power_management.h"
-#include <stdbool.h>
-#include <stdint.h>
 
-// Configuration Constants
+/* ============================================================================
+ */
+/* Configuration Constants (SSOT compliant) */
+/* ============================================================================
+ */
+
+/// @brief Maximum HTTP request size
 #define TELEMETRY_MAX_REQUEST_SIZE 2048
+
+/// @brief Maximum HTTP response size
 #define TELEMETRY_MAX_RESPONSE_SIZE 4096
+
+/// @brief Maximum number of concurrent connections
 #define TELEMETRY_MAX_CONNECTIONS 4
+
+/// @brief HTTP server port (simulated over USB CDC)
 #define TELEMETRY_HTTP_PORT 8080
+
+/// @brief Telemetry update interval
 #define TELEMETRY_UPDATE_INTERVAL_MS 500
+
+/// @brief Maximum JSON payload size
 #define TELEMETRY_MAX_JSON_SIZE 3072
+
+/// @brief Dashboard web interface buffer size
 #define TELEMETRY_WEB_BUFFER_SIZE 8192
 
-// Data Structures
+/* ============================================================================
+ */
+/* Data Structures                                                           */
+/* ============================================================================
+ */
+
+/// @brief Motor telemetry data
 typedef struct {
-    uint8_t motor_id;
-    float current_position_deg;
-    float target_position_deg;
-    float current_speed_rpm;
-    float target_speed_rpm;
-    float motor_current_a;
-    float motor_voltage_v;
-    uint32_t step_count;
-    uint32_t fault_flags;
-    bool enabled;
-    bool moving;
-    bool at_target;
-    uint32_t last_update_ms;
+    uint8_t motor_id;           ///< Motor identifier (0-1)
+    float current_position_deg; ///< Current position in degrees
+    float target_position_deg;  ///< Target position in degrees
+    float current_speed_rpm;    ///< Current speed in RPM
+    float target_speed_rpm;     ///< Target speed in RPM
+    float motor_current_a;      ///< Motor current in amperes
+    float motor_voltage_v;      ///< Motor voltage in volts
+    uint32_t step_count;        ///< Total step count
+    uint32_t fault_flags;       ///< L6470 fault flags
+    bool enabled;               ///< Motor enabled status
+    bool moving;                ///< Motor is moving
+    bool at_target;             ///< Motor at target position
+    uint32_t last_update_ms;    ///< Last update timestamp
 } MotorTelemetryData_t;
 
+/// @brief System telemetry data
 typedef struct {
-    uint32_t uptime_ms;
-    uint32_t cpu_utilization_percent;
-    uint32_t free_heap_bytes;
-    uint32_t min_stack_bytes;
-    float cpu_temperature_c;
-    float supply_voltage_v;
-    uint32_t context_switches_per_sec;
-    uint32_t total_tasks;
-    uint32_t active_tasks;
-    PowerMode_t power_mode;
-    uint32_t power_savings_mw;
-    uint32_t last_update_ms;
+    uint32_t uptime_ms;                ///< System uptime in milliseconds
+    uint32_t cpu_utilization_percent;  ///< CPU utilization percentage
+    uint32_t free_heap_bytes;          ///< Free heap memory
+    uint32_t min_stack_bytes;          ///< Minimum stack space across tasks
+    float cpu_temperature_c;           ///< CPU temperature in Celsius
+    float supply_voltage_v;            ///< Supply voltage in volts
+    uint32_t context_switches_per_sec; ///< Context switches per second
+    uint32_t total_tasks;              ///< Total number of tasks
+    uint32_t active_tasks;             ///< Number of active tasks
+    PowerMode_t power_mode;            ///< Current power mode
+    uint32_t power_savings_mw;         ///< Estimated power savings in mW
+    uint32_t last_update_ms;           ///< Last update timestamp
 } SystemTelemetryData_t;
 
 typedef struct {

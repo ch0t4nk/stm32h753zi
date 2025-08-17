@@ -1,3 +1,12 @@
+
+
+#include "mock_hal_abstraction.h" // For MockHAL_State_t, etc.
+#include "config/error_codes.h"   // For SystemError_t, SYSTEM_OK
+#include "config/motor_config.h"  // For MAX_MOTORS and motor constants
+#include "hal_abstraction/hal_abstraction.h" // For HAL_GPIO_Config_t, etc.
+#include <stdbool.h>
+#include <stdint.h>
+
 /**
  * @file hal_abstraction_mock.c
  * @brief Mock Hardware Abstraction Layer Implementation for Testing
@@ -11,8 +20,8 @@
  * @note Only included when in UNITY_TESTING mode
  */
 
-#include "mock_hal_abstraction.h"
 #include "hal_abstraction.h"
+#include "mock_hal_abstraction.h"
 
 #ifdef UNITY_TESTING
 /* ==========================================================================
@@ -33,56 +42,18 @@
 /* ==========================================================================
  */
 
-typedef struct {
-    HAL_GPIO_State_t pin_states[16]; // Max 16 pins per port
-    bool pin_configured[16];
-    HAL_GPIO_Config_t pin_configs[16];
-} MockGPIOPort_Internal_t;
+// --- Programmable Safety Event Simulation API ---
+void MockHAL_SetEstopActive(bool active) {
+    mock_hal_state.estop_active = active;
+}
 
-typedef struct {
-    uint8_t last_tx_data[256];
-    uint8_t last_rx_data[256];
-    uint16_t last_data_size;
-    uint32_t call_count;
-    SystemError_t return_value;
-    bool initialized;
-} MockSPI_Internal_t;
+void MockHAL_SetFaultPinActive(bool active) {
+    mock_hal_state.fault_pin_active = active;
+}
 
-typedef struct {
-    uint16_t last_device_address;
-    uint16_t last_register_address;
-    uint8_t last_data[256];
-    uint16_t last_data_size;
-    uint32_t call_count;
-    SystemError_t return_value;
-    bool initialized;
-} MockI2C_Internal_t;
-
-typedef struct {
-    uint32_t counter_value;
-    bool running;
-    bool initialized;
-    HAL_Timer_Config_t config;
-} MockTimer_Internal_t;
-
-typedef struct {
-    MockGPIOPort_Internal_t gpio_ports[HAL_GPIO_PORT_MAX];
-    MockSPI_Internal_t spi_instances[HAL_SPI_INSTANCE_MAX];
-    MockI2C_Internal_t i2c_instances[HAL_I2C_INSTANCE_MAX];
-    MockTimer_Internal_t timer_instances[HAL_TIMER_INSTANCE_MAX];
-
-    uint32_t system_tick;
-    uint32_t delay_call_count;
-    uint32_t watchdog_refresh_count;
-    bool interrupts_enabled;
-    bool hal_initialized;
-
-    // Fault injection
-    bool inject_spi_failure;
-    bool inject_i2c_failure;
-    bool inject_gpio_failure;
-    bool inject_timer_failure;
-} MockHAL_Internal_State_t;
+void MockHAL_TriggerWatchdogTimeout(bool trigger) {
+    mock_hal_state.watchdog_timeout_triggered = trigger;
+}
 
 /* ==========================================================================
  */
@@ -90,7 +61,7 @@ typedef struct {
 /* ==========================================================================
  */
 
-static MockHAL_Internal_State_t mock_hal_state = {0};
+MockHAL_Internal_State_t mock_hal_state = {0};
 
 /* ==========================================================================
  */
@@ -153,358 +124,24 @@ static MockHAL_State_t *HAL_Abstraction_Mock_GetState(void) {
 
     // Copy GPIO states and mirror to bitmask indices
     for (int port = 0; port < HAL_GPIO_PORT_MAX; port++) {
-        for (int pin = 0; pin < 16; pin++) {
-            bool cfg = mock_hal_state.gpio_ports[port].pin_configured[pin];
-            HAL_GPIO_State_t st =
-                mock_hal_state.gpio_ports[port].pin_states[pin];
-
-            // Index by pin number
-            test_mock_state.gpio_configured[port][pin] = cfg;
-            test_mock_state.gpio_states[port][pin] = st;
-
-            // Index by bitmask (1 << pin)
-            uint32_t bitmask = (1u << pin);
-            test_mock_state.gpio_configured[port][bitmask] = cfg;
-            test_mock_state.gpio_states[port][bitmask] = st;
-        }
-    }
-
-    // Copy transaction counts
-    for (int i = 0; i < HAL_SPI_INSTANCE_MAX; i++) {
-        test_mock_state.spi_transaction_count[i] =
-            mock_hal_state.spi_instances[i].call_count;
-    }
-    for (int i = 0; i < HAL_I2C_INSTANCE_MAX; i++) {
-        test_mock_state.i2c_transaction_count[i] =
-            mock_hal_state.i2c_instances[i].call_count;
     }
 
     return &test_mock_state;
-}
 
-/**
- * @brief Test-compatible function name (expected by tests)
- * @return MockHAL_State_t* Pointer to mock state
- */
-MockHAL_State_t *MockHAL_GetState(void) {
-    return HAL_Abstraction_Mock_GetState();
-}
-
-/**
- * @brief Reset all mock states (test-compatible name)
- */
-void MockHAL_Reset(void) {
-    HAL_Abstraction_Mock_Reset();
-}
-
-/**
- * @brief Set GPIO pin state for testing (test-compatible name)
- */
-void MockHAL_SetGPIOState(HAL_GPIO_Port_t port, uint32_t pin,
-                          HAL_GPIO_State_t state) {
-    HAL_Abstraction_Mock_SetGPIOState(port, pin, state);
-}
-
-/**
- * @brief Check if GPIO pin was set (test-compatible name)
- */
-bool MockHAL_WasGPIOPinSet(HAL_GPIO_Port_t port, uint32_t pin) {
-    if (port >= HAL_GPIO_PORT_MAX || pin >= 16) {
-        return false;
-    }
-
-    // Find pin index
-    uint8_t pin_index = 0;
-    uint32_t pin_mask = pin;
-    while (pin_mask >>= 1)
-        pin_index++;
-
-    if (pin_index < 16) {
-        return mock_hal_state.gpio_ports[port].pin_states[pin_index] ==
-               HAL_GPIO_STATE_SET;
-    }
-
-    return false;
-}
-
-/**
- * @brief Set system tick (test-compatible name)
- */
-void MockHAL_SetTick(uint32_t tick_value) {
-    mock_hal_state.system_tick = tick_value;
-}
-
-/**
- * @brief Inject faults for testing (test-compatible name)
- */
-void MockHAL_InjectFault(uint32_t fault_type, bool enable) {
-    if (fault_type & MOCK_FAULT_GPIO_INIT) {
-        mock_hal_state.inject_gpio_failure = enable;
-    }
-    if (fault_type & MOCK_FAULT_GPIO_WRITE) {
-        mock_hal_state.inject_gpio_failure =
-            enable; // Same as GPIO_INIT for now
-    }
-    if (fault_type & MOCK_FAULT_SPI_INIT) {
-        mock_hal_state.inject_spi_failure = enable;
-    }
-    if (fault_type & MOCK_FAULT_I2C_INIT) {
-        mock_hal_state.inject_i2c_failure = enable;
-    }
-}
-
-/**
- * @brief Set mock SPI return value for next operation
- */
-void HAL_Abstraction_Mock_SetSPIReturnValue(HAL_SPI_Instance_t instance,
-                                            SystemError_t value) {
-    if (instance < HAL_SPI_INSTANCE_MAX) {
-        mock_hal_state.spi_instances[instance].return_value = value;
-    }
-}
-
-/**
- * @brief Set mock I2C return value for next operation
- */
-void HAL_Abstraction_Mock_SetI2CReturnValue(HAL_I2C_Instance_t instance,
-                                            SystemError_t value) {
-    if (instance < HAL_I2C_INSTANCE_MAX) {
-        mock_hal_state.i2c_instances[instance].return_value = value;
-    }
-}
-
-/**
- * @brief Inject SPI failure for testing error handling
- */
-void HAL_Abstraction_Mock_InjectSPIFailure(bool enable) {
-    mock_hal_state.inject_spi_failure = enable;
-}
-
-/**
- * @brief Inject I2C failure for testing error handling
- */
-void HAL_Abstraction_Mock_InjectI2CFailure(bool enable) {
-    mock_hal_state.inject_i2c_failure = enable;
-}
-
-/**
- * @brief Set GPIO pin state for testing input reads
- */
-void HAL_Abstraction_Mock_SetGPIOState(HAL_GPIO_Port_t port, uint32_t pin,
-                                       HAL_GPIO_State_t state) {
-    if (port < HAL_GPIO_PORT_MAX) {
-        int idx = (pin < 16) ? (int)pin : mock_pin_to_index(pin);
-        if (idx >= 0 && idx < 16) {
-            mock_hal_state.gpio_ports[port].pin_states[idx] = state;
+    /**
+     * @brief Set mock I2C return value for next operation
+     */
+    void HAL_Abstraction_Mock_SetI2CReturnValue(HAL_I2C_Instance_t instance,
+                                                SystemError_t value) {
+        if (instance < HAL_I2C_INSTANCE_MAX) {
+            mock_hal_state.i2c_instances[instance].return_value = value;
         }
     }
 }
 
-/**
- * @brief Advance mock system tick for testing timing
- */
-void HAL_Abstraction_Mock_AdvanceTick(uint32_t increment) {
-    mock_hal_state.system_tick += increment;
-}
-
 /* ==========================================================================
  */
-/* GPIO Mock Implementation                                                  */
-/* ==========================================================================
- */
-
-SystemError_t HAL_Abstraction_GPIO_Init(HAL_GPIO_Port_t port,
-                                        const HAL_GPIO_Config_t *config) {
-    if (config == NULL || port >= HAL_GPIO_PORT_MAX) {
-        return ERROR_INVALID_PARAMETER;
-    }
-
-    if (mock_hal_state.inject_gpio_failure) {
-        return ERROR_HARDWARE_FAULT;
-    }
-
-    int idx = mock_pin_to_index(config->pin);
-    if (idx < 0 || idx >= 16)
-        return ERROR_INVALID_PARAMETER;
-
-    mock_hal_state.gpio_ports[port].pin_configured[idx] = true;
-    mock_hal_state.gpio_ports[port].pin_configs[idx] = *config;
-
-    return SYSTEM_OK;
-}
-
-SystemError_t HAL_Abstraction_GPIO_Write(HAL_GPIO_Port_t port, uint32_t pin,
-                                         HAL_GPIO_State_t state) {
-    if (port >= HAL_GPIO_PORT_MAX) {
-        return ERROR_INVALID_PARAMETER;
-    }
-    if (mock_hal_state.inject_gpio_failure) {
-        return ERROR_HARDWARE_FAULT;
-    }
-    int idx = (pin < 16) ? (int)pin : mock_pin_to_index(pin);
-    if (idx < 0 || idx >= 16)
-        return ERROR_INVALID_PARAMETER;
-    if (!mock_hal_state.gpio_ports[port].pin_configured[idx]) {
-        return ERROR_NOT_INITIALIZED;
-    }
-    mock_hal_state.gpio_ports[port].pin_states[idx] = state;
-
-    return SYSTEM_OK;
-}
-
-SystemError_t HAL_Abstraction_GPIO_Read(HAL_GPIO_Port_t port, uint32_t pin,
-                                        HAL_GPIO_State_t *state) {
-    if (state == NULL || port >= HAL_GPIO_PORT_MAX) {
-        return ERROR_NULL_POINTER;
-    }
-    int idx = (pin < 16) ? (int)pin : mock_pin_to_index(pin);
-    if (idx < 0 || idx >= 16)
-        return ERROR_INVALID_PARAMETER;
-    if (!mock_hal_state.gpio_ports[port].pin_configured[idx]) {
-        return ERROR_NOT_INITIALIZED;
-    }
-    *state = mock_hal_state.gpio_ports[port].pin_states[idx];
-
-    return SYSTEM_OK;
-}
-
-SystemError_t HAL_Abstraction_GPIO_Toggle(HAL_GPIO_Port_t port, uint32_t pin) {
-    if (port >= HAL_GPIO_PORT_MAX) {
-        return ERROR_INVALID_PARAMETER;
-    }
-    int idx = (pin < 16) ? (int)pin : mock_pin_to_index(pin);
-    if (idx < 0 || idx >= 16)
-        return ERROR_INVALID_PARAMETER;
-    HAL_GPIO_State_t current = mock_hal_state.gpio_ports[port].pin_states[idx];
-    mock_hal_state.gpio_ports[port].pin_states[idx] =
-        (current == HAL_GPIO_STATE_SET) ? HAL_GPIO_STATE_RESET
-                                        : HAL_GPIO_STATE_SET;
-
-    return SYSTEM_OK;
-}
-
-SystemError_t HAL_Abstraction_GPIO_EnableInterrupt(HAL_GPIO_Port_t port,
-                                                   uint32_t pin,
-                                                   uint32_t trigger_type,
-                                                   uint8_t priority) {
-    if (port >= HAL_GPIO_PORT_MAX) {
-        return ERROR_INVALID_PARAMETER;
-    }
-
-    if (mock_hal_state.inject_gpio_failure) {
-        return ERROR_HARDWARE_FAULT;
-    }
-
-    // Mock implementation just records that interrupt was configured
-    return SYSTEM_OK;
-}
-
-/* ==========================================================================
- */
-/* SPI Mock Implementation                                                   */
-/* ==========================================================================
- */
-
-SystemError_t HAL_Abstraction_SPI_Init(HAL_SPI_Instance_t instance) {
-    if (instance >= HAL_SPI_INSTANCE_MAX) {
-        return ERROR_INVALID_PARAMETER;
-    }
-
-    mock_hal_state.spi_instances[instance].initialized = true;
-    return SYSTEM_OK;
-}
-
-SystemError_t
-HAL_Abstraction_SPI_TransmitReceive(HAL_SPI_Instance_t instance,
-                                    const HAL_SPI_Transaction_t *transaction) {
-    if (transaction == NULL || instance >= HAL_SPI_INSTANCE_MAX) {
-        return ERROR_NULL_POINTER;
-    }
-
-    if (mock_hal_state.inject_spi_failure) {
-        return ERROR_HARDWARE_FAULT;
-    }
-
-    MockSPI_Internal_t *spi = &mock_hal_state.spi_instances[instance];
-
-    // Record transaction details
-    if (transaction->tx_data &&
-        transaction->data_size <= sizeof(spi->last_tx_data)) {
-        memcpy(spi->last_tx_data, transaction->tx_data,
-               transaction->data_size);
-    }
-
-    if (transaction->rx_data &&
-        transaction->data_size <= sizeof(spi->last_rx_data)) {
-        // For testing, fill rx_data with test pattern
-        for (uint16_t i = 0; i < transaction->data_size; i++) {
-            transaction->rx_data[i] = 0xA5 + i; // Test pattern
-        }
-        memcpy(spi->last_rx_data, transaction->rx_data,
-               transaction->data_size);
-    }
-
-    spi->last_data_size = transaction->data_size;
-    spi->call_count++;
-
-    return spi->return_value;
-}
-
-SystemError_t HAL_Abstraction_SPI_Transmit(HAL_SPI_Instance_t instance,
-                                           const uint8_t *tx_data,
-                                           uint16_t data_size,
-                                           uint32_t timeout_ms) {
-    if (tx_data == NULL || instance >= HAL_SPI_INSTANCE_MAX) {
-        return ERROR_NULL_POINTER;
-    }
-
-    if (mock_hal_state.inject_spi_failure) {
-        return ERROR_HARDWARE_FAULT;
-    }
-
-    MockSPI_Internal_t *spi = &mock_hal_state.spi_instances[instance];
-
-    if (data_size <= sizeof(spi->last_tx_data)) {
-        memcpy(spi->last_tx_data, tx_data, data_size);
-    }
-
-    spi->last_data_size = data_size;
-    spi->call_count++;
-
-    return spi->return_value;
-}
-
-SystemError_t HAL_Abstraction_SPI_Receive(HAL_SPI_Instance_t instance,
-                                          uint8_t *rx_data, uint16_t data_size,
-                                          uint32_t timeout_ms) {
-    if (rx_data == NULL || instance >= HAL_SPI_INSTANCE_MAX) {
-        return ERROR_NULL_POINTER;
-    }
-
-    if (mock_hal_state.inject_spi_failure) {
-        return ERROR_HARDWARE_FAULT;
-    }
-
-    MockSPI_Internal_t *spi = &mock_hal_state.spi_instances[instance];
-
-    // Fill with test pattern
-    for (uint16_t i = 0; i < data_size; i++) {
-        rx_data[i] = 0x5A + i;
-    }
-
-    if (data_size <= sizeof(spi->last_rx_data)) {
-        memcpy(spi->last_rx_data, rx_data, data_size);
-    }
-
-    spi->last_data_size = data_size;
-    spi->call_count++;
-
-    return spi->return_value;
-}
-
-/* ==========================================================================
- */
-/* I2C Mock Implementation                                                   */
+/* I2C Mock Implementation */
 /* ==========================================================================
  */
 
@@ -562,18 +199,31 @@ HAL_Abstraction_I2C_MemRead(HAL_I2C_Instance_t instance,
 
     if (transaction->data &&
         transaction->data_size <= sizeof(i2c->last_data)) {
-        // Fill with test pattern for AS5600 simulation
-        if (transaction->device_address == 0x36) {       // AS5600 address
-            if (transaction->register_address == 0x0C) { // RAW_ANGLE register
-                transaction->data[0] = 0x12; // Mock angle high byte
-                transaction->data[1] = 0x34; // Mock angle low byte
-            } else if (transaction->register_address ==
-                       0x0E) {               // ANGLE register
-                transaction->data[0] = 0x56; // Mock angle high byte
-                transaction->data[1] = 0x78; // Mock angle low byte
+        if (i2c->response_set &&
+            i2c->response_size >= transaction->data_size) {
+            memcpy(transaction->data, i2c->response_data,
+                   transaction->data_size);
+            memcpy(i2c->last_data, i2c->response_data, transaction->data_size);
+            i2c->response_set = false;
+        } else {
+            // Fill with test pattern for AS5600 simulation
+            if (transaction->device_address == 0x36) { // AS5600 address
+                if (transaction->register_address ==
+                    0x0C) {                      // RAW_ANGLE register
+                    transaction->data[0] = 0x12; // Mock angle high byte
+                    transaction->data[1] = 0x34; // Mock angle low byte
+                } else if (transaction->register_address ==
+                           0x0E) {               // ANGLE register
+                    transaction->data[0] = 0x56; // Mock angle high byte
+                    transaction->data[1] = 0x78; // Mock angle low byte
+                } else {
+                    for (uint16_t i = 0; i < transaction->data_size; i++) {
+                        transaction->data[i] = 0xC5 + i;
+                    }
+                }
             }
+            memcpy(i2c->last_data, transaction->data, transaction->data_size);
         }
-        memcpy(i2c->last_data, transaction->data, transaction->data_size);
     }
 
     i2c->last_data_size = transaction->data_size;
@@ -625,13 +275,41 @@ SystemError_t HAL_Abstraction_I2C_Receive(HAL_I2C_Instance_t instance,
 
     i2c->last_device_address = device_address;
 
-    // Fill with test pattern
-    for (uint16_t i = 0; i < data_size; i++) {
-        rx_data[i] = 0xAB + i;
+    if (i2c->response_set && i2c->response_size >= data_size) {
+        memcpy(rx_data, i2c->response_data, data_size);
+        memcpy(i2c->last_data, i2c->response_data, data_size);
+        i2c->response_set = false;
+    } else {
+        // Fill with test pattern
+        for (uint16_t i = 0; i < data_size; i++) {
+            rx_data[i] = 0xAB + i;
+        }
+        if (data_size <= sizeof(i2c->last_data)) {
+            memcpy(i2c->last_data, rx_data, data_size);
+        }
+    }
+    // --------------------------------------------------------------------------
+    // Programmable SPI/I2C response mock implementations
+    // --------------------------------------------------------------------------
+
+    void MockHAL_SetSPIResponse(HAL_SPI_Instance_t instance,
+                                const uint8_t *data, uint16_t size) {
+        if (instance >= HAL_SPI_INSTANCE_MAX || data == NULL || size > 256)
+            return;
+        MockSPI_Internal_t *spi = &mock_hal_state.spi_instances[instance];
+        memcpy(spi->response_data, data, size);
+        spi->response_size = size;
+        spi->response_set = true;
     }
 
-    if (data_size <= sizeof(i2c->last_data)) {
-        memcpy(i2c->last_data, rx_data, data_size);
+    void MockHAL_SetI2CResponse(HAL_I2C_Instance_t instance,
+                                const uint8_t *data, uint16_t size) {
+        if (instance >= HAL_I2C_INSTANCE_MAX || data == NULL || size > 256)
+            return;
+        MockI2C_Internal_t *i2c = &mock_hal_state.i2c_instances[instance];
+        memcpy(i2c->response_data, data, size);
+        i2c->response_size = size;
+        i2c->response_set = true;
     }
 
     i2c->last_data_size = data_size;
@@ -688,7 +366,7 @@ HAL_Abstraction_I2C_TransmitReceive(HAL_I2C_Instance_t instance,
 
 /* ==========================================================================
  */
-/* Timer Mock Implementation                                                 */
+/* Timer Mock Implementation */
 /* ==========================================================================
  */
 
@@ -750,7 +428,7 @@ SystemError_t HAL_Abstraction_Timer_GetCounter(HAL_Timer_Instance_t instance,
 
 /* ==========================================================================
  */
-/* System Timing Mock Implementation                                         */
+/* System Timing Mock Implementation */
 /* ==========================================================================
  */
 
@@ -769,7 +447,7 @@ uint32_t HAL_Abstraction_GetMicroseconds(void) {
 
 /* ==========================================================================
  */
-/* Watchdog Mock Implementation                                              */
+/* Watchdog Mock Implementation */
 /* ==========================================================================
  */
 
@@ -784,7 +462,7 @@ SystemError_t HAL_Abstraction_Watchdog_Refresh(void) {
 
 /* ==========================================================================
  */
-/* System Control Mock Implementation                                        */
+/* System Control Mock Implementation */
 /* ==========================================================================
  */
 
@@ -808,7 +486,7 @@ void HAL_Abstraction_SystemReset(void) {
 
 /* ==========================================================================
  */
-/* Configuration Functions Mock Implementation                               */
+/* Configuration Functions Mock Implementation */
 /* ==========================================================================
  */
 
@@ -826,7 +504,7 @@ SystemError_t HAL_Abstraction_ConfigureCommunicationHardware(void) {
 
 /* ==========================================================================
  */
-/* Driver Abstraction Mock Implementation (FTR-013)                         */
+/* Driver Abstraction Mock Implementation (FTR-013) */
 /* ==========================================================================
  */
 
@@ -894,7 +572,8 @@ SystemError_t HAL_Abstraction_L6470_Init(uint8_t motor_id) {
         return ERROR_INVALID_PARAMETER;
     }
 
-    // Could add initialization tracking here if needed for test verification
+    // Could add initialization tracking here if needed for test
+    // verification
     return SYSTEM_OK;
 }
 
@@ -951,5 +630,4 @@ SystemError_t HAL_Abstraction_L6470_HardStop(uint8_t motor_id) {
     // Mock: hard stop always succeeds in test environment
     return SYSTEM_OK;
 }
-
-#endif /* UNITY_TESTING */
+#endif // UNITY_TESTING
