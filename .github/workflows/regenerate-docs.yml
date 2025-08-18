@@ -1,0 +1,19 @@
+name: Regenerate Docs
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  regenerate:
+    name: regenerate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Placeholder regeneration step
+        run: |
+          echo "Regeneration workflow placeholder: implement scripts/regenerate_docs.py to perform regeneration"
