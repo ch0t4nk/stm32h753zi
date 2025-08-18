@@ -1,6 +1,6 @@
 # STM32H753ZI Development Workflow Script (PowerShell)
 param(
-    [Parameter(Mandatory=$true, Position=0)]
+    [Parameter(Mandatory = $true, Position = 0)]
     [ValidateSet("before", "during", "after")]
     [string]$Phase,
     [string]$FeatureId = "",
@@ -33,7 +33,8 @@ switch ($Phase) {
         }
         if (Test-Path "scripts\fix_cmake.ps1") {
             & ".\scripts\fix_cmake.ps1"
-        } else {
+        }
+        else {
             & bash "./scripts/fix_cmake.sh"
         }
         & python scripts/auto_update_status.py --source build --verbose

@@ -445,12 +445,11 @@ SystemError_t execute_emergency_stop_sequence(void) {
 SystemError_t failsafe_hardware_init(void) {
     // Initialize safety relay outputs (normally closed for fail-safe)
     SystemError_t result = HAL_Abstraction_GPIO_Init(
-        SAFETY_RELAY1_PORT,
-        &(HAL_GPIO_Config_t){.pin = SAFETY_RELAY1_PIN,
-                             .mode = GPIO_MODE_OUTPUT_PP,
-                             .pull = GPIO_NOPULL,
-                             .speed = GPIO_SPEED_FREQ_LOW,
-                             .alternate = 0});
+        SAFETY_RELAY1_PORT, &(HAL_GPIO_Config_t){.pin = SAFETY_RELAY1_PIN,
+                                                 .mode = GPIO_MODE_OUTPUT_PP,
+                                                 .pull = GPIO_NOPULL,
+                                                 .speed = GPIO_SPEED_FREQ_LOW,
+                                                 .alternate = 0});
 
     if (result == SYSTEM_OK) {
         result = HAL_Abstraction_GPIO_Init(

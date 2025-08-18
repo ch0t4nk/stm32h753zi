@@ -19,9 +19,9 @@
 extern "C" {
 #endif
 
+#include "common/data_types.h"
 #include <stdbool.h>
 #include <stdint.h>
-#include "common/data_types.h"
 
 /**
  * @brief Safety monitor structure (SSOT)
@@ -74,11 +74,14 @@ SystemError_t safety_system_task(void);
 bool safety_system_is_operational(void);
 bool safety_get_emergency_stop_state(void);
 SystemError_t safety_monitor_update(MonitorChannel_t channel, float value);
-SystemError_t log_safety_event(SafetyEventType_t event, uint32_t parameter, uint32_t additional_data);
+SystemError_t log_safety_event(SafetyEventType_t event, uint32_t parameter,
+                               uint32_t additional_data);
 SystemError_t handle_safety_violation(MonitorChannel_t channel, float value);
-void safety_log_event(SafetyEventType_t event, uint8_t motor_id, uint32_t additional_data);
+void safety_log_event(SafetyEventType_t event, uint8_t motor_id,
+                      uint32_t additional_data);
 SafetyMonitor_t get_safety_monitor_status(MonitorChannel_t channel);
-SystemError_t set_safety_monitor_enabled(MonitorChannel_t channel, bool enabled);
+SystemError_t set_safety_monitor_enabled(MonitorChannel_t channel,
+                                         bool enabled);
 
 #ifdef __cplusplus
 }

@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['valid_6895',['valid',['../d5/d0d/structcalibration__data__t.html#a075170c9f1ff83992e7f358cdf1af515',1,'calibration_data_t']]],
+  ['valid_5fsamples_5fcount_6896',['valid_samples_count',['../df/da6/structMotorCharacterizationResults__t.html#acc80bdc2160bdc065b2bbf6fa8e82184',1,'MotorCharacterizationResults_t']]],
+  ['validate_5fparameters_6897',['validate_parameters',['../df/dc8/structMotorCharacterizationConfig__t.html#a50b629af1c12d86408cbe93d6a886ffc',1,'MotorCharacterizationConfig_t']]],
+  ['validated_6898',['validated',['../d7/d05/structSafetyFunctionRecord__t.html#a08a19d29a19a0ef168d9f2b906f83dde',1,'SafetyFunctionRecord_t']]],
+  ['validation_5faccuracy_5fpercent_6899',['validation_accuracy_percent',['../d8/dbb/structOptimalControlParameters__t.html#a396a09ac2584520719ff7add356d4aa3',1,'OptimalControlParameters_t']]],
+  ['validation_5ftime_5fms_6900',['validation_time_ms',['../d1/db9/structOptimizationConfig__t.html#a39017f1ac234643654f67e3d2be573ce',1,'OptimizationConfig_t']]],
+  ['value_6901',['value',['../d7/d9a/structconfig__parameter__t.html#a42421a17bb4dfaf66c4be41f4def46ff',1,'config_parameter_t']]],
+  ['variance_6902',['variance',['../dc/d6c/structstatistics__t.html#a9c4e21ed3cbd573aebbdc586f07d5b0e',1,'statistics_t']]],
+  ['velocity_6903',['velocity',['../d6/d57/structControlState__t.html#aa36784080e2f5a2bd79aaa5679e03956',1,'ControlState_t::velocity()'],['../df/d9d/structPositionControlStatus__t.html#a057bdfff37ec5993296e39b46e22db64',1,'PositionControlStatus_t::velocity()']]],
+  ['velocity_5fdps_6904',['velocity_dps',['../da/dd9/structAS5600__EncoderState__t.html#af1b5cb23a1c15d7c215ff6ca45ba5a70',1,'AS5600_EncoderState_t::velocity_dps()'],['../d5/da3/structOptimizationTelemetryPacket__t.html#a0bcd1d4e9cd7eb9ab598309fb879eda5',1,'OptimizationTelemetryPacket_t::velocity_dps()']]],
+  ['velocity_5ffilter_5falpha_6905',['velocity_filter_alpha',['../d5/d1f/structPositionFilter__t.html#a86d14add504a2faf66d45d6808f38e6d',1,'PositionFilter_t']]],
+  ['velocity_5fgain_6906',['velocity_gain',['../d2/de8/structFeedforwardController__t.html#ad18eb49002c9378afbd0427a257f68ec',1,'FeedforwardController_t']]],
+  ['verification_5fmethod_6907',['verification_method',['../de/d0e/structRequirementTrace__t.html#a3bd464b8358ab5c917016c65e3ccbd1f',1,'RequirementTrace_t']]],
+  ['verified_6908',['verified',['../d7/d05/structSafetyFunctionRecord__t.html#ac95e1d11abf106c9da060df7fb6bd48b',1,'SafetyFunctionRecord_t::verified()'],['../de/d0e/structRequirementTrace__t.html#aa4a9ee18714fecce13c109994af21850',1,'RequirementTrace_t::verified()']]],
+  ['version_6909',['version',['../d4/d68/structSystemState__t.html#aa71d2ce4e937286c4f167cd732be0dd6',1,'SystemState_t']]],
+  ['version_5fbuild_6910',['version_build',['../df/dd1/structBuildInfo__t.html#a886b24efd8be2213cfa01dbd0c057eb4',1,'BuildInfo_t']]],
+  ['version_5fmajor_6911',['version_major',['../df/dd1/structBuildInfo__t.html#a3ad34985addc5310735de77a9302c9c9',1,'BuildInfo_t']]],
+  ['version_5fminor_6912',['version_minor',['../df/dd1/structBuildInfo__t.html#ae3b29a471dfc3177627bcee8f09c82a9',1,'BuildInfo_t']]],
+  ['version_5fpatch_6913',['version_patch',['../df/dd1/structBuildInfo__t.html#ad5c54b6fbd787114f8771c9ecec0a4cf',1,'BuildInfo_t']]],
+  ['version_5fstring_6914',['version_string',['../df/dd1/structBuildInfo__t.html#a69958eddee98c29a2a99da182fb9f47c',1,'BuildInfo_t']]],
+  ['vibration_5frms_5fg_6915',['vibration_rms_g',['../d4/d30/structPerformanceMetrics__t.html#a8517b1c420e772ff87dc4099565d3d35',1,'PerformanceMetrics_t']]],
+  ['violation_5fcount_6916',['violation_count',['../df/d2c/structSafetyMonitor__t.html#a55be9193d7e64210a57e78d03f55c9b8',1,'SafetyMonitor_t']]],
+  ['viscous_5fdamping_5fnm_5fs_5frad_6917',['viscous_damping_nm_s_rad',['../d2/de7/structMockPhysicalParams__t.html#ae000440fdadd63854ab577b463b927a1',1,'MockPhysicalParams_t']]],
+  ['viscous_5ffriction_5fcoeff_6918',['viscous_friction_coeff',['../d0/d53/structMotorPhysicalParameters__t.html#a58b4d5e797f267d16e596139e89b8d2a',1,'MotorPhysicalParameters_t']]]
+];

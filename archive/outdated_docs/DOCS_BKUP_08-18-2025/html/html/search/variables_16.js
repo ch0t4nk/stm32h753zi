@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['w_6919',['w',['../de/de3/structquaternion__t.html#acbdbba807ad9e005be5b5bb62d9474b9',1,'quaternion_t']]],
+  ['wait_5ffor_5fcompletion_6920',['wait_for_completion',['../d7/da6/structCoordinatedMoveCommand__t.html#a994c77e6be8e5e1ab32bfbd92a53379b',1,'CoordinatedMoveCommand_t']]],
+  ['wake_5fevents_5fcount_6921',['wake_events_count',['../dc/db0/structPowerManagementState__t.html#a5517ff3e66115641fa599516d7a70a9a',1,'PowerManagementState_t']]],
+  ['wake_5ffrom_5fcommunication_6922',['wake_from_communication',['../dc/d8c/structPowerStatistics__t.html#a347a216afd902f491e1868e717274d85',1,'PowerStatistics_t']]],
+  ['wake_5ffrom_5fmotion_6923',['wake_from_motion',['../dc/d8c/structPowerStatistics__t.html#aa49380c5840d019e215c751ed2030cca',1,'PowerStatistics_t']]],
+  ['wake_5ffrom_5fsafety_6924',['wake_from_safety',['../dc/d8c/structPowerStatistics__t.html#adf0fc9ad43bd0955cb750de02afd5df7',1,'PowerStatistics_t']]],
+  ['warning_5fcount_6925',['warning_count',['../df/d5a/structSafetyTelemetryData__t.html#a960c703b183f95f676f1dc0b18a19f64',1,'SafetyTelemetryData_t::warning_count()'],['../df/d2c/structSafetyMonitor__t.html#a502a2319aa9b6229fee05ed33c18b98c',1,'SafetyMonitor_t::warning_count()']]],
+  ['warning_5fmax_6926',['warning_max',['../df/d2c/structSafetyMonitor__t.html#ae99e676003cd02a960833118d0327aa1',1,'SafetyMonitor_t']]],
+  ['warning_5fmin_6927',['warning_min',['../df/d2c/structSafetyMonitor__t.html#addd6e5a460bb8b60c3c68518641a5e01',1,'SafetyMonitor_t']]],
+  ['warning_5fthreshold_5fms_6928',['warning_threshold_ms',['../d5/d87/structWatchdogConfig__t.html#a835cb7193268f6cdf46d89fb9392adef',1,'WatchdogConfig_t']]],
+  ['warnings_5fissued_6929',['warnings_issued',['../d4/db0/structSafetyStatistics__t.html#a4da8bb462800c5c41ddc25a6395e80f1',1,'SafetyStatistics_t']]],
+  ['watchdog_5factive_6930',['watchdog_active',['../df/d5a/structSafetyTelemetryData__t.html#a3ae7ad6d2caa14711f1b5f27cbcf6b05',1,'SafetyTelemetryData_t']]],
+  ['watchdog_5fconfig_6931',['watchdog_config',['../d2/d94/watchdog__manager_8c.html#ac1e031c9a0b5a9051fb1459c0bfbeed4',1,'watchdog_manager.c']]],
+  ['watchdog_5fenabled_6932',['watchdog_enabled',['../de/dfa/structSafetyStateInfo__t.html#a2638b8a68d42bc5f2c340a28a5099ecb',1,'SafetyStateInfo_t']]],
+  ['watchdog_5finitialized_6933',['watchdog_initialized',['../d2/d94/watchdog__manager_8c.html#a6a358ee4c73d084eab2dacd59ee8fa4d',1,'watchdog_manager.c']]],
+  ['watchdog_5fkicks_5fmissed_6934',['watchdog_kicks_missed',['../de/dfa/structSafetyStateInfo__t.html#a889842039353ab6918c05788751c3393',1,'SafetyStateInfo_t']]],
+  ['watchdog_5flast_5fkick_5ftime_5fms_6935',['watchdog_last_kick_time_ms',['../de/dfa/structSafetyStateInfo__t.html#ac1335de0be639d3238a9e71f05581795',1,'SafetyStateInfo_t']]],
+  ['watchdog_5frefresh_5fcount_6936',['watchdog_refresh_count',['../da/d16/structMockHAL__State__t.html#a7250e1ea9d6c7a59bf920f5c1c9b19fa',1,'MockHAL_State_t']]],
+  ['watchdog_5frefresh_5ftimer_6937',['watchdog_refresh_timer',['../de/db3/rtos__resources__config_8h.html#ae511a8d6492402c6ed34bb1798593671',1,'rtos_resources_config.h']]],
+  ['watchdog_5ftimeout_5fevents_6938',['watchdog_timeout_events',['../de/dfa/structSafetyStateInfo__t.html#a9dfda603f71fc2a0a8079637a9396a8e',1,'SafetyStateInfo_t']]],
+  ['watchdog_5ftimeouts_6939',['watchdog_timeouts',['../d4/db0/structSafetyStatistics__t.html#aa506c518d4ed30ae6c784196618f2a54',1,'SafetyStatistics_t']]],
+  ['watchdog_5ftimer_6940',['watchdog_timer',['../d3/d37/rtos__tasks_8c.html#a4df29189874eddbf759dc04927e4113e',1,'rtos_tasks.c']]],
+  ['watchdog_5fwarning_5factive_6941',['watchdog_warning_active',['../d2/d94/watchdog__manager_8c.html#a9bfcc51b8b713e089101837bb273912d',1,'watchdog_manager.c']]],
+  ['winding_5finductance_5fh_6942',['winding_inductance_h',['../d0/d53/structMotorPhysicalParameters__t.html#a5cb2945b05054ec4b2b49e467513c4c2',1,'MotorPhysicalParameters_t']]],
+  ['winding_5fresistance_5fohm_6943',['winding_resistance_ohm',['../d0/d53/structMotorPhysicalParameters__t.html#a3e5e02d53d82bc6d7f4dc68db6546676',1,'MotorPhysicalParameters_t']]]
+];
