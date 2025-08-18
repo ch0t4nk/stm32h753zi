@@ -13,7 +13,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
-      - name: Placeholder regeneration step
+          python-version: "3.10"
+      - name: Run regeneration script
         run: |
-          echo "Regeneration workflow placeholder: implement scripts/regenerate_docs.py to perform regeneration"
+          python scripts/regenerate_docs.py --commit
