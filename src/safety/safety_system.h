@@ -21,6 +21,39 @@ extern "C" {
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "common/data_types.h"
+
+/**
+ * @brief Safety monitor structure (SSOT)
+ */
+typedef struct {
+    float current_value;
+    float safe_min;
+    float safe_max;
+    float warning_min;
+    float warning_max;
+    uint32_t violation_count;
+    uint32_t warning_count;
+    uint32_t last_violation;
+    bool enabled;
+} SafetyMonitor_t;
+
+/**
+ * @brief Monitor channel enumeration
+ */
+typedef enum {
+    MONITOR_MOTOR1_CURRENT,
+    MONITOR_MOTOR2_CURRENT,
+    MONITOR_MOTOR1_SPEED,
+    MONITOR_MOTOR2_SPEED,
+    MONITOR_MOTOR1_POSITION,
+    MONITOR_MOTOR2_POSITION,
+    MONITOR_SYSTEM_TEMPERATURE,
+    MONITOR_SUPPLY_VOLTAGE,
+    MONITOR_CPU_USAGE,
+    MONITOR_COMM_LATENCY,
+    MONITOR_COUNT
+} MonitorChannel_t;
 
 /**
  * @brief Watchdog configuration structure (SSOT)
@@ -34,13 +67,18 @@ typedef struct {
     uint32_t timeout_count;        /**< Timeout event count */
     uint32_t missed_refresh_count; /**< Missed refresh count */
 } WatchdogConfig_t;
-#define SAFETY_SYSTEM_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-// ...[content omitted for brevity, see previous message for full content]...
+// Function declarations
+SystemError_t safety_system_init(void);
+SystemError_t safety_system_task(void);
+bool safety_system_is_operational(void);
+bool safety_get_emergency_stop_state(void);
+SystemError_t safety_monitor_update(MonitorChannel_t channel, float value);
+SystemError_t log_safety_event(SafetyEventType_t event, uint32_t parameter, uint32_t additional_data);
+SystemError_t handle_safety_violation(MonitorChannel_t channel, float value);
+void safety_log_event(SafetyEventType_t event, uint8_t motor_id, uint32_t additional_data);
+SafetyMonitor_t get_safety_monitor_status(MonitorChannel_t channel);
+SystemError_t set_safety_monitor_enabled(MonitorChannel_t channel, bool enabled);
 
 #ifdef __cplusplus
 }

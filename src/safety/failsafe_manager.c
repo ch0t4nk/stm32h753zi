@@ -448,8 +448,8 @@ SystemError_t failsafe_hardware_init(void) {
         SAFETY_RELAY1_PORT,
         &(HAL_GPIO_Config_t){.pin = SAFETY_RELAY1_PIN,
                              .mode = GPIO_MODE_OUTPUT_PP,
-                             .pull = HAL_GPIO_NOPULL,
-                             .speed = HAL_GPIO_SPEED_FREQ_LOW,
+                             .pull = GPIO_NOPULL,
+                             .speed = GPIO_SPEED_FREQ_LOW,
                              .alternate = 0});
 
     if (result == SYSTEM_OK) {
@@ -457,8 +457,8 @@ SystemError_t failsafe_hardware_init(void) {
             SAFETY_RELAY2_PORT,
             &(HAL_GPIO_Config_t){.pin = SAFETY_RELAY2_PIN,
                                  .mode = GPIO_MODE_OUTPUT_PP,
-                                 .pull = HAL_GPIO_NOPULL,
-                                 .speed = HAL_GPIO_SPEED_FREQ_LOW,
+                                 .pull = GPIO_NOPULL,
+                                 .speed = GPIO_SPEED_FREQ_LOW,
                                  .alternate = 0});
     }
 

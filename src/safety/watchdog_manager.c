@@ -6,8 +6,7 @@
 #include "config/safety_config.h"
 #include "hal_abstraction/hal_abstraction.h"
 #include "safety_system.h"
-#include "stm32h7xx_hal_iwdg.h"
-#include "stm32h7xx_hal_wwdg.h"
+#include "stm32h7xx_hal.h"
 #include <inttypes.h>
 #include <stdbool.h>
 #include <stddef.h>

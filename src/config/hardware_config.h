@@ -131,10 +131,18 @@
 // Position Control Limits
 #define MAX_POSITION_ERROR_STEPS 100 // Maximum position error in steps
 
+// L6470 Motor Driver Status Pins (X-NUCLEO-IHM02A1 shield)
+#define MOTOR_FLAG_PORT GPIOB     // L6470 FLAG pin port (fault indication)
+#define MOTOR_FLAG_PIN GPIO_PIN_2 // L6470 FLAG pin (active low when fault)
+#define MOTOR_BUSY_PORT GPIOB     // L6470 BUSY pin port (operation status)
+#define MOTOR_BUSY_PIN                                                        \
+    GPIO_PIN_3 // L6470 BUSY pin (high when executing command)
+
 // ============================================================================
 // AS5600 Magnetic Encoder Configuration
 // ============================================================================
 
 #define AS5600_I2C_ADDRESS_8BIT 0x6C // AS5600 I2C address (8-bit format)
+#define ENCODER_VALUE_MASK 0x0FFF // 12-bit encoder value mask (4096 positions)
 
 #endif /* HARDWARE_CONFIG_H */

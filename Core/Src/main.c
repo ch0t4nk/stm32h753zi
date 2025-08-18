@@ -27,6 +27,7 @@
 /* USER CODE BEGIN Includes */
 #include "stm32h7xx_hal_flash.h"
 #include "stm32h7xx_hal_flash_ex.h"
+#include "real_time_control.h"
 /* USER CODE END Includes */
 
 /* Private typedef
@@ -189,6 +190,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     /* USER CODE END Callback 0 */
     if (htim->Instance == TIM6) {
         HAL_IncTick();
+    } else if (htim->Instance == TIM2) {
+        // Control loop timer (TIM2)
+        rt_control_loop_handler();
+    } else if (htim->Instance == TIM3) {
+        // Safety monitor timer (TIM3)
+        rt_safety_monitor_handler();
     }
     /* USER CODE BEGIN Callback 1 */
 

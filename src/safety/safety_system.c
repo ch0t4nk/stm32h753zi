@@ -40,32 +40,6 @@ typedef struct {
 /* EmergencyStopState_t struct is defined in config/safety_config.h */
 
 typedef struct {
-    float current_value;
-    float safe_min;
-    float safe_max;
-    float warning_min;
-    float warning_max;
-    uint32_t violation_count;
-    uint32_t warning_count;
-    uint32_t last_violation;
-    bool enabled;
-} SafetyMonitor_t;
-
-typedef enum {
-    MONITOR_MOTOR1_CURRENT,
-    MONITOR_MOTOR2_CURRENT,
-    MONITOR_MOTOR1_SPEED,
-    MONITOR_MOTOR2_SPEED,
-    MONITOR_MOTOR1_POSITION,
-    MONITOR_MOTOR2_POSITION,
-    MONITOR_SYSTEM_TEMPERATURE,
-    MONITOR_SUPPLY_VOLTAGE,
-    MONITOR_CPU_USAGE,
-    MONITOR_COMM_LATENCY,
-    MONITOR_COUNT
-} MonitorChannel_t;
-
-typedef struct {
     uint32_t total_safety_events;
     uint32_t emergency_stops;
     uint32_t watchdog_timeouts;
@@ -140,6 +114,11 @@ static SafetyState_t current_safety_state = SAFETY_STATE_UNKNOWN;
 static uint32_t safety_state_entry_time = 0;
 static uint32_t last_safety_check_time = 0;
 
+// Emergency stop state
+static EmergencyStopState_t current_emergency_stop_state =
+    EMERGENCY_STOP_NORMAL;
+static EmergencyStopSource_t current_emergency_stop_source = ESTOP_SOURCE_NONE;
+
 /* ==========================================================================
  */
 /* Private Function Prototypes                                               */
@@ -149,6 +128,8 @@ static uint32_t last_safety_check_time = 0;
 static SystemError_t initialize_safety_configurations(void);
 static SystemError_t initialize_safety_monitors(void);
 static void set_safety_state(SafetyState_t new_state);
+static void set_emergency_stop_state(EmergencyStopState_t new_state,
+                                     EmergencyStopSource_t source);
 static SystemError_t perform_safety_checks(void);
 static void broadcast_emergency_stop(void);
 // get_microsecond_timer() is declared in timing_precision.h (non-static)
@@ -372,6 +353,13 @@ SystemError_t safety_system_task(void) {
     uint32_t start_time = HAL_Abstraction_GetTick();
     SystemError_t estop_result = emergency_stop_execute(source);
 
+    // Update emergency stop state
+    if (estop_result == SYSTEM_OK) {
+        set_emergency_stop_state(EMERGENCY_STOP_TRIGGERED, source);
+    } else {
+        set_emergency_stop_state(EMERGENCY_STOP_FAULT, source);
+    }
+
     // Update statistics
     safety_statistics.emergency_stops++;
     safety_statistics.total_safety_events++;
@@ -399,6 +387,9 @@ SystemError_t reset_emergency_stop(void) {
         return reset_result;
     }
 
+    // Reset emergency stop state to normal
+    set_emergency_stop_state(EMERGENCY_STOP_NORMAL, ESTOP_SOURCE_NONE);
+
     // Return to safe state
     set_safety_state(SAFETY_STATE_SAFE);
 
@@ -407,6 +398,16 @@ SystemError_t reset_emergency_stop(void) {
                      get_microsecond_timer());
 
     return SYSTEM_OK;
+}
+
+static void set_emergency_stop_state(EmergencyStopState_t new_state,
+                                     EmergencyStopSource_t source) {
+    current_emergency_stop_state = new_state;
+    current_emergency_stop_source = source;
+}
+
+EmergencyStopState_t emergency_stop_get_state(void) {
+    return current_emergency_stop_state;
 }
 
 EmergencyStopState_t get_emergency_stop_state(void) {
@@ -425,7 +426,7 @@ bool is_system_safe(void) {
 
     // Check emergency stop state
     EmergencyStopState_t estop_state = get_emergency_stop_state();
-    if (estop_state.active || estop_state.latched) {
+    if (estop_state != EMERGENCY_STOP_NORMAL) {
         return false;
     }
 

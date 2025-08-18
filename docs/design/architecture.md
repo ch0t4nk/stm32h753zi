@@ -1,4 +1,5 @@
 <!-- [MermaidChart: 499e919f-9d7a-4e6e-ae2c-5c88520a55fe] -->
+
 # STM32H753ZI Stepper Motor Control & Semantic Search System Architecture
 
 **Status**: ✅ **PRODUCTION READY** - ARM_CM7 FreeRTOS + AI-Powered Documentation + API  
@@ -15,33 +16,62 @@ Professional stepper motor control system with integrated AI-powered semantic se
 ---
 id: 499e919f-9d7a-4e6e-ae2c-5c88520a55fe
 ---
-graph TD
-    MCU["STM32H753ZI Nucleo-144<br/>ARM Cortex-M7 @ 480MHz<br/>2MB FLASH, 1MB RAM"]
-    L6470_1["L6470 Driver 1<br/>Stepper Motor Control<br/>Microstepping & Current Control"]
-    L6470_2["L6470 Driver 2<br/>Stepper Motor Control<br/>Microstepping & Current Control"]
-    AS5600_1["AS5600 Encoder 1<br/>Magnetic Position Sensor<br/>12-bit Resolution"]
-    AS5600_2["AS5600 Encoder 2<br/>Magnetic Position Sensor<br/>12-bit Resolution"]
-    CAN["CAN Bus<br/>High-Speed Communication<br/>Motor Commands & Status"]
-    STLink["ST-Link Virtual UART<br/>Debug & Telemetry<br/>115200 baud"]
-    MOTOR1["Stepper Motor 1<br/>Closed-Loop Control"]
-    MOTOR2["Stepper Motor 2<br/>Closed-Loop Control"]
-    SAFETY["Safety Systems<br/>Emergency Stop<br/>Fault Monitoring"]
-    WATCHDOG["Hardware Watchdogs<br/>System Health Monitoring"]
-    
-    MCU -->|SPI Daisy Chain| L6470_1
-    MCU -->|SPI Daisy Chain| L6470_2
-    MCU -->|I2C1 PB6/PB7| AS5600_1
-    MCU -->|I2C2| AS5600_2
-    MCU -->|CAN-FD| CAN
-    MCU -->|UART| STLink
-    MCU -->|GPIO| SAFETY
-    MCU -->|IWDG/WWDG| WATCHDOG
-    
+%%{init: {'flowchart': {'curve': 'basis', 'htmlLabels': false}} }%%
+graph LR
+    subgraph "Microcontroller"
+        MCU["STM32H753ZI Nucleo-144\nARM Cortex-M7 @ 480MHz\n2MB FLASH, 1MB RAM"]:::mcu
+    end
+
+    subgraph "Stepper Motor 1 Control"
+        L6470_1["L6470 Driver 1\nStepper Motor Control"]:::motor1
+        AS5600_1["AS5600 Encoder 1\nMagnetic Position Sensor"]:::motor1
+        MOTOR1["Stepper Motor 1\nClosed-Loop"]:::motor1
+    end
+
+    subgraph "Stepper Motor 2 Control"
+        L6470_2["L6470 Driver 2\nStepper Motor Control"]:::motor2
+        AS5600_2["AS5600 Encoder 2\nMagnetic Position Sensor"]:::motor2
+        MOTOR2["Stepper Motor 2\nClosed-Loop"]:::motor2
+    end
+
+    subgraph "System Interfaces"
+        CAN["CAN Bus\nHigh-Speed\nMotor Cmd/Status"]:::iface
+        STLink["ST-Link Virtual UART\nDebug & Telemetry"]:::iface
+        SAFETY["Safety Systems\nEmergency Stop"]:::alert
+        WATCHDOG["Hardware Watchdog\nHealth Monitor"]:::alert
+    end
+
+    %% Connections from MCU
+    MCU -- "SPI Daisy Chain" --> L6470_1
+    MCU -- "SPI Daisy Chain" --> L6470_2
+    MCU -- "I2C1" --> AS5600_1
+    MCU -- "I2C2" --> AS5600_2
+    MCU -- "CAN-FD" --> CAN
+    MCU -- "UART" --> STLink
+    MCU -- "GPIO" --> SAFETY
+    MCU -- "IWDG/WWDG" --> WATCHDOG
+
+    %% Motor Driver to Motor
     L6470_1 --> MOTOR1
     L6470_2 --> MOTOR2
-    
-    AS5600_1 -.->|Position Feedback| MOTOR1
-    AS5600_2 -.->|Position Feedback| MOTOR2
+
+    %% Encoder to Motor (feedback)
+    AS5600_1 -. "Position Feedback" .-> MOTOR1
+    AS5600_2 -. "Position Feedback" .-> MOTOR2
+
+    %% Color Classes
+    classDef mcu fill:#B6D6F2,stroke:#357ABD,stroke-width:2px;
+    classDef motor1 fill:#C6E5B1,stroke:#4F9D2D,stroke-width:2px;
+    classDef motor2 fill:#C3F3F1,stroke:#138A9A,stroke-width:2px;
+    classDef iface fill:#DAC2FF,stroke:#8E44AD,stroke-width:2px;
+    classDef alert fill:#FFD5C2,stroke:#E67E22,stroke-width:2px;
+
+    %% Assign classes
+    class MCU mcu;
+    class L6470_1,AS5600_1,MOTOR1 motor1;
+    class L6470_2,AS5600_2,MOTOR2 motor2;
+    class CAN,STLink iface;
+    class SAFETY,WATCHDOG alert;
 ```
 
 ## 🧱 **Software Architecture**
@@ -54,23 +84,23 @@ graph TB
         APP["Application Logic<br/>Motor Control Algorithms<br/>Safety Systems"]
         TASKS["FreeRTOS Tasks<br/>✅ Infrastructure Ready<br/>📋 Phase 2 Implementation"]
     end
-    
+
     subgraph "FreeRTOS Kernel (ARM_CM7)"
         SCHED["Scheduler<br/>✅ 1kHz Operational<br/>Cortex-M7 r0p1 Port"]
         QUEUES["Queues & Semaphores<br/>✅ Framework Ready<br/>Inter-Task Communication"]
         TIMERS["Software Timers<br/>✅ Infrastructure Ready<br/>Periodic Operations"]
     end
-    
+
     subgraph "HAL Abstraction Layer"
         HAL["HAL Abstraction<br/>✅ Platform Independent<br/>Testing Compatible"]
         DRIVERS["Hardware Drivers<br/>✅ L6470 + AS5600<br/>SPI/I2C Interfaces"]
     end
-    
+
     subgraph "STM32H7 Hardware"
         PERIPH["Peripherals<br/>✅ SPI/I2C/CAN/UART<br/>✅ I2C1 Configured"]
         NVIC["NVIC & Interrupts<br/>✅ FreeRTOS Priorities<br/>Real-Time Response"]
     end
-    
+
     APP --> TASKS
     TASKS --> SCHED
     SCHED --> HAL
@@ -89,23 +119,23 @@ graph LR
         CAN_TASK["CAN Communication<br/>Priority: 2 (Medium)<br/>Period: 20ms<br/>Stack: 1KB"]
         UART_TASK["UART Telemetry<br/>Priority: 1 (Low)<br/>Period: 50ms<br/>Stack: 1KB"]
     end
-    
+
     subgraph "Inter-Task Communication"
         MOTOR_Q["Motor Command Queue<br/>8 entries"]
         CAN_Q["CAN Message Queue<br/>16 entries"]
         UART_Q["UART Message Queue<br/>8 entries"]
         SAFETY_Q["Safety Event Queue<br/>4 entries"]
-        
+
         SPI_MUTEX["SPI Bus Mutex<br/>L6470 Protection"]
         I2C_MUTEX["I2C Bus Mutex<br/>AS5600 Protection"]
         STATE_MUTEX["Motor State Mutex<br/>Shared Data Protection"]
     end
-    
+
     SAFETY -->|Emergency Events| SAFETY_Q
     MOTOR -->|Commands| MOTOR_Q
     CAN_TASK -->|Messages| CAN_Q
     UART_TASK -->|Telemetry| UART_Q
-    
+
     MOTOR -.->|Bus Access| SPI_MUTEX
     MOTOR -.->|Encoder Access| I2C_MUTEX
     SAFETY -.->|State Access| STATE_MUTEX
@@ -166,13 +196,13 @@ graph LR
         TOOLCHAIN["arm-none-eabi-gcc<br/>Cortex-M7 Optimization<br/>✅ Production Ready"]
         FIRMWARE["STM32H753ZI Firmware<br/>✅ 2.41% FLASH Usage<br/>✅ 25.74% DTCMRAM"]
     end
-    
+
     subgraph "Host Testing Build"
         CMAKE_HOST["host_tests/CMakeLists.txt<br/>Native GCC<br/>✅ Unit Testing"]
         MOCKS["Mock Framework<br/>HAL Abstraction Mocks<br/>✅ Hardware-Free Testing"]
         TESTS["Unit & Integration Tests<br/>✅ Testing Framework<br/>Unity + GoogleTest"]
     end
-    
+
     CMAKE_ARM --> TOOLCHAIN --> FIRMWARE
     CMAKE_HOST --> MOCKS --> TESTS
 ```
@@ -208,25 +238,25 @@ graph TD
         WWDG["Window Watchdog<br/>✅ APB1 Clock<br/>Software Monitor"]
         ESTOP["Emergency Stop GPIO<br/>✅ Immediate Response<br/><1ms Reaction"]
     end
-    
+
     subgraph "Software Safety (FreeRTOS)"
         SAFETY_TASK["Safety Monitor Task<br/>✅ Highest Priority (4)<br/>500Hz Monitoring"]
         FAULT_DETECT["Fault Detection<br/>✅ 15+ Fault Conditions<br/>Real-Time Analysis"]
         ERROR_HANDLE["Error Handling<br/>✅ Graduated Response<br/>Fault Isolation"]
     end
-    
+
     subgraph "Motor Safety"
         L6470_FAULTS["L6470 Fault Flags<br/>✅ Overcurrent, Overtemp<br/>Automatic Protection"]
         POSITION_MONITOR["Position Monitoring<br/>✅ AS5600 Feedback<br/>Closed-Loop Validation"]
         LIMIT_ENFORCE["Limit Enforcement<br/>✅ Software Limits<br/>Motion Boundaries"]
     end
-    
+
     IWDG --> SAFETY_TASK
     WWDG --> SAFETY_TASK
     SAFETY_TASK --> FAULT_DETECT
     FAULT_DETECT --> ERROR_HANDLE
     ERROR_HANDLE --> ESTOP
-    
+
     L6470_FAULTS --> FAULT_DETECT
     POSITION_MONITOR --> FAULT_DETECT
     LIMIT_ENFORCE --> FAULT_DETECT
@@ -266,18 +296,18 @@ graph LR
         SPI["SPI Bus<br/>✅ L6470 Daisy Chain<br/>1MHz Clock"]
         I2C["I2C Bus<br/>✅ AS5600 Encoders<br/>400kHz Fast Mode"]
     end
-    
+
     subgraph "External Communication"
         CAN_IF["CAN-FD Interface<br/>✅ High-Speed Commands<br/>1Mbps Bitrate"]
         UART_IF["UART Interface<br/>✅ Debug & Telemetry<br/>115200 baud"]
     end
-    
+
     subgraph "Control Protocols"
         MOTOR_CMD["Motor Commands<br/>Position, Speed, Acceleration<br/>Real-Time Control"]
         SAFETY_MSG["Safety Messages<br/>Emergency Stop, Fault Status<br/>Priority Communication"]
         TELEM["Telemetry Data<br/>Position, Status, Diagnostics<br/>Monitoring & Debug"]
     end
-    
+
     SPI --> MOTOR_CMD
     I2C --> MOTOR_CMD
     CAN_IF --> MOTOR_CMD
@@ -317,17 +347,17 @@ graph TB
         UNITY["Unity Framework<br/>✅ Embedded C Testing<br/>Mock-Based Validation"]
         HAL_MOCK["HAL Abstraction Mocks<br/>✅ Hardware-Free Testing<br/>Controlled Environment"]
     end
-    
+
     subgraph "Integration Testing"
         FREERTOS_TEST["FreeRTOS Integration<br/>📋 Task Communication Testing<br/>Real-Time Validation"]
         HW_TEST["Hardware Testing<br/>📋 STM32H753ZI Validation<br/>Production Environment"]
     end
-    
+
     subgraph "Performance Testing"
         TIMING["Timing Validation<br/>📋 Real-Time Requirements<br/>Deadline Monitoring"]
         LOAD["Load Testing<br/>📋 CPU Utilization<br/>Memory Usage Analysis"]
     end
-    
+
     UNITY --> HAL_MOCK
     HAL_MOCK --> FREERTOS_TEST
     FREERTOS_TEST --> HW_TEST
@@ -338,6 +368,7 @@ graph TB
 ## 🎯 **Current Status Summary**
 
 ### ✅ **Production Ready Components**
+
 - **ARM_CM7 FreeRTOS Infrastructure**: Complete with 50.5KB optimized firmware
 - **Hardware Drivers**: L6470 + AS5600 with simulation compatibility
 - **Safety Systems**: Multi-layer protection with <1ms emergency response
@@ -346,6 +377,7 @@ graph TB
 - **Documentation**: 203KB comprehensive implementation and troubleshooting guides
 
 ### 📋 **Phase 2 Implementation Ready**
+
 - **Task Architecture**: Detailed plan for 4 specialized FreeRTOS tasks
 - **Communication Framework**: Complete inter-task communication design
 - **Performance Framework**: Real-time validation and optimization guidelines
@@ -353,6 +385,7 @@ graph TB
 - **Testing Strategy**: Comprehensive unit, integration, and performance testing
 
 ### 🎯 **Future Enhancement Opportunities**
+
 - **Phase 3 Advanced Features**: Adaptive control, enhanced protocols
 - **Deployment Optimization**: Application-specific performance tuning
 - **Extended Hardware Support**: Additional sensor and actuator integration

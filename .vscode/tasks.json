@@ -1,1082 +1,1091 @@
 {
-  "version": "2.0.0",
-  "inputs": [
-    {
-      "id": "searchQuery",
-      "description": "Enter your search query (concept, function, register, etc.)",
-      "default": "GPIO configuration",
-      "type": "promptString"
-    },
-    {
-      "id": "searchScope",
-      "description": "Select search scope",
-      "default": "STM32H7",
-      "type": "pickString",
-      "options": [
-        "STM32H7",
-        "motor_control",
-        "instruction_guides",
-        "project_code",
-        "safety_systems",
-        "all"
-      ]
-    }
-  ],
-  "tasks": [
-    {
-      "label": "Build (CMake)",
-      "type": "shell",
-      "windows": {
-        "command": "powershell",
-        "args": [
-          "-NoProfile",
-          "-ExecutionPolicy",
-          "Bypass",
-          "-File",
-          "${workspaceFolder}\\scripts\\fix_cmake.ps1"
-        ]
-      },
-      "linux": {
-        "command": "bash",
-        "args": [
-          "./scripts/fix_cmake.sh"
-        ]
-      },
-      "osx": {
-        "command": "bash",
-        "args": [
-          "./scripts/fix_cmake.sh"
-        ]
-      },
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "options": {
-        "cwd": "${workspaceFolder}",
-        "env": {
-          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
-          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
-        }
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared",
-        "showReuseMessage": true,
-        "clear": false
-      },
-      "problemMatcher": [
-        "$gcc"
-      ]
-    },
-    {
-      "label": "Clean Build",
-      "type": "shell",
-      "command": "rm -rf build",
-      "group": "build",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      }
-    },
-    {
-      "label": "Flash STM32H753ZI",
-      "type": "shell",
-      "windows": {
-        "command": "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
-        "args": [
-          "-c",
-          "port=SWD",
-          "-w",
-          "build/Debug/stm32h753_ihm02a1.hex",
-          "-v",
-          "-rst"
-        ]
-      },
-      "linux": {
-        "command": "openocd",
-        "args": [
-          "-f",
-          "interface/stlink.cfg",
-          "-f",
-          "target/stm32h7x.cfg",
-          "-c",
-          "program build/Debug/stm32h753_ihm02a1.elf verify reset exit"
-        ]
-      },
-      "osx": {
-        "command": "openocd",
-        "args": [
-          "-f",
-          "interface/stlink.cfg",
-          "-f",
-          "target/stm32h7x.cfg",
-          "-c",
-          "program build/Debug/stm32h753_ihm02a1.elf verify reset exit"
-        ]
-      },
-      "group": "build",
-      "dependsOn": "Build (CMake)",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      }
-    },
-    {
-      "label": "Run Tests (CTest)",
-      "type": "shell",
-      "command": "cd build && ctest",
-      "group": {
-        "kind": "test",
-        "isDefault": true
-      },
-      "dependsOn": "Build (CMake)",
-      "problemMatcher": []
-    },
-    {
-      "label": "Lint (clang-tidy/cppcheck)",
-      "type": "shell",
-      "command": "clang-tidy --version && cppcheck --version",
-      "group": "test",
-      "problemMatcher": []
-    },
-    {
-      "label": "Generate Docs (Doxygen)",
-      "type": "shell",
-      "command": "doxygen docs/Doxyfile",
-      "group": "build",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Validate SSOT",
-      "type": "shell",
-      "windows": {
-        "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
-        "args": [
-          "scripts/validate_ssot.py"
-        ]
-      },
-      "linux": {
-        "command": "${workspaceFolder}/.venv/bin/python",
-        "args": [
-          "scripts/validate_ssot.py"
-        ]
-      },
-      "osx": {
-        "command": "${workspaceFolder}/.venv/bin/python",
-        "args": [
-          "scripts/validate_ssot.py"
-        ]
-      },
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      }
-    },
-    {
-      "label": "Validate Build Environment",
-      "type": "shell",
-      "windows": {
-        "command": "powershell",
-        "args": [
-          "-Command",
-          "Write-Host 'Validating Windows build environment...'; if (Get-Command arm-none-eabi-gcc -ErrorAction SilentlyContinue) { Write-Host '✅ ARM GCC found' } else { Write-Host '⚠️ ARM GCC not found in PATH' }; if (Test-Path '.venv\\Scripts\\Activate.ps1') { Write-Host '✅ Virtual environment found' } else { Write-Host '❌ Virtual environment missing' }"
-        ]
-      },
-      "linux": {
-        "command": "bash",
-        "args": [
-          "./scripts/validate_build_env.sh"
-        ]
-      },
-      "osx": {
-        "command": "bash",
-        "args": [
-          "./scripts/validate_build_env.sh"
-        ]
-      },
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}",
-        "env": {
-          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
-          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
-        }
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      }
-    },
-    {
-      "label": "Format Code",
-      "type": "shell",
-      "command": "find src -name '*.c' -o -name '*.h' | xargs clang-format -i",
-      "group": "build",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      }
-    },
-    {
-      "label": "Update STATUS.md",
-      "type": "shell",
-      "windows": {
-        "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
-        "args": [
-          "scripts/auto_update_status.py",
-          "--verbose"
-        ]
-      },
-      "linux": {
-        "command": "${workspaceFolder}/.venv/bin/python",
-        "args": [
-          "scripts/auto_update_status.py",
-          "--verbose"
-        ]
-      },
-      "osx": {
-        "command": "${workspaceFolder}/.venv/bin/python",
-        "args": [
-          "scripts/auto_update_status.py",
-          "--verbose"
-        ]
-      },
-      "group": "build",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Update STATUS.md (Build Triggered)",
-      "type": "shell",
-      "windows": {
-        "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
-        "args": [
-          "scripts/auto_update_status.py",
-          "--source",
-          "build",
-          "--verbose"
-        ]
-      },
-      "linux": {
-        "command": "${workspaceFolder}/.venv/bin/python",
-        "args": [
-          "scripts/auto_update_status.py",
-          "--source",
-          "build",
-          "--verbose"
-        ]
-      },
-      "osx": {
-        "command": "${workspaceFolder}/.venv/bin/python",
-        "args": [
-          "scripts/auto_update_status.py",
-          "--source",
-          "build",
-          "--verbose"
-        ]
-      },
-      "group": "build",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": false,
-        "reveal": "silent",
-        "focus": false,
-        "panel": "shared"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Update STATUS.md (Preview)",
-      "type": "shell",
-      "windows": {
-        "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
-        "args": [
-          "scripts/auto_update_status.py",
-          "--dry-run",
-          "--verbose"
-        ]
-      },
-      "linux": {
-        "command": "${workspaceFolder}/.venv/bin/python",
-        "args": [
-          "scripts/auto_update_status.py",
-          "--dry-run",
-          "--verbose"
-        ]
-      },
-      "osx": {
-        "command": "${workspaceFolder}/.venv/bin/python",
-        "args": [
-          "scripts/auto_update_status.py",
-          "--dry-run",
-          "--verbose"
-        ]
-      },
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Build with Status Update",
-      "type": "shell",
-      "command": "./scripts/fix_cmake.sh",
-      "group": {
-        "kind": "build",
-        "isDefault": false
-      },
-      "dependsOrder": "sequence",
-      "dependsOn": [
-        "Build (CMake)",
-        "Update STATUS.md (Build Triggered)"
-      ],
-      "options": {
-        "cwd": "${workspaceFolder}",
-        "env": {
-          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
-          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
-        }
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared",
-        "showReuseMessage": true,
-        "clear": false
-      },
-      "problemMatcher": [
-        "$gcc"
-      ]
-    },
-    {
-      "label": "Build with Automated Status (CMake)",
-      "type": "shell",
-      "command": "cmake --build build",
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "dependsOn": "Build (CMake)",
-      "options": {
-        "cwd": "${workspaceFolder}",
-        "env": {
-          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
-          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
-        }
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared",
-        "showReuseMessage": true,
-        "clear": false
-      },
-      "problemMatcher": [
-        "$gcc"
-      ]
-    },
-    {
-      "label": "Update Status (CMake Target)",
-      "type": "shell",
-      "command": "cmake --build build --target update-status",
-      "group": "build",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Preview Status Updates (CMake Target)",
-      "type": "shell",
-      "command": "cmake --build build --target update-status-preview",
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "STATUS: Quick Update",
-      "type": "shell",
-      "windows": {
-        "command": "powershell",
-        "args": [
-          "-ExecutionPolicy",
-          "Bypass",
-          "-File",
-          "scripts\\run_python.ps1",
-          "scripts\\auto_update_status.py",
-          "--verbose"
-        ]
-      },
-      "linux": {
-        "command": "bash",
-        "args": [
-          "scripts/run_python.sh",
-          "scripts/auto_update_status.py",
-          "--verbose"
-        ]
-      },
-      "osx": {
-        "command": "bash",
-        "args": [
-          "scripts/run_python.sh",
-          "scripts/auto_update_status.py",
-          "--verbose"
-        ]
-      },
-      "group": "build",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "silent",
-        "focus": false,
-        "panel": "shared",
-        "showReuseMessage": false,
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "STATUS: Build + Update",
-      "type": "shell",
-      "windows": {
-        "command": "powershell",
-        "args": [
-          "-Command",
-          ".\\scripts\\run_python.ps1",
-          "scripts\\auto_update_status.py",
-          "--source",
-          "build",
-          "--verbose"
-        ]
-      },
-      "linux": {
-        "command": "bash",
-        "args": [
-          "./scripts/run_python.sh",
-          "scripts/auto_update_status.py",
-          "--source",
-          "build",
-          "--verbose"
-        ]
-      },
-      "osx": {
-        "command": "bash",
-        "args": [
-          "./scripts/run_python.sh",
-          "scripts/auto_update_status.py",
-          "--source",
-          "build",
-          "--verbose"
-        ]
-      },
-      "group": "build",
-      "dependsOn": "Build (CMake)",
-      "dependsOrder": "sequence",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "silent",
-        "focus": false,
-        "panel": "shared",
-        "showReuseMessage": false,
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "STATUS: Preview Changes",
-      "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python",
-      "args": [
-        "scripts/auto_update_status.py",
-        "--dry-run",
-        "--verbose"
-      ],
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new",
-        "showReuseMessage": false,
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "STATUS: Force Full Update",
-      "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python",
-      "args": [
-        "scripts/auto_update_status.py",
-        "--force",
-        "--verbose"
-      ],
-      "group": "build",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared",
-        "showReuseMessage": false,
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "🚀 WORKFLOW: Before Work",
-      "type": "shell",
-      "windows": {
-        "command": "powershell",
-        "args": [
-          "-Command",
-          ".\\scripts\\workflow.ps1",
-          "before"
-        ]
-      },
-      "linux": {
-        "command": "bash",
-        "args": [
-          "./scripts/workflow.sh",
-          "before"
-        ]
-      },
-      "osx": {
-        "command": "bash",
-        "args": [
-          "./scripts/workflow.sh",
-          "before"
-        ]
-      },
-      "group": "build",
-      "options": {
-        "cwd": "${workspaceFolder}",
-        "env": {
-          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
-          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
-        }
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new",
-        "showReuseMessage": false,
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "🔄 WORKFLOW: During Work (Build + Update)",
-      "type": "shell",
-      "windows": {
-        "command": "powershell",
-        "args": [
-          "-Command",
-          ".\\scripts\\workflow.ps1",
-          "during"
-        ]
-      },
-      "linux": {
-        "command": "bash",
-        "args": [
-          "./scripts/workflow.sh",
-          "during"
-        ]
-      },
-      "osx": {
-        "command": "bash",
-        "args": [
-          "./scripts/workflow.sh",
-          "during"
-        ]
-      },
-      "group": {
-        "kind": "build",
-        "isDefault": false
-      },
-      "options": {
-        "cwd": "${workspaceFolder}",
-        "env": {
-          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
-          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
-        }
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared",
-        "showReuseMessage": true,
-        "clear": false
-      },
-      "problemMatcher": [
-        "$gcc"
-      ]
-    },
-    {
-      "label": "✅ WORKFLOW: After Work (Prepare Commit)",
-      "type": "shell",
-      "windows": {
-        "command": "powershell",
-        "args": [
-          "-Command",
-          ".\\scripts\\workflow.ps1",
-          "after"
-        ]
-      },
-      "linux": {
-        "command": "bash",
-        "args": [
-          "./scripts/workflow.sh",
-          "after"
-        ]
-      },
-      "osx": {
-        "command": "bash",
-        "args": [
-          "./scripts/workflow.sh",
-          "after"
-        ]
-      },
-      "group": "build",
-      "options": {
-        "cwd": "${workspaceFolder}",
-        "env": {
-          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
-          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
-        }
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new",
-        "showReuseMessage": false,
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "📋 WORKFLOW: Check Feature Status",
-      "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python",
-      "args": [
-        "scripts/feature_tracker.py",
-        "list",
-        "--status",
-        "IN_PROGRESS"
-      ],
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new",
-        "showReuseMessage": false,
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "📊 WORKFLOW: Project Report",
-      "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python",
-      "args": [
-        "scripts/feature_tracker.py",
-        "report"
-      ],
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new",
-        "showReuseMessage": false,
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "🚀 SEMANTIC: Start Ollama",
-      "type": "shell",
-      "command": "./scripts/start_ollama.sh",
-      "group": "build",
-      "options": {
-        "cwd": "${workspaceFolder}",
-        "env": {
-          "VIRTUAL_ENV": "${workspaceFolder}/.venv",
-          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
-        }
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared",
-        "showReuseMessage": false,
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "🔍 SEMANTIC: Search STM32 Docs",
-      "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python",
-      "args": [
-        "scripts/stm32_semantic_search.py",
-        "concept",
-        "${input:searchQuery}",
-        "--scope",
-        "${input:searchScope}"
-      ],
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new",
-        "showReuseMessage": false,
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "🔍 SEMANTIC: Quick GPIO Search",
-      "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python",
-      "args": [
-        "scripts/stm32_semantic_search.py",
-        "concept",
-        "GPIO configuration",
-        "--scope",
-        "STM32H7"
-      ],
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new",
-        "showReuseMessage": false,
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "🔍 SEMANTIC: Quick L6470 Search",
-      "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python",
-      "args": [
-        "scripts/stm32_semantic_search.py",
-        "function",
-        "L6470",
-        "--scope",
-        "motor_control"
-      ],
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new",
-        "showReuseMessage": false,
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "📈 SEMANTIC: Performance Test",
-      "type": "shell",
-      "command": "${workspaceFolder}/.venv/bin/python",
-      "args": [
-        "scripts/semantic_search.py"
-      ],
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new",
-        "showReuseMessage": false,
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "🐧 WSL2: Build Host Tests",
-      "type": "shell",
-      "command": "powershell",
-      "args": [
-        "-Command",
-        ".\\scripts\\build_wsl2_host_tests.ps1"
-      ],
-      "group": {
-        "kind": "build",
-        "isDefault": false
-      },
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new",
-        "showReuseMessage": false,
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "🏃 WSL2: Quick Test Run",
-      "type": "shell",
-      "command": "powershell",
-      "args": [
-        "-Command",
-        ".\\scripts\\wsl2_quick_test.ps1"
-      ],
-      "group": {
-        "kind": "test",
-        "isDefault": false
-      },
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new",
-        "showReuseMessage": false,
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "🔧 DEBUG: Connect ST-LINK",
-      "type": "shell",
-      "windows": {
-        "command": "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
-        "args": [
-          "-c",
-          "port=SWD",
-          "freq=4000",
-          "ap=0",
-          "mode=UR"
-        ]
-      },
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new"
-      }
-    },
-    {
-      "label": "🔍 DEBUG: Read System Fault Status",
-      "type": "shell",
-      "windows": {
-        "command": "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
-        "args": [
-          "-c",
-          "port=SWD",
-          "-r32",
-          "0xE000ED28",
-          "1",
-          "-r32",
-          "0xE000ED2C",
-          "1",
-          "-r32",
-          "0xE000ED30",
-          "1"
-        ]
-      },
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new"
-      }
-    },
-    {
-      "label": "🔍 DEBUG: Read RCC Clock Status",
-      "type": "shell",
-      "windows": {
-        "command": "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
-        "args": [
-          "-c",
-          "port=SWD",
-          "-r32",
-          "0x58024400",
-          "1",
-          "-r32",
-          "0x58024404",
-          "1",
-          "-r32",
-          "0x58024408",
-          "1",
-          "-r32",
-          "0x5802440C",
-          "1"
-        ]
-      },
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new"
-      }
-    },
-    {
-      "label": "🔄 DEBUG: Reset and Halt",
-      "type": "shell",
-      "windows": {
-        "command": "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
-        "args": [
-          "-c",
-          "port=SWD",
-          "-rst",
-          "-halt"
-        ]
-      },
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new"
-      }
-    },
-    {
-      "label": "🚨 DEBUG: Full System Fault Analysis",
-      "type": "shell",
-      "windows": {
-        "command": "powershell",
-        "args": [
-          "-ExecutionPolicy",
-          "Bypass",
-          "-File",
-          "scripts\\debug_system_fault.ps1",
-          "-Verbose",
-          "-FullAnalysis"
-        ]
-      },
-      "group": "test",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "new"
-      }
-    }
-  ]
+	"version": "2.0.0",
+	"inputs": [
+		{
+			"id": "searchQuery",
+			"description": "Enter your search query (concept, function, register, etc.)",
+			"default": "GPIO configuration",
+			"type": "promptString"
+		},
+		{
+			"id": "searchScope",
+			"description": "Select search scope",
+			"default": "STM32H7",
+			"type": "pickString",
+			"options": [
+				"STM32H7",
+				"motor_control",
+				"instruction_guides",
+				"project_code",
+				"safety_systems",
+				"all"
+			]
+		}
+	],
+	"tasks": [
+		{
+			"label": "Build (CMake)",
+			"type": "shell",
+			"windows": {
+				"command": "powershell",
+				"args": [
+					"-NoProfile",
+					"-ExecutionPolicy",
+					"Bypass",
+					"-File",
+					"${workspaceFolder}\\scripts\\fix_cmake.ps1"
+				]
+			},
+			"linux": {
+				"command": "bash",
+				"args": [
+					"./scripts/fix_cmake.sh"
+				]
+			},
+			"osx": {
+				"command": "bash",
+				"args": [
+					"./scripts/fix_cmake.sh"
+				]
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"options": {
+				"cwd": "${workspaceFolder}",
+				"env": {
+					"VIRTUAL_ENV": "${workspaceFolder}/.venv",
+					"PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+				}
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"problemMatcher": [
+				"$gcc"
+			]
+		},
+		{
+			"label": "Clean Build",
+			"type": "shell",
+			"command": "rm -rf build",
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			}
+		},
+		{
+			"label": "Flash STM32H753ZI",
+			"type": "shell",
+			"windows": {
+				"command": "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
+				"args": [
+					"-c",
+					"port=SWD",
+					"-w",
+					"build/Debug/stm32h753_ihm02a1.hex",
+					"-v",
+					"-rst"
+				]
+			},
+			"linux": {
+				"command": "openocd",
+				"args": [
+					"-f",
+					"interface/stlink.cfg",
+					"-f",
+					"target/stm32h7x.cfg",
+					"-c",
+					"program build/Debug/stm32h753_ihm02a1.elf verify reset exit"
+				]
+			},
+			"osx": {
+				"command": "openocd",
+				"args": [
+					"-f",
+					"interface/stlink.cfg",
+					"-f",
+					"target/stm32h7x.cfg",
+					"-c",
+					"program build/Debug/stm32h753_ihm02a1.elf verify reset exit"
+				]
+			},
+			"group": "build",
+			"dependsOn": "Build (CMake)",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			}
+		},
+		{
+			"label": "Run Tests (CTest)",
+			"type": "shell",
+			"command": "cd build && ctest",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"dependsOn": "Build (CMake)",
+			"problemMatcher": []
+		},
+		{
+			"label": "Lint (clang-tidy/cppcheck)",
+			"type": "shell",
+			"command": "clang-tidy --version && cppcheck --version",
+			"group": "test",
+			"problemMatcher": []
+		},
+		{
+			"label": "Generate Docs (Doxygen)",
+			"type": "shell",
+			"command": "doxygen docs/Doxyfile",
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Validate SSOT",
+			"type": "shell",
+			"windows": {
+				"command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+				"args": [
+					"scripts/validate_ssot.py"
+				]
+			},
+			"linux": {
+				"command": "${workspaceFolder}/.venv/bin/python",
+				"args": [
+					"scripts/validate_ssot.py"
+				]
+			},
+			"osx": {
+				"command": "${workspaceFolder}/.venv/bin/python",
+				"args": [
+					"scripts/validate_ssot.py"
+				]
+			},
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			}
+		},
+		{
+			"label": "Validate Build Environment",
+			"type": "shell",
+			"windows": {
+				"command": "powershell",
+				"args": [
+					"-Command",
+					"Write-Host 'Validating Windows build environment...'; if (Get-Command arm-none-eabi-gcc -ErrorAction SilentlyContinue) { Write-Host '✅ ARM GCC found' } else { Write-Host '⚠️ ARM GCC not found in PATH' }; if (Test-Path '.venv\\Scripts\\Activate.ps1') { Write-Host '✅ Virtual environment found' } else { Write-Host '❌ Virtual environment missing' }"
+				]
+			},
+			"linux": {
+				"command": "bash",
+				"args": [
+					"./scripts/validate_build_env.sh"
+				]
+			},
+			"osx": {
+				"command": "bash",
+				"args": [
+					"./scripts/validate_build_env.sh"
+				]
+			},
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}",
+				"env": {
+					"VIRTUAL_ENV": "${workspaceFolder}/.venv",
+					"PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+				}
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			}
+		},
+		{
+			"label": "Format Code",
+			"type": "shell",
+			"command": "find src -name '*.c' -o -name '*.h' | xargs clang-format -i",
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			}
+		},
+		{
+			"label": "Update STATUS.md",
+			"type": "shell",
+			"windows": {
+				"command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+				"args": [
+					"scripts/auto_update_status.py",
+					"--verbose"
+				]
+			},
+			"linux": {
+				"command": "${workspaceFolder}/.venv/bin/python",
+				"args": [
+					"scripts/auto_update_status.py",
+					"--verbose"
+				]
+			},
+			"osx": {
+				"command": "${workspaceFolder}/.venv/bin/python",
+				"args": [
+					"scripts/auto_update_status.py",
+					"--verbose"
+				]
+			},
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Update STATUS.md (Build Triggered)",
+			"type": "shell",
+			"windows": {
+				"command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+				"args": [
+					"scripts/auto_update_status.py",
+					"--source",
+					"build",
+					"--verbose"
+				]
+			},
+			"linux": {
+				"command": "${workspaceFolder}/.venv/bin/python",
+				"args": [
+					"scripts/auto_update_status.py",
+					"--source",
+					"build",
+					"--verbose"
+				]
+			},
+			"osx": {
+				"command": "${workspaceFolder}/.venv/bin/python",
+				"args": [
+					"scripts/auto_update_status.py",
+					"--source",
+					"build",
+					"--verbose"
+				]
+			},
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": false,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Update STATUS.md (Preview)",
+			"type": "shell",
+			"windows": {
+				"command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+				"args": [
+					"scripts/auto_update_status.py",
+					"--dry-run",
+					"--verbose"
+				]
+			},
+			"linux": {
+				"command": "${workspaceFolder}/.venv/bin/python",
+				"args": [
+					"scripts/auto_update_status.py",
+					"--dry-run",
+					"--verbose"
+				]
+			},
+			"osx": {
+				"command": "${workspaceFolder}/.venv/bin/python",
+				"args": [
+					"scripts/auto_update_status.py",
+					"--dry-run",
+					"--verbose"
+				]
+			},
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Build with Status Update",
+			"type": "shell",
+			"command": "./scripts/fix_cmake.sh",
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			},
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"Build (CMake)",
+				"Update STATUS.md (Build Triggered)"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}",
+				"env": {
+					"VIRTUAL_ENV": "${workspaceFolder}/.venv",
+					"PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+				}
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"problemMatcher": [
+				"$gcc"
+			]
+		},
+		{
+			"label": "Build with Automated Status (CMake)",
+			"type": "shell",
+			"command": "cmake --build build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"dependsOn": "Build (CMake)",
+			"options": {
+				"cwd": "${workspaceFolder}",
+				"env": {
+					"VIRTUAL_ENV": "${workspaceFolder}/.venv",
+					"PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+				}
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"problemMatcher": [
+				"$gcc"
+			]
+		},
+		{
+			"label": "Update Status (CMake Target)",
+			"type": "shell",
+			"command": "cmake --build build --target update-status",
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Preview Status Updates (CMake Target)",
+			"type": "shell",
+			"command": "cmake --build build --target update-status-preview",
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "STATUS: Quick Update",
+			"type": "shell",
+			"windows": {
+				"command": "powershell",
+				"args": [
+					"-ExecutionPolicy",
+					"Bypass",
+					"-File",
+					"scripts\\run_python.ps1",
+					"scripts\\auto_update_status.py",
+					"--verbose"
+				]
+			},
+			"linux": {
+				"command": "bash",
+				"args": [
+					"scripts/run_python.sh",
+					"scripts/auto_update_status.py",
+					"--verbose"
+				]
+			},
+			"osx": {
+				"command": "bash",
+				"args": [
+					"scripts/run_python.sh",
+					"scripts/auto_update_status.py",
+					"--verbose"
+				]
+			},
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "STATUS: Build + Update",
+			"type": "shell",
+			"windows": {
+				"command": "powershell",
+				"args": [
+					"-Command",
+					".\\scripts\\run_python.ps1",
+					"scripts\\auto_update_status.py",
+					"--source",
+					"build",
+					"--verbose"
+				]
+			},
+			"linux": {
+				"command": "bash",
+				"args": [
+					"./scripts/run_python.sh",
+					"scripts/auto_update_status.py",
+					"--source",
+					"build",
+					"--verbose"
+				]
+			},
+			"osx": {
+				"command": "bash",
+				"args": [
+					"./scripts/run_python.sh",
+					"scripts/auto_update_status.py",
+					"--source",
+					"build",
+					"--verbose"
+				]
+			},
+			"group": "build",
+			"dependsOn": "Build (CMake)",
+			"dependsOrder": "sequence",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "STATUS: Preview Changes",
+			"type": "shell",
+			"command": "${workspaceFolder}/.venv/bin/python",
+			"args": [
+				"scripts/auto_update_status.py",
+				"--dry-run",
+				"--verbose"
+			],
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "STATUS: Force Full Update",
+			"type": "shell",
+			"command": "${workspaceFolder}/.venv/bin/python",
+			"args": [
+				"scripts/auto_update_status.py",
+				"--force",
+				"--verbose"
+			],
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "🚀 WORKFLOW: Before Work",
+			"type": "shell",
+			"windows": {
+				"command": "powershell",
+				"args": [
+					"-Command",
+					".\\scripts\\workflow.ps1",
+					"before"
+				]
+			},
+			"linux": {
+				"command": "bash",
+				"args": [
+					"./scripts/workflow.sh",
+					"before"
+				]
+			},
+			"osx": {
+				"command": "bash",
+				"args": [
+					"./scripts/workflow.sh",
+					"before"
+				]
+			},
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}",
+				"env": {
+					"VIRTUAL_ENV": "${workspaceFolder}/.venv",
+					"PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+				}
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "🔄 WORKFLOW: During Work (Build + Update)",
+			"type": "shell",
+			"windows": {
+				"command": "powershell",
+				"args": [
+					"-Command",
+					".\\scripts\\workflow.ps1",
+					"during"
+				]
+			},
+			"linux": {
+				"command": "bash",
+				"args": [
+					"./scripts/workflow.sh",
+					"during"
+				]
+			},
+			"osx": {
+				"command": "bash",
+				"args": [
+					"./scripts/workflow.sh",
+					"during"
+				]
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			},
+			"options": {
+				"cwd": "${workspaceFolder}",
+				"env": {
+					"VIRTUAL_ENV": "${workspaceFolder}/.venv",
+					"PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+				}
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"problemMatcher": [
+				"$gcc"
+			]
+		},
+		{
+			"label": "✅ WORKFLOW: After Work (Prepare Commit)",
+			"type": "shell",
+			"windows": {
+				"command": "powershell",
+				"args": [
+					"-Command",
+					".\\scripts\\workflow.ps1",
+					"after"
+				]
+			},
+			"linux": {
+				"command": "bash",
+				"args": [
+					"./scripts/workflow.sh",
+					"after"
+				]
+			},
+			"osx": {
+				"command": "bash",
+				"args": [
+					"./scripts/workflow.sh",
+					"after"
+				]
+			},
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}",
+				"env": {
+					"VIRTUAL_ENV": "${workspaceFolder}/.venv",
+					"PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+				}
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "📋 WORKFLOW: Check Feature Status",
+			"type": "shell",
+			"command": "${workspaceFolder}/.venv/bin/python",
+			"args": [
+				"scripts/feature_tracker.py",
+				"list",
+				"--status",
+				"IN_PROGRESS"
+			],
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "📊 WORKFLOW: Project Report",
+			"type": "shell",
+			"command": "${workspaceFolder}/.venv/bin/python",
+			"args": [
+				"scripts/feature_tracker.py",
+				"report"
+			],
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "🚀 SEMANTIC: Start Ollama",
+			"type": "shell",
+			"command": "./scripts/start_ollama.sh",
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}",
+				"env": {
+					"VIRTUAL_ENV": "${workspaceFolder}/.venv",
+					"PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+				}
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "🔍 SEMANTIC: Search STM32 Docs",
+			"type": "shell",
+			"command": "${workspaceFolder}/.venv/bin/python",
+			"args": [
+				"scripts/stm32_semantic_search.py",
+				"concept",
+				"${input:searchQuery}",
+				"--scope",
+				"${input:searchScope}"
+			],
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "🔍 SEMANTIC: Quick GPIO Search",
+			"type": "shell",
+			"command": "${workspaceFolder}/.venv/bin/python",
+			"args": [
+				"scripts/stm32_semantic_search.py",
+				"concept",
+				"GPIO configuration",
+				"--scope",
+				"STM32H7"
+			],
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "🔍 SEMANTIC: Quick L6470 Search",
+			"type": "shell",
+			"command": "${workspaceFolder}/.venv/bin/python",
+			"args": [
+				"scripts/stm32_semantic_search.py",
+				"function",
+				"L6470",
+				"--scope",
+				"motor_control"
+			],
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "📈 SEMANTIC: Performance Test",
+			"type": "shell",
+			"command": "${workspaceFolder}/.venv/bin/python",
+			"args": [
+				"scripts/semantic_search.py"
+			],
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "🐧 WSL2: Build Host Tests",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-Command",
+				".\\scripts\\build_wsl2_host_tests.ps1"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			},
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "🏃 WSL2: Quick Test Run",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-Command",
+				".\\scripts\\wsl2_quick_test.ps1"
+			],
+			"group": {
+				"kind": "test",
+				"isDefault": false
+			},
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "🔧 DEBUG: Connect ST-LINK",
+			"type": "shell",
+			"windows": {
+				"command": "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
+				"args": [
+					"-c",
+					"port=SWD",
+					"freq=4000",
+					"ap=0",
+					"mode=UR"
+				]
+			},
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new"
+			}
+		},
+		{
+			"label": "🔍 DEBUG: Read System Fault Status",
+			"type": "shell",
+			"windows": {
+				"command": "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
+				"args": [
+					"-c",
+					"port=SWD",
+					"-r32",
+					"0xE000ED28",
+					"1",
+					"-r32",
+					"0xE000ED2C",
+					"1",
+					"-r32",
+					"0xE000ED30",
+					"1"
+				]
+			},
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new"
+			}
+		},
+		{
+			"label": "🔍 DEBUG: Read RCC Clock Status",
+			"type": "shell",
+			"windows": {
+				"command": "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
+				"args": [
+					"-c",
+					"port=SWD",
+					"-r32",
+					"0x58024400",
+					"1",
+					"-r32",
+					"0x58024404",
+					"1",
+					"-r32",
+					"0x58024408",
+					"1",
+					"-r32",
+					"0x5802440C",
+					"1"
+				]
+			},
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new"
+			}
+		},
+		{
+			"label": "🔄 DEBUG: Reset and Halt",
+			"type": "shell",
+			"windows": {
+				"command": "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
+				"args": [
+					"-c",
+					"port=SWD",
+					"-rst",
+					"-halt"
+				]
+			},
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new"
+			}
+		},
+		{
+			"label": "🚨 DEBUG: Full System Fault Analysis",
+			"type": "shell",
+			"windows": {
+				"command": "powershell",
+				"args": [
+					"-ExecutionPolicy",
+					"Bypass",
+					"-File",
+					"scripts\\debug_system_fault.ps1",
+					"-Verbose",
+					"-FullAnalysis"
+				]
+			},
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new"
+			}
+		},
+		{
+			"label": "Build Current State",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-Command",
+				"if (Test-Path build) { cmake --build build } else { Write-Host 'Build directory not found' }"
+			]
+		}
+	]
 }

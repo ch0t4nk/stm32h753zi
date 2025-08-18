@@ -28,8 +28,9 @@ extern "C" {
 
 /* Includes
  * ------------------------------------------------------------------*/
+/* Don't include stm32h7xx.h here - it will include hal.h creating circular
+ * dependency */
 #include "Legacy/stm32_hal_legacy.h"
-#include "stm32h7xx.h"
 #include <math.h>
 #include <stddef.h>
 

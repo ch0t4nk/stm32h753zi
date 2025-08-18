@@ -610,14 +610,3 @@ static void safety_monitor_task(void *context) {
                                       rt_control_system.timing.overrun_count);
   }
 }
-
-/**
- * @brief Timer interrupt callback for control loop
- */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-  if (htim == &htim_control_loop) {
-    rt_control_loop_handler();
-  } else if (htim == &htim_safety_monitor) {
-    rt_safety_monitor_handler();
-  }
-}

@@ -31,8 +31,8 @@
 #ifndef STM32H7xx_HAL_CONF_H
 #define STM32H7xx_HAL_CONF_H
 
-/* Enable HAL Driver */
-#define USE_HAL_DRIVER
+/* Enable HAL Driver - defined by build system */
+/* #define USE_HAL_DRIVER */
 
 #ifdef __cplusplus
 extern "C" {
@@ -43,12 +43,15 @@ extern "C" {
 /* Exported constants
  * --------------------------------------------------------*/
 
-/* ########################## Device Header Include #########################
+/* ########################## HAL Definitions Include #########################
  */
 /**
- * @brief Include the device header file to get all device-specific definitions
+ * @brief Include device header first, then HAL definitions
+ * Device header provides peripheral register definitions
+ * HAL definitions provide basic types like HAL_StatusTypeDef
  */
 #include "stm32h7xx.h"
+#include "stm32h7xx_hal_def.h"
 
 /* ########################## Module Selection ##############################
  */
@@ -84,7 +87,7 @@ extern "C" {
 /* #define HAL_OSPI_MODULE_ENABLED   */
 /* #define HAL_I2S_MODULE_ENABLED   */
 /* #define HAL_SMBUS_MODULE_ENABLED   */
-/* #define HAL_IWDG_MODULE_ENABLED   */
+#define HAL_IWDG_MODULE_ENABLED /* Independent Watchdog - SAFETY CRITICAL */
 /* #define HAL_LPTIM_MODULE_ENABLED   */
 /* #define HAL_LTDC_MODULE_ENABLED   */
 /* #define HAL_QSPI_MODULE_ENABLED   */
@@ -102,7 +105,7 @@ extern "C" {
 /* #define HAL_USART_MODULE_ENABLED   */
 /* #define HAL_IRDA_MODULE_ENABLED   */
 /* #define HAL_SMARTCARD_MODULE_ENABLED   */
-/* #define HAL_WWDG_MODULE_ENABLED   */
+#define HAL_WWDG_MODULE_ENABLED /* Window Watchdog - SAFETY CRITICAL */
 /* #define HAL_PCD_MODULE_ENABLED   */
 /* #define HAL_HCD_MODULE_ENABLED   */
 /* #define HAL_DFSDM_MODULE_ENABLED   */
