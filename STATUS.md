@@ -1,8 +1,8 @@
 # STM32H753ZI Project Status
 
-**Last Updated**: August 16, 2025
-**Status**: 🚩 **RTOS MIGRATION COMPLETE**
-**Deployment**: 🚀 **PRODUCTION-READY FOUNDATION**
+**Last Updated**: August 18, 2025
+**Status**: � **HAL INTEGRATION IN PROGRESS**
+**Deployment**: ⚙️ **BUILD SYSTEM STABILIZATION**
 **AI Infrastructure**: ❌ **Semantic Search Decommissioned**
 
 ---
@@ -10,15 +10,15 @@
 ## Context Transfer & Continuity (for Copilot/Automation)
 
 **Current Branch**: main
-**Recent Manual Edits**: src/safety/emergency_stop_abstracted.h (modernized, SSOT-compliant), src/config/motor_config.h, src/hal_abstraction/hal_abstraction.h, features/feature_registry.json, STATUS.md
-**Recent Automated Actions**: SSOT config restoration, telemetry/optimization infrastructure validation, feature registry/STATUS.md update, test folder audit, emergency stop abstraction modernization
-**Build System**: CMake, ARM GCC, Debug preset, FreeRTOS (CMSIS_V2), STM32CubeMX minimal config
-**SSOT Compliance**: All config/SSOT headers restored and validated, no hardcoded values, dual SSOT enforced (firmware/workflow)
-**Telemetry State**: Infrastructure present, core logic incomplete (see FTR-020)
-**Test System**: Test folder well-structured, CTest not yet integrated, many tests present but some disabled or not implemented
-**Feature Tracking**: Automated, FTR-020 (Production Telemetry System Completion) in progress, all features tracked in feature_registry.json
-**Recent Build**: Successful, all missing types/macros restored, no critical errors
-**Current Focus**: Telemetry system completion (FTR-020), hardware integration, test system enablement, safety/estop modernization
+**Current Focus**: **HAL Driver Integration & RTOS Compatibility**
+**Recent Manual Edits**: Core/Inc/stm32h7xx_hal_conf.h (RTOS support), Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h (RTOS patches), src/config/safety_config.h (SSOT include guards), src/config/hardware_config.h (interrupt definitions), src/config/motor_config.h (control loop timing)
+**Recent Automated Actions**: Archive integration (AS5600 driver, simulation, optimization config), SSOT violation cleanup, duplicate enum resolution
+**Build System**: CMake, ARM GCC, Debug preset, STM32Cube FW H7 V1.12.0 with RTOS compatibility patches
+**SSOT Compliance**: All config/SSOT headers validated, include guards fixed, duplicate definitions removed
+**HAL Integration Status**: RTOS support patched, SPI/FDCAN modules enabled, USE_HAL_DRIVER defined, remaining struct/function conflicts under resolution
+**Current Issues**: EmergencyStopState_t struct member mismatches, function signature conflicts in safety_system.c, AS5600_I2C_ADDRESS_8BIT missing
+**Architecture**: Hybrid STM32Cube FW + Archive assets, SSOT configuration management, HAL abstraction preserved
+**Recent Build**: Compilation errors reduced from ~20 to ~5, HAL_StatusTypeDef issue resolved, core HAL compatibility achieved
 
 ---
 
@@ -34,81 +34,121 @@
 
 ## ✅ Progress So Far
 
-- **Phase 1.1**: Telemetry infrastructure (optimization_telemetry.h/c, <500µs execution)
-- **Phase 1.2**: Motor characterization (motor_characterization.h/c, L6470 optimization)
-- **Phase 1.3**: Validation testing (dual-build system validated, 10/10 tests passing at last full run)
-- **Phase 1.4**: Safety compliance (95%+ achieved, production safety validation)
+### **Phase 2.1: STM32H753ZI HAL Integration & RTOS Compatibility (IN PROGRESS)**
+
+- **✅ HAL Architecture Decision**: Maintained STM32Cube FW H7 V1.12.0 with targeted RTOS compatibility patches
+- **✅ SSOT Architecture Preserved**: All configuration centralized in src/config/ headers
+- **✅ Archive Asset Integration**: Successfully copied AS5600 driver, simulation framework, optimization configs from archive/old_hal_rtos/
+- **✅ HAL RTOS Support**: Patched stm32h7xx_hal_def.h to remove artificial USE_RTOS == 1 restriction
+- **✅ HAL Module Enablement**: Enabled SPI (L6470 communication) and FDCAN (CAN communication) modules
+- **✅ SSOT Violation Cleanup**: Removed duplicate enum definitions (EmergencyStopSource_t, EmergencyStopState_t) from source files
+- **✅ Include Guard Fixes**: Fixed malformed headers (safety_config.h, safety_system.h) with proper include guard structure
+- **✅ Missing Dependencies**: Added system_config.h, interrupt IRQ definitions, control loop timing constants
+- **🔧 BUILD STATUS**: Compilation errors reduced from ~20 to ~5, core HAL compatibility achieved
+
+### **Previous Completed Phases**
+
+- **Phase 1.1-1.4**: Telemetry infrastructure, motor characterization, validation testing, safety compliance (95%+ achieved)
 - **Phase 2.0**: FreeRTOS task architecture (motor/safety/comm tasks, deterministic timing)
-- **Phase 2.1**: RTOS migration (STM32CubeH7 V1.12.1 HAL upgrade, RTOS constraint removed, FreeRTOS integration validated)
-- **2025-08-16**: Emergency stop abstraction modernized (SSOT-compliant, HAL-abstracted API)
 
 ## 🔄 Current Work & Next Steps
 
-- **FTR-020: Production Telemetry System Completion** (IN_PROGRESS, Phase 1.4, HIGH)
+### **IMMEDIATE: HAL Integration Completion (Priority 1)**
 
-  - Complete all missing telemetry logic (acquisition, processing, reporting)
-  - Implement telemetry dashboard/reporting interface
-  - Integrate with FreeRTOS and safety monitoring
-  - Achieve >=90% test coverage (unit/integration)
-  - Document API, usage, and integration
-  - Remove all stubs and incomplete logic from production build
-  - See feature_registry.json for full acceptance criteria
+- **🔧 ACTIVE ISSUES**:
+  - EmergencyStopState_t struct member access errors (active/latched members missing from SSOT definition)
+  - Function signature conflicts: log_safety_event, handle_safety_violation parameter mismatches
+  - AS5600_I2C_ADDRESS_8BIT constant missing from driver configuration
+  - Remaining SSOT alignment between archive assets and current config headers
 
-- **Recent Work**: RTOS HAL migration, CubeMX/HAL/FreeRTOS upgrade, build system validation, SSOT enforcement, STATUS.md and feature tracking update, emergency stop abstraction modernization
-- **Test Results**: All core/integration tests passing at last full run (CTest not currently integrated)
-- **Build System**: Minimal, robust, SSOT-driven, all CubeMX output integrated, syscalls.c/-lnosys conflict resolved
-- **Validation**: Pre-commit SSOT validation, STATUS.md compliance, feature tracking automation
-- **Performance**: 1kHz control loop, <2ms response, <1ms emergency stop, 18.7KB firmware, <5KB RAM
+- **⏭️ NEXT ACTIONS**:
+  1. **Complete EmergencyStopState_t SSOT alignment**: Ensure src/config/safety_config.h struct matches all usage patterns
+  2. **Fix function signature conflicts**: Align safety_system.c function signatures with header declarations
+  3. **Add missing AS5600 constants**: Complete AS5600 driver configuration integration
+  4. **Full build verification**: Achieve clean compilation with zero errors
+  5. **Test link phase**: Verify firmware linking succeeds
+
+### **Phase 2.2: Post-HAL Integration (Priority 2)**
+
+- **Hardware Configuration Completion**: Compare current hardware_config.h (94 lines) vs archive (429 lines) for missing definitions
+- **SSOT Validation**: Run complete SSOT validation to ensure configuration integrity
+- **Basic Functionality Testing**: Verify HAL operations (GPIO, SPI, timers) work with RTOS
+- **Safety System Validation**: Test emergency stop and safety systems with new HAL integration
 
 ## 🧠 Technical Context for Copilot/Automation
 
-- **Branch**: main
-- **Emergency Stop Abstraction**: Modernized, SSOT-compliant, HAL-abstracted API (src/safety/emergency_stop_abstracted.h)
-- **Feature Progress**: FTR-020 (telemetry) in progress, 5/16 hours, implementation file: src/safety/emergency_stop_abstracted.h
-- **Recent Manual Edits**: src/safety/emergency_stop_abstracted.h (modernized, SSOT-compliant), src/config/motor_config.h, src/hal_abstraction/hal_abstraction.h, features/feature_registry.json, STATUS.md
-- **Recent Automated Actions**: SSOT config restoration, telemetry/optimization infrastructure validation, feature registry/STATUS.md update, test folder audit, emergency stop abstraction modernization
-- **Build System**: CMake, ARM GCC, Debug preset, FreeRTOS (CMSIS_V2), STM32CubeMX minimal config
-- **SSOT Compliance**: All config/SSOT headers restored and validated, no hardcoded values, dual SSOT enforced (firmware/workflow)
-- **Telemetry State**: Infrastructure present, core logic incomplete (see FTR-020)
-- **Test System**: Test folder well-structured, CTest not yet integrated, many tests present but some disabled or not implemented
-- **Feature Tracking**: Automated, FTR-020 (Production Telemetry System Completion) in progress, all features tracked in feature_registry.json
-- **Recent Build**: Successful, all missing types/macros restored, no critical errors, emergency stop abstraction API modernized
-- **Current Focus**: Telemetry system completion (FTR-020), hardware integration, test system enablement, safety/estop modernization
+### **Current HAL Integration Session Context**
+
+- **Approach**: Hybrid STM32Cube FW H7 V1.12.0 + Archive asset integration + SSOT configuration management
+- **Key Decisions**: 
+  - Maintained existing HAL version with targeted RTOS compatibility patches vs. complete HAL replacement
+  - Used archive/old_hal_rtos/ as source for missing drivers/configs vs. creating minimal implementations
+  - Enforced SSOT violations cleanup vs. allowing duplicate definitions
+- **Architecture Patterns**:
+  - SSOT definitions in src/config/ headers only
+  - Source files include SSOT headers, never define their own enums/structs
+  - Proper include guards encompassing all header content
+  - HAL module enablement based on hardware requirements (SPI for L6470, FDCAN for CAN)
+
+### **File Status & Dependencies**
+
+- **Modified HAL Core**: stm32h7xx_hal_def.h (RTOS support patch), stm32h7xx_hal_conf.h (module enablement, USE_HAL_DRIVER)
+- **SSOT Headers Enhanced**: safety_config.h (include guards, enums), hardware_config.h (IRQ definitions), motor_config.h (timing)
+- **Integrated Archive Assets**: src/drivers/as5600/, src/simulation/, src/config/optimization_config.h, system_config.h
+- **Remaining Dependencies**: Complete AS5600 configuration, EmergencyStopState_t struct alignment, function signature resolution
 
 ## ⏭️ Next Steps
 
-1. Complete FTR-020: Implement all missing telemetry logic, reporting, and test coverage
-2. Integrate and enable CTest/unit/integration tests in build system
-3. Hardware integration and validation (STM32H753ZI + X-NUCLEO-IHM02A1)
-4. Encoder calibration and mounting (AS5600)
-5. Final performance optimization (timing, power)
-6. Field deployment and monitoring
-7. Begin advanced feature development (trajectory planning, industrial comms, AI optimization)
+### **Immediate (Next Session)**
+1. **Complete HAL Integration**: Fix remaining 5 compilation errors (struct member access, function signatures, missing constants)
+2. **Achieve Clean Build**: Verify zero compilation errors and successful firmware linking
+3. **SSOT Validation**: Run complete configuration validation and fix any remaining violations
+
+### **Short Term (This Week)**
+4. **Hardware Configuration Review**: Compare current vs archive hardware configs for missing definitions
+5. **Basic Functionality Testing**: Test HAL operations (GPIO, SPI, timers) with RTOS integration
+6. **Safety System Validation**: Verify emergency stop and safety systems work with new HAL
+
+### **Medium Term (Next Week)**
+7. **Feature Development Resume**: Return to FTR-020 (Production Telemetry System) completion
+8. **Hardware Integration**: STM32H753ZI + X-NUCLEO-IHM02A1 board testing
+9. **Test System Integration**: Enable CTest and validate unit/integration tests
 
 ## 📝 Notes & Observations
 
-- RTOS migration root cause resolved (HAL V1.11.5 constraint removed, now V1.12.1)
-- All technical/workflow context transferred and validated
-- Dual SSOT (firmware/workflow) fully enforced and validated
-- STATUS.md and feature tracking automation operational
-- All build/test/validation systems passing
+### **HAL Integration Lessons Learned**
+- **RTOS Compatibility**: STM32Cube FW H7 V1.12.0 has artificial RTOS restrictions that required patching
+- **SSOT Violations**: Archive integration introduced duplicate enum/struct definitions requiring systematic cleanup
+- **Include Guard Issues**: Several headers had malformed include guards with code outside protection
+- **Configuration Completeness**: Current project configs significantly smaller than archive versions, indicating missing definitions
+- **HAL Module Dependencies**: SPI and FDCAN modules required explicit enablement for L6470 and CAN communication
+
+### **Architecture Decisions**
+- **Hybrid Approach Successful**: Combining STM32Cube FW base with selective archive asset integration
+- **SSOT Enforcement Critical**: Centralized configuration management prevents definition conflicts
+- **Archive Asset Value**: Complete implementations from archive superior to minimal recreations
 
 ## 📊 Key Metrics
 
-- **Firmware Size**: 18.7KB (0.89% flash)
-- **RAM Usage**: 20.1KB / 1MB (1.96%)
-- **Control Loop**: 1kHz, <2ms response
-- **Emergency Stop**: <1ms
-- **Tests**: 100% core/integration passing (at last full run)
-- **Build System**: Minimal, robust, SSOT-driven
+### **Build Status**
+- **Compilation Errors**: 5 (down from ~20 at session start)
+- **HAL Compatibility**: ✅ Core types resolved (HAL_StatusTypeDef)
+- **SSOT Violations**: ✅ All duplicate enum/struct definitions cleaned up
+- **Missing Dependencies**: 🔧 AS5600 constants, EmergencyStopState_t alignment
+
+### **Project Scale**
+- **Source Files**: 156 (increased from 155 with AS5600 driver addition)
+- **Configuration Files**: src/config/ centralized SSOT architecture
+- **Archive Integration**: AS5600 driver, simulation framework, optimization configs successfully integrated
 
 ## 🎯 Architecture Status
 
-- **Dual SSOT**: src/config/\* (firmware), src/config/workflow_config.h (workflow)
-- **HAL Abstraction**: Platform-independent, mock/real drivers
-- **FreeRTOS**: CMSIS_V2, deterministic, validated
-- **Safety**: 5 watchdogs, multi-level faults, event log
-- **Semantic Search**: ❌ Decommissioned (feature closed, will be removed from workspace)
+- **HAL Integration**: 🔧 STM32Cube FW H7 V1.12.0 + RTOS compatibility patches + archive asset integration
+- **SSOT Configuration**: ✅ src/config/* (firmware), src/config/workflow_config.h (workflow) - all violations cleaned up
+- **Build System**: ✅ CMake, ARM GCC, 156 source files, Debug preset configured
+- **FreeRTOS**: ✅ CMSIS_V2, deterministic, RTOS support patched in HAL
+- **Safety**: 🔧 Core architecture present, struct alignment in progress
+- **Hardware Drivers**: 🔧 L6470 (needs SPI), AS5600 (integration in progress), simulation framework added
 
 ## 🔗 Quick References
 
