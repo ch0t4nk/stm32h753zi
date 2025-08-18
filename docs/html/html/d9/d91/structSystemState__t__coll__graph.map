@@ -1,8 +1,0 @@
-<map id="SystemState_t" name="SystemState_t">
-<area shape="rect" id="node1" title=" " alt="" coords="329,107,447,133"/>
-<area shape="rect" id="node2" href="$d2/d34/structEncoderState__t.html" title=" " alt="" coords="31,5,151,32"/>
-<area shape="rect" id="node3" href="$d0/d57/structMotorStateInfo__t.html" title=" " alt="" coords="25,56,156,83"/>
-<area shape="rect" id="node4" href="$de/dfa/structSafetyStateInfo__t.html" title=" " alt="" coords="23,107,158,133"/>
-<area shape="rect" id="node5" href="$df/d35/structCommunicationState__t.html" title=" " alt="" coords="5,157,176,184"/>
-<area shape="rect" id="node6" href="$d0/dbb/structPerformanceState__t.html" title=" " alt="" coords="15,208,166,235"/>
-</map>

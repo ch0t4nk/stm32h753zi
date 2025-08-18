@@ -1,8 +1,0 @@
-<map id="src/application/main_application.h" name="src/application/main_application.h">
-<area shape="rect" id="node1" title="Main Application API &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="28,5,183,47"/>
-<area shape="rect" id="node2" href="$d8/d36/stm32h7xx__hal_8h.html" title="Mock STM32H7xx HAL header for unit testing." alt="" coords="38,95,173,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="11,244,93,271"/>
-<area shape="rect" id="node6" href="$de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="251,169,421,196"/>
-<area shape="rect" id="node4" title=" " alt="" coords="178,244,249,271"/>
-<area shape="rect" id="node5" href="$d4/d03/mock__hal__types_8h.html" title="Mock HAL type definitions for unit testing environment." alt="" coords="35,169,175,196"/>
-</map>

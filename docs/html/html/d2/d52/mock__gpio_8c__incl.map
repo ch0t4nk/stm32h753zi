@@ -1,4 +1,0 @@
-<map id="tests/mocks/mock_gpio.c" name="tests/mocks/mock_gpio.c">
-<area shape="rect" id="node1" title="Mock GPIO port instances for testing." alt="" coords="5,5,192,32"/>
-<area shape="rect" id="node2" href="$d4/d05/mock__hal_8h.html" title="Mock HAL header for unit testing STM32H7 safety systems." alt="" coords="50,80,147,107"/>
-</map>

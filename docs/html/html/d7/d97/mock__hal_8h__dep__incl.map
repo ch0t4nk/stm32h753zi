@@ -1,6 +1,0 @@
-<map id="tests/mocks/mock_hal.h" name="tests/mocks/mock_hal.h">
-<area shape="rect" id="node1" title="Mock HAL header for unit testing STM32H7 safety systems." alt="" coords="215,5,395,32"/>
-<area shape="rect" id="node2" href="$dd/db9/mock__gpio_8c.html" title="Mock GPIO port instances for testing." alt="" coords="5,87,192,114"/>
-<area shape="rect" id="node3" href="$de/dd5/mock__hal_8c.html" title="Mock implementations for STM32H7 HAL functions for unit testing." alt="" coords="216,87,395,114"/>
-<area shape="rect" id="node4" href="$d0/d45/test__safety__gtest_8cpp.html" title="GoogleTest&#45;based unit tests for safety systems (C++ wrapper for C code)" alt="" coords="419,80,579,121"/>
-</map>

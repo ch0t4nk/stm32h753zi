@@ -1,6 +1,0 @@
-<map id="tests/mocks/mock_hal.c" name="tests/mocks/mock_hal.c">
-<area shape="rect" id="node1" title="Mock implementations for STM32H7 HAL functions for unit testing." alt="" coords="71,5,250,32"/>
-<area shape="rect" id="node2" href="$d4/d05/mock__hal_8h.html" title="Mock HAL header for unit testing STM32H7 safety systems." alt="" coords="5,80,103,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="127,80,194,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="219,80,289,107"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="src/safety/watchdog_manager.h" name="src/safety/watchdog_manager.h">
-<area shape="rect" id="node1" title="Watchdog Management System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="282,5,435,47"/>
-<area shape="rect" id="node2" href="$d9/dfd/main__application_8c.html" title="Main Application &#45; STM32H753ZI Stepper Motor Control Demo." alt="" coords="5,95,160,136"/>
-<area shape="rect" id="node3" href="$d3/d37/rtos__tasks_8c.html" title="FreeRTOS Task Implementations for STM32H753ZI Motor Control System." alt="" coords="184,102,336,129"/>
-<area shape="rect" id="node4" href="$db/d1a/safety__system_8c.html" title="Safety System Manager Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="360,102,557,129"/>
-<area shape="rect" id="node5" href="$d2/d94/watchdog__manager_8c.html" title="Watchdog Management System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="582,95,735,136"/>
-</map>

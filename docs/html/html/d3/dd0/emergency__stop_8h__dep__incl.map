@@ -1,7 +1,0 @@
-<map id="src/safety/emergency_stop.h" name="src/safety/emergency_stop.h">
-<area shape="rect" id="node1" title="Emergency Stop System &#45; STM32H753ZI Stepper Motor Project." alt="" coords="293,5,456,47"/>
-<area shape="rect" id="node2" href="$d3/da2/emergency__stop_8c.html" title="Emergency Stop System Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="5,95,168,136"/>
-<area shape="rect" id="node3" href="$dc/d33/l6470__fault__monitor_8c.html" title="L6470 Hardware Fault Monitoring Implementation." alt="" coords="192,95,355,136"/>
-<area shape="rect" id="node4" href="$db/d1a/safety__system_8c.html" title="Safety System Manager Implementation &#45; STM32H753ZI Stepper Motor Project." alt="" coords="379,102,576,129"/>
-<area shape="rect" id="node5" href="$d0/d45/test__safety__gtest_8cpp.html" title="GoogleTest&#45;based unit tests for safety systems (C++ wrapper for C code)" alt="" coords="600,95,760,136"/>
-</map>

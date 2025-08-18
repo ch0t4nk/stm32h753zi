@@ -1,8 +1,0 @@
-<map id="tests/copilot_integration/test_core_scope.h" name="tests/copilot_integration/test_core_scope.h">
-<area shape="rect" id="node1" title="Test file for validating core&#45;software.instructions.md scoping." alt="" coords="97,5,277,47"/>
-<area shape="rect" id="node2" href="$de/d11/error__codes_8h.html" title="System Error Codes &#45; Single Source of Truth (SSOT)" alt="" coords="5,95,176,121"/>
-<area shape="rect" id="node5" href="$d3/ddc/data__types_8h.html" title="Common Data Types &#45; Single Source of Truth (SSOT)" alt="" coords="201,95,367,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="151,169,233,196"/>
-<area shape="rect" id="node4" title=" " alt="" coords="55,169,126,196"/>
-<area shape="rect" id="node6" title=" " alt="" coords="257,169,332,196"/>
-</map>
