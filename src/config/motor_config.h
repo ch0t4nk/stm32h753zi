@@ -1,3 +1,10 @@
+// Motor supply voltage for telemetry power calculation (used in telemetry)
+#define MOTOR_SUPPLY_VOLTAGE                                                  \
+    24.0f // Typical supply voltage for IHM02A1/L6470 system
+
+// Floating-point constant for microseconds per second (used in timing
+// calculations)
+#define MICROSECONDS_PER_SECOND_F 1000000.0f
 /**
  * @file motor_config.h
  * @brief Motor and L6470 Driver Configuration - Single Source of Truth (SSOT)
@@ -59,6 +66,11 @@
 #define MOTOR_MICROSTEPS 128    // Microstepping setting (1/128)
 #define MOTOR_TOTAL_STEPS (MOTOR_STEPS_PER_REV * MOTOR_MICROSTEPS)
 #define MOTOR_DEGREES_PER_STEP (360.0f / MOTOR_TOTAL_STEPS)
+
+// Position Control Tolerances
+#define POSITION_TOLERANCE_DEG 0.1f // Position tolerance in degrees
+#define POSITION_TOLERANCE_STEPS                                              \
+    (POSITION_TOLERANCE_DEG / MOTOR_DEGREES_PER_STEP)
 
 #define MOTOR_TYPICAL_MECHANICAL_TIME_CONSTANT_S ((timestamp_ms_t)0.1f)
 #define MOTOR_TYPICAL_ELECTRICAL_TIME_CONSTANT_S ((timestamp_ms_t)0.002f)
@@ -169,5 +181,14 @@ typedef enum {
     MOTOR_MODE_POSITION_CONTROL,
     MOTOR_MODE_COUNT
 } MotorControlMode_t;
+
+/* ==========================================================================
+ */
+/* Control Loop Timing Configuration (SSOT)                                 */
+/* ==========================================================================
+ */
+#define CONTROL_LOOP_FREQ_HZ 1000 // Control loop frequency
+#define CONTROL_LOOP_PERIOD_MS                                                \
+    (1000 / CONTROL_LOOP_FREQ_HZ) // Control loop period
 
 #endif /* MOTOR_CONFIG_H */

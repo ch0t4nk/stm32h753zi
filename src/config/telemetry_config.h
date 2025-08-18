@@ -1,3 +1,13 @@
+
+// Default value for thermal performance if calculation fails (used in
+// telemetry)
+#define TELEMETRY_THERMAL_PERFORMANCE_DEFAULT 1.0f
+
+// Ratio for real-time compatibility threshold (used in performance metrics)
+#define TELEMETRY_REALTIME_COMPATIBILITY_RATIO 0.8f // 80% of sample period
+
+// Placeholder value for motor current if not implemented (used in telemetry)
+#define TELEMETRY_MOTOR_CURRENT_PLACEHOLDER_F 0.0f
 #ifndef TELEMETRY_CONFIG_H
 #define TELEMETRY_CONFIG_H
 

@@ -29,8 +29,11 @@
       "windows": {
         "command": "powershell",
         "args": [
-          "-Command",
-          ".\\scripts\\fix_cmake.ps1"
+          "-NoProfile",
+          "-ExecutionPolicy",
+          "Bypass",
+          "-File",
+          "${workspaceFolder}\\scripts\\fix_cmake.ps1"
         ]
       },
       "linux": {

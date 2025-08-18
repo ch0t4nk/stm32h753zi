@@ -1,0 +1,30 @@
+---
+id: 499e919f-9d7a-4e6e-ae2c-5c88520a55fe
+---
+graph TD
+    MCU["STM32H753ZI Nucleo-144<br/>ARM Cortex-M7 @ 480MHz<br/>2MB FLASH, 1MB RAM"]
+    L6470_1["L6470 Driver 1<br/>Stepper Motor Control<br/>Microstepping & Current Control"]
+    L6470_2["L6470 Driver 2<br/>Stepper Motor Control<br/>Microstepping & Current Control"]
+    AS5600_1["AS5600 Encoder 1<br/>Magnetic Position Sensor<br/>12-bit Resolution"]
+    AS5600_2["AS5600 Encoder 2<br/>Magnetic Position Sensor<br/>12-bit Resolution"]
+    CAN["CAN Bus<br/>High-Speed Communication<br/>Motor Commands & Status"]
+    STLink["ST-Link Virtual UART<br/>Debug & Telemetry<br/>115200 baud"]
+    MOTOR1["Stepper Motor 1<br/>Closed-Loop Control"]
+    MOTOR2["Stepper Motor 2<br/>Closed-Loop Control"]
+    SAFETY["Safety Systems<br/>Emergency Stop<br/>Fault Monitoring"]
+    WATCHDOG["Hardware Watchdogs<br/>System Health Monitoring"]
+    
+    MCU -->|SPI Daisy Chain| L6470_1
+    MCU -->|SPI Daisy Chain| L6470_2
+    MCU -->|I2C1 PB6/PB7| AS5600_1
+    MCU -->|I2C2| AS5600_2
+    MCU -->|CAN-FD| CAN
+    MCU -->|UART| STLink
+    MCU -->|GPIO| SAFETY
+    MCU -->|IWDG/WWDG| WATCHDOG
+    
+    L6470_1 --> MOTOR1
+    L6470_2 --> MOTOR2
+    
+    AS5600_1 -.->|Position Feedback| MOTOR1
+    AS5600_2 -.->|Position Feedback| MOTOR2

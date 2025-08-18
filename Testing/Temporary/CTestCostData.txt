@@ -1,3 +1,9 @@
 test_safety_systems_hal_abstracted 0 0
+test_mock_safety_events 0 0
+test_basic_safety 0 0
+test_emergency_stop_unity 0 0
 ---
 test_safety_systems_hal_abstracted
+test_mock_safety_events
+test_basic_safety
+test_emergency_stop_unity

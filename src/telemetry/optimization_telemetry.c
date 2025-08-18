@@ -83,6 +83,16 @@ typedef struct {
 // Private telemetry contexts for each motor
 static TelemetryContext_t telemetry_contexts[MAX_MOTORS];
 
+// NOTE: Hardware-driven exclusions (see docs/SSOT_EXCLUSIONS_TELEMETRY.md):
+// - SPI/nCS pin assignments are fixed by board layout and solder bridges
+// (UM1964 Table 6, Sec. 2.2)
+// - L6470 supply voltage (8V–45V) and phase current (≤3A) are hardware limits
+// (UM1964 Sec. 1)
+// - L6470 register addresses/reset values are fixed by silicon (UM1963 Table
+// 3)
+// - Some errata workarounds may require hardcoded logic
+// (ERRATA_STM32H753ZI.txt)
+
 // Use SSOT macros for buffer sizes, sample rates, etc. throughout
 // implementation Example: use TELEMETRY_CHARACTERIZATION_BUFFER_SIZE,
 // TELEMETRY_SAMPLE_RATE_MAX_HZ, etc.
@@ -178,9 +188,12 @@ SystemError_t optimization_telemetry_init(uint8_t motor_id) {
         (result == SYSTEM_OK) ? (uint8_t)kval_run_value : 0x29;
 
     context->safety_limits_enabled = true;
-    context->safety_current_limit_a = MOTOR_MAX_CURRENT_A * 0.8f;
-    context->safety_speed_limit_dps = MOTOR_MAX_SPEED_RPM * 6.0f * 0.9f;
-    context->safety_error_limit_deg = 10.0f;
+    // Hardware limit: L6470 phase current ≤3A (UM1964 Sec. 1, SSOT exclusion)
+    context->safety_current_limit_a =
+        MOTOR_MAX_CURRENT_A * SAFETY_CURRENT_LIMIT_RATIO;
+    context->safety_speed_limit_dps =
+        MOTOR_MAX_SPEED_DPS * SAFETY_SPEED_LIMIT_RATIO;
+    context->safety_error_limit_deg = MOTOR_RUNAWAY_THRESHOLD_DEG;
 
     context->performance.cpu_overhead_percent = 0.0f;
     context->performance.memory_usage_bytes = sizeof(TelemetryContext_t);
@@ -220,12 +233,14 @@ optimization_telemetry_collect_sample(uint8_t motor_id,
         packet->data_quality_score = 20;
     packet->kval_hold_actual = context->cached_kval_hold;
     packet->kval_run_actual = context->cached_kval_run;
-    float supply_voltage = 24.0f;
+    // Use SSOT macro for supply voltage (see config/motor_config.h)
+    // Hardware limit: L6470 supply voltage 8V–45V (UM1964 Sec. 1)
+    float supply_voltage = MOTOR_SUPPLY_VOLTAGE;
     packet->power_consumption_w = packet->motor_current_a * supply_voltage;
     result = optimization_telemetry_calculate_thermal_performance(
         packet, &packet->thermal_performance);
     if (result != SYSTEM_OK)
-        packet->thermal_performance = 1.0f;
+        packet->thermal_performance = TELEMETRY_THERMAL_PERFORMANCE_DEFAULT;
     packet->cpu_utilization_percent =
         context->performance.cpu_overhead_percent;
     packet->position_error =
@@ -276,9 +291,12 @@ SystemError_t optimization_telemetry_collect_dataset(
     if (expected_samples > TELEMETRY_CHARACTERIZATION_BUFFER_SIZE)
         return ERROR_BUFFER_OVERFLOW;
     context->safety_limits_enabled = true;
-    context->safety_current_limit_a = MOTOR_MAX_CURRENT_A * 0.8f;
-    context->safety_speed_limit_dps = MOTOR_MAX_SPEED_RPM * 6.0f * 0.9f;
-    context->safety_error_limit_deg = 10.0f;
+    // Use SSOT macro for max current (see config/motor_config.h)
+    // Hardware limit: L6470 phase current ≤3A (UM1964 Sec. 1)
+    context->safety_current_limit_a = MOTOR_MAX_CURRENT_A;
+    context->safety_speed_limit_dps =
+        MOTOR_MAX_SPEED_DPS * SAFETY_SPEED_LIMIT_RATIO;
+    context->safety_error_limit_deg = MOTOR_RUNAWAY_THRESHOLD_DEG;
     uint32_t sample_interval_us = 1000000 / config->sample_rate_hz;
     uint32_t sample_index = 0;
     uint32_t start_time_us = telemetry_get_microsecond_timer();
@@ -304,9 +322,11 @@ SystemError_t optimization_telemetry_collect_dataset(
     dataset->data_valid = (sample_index > 0);
     dataset->checksum = telemetry_calculate_checksum(dataset);
     context->safety_limits_enabled = true;
-    context->safety_current_limit_a = MOTOR_MAX_CURRENT_A * 0.8f;
-    context->safety_speed_limit_dps = MOTOR_MAX_SPEED_RPM * 6.0f * 0.9f;
-    context->safety_error_limit_deg = 10.0f;
+    context->safety_current_limit_a =
+        MOTOR_MAX_CURRENT_A * SAFETY_CURRENT_LIMIT_RATIO;
+    context->safety_speed_limit_dps =
+        MOTOR_MAX_SPEED_DPS * SAFETY_SPEED_LIMIT_RATIO;
+    context->safety_error_limit_deg = MOTOR_RUNAWAY_THRESHOLD_DEG;
     return SYSTEM_OK;
 }
 
@@ -367,8 +387,8 @@ static SystemError_t telemetry_read_as5600_burst(uint8_t motor_id,
     if (result != SYSTEM_OK)
         return result;
     uint32_t current_time_us = telemetry_get_microsecond_timer();
-    float dt_seconds =
-        (current_time_us - context->last_sample_timestamp_us) / 1000000.0f;
+    float dt_seconds = (current_time_us - context->last_sample_timestamp_us) /
+                       MICROSECONDS_PER_SECOND_F;
     result =
         telemetry_calculate_derivatives(context, *position_degrees, dt_seconds,
                                         velocity_dps, acceleration_dps2);
@@ -385,13 +405,17 @@ static SystemError_t telemetry_read_l6470_status_fast(
         HAL_Abstraction_L6470_GetStatus(motor_id, &status_register);
     if (result != SYSTEM_OK)
         return result;
-    // TODO: Parse status_register for flags (use SSOT macros if available)
+    // NOTE: L6470 register addresses/reset values are hardware-determined (see
+    // SSOT_EXCLUSIONS_TELEMETRY.md, UM1963 Table 3)
     *status_flags = (uint8_t)(status_register & 0xFF);
     *thermal_warning = (status_register & (1 << 7)) != 0;
     *stall_detected = (status_register & (1 << 5)) != 0;
     *overcurrent_detected = (status_register & (1 << 3)) != 0;
-    // TODO: Read current from L6470 (use HAL abstraction)
-    *motor_current_a = 0.0f; // Placeholder, implement actual read
+    // NOTE: Actual current readout is hardware-limited by L6470 design (see
+    // SSOT_EXCLUSIONS_TELEMETRY.md)
+    *motor_current_a =
+        TELEMETRY_MOTOR_CURRENT_PLACEHOLDER_F; // Placeholder, implement actual
+                                               // read
     return SYSTEM_OK;
 }
 
@@ -469,17 +493,21 @@ static void telemetry_update_performance_metrics(TelemetryContext_t *context,
     if (sample_time_us > metrics->max_sample_time_us) {
         metrics->max_sample_time_us = sample_time_us;
     }
-    float target_sample_period_us = 1000000.0f / context->sample_rate_hz;
+    float target_sample_period_us =
+        MICROSECONDS_PER_SECOND_F / context->sample_rate_hz;
     metrics->cpu_overhead_percent =
         (sample_time_us / target_sample_period_us) * 100.0f;
     metrics->real_time_compatible =
-        (sample_time_us < (target_sample_period_us * 0.8f));
-    float expected_interval_us = 1000000.0f / context->sample_rate_hz;
+        (sample_time_us <
+         (target_sample_period_us * TELEMETRY_REALTIME_COMPATIBILITY_RATIO));
+    float expected_interval_us =
+        MICROSECONDS_PER_SECOND_F / context->sample_rate_hz;
     float actual_interval_us =
         telemetry_get_microsecond_timer() - context->last_sample_timestamp_us;
     float timing_error = fabsf(actual_interval_us - expected_interval_us);
     metrics->timing_accuracy_percent =
         100.0f - (timing_error / expected_interval_us * 100.0f);
+    // ...existing code...
     if (metrics->timing_accuracy_percent > 100.0f)
         metrics->timing_accuracy_percent = 100.0f;
     if (metrics->timing_accuracy_percent < 0.0f)

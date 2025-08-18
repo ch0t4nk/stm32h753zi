@@ -99,4 +99,42 @@
 #define SAFETY_RELAY2_PIN_INDEX 5
 #endif
 
+// ============================================================================
+// Interrupt Request (IRQ) Numbers for Safety-Critical Interrupt Priorities
+// ============================================================================
+
+// Emergency Stop and Safety-Critical IRQs
+#define EMERGENCY_STOP_IRQ EXTI15_10_IRQn   // Emergency stop button interrupt
+#define SAFETY_TIMER_IRQ TIM1_UP_TIM10_IRQn // Safety monitor timer interrupt
+
+// Real-Time Control IRQs
+#define CONTROL_TIMER_IRQ TIM2_IRQn // Control loop timer interrupt
+
+// Motor Communication IRQs
+#define MOTOR_SPI_IRQ SPI1_IRQn // L6470 SPI communication interrupt
+
+// Sensor and Encoder IRQs
+#define ENCODER_I2C1_IRQ I2C1_EV_IRQn // AS5600 encoder 1 I2C interrupt
+#define ENCODER_I2C2_IRQ I2C2_EV_IRQn // AS5600 encoder 2 I2C interrupt
+
+// System Communication IRQs
+#define SYSTEM_UART_IRQ USART3_IRQn    // System UART interrupt
+#define SYSTEM_CAN_IRQ FDCAN1_IT0_IRQn // System CAN interrupt
+
+// System Management IRQs
+#define SYSTEM_TICK_IRQ SysTick_IRQn // System tick timer interrupt
+
+// ============================================================================
+// Motor Control Constants
+// ============================================================================
+
+// Position Control Limits
+#define MAX_POSITION_ERROR_STEPS 100 // Maximum position error in steps
+
+// ============================================================================
+// AS5600 Magnetic Encoder Configuration
+// ============================================================================
+
+#define AS5600_I2C_ADDRESS_8BIT 0x6C // AS5600 I2C address (8-bit format)
+
 #endif /* HARDWARE_CONFIG_H */

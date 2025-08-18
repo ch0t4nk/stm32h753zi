@@ -1,6 +1,6 @@
 /**
  * @file interrupt_priorities.h
- * @brief Safety-Critical Interrupt Priority Configuration
+ * @brief Safety-Critical Interrupt Priority Configuratione
  * @author STM32H753ZI Project Team
  * @date 2025-08-12
  *

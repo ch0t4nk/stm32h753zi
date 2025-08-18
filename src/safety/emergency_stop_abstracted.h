@@ -149,7 +149,8 @@ SystemError_t estop_get_stats(uint32_t *trigger_count,
 
 // --- Legacy API: Deprecated, use new estop_ API ---
 // (Optionally provide wrappers for backward compatibility)
-// #define emergency_stop_init estop_init
+// Legacy API compatibility for tests
+#define emergency_stop_init estop_init
 // ...etc...
 
 // --- Discussion: If any new methods are needed for telemetry, test, or

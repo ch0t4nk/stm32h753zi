@@ -1,4 +1,6 @@
+
 cmake_minimum_required(VERSION 3.15)
+message(STATUS "=== [DEBUG] CMake configure started ===")
 
 # Set CMake policies to suppress warnings
 if(POLICY CMP0109)
@@ -32,6 +34,11 @@ add_compile_definitions(
 
 # Only add GCC/Clang-specific flags for those compilers
 if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
+# Debug: Print SOURCES list to verify inclusion of safety modules
+message(STATUS "SOURCES list:")
+foreach(src ${SOURCES})
+    message(STATUS "  ${src}")
+endforeach()
     add_compile_options(
         -mcpu=cortex-m7
         -mthumb
@@ -119,6 +126,7 @@ if(ENABLE_COVERAGE)
 endif()
 
 # Include directories (SSOT configuration)
+# CRITICAL: Core/Inc must come BEFORE HAL driver includes to ensure correct hal_conf.h
 include_directories(
     src
     src/config
@@ -130,12 +138,12 @@ include_directories(
     src/application
     src/optimization
     src/hal_abstraction
-    Core/Inc
-    drivers/STM32H7xx_HAL_Driver/Inc
-    drivers/STM32H7xx_HAL_Driver/Inc/Legacy
-    drivers/CMSIS/Device/ST/STM32H7xx/Include
-    drivers/CMSIS/Include
-    drivers/BSP/STM32H7xx_Nucleo
+    Core/Inc                                            # MUST be first - contains correct hal_conf.h
+    Drivers/STM32H7xx_HAL_Driver/Inc                    # Match source directory case
+    Drivers/STM32H7xx_HAL_Driver/Inc/Legacy
+    Drivers/CMSIS/Device/ST/STM32H7xx/Include
+    Drivers/CMSIS/Include
+    Drivers/BSP/STM32H7xx_Nucleo
     00_reference/stm32h7xx_nucleo_bsp_md
     Middlewares/Third_Party/FreeRTOS/Source/include
     Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1
@@ -176,34 +184,55 @@ add_custom_target(generate_schemas
 )
 
 # Source files
+
+# Debug: Print working directory and source dir
+message(STATUS "[DEBUG] CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
+message(STATUS "[DEBUG] CMAKE_BINARY_DIR: ${CMAKE_BINARY_DIR}")
+
 file(GLOB_RECURSE SOURCES
-    "src/hal_abstraction/hal_abstraction_stm32h7.c"    # HAL abstraction STM32H7 implementation
-    "Core/Src/gpio.c"            # STM32CubeMX generated GPIO init
-    "Core/Src/freertos.c"        # STM32CubeMX generated FreeRTOS init
+    "src/hal_abstraction/hal_abstraction_stm32h7.c"
+    "Core/Src/gpio.c"
+    "Core/Src/freertos.c"
     "src/drivers/l6470/*.c"
-    "src/drivers/as5600/*.c"     # AS5600 magnetic encoder driver
-    "src/controllers/*.c"        # Motor controller integration layer + characterization
-    "src/safety/*.c"             # Safety systems (emergency stop, watchdog, fault monitoring)
-    "src/communication/*.c"      # Communication protocols (UART, CAN)
-    "src/config/hardware_detection.c"   # Hardware detection and presence validation
-    "src/rtos/*.c"               # RTOS task implementations for Phase 5A
-    "src/telemetry/*.c"          # Optimization telemetry for motor characterization
-    "src/optimization/*.c"       # Motor efficiency optimization algorithms (FTR-009)
-    # "src/simulation/*.c"         # Motor/encoder simulation framework - TEMPORARILY DISABLED for safety integration
-    "drivers/STM32H7xx_HAL_Driver/Src/*.c"
-    # "drivers/BSP/STM32H7xx_Nucleo/*.c"  # BSP removed - using direct HAL UART instead
+    "src/drivers/as5600/*.c"
+    "src/controllers/*.c"
+    "src/safety/*.c"
+    "src/communication/*.c"
+    "src/config/hardware_detection.c"
+    "src/rtos/*.c"
+    "src/telemetry/*.c"
+    "src/optimization/*.c"
+    # "src/simulation/*.c"
+    "Drivers/STM32H7xx_HAL_Driver/Src/*.c"
+    # "drivers/BSP/STM32H7xx_Nucleo/*.c"
     "Core/Src/stm32h7xx_hal_msp.c"
     "Core/Src/stm32h7xx_it.c"
     "Core/Src/system_stm32h7xx.c"
-    "Core/Src/stm32h7xx_hal_timebase_tim.c" # Add timebase TIM6 implementation
-    # Main application entry point with HAL UART support (no BSP)
-    "Core/Src/main.c"            # STM32CubeMX generated main file (HAL UART)
-    # "src/application/uart_test.c"        # Clean HAL UART implementation (DISABLED)
-    "src/enhanced_clock_config.c" # Enhanced HSE clock configuration
-    "src/config/clock_config.c"   # Centralized clock configuration SSOT
-    "src/config/clock_config_480mhz.c"  # Fixed 480MHz clock config for Rev V
+    "Core/Src/stm32h7xx_hal_timebase_tim.c"
+    "Core/Src/main.c"
+    # "src/application/uart_test.c"
+    "src/enhanced_clock_config.c"
+    "src/config/clock_config.c"
+    "src/config/clock_config_480mhz.c"
     "Core/Src/syscalls.c"
 )
+
+# Debug: Print number of files found for each pattern
+file(GLOB SAFETY_SOURCES "src/safety/*.c")
+list(LENGTH SAFETY_SOURCES SAFETY_COUNT)
+message(STATUS "[DEBUG] SAFETY_SOURCES count: ${SAFETY_COUNT}")
+foreach(f ${SAFETY_SOURCES})
+    message(STATUS "[DEBUG] SAFETY_SOURCE: ${f}")
+endforeach()
+
+list(LENGTH SOURCES SOURCES_COUNT)
+message(STATUS "[DEBUG] Total SOURCES count: ${SOURCES_COUNT}")
+
+# Debug: Print SOURCES list to verify inclusion of safety modules
+message(STATUS "[DEBUG] SOURCES list:")
+foreach(src ${SOURCES})
+    message(STATUS "[DEBUG]   ${src}")
+endforeach()
 
 # Add FreeRTOS source files when using RTOS
 file(GLOB FREERTOS_SOURCES
@@ -221,7 +250,7 @@ list(FILTER SOURCES EXCLUDE REGEX ".*hal_msp_template.*")
 list(FILTER SOURCES EXCLUDE REGEX ".*timebase_tim_template.*")
 
 # Exclude legacy files in favor of HAL abstraction versions
-list(FILTER SOURCES EXCLUDE REGEX ".*emergency_stop\\.c$")  # Use emergency_stop_abstracted.c instead
+# (Do not exclude emergency_stop.c; use real safety logic)
 list(FILTER SOURCES EXCLUDE REGEX ".*hardware_simulation\\.c$")  # Use motor_simulation.c instead (newer simulation framework)
 
 # Use the correct startup file for GCC

@@ -29,6 +29,37 @@ extern "C" {
 
 /* Includes
  * ------------------------------------------------------------------*/
+/* USER CODE BEGIN HSE_VALUE */
+/* Define HSE_VALUE before including HAL to override default 25MHz */
+#define HSE_VALUE                                                             \
+    8000000UL /*!< Value of the External oscillator in Hz - STM32H753ZI       \
+                 Nucleo-144 uses 8MHz */
+/* USER CODE END HSE_VALUE */
+
+/* Define essential oscillator values before HAL include */
+#ifndef CSI_VALUE
+#define CSI_VALUE (4000000UL) /*!< Value of the Internal oscillator in Hz*/
+#endif
+
+#ifndef HSI_VALUE
+#define HSI_VALUE (64000000UL) /*!< Value of the Internal oscillator in Hz*/
+#endif
+
+#ifndef TICK_INT_PRIORITY
+#define TICK_INT_PRIORITY (15UL) /*!< Tick interrupt priority */
+#endif
+
+/* Essential assert_param definition */
+#ifndef assert_param
+#ifdef USE_FULL_ASSERT
+#define assert_param(expr)                                                    \
+    ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
+void assert_failed(uint8_t *file, uint32_t line);
+#else
+#define assert_param(expr) ((void)0U)
+#endif /* USE_FULL_ASSERT */
+#endif /* assert_param */
+
 #include "stm32h7xx_hal.h"
 
 #include "stm32h7xx_nucleo.h"

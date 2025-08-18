@@ -1,3 +1,23 @@
+#ifndef SAFETY_CONFIG_H
+#define SAFETY_CONFIG_H
+
+// Ratio of current limit to max current for safety (used in telemetry safety
+// checks)
+#define SAFETY_CURRENT_LIMIT_RATIO 0.8f // 80% of max current (empirical sa/**
+*@brief Emergency stop state structure *Defines the current state and status of
+        the emergency stop system * /
+    typedef struct {
+    bool active;                  /**< Emergency stop is active */
+    bool latched;                 /**< Emergency stop is latched */
+    EmergencyStopSource_t source; /**< Source of emergency stop */
+    uint32_t timestamp;           /**< Timestamp when activated */
+    uint32_t reset_attempts;      /**< Number of reset attempts */
+    bool reset_pending;           /**< Reset operation pending */
+} EmergencyStopState_t;
+// Ratio of speed limit to max speed for safety (used in telemetry safety
+// checks)
+#define SAFETY_SPEED_LIMIT_RATIO                                              \
+    0.9f // 90% of max speed (empirical safe margin)
 /**
  * @file safety_config.h
  * @brief Safety Configuration - Single Source of Truth (SSOT)
@@ -13,9 +33,6 @@
  * TODO: See .github/instructions/safety-systems.instructions.md for watchdog
  * configuration details
  */
-
-#ifndef SAFETY_CONFIG_H
-#define SAFETY_CONFIG_H
 
 #include <stdint.h>
 
@@ -234,6 +251,34 @@ typedef enum {
     SAFETY_LEVEL_EMERGENCY, // Emergency safety level
     SAFETY_LEVEL_COUNT      // Number of levels
 } SafetyLevel_t;
+
+/**
+ * @brief Emergency stop sources
+ */
+typedef enum {
+    ESTOP_SOURCE_NONE = 0,       /**< No emergency stop */
+    ESTOP_SOURCE_BUTTON,         /**< Physical button */
+    ESTOP_SOURCE_SOFTWARE,       /**< Software command */
+    ESTOP_SOURCE_COMM_LOSS,      /**< Communication loss */
+    ESTOP_SOURCE_FAULT_CASCADE,  /**< Fault cascade */
+    ESTOP_SOURCE_WATCHDOG,       /**< Watchdog timeout */
+    ESTOP_SOURCE_OVERHEAT,       /**< Overtemperature */
+    ESTOP_SOURCE_OVERCURRENT,    /**< Overcurrent protection */
+    ESTOP_SOURCE_POSITION_LIMIT, /**< Position limit violation */
+    ESTOP_SOURCE_COUNT           /**< Number of sources */
+} EmergencyStopSource_t;
+
+/**
+ * @brief Emergency Stop State enumeration
+ * Defines the various states of the emergency stop system
+ */
+typedef enum {
+    EMERGENCY_STOP_NORMAL = 0, /*!< Normal operation - no emergency stop */
+    EMERGENCY_STOP_TRIGGERED,  /*!< Emergency stop has been triggered */
+    EMERGENCY_STOP_FAULT,      /*!< Emergency stop system fault detected */
+    EMERGENCY_STOP_RECOVERY,   /*!< Emergency stop recovery in progress */
+    EMERGENCY_STOP_STATE_COUNT /*!< Number of emergency stop states */
+} EmergencyStopState_t;
 
 /* ==========================================================================
  */

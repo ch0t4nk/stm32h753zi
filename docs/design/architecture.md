@@ -1,3 +1,4 @@
+<!-- [MermaidChart: 499e919f-9d7a-4e6e-ae2c-5c88520a55fe] -->
 # STM32H753ZI Stepper Motor Control & Semantic Search System Architecture
 
 **Status**: ✅ **PRODUCTION READY** - ARM_CM7 FreeRTOS + AI-Powered Documentation + API  
@@ -11,6 +12,9 @@ Professional stepper motor control system with integrated AI-powered semantic se
 ## 🏗️ **Hardware Architecture**
 
 ```mermaid
+---
+id: 499e919f-9d7a-4e6e-ae2c-5c88520a55fe
+---
 graph TD
     MCU["STM32H753ZI Nucleo-144<br/>ARM Cortex-M7 @ 480MHz<br/>2MB FLASH, 1MB RAM"]
     L6470_1["L6470 Driver 1<br/>Stepper Motor Control<br/>Microstepping & Current Control"]

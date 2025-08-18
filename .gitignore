@@ -112,3 +112,6 @@ Makefile
 # === LOGS AND RUNTIME FILES ===
 logs/
 *.log
+
+# === REFERENCE PROJECTS ===
+stm32h753zi_spn2_mcsdk_rtos/
