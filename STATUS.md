@@ -35,6 +35,18 @@
 
 ---
 
+## Session Summary (Aug 19, 2025)
+
+- SSOT migration completed this session: inline hex annotations removed, small literals migrated to `src/config/*`, validator green.
+- Host-test status: host tests build produced binaries; some host tests failing (9/17 telemetry failures) and one safety test segfaulting — triage in progress.
+- Next immediate action: host-test triage and hardware flashing once host-tests stabilize.
+
+## 🔧 Setup Summary
+
+- Virtualenv: `.venv` (use `.venv\Scripts\python.exe` on Windows)
+- Build preset: `Debug` (Ninja generator via `CMakePresets.json`)
+- Primary shell: PowerShell (Windows), scripts support cross-platform wrappers
+
 ## 🔧 Setup & Quick Reference
 
 - **Build (CMake)**: `cmake -S . -B build && cmake --build build`
