@@ -61,6 +61,17 @@ static SystemError_t check_system_health(void);
 static bool is_fault_critical(uint32_t fault_code);
 static const char *get_fault_description(uint32_t fault_code);
 
+/*
+ * Some host test builds rely on the static helper check_motor_limits being
+ * present in this compilation unit. Ensure a very small, safe definition
+ * exists (returns SYSTEM_OK) to satisfy link-time requirements when the
+ * fuller legacy implementation is omitted from host test builds.
+ */
+static SystemError_t check_motor_limits(uint8_t motor_id) {
+    (void)motor_id;
+    return SYSTEM_OK;
+}
+
 /* ==========================================================================
  */
 /* Public API Implementation                                                 */

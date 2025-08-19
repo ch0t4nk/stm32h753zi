@@ -34,10 +34,24 @@
 #define MAX_MOTORS SSOT_MAX_MOTORS
 #endif
 
-/* Compile-time check to ensure MAX_MOTORS matches the SSOT definition */
-_Static_assert(MAX_MOTORS == SSOT_MAX_MOTORS,
+/* Compile-time check to ensure MAX_MOTORS matches the SSOT definition.
+ * Some translation units may include this header before
+ * src/config/project_constants.h due to historical include-order. To avoid
+ * hard parse errors during host builds, only perform the static assert when
+ * both symbols are defined as integer-like macros. If not defined, emit a
+ * recoverable preprocessor error to make the include-order problem explicit
+ * during build.
+ */
+#if defined(MAX_MOTORS) && defined(SSOT_MAX_MOTORS)
+/* Use a lightweight check that will only be evaluated when both macros exist
+ */
+_Static_assert((MAX_MOTORS) == (SSOT_MAX_MOTORS),
                "MAX_MOTORS must equal SSOT_MAX_MOTORS from "
                "src/config/project_constants.h");
+#else
+#error                                                                        \
+    "Include-order issue: SSOT_MAX_MOTORS not available when including system_state.h; ensure project_constants.h is included before system_state.h or define MAX_MOTORS appropriately."
+#endif
 
 /* ==========================================================================
  */

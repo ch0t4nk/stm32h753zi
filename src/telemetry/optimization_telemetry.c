@@ -581,123 +581,79 @@ static SystemError_t
 telemetry_check_safety_bounds(const TelemetryContext_t *context,
                               const OptimizationTelemetryPacket_t *packet,
                               bool *safety_ok) {
-    *safety_ok = true;
+    if (context == NULL || packet == NULL || safety_ok == NULL)
+        return ERROR_INVALID_PARAMETER;
+
     bool violation = false;
+    *safety_ok = true;
+
+    /* Check motor current */
     if (packet->motor_current_a > context->safety_current_limit_a) {
         violation = true;
-        /* Host-test: write a short record instead of calling external logger
-         */
-        {
-            FILE *f2 =
-                host_safe_fopen("build_host_tests/telemetry_safety.log", "a");
-            if (f2) {
-                fprintf(f2,
-                        "[TELEMETRY][LOG] Current exceeded safety limit\n");
-                fclose(f2);
-            }
+#ifdef HOST_TEST_BUILD
+        FILE *f =
+            host_safe_fopen("build_host_tests/telemetry_safety.log", "a");
+        if (f) {
+            fprintf(f, "[TELEMETRY][SAFETY] current=%.3fA limit=%.3fA\n",
+                    packet->motor_current_a, context->safety_current_limit_a);
+            fclose(f);
         }
-        {
-            FILE *f =
-                host_safe_fopen("build_host_tests/telemetry_safety.log", "a");
-            if (f) {
-                fprintf(f, "[TELEMETRY][SAFETY] current=%.3fA limit=%.3fA\n",
-                        packet->motor_current_a,
-                        context->safety_current_limit_a);
-                fclose(f);
-            } else {
-                printf("[TELEMETRY][SAFETY] current=%.3fA limit=%.3fA\n",
-                       packet->motor_current_a,
-                       context->safety_current_limit_a);
-                fflush(stdout);
-            }
-        }
+#endif
     }
+
+    /* Check velocity */
     if (fabsf(packet->velocity_dps) > context->safety_speed_limit_dps) {
         violation = true;
-        {
-            FILE *f2 =
-                host_safe_fopen("build_host_tests/telemetry_safety.log", "a");
-            if (f2) {
-                fprintf(f2, "[TELEMETRY][LOG] Speed exceeded safety limit\n");
-                fclose(f2);
-            }
-        }
-        {
-            FILE *f2 =
-                host_safe_fopen("build_host_tests/telemetry_safety.log", "a");
-            if (f2) {
-                fprintf(f2,
-                        "safety_violation: motor=%u violation_count=%u "
-                        "value=%f limit=%f\n",
-                        (unsigned)motor_id,
-                        (unsigned)context->safety_violation_count,
-                        (double)measured_value, (double)limit_value);
-                fclose(f2);
-            }
-        }
-    }
-}
-if (fabsf(packet->position_error) > context->safety_error_limit_deg) {
-    violation = true;
-    {
+#ifdef HOST_TEST_BUILD
         FILE *f =
             host_safe_fopen("build_host_tests/telemetry_safety.log", "a");
         if (f) {
-            fprintf(f, "safety_reset: motor=%u reason=%s\n",
-                    (unsigned)motor_id, reason);
+            fprintf(f, "[TELEMETRY][SAFETY] velocity=%.3f limit=%.3f\n",
+                    packet->velocity_dps, context->safety_speed_limit_dps);
             fclose(f);
         }
+#endif
     }
-}
-{
-    FILE *f2 = host_safe_fopen("build_host_tests/telemetry_safety.log", "a");
-    if (f2) {
-        fprintf(f2, "safety_violation_persist: motor=%u count=%u\n",
-                (unsigned)motor_id, (unsigned)context->safety_violation_count);
-        fclose(f2);
-    }
-}
-else {
-    printf("[TELEMETRY][SAFETY] position_error=%.3fdeg "
-           "limit=%.3fdeg\n",
-           packet->position_error, context->safety_error_limit_deg);
-    fflush(stdout);
-}
-}
-}
-if (packet->thermal_warning || packet->stall_detected ||
-    packet->overcurrent_detected) {
-    violation = true;
-    {
+
+    /* Check position error */
+    if (fabsf(packet->position_error) > context->safety_error_limit_deg) {
+        violation = true;
+#ifdef HOST_TEST_BUILD
         FILE *f =
             host_safe_fopen("build_host_tests/telemetry_safety.log", "a");
         if (f) {
-            fprintf(f, "safety_override: motor=%u action=%s\n",
-                    (unsigned)motor_id, action);
+            fprintf(f, "[TELEMETRY][SAFETY] position_error=%.3f limit=%.3f\n",
+                    packet->position_error, context->safety_error_limit_deg);
             fclose(f);
         }
+#endif
     }
-    {
+
+    /* Thermal, stall, overcurrent flags */
+    if (packet->thermal_warning || packet->stall_detected ||
+        packet->overcurrent_detected) {
+        violation = true;
+#ifdef HOST_TEST_BUILD
         FILE *f =
             host_safe_fopen("build_host_tests/telemetry_safety.log", "a");
         if (f) {
             fprintf(f,
                     "[TELEMETRY][SAFETY] thermal=%u stall=%u overcurrent=%u\n",
-                    packet->thermal_warning, packet->stall_detected,
-                    packet->overcurrent_detected);
+                    (unsigned)packet->thermal_warning,
+                    (unsigned)packet->stall_detected,
+                    (unsigned)packet->overcurrent_detected);
             fclose(f);
-        } else {
-            printf("[TELEMETRY][SAFETY] thermal=%u stall=%u "
-                   "overcurrent=%u\n",
-                   packet->thermal_warning, packet->stall_detected,
-                   packet->overcurrent_detected);
-            fflush(stdout);
         }
+#endif
     }
-}
-if (violation)
-    *safety_ok = false;
-return SYSTEM_OK;
+
+    if (violation) {
+        *safety_ok = false;
+    } else {
+        *safety_ok = true;
+    }
+
+    return SYSTEM_OK;
 }
 
 static uint32_t telemetry_get_microsecond_timer(void) {

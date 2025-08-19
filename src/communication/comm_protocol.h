@@ -26,6 +26,14 @@
 #include <stdint.h>
 // Shared SSOT constants
 #include "config/constants_shared.h"
+/* constants_shared.h contains a legacy ERROR_CODE_BASE definition used by some
+ * historic modules. Prefer the canonical mapping in src/config/error_codes.h.
+ * Undefine the legacy value here to avoid redefinition warnings when
+ * error_codes.h is included later in the translation unit.
+ */
+#ifdef ERROR_CODE_BASE
+#undef ERROR_CODE_BASE
+#endif
 /* Project-wide SSOT: small constants that may be materialized as hardcoded
  * values in lower-level code. See src/config/project_constants.h for
  * definitions and runtime/update notes.

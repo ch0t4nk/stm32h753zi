@@ -20,7 +20,6 @@
 - Ensured the auto-update process adheres to the Development Workflow rules: post-commit auto-update, feature-tracker integration points, and SSOT-aware script execution (`scripts/run_python_configurable.ps1`).
 - Documented auto-update triggers and preservation rules: timestamps and build metrics auto-generated, while technical context, phase status, and next-steps remain manual-edit preserved.
 
-
 ## Context Transfer & Continuity (for Copilot/Automation)
 
 **Current Branch**: main

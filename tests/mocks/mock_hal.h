@@ -13,6 +13,8 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+/* Ensure HAL abstraction types and enums are available for mock definitions */
+#include "hal_abstraction/hal_abstraction.h"
 
 // Prevent real HAL inclusion by defining HAL guard
 #define __STM32H7xx_HAL_H
@@ -80,25 +82,12 @@ extern GPIO_TypeDef *GPIOC;
 // MOCK STATE TRACKING
 // =============================================================================
 
-#define MAX_GPIO_STATES 32
-
-typedef struct {
-    GPIO_TypeDef *port;
-    uint16_t pin;
-    GPIO_PinState state;
-    uint32_t timestamp;
-} MockGPIO_State_t;
-
-typedef struct {
-    uint32_t system_tick;
-    uint32_t call_count;
-    bool emergency_stop_state;
-    bool fault_pin_state;
-    uint32_t watchdog_refresh_count;
-    uint32_t last_watchdog_refresh;
-    MockGPIO_State_t gpio_states[MAX_GPIO_STATES];
-    int gpio_state_count;
-} MockHAL_State_t;
+/* Reuse canonical mock state from mock_hal_abstraction.h to ensure a single
+ * authoritative layout is used across all test translation units. */
+#ifndef MOCK_GPIO_INDEX_SPACE
+#define MOCK_GPIO_INDEX_SPACE 32
+#endif
+#include "mock_hal_abstraction.h"
 
 // =============================================================================
 // MOCK HAL FUNCTION DECLARATIONS

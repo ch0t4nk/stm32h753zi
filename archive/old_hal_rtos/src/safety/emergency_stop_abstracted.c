@@ -54,6 +54,15 @@ typedef struct {
 
 static EmergencyStopContext_t estop_context = {0};
 
+/* Weak hook called by mocks on global reset to notify application
+ * modules to clear their initialized flags during host testing.
+ * Defined weakly so production code is unaffected. Tests may override.
+ */
+__attribute__((weak)) void Test_ResetApplication(void) {
+    /* Clear module initialization to simulate power-on reset in tests */
+    estop_context.initialized = false;
+}
+
 /* ==========================================================================
  */
 /* Private Function Declarations                                             */

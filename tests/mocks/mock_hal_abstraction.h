@@ -269,7 +269,13 @@ void MockHAL_SetI2CResponse(HAL_I2C_Instance_t instance, const uint8_t *data,
  * @param function_name Function name
  * @return Number of calls
  */
-uint32_t MockHAL_GetCallCount(const char *function_name);
+/**
+ * @brief Get number of times functions have been called (legacy API)
+ *
+ * Backwards-compatible no-argument API used by existing unit tests.
+ * Newer tests can be extended later to provide per-function call counts.
+ */
+uint32_t MockHAL_GetCallCount(void);
 
 /**
  * @brief Verify function was called with expected parameters
@@ -295,10 +301,14 @@ typedef struct {
     bool enabled;
 } MockFunction_t;
 
-// Allow tests to index by either pin index [0..15] or pin bitmask (1<<n)
-// by expanding the second dimension. This avoids out-of-bounds when tests
-// erroneously use bitmasks as indices.
-#define MOCK_GPIO_INDEX_SPACE (1u << 16)
+// Allow tests to index by either pin index [0..15] or pin bitmask (1<<n).
+// The original value (1<<16) creates extremely large global arrays which
+// can cause memory layout differences across translation units and lead to
+// runtime crashes in host tests. Use a small expanded index space that
+// covers common bitmask/index usage while keeping memory reasonable.
+// If a test requires larger mask-index support, increase this value
+// locally in the test and adapt the mock implementation accordingly.
+#define MOCK_GPIO_INDEX_SPACE 32
 typedef struct {
     HAL_GPIO_State_t pin_states[HAL_GPIO_PORT_MAX][MOCK_GPIO_INDEX_SPACE];
     bool pin_written[HAL_GPIO_PORT_MAX][MOCK_GPIO_INDEX_SPACE];
