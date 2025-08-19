@@ -1,0 +1,2022 @@
+{
+  "summary": {
+    "violations_count": 223,
+    "include_issues_count": 0,
+    "missing_files_count": 0,
+    "inconsistencies_count": 0
+  },
+  "violations": [
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 37,
+      "content": "#define ERROR_CODE_ENCODER_BASE 0x3000          // Encoder/sensor errors",
+      "matches": [
+        "0x3000"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 40,
+      "content": "#define ERROR_CODE_SYSTEM_BASE 0x6000           // System/hardware errors",
+      "matches": [
+        "0x6000"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 41,
+      "content": "#define ERROR_CODE_CONFIG_BASE 0x7000           // Configuration errors",
+      "matches": [
+        "0x7000"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 42,
+      "content": "#define ERROR_CODE_TEST_BASE 0x8000             // Test/debug errors",
+      "matches": [
+        "0x8000"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 57,
+      "content": "ERROR_CODE_GENERIC_BASE,  // 0x1000 - Invalid parameter passed",
+      "matches": [
+        "0x1000"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 59,
+      "content": "ERROR_BUFFER_OVERFLOW,        // 0x1002 - Buffer overflow detected",
+      "matches": [
+        "0x1002"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 60,
+      "content": "ERROR_BUFFER_UNDERFLOW,       // 0x1003 - Buffer underflow detected",
+      "matches": [
+        "0x1003"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 61,
+      "content": "ERROR_OUT_OF_RANGE,           // 0x1004 - Value out of valid range",
+      "matches": [
+        "0x1004"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 62,
+      "content": "ERROR_NOT_INITIALIZED,        // 0x1005 - Module not initialized",
+      "matches": [
+        "0x1005"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 63,
+      "content": "ERROR_ALREADY_INITIALIZED,    // 0x1006 - Module already initialized",
+      "matches": [
+        "0x1006"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 64,
+      "content": "ERROR_OPERATION_FAILED,       // 0x1007 - Generic operation failure",
+      "matches": [
+        "0x1007"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 66,
+      "content": "ERROR_BUSY,                   // 0x1009 - Resource busy",
+      "matches": [
+        "0x1009"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 67,
+      "content": "ERROR_NOT_SUPPORTED,          // 0x100A - Operation not supported",
+      "matches": [
+        "0x100A"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 68,
+      "content": "ERROR_INVALID_STATE,          // 0x100B - Invalid system state",
+      "matches": [
+        "0x100B"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 69,
+      "content": "ERROR_RESOURCE_UNAVAILABLE,   // 0x100C - Required resource unavailable",
+      "matches": [
+        "0x100C"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 70,
+      "content": "ERROR_CHECKSUM_FAILED,        // 0x100D - Checksum verification failed",
+      "matches": [
+        "0x100D"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 71,
+      "content": "ERROR_VERSION_MISMATCH,       // 0x100E - Version compatibility error",
+      "matches": [
+        "0x100E"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 72,
+      "content": "ERROR_INSUFFICIENT_RESOURCES, // 0x100F - Insufficient system resources",
+      "matches": [
+        "0x100F"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 73,
+      "content": "ERROR_MEMORY_ALLOCATION,      // 0x1010 - Memory allocation failed",
+      "matches": [
+        "0x1010"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 74,
+      "content": "ERROR_RETRY_LIMIT_EXCEEDED,   // 0x1011 - Maximum retry attempts exceeded",
+      "matches": [
+        "0x1011"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 75,
+      "content": "ERROR_CONFIGURATION_INVALID,  // 0x1012 - Invalid configuration detected",
+      "matches": [
+        "0x1012"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 78,
+      "content": "ERROR_QUEUE_FULL,     // 0x1013 - Queue is full, cannot add item",
+      "matches": [
+        "0x1013"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 79,
+      "content": "ERROR_STACK_OVERFLOW, // 0x1014 - Stack overflow detected",
+      "matches": [
+        "0x1014"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 124,
+      "content": "ERROR_OPERATION_IN_PROGRESS, // 0x2020 - Operation already in progress",
+      "matches": [
+        "0x2020"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 125,
+      "content": "ERROR_INVALID_DATA,          // 0x2021 - Invalid data provided",
+      "matches": [
+        "0x2021"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 126,
+      "content": "ERROR_SIGNAL_QUALITY_LOW,    // 0x2022 - Signal quality too low",
+      "matches": [
+        "0x2022"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 127,
+      "content": "ERROR_PARAMETER_VALIDATION_FAILED, // 0x2023 - Parameter validation failed",
+      "matches": [
+        "0x2023"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 131,
+      "content": "ERROR_CODE_ENCODER_BASE,      // 0x3000 - Encoder initialization failed",
+      "matches": [
+        "0x3000"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 132,
+      "content": "ERROR_ENCODER_I2C_FAILED,         // 0x3001 - I2C communication failed",
+      "matches": [
+        "0x3001"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 133,
+      "content": "ERROR_ENCODER_NOT_RESPONDING,     // 0x3002 - Encoder not responding",
+      "matches": [
+        "0x3002"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 135,
+      "content": "ERROR_ENCODER_INVALID_ADDRESS,    // 0x3004 - Invalid encoder I2C address",
+      "matches": [
+        "0x3004"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 136,
+      "content": "ERROR_ENCODER_CONFIG_INVALID,     // 0x3005 - Invalid encoder configuration",
+      "matches": [
+        "0x3005"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 137,
+      "content": "ERROR_ENCODER_COMMUNICATION,      // 0x3006 - General communication error",
+      "matches": [
+        "0x3006"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 138,
+      "content": "ERROR_ENCODER_DATA_INVALID,       // 0x3007 - Invalid encoder data received",
+      "matches": [
+        "0x3007"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 139,
+      "content": "ERROR_ENCODER_ANGLE_JUMP,         // 0x3008 - Sudden angle jump detected",
+      "matches": [
+        "0x3008"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 140,
+      "content": "ERROR_ENCODER_STUCK,              // 0x3009 - Encoder appears stuck",
+      "matches": [
+        "0x3009"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 141,
+      "content": "ERROR_ENCODER_NOISE,              // 0x300A - Excessive encoder noise",
+      "matches": [
+        "0x300A"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 142,
+      "content": "ERROR_ENCODER_OUT_OF_RANGE,       // 0x300B - Encoder reading out of range",
+      "matches": [
+        "0x300B"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 143,
+      "content": "ERROR_ENCODER_CORRELATION_FAILED, // 0x300C - Encoder-motor correlation",
+      "matches": [
+        "0x300C"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 145,
+      "content": "ERROR_ENCODER_CALIBRATION_INVALID, // 0x300D - Encoder calibration invalid",
+      "matches": [
+        "0x300D"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 146,
+      "content": "ERROR_ENCODER_MAGNET_WEAK,   // 0x300E - Magnet field too weak (AS5600)",
+      "matches": [
+        "0x300E"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 147,
+      "content": "ERROR_ENCODER_MAGNET_STRONG, // 0x300F - Magnet field too strong (AS5600)",
+      "matches": [
+        "0x300F"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 148,
+      "content": "ERROR_ENCODER_MAGNET_MISALIGNED,   // 0x3010 - Magnet misaligned (AS5600)",
+      "matches": [
+        "0x3010"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 149,
+      "content": "ERROR_ENCODER_INVALID_ID,          // 0x3011 - Invalid encoder ID",
+      "matches": [
+        "0x3011"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 150,
+      "content": "ERROR_ENCODER_MAGNET_NOT_DETECTED, // 0x3012 - Magnet not detected",
+      "matches": [
+        "0x3012"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 151,
+      "content": "ERROR_ENCODER_MAGNET_TOO_STRONG,   // 0x3013 - Magnet field too strong",
+      "matches": [
+        "0x3013"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 152,
+      "content": "ERROR_ENCODER_MAGNET_TOO_WEAK,     // 0x3014 - Magnet field too weak",
+      "matches": [
+        "0x3014"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 153,
+      "content": "ERROR_ENCODER_FILTER_FAILED, // 0x3015 - Encoder filter processing failed",
+      "matches": [
+        "0x3015"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 154,
+      "content": "ERROR_ENCODER_CONVERSION_FAILED,   // 0x3016 - Angle conversion failed",
+      "matches": [
+        "0x3016"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 155,
+      "content": "ERROR_ENCODER_ZERO_REFERENCE_LOST, // 0x3017 - Zero reference position lost",
+      "matches": [
+        "0x3017"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 156,
+      "content": "ERROR_ENCODER_RESOLUTION_ERROR,    // 0x3018 - Encoder resolution error",
+      "matches": [
+        "0x3018"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 157,
+      "content": "ERROR_ENCODER_LINEARIZATION_FAILED, // 0x3019 - Encoder linearization",
+      "matches": [
+        "0x3019"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 163,
+      "content": "ERROR_UART_TX_FAILED,        // 0x4001 - UART transmission failed",
+      "matches": [
+        "0x4001"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 164,
+      "content": "ERROR_UART_RX_FAILED,        // 0x4002 - UART reception failed",
+      "matches": [
+        "0x4002"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 166,
+      "content": "ERROR_UART_FRAMING_ERROR,    // 0x4004 - UART framing error",
+      "matches": [
+        "0x4004"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 167,
+      "content": "ERROR_UART_PARITY_ERROR,     // 0x4005 - UART parity error",
+      "matches": [
+        "0x4005"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 168,
+      "content": "ERROR_UART_OVERRUN,          // 0x4006 - UART overrun error",
+      "matches": [
+        "0x4006"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 169,
+      "content": "ERROR_UART_BUFFER_FULL,      // 0x4007 - UART buffer full",
+      "matches": [
+        "0x4007"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 170,
+      "content": "ERROR_CAN_INIT_FAILED,       // 0x4008 - CAN initialization failed",
+      "matches": [
+        "0x4008"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 171,
+      "content": "ERROR_CAN_TX_FAILED,         // 0x4009 - CAN transmission failed",
+      "matches": [
+        "0x4009"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 172,
+      "content": "ERROR_CAN_RX_FAILED,         // 0x400A - CAN reception failed",
+      "matches": [
+        "0x400A"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 173,
+      "content": "ERROR_CAN_BUS_OFF,           // 0x400B - CAN bus off state",
+      "matches": [
+        "0x400B"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 174,
+      "content": "ERROR_CAN_ERROR_PASSIVE,     // 0x400C - CAN error passive state",
+      "matches": [
+        "0x400C"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 175,
+      "content": "ERROR_CAN_ARBITRATION_LOST,  // 0x400D - CAN arbitration lost",
+      "matches": [
+        "0x400D"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 176,
+      "content": "ERROR_CAN_MESSAGE_LOST,      // 0x400E - CAN message lost",
+      "matches": [
+        "0x400E"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 177,
+      "content": "ERROR_CAN_INVALID_ID,        // 0x400F - Invalid CAN message ID",
+      "matches": [
+        "0x400F"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 178,
+      "content": "ERROR_CAN_FILTER_FAILED,     // 0x4010 - CAN filter configuration failed",
+      "matches": [
+        "0x4010"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 181,
+      "content": "ERROR_ETH_INIT_FAILED,      // 0x4013 - Ethernet initialization failed",
+      "matches": [
+        "0x4013"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 182,
+      "content": "ERROR_ETH_LINK_DOWN,        // 0x4014 - Ethernet link down",
+      "matches": [
+        "0x4014"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 183,
+      "content": "ERROR_ETH_NO_IP,            // 0x4014 - No IP address assigned",
+      "matches": [
+        "0x4014"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 184,
+      "content": "ERROR_ETH_SOCKET_FAILED,    // 0x4015 - Socket creation failed",
+      "matches": [
+        "0x4015"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 185,
+      "content": "ERROR_ETH_BIND_FAILED,      // 0x4016 - Socket bind failed",
+      "matches": [
+        "0x4016"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 186,
+      "content": "ERROR_ETH_LISTEN_FAILED,    // 0x4017 - Socket listen failed",
+      "matches": [
+        "0x4017"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 187,
+      "content": "ERROR_ETH_ACCEPT_FAILED,    // 0x4018 - Socket accept failed",
+      "matches": [
+        "0x4018"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 188,
+      "content": "ERROR_ETH_SEND_FAILED,      // 0x4019 - TCP send failed",
+      "matches": [
+        "0x4019"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 189,
+      "content": "ERROR_ETH_RECEIVE_FAILED,   // 0x401A - TCP receive failed",
+      "matches": [
+        "0x401A"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 190,
+      "content": "ERROR_ETH_CONNECTION_LOST,  // 0x401B - TCP connection lost",
+      "matches": [
+        "0x401B"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 191,
+      "content": "ERROR_I2C_INIT_FAILED,      // 0x401C - I2C initialization failed",
+      "matches": [
+        "0x401C"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 192,
+      "content": "ERROR_I2C_DEVICE_NOT_FOUND, // 0x401D - I2C device not found",
+      "matches": [
+        "0x401D"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 194,
+      "content": "ERROR_I2C_ARBITRATION_LOST, // 0x401F - I2C arbitration lost",
+      "matches": [
+        "0x401F"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 195,
+      "content": "ERROR_I2C_BUS_ERROR,        // 0x4020 - I2C bus error",
+      "matches": [
+        "0x4020"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 196,
+      "content": "ERROR_I2C_NACK_RECEIVED,    // 0x4021 - I2C NACK received",
+      "matches": [
+        "0x4021"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 197,
+      "content": "ERROR_I2C_OVERRUN,          // 0x4022 - I2C overrun error",
+      "matches": [
+        "0x4022"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 198,
+      "content": "ERROR_SPI_INIT_FAILED,      // 0x4023 - SPI initialization failed",
+      "matches": [
+        "0x4023"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 199,
+      "content": "ERROR_SPI_TX_FAILED,        // 0x4024 - SPI transmission failed",
+      "matches": [
+        "0x4024"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 200,
+      "content": "ERROR_SPI_RX_FAILED,        // 0x4025 - SPI reception failed",
+      "matches": [
+        "0x4025"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 202,
+      "content": "ERROR_SPI_MODE_FAULT,       // 0x4027 - SPI mode fault",
+      "matches": [
+        "0x4027"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 203,
+      "content": "ERROR_SPI_OVERRUN,          // 0x4028 - SPI overrun error",
+      "matches": [
+        "0x4028"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 204,
+      "content": "ERROR_SPI_CRC_ERROR,        // 0x4029 - SPI CRC error",
+      "matches": [
+        "0x4029"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 205,
+      "content": "ERROR_SPI_FRAME_ERROR,      // 0x402A - SPI frame error",
+      "matches": [
+        "0x402A"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 206,
+      "content": "ERROR_SPI_TRANSMISSION_FAILED, // 0x402B - SPI transmission failed",
+      "matches": [
+        "0x402B"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 239,
+      "content": "ERROR_CODE_SYSTEM_BASE,      // 0x6000 - System initialization failed",
+      "matches": [
+        "0x6000"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 240,
+      "content": "ERROR_FAULT_NOT_FOUND,           // 0x6001 - Fault record not found",
+      "matches": [
+        "0x6001"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 255,
+      "content": "ERROR_CODE_BASE | 0x7000, // 0x7000 - General system fault",
+      "matches": [
+        "0x7000",
+        "0x7000"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 257,
+      "content": "ERROR_POWER_SUPPLY_FAULT,     // 0x7002 - Power supply fault",
+      "matches": [
+        "0x7002"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 258,
+      "content": "ERROR_TEMPERATURE_FAULT,      // 0x7003 - Temperature out of range",
+      "matches": [
+        "0x7003"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 259,
+      "content": "ERROR_THERMAL_THROTTLE,       // 0x7004 - Thermal throttling activated",
+      "matches": [
+        "0x7004"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 260,
+      "content": "ERROR_VOLTAGE_FAULT,          // 0x7005 - Voltage out of range",
+      "matches": [
+        "0x7005"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 261,
+      "content": "ERROR_CLOCK_FAULT,            // 0x7006 - System clock fault",
+      "matches": [
+        "0x7006"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 263,
+      "content": "ERROR_UNKNOWN,                // 0x7008 - Unknown error",
+      "matches": [
+        "0x7008"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 264,
+      "content": "ERROR_GPIO_WRITE_FAILED,      // 0x7009 - GPIO write operation failed",
+      "matches": [
+        "0x7009"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\error_codes.h",
+      "line": 265,
+      "content": "ERROR_CONFIG_OUT_OF_RANGE, // 0x700A - Configuration parameter out of range",
+      "matches": [
+        "0x700A"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\system_state.h",
+      "line": 32,
+      "content": "#define SYSTEM_STATE_VERSION 0x0100   // State structure version (v1.0)",
+      "matches": [
+        "0x0100"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\common\\system_state.h",
+      "line": 33,
+      "content": "#define SYSTEM_STATE_MAGIC 0xDEADBEEF // Magic number for validation",
+      "matches": [
+        "0xDEADBEEF"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\communication\\comm_protocol.h",
+      "line": 64,
+      "content": "uint32_t magic;          ///< 0xDEADBEEF for validation",
+      "matches": [
+        "0xDEADBEEF"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 55,
+      "content": "ERROR_CODE_GENERIC_BASE,  // 0x1000 - Invalid parameter passed",
+      "matches": [
+        "0x1000"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 57,
+      "content": "ERROR_BUFFER_OVERFLOW,        // 0x1002 - Buffer overflow detected",
+      "matches": [
+        "0x1002"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 58,
+      "content": "ERROR_BUFFER_UNDERFLOW,       // 0x1003 - Buffer underflow detected",
+      "matches": [
+        "0x1003"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 59,
+      "content": "ERROR_OUT_OF_RANGE,           // 0x1004 - Value out of valid range",
+      "matches": [
+        "0x1004"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 60,
+      "content": "ERROR_NOT_INITIALIZED,        // 0x1005 - Module not initialized",
+      "matches": [
+        "0x1005"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 61,
+      "content": "ERROR_ALREADY_INITIALIZED,    // 0x1006 - Module already initialized",
+      "matches": [
+        "0x1006"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 62,
+      "content": "ERROR_OPERATION_FAILED,       // 0x1007 - Generic operation failure",
+      "matches": [
+        "0x1007"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 64,
+      "content": "ERROR_BUSY,                   // 0x1009 - Resource busy",
+      "matches": [
+        "0x1009"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 65,
+      "content": "ERROR_NOT_SUPPORTED,          // 0x100A - Operation not supported",
+      "matches": [
+        "0x100A"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 66,
+      "content": "ERROR_INVALID_STATE,          // 0x100B - Invalid system state",
+      "matches": [
+        "0x100B"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 67,
+      "content": "ERROR_RESOURCE_UNAVAILABLE,   // 0x100C - Required resource unavailable",
+      "matches": [
+        "0x100C"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 68,
+      "content": "ERROR_CHECKSUM_FAILED,        // 0x100D - Checksum verification failed",
+      "matches": [
+        "0x100D"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 69,
+      "content": "ERROR_VERSION_MISMATCH,       // 0x100E - Version compatibility error",
+      "matches": [
+        "0x100E"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 70,
+      "content": "ERROR_INSUFFICIENT_RESOURCES, // 0x100F - Insufficient system resources",
+      "matches": [
+        "0x100F"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 71,
+      "content": "ERROR_MEMORY_ALLOCATION,      // 0x1010 - Memory allocation failed",
+      "matches": [
+        "0x1010"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 72,
+      "content": "ERROR_RETRY_LIMIT_EXCEEDED,   // 0x1011 - Maximum retry attempts exceeded",
+      "matches": [
+        "0x1011"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 73,
+      "content": "ERROR_CONFIGURATION_INVALID,  // 0x1012 - Invalid configuration detected",
+      "matches": [
+        "0x1012"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 76,
+      "content": "ERROR_QUEUE_FULL,     // 0x1013 - Queue is full, cannot add item",
+      "matches": [
+        "0x1013"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 77,
+      "content": "ERROR_STACK_OVERFLOW, // 0x1014 - Stack overflow detected",
+      "matches": [
+        "0x1014"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 122,
+      "content": "ERROR_OPERATION_IN_PROGRESS, // 0x2020 - Operation already in progress",
+      "matches": [
+        "0x2020"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 123,
+      "content": "ERROR_INVALID_DATA,          // 0x2021 - Invalid data provided",
+      "matches": [
+        "0x2021"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 124,
+      "content": "ERROR_SIGNAL_QUALITY_LOW,    // 0x2022 - Signal quality too low",
+      "matches": [
+        "0x2022"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 125,
+      "content": "ERROR_PARAMETER_VALIDATION_FAILED, // 0x2023 - Parameter validation failed",
+      "matches": [
+        "0x2023"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 129,
+      "content": "ERROR_CODE_ENCODER_BASE,      // 0x3000 - Encoder initialization failed",
+      "matches": [
+        "0x3000"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 130,
+      "content": "ERROR_ENCODER_I2C_FAILED,         // 0x3001 - I2C communication failed",
+      "matches": [
+        "0x3001"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 131,
+      "content": "ERROR_ENCODER_NOT_RESPONDING,     // 0x3002 - Encoder not responding",
+      "matches": [
+        "0x3002"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 133,
+      "content": "ERROR_ENCODER_INVALID_ADDRESS,    // 0x3004 - Invalid encoder I2C address",
+      "matches": [
+        "0x3004"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 134,
+      "content": "ERROR_ENCODER_CONFIG_INVALID,     // 0x3005 - Invalid encoder configuration",
+      "matches": [
+        "0x3005"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 135,
+      "content": "ERROR_ENCODER_COMMUNICATION,      // 0x3006 - General communication error",
+      "matches": [
+        "0x3006"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 136,
+      "content": "ERROR_ENCODER_DATA_INVALID,       // 0x3007 - Invalid encoder data received",
+      "matches": [
+        "0x3007"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 137,
+      "content": "ERROR_ENCODER_ANGLE_JUMP,         // 0x3008 - Sudden angle jump detected",
+      "matches": [
+        "0x3008"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 138,
+      "content": "ERROR_ENCODER_STUCK,              // 0x3009 - Encoder appears stuck",
+      "matches": [
+        "0x3009"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 139,
+      "content": "ERROR_ENCODER_NOISE,              // 0x300A - Excessive encoder noise",
+      "matches": [
+        "0x300A"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 140,
+      "content": "ERROR_ENCODER_OUT_OF_RANGE,       // 0x300B - Encoder reading out of range",
+      "matches": [
+        "0x300B"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 141,
+      "content": "ERROR_ENCODER_CORRELATION_FAILED, // 0x300C - Encoder-motor correlation",
+      "matches": [
+        "0x300C"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 143,
+      "content": "ERROR_ENCODER_CALIBRATION_INVALID, // 0x300D - Encoder calibration invalid",
+      "matches": [
+        "0x300D"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 144,
+      "content": "ERROR_ENCODER_MAGNET_WEAK,   // 0x300E - Magnet field too weak (AS5600)",
+      "matches": [
+        "0x300E"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 145,
+      "content": "ERROR_ENCODER_MAGNET_STRONG, // 0x300F - Magnet field too strong (AS5600)",
+      "matches": [
+        "0x300F"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 146,
+      "content": "ERROR_ENCODER_MAGNET_MISALIGNED,   // 0x3010 - Magnet misaligned (AS5600)",
+      "matches": [
+        "0x3010"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 147,
+      "content": "ERROR_ENCODER_INVALID_ID,          // 0x3011 - Invalid encoder ID",
+      "matches": [
+        "0x3011"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 148,
+      "content": "ERROR_ENCODER_MAGNET_NOT_DETECTED, // 0x3012 - Magnet not detected",
+      "matches": [
+        "0x3012"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 149,
+      "content": "ERROR_ENCODER_MAGNET_TOO_STRONG,   // 0x3013 - Magnet field too strong",
+      "matches": [
+        "0x3013"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 150,
+      "content": "ERROR_ENCODER_MAGNET_TOO_WEAK,     // 0x3014 - Magnet field too weak",
+      "matches": [
+        "0x3014"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 151,
+      "content": "ERROR_ENCODER_FILTER_FAILED, // 0x3015 - Encoder filter processing failed",
+      "matches": [
+        "0x3015"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 152,
+      "content": "ERROR_ENCODER_CONVERSION_FAILED,   // 0x3016 - Angle conversion failed",
+      "matches": [
+        "0x3016"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 153,
+      "content": "ERROR_ENCODER_ZERO_REFERENCE_LOST, // 0x3017 - Zero reference position lost",
+      "matches": [
+        "0x3017"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 154,
+      "content": "ERROR_ENCODER_RESOLUTION_ERROR,    // 0x3018 - Encoder resolution error",
+      "matches": [
+        "0x3018"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 155,
+      "content": "ERROR_ENCODER_LINEARIZATION_FAILED, // 0x3019 - Encoder linearization",
+      "matches": [
+        "0x3019"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 161,
+      "content": "ERROR_UART_TX_FAILED,        // 0x4001 - UART transmission failed",
+      "matches": [
+        "0x4001"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 162,
+      "content": "ERROR_UART_RX_FAILED,        // 0x4002 - UART reception failed",
+      "matches": [
+        "0x4002"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 164,
+      "content": "ERROR_UART_FRAMING_ERROR,    // 0x4004 - UART framing error",
+      "matches": [
+        "0x4004"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 165,
+      "content": "ERROR_UART_PARITY_ERROR,     // 0x4005 - UART parity error",
+      "matches": [
+        "0x4005"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 166,
+      "content": "ERROR_UART_OVERRUN,          // 0x4006 - UART overrun error",
+      "matches": [
+        "0x4006"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 167,
+      "content": "ERROR_UART_BUFFER_FULL,      // 0x4007 - UART buffer full",
+      "matches": [
+        "0x4007"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 168,
+      "content": "ERROR_CAN_INIT_FAILED,       // 0x4008 - CAN initialization failed",
+      "matches": [
+        "0x4008"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 169,
+      "content": "ERROR_CAN_TX_FAILED,         // 0x4009 - CAN transmission failed",
+      "matches": [
+        "0x4009"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 170,
+      "content": "ERROR_CAN_RX_FAILED,         // 0x400A - CAN reception failed",
+      "matches": [
+        "0x400A"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 171,
+      "content": "ERROR_CAN_BUS_OFF,           // 0x400B - CAN bus off state",
+      "matches": [
+        "0x400B"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 172,
+      "content": "ERROR_CAN_ERROR_PASSIVE,     // 0x400C - CAN error passive state",
+      "matches": [
+        "0x400C"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 173,
+      "content": "ERROR_CAN_ARBITRATION_LOST,  // 0x400D - CAN arbitration lost",
+      "matches": [
+        "0x400D"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 174,
+      "content": "ERROR_CAN_MESSAGE_LOST,      // 0x400E - CAN message lost",
+      "matches": [
+        "0x400E"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 175,
+      "content": "ERROR_CAN_INVALID_ID,        // 0x400F - Invalid CAN message ID",
+      "matches": [
+        "0x400F"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 176,
+      "content": "ERROR_CAN_FILTER_FAILED,     // 0x4010 - CAN filter configuration failed",
+      "matches": [
+        "0x4010"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 179,
+      "content": "ERROR_ETH_INIT_FAILED,      // 0x4013 - Ethernet initialization failed",
+      "matches": [
+        "0x4013"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 180,
+      "content": "ERROR_ETH_LINK_DOWN,        // 0x4014 - Ethernet link down",
+      "matches": [
+        "0x4014"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 181,
+      "content": "ERROR_ETH_NO_IP,            // 0x4014 - No IP address assigned",
+      "matches": [
+        "0x4014"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 182,
+      "content": "ERROR_ETH_SOCKET_FAILED,    // 0x4015 - Socket creation failed",
+      "matches": [
+        "0x4015"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 183,
+      "content": "ERROR_ETH_BIND_FAILED,      // 0x4016 - Socket bind failed",
+      "matches": [
+        "0x4016"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 184,
+      "content": "ERROR_ETH_LISTEN_FAILED,    // 0x4017 - Socket listen failed",
+      "matches": [
+        "0x4017"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 185,
+      "content": "ERROR_ETH_ACCEPT_FAILED,    // 0x4018 - Socket accept failed",
+      "matches": [
+        "0x4018"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 186,
+      "content": "ERROR_ETH_SEND_FAILED,      // 0x4019 - TCP send failed",
+      "matches": [
+        "0x4019"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 187,
+      "content": "ERROR_ETH_RECEIVE_FAILED,   // 0x401A - TCP receive failed",
+      "matches": [
+        "0x401A"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 188,
+      "content": "ERROR_ETH_CONNECTION_LOST,  // 0x401B - TCP connection lost",
+      "matches": [
+        "0x401B"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 189,
+      "content": "ERROR_I2C_INIT_FAILED,      // 0x401C - I2C initialization failed",
+      "matches": [
+        "0x401C"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 190,
+      "content": "ERROR_I2C_DEVICE_NOT_FOUND, // 0x401D - I2C device not found",
+      "matches": [
+        "0x401D"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 192,
+      "content": "ERROR_I2C_ARBITRATION_LOST, // 0x401F - I2C arbitration lost",
+      "matches": [
+        "0x401F"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 193,
+      "content": "ERROR_I2C_BUS_ERROR,        // 0x4020 - I2C bus error",
+      "matches": [
+        "0x4020"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 194,
+      "content": "ERROR_I2C_NACK_RECEIVED,    // 0x4021 - I2C NACK received",
+      "matches": [
+        "0x4021"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 195,
+      "content": "ERROR_I2C_OVERRUN,          // 0x4022 - I2C overrun error",
+      "matches": [
+        "0x4022"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 196,
+      "content": "ERROR_SPI_INIT_FAILED,      // 0x4023 - SPI initialization failed",
+      "matches": [
+        "0x4023"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 197,
+      "content": "ERROR_SPI_TX_FAILED,        // 0x4024 - SPI transmission failed",
+      "matches": [
+        "0x4024"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 198,
+      "content": "ERROR_SPI_RX_FAILED,        // 0x4025 - SPI reception failed",
+      "matches": [
+        "0x4025"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 200,
+      "content": "ERROR_SPI_MODE_FAULT,       // 0x4027 - SPI mode fault",
+      "matches": [
+        "0x4027"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 201,
+      "content": "ERROR_SPI_OVERRUN,          // 0x4028 - SPI overrun error",
+      "matches": [
+        "0x4028"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 202,
+      "content": "ERROR_SPI_CRC_ERROR,        // 0x4029 - SPI CRC error",
+      "matches": [
+        "0x4029"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 203,
+      "content": "ERROR_SPI_FRAME_ERROR,      // 0x402A - SPI frame error",
+      "matches": [
+        "0x402A"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 204,
+      "content": "ERROR_SPI_TRANSMISSION_FAILED, // 0x402B - SPI transmission failed",
+      "matches": [
+        "0x402B"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 237,
+      "content": "ERROR_CODE_SYSTEM_BASE,      // 0x6000 - System initialization failed",
+      "matches": [
+        "0x6000"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 238,
+      "content": "ERROR_FAULT_NOT_FOUND,           // 0x6001 - Fault record not found",
+      "matches": [
+        "0x6001"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 253,
+      "content": "ERROR_CODE_BASE | 0x7000, // 0x7000 - General system fault",
+      "matches": [
+        "0x7000",
+        "0x7000"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 255,
+      "content": "ERROR_POWER_SUPPLY_FAULT,     // 0x7002 - Power supply fault",
+      "matches": [
+        "0x7002"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 256,
+      "content": "ERROR_TEMPERATURE_FAULT,      // 0x7003 - Temperature out of range",
+      "matches": [
+        "0x7003"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 257,
+      "content": "ERROR_THERMAL_THROTTLE,       // 0x7004 - Thermal throttling activated",
+      "matches": [
+        "0x7004"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 258,
+      "content": "ERROR_VOLTAGE_FAULT,          // 0x7005 - Voltage out of range",
+      "matches": [
+        "0x7005"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 259,
+      "content": "ERROR_CLOCK_FAULT,            // 0x7006 - System clock fault",
+      "matches": [
+        "0x7006"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 261,
+      "content": "ERROR_UNKNOWN,                // 0x7008 - Unknown error",
+      "matches": [
+        "0x7008"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 262,
+      "content": "ERROR_GPIO_WRITE_FAILED,      // 0x7009 - GPIO write operation failed",
+      "matches": [
+        "0x7009"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\config\\error_codes.h",
+      "line": 263,
+      "content": "ERROR_CONFIG_OUT_OF_RANGE, // 0x700A - Configuration parameter out of range",
+      "matches": [
+        "0x700A"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\controllers\\multi_motor_coordinator.h",
+      "line": 27,
+      "content": "#define ERROR_MOTION_ACTIVE 0x5100         // Motion already active",
+      "matches": [
+        "0x5100"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\controllers\\multi_motor_coordinator.h",
+      "line": 28,
+      "content": "#define ERROR_NO_MOTORS_ENABLED 0x5101     // No motors enabled for operation",
+      "matches": [
+        "0x5101"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\controllers\\multi_motor_coordinator.h",
+      "line": 30,
+      "content": "#define ERROR_LOAD_IMBALANCE 0x5103        // Load imbalance detected",
+      "matches": [
+        "0x5103"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\controllers\\multi_motor_coordinator.h",
+      "line": 31,
+      "content": "#define ERROR_VELOCITY_OUT_OF_RANGE 0x5104 // Velocity exceeds limits",
+      "matches": [
+        "0x5104"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\controllers\\position_control.h",
+      "line": 43,
+      "content": "#define ERROR_POSITION_ERROR_EXCESSIVE 0x4100",
+      "matches": [
+        "0x4100"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\controllers\\position_control.h",
+      "line": 44,
+      "content": "#define ERROR_POSITION_OUT_OF_RANGE 0x4101",
+      "matches": [
+        "0x4101"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\controllers\\position_control.h",
+      "line": 45,
+      "content": "#define ERROR_POSITION_LIMIT_EXCEEDED 0x4102",
+      "matches": [
+        "0x4102"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\controllers\\position_control.h",
+      "line": 47,
+      "content": "#define ERROR_HOMING_FAILED 0x4104",
+      "matches": [
+        "0x4104"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\controllers\\real_time_control.h",
+      "line": 36,
+      "content": "#define ERROR_NO_FREE_TASK_SLOTS 0x6102  // No free task slots available",
+      "matches": [
+        "0x6102"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\controllers\\real_time_control.h",
+      "line": 37,
+      "content": "#define ERROR_TASK_NOT_ENABLED 0x6103    // Task not enabled",
+      "matches": [
+        "0x6103"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\controllers\\real_time_control.h",
+      "line": 38,
+      "content": "#define ERROR_DEADLINE_MISSED 0x6104     // Task deadline missed",
+      "matches": [
+        "0x6104"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\controllers\\real_time_control.h",
+      "line": 39,
+      "content": "#define ERROR_CPU_OVERLOAD 0x6105        // CPU overload detected",
+      "matches": [
+        "0x6105"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\optimization\\adaptive_current_algorithm.h",
+      "line": 262,
+      "content": "#define ERROR_ADAPTIVE_CURRENT_BASE 0x7000",
+      "matches": [
+        "0x7000"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "src\\optimization\\motor_efficiency_optimizer.c",
+      "line": 163,
+      "content": "static uint32_t noise_seed = 0x12345678;",
+      "matches": [
+        "0x12345678"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "Core\\Src\\system_stm32h7xx.c",
+      "line": 206,
+      "content": "RCC->CR &= 0xEAF6ED7FU;",
+      "matches": [
+        "0xEAF6ED7F"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "Core\\Src\\system_stm32h7xx.c",
+      "line": 235,
+      "content": "RCC->PLLCKSELR = 0x02020200;",
+      "matches": [
+        "0x02020200"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "Core\\Src\\system_stm32h7xx.c",
+      "line": 238,
+      "content": "RCC->PLLCFGR = 0x01FF0000;",
+      "matches": [
+        "0x01FF0000"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "Core\\Src\\system_stm32h7xx.c",
+      "line": 240,
+      "content": "RCC->PLL1DIVR = 0x01010280;",
+      "matches": [
+        "0x01010280"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "Core\\Src\\system_stm32h7xx.c",
+      "line": 245,
+      "content": "RCC->PLL2DIVR = 0x01010280;",
+      "matches": [
+        "0x01010280"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    },
+    {
+      "file": "Core\\Src\\system_stm32h7xx.c",
+      "line": 251,
+      "content": "RCC->PLL3DIVR = 0x01010280;",
+      "matches": [
+        "0x01010280"
+      ],
+      "description": "Large hex addresses should be in config headers"
+    }
+  ],
+  "include_violations": [],
+  "missing_files": [],
+  "inconsistencies": []
+}
