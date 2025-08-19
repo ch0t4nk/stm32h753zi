@@ -260,14 +260,21 @@ set(STARTUP_FILE "${CMAKE_SOURCE_DIR}/startup_stm32h753xx.s")
 add_executable(${PROJECT_NAME} ${SOURCES} ${STARTUP_FILE})
 
 # Set target properties
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    LINK_FLAGS "-Wl,--gc-sections -Wl,--print-memory-usage -Wl,-Map=\"${CMAKE_BINARY_DIR}/${PROJECT_NAME}.map\" -lc -lm"
-)
+if(NOT CMAKE_HOST_WIN32)
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        LINK_FLAGS "-Wl,--gc-sections -Wl,--print-memory-usage -Wl,-Map=\"${CMAKE_BINARY_DIR}/${PROJECT_NAME}.map\" -lc -lm"
+    )
 
-# Link libraries
-target_link_libraries(${PROJECT_NAME} 
-    m  # Math library
-)
+    # Link libraries (math) only for non-Windows hosts / cross toolchains
+    target_link_libraries(${PROJECT_NAME} 
+        m  # Math library
+    )
+else()
+    # On Windows host builds, avoid adding -lm (it becomes m.lib and breaks lld-link).
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        LINK_FLAGS "-Wl,--gc-sections -Wl,--print-memory-usage -Wl,-Map=\"${CMAKE_BINARY_DIR}/${PROJECT_NAME}.map\" -lc"
+    )
+endif()
 
 # Create binary and hex files
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD

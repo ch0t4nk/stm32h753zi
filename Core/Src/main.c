@@ -28,6 +28,8 @@
 #include "real_time_control.h"
 #include "stm32h7xx_hal_flash.h"
 #include "stm32h7xx_hal_flash_ex.h"
+// SSOT hardware config
+#include "config/hardware_config.h"
 /* USER CODE END Includes */
 
 /* Private typedef

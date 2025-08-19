@@ -22,6 +22,23 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+/* Include project SSOT constants. Prefer referencing SSOT_* macros from
+ * src/config/project_constants.h. For backward compatibility some legacy
+ * code expects MAX_MOTORS; map that name to SSOT_MAX_MOTORS here.
+ * NOTE: SSOT_MAX_MOTORS is a compile-time constant and changing it requires
+ * a rebuild/reflash of firmware.
+ */
+#include "config/project_constants.h"
+
+#ifndef MAX_MOTORS
+#define MAX_MOTORS SSOT_MAX_MOTORS
+#endif
+
+/* Compile-time check to ensure MAX_MOTORS matches the SSOT definition */
+_Static_assert(MAX_MOTORS == SSOT_MAX_MOTORS,
+               "MAX_MOTORS must equal SSOT_MAX_MOTORS from "
+               "src/config/project_constants.h");
+
 /* ==========================================================================
  */
 /* System State Structure Overview (SSOT)                                    */
@@ -29,9 +46,11 @@
  */
 // TODO: See .instructions/state-management.md for state update procedures
 
-#define SYSTEM_STATE_VERSION 0x0100   // State structure version (v1.0)
-#define SYSTEM_STATE_MAGIC 0xDEADBEEF // Magic number for validation
-#define MAX_STATE_OBSERVERS 8         // Maximum state change observers
+#define SYSTEM_STATE_VERSION                                                  \
+    SSOT_SYSTEM_STATE_VERSION // State structure version (v1.0)
+#define SYSTEM_STATE_MAGIC                                                    \
+    SSOT_SYSTEM_STATE_MAGIC   // Magic number for validation
+#define MAX_STATE_OBSERVERS 8 // Maximum state change observers
 
 /* ==========================================================================
  */

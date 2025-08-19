@@ -118,7 +118,8 @@ function workflow-status {
         # Show feature status
         if (Test-Path "$ProjectRoot\scripts\feature_tracker.py") {
             Write-Host "`n🔍 Feature Status:" -ForegroundColor Yellow
-            & python "$ProjectRoot\scripts\feature_tracker.py" list --status IN_PROGRESS
+            $RunPython = Join-Path $ProjectRoot "scripts\run_python.ps1"
+            & $RunPython "scripts\feature_tracker.py" "list" "--status" "IN_PROGRESS"
         }
         
         # Show STATUS.md summary

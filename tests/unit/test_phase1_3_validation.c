@@ -19,6 +19,11 @@
 #include <stdio.h>
 #include <string.h>
 
+// Ensure M_PI is defined on all hosts
+#ifndef M_PI
+#define M_PI 3.14159265358979323846f
+#endif
+
 // Include only the essential defines we need for testing
 #define SYSTEM_OK 0
 #define ERROR_INVALID_PARAMETER 1

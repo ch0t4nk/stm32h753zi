@@ -55,6 +55,19 @@ typedef struct {
     uint32_t timeout_ms;       ///< Transaction timeout
     bool use_register_address; ///< Whether to use register addressing
 } HAL_I2C_Transaction_t;
+
+/**
+ * @brief SPI transaction configuration
+ */
+#ifndef HAL_SPI_TRANSACTION_T_DEFINED
+#define HAL_SPI_TRANSACTION_T_DEFINED
+typedef struct {
+    const uint8_t *tx_data; ///< Transmit data buffer
+    uint8_t *rx_data;       ///< Receive data buffer
+    uint16_t data_size;     ///< Data size in bytes
+    uint32_t timeout_ms;    ///< Transaction timeout
+} HAL_SPI_Transaction_t;
+#endif
 #endif
 
 /**
@@ -69,6 +82,30 @@ typedef struct {
     uint32_t speed;     ///< GPIO speed setting
     uint32_t alternate; ///< Alternate function selection
 } HAL_GPIO_Config_t;
+
+/* Backwards-compatible HAL GPIO mode/pull/speed macros used by archived
+ * translation units. These are intentionally simple integer aliases so the
+ * HAL abstraction header can be included in host-tests without pulling in
+ * the full STM32 HAL headers.
+ */
+#ifndef HAL_GPIO_MODE_INPUT
+#define HAL_GPIO_MODE_INPUT 0
+#endif
+#ifndef HAL_GPIO_MODE_OUTPUT_PP
+#define HAL_GPIO_MODE_OUTPUT_PP 1
+#endif
+#ifndef HAL_GPIO_MODE_IT_FALLING
+#define HAL_GPIO_MODE_IT_FALLING 2
+#endif
+#ifndef HAL_GPIO_PULLUP
+#define HAL_GPIO_PULLUP 0
+#endif
+#ifndef HAL_GPIO_NOPULL
+#define HAL_GPIO_NOPULL 1
+#endif
+#ifndef HAL_GPIO_SPEED_FREQ_LOW
+#define HAL_GPIO_SPEED_FREQ_LOW 0
+#endif
 #endif
 
 /**
@@ -212,6 +249,74 @@ SystemError_t HAL_Abstraction_GPIO_Write(HAL_GPIO_Port_t port, uint32_t pin,
 SystemError_t HAL_Abstraction_GPIO_Read(HAL_GPIO_Port_t port, uint32_t pin,
                                         HAL_GPIO_State_t *state);
 
+/**
+ * @brief Enable GPIO interrupt for a pin
+ * @param port GPIO port
+ * @param pin GPIO pin
+ * @param trigger_type Trigger type (HAL_GPIO_MODE_IT_FALLING etc.)
+ * @param priority Interrupt priority
+ * @return SystemError_t
+ */
+SystemError_t HAL_Abstraction_GPIO_EnableInterrupt(HAL_GPIO_Port_t port,
+                                                   uint32_t pin,
+                                                   uint32_t trigger_type,
+                                                   uint32_t priority);
+
+#ifdef __cplusplus
+}
+#endif
+
+/* Some older translation units expect additional HAL function prototypes
+ * declared here. Provide a minimal, stable set of declarations so host-tests
+ * and legacy code compile against the HAL abstraction header. These are thin
+ * prototypes that the HAL implementation will define for the target build.
+ */
+
+#ifndef HAL_ABSTRACTION_LEGACY_PROTOS_DEFINED
+#define HAL_ABSTRACTION_LEGACY_PROTOS_DEFINED
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Timer APIs */
+SystemError_t HAL_Abstraction_Timer_Init(HAL_Timer_Instance_t instance,
+                                         const HAL_Timer_Config_t *config);
+SystemError_t HAL_Abstraction_Timer_Start(HAL_Timer_Instance_t instance);
+SystemError_t HAL_Abstraction_Timer_Stop(HAL_Timer_Instance_t instance);
+SystemError_t HAL_Abstraction_Timer_GetCounter(HAL_Timer_Instance_t instance,
+                                               uint32_t *counter);
+
+/* SPI / I2C APIs */
+SystemError_t
+HAL_Abstraction_SPI_TransmitReceive(HAL_SPI_Instance_t instance,
+                                    const HAL_SPI_Transaction_t *transaction);
+SystemError_t HAL_Abstraction_AS5600_Init(uint8_t motor_id);
+SystemError_t HAL_Abstraction_AS5600_ReadAngle(uint8_t motor_id,
+                                               float *angle_deg);
+SystemError_t HAL_Abstraction_L6470_Init(uint8_t motor_id);
+/* Note: legacy implementations use an 8-bit param id for L6470 registers. */
+SystemError_t HAL_Abstraction_L6470_GetParameter(uint8_t motor_id,
+                                                 uint8_t param,
+                                                 uint32_t *value);
+SystemError_t HAL_Abstraction_L6470_HardStop(uint8_t motor_id);
+/**
+ * @brief Read full L6470 status register (32-bit representation)
+ * @param motor_id Motor index
+ * @param status Pointer to store status value
+ */
+SystemError_t HAL_Abstraction_L6470_GetStatus(uint8_t motor_id,
+                                              uint32_t *status);
+
+/* Watchdog */
+SystemError_t HAL_Abstraction_Watchdog_Init(uint32_t timeout_ms);
+SystemError_t HAL_Abstraction_Watchdog_Refresh(void);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* HAL_ABSTRACTION_LEGACY_PROTOS_DEFINED */
 #ifdef __cplusplus
 }
 #endif

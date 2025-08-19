@@ -50,7 +50,24 @@ if (-not $env:VIRTUAL_ENV) {
     else {
         Write-Host "Virtual environment not found at .venv/" -ForegroundColor Red
         Write-Host "Creating virtual environment..." -ForegroundColor Yellow
-        python -m venv .venv
+        # Resolve Python executable (prefer repository helper)
+        $GetPythonPathScript = Join-Path $WorkspaceRoot "scripts\get_python_path.ps1"
+        $ResolvedPython = $null
+        if (Test-Path $GetPythonPathScript) {
+            try {
+                $ResolvedPython = & $GetPythonPathScript
+            }
+            catch {
+                $ResolvedPython = $null
+            }
+        }
+        if (-not $ResolvedPython) {
+            $pyCmd = Get-Command python -ErrorAction SilentlyContinue
+            if ($pyCmd) { $ResolvedPython = $pyCmd.Source } else { $ResolvedPython = "python" }
+        }
+
+        Write-Host "Using Python for venv creation: $ResolvedPython" -ForegroundColor Gray
+        & $ResolvedPython -m venv .venv
         & ".\.venv\Scripts\Activate.ps1"
         Write-Host "Virtual environment created and activated: $env:VIRTUAL_ENV" -ForegroundColor Green
     }
@@ -62,12 +79,31 @@ else {
 # Ensure Python dependencies are installed
 Write-Host "Checking Python dependencies..." -ForegroundColor Yellow
 try {
-    python -c "import chromadb, requests" 2>$null
+    # Use resolved Python if available to check dependencies
+    if (-not $ResolvedPython) {
+        $GetPythonPathScript = Join-Path $WorkspaceRoot "scripts\get_python_path.ps1"
+        if (Test-Path $GetPythonPathScript) { try { $ResolvedPython = & $GetPythonPathScript } catch { $ResolvedPython = $null } }
+        if (-not $ResolvedPython) { $pyCmd = Get-Command python -ErrorAction SilentlyContinue; if ($pyCmd) { $ResolvedPython = $pyCmd.Source } else { $ResolvedPython = "python" } }
+    }
+
+    & $ResolvedPython -c "import chromadb, requests" 2>$null
     Write-Host "Python dependencies available" -ForegroundColor Green
 }
 catch {
     Write-Host "Installing required Python packages..." -ForegroundColor Yellow
-    pip install --quiet chromadb requests ollama
+    # Ensure the resolved Python path is a clean string and safely executable
+    try {
+        $pythonExe = [string]$ResolvedPython
+        # Trim surrounding quotes and whitespace that may have been returned by helper scripts
+        $pythonExe = $pythonExe.Trim('"').Trim("'").Trim()
+    }
+    catch {
+        $pythonExe = $ResolvedPython
+    }
+    if (-not $pythonExe) { $pythonExe = "python" }
+    Write-Host "Using python executable for install: $pythonExe" -ForegroundColor Gray
+    # Invoke pip via the executable with explicit argument list to avoid PowerShell parsing issues
+    & "$pythonExe" '-m' 'pip' 'install' '--quiet' 'chromadb' 'requests' 'ollama'
     Write-Host "Python dependencies installed" -ForegroundColor Green
 }
 

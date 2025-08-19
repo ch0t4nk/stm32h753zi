@@ -21,6 +21,11 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#ifdef UNITY_TESTING
+/* Minimal stub for IRQn_Type used in host-tests */
+typedef int IRQn_Type;
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif

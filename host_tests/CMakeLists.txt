@@ -82,7 +82,9 @@ function(add_host_test test_name test_source)
         )
         
         # Link math library for mathematical functions
-        target_link_libraries(${test_name} m)
+        if(NOT CMAKE_HOST_WIN32)
+            target_link_libraries(${test_name} m)
+        endif()
         
         add_test(NAME ${test_name} COMMAND ${test_name})
     else()
@@ -94,6 +96,7 @@ endfunction()
 add_host_test(test_phase1_3_validation_host
     ${TEST_UNIT_DIR}/test_phase1_3_validation.c
     ${TEST_MOCKS_DIR}/mock_hal_abstraction.c
+    ${TEST_MOCKS_DIR}/mock_hal.c
     ${TEST_MOCKS_DIR}/mock_drivers.c
 )
 
@@ -101,7 +104,9 @@ add_host_test(test_phase1_3_validation_host
 add_host_test(test_optimization_telemetry_host
     ${TEST_UNIT_DIR}/test_optimization_telemetry.c
     ${TEST_MOCKS_DIR}/mock_hal_abstraction.c
+    ${TEST_MOCKS_DIR}/mock_hal.c
     ${CMAKE_SOURCE_DIR}/../src/telemetry/optimization_telemetry.c
+    ${CMAKE_SOURCE_DIR}/../src/telemetry/optimization_telemetry_host_stubs.c
 )
 
 # add_host_test(test_motor_characterization_host
@@ -115,11 +120,18 @@ add_host_test(test_optimization_telemetry_host
 add_host_test(test_safety_systems_hal_abstracted_host
     ${TEST_UNIT_DIR}/test_safety_systems_hal_abstracted.c
     ${TEST_MOCKS_DIR}/mock_hal_abstraction.c
+    ${TEST_MOCKS_DIR}/mock_hal.c
     ${TEST_MOCKS_DIR}/mock_drivers.c
     # ${CMAKE_SOURCE_DIR}/../src/safety/emergency_stop_abstracted.c
     ${CMAKE_SOURCE_DIR}/../src/safety/safety_system.c
     ${CMAKE_SOURCE_DIR}/../src/safety/fault_monitor.c
     ${CMAKE_SOURCE_DIR}/../src/safety/watchdog_manager.c
+    ${CMAKE_SOURCE_DIR}/../src/safety/estop_compat.c
+    ${CMAKE_SOURCE_DIR}/../archive/old_hal_rtos/src/safety/emergency_stop_abstracted.c
+    ${CMAKE_SOURCE_DIR}/../src/controllers/timing_precision.c
+    ${TEST_MOCKS_DIR}/host_safety_stubs.c
+    # Use mock_drivers.c for host tests to avoid building the hardware driver
+    # ${CMAKE_SOURCE_DIR}/../src/drivers/l6470/l6470_driver.c
 )
 
 # Enable CTest framework for host testing

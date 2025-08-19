@@ -21,6 +21,16 @@
 #include "config/motor_config.h"
 #ifndef UNITY_TESTING
 #include "stm32h7xx_hal.h"
+#else
+/* Host-test / Unity compatibility stubs for a subset of STM32 HAL types
+ * These are intentionally minimal and only for compilation on the host. */
+typedef struct {
+    int _dummy;
+} SPI_HandleTypeDef;
+typedef struct {
+    int _dummy;
+} GPIO_TypeDef;
+typedef int HAL_StatusTypeDef;
 #endif
 #include <stdbool.h>
 #include <stdint.h>

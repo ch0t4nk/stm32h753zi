@@ -2,7 +2,7 @@
  * @file l6470_registers_generated.h
  * @brief L6470 Register Definitions - Auto-Generated from Schema
  * @version 1.0
- * @date 2025-08-18 12:50:28
+ * @date 2025-08-18 16:22:14
  *
  * ⚠️  WARNING: AUTO-GENERATED FILE - DO NOT EDIT MANUALLY
  * This file is generated from YAML schema definitions.

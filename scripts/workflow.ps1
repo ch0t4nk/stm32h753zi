@@ -23,13 +23,16 @@ if (Test-Path ".venv\Scripts\Activate.ps1") {
 switch ($Phase) {
     "before" {
         Write-Host "[INFO] Starting work session..." -ForegroundColor Blue
-        & python scripts/auto_update_status.py --verbose
-        & python scripts/feature_tracker.py report
+        # Use workspace-aware runner to ensure the correct Python executable is used
+        $RunPython = (Join-Path $ProjectRoot "scripts\run_python.ps1")
+        & $RunPython "scripts\auto_update_status.py" "--verbose"
+        & $RunPython "scripts\feature_tracker.py" "report"
     }
     "during" {
         Write-Host "[WORK] Development work in progress..." -ForegroundColor Blue
         if ($FeatureId) {
-            & python scripts/feature_tracker.py update $FeatureId --status IN_PROGRESS
+            $RunPython = (Join-Path $ProjectRoot "scripts\run_python.ps1")
+            & $RunPython "scripts\feature_tracker.py" "update" $FeatureId "--status" "IN_PROGRESS"
         }
         if (Test-Path "scripts\fix_cmake.ps1") {
             & ".\scripts\fix_cmake.ps1"
@@ -37,14 +40,17 @@ switch ($Phase) {
         else {
             & bash "./scripts/fix_cmake.sh"
         }
-        & python scripts/auto_update_status.py --source build --verbose
+        $RunPython = (Join-Path $ProjectRoot "scripts\run_python.ps1")
+        & $RunPython "scripts\auto_update_status.py" "--source" "build" "--verbose"
     }
     "after" {
         Write-Host "[DONE] Completing work session..." -ForegroundColor Blue
         if ($FeatureId) {
-            & python scripts/feature_tracker.py update $FeatureId --status COMPLETE
+            $RunPython = (Join-Path $ProjectRoot "scripts\run_python.ps1")
+            & $RunPython "scripts\feature_tracker.py" "update" $FeatureId "--status" "COMPLETE"
         }
-        & python scripts/auto_update_status.py --source build --verbose
+        $RunPython = (Join-Path $ProjectRoot "scripts\run_python.ps1")
+        & $RunPython "scripts\auto_update_status.py" "--source" "build" "--verbose"
         & git status --porcelain
         Write-Host "[OK] Ready for commit" -ForegroundColor Green
     }

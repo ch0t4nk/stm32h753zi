@@ -20,6 +20,7 @@
 #include "common/data_types.h"
 #include "common/error_codes.h"
 #include "config/optimization_config.h"
+#include "config/project_constants.h"
 #include "motor_efficiency_optimizer.h"
 #include <stdbool.h>
 #include <stdint.h>
@@ -34,47 +35,47 @@
  * @brief Adaptive current algorithm configuration
  */
 typedef struct {
-  float initial_current_pct;      // Initial current percentage (50-120%)
-  float learning_rate;            // Algorithm learning rate (0.01-0.5)
-  float exploration_factor;       // Exploration vs exploitation (0.0-1.0)
-  float stability_threshold;      // Stability threshold for convergence
-  uint32_t convergence_window;    // Window size for convergence detection
-  bool enable_safety_constraints; // Enable safety constraint checking
-  float max_current_change_pct;   // Maximum current change per iteration
-  float min_efficiency_threshold; // Minimum efficiency before abort
+    float initial_current_pct;      // Initial current percentage (50-120%)
+    float learning_rate;            // Algorithm learning rate (0.01-0.5)
+    float exploration_factor;       // Exploration vs exploitation (0.0-1.0)
+    float stability_threshold;      // Stability threshold for convergence
+    uint32_t convergence_window;    // Window size for convergence detection
+    bool enable_safety_constraints; // Enable safety constraint checking
+    float max_current_change_pct;   // Maximum current change per iteration
+    float min_efficiency_threshold; // Minimum efficiency before abort
 } AdaptiveCurrentConfig_t;
 
 /**
  * @brief Adaptive current algorithm state
  */
 typedef struct {
-  float current_setpoint_pct;   // Current percentage setpoint
-  float previous_efficiency;    // Previous efficiency measurement
-  float efficiency_gradient;    // Estimated efficiency gradient
-  float learning_rate_adaptive; // Adaptive learning rate
+    float current_setpoint_pct;   // Current percentage setpoint
+    float previous_efficiency;    // Previous efficiency measurement
+    float efficiency_gradient;    // Estimated efficiency gradient
+    float learning_rate_adaptive; // Adaptive learning rate
 
-  // Exploration state
-  bool exploration_mode;       // Currently exploring vs exploiting
-  uint32_t exploration_count;  // Number of exploration steps
-  float exploration_direction; // Current exploration direction
+    // Exploration state
+    bool exploration_mode;       // Currently exploring vs exploiting
+    uint32_t exploration_count;  // Number of exploration steps
+    float exploration_direction; // Current exploration direction
 
-  // Convergence tracking
-  float efficiency_history[10]; // Recent efficiency history
-  uint8_t history_index;        // Current history index
-  uint32_t stable_iterations;   // Iterations meeting stability criteria
-  bool converged;               // Algorithm convergence status
+    // Convergence tracking
+    float efficiency_history[10]; // Recent efficiency history
+    uint8_t history_index;        // Current history index
+    uint32_t stable_iterations;   // Iterations meeting stability criteria
+    bool converged;               // Algorithm convergence status
 
-  // Adaptation statistics
-  uint32_t adaptation_count;  // Total adaptations performed
-  uint32_t improvement_count; // Successful improvements
-  uint32_t degradation_count; // Performance degradations
-  float best_efficiency;      // Best efficiency achieved
-  float best_current_pct;     // Current setting for best efficiency
+    // Adaptation statistics
+    uint32_t adaptation_count;  // Total adaptations performed
+    uint32_t improvement_count; // Successful improvements
+    uint32_t degradation_count; // Performance degradations
+    float best_efficiency;      // Best efficiency achieved
+    float best_current_pct;     // Current setting for best efficiency
 
-  // Safety monitoring
-  bool safety_override_active;   // Safety override engaged
-  uint32_t safety_violations;    // Number of safety violations
-  float min_observed_efficiency; // Minimum efficiency observed
+    // Safety monitoring
+    bool safety_override_active;   // Safety override engaged
+    uint32_t safety_violations;    // Number of safety violations
+    float min_observed_efficiency; // Minimum efficiency observed
 } AdaptiveCurrentState_t;
 
 /* ==========================================================================
@@ -87,35 +88,35 @@ typedef struct {
  * @brief Adaptive current algorithm performance metrics
  */
 typedef struct {
-  // Convergence metrics
-  uint32_t iterations_to_converge;  // Iterations required for convergence
-  float convergence_efficiency;     // Efficiency at convergence
-  float efficiency_improvement_pct; // Total efficiency improvement
+    // Convergence metrics
+    uint32_t iterations_to_converge;  // Iterations required for convergence
+    float convergence_efficiency;     // Efficiency at convergence
+    float efficiency_improvement_pct; // Total efficiency improvement
 
-  // Stability metrics
-  float efficiency_variance;  // Variance in efficiency measurements
-  float current_variance;     // Variance in current settings
-  uint32_t oscillation_count; // Number of oscillations detected
+    // Stability metrics
+    float efficiency_variance;  // Variance in efficiency measurements
+    float current_variance;     // Variance in current settings
+    uint32_t oscillation_count; // Number of oscillations detected
 
-  // Exploration metrics
-  float exploration_ratio;         // Ratio of exploration vs exploitation
-  uint32_t exploration_successes;  // Successful exploration steps
-  uint32_t exploitation_successes; // Successful exploitation steps
+    // Exploration metrics
+    float exploration_ratio;         // Ratio of exploration vs exploitation
+    uint32_t exploration_successes;  // Successful exploration steps
+    uint32_t exploitation_successes; // Successful exploitation steps
 
-  // Learning metrics
-  float average_learning_rate;     // Average learning rate used
-  float gradient_estimation_error; // Error in gradient estimation
-  uint32_t gradient_reversals;     // Number of gradient reversals
+    // Learning metrics
+    float average_learning_rate;     // Average learning rate used
+    float gradient_estimation_error; // Error in gradient estimation
+    uint32_t gradient_reversals;     // Number of gradient reversals
 
-  // Safety metrics
-  uint32_t safety_interventions;  // Number of safety interventions
-  float max_current_violation;    // Maximum current violation detected
-  uint32_t efficiency_violations; // Efficiency threshold violations
+    // Safety metrics
+    uint32_t safety_interventions;  // Number of safety interventions
+    float max_current_violation;    // Maximum current violation detected
+    uint32_t efficiency_violations; // Efficiency threshold violations
 
-  // Timing metrics
-  uint32_t total_execution_time_ms;   // Total algorithm execution time
-  uint32_t average_iteration_time_us; // Average iteration time
-  uint32_t max_iteration_time_us;     // Maximum iteration time
+    // Timing metrics
+    uint32_t total_execution_time_ms;   // Total algorithm execution time
+    uint32_t average_iteration_time_us; // Average iteration time
+    uint32_t max_iteration_time_us;     // Maximum iteration time
 } AdaptiveCurrentMetrics_t;
 
 /* ==========================================================================
@@ -148,9 +149,10 @@ SystemError_t adaptive_current_deinit(motor_id_t motor_id);
  * @param optimal_current_pct Output: Optimal current percentage
  * @return SystemError_t Success or error code
  */
-SystemError_t adaptive_current_step(motor_id_t motor_id,
-                                    const PerformanceMetrics_t *current_metrics,
-                                    float dt, float *optimal_current_pct);
+SystemError_t
+adaptive_current_step(motor_id_t motor_id,
+                      const PerformanceMetrics_t *current_metrics, float dt,
+                      float *optimal_current_pct);
 
 /**
  * @brief Check if algorithm has converged
@@ -258,18 +260,24 @@ SystemError_t adaptive_current_generate_report(motor_id_t motor_id,
 /* ==========================================================================
  */
 
-// Extend system error codes for algorithm-specific errors
-#define ERROR_ADAPTIVE_CURRENT_BASE 0x7000
+/* Algorithm-specific error codes should be derived from the SSOT base
+ * SSOT_ERROR_ADAPTIVE_CURRENT_BASE. If not present, fall back to a local
+ * value defined in the SSOT header. Runtime: no
+ */
+#ifndef ERROR_ADAPTIVE_CURRENT_BASE
+#define ERROR_ADAPTIVE_CURRENT_BASE SSOT_ERROR_ADAPTIVE_CURRENT_BASE
+#endif
+
 #define ERROR_ADAPTIVE_CURRENT_NOT_CONVERGED (ERROR_ADAPTIVE_CURRENT_BASE + 1)
 #define ERROR_ADAPTIVE_CURRENT_OSCILLATING (ERROR_ADAPTIVE_CURRENT_BASE + 2)
-#define ERROR_ADAPTIVE_CURRENT_SAFETY_VIOLATION                                \
-  (ERROR_ADAPTIVE_CURRENT_BASE + 3)
-#define ERROR_ADAPTIVE_CURRENT_INVALID_GRADIENT                                \
-  (ERROR_ADAPTIVE_CURRENT_BASE + 4)
-#define ERROR_ADAPTIVE_CURRENT_LEARNING_RATE_TOO_LOW                           \
-  (ERROR_ADAPTIVE_CURRENT_BASE + 5)
-#define ERROR_ADAPTIVE_CURRENT_EFFICIENCY_DEGRADED                             \
-  (ERROR_ADAPTIVE_CURRENT_BASE + 6)
+#define ERROR_ADAPTIVE_CURRENT_SAFETY_VIOLATION                               \
+    (ERROR_ADAPTIVE_CURRENT_BASE + 3)
+#define ERROR_ADAPTIVE_CURRENT_INVALID_GRADIENT                               \
+    (ERROR_ADAPTIVE_CURRENT_BASE + 4)
+#define ERROR_ADAPTIVE_CURRENT_LEARNING_RATE_TOO_LOW                          \
+    (ERROR_ADAPTIVE_CURRENT_BASE + 5)
+#define ERROR_ADAPTIVE_CURRENT_EFFICIENCY_DEGRADED                            \
+    (ERROR_ADAPTIVE_CURRENT_BASE + 6)
 
 #endif /* ADAPTIVE_CURRENT_ALGORITHM_H */
 

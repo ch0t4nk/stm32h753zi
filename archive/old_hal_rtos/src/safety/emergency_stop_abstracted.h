@@ -40,31 +40,56 @@ extern "C" {
 /* ==========================================================================
  */
 
-/**
+/*
  * @brief Emergency stop states
+ *
+ * Guarded to avoid conflicts with the project's SSOT `config/safety_config.h`.
  */
+#ifndef EMERGENCY_STOP_STATE_T_DEFINED
+#define EMERGENCY_STOP_STATE_T_DEFINED
 typedef enum {
-  EMERGENCY_STOP_UNINITIALIZED = 0, ///< System not initialized
-  EMERGENCY_STOP_ARMED = 1,         ///< System armed and ready
-  EMERGENCY_STOP_TRIGGERED = 2,     ///< Emergency stop activated
-  EMERGENCY_STOP_RESET_PENDING = 3, ///< Reset requested, awaiting confirmation
-  EMERGENCY_STOP_FAULT = 4          ///< System fault detected
+    EMERGENCY_STOP_UNINITIALIZED = 0, ///< System not initialized
+    EMERGENCY_STOP_ARMED = 1,         ///< System armed and ready
+    EMERGENCY_STOP_TRIGGERED = 2,     ///< Emergency stop activated
+    EMERGENCY_STOP_RESET_PENDING =
+        3,                   ///< Reset requested, awaiting confirmation
+    EMERGENCY_STOP_FAULT = 4 ///< System fault detected
 } EmergencyStopState_t;
+#endif
+
+/* If the SSOT defines different names for armed/reset states, provide
+ * non-invasive fallback macros so archived C can use EMERGENCY_STOP_ARMED
+ * and EMERGENCY_STOP_RESET_PENDING without causing compile errors. Map
+ * 'armed' -> NORMAL and 'reset pending' -> RECOVERY to avoid duplicate
+ * case values in the archived implementation when SSOT is present. */
+#ifndef EMERGENCY_STOP_ARMED
+#define EMERGENCY_STOP_ARMED EMERGENCY_STOP_NORMAL
+#endif
+#ifndef EMERGENCY_STOP_RESET_PENDING
+#define EMERGENCY_STOP_RESET_PENDING EMERGENCY_STOP_RECOVERY
+#endif
 
 /**
  * @brief Emergency stop trigger sources
  */
+/*
+ * Guard EmergencyStopSource_t to avoid redefinition when SSOT headers are
+ * included in the same translation unit.
+ */
+#ifndef EMERGENCY_STOP_SOURCE_T_DEFINED
+#define EMERGENCY_STOP_SOURCE_T_DEFINED
 typedef enum {
-  ESTOP_SOURCE_UNKNOWN = 0,
-  ESTOP_SOURCE_BUTTON = 1,
-  ESTOP_SOURCE_SOFTWARE = 2,
-  ESTOP_SOURCE_COMMUNICATION = 3,
-  ESTOP_SOURCE_SAFETY_MONITOR = 4,
-  ESTOP_SOURCE_MOTOR_FAULT = 5,
-  ESTOP_SOURCE_ENCODER_FAULT = 6,
-  ESTOP_SOURCE_WATCHDOG = 7,
-  ESTOP_SOURCE_SYSTEM_FAULT = 8
+    ESTOP_SOURCE_UNKNOWN = 0,
+    ESTOP_SOURCE_BUTTON = 1,
+    ESTOP_SOURCE_SOFTWARE = 2,
+    ESTOP_SOURCE_COMMUNICATION = 3,
+    ESTOP_SOURCE_SAFETY_MONITOR = 4,
+    ESTOP_SOURCE_MOTOR_FAULT = 5,
+    ESTOP_SOURCE_ENCODER_FAULT = 6,
+    ESTOP_SOURCE_WATCHDOG = 7,
+    ESTOP_SOURCE_SYSTEM_FAULT = 8
 } EmergencyStopSource_t;
+#endif
 
 /* ==========================================================================
  */

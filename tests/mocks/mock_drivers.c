@@ -161,6 +161,21 @@ SystemError_t l6470_hard_stop(uint8_t motor_id) {
     return func->return_value;
 }
 
+// Provide a simple soft stop mock used by safety code during host tests
+SystemError_t l6470_soft_stop(uint8_t motor_id) {
+    MockDriverFunction_t *func = get_function_mock("l6470_soft_stop");
+    func->call_count++;
+
+    if (motor_id >= 2) {
+        return ERROR_INVALID_PARAMETER;
+    }
+
+    // Simulate a controlled deceleration by setting status flags
+    mock_state.l6470_status[motor_id] &=
+        ~0x0001; // clear running flag (example)
+    return func->return_value;
+}
+
 /* ==========================================================================
  */
 /* Mock Control Functions */

@@ -10,6 +10,8 @@
 
 #include "hal_abstraction.h"
 #include "stm32h7xx_hal.h"
+// Include SSOT hardware config for hardware constant definitions
+#include "config/hardware_config.h"
 
 /* ==========================================================================
  */

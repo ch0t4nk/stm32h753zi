@@ -406,6 +406,9 @@ static void set_emergency_stop_state(EmergencyStopState_t new_state,
     current_emergency_stop_source = source;
 }
 
+/* On host tests the archived emergency_stop implementation may also define
+ * emergency_stop_get_state. Guard these to avoid duplicate symbol errors. */
+#ifndef HOST_TESTING
 EmergencyStopState_t emergency_stop_get_state(void) {
     return current_emergency_stop_state;
 }
@@ -413,6 +416,19 @@ EmergencyStopState_t emergency_stop_get_state(void) {
 EmergencyStopState_t get_emergency_stop_state(void) {
     return emergency_stop_get_state();
 }
+#endif
+
+#ifdef HOST_TESTING
+/* Forward to archived emergency_stop implementation available in host
+ * tests. Provide an inline wrapper to avoid duplicate symbol definitions
+ * while allowing existing callers to continue using
+ * get_emergency_stop_state().
+ */
+extern EmergencyStopState_t emergency_stop_get_state(void);
+static inline EmergencyStopState_t get_emergency_stop_state(void) {
+    return emergency_stop_get_state();
+}
+#endif
 
 bool is_system_safe(void) {
     if (!safety_system_initialized) {

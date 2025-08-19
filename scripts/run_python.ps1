@@ -73,6 +73,12 @@ if (-not $PythonExe) {
     }
 }
 
-# Run the Python script with all arguments
-$AllArgs = @($ScriptPath) + $Arguments
+# Resolve script path relative to workspace
+$ResolvedScript = if (Test-Path $ScriptPath) { $ScriptPath } else { Join-Path $WorkspaceRoot $ScriptPath }
+
+# Run the Python script with all arguments and forward exit code
+$AllArgs = @($ResolvedScript) + $Arguments
+Write-Host "Executing: $PythonExe $AllArgs" -ForegroundColor Gray
 & $PythonExe @AllArgs
+$ExitCode = $LASTEXITCODE
+exit $ExitCode

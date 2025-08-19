@@ -32,9 +32,9 @@ extern "C" {
 // Include our mock HAL types
 #include "mock_hal_types.h"
 
-// HAL Status definitions (already in mock_hal_types.h but ensure they're
-// available)
-#ifndef HAL_StatusTypeDef
+// HAL Status definitions are provided by mock_hal_types.h. If the mock
+// types already defined the status enum, avoid redefining it.
+#if !defined(MOCK_HAL_STATUS_DEFINED)
 typedef enum {
     HAL_OK = 0x00U,
     HAL_ERROR = 0x01U,
@@ -110,6 +110,12 @@ HAL_StatusTypeDef HAL_I2C_Mem_Read(I2C_HandleTypeDef *hi2c,
 HAL_StatusTypeDef HAL_I2C_IsDeviceReady(I2C_HandleTypeDef *hi2c,
                                         uint16_t DevAddress, uint32_t Trials,
                                         uint32_t Timeout);
+
+// Minimal watchdog function prototypes to satisfy safety/watchdog code
+HAL_StatusTypeDef HAL_IWDG_Init(IWDG_HandleTypeDef *hiwdg);
+HAL_StatusTypeDef HAL_IWDG_Refresh(IWDG_HandleTypeDef *hiwdg);
+HAL_StatusTypeDef HAL_WWDG_Init(WWDG_HandleTypeDef *hwwdg);
+HAL_StatusTypeDef HAL_WWDG_Refresh(WWDG_HandleTypeDef *hwwdg);
 
 // Mock SPI function prototypes
 HAL_StatusTypeDef HAL_SPI_Init(SPI_HandleTypeDef *hspi);

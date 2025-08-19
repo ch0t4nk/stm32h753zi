@@ -3,15 +3,18 @@
 Source: `prompts/github_system.md` processed on 2025-08-18.
 
 ## Intent
+
 Prepare repository artifacts to offload domain-driven documentation regeneration via a GitHub Action. This file captures the regeneration instructions and anchors.
 
 ## Anchors
+
 - SSOT config: `src/config/ssot.yaml`
 - Workspace status: `STATUS.md`
 - Archived docs: `archive/outdated_docs/DOCS_BKUP_08-18-2025`
 - Output target: `docs/`
 
 ## Regeneration plan (extracted)
+
 1. Ingest `STATUS.md` as primary context anchor.
 2. Reference archived docs for historical continuity.
 3. Ensure `.github/instructions/` are respected and SSOT is followed.

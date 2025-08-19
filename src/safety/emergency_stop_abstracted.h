@@ -1,165 +1,125 @@
-
-/**
- * @file emergency_stop_abstracted.h
- * @brief Emergency Stop System with HAL Abstraction - STM32H753ZI Stepper
- * Motor Project (SSOT-compliant)
- * @author STM32H753ZI Project Team
- * @date 2025
+/*
+ * emergency_stop_abstracted.h
  *
- * @note Emergency stop implementation using HAL abstraction layer:
- * - .github/instructions/safety-rt.instructions.md
- * - .github/instructions/hardware.instructions.md
- * - config/safety_config.h (SSOT)
- *
- * @warning SAFETY-CRITICAL: This system must respond within
- * ESTOP_REACTION_TIME_MS
+ * Minimal compatibility header for host-tests that exposes the "estop_"
+ * API names used by unit tests while re-using the project's SSOT enums
+ * from `config/safety_config.h` to avoid duplicate type definitions.
  */
 
-#ifndef SAFETY_EMERGENCY_STOP_ABSTRACTED_H
-#define SAFETY_EMERGENCY_STOP_ABSTRACTED_H
+#ifndef PROJECT_EMERGENCY_STOP_ABSTRACTED_H
+#define PROJECT_EMERGENCY_STOP_ABSTRACTED_H
+
+#include "config/error_codes.h"
+#include "config/safety_config.h"
+#include <stdbool.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-// SSOT: Always include error codes and stdint before any type usage
-#include "common/error_codes.h"
-#include "config/hardware_config.h"
-#include "config/safety_config.h"
-#include "hal_abstraction/hal_abstraction.h"
-#include <stdbool.h>
-#include <stdint.h>
+// Map test-facing Estop types to SSOT enums
+typedef EmergencyStopState_t EstopState_t;
+typedef EmergencyStopSource_t EstopSource_t;
 
-/* ==========================================================================
+/* Legacy compatibility aliases used by older tests and archived code. These
+ * map the legacy ESTOP_SRC_* and ESTOP_STATE_* names (used throughout the
+ * codebase and tests) to the SSOT canonical names above.
  */
-/* Emergency Stop State Types (SSOT)                                         */
-/* ==========================================================================
- */
+#ifndef ESTOP_SRC_SOFTWARE
+#define ESTOP_SRC_SOFTWARE ESTOP_SOURCE_SOFTWARE
+#endif
+/* Map legacy motor/encoder fault names to existing SSOT sources. These are
+ * best-effort mappings to allow archived tests to run without changing
+ * the SSOT. */
+#ifndef ESTOP_SRC_MOTOR_FAULT
+#define ESTOP_SRC_MOTOR_FAULT ESTOP_SOURCE_OVERCURRENT
+#endif
+#ifndef ESTOP_SRC_ENCODER_FAULT
+#define ESTOP_SRC_ENCODER_FAULT ESTOP_SOURCE_POSITION_LIMIT
+#endif
 
-// Modern SSOT-compliant E-Stop state and source enums
-typedef enum {
-    ESTOP_STATE_UNINITIALIZED = 0,
-    ESTOP_STATE_ARMED,
-    ESTOP_STATE_TRIGGERED,
-    ESTOP_STATE_RESET_PENDING,
-    ESTOP_STATE_FAULT
-} EstopState_t;
+/* Map legacy armed/reset state names to SSOT states that represent the
+ * same conceptual behavior: 'armed' -> normal ready state, 'reset_pending'
+ * -> recovery state. This avoids introducing new enum values and prevents
+ * duplicate case labels in archived code compiled under the SSOT. */
+#ifndef ESTOP_STATE_ARMED
+#define ESTOP_STATE_ARMED EMERGENCY_STOP_NORMAL
+#endif
+#ifndef ESTOP_STATE_TRIGGERED
+#define ESTOP_STATE_TRIGGERED EMERGENCY_STOP_TRIGGERED
+#endif
+#ifndef ESTOP_STATE_RESET_PENDING
+#define ESTOP_STATE_RESET_PENDING EMERGENCY_STOP_RECOVERY
+#endif
 
-typedef enum {
-    ESTOP_SRC_UNKNOWN = 0,
-    ESTOP_SRC_BUTTON,
-    ESTOP_SRC_SOFTWARE,
-    ESTOP_SRC_COMMUNICATION,
-    ESTOP_SRC_SAFETY_MONITOR,
-    ESTOP_SRC_MOTOR_FAULT,
-    ESTOP_SRC_ENCODER_FAULT,
-    ESTOP_SRC_WATCHDOG,
-    ESTOP_SRC_SYSTEM_FAULT
-} EstopSource_t;
-
-/* ==========================================================================
- */
-/* Emergency Stop API Functions (SSOT-compliant)                             */
-/* ==========================================================================
- */
-
-// --- Modern, SSOT-compliant E-Stop API ---
-
-/**
- * @brief Initialize the E-Stop system (HAL-abstracted, SSOT-driven)
- * @return SystemError_t
- */
+// Test-facing API (thin wrappers implemented in src/safety/estop_compat.c)
 SystemError_t estop_init(void);
-
-/**
- * @brief Trigger E-Stop (with source)
- * @param source (EstopSource_t)
- * @return SystemError_t
- */
 SystemError_t estop_trigger(EstopSource_t source);
-
-/**
- * @brief Reset E-Stop (requires confirmation, debounced)
- * @return SystemError_t
- */
 SystemError_t estop_reset(void);
-
-/**
- * @brief Periodic E-Stop state machine processing (call in safety loop)
- * @return SystemError_t
- */
 SystemError_t estop_process(void);
-
-/**
- * @brief Get current E-Stop state
- * @return EstopState_t
- */
 EstopState_t estop_get_state(void);
-
-/**
- * @brief Check if E-Stop is currently active
- * @return true if active
- */
 bool estop_is_active(void);
-
-/**
- * @brief Check if E-Stop button is pressed (HAL-abstracted)
- * @return true if pressed
- */
-bool estop_button_pressed(void);
-
-/**
- * @brief E-Stop interrupt handler (HAL-abstracted)
- */
-void estop_irq_handler(void);
-
-/**
- * @brief E-Stop self-test (diagnostics)
- * @return SystemError_t
- */
 SystemError_t estop_self_test(void);
-
-/**
- * @brief Set E-Stop LED (HAL-abstracted)
- * @param on true=LED on, false=off
- * @return SystemError_t
- */
-SystemError_t estop_set_led(bool on);
-
-/**
- * @brief Check E-Stop system health
- * @return SystemError_t
- */
-SystemError_t estop_check_health(void);
-
-/**
- * @brief Get last E-Stop trigger source
- * @return EstopSource_t
- */
-EstopSource_t estop_last_source(void);
-
-/**
- * @brief Get E-Stop statistics (total triggers, last trigger time)
- * @param trigger_count [out]
- * @param last_trigger_time [out]
- * @return SystemError_t
- */
 SystemError_t estop_get_stats(uint32_t *trigger_count,
                               uint32_t *last_trigger_time);
+EstopSource_t estop_last_source(void);
+SystemError_t estop_check_health(void);
 
-// --- Legacy API: Deprecated, use new estop_ API ---
-// (Optionally provide wrappers for backward compatibility)
-// Legacy API compatibility for tests
-#define emergency_stop_init estop_init
-// ...etc...
+/*
+/* Legacy emergency_stop_* API compatibility.
+ *
+ * The archived implementation and some older tests expect integer-typed
+ * parameters/returns (uint32_t) for sources/states. Declare the legacy
+ * API using integer types here so both the archived C and the compatibility
+ * wrappers share the same ABI and avoid conflicting prototypes.
+ */
 
-// --- Discussion: If any new methods are needed for telemetry, test, or
-// advanced safety, add TODOs here ---
-// TODO: estop_get_fault_flags(), estop_set_test_mode(), estop_get_telemetry(),
-// etc.
+/* Fallback mappings for legacy state/sources that are not present in the
+ * modern SSOT. These create non-invasive aliases so older tests using
+ * ESTOP_STATE_* / ESTOP_SRC_* still compile. Assumption: map legacy motor
+ * and encoder fault sources to the closest existing SSOT sources.
+ */
+#ifndef EMERGENCY_STOP_ARMED
+#define EMERGENCY_STOP_ARMED EMERGENCY_STOP_TRIGGERED
+#endif
+
+#ifndef EMERGENCY_STOP_RESET_PENDING
+#define EMERGENCY_STOP_RESET_PENDING EMERGENCY_STOP_RECOVERY
+#endif
+
+#ifndef ESTOP_SRC_MOTOR_FAULT
+/* Assumption: map motor fault to overcurrent source */
+#define ESTOP_SRC_MOTOR_FAULT ESTOP_SOURCE_OVERCURRENT
+#endif
+
+#ifndef ESTOP_SRC_ENCODER_FAULT
+/* Assumption: map encoder fault to position limit source */
+#define ESTOP_SRC_ENCODER_FAULT ESTOP_SOURCE_POSITION_LIMIT
+#endif
+
+/* Declare legacy API with integer-based signatures to match archived C.
+ * estop_compat.c provides modern estop_* wrappers that cast to/from these
+ * integer values. */
+SystemError_t emergency_stop_init(void);
+SystemError_t emergency_stop_execute(uint32_t source);
+SystemError_t emergency_stop_reset(void);
+SystemError_t emergency_stop_process(void);
+uint32_t emergency_stop_get_state(void);
+bool emergency_stop_is_active(void);
+SystemError_t emergency_stop_self_test(void);
+SystemError_t emergency_stop_set_led(bool state);
+SystemError_t emergency_stop_check_health(void);
+uint32_t emergency_stop_get_last_source(void);
+SystemError_t emergency_stop_get_statistics(uint32_t *trigger_count,
+                                            uint32_t *last_trigger_time);
+/* Provide legacy alias for trigger name used by some tests */
+#ifndef emergency_stop_trigger
+#define emergency_stop_trigger emergency_stop_execute
+#endif
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* SAFETY_EMERGENCY_STOP_ABSTRACTED_H */
+#endif // PROJECT_EMERGENCY_STOP_ABSTRACTED_H

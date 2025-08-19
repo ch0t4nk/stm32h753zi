@@ -19,9 +19,9 @@
 
 // Position control configuration constants
 #define POSITION_SETTLED_THRESHOLD 10 // Steps for position settled
-#define STEPS_TO_DEGREES                                                       \
-  (360.0f / 200.0f /                                                           \
-   16.0f) // Conversion factor (assuming 200 steps/rev, 16x microstepping)
+#define STEPS_TO_DEGREES                                                      \
+    (360.0f / 200.0f /                                                        \
+     16.0f) // Conversion factor (assuming 200 steps/rev, 16x microstepping)
 #define VELOCITY_SETTLED_THRESHOLD 5 // Steps/sec for velocity settled
 #define MAX_POSITION_STEPS 1000000   // Maximum absolute position
 #define POSITION_FILTER_ALPHA 0.8f   // Position filter coefficient
@@ -40,121 +40,131 @@
 #define FEEDFORWARD_FRICTION_COMP 50.0f // Steps/sec
 
 // Error codes specific to position control
-#define ERROR_POSITION_ERROR_EXCESSIVE 0x4100
-#define ERROR_POSITION_OUT_OF_RANGE 0x4101
-#define ERROR_POSITION_LIMIT_EXCEEDED 0x4102
-#define ERROR_HOMING_TIMEOUT 0x4103
-#define ERROR_HOMING_FAILED 0x4104
+// Map legacy numeric values to canonical SSOT error code ranges
+#ifndef POSITION_CONTROL_ERROR_BASE
+#define POSITION_CONTROL_ERROR_BASE (ERROR_CODE_MOTOR_BASE + 0x100)
+#endif
+
+#define ERROR_POSITION_ERROR_EXCESSIVE                                        \
+    (POSITION_CONTROL_ERROR_BASE + 0x00) /**< Position error excessive */
+#define ERROR_POSITION_OUT_OF_RANGE                                           \
+    (POSITION_CONTROL_ERROR_BASE + 0x01) /**< Position out of range */
+#define ERROR_POSITION_LIMIT_EXCEEDED                                         \
+    (POSITION_CONTROL_ERROR_BASE + 0x02) /**< Position limit exceeded */
+#define ERROR_HOMING_TIMEOUT                                                  \
+    (POSITION_CONTROL_ERROR_BASE + 0x03) /**< Homing timeout */
+#define ERROR_HOMING_FAILED                                                   \
+    (POSITION_CONTROL_ERROR_BASE + 0x04) /**< Homing failed */
 
 /**
  * @brief Homing methods enumeration
  */
 typedef enum {
-  HOMING_METHOD_LIMIT_SWITCH = 0, ///< Use limit switch for homing
-  HOMING_METHOD_ENCODER_INDEX,    ///< Use encoder index pulse
-  HOMING_METHOD_CURRENT_POSITION  ///< Set current position as home
+    HOMING_METHOD_LIMIT_SWITCH = 0, ///< Use limit switch for homing
+    HOMING_METHOD_ENCODER_INDEX,    ///< Use encoder index pulse
+    HOMING_METHOD_CURRENT_POSITION  ///< Set current position as home
 } HomingMethod_t;
 
 /**
  * @brief PID controller structure
  */
 typedef struct {
-  float kp;             ///< Proportional gain
-  float ki;             ///< Integral gain
-  float kd;             ///< Derivative gain
-  float integral;       ///< Integral accumulator
-  float integral_limit; ///< Integral windup limit
-  float output_limit;   ///< Output saturation limit
+    float kp;             ///< Proportional gain
+    float ki;             ///< Integral gain
+    float kd;             ///< Derivative gain
+    float integral;       ///< Integral accumulator
+    float integral_limit; ///< Integral windup limit
+    float output_limit;   ///< Output saturation limit
 } PIDController_t;
 
 /**
  * @brief Feedforward compensation structure
  */
 typedef struct {
-  float velocity_gain;         ///< Velocity feedforward gain
-  float acceleration_gain;     ///< Acceleration feedforward gain
-  float friction_compensation; ///< Static friction compensation
+    float velocity_gain;         ///< Velocity feedforward gain
+    float acceleration_gain;     ///< Acceleration feedforward gain
+    float friction_compensation; ///< Static friction compensation
 } FeedforwardController_t;
 
 /**
  * @brief Position control limits structure
  */
 typedef struct {
-  int32_t max_position_error; ///< Maximum allowed position error
-  uint32_t max_velocity;      ///< Maximum velocity limit
-  uint32_t max_acceleration;  ///< Maximum acceleration limit
+    int32_t max_position_error; ///< Maximum allowed position error
+    uint32_t max_velocity;      ///< Maximum velocity limit
+    uint32_t max_acceleration;  ///< Maximum acceleration limit
 } ControlLimits_t;
 
 /**
  * @brief Position control state structure
  */
 typedef struct {
-  int32_t current_position;  ///< Current encoder position
-  int32_t target_position;   ///< Target position
-  int32_t position_error;    ///< Position error (target - current)
-  int32_t filtered_position; ///< Filtered position
-  float velocity;            ///< Current velocity
-  bool enabled;              ///< Control loop enabled flag
-  bool homed;                ///< Homing completed flag
+    int32_t current_position;  ///< Current encoder position
+    int32_t target_position;   ///< Target position
+    int32_t position_error;    ///< Position error (target - current)
+    int32_t filtered_position; ///< Filtered position
+    float velocity;            ///< Current velocity
+    bool enabled;              ///< Control loop enabled flag
+    bool homed;                ///< Homing completed flag
 } ControlState_t;
 
 /**
  * @brief Position filtering structure
  */
 typedef struct {
-  float position_filter_alpha; ///< Position filter coefficient
-  float velocity_filter_alpha; ///< Velocity filter coefficient
+    float position_filter_alpha; ///< Position filter coefficient
+    float velocity_filter_alpha; ///< Velocity filter coefficient
 } PositionFilter_t;
 
 /**
  * @brief Control history for derivative calculation
  */
 typedef struct {
-  int32_t last_position;         ///< Previous position
-  float last_error;              ///< Previous error
-  float last_pid_output;         ///< Last PID output
-  float last_feedforward_output; ///< Last feedforward output
-  float last_target_velocity;    ///< Last target velocity
+    int32_t last_position;         ///< Previous position
+    float last_error;              ///< Previous error
+    float last_pid_output;         ///< Last PID output
+    float last_feedforward_output; ///< Last feedforward output
+    float last_target_velocity;    ///< Last target velocity
 } ControlHistory_t;
 
 /**
  * @brief Complete position controller structure
  */
 typedef struct {
-  PIDController_t pid;                 ///< PID controller
-  FeedforwardController_t feedforward; ///< Feedforward controller
-  ControlLimits_t limits;              ///< Control limits
-  ControlState_t state;                ///< Current state
-  PositionFilter_t filter;             ///< Filtering parameters
-  ControlHistory_t history;            ///< Control history
+    PIDController_t pid;                 ///< PID controller
+    FeedforwardController_t feedforward; ///< Feedforward controller
+    ControlLimits_t limits;              ///< Control limits
+    ControlState_t state;                ///< Current state
+    PositionFilter_t filter;             ///< Filtering parameters
+    ControlHistory_t history;            ///< Control history
 } PositionControl_t;
 
 /**
  * @brief Homing configuration structure
  */
 typedef struct {
-  HomingMethod_t method;     ///< Homing method
-  int8_t search_direction;   ///< Search direction (+1 or -1)
-  uint32_t search_speed;     ///< Homing search speed
-  uint32_t backoff_speed;    ///< Backoff speed after switch hit
-  uint32_t backoff_distance; ///< Backoff distance in steps
-  int32_t home_offset;       ///< Home position offset
-  uint32_t timeout_ms;       ///< Homing timeout in milliseconds
+    HomingMethod_t method;     ///< Homing method
+    int8_t search_direction;   ///< Search direction (+1 or -1)
+    uint32_t search_speed;     ///< Homing search speed
+    uint32_t backoff_speed;    ///< Backoff speed after switch hit
+    uint32_t backoff_distance; ///< Backoff distance in steps
+    int32_t home_offset;       ///< Home position offset
+    uint32_t timeout_ms;       ///< Homing timeout in milliseconds
 } HomingConfig_t;
 
 /**
  * @brief Position control status structure
  */
 typedef struct {
-  bool enabled;             ///< Controller enabled
-  bool homed;               ///< Homing completed
-  int32_t current_position; ///< Current position
-  int32_t target_position;  ///< Target position
-  int32_t position_error;   ///< Position error
-  float velocity;           ///< Current velocity
-  float pid_output;         ///< Last PID output
-  float feedforward_output; ///< Last feedforward output
-  bool position_settled;    ///< Position settled flag
+    bool enabled;             ///< Controller enabled
+    bool homed;               ///< Homing completed
+    int32_t current_position; ///< Current position
+    int32_t target_position;  ///< Target position
+    int32_t position_error;   ///< Position error
+    float velocity;           ///< Current velocity
+    float pid_output;         ///< Last PID output
+    float feedforward_output; ///< Last feedforward output
+    bool position_settled;    ///< Position settled flag
 } PositionControlStatus_t;
 
 // Core position control functions

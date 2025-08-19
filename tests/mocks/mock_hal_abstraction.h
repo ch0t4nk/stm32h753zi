@@ -407,3 +407,32 @@ void MockHAL_InjectFault(uint32_t fault_type, bool enable);
 #endif
 
 #endif /* MOCK_HAL_ABSTRACTION_H */
+// Ensure helper prototypes are declared for all test translation units.
+// Some older tests expect these functions to be available; provide
+// declarations here to avoid implicit-function-declaration errors.
+#ifndef MOCK_HAL_HELPER_PROTOTYPES_H
+#define MOCK_HAL_HELPER_PROTOTYPES_H
+
+/**
+ * @brief Program SPI response for next mock transaction (one-shot)
+ */
+void MockHAL_SetSPIResponse(HAL_SPI_Instance_t instance, const uint8_t *data,
+                            uint16_t size);
+
+/**
+ * @brief Program I2C response for next mock transaction (one-shot)
+ */
+void MockHAL_SetI2CResponse(HAL_I2C_Instance_t instance, const uint8_t *data,
+                            uint16_t size);
+
+/**
+ * @brief Set mock tick value
+ */
+void MockHAL_SetTick(uint32_t tick_value);
+
+/**
+ * @brief Get pointer to internal mock state (for verification)
+ */
+MockHAL_State_t *MockHAL_GetState(void);
+
+#endif /* MOCK_HAL_HELPER_PROTOTYPES_H */

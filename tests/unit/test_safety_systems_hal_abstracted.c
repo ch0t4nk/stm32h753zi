@@ -14,10 +14,26 @@
 #include "hal_abstraction/hal_abstraction.h"
 #include "mock_hal_abstraction.h"
 #include "safety/emergency_stop_abstracted.h"
+#include "safety/fault_monitor.h"
+#include "safety/safety_system.h"
+#include "safety/watchdog_manager.h"
 #include "unity.h"
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
+
+/* Instrumentation: trace tests using TRACE_AND_RUN so we don't modify
+ * the UNITY-provided RUN_TEST macro. TRACE_AND_RUN prints the test name
+ * then delegates to the existing RUN_TEST macro.
+ */
+#ifndef TRACE_AND_RUN
+#define TRACE_AND_RUN(test)                                                   \
+    do {                                                                      \
+        printf("[UNITY] RUN_TEST %s\n", #test);                               \
+        fflush(stdout);                                                       \
+        RUN_TEST(test);                                                       \
+    } while (0)
+#endif
 
 /* ==========================================================================
  */
@@ -587,52 +603,52 @@ int main(void) {
     UNITY_BEGIN();
 
     // Emergency Stop Initialization Tests
-    RUN_TEST(test_emergency_stop_init_success);
-    RUN_TEST(test_emergency_stop_init_gpio_failure);
+    TRACE_AND_RUN(test_emergency_stop_init_success);
+    TRACE_AND_RUN(test_emergency_stop_init_gpio_failure);
 
     // Emergency Stop Button Tests
-    RUN_TEST(test_emergency_stop_button_press);
-    RUN_TEST(test_emergency_stop_button_debounce);
-    RUN_TEST(test_emergency_stop_timing_requirement);
+    TRACE_AND_RUN(test_emergency_stop_button_press);
+    TRACE_AND_RUN(test_emergency_stop_button_debounce);
+    TRACE_AND_RUN(test_emergency_stop_timing_requirement);
 
     // Emergency Stop Software Trigger Tests
-    RUN_TEST(test_emergency_stop_software_trigger);
-    RUN_TEST(test_emergency_stop_multiple_sources);
+    TRACE_AND_RUN(test_emergency_stop_software_trigger);
+    TRACE_AND_RUN(test_emergency_stop_multiple_sources);
 
     // Emergency Stop Reset Tests
-    RUN_TEST(test_emergency_stop_reset_success);
-    RUN_TEST(test_emergency_stop_reset_button_pressed);
-    RUN_TEST(test_emergency_stop_reset_not_triggered);
+    TRACE_AND_RUN(test_emergency_stop_reset_success);
+    TRACE_AND_RUN(test_emergency_stop_reset_button_pressed);
+    TRACE_AND_RUN(test_emergency_stop_reset_not_triggered);
 
     // Emergency Stop LED Tests
-    RUN_TEST(test_emergency_stop_led_heartbeat_armed);
-    RUN_TEST(test_emergency_stop_led_triggered_state);
+    TRACE_AND_RUN(test_emergency_stop_led_heartbeat_armed);
+    TRACE_AND_RUN(test_emergency_stop_led_triggered_state);
 
     // Emergency Stop Self-Test Tests
-    RUN_TEST(test_emergency_stop_self_test_success);
-    RUN_TEST(test_emergency_stop_self_test_gpio_failure);
+    TRACE_AND_RUN(test_emergency_stop_self_test_success);
+    TRACE_AND_RUN(test_emergency_stop_self_test_gpio_failure);
 
     // Emergency Stop Statistics Tests
-    RUN_TEST(test_emergency_stop_statistics);
+    TRACE_AND_RUN(test_emergency_stop_statistics);
 
     // Emergency Stop Health Check Tests
-    RUN_TEST(test_emergency_stop_health_check_success);
-    RUN_TEST(test_emergency_stop_health_check_not_initialized);
+    TRACE_AND_RUN(test_emergency_stop_health_check_success);
+    TRACE_AND_RUN(test_emergency_stop_health_check_not_initialized);
 
     // HAL Abstraction Tests
-    RUN_TEST(test_hal_abstraction_gpio_operations);
-    RUN_TEST(test_hal_abstraction_fault_injection);
-    RUN_TEST(test_hal_abstraction_timing_functions);
-    RUN_TEST(test_hal_abstraction_spi_operations);
-    RUN_TEST(test_hal_abstraction_i2c_operations);
+    TRACE_AND_RUN(test_hal_abstraction_gpio_operations);
+    TRACE_AND_RUN(test_hal_abstraction_fault_injection);
+    TRACE_AND_RUN(test_hal_abstraction_timing_functions);
+    TRACE_AND_RUN(test_hal_abstraction_spi_operations);
+    TRACE_AND_RUN(test_hal_abstraction_i2c_operations);
 
     // Integration Tests
-    RUN_TEST(test_hal_abstraction_integration_emergency_stop_full_cycle);
+    TRACE_AND_RUN(test_hal_abstraction_integration_emergency_stop_full_cycle);
 
     // Safety System Integration Tests (New)
-    RUN_TEST(test_safety_system_state_integration);
-    RUN_TEST(test_emergency_stop_broadcast);
-    RUN_TEST(test_safety_monitoring_health_checks);
+    TRACE_AND_RUN(test_safety_system_state_integration);
+    TRACE_AND_RUN(test_emergency_stop_broadcast);
+    TRACE_AND_RUN(test_safety_monitoring_health_checks);
 
     return UNITY_END();
 }

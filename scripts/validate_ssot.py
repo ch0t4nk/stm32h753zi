@@ -280,6 +280,7 @@ def check_include_dependencies() -> List[Dict]:
                         ),
                     }
                 )
+    return violations
 def validate_config_consistency() -> List[Dict]:
     """Validate consistency between configuration files."""
     inconsistencies = []
@@ -749,6 +750,68 @@ def main():
 
     # Check SSOT structure
     missing_files = validate_ssot_structure()
+    # Find hardcoded value violations across relevant source files
+    violations = []
+    search_paths = [Path("src"), Path("Core")]
+    for sp in search_paths:
+        if not sp.exists():
+            continue
+        for p in sp.rglob("*.*"):
+            if p.suffix.lower() in [".c", ".h", ".cpp", ".hpp"]:
+                violations.extend(find_hardcoded_values(str(p)))
+
+    # Include dependency checks
+    include_violations = check_include_dependencies()
+
+    # Configuration consistency
+    inconsistencies = validate_config_consistency()
+
+    # Documentation validations (optional)
+    doc_structure_errors = None
+    instruction_ref_errors = None
+    doc_path_errors = None
+    if args.include_docs:
+        doc_structure_errors = validate_documentation_structure()
+        instruction_ref_errors = validate_instruction_references()
+        doc_path_errors = validate_documentation_paths()
+
+    # Workflow validations (optional)
+    workflow_errors = None
+    if args.include_workflow:
+        workflow_errors = validate_workflow_ssot()
+
+    # Generate a human-readable report
+    generate_report(
+        violations=violations,
+        missing_files=missing_files,
+        include_violations=include_violations,
+        inconsistencies=inconsistencies,
+        doc_structure_errors=doc_structure_errors,
+        instruction_ref_errors=instruction_ref_errors,
+        doc_path_errors=doc_path_errors,
+        workflow_errors=workflow_errors,
+        include_docs=args.include_docs,
+        include_workflow=args.include_workflow,
+    )
+
+    # Determine exit code: non-zero when any issue found
+    total_issues = (
+        len(violations)
+        + len(missing_files)
+        + len(include_violations)
+        + len(inconsistencies)
+    )
+    if args.include_workflow and workflow_errors:
+        total_issues += len(workflow_errors)
+    if args.include_docs:
+        if doc_structure_errors:
+            total_issues += len(doc_structure_errors)
+        if instruction_ref_errors:
+            total_issues += len(instruction_ref_errors)
+        if doc_path_errors:
+            total_issues += len(doc_path_errors)
+
+    return 2 if total_issues > 0 else 0
 
 
 

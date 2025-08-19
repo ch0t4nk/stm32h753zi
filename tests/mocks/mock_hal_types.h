@@ -29,6 +29,10 @@ typedef enum {
     HAL_TIMEOUT = 0x03U
 } HAL_StatusTypeDef;
 
+// Signal that HAL status type was provided by mock types to avoid
+// redefinition in other mock headers
+#define MOCK_HAL_STATUS_DEFINED
+
 // Mock I2C Handle
 typedef struct {
     void *Instance;     // Mock I2C instance pointer
@@ -53,6 +57,58 @@ typedef struct {
     uint32_t State;       // Mock SPI state
     uint32_t ErrorCode;   // Mock error code
 } SPI_HandleTypeDef;
+
+// Minimal watchdog handle types for host testing (expanded to match
+// expectations from safety/watchdog code)
+typedef struct {
+    void *Instance;
+    struct {
+        uint32_t Prescaler;
+        uint32_t Reload;
+        uint32_t Window;
+    } Init;
+    uint32_t State;
+} IWDG_HandleTypeDef;
+
+typedef struct {
+    void *Instance;
+    struct {
+        uint32_t Prescaler;
+        uint32_t Window;
+        uint32_t Counter;
+        uint32_t EWIMode;
+    } Init;
+    uint32_t State;
+} WWDG_HandleTypeDef;
+
+// Mock peripheral instance tokens for unit tests
+#define IWDG1 ((void *)0x1)
+#define WWDG1 ((void *)0x2)
+
+// WWDG related macros expected by watchdog_manager
+#define WWDG_EWI_ENABLE 1
+#define WWDG_IT_EWI 0x01
+#define RESET 0
+#define WWDG_PRESCALER_8 8
+
+// Helper macros for test environment (no-op implementations)
+#define __HAL_RCC_WWDG1_CLK_ENABLE() ((void)0)
+#define __HAL_WWDG_GET_IT_SOURCE(h, it) (RESET)
+#define __HAL_WWDG_CLEAR_IT(h, it) ((void)0)
+
+// IWDG related macros expected by watchdog_manager. Guard to avoid
+// redefinition with SSOT safety_config.h which may already define them.
+#ifndef IWDG_PRESCALER_32
+#define IWDG_PRESCALER_32 32
+#endif
+
+#ifndef IWDG_WINDOW_DISABLE
+#define IWDG_WINDOW_DISABLE 0
+#endif
+
+#ifndef IWDG_PR_PR_Pos
+#define IWDG_PR_PR_Pos 0
+#endif
 
 // Mock GPIO Port Definition
 typedef struct {

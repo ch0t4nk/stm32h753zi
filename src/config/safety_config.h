@@ -18,6 +18,14 @@ typedef enum {
     ESTOP_SOURCE_COUNT           /**< Number of sources */
 } EmergencyStopSource_t;
 
+/* Signal that the SSOT emergency stop source typedef has been defined so
+ * archive headers that also declare EmergencyStopSource_t can skip their
+ * redefinition when included in the same translation unit.
+ */
+#ifndef EMERGENCY_STOP_SOURCE_T_DEFINED
+#define EMERGENCY_STOP_SOURCE_T_DEFINED
+#endif
+
 /**
  * @brief Emergency Stop State enumeration
  * Defines the various states of the emergency stop system
@@ -29,6 +37,14 @@ typedef enum {
     EMERGENCY_STOP_RECOVERY,   /*!< Emergency stop recovery in progress */
     EMERGENCY_STOP_STATE_COUNT /*!< Number of emergency stop states */
 } EmergencyStopState_t;
+
+/* Signal that the SSOT emergency stop state typedef has been defined so
+ * archive headers that also declare EmergencyStopState_t can skip their
+ * redefinition when included in the same translation unit.
+ */
+#ifndef EMERGENCY_STOP_STATE_T_DEFINED
+#define EMERGENCY_STOP_STATE_T_DEFINED
+#endif
 
 // Ratio of current limit to max current for safety (used in telemetry safety
 // checks)
