@@ -1,8 +1,8 @@
 # STM32H753ZI Project Status
 
 **Last Updated**: August 18, 2025
-**Status**: 🎉 **MAJOR MILESTONE: CLEAN BUILD SUCCESS ACHIEVED!**
-**Deployment**: ✅ **ARM GCC TOOLCHAIN FULLY OPERATIONAL**
+**Status**: ✔️ In-progress — firmware builds complete; host-test migration and host-test debugging underway
+**Deployment**: ✅ ARM GCC toolchain configured for firmware builds (see Build section)
 **AI Infrastructure**: ✅ **Semantic Search Production Ready**
 
 ---
@@ -12,13 +12,13 @@
 **Current Branch**: main
 **Current Focus**: **Hardware Validation & Integration Testing**
 **Recent Major Breakthrough**: **🎉 Complete Firmware Build Success - All 128 Files Compiled & Linked Successfully**
-**Build System**: CMake with Ninja generator, ARM GCC cross-compiler (STM32CubeCLT 1.19.0), Debug preset, SSOT-based configuration
-**Toolchain Status**: ✅ ARM GCC confirmed active and fully functional with STM32H753ZI target
-**SSOT Integration**: ✅ Workspace SSOT (`src/config/workspace_config.h`) fully integrated with CMake toolchain
-**HAL Integration Status**: ✅ Complete - HAL peripheral definitions working, safety systems compiled, timer callbacks merged
-**Current Issues**: None - Clean build achieved, ready for hardware testing
+**Build System**: CMake with Ninja generator, ARM GCC cross-compiler (STM32CubeCLT 1.19.0) used for firmware builds (Debug preset). Host-test build uses a separate `host_tests` CMakeLists.txt and `build_host_tests` directory.
+**Toolchain Status**: ✅ ARM GCC active for firmware builds; host tests require a native host compiler build (see Host-test notes below).
+**SSOT Integration**: ✅ Workspace SSOT (`src/config/workspace_config.h`) integrated with CMake toolchain
+**HAL Integration Status**: ✅ HAL peripheral definitions compile for ARM target; some generated header warnings remain but do not prevent firmware linking
+**Current Issues**: Host-test run not yet completed — host test build currently fails due to syntax issues in test mocks (see Recent Activity)
 **Architecture**: STM32Cube HAL + FreeRTOS + X-CUBE-SPN2/MCSDK hybrid, comprehensive SSOT architecture
-**Recent Build**: **🚀 COMPLETE SUCCESS**: 128 files compiled, 14.5KB flash usage, ready for deployment
+**Recent Build**: Firmware build (ARM) completed and produced ELF/BIN/HEX; host-test build attempted in `build_host_tests` but failed during test mock compilation and tests were not executed
 
 ---
 
@@ -90,6 +90,48 @@
 - **Motion Profile Testing**: Implement and test coordinated dual-motor movements
 - **Closed-Loop Control**: Validate encoder feedback with motor positioning
 
+---
+
+## 🧪 Host-test Progress (updated Aug 19, 2025)
+
+- Status: In-progress — host-only build completed; test execution advanced to runtime debugging.
+
+- Summary of actions taken:
+
+  - Created isolated host-only CMake build (`build_host_tests`) to avoid ARM cross-compile flags and successfully produced host test binaries.
+  - Implemented a compatibility shim (`src/safety/emergency_stop_abstracted.h` / `src/safety/estop_compat.c`) to adapt legacy `emergency_stop_*` APIs to the canonical SSOT `estop_*` API without modifying SSOT headers.
+  - Linked archived, stateful emergency-stop implementation (`archive/old_hal_rtos/src/safety/emergency_stop_abstracted.c`) into the host-test target to satisfy tests that require stateful behavior.
+  - Fixed prototype mismatches in HAL abstractions and synchronized mock headers to compile cleanly for host.
+  - Added runtime instrumentation (printf + fflush) in the compatibility wrappers and archived code to trace initialization and HAL calls.
+
+- Current test run results (host, Aug 19, 2025):
+
+  - test_phase1_3_validation_host — Passed
+  - test_optimization_telemetry_host — 17 tests, 9 failures; many assertions fail with a consistent error code: 20502. Likely causes: telemetry mocks or SSOT/mapping mismatch in telemetry initialization.
+  - test_safety_systems_hal_abstracted_host — Executable produced but crashes with a segmentation fault during CTest execution. Captured logs show repeated successful archived emergency-stop init sequences immediately before the crash.
+
+- Immediate next steps (high priority):
+
+  1. Run the failing safety test binary directly under a debugger (or MSVC debug build / AddressSanitizer if available) to obtain a backtrace and identify crash site.
+  2. Instrument the Unity runner to isolate which test case triggers the segfault (print test names before RUN_TEST or run single test cases via CTest target filters).
+  3. Investigate telemetry failures by tracing where return code 20502 originates (mock return values and telemetry initialization paths).
+  4. Keep all host-only changes behind `HOST_TESTING` guards and avoid edits to canonical SSOT headers; prefer adapters/shims and guarded forwards.
+
+Notes: All runtime instrumentation was added temporarily for debugging and will be removed or converted to test-only traces once root causes are fixed. The firmware/ARM build remains unaffected by these host-only changes.
+
+## Recent Activity
+
+- Host-test build attempted in `host_tests` → `build_host_tests`.
+- Host-test compilation failed: syntax errors found in `tests/mocks/mock_hal_abstraction.c` (nested function definitions caused by a missing closing brace) and missing math constant (`M_PI`) in one test source.
+- Impact: Automated CTest run did not execute tests because host test executables were not generated. Firmware ARM build remains successful and produced ELF/BIN/HEX outputs.
+
+## Immediate Next Steps (short-term)
+
+1. Fix `tests/mocks/mock_hal_abstraction.c`: close `HAL_Abstraction_Mock_GetState()` (add missing `}`) and move helper function definitions to top-level scope.
+2. Add `#include <math.h>` where `M_PI` is used (or define `M_PI`) in test sources.
+3. Rebuild host tests: `cmake --build build_host_tests` and run tests: `ctest -V` from `build_host_tests`.
+4. Update STATUS.md with host-test results and continue hardware flashing once host tests pass.
+
 ## 🧠 Technical Context for Copilot/Automation
 
 ### **Current Hardware Validation Session Context**
@@ -114,6 +156,12 @@
 - **Workspace SSOT**: ✅ `src/config/workspace_config.h` (toolchain paths, build environment settings)
 - **Integration Layer**: ✅ `cmake/gcc-arm-none-eabi.cmake` sources workspace SSOT for toolchain configuration
 - **Validation**: ✅ Build system successfully references centralized configuration sources
+
+**Recent SSOT migration (this session)**
+
+- Migrated several non-critical literals to SSOT headers (`src/config/project_constants.h`, `src/config/clock_config.h`): PLL fractional divisor, telemetry KVAL default, and legacy error-base mappings.
+- Cleaned inline hex annotations from `src/config/error_codes.h` and added a documented HARDCODED exceptions registry for vendor-local values.
+- Validation: Ran `scripts/validate_ssot.py` (repo venv) — result: no SSOT violations.
 
 ### **File Status & Dependencies**
 
