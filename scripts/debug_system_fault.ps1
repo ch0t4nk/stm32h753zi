@@ -11,8 +11,21 @@ param(
 $ErrorActionPreference = "Stop"
 
 # STM32CubeCLT paths
-$CUBE_PROGRAMMER = "C:\ST\STM32CubeCLT_1.19.0\STM32CubeProgrammer\bin\STM32_Programmer_CLI.exe"
-$STLINK_GDB = "C:\ST\STM32CubeCLT_1.19.0\STLink-gdb-server\bin\ST-LINK_gdbserver.exe"
+$CUBE_PROGRAMMER = $null
+$STLINK_GDB = $null
+if ($env:STM32_PROGRAMMER_CLI) { $CUBE_PROGRAMMER = $env:STM32_PROGRAMMER_CLI }
+else {
+    $psHelper = Join-Path $PSScriptRoot "Get-WorkflowToolchain.ps1"
+    if (Test-Path $psHelper) {
+        try { $candidate = & $psHelper "stm32_programmer_cli_candidates" 2>$null; if ($candidate -and (Test-Path $candidate)) { $CUBE_PROGRAMMER = $candidate } }
+        catch { }
+    }
+}
+if (-not $CUBE_PROGRAMMER) { $CUBE_PROGRAMMER = "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe" }
+
+# ST-Link GDB server helper (best-effort)
+if ($env:STLINK_GDB) { $STLINK_GDB = $env:STLINK_GDB }
+else { $STLINK_GDB = "$($CUBE_PROGRAMMER -replace 'STM32_Programmer_CLI.exe','STLink-gdb-server\\bin\\ST-LINK_gdbserver.exe')" }
 
 # Define register addresses for STM32H753ZI
 $REGISTERS = @{

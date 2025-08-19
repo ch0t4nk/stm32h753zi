@@ -20,7 +20,16 @@ param(
     [switch]$Force
 )
 
-$STM32_PROG_CLI = "C:\ST\STM32CubeCLT_1.19.0\STM32CubeProgrammer\bin\STM32_Programmer_CLI.exe"
+$STM32_PROG_CLI = $null
+if ($env:STM32_PROGRAMMER_CLI) { $STM32_PROG_CLI = $env:STM32_PROGRAMMER_CLI }
+else {
+    $psHelper = Join-Path $PSScriptRoot "Get-WorkflowToolchain.ps1"
+    if (Test-Path $psHelper) {
+        try { $candidate = & $psHelper "stm32_programmer_cli_candidates" 2>$null; if ($candidate -and (Test-Path $candidate)) { $STM32_PROG_CLI = $candidate } }
+        catch { }
+    }
+}
+if (-not $STM32_PROG_CLI) { $STM32_PROG_CLI = "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe" }
 
 function Write-Success { param($Message) Write-Host "✅ $Message" -ForegroundColor Green }
 function Write-Error { param($Message) Write-Host "❌ $Message" -ForegroundColor Red }

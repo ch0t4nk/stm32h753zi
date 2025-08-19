@@ -4,7 +4,17 @@
 Write-Host "🔧 STM32H753ZI PLL Configuration Analysis" -ForegroundColor Cyan
 Write-Host "========================================`n"
 
-$STM32_PROGRAMMER = "C:\ST\STM32CubeCLT_1.19.0\STM32CubeProgrammer\bin\STM32_Programmer_CLI.exe"
+# Resolve STM32 CubeProgrammer CLI via env override -> JSON helper -> fallback
+$STM32_PROGRAMMER = $null
+if ($env:STM32_PROGRAMMER_CLI) { $STM32_PROGRAMMER = $env:STM32_PROGRAMMER_CLI }
+else {
+    $psHelper = Join-Path $PSScriptRoot "Get-WorkflowToolchain.ps1"
+    if (Test-Path $psHelper) {
+        try { $candidate = & $psHelper "stm32_programmer_cli_candidates" 2>$null; if ($candidate -and (Test-Path $candidate)) { $STM32_PROGRAMMER = $candidate } }
+        catch { }
+    }
+}
+if (-not $STM32_PROGRAMMER) { $STM32_PROGRAMMER = "C:\\ST\\STM32CubeCLT_1.19.0\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe" }
 
 # Check if tool exists
 if (-not (Test-Path $STM32_PROGRAMMER)) {

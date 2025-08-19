@@ -18,6 +18,14 @@
 
 #include <stdint.h>
 
+// If present, include generated workspace overrides (created by
+// scripts/generate_workspace_config.py)
+#ifdef __has_include
+#if __has_include("workspace_config.generated.h")
+#include "workspace_config.generated.h"
+#endif
+#endif
+
 /* ==========================================================================
  */
 /* Toolchain Configuration (SSOT)                                            */
