@@ -405,3 +405,127 @@ scripts/run_python_configurable.ps1 scripts/auto_update_status.py --verbose
 - [ ] **Debug Mode**: Maximum verbosity for troubleshooting and investigation
 
 **Remember**: The goal is ensuring Copilot always has accurate, current context about development state through integrated feature tracking, STATUS.md maintenance, and configurable workflow complexity via SSOT principles.
+
+## 🛠 CI Integration: Configure-time generator + SSOT validation
+
+### What changed (short)
+
+- We now generate the workspace config header at configure-time (in the build
+  directory) so both local builds and CI run against the same generated
+  overlay. The generator is `scripts/generate_workspace_config.py` and the
+  generated file is placed at `build/generated/include/workspace_config.generated.h`.
+- A new CI workflow (`.github/workflows/validate-ssot.yml`) runs on push to
+  `main`, on semver tags (for release flows), and can be triggered manually
+  via `workflow_dispatch`. It executes the generator and then runs
+  `scripts/validate_ssot.py`. The workflow uploads the generated header as an
+  artifact for debugging failing runs.
+
+### Why this pattern (rationale)
+
+- Avoids committing generated files into source. Generated artifacts live in
+  the build area, keeping the repository clean and reducing merge noise.
+- Ensures the validator and builds use the exact same overlay, removing a
+  class of 'works-locally-but-fails-in-CI' issues.
+- Keeps SSOT enforcement fast: the generator is cheap and only writes a tiny
+  header, so CI remains snappy.
+
+### How it works (developer-facing)
+
+1. During CMake configure, CMake runs the generator and writes the header to:
+
+   build/generated/include/workspace_config.generated.h
+
+2. CMake adds `build/generated/include` to the include path (before
+   source `src/config`) so the generated overlay takes precedence.
+
+3. The CI workflow runs the same generator into `build/generated/include`
+   and then runs `scripts/validate_ssot.py` to enforce SSOT rules.
+
+4. If validation fails, the generated header is uploaded as an artifact for
+   fast debugging.
+
+### Commands and examples
+
+Run the generator locally (mirrors CI):
+
+```powershell
+# Windows PowerShell
+python scripts/generate_workspace_config.py --input config/workflow_toolchain.json --output build/generated/include/workspace_config.generated.h
+```
+
+Run the validator locally (after generation):
+
+```powershell
+python scripts/validate_ssot.py
+```
+
+### Release and push policy (no PRs until first release)
+
+- Policy: PR-based workflows are disabled until the project's first release.
+  During early development we rely on direct pushes to `main` (or release
+  tags) and manual `workflow_dispatch` runs for validation. This reduces
+  CI churn and keeps the process simple while stabilizing the baseline.
+
+- Release flow (recommended):
+  1. Prepare and validate changes locally. Run the generator and validator.
+  ```powershell
+  python scripts/generate_workspace_config.py --input config/workflow_toolchain.json --output build/generated/include/workspace_config.generated.h
+  python scripts/validate_ssot.py
+  ```
+  2. Push to `main` (or create a release tag). To create a semver tag that
+     triggers CI validation for the release:
+  ```powershell
+  git tag -a v0.1.0 -m "Release v0.1.0"
+  git push origin v0.1.0
+  ```
+  3. CI will run validation for the push or tag and upload the generated
+     header artifact for inspection if needed.
+
+Note: After the first stable release, we will enable PR-based workflows and
+add branch protection rules to require SSOT validation on PRs.
+
+CI-specific note: The CMake build also exposes a `validate-ssot` target which
+depends on the generator. You can run it from the workspace root if CMake has
+already been configured:
+
+```powershell
+cmake --build build --target validate-ssot
+```
+
+### Generated-overlay guard (new)
+
+We added a small guard script `scripts/validate_generated_overlay.py` which
+executes quickly and asserts that the configure-time generated header
+(`build/generated/include/workspace_config.generated.h`) contains required
+macros used by the build. The CI workflow now runs this guard before the
+main SSOT validator so we fail fast on missing/invalid overlays. You can run
+the guard locally:
+
+```powershell
+python scripts/validate_generated_overlay.py --file build/generated/include/workspace_config.generated.h
+```
+
+### Assumptions and compatibility
+
+- The generator script accepts `--input` and `--output` CLI flags (see
+  `scripts/generate_workspace_config.py`). CMake also calls Python directly
+  to run the generator; this is robust as long as the project's venv or
+  system Python is available.
+- The CI workflow uses Ubuntu runners and Python 3.10/3.11 matrix. If your
+  organization requires Windows or macOS runners, extend the workflow matrix
+  accordingly.
+
+### Troubleshooting
+
+- If CI reports "generated header not found", ensure the generator printed
+  "Generated <path>" in the log and that `build/generated/include` was
+  created. The workflow uploads the artifact for post-mortem analysis.
+- If the generated header differs between local and CI runs, check
+  `config/workflow_toolchain.json` and any environment-specific variables the
+  generator imports.
+
+### Security note
+
+- The validator runs arbitrary Python scripts from the repository and thus
+  should be treated as code execution in CI. Protect branches and restrict
+  who can push to `main`/open PRs to avoid running untrusted code.

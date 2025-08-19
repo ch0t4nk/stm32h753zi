@@ -1,0 +1,58 @@
+name: "Auto-approve trusted PRs"
+
+# Auto-approve PRs when they are authored by a trusted user or labeled
+# with `auto-approve`. This workflow uses a repository secret named
+# `AUTO_APPROVE_TOKEN` (a Personal Access Token with minimal `repo` scopes)
+# to create an approval review on the PR. It intentionally only *approves*
+# and does not merge.
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, labeled]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  auto-approve:
+    name: Auto-approve PR when allowed
+    runs-on: ubuntu-latest
+    env:
+      # Comma-separated list of trusted authors that can auto-approve their own PRs
+      ALLOWED_AUTHORS: "ch0t4nk,dependabot[bot]"
+      APPROVE_LABEL: "auto-approve"
+
+    steps:
+      - name: Check PR and decide
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.AUTO_APPROVE_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            if (!pr) {
+              core.info('No pull_request payload available — exiting.');
+              return;
+            }
+
+            const allowed = process.env.ALLOWED_AUTHORS.split(',').map(s=>s.trim());
+            const hasLabel = (pr.labels || []).some(l => l.name === process.env.APPROVE_LABEL);
+            const isTrustedAuthor = allowed.includes(pr.user.login);
+
+            core.info(`PR #${pr.number} by ${pr.user.login}, labels=${(pr.labels||[]).map(l=>l.name).join(',')}`);
+
+            if (!hasLabel && !isTrustedAuthor) {
+              core.info('PR not eligible for auto-approve: neither trusted author nor labelled');
+              return;
+            }
+
+            // Create an approval review
+            await github.rest.pulls.createReview({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+              event: 'APPROVE',
+              body: 'Auto-approved by workflow (trusted author or label)'
+            });
+
+            core.info('PR approved by workflow');

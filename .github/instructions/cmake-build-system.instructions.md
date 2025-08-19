@@ -6,17 +6,20 @@ description: "STM32H753ZI build system configuration including ARM firmware and 
 # Build System Instructions
 
 ## Overview
+
 This instruction file provides comprehensive guidance for the dual build system architecture that enables both ARM firmware compilation and host testing. This system prevents wasted effort exploring toolchain issues by establishing clear separation between compilation targets.
 
 ## Dual Build Architecture
 
 ### ARM Firmware Compilation (Primary Target)
+
 **Purpose**: Build actual STM32H753ZI firmware for hardware deployment  
 **Toolchain**: ARM GCC cross-compiler (`arm-none-eabi-gcc`)  
 **Configuration**: CMakePresets.json with ARM-specific settings  
 **Build Directory**: `build/` (primary build artifacts)
 
-### Host Testing Compilation (Secondary Target)  
+### Host Testing Compilation (Secondary Target)
+
 **Purpose**: Build drivers and logic for local testing with mocks  
 **Toolchain**: Local GCC (`gcc`, system compiler)  
 **Configuration**: Separate `host_tests/CMakeLists.txt`  
@@ -25,17 +28,18 @@ This instruction file provides comprehensive guidance for the dual build system 
 ## Root Cause Analysis of Recurring Issues
 
 ### Why We Keep Having CMake Problems
-1. **Dev Container ARM GCC Installation**: ARM cross-compiler may not be installed or in PATH
-2. **CMake Toolchain Selection**: CMake defaults to system compiler instead of ARM GCC
-3. **Preset Configuration**: CMakePresets.json references may be incorrect or unused
-4. **Environment Variables**: Missing or incorrect PATH/toolchain environment setup
-5. **Build Directory State**: Cached CMake configuration prevents toolchain changes
+
+1. **CMake Toolchain Selection**: CMake defaults to system compiler instead of ARM GCC
+2. **Preset Configuration**: CMakePresets.json references may be incorrect or unused
+3. **Environment Variables**: Missing or incorrect PATH/toolchain environment setup
+4. **Build Directory State**: Cached CMake configuration prevents toolchain changes
 
 ## Definitive Build System Setup
 
 ### 1. Verify ARM GCC Toolchain Installation
 
 **Check Installation:**
+
 ```bash
 # MUST succeed - if this fails, ARM GCC is not installed
 which arm-none-eabi-gcc
@@ -46,6 +50,7 @@ arm-none-eabi-gcc --version
 ```
 
 **Install ARM GCC if Missing:**
+
 ```bash
 # Ubuntu/Debian installation
 sudo apt-get update
@@ -59,6 +64,7 @@ arm-none-eabi-gdb --version
 ### 2. CMake Toolchain Configuration
 
 **Required Toolchain File: `cmake/gcc-arm-none-eabi.cmake`**
+
 ```cmake
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR arm)
@@ -88,55 +94,57 @@ set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 ### 3. CMake Presets Configuration
 
 **Required: `CMakePresets.json`**
+
 ```json
 {
-    "version": 3,
-    "configurePresets": [
-        {
-            "name": "default",
-            "hidden": true,
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/${presetName}",
-            "toolchainFile": "${sourceDir}/cmake/gcc-arm-none-eabi.cmake",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "Debug",
-            "inherits": "default",
-            "displayName": "Debug Configuration",
-            "description": "Debug build with ARM GCC toolchain",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "Release",
-            "inherits": "default",
-            "displayName": "Release Configuration", 
-            "description": "Release build with ARM GCC toolchain",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
-            }
-        }
-    ],
-    "buildPresets": [
-        {
-            "name": "Debug",
-            "configurePreset": "Debug"
-        },
-        {
-            "name": "Release", 
-            "configurePreset": "Release"
-        }
-    ]
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "default",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "toolchainFile": "${sourceDir}/cmake/gcc-arm-none-eabi.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "Debug",
+      "inherits": "default",
+      "displayName": "Debug Configuration",
+      "description": "Debug build with ARM GCC toolchain",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "Release",
+      "inherits": "default",
+      "displayName": "Release Configuration",
+      "description": "Release build with ARM GCC toolchain",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "Debug",
+      "configurePreset": "Debug"
+    },
+    {
+      "name": "Release",
+      "configurePreset": "Release"
+    }
+  ]
 }
 ```
 
 ## Correct Build Procedure
 
 ### Method 1: Using CMake Presets (RECOMMENDED)
+
 ```bash
 # Clean start (removes any cached configuration)
 rm -rf build/
@@ -152,6 +160,7 @@ cmake --build --preset Debug
 ```
 
 ### Method 2: Manual Toolchain Specification
+
 ```bash
 # Clean start
 rm -rf build/
@@ -164,6 +173,7 @@ cmake --build build
 ```
 
 ### Method 3: Environment-Based (Fallback)
+
 ```bash
 # Set environment variables
 export CC=arm-none-eabi-gcc
@@ -181,20 +191,22 @@ cmake --build build
 ## VS Code Integration
 
 ### Required: `.vscode/cmake-kits.json`
+
 ```json
 [
-    {
-        "name": "ARM GCC for STM32H753ZI",
-        "compilers": {
-            "C": "/usr/bin/arm-none-eabi-gcc",
-            "CXX": "/usr/bin/arm-none-eabi-g++"
-        },
-        "toolchainFile": "${workspaceFolder}/cmake/gcc-arm-none-eabi.cmake"
-    }
+  {
+    "name": "ARM GCC for STM32H753ZI",
+    "compilers": {
+      "C": "/usr/bin/arm-none-eabi-gcc",
+      "CXX": "/usr/bin/arm-none-eabi-g++"
+    },
+    "toolchainFile": "${workspaceFolder}/cmake/gcc-arm-none-eabi.cmake"
+  }
 ]
 ```
 
 ### VS Code CMake Extension Setup
+
 1. **Install CMake Tools Extension** (if not already installed)
 2. **Select Kit**: `Ctrl+Shift+P` → "CMake: Select a Kit" → "ARM GCC for STM32H753ZI"
 3. **Select Preset**: `Ctrl+Shift+P` → "CMake: Select Configure Preset" → "Debug"
@@ -204,8 +216,10 @@ cmake --build build
 ## Troubleshooting Guide
 
 ### Issue: "cc: error: unrecognized command-line option '-mthumb'"
+
 **Cause**: CMake is using system compiler (gcc) instead of ARM GCC cross-compiler
 **Solution**:
+
 ```bash
 # Verify ARM GCC is found
 which arm-none-eabi-gcc
@@ -218,8 +232,10 @@ cmake --preset Debug
 ```
 
 ### Issue: "CMAKE_TOOLCHAIN_FILE was not used by the project"
+
 **Cause**: Toolchain file specified after build directory already configured
 **Solution**:
+
 ```bash
 # MUST clean build directory first
 rm -rf build/
@@ -229,8 +245,10 @@ cmake --preset Debug
 ```
 
 ### Issue: "arm-none-eabi-gcc: command not found"
+
 **Cause**: ARM GCC toolchain not installed or not in PATH
 **Solution**:
+
 ```bash
 # Install ARM GCC toolchain
 sudo apt-get update
@@ -241,8 +259,10 @@ arm-none-eabi-gcc --version
 ```
 
 ### Issue: CMake finds wrong compiler version
+
 **Cause**: Multiple GCC installations or PATH issues
 **Solution**:
+
 ```bash
 # Check which compiler CMake will find
 which arm-none-eabi-gcc
@@ -253,8 +273,10 @@ set(CMAKE_C_COMPILER /usr/bin/arm-none-eabi-gcc)
 ```
 
 ### Issue: Linker errors about missing libraries
+
 **Cause**: Wrong linker flags or missing nano.specs
 **Solution**:
+
 ```bash
 # Verify ARM GCC has newlib-nano
 arm-none-eabi-gcc --print-search-dirs
@@ -267,6 +289,7 @@ set(CMAKE_EXE_LINKER_FLAGS_INIT "-specs=nano.specs -specs=nosys.specs")
 ## Rapid Recovery Procedure
 
 ### When Build System is Broken - Quick Fix
+
 ```bash
 #!/bin/bash
 # save as scripts/fix_cmake.sh
@@ -300,10 +323,11 @@ echo "✅ Build system fixed!"
 ## VS Code Tasks Integration
 
 ### Required: `.vscode/tasks.json` Build Task
+
 ```json
 {
     "label": "Build (CMake ARM)",
-    "type": "shell", 
+    "type": "shell",
     "command": "cmake",
     "args": ["--build", "build/Debug"],
     "group": {
@@ -319,7 +343,7 @@ echo "✅ Build system fixed!"
 {
     "label": "Configure (CMake ARM)",
     "type": "shell",
-    "command": "cmake", 
+    "command": "cmake",
     "args": ["--preset", "Debug"],
     "group": "build",
     "options": {
@@ -331,30 +355,41 @@ echo "✅ Build system fixed!"
 ## Environment Validation
 
 ### Python Virtual Environment Setup
+
 **Required Virtual Environment**: `.venv` in workspace root
+
 ```bash
 # Check if virtual environment exists
 if [ ! -d ".venv" ]; then
     echo "⚠️  Creating Python virtual environment..."
     python3 -m venv .venv
+    # Activate venv (Linux/macOS)
     source .venv/bin/activate
     pip install --upgrade pip
-    pip install chromadb requests ollama
+    # Install project requirements from requirements.txt when available.
+    if [ -f requirements.txt ]; then
+        pip install -r requirements.txt
+    fi
     echo "✅ Virtual environment created and packages installed"
 else
     echo "✅ Virtual environment exists"
 fi
 
-# Always activate virtual environment for development
+# Activate virtual environment for development
+# Linux/macOS:
 source .venv/bin/activate
+# Windows PowerShell (if using PowerShell on Windows):
+# .\.venv\Scripts\Activate.ps1
 ```
 
 **VS Code Integration**: Workspace is configured to automatically activate `.venv`:
+
 - `python.defaultInterpreterPath`: Uses `.venv/bin/python`
 - `terminal.integrated.env.linux`: Automatically adds `.venv/bin` to PATH
 - `terminal.integrated.profiles.linux`: Auto-activates venv in new terminals
 
 ### Pre-Build Checklist Script
+
 ```bash
 #!/bin/bash
 # save as scripts/validate_build_env.sh
@@ -409,6 +444,7 @@ echo "🎯 Build environment ready!"
 ## Container Integration
 
 ### Dockerfile ARM GCC Setup
+
 ```dockerfile
 # Ensure ARM GCC is installed in dev container
 RUN apt-get update && apt-get install -y \
@@ -424,6 +460,7 @@ RUN arm-none-eabi-gcc --version && ninja --version
 ## Quick Reference Commands
 
 ### Daily Development Commands
+
 ```bash
 # Quick build (assumes environment is set up)
 cmake --build build/Debug
@@ -439,6 +476,7 @@ cmake --preset Debug && grep -A5 "The target system is" build/Debug/CMakeCache.t
 ```
 
 ### Emergency Reset
+
 ```bash
 # Complete reset when everything is broken
 rm -rf build/ .vscode/cmake-tools-kits.json
@@ -448,17 +486,44 @@ cmake --preset Debug
 ## Integration with SSOT
 
 ### Build Configuration SSOT
+
 All build-related configurations should reference:
+
 - `cmake/gcc-arm-none-eabi.cmake` - Primary toolchain configuration
 - `CMakePresets.json` - Build preset definitions
 - `.vscode/cmake-kits.json` - VS Code integration
 - `scripts/validate_build_env.sh` - Environment validation
+
+## Additional CMake-generated overlay
+
+The build system generates a small workspace overlay header during configure:
+
+- Generated header: `build/generated/include/workspace_config.generated.h`
+- CMake target: `generate-workspace-config` (run during configure or via
+  `cmake --build build --target generate-workspace-config`)
+
+This generated header contains toolchain paths and small environment macros
+used by the build. It is intentionally written into the build directory so it
+is not committed to source control.
+
+### Generated-overlay guard
+
+To catch missing or malformed overlays early we provide a small guard script
+that CI runs before the full SSOT validation. The script is
+`scripts/validate_generated_overlay.py` and it checks the generated header for
+required macros (e.g. `ARM_GCC_PATH`, `ARM_GPP_PATH`, `CMAKE_TOOLCHAIN_FILE_PATH`).
+Run it locally after generation if you need a quick pre-check:
+
+```powershell
+python scripts/validate_generated_overlay.py --file build/generated/include/workspace_config.generated.h
+```
 
 Never hardcode compiler paths or flags outside these SSOT files.
 
 ## Success Indicators
 
 ### Working Build System Shows:
+
 ```bash
 # Successful configure output:
 -- The C compiler identification is GNU 10.3.1

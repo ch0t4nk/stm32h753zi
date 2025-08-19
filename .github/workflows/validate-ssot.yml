@@ -1,0 +1,82 @@
+name: "Validate SSOT"
+
+# This workflow generates the workspace config header at configure-time and runs
+# the SSOT validator. It is intended to block merges with invalid SSOT state.
+#
+# Key design points:
+# - We run the workspace generator (scripts/generate_workspace_config.py)
+#   into the build area so the validator sees the exact overlay used by the
+#   build.
+# - The workflow is intentionally simple: checkout -> setup python -> run
+#   generator -> run validator. This keeps it fast and deterministic.
+# - We keep heavy comments to make the CI behaviour transparent to contributors.
+
+on:
+  # Industrial best-practice: until the first release, we use push-based CI and
+  # manual dispatch. PRs are not used as per project policy; this reduces
+  # early workflow churn and simplifies release gating until the project is
+  # ready for public contributions.
+  push:
+    branches: [main]
+    # Also trigger on semver tags so release flows run validation as part of
+    # the release process.
+    tags: ["v*", "release/*"]
+  # Allow manual triggering for maintainers and automation tools.
+  workflow_dispatch: {}
+
+jobs:
+  validate-ssot:
+    name: "Generate workspace config and validate SSOT"
+    runs-on: ubuntu-latest
+    # Minimal matrix in case we want to expand to multiple python versions later
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11"]
+
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "Set up Python ${{ matrix.python-version }}"
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: "Install project requirements (with pip cache)"
+        # Use pip cache to speed up repeated workflow runs. Keep the step
+        # simple and robust across runner images.
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: "Install project requirements"
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: "Run workspace config generator"
+        # We run the generator and explicitly write into a temporary build dir
+        # to mimic configure-time generation used by developers locally.
+        run: |
+          python scripts/generate_workspace_config.py --input config/workflow_toolchain.json --output build/generated/include/workspace_config.generated.h
+
+      - name: "Validate generated overlay"
+        run: |
+          python scripts/validate_generated_overlay.py --file build/generated/include/workspace_config.generated.h
+
+      - name: "Run SSOT validator"
+        # Note: the validator CLI doesn't support --verbose in the current
+        # implementation; run with default args. Increase verbosity locally
+        # if needed by running the script directly.
+        run: |
+          python scripts/validate_ssot.py
+
+      - name: "Upload generated header (artifact)"
+        # Upload the generated header for debugging if validation fails.
+        uses: actions/upload-artifact@v4
+        with:
+          name: workspace_config_generated
+          path: build/generated/include/workspace_config.generated.h
