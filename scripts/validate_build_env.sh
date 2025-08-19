@@ -56,30 +56,46 @@ check_command() {
     fi
 }
 
-# Check ARM GCC toolchain
+# Check ARM GCC toolchain (prefer override, then SSOT JSON, then PATH)
 echo "📋 ARM GCC Toolchain:"
-if which arm-none-eabi-gcc > /dev/null 2>&1; then
-    echo "✅ arm-none-eabi-gcc: $(arm-none-eabi-gcc --version | head -1)"
-    
-    # Check specific tools
-    check_command "arm-none-eabi-g++" || EXIT_CODE=1
-    check_command "arm-none-eabi-gdb" || EXIT_CODE=1
-    check_command "arm-none-eabi-objcopy" || EXIT_CODE=1
-    check_command "arm-none-eabi-size" || EXIT_CODE=1
-    
-    # Check if newlib-nano is available
-    echo -n "newlib-nano: "
-    if find /usr -name "*nano.specs" 2>/dev/null | grep -q nano.specs; then
-        echo "✅ Available"
-    else
-        echo "❌ Not found (specs may fail)"
-        EXIT_CODE=1
-    fi
+if [ -n "${ARM_GCC_OVERRIDE}" ]; then
+    echo "Using ARM_GCC_OVERRIDE=${ARM_GCC_OVERRIDE}"
+    check_command "${ARM_GCC_OVERRIDE}" || EXIT_CODE=1
 else
-    echo "❌ arm-none-eabi-gcc: Not found"
-    echo "   Install with: sudo apt-get install gcc-arm-none-eabi gdb-arm-none-eabi"
-    EXIT_CODE=1
+    if command -v python3 >/dev/null 2>&1 && [ -f "config/workflow_toolchain.json" ]; then
+        ARM_GCC_FROM_JSON=$(python3 scripts/get_toolchain_value.py arm_gcc_executable 2>/dev/null || true)
+        if [ -n "${ARM_GCC_FROM_JSON}" ]; then
+            echo "Checking ARM GCC in SSOT: ${ARM_GCC_FROM_JSON}"
+            if [ -x "${ARM_GCC_FROM_JSON}" ] || command -v "${ARM_GCC_FROM_JSON}" >/dev/null 2>&1; then
+                echo "✅ Found ARM GCC at ${ARM_GCC_FROM_JSON}"
+            else
+                echo "⚠️ ARM GCC not found at ${ARM_GCC_FROM_JSON} - falling back to PATH"
+                check_command "arm-none-eabi-gcc" || EXIT_CODE=1
+            fi
+        else
+            check_command "arm-none-eabi-gcc" || EXIT_CODE=1
+        fi
+    else
+        check_command "arm-none-eabi-gcc" || EXIT_CODE=1
+    fi
 fi
+
+    # If arm-none-eabi-gcc is available (via PATH or override), print version and check related tools
+    if which arm-none-eabi-gcc > /dev/null 2>&1; then
+        echo "✅ arm-none-eabi-gcc: $(arm-none-eabi-gcc --version | head -1)"
+        check_command "arm-none-eabi-g++" || EXIT_CODE=1
+        check_command "arm-none-eabi-gdb" || EXIT_CODE=1
+        check_command "arm-none-eabi-objcopy" || EXIT_CODE=1
+        check_command "arm-none-eabi-size" || EXIT_CODE=1
+
+        echo -n "newlib-nano: "
+        if find /usr -name "*nano.specs" 2>/dev/null | grep -q nano.specs; then
+            echo "✅ Available"
+        else
+            echo "❌ Not found (specs may fail)"
+            EXIT_CODE=1
+        fi
+    fi
 
 echo ""
 

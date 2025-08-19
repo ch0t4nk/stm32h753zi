@@ -1,0 +1,9 @@
+{
+  "stm32cubeclt_base_path": "C:/ST/STM32CubeCLT_1.19.0",
+  "arm_toolchain_base_path": "C:/custom/path/to/GNU-tools-for-STM32/bin",
+  "arm_gcc_executable": "C:/custom/path/to/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.exe",
+  "stm32_programmer_cli_candidates": [
+    "C:/ST/STM32CubeCLT_1.19.0/STM32CubeProgrammer/bin/STM32_Programmer_CLI.exe",
+    "C:/Program Files/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin/STM32_Programmer_CLI.exe"
+  ]
+}

@@ -42,17 +42,33 @@ $fileSizeKB = [math]::Round($fileInfo.Length / 1024, 1)
 Write-ColorOutput $Green "📊 File size: $($fileInfo.Length) bytes ($fileSizeKB KB)"
 
 # Check for ST-Link tools
-$stlinkPaths = @(
-    "C:\ST\STM32CubeCLT_1.18.0\STM32CubeProgrammer\bin\STM32_Programmer_CLI.exe",
-    "C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32_Programmer_CLI.exe",
-    "C:\Program Files (x86)\STMicroelectronics\STM32 ST-LINK Utility\ST-LINK_CLI.exe"
-)
 
+# Prefer environment override, then JSON SSOT candidates, then fallback hardcoded list
 $stlinkTool = $null
-foreach ($path in $stlinkPaths) {
-    if (Test-Path $path) {
-        $stlinkTool = $path
-        break
+if ($env:STM32_PROGRAMMER_CLI) {
+    $stlinkTool = $env:STM32_PROGRAMMER_CLI
+} else {
+    $psHelper = Join-Path $PSScriptRoot "Get-WorkflowToolchain.ps1"
+    if (Test-Path $psHelper) {
+        try {
+            $candidate = & $psHelper "stm32_programmer_cli_candidates" 2>$null
+            if ($candidate -and (Test-Path $candidate)) { $stlinkTool = $candidate }
+        } catch { }
+    }
+}
+
+if (-not $stlinkTool) {
+    $stlinkPaths = @(
+        "C:\ST\STM32CubeCLT_1.18.0\STM32CubeProgrammer\bin\STM32_Programmer_CLI.exe",
+        "C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32_Programmer_CLI.exe",
+        "C:\Program Files (x86)\STMicroelectronics\STM32 ST-LINK Utility\ST-LINK_CLI.exe"
+    )
+
+    foreach ($path in $stlinkPaths) {
+        if (Test-Path $path) {
+            $stlinkTool = $path
+            break
+        }
     }
 }
 

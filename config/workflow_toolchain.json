@@ -1,0 +1,17 @@
+{
+    "stm32cubeclt_version": "1.19.0",
+    "stm32cubeclt_base_path": "C:/ST/STM32CubeCLT_1.19.0",
+    "arm_toolchain_base_path": "${stm32cubeclt_base_path}/GNU-tools-for-STM32/bin",
+    "arm_gcc_executable": "${arm_toolchain_base_path}/arm-none-eabi-gcc.exe",
+    "arm_gpp_executable": "${arm_toolchain_base_path}/arm-none-eabi-g++.exe",
+    "arm_objcopy_executable": "${arm_toolchain_base_path}/arm-none-eabi-objcopy.exe",
+    "cmake_toolchain_file": "cmake/gcc-arm-none-eabi.cmake",
+    "stm32_programmer_cli_candidates": [
+        "${stm32cubeclt_base_path}/STM32CubeProgrammer/bin/STM32_Programmer_CLI.exe",
+        "C:/Program Files/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin/STM32_Programmer_CLI.exe"
+    ],
+    "preferred_host_compiler": "gcc",
+    "cmake_generator_preferred": "Ninja",
+    "python_venv": ".venv",
+    "workspace_root_default": "C:/repos/Nucleo-H753ZI Project/code"
+}

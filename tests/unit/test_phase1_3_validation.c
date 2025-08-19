@@ -24,13 +24,11 @@
 #define M_PI 3.14159265358979323846f
 #endif
 
-// Include only the essential defines we need for testing
-#define SYSTEM_OK 0
-#define ERROR_INVALID_PARAMETER 1
-#define ERROR_BUFFER_OVERFLOW 2
-#define ERROR_INSUFFICIENT_DATA 3
+// Include canonical SSOT error definitions for consistency with firmware
+#include "common/error_codes.h"
 
-typedef int SystemError_t;
+// Provide minimal local compatibility typedefs used by older tests
+typedef SystemError_t SystemError_t;
 
 // Mock telemetry packet structure for testing
 typedef struct {

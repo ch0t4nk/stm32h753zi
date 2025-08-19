@@ -31,9 +31,31 @@ optimization_telemetry_export_json(const CharacterizationDataSet_t *dataset,
     if (dataset == NULL || json_buffer == NULL || output_size == NULL)
         return ERROR_NULL_POINTER;
     // Produce a tiny JSON summary suitable for unit tests
-    const char *template = "{\"motor_id\":%u,\"samples\":%u}";
-    int written = snprintf(json_buffer, buffer_size, template,
-                           dataset->motor_id, (unsigned)dataset->sample_count);
+    /* Produce a minimal JSON including sample_count and a samples array so
+     * unit tests that look for keys and size see reasonable output. */
+    int written =
+        snprintf(json_buffer, buffer_size,
+                 "{\"motor_id\":%u,\"sample_count\":%u,\"samples\":[",
+                 dataset->motor_id, (unsigned)dataset->sample_count);
+    for (uint32_t i = 0; i < dataset->sample_count; i++) {
+        if ((size_t)written < buffer_size - 50) {
+            int n = snprintf(json_buffer + written, buffer_size - written,
+                             "{\"timestamp_us\":%u,\"position\":%.1f}",
+                             dataset->samples[i].timestamp_us,
+                             dataset->samples[i].position_degrees);
+            if (n > 0)
+                written += n;
+            if (i + 1 < dataset->sample_count) {
+                if ((size_t)written < buffer_size - 2) {
+                    json_buffer[written++] = ',';
+                }
+            }
+        }
+    }
+    if ((size_t)written < buffer_size - 2)
+        json_buffer[written++] = ']';
+    if ((size_t)written < buffer_size - 1)
+        json_buffer[written++] = '}';
     if (written < 0)
         return ERROR_OPERATION_FAILED; // use canonical defined error code
     *output_size = (size_t)written;

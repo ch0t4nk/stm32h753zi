@@ -7,7 +7,24 @@
     Verify the actual system performance after Enhanced_SystemClock_Config implementation
 #>
 
-$STM32_PROG_CLI = "C:\ST\STM32CubeCLT_1.19.0\STM32CubeProgrammer\bin\STM32_Programmer_CLI.exe"
+if ($env:STM32_PROGRAMMER_CLI) {
+    $STM32_PROG_CLI = $env:STM32_PROGRAMMER_CLI
+}
+else {
+    # Try JSON SSOT via helper script
+    $psHelper = Join-Path $PSScriptRoot "Get-WorkflowToolchain.ps1"
+    if (Test-Path $psHelper) {
+        try {
+            $candidate = & $psHelper "stm32_programmer_cli_candidates" 2>$null
+            if ($candidate) { $STM32_PROG_CLI = $candidate }
+        }
+        catch { }
+    }
+}
+
+if (-not $STM32_PROG_CLI) {
+    $STM32_PROG_CLI = "C:\ST\STM32CubeCLT_1.19.0\STM32CubeProgrammer\bin\STM32_Programmer_CLI.exe"
+}
 
 function Write-Success { param($Message) Write-Host "✅ $Message" -ForegroundColor Green }
 function Write-Info { param($Message) Write-Host "ℹ️  $Message" -ForegroundColor Cyan }
