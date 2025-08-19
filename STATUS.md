@@ -1,6 +1,6 @@
 # STM32H753ZI Project Status
 
-**Last Updated**: August 18, 2025
+**Last Updated**: August 19, 2025
 **Status**: ✔️ In-progress — firmware builds complete; host-test migration and host-test debugging underway
 **Deployment**: ✅ ARM GCC toolchain configured for firmware builds (see Build section)
 **AI Infrastructure**: ✅ **Semantic Search Production Ready**
@@ -13,6 +13,12 @@
 - Updated PowerShell scripts to resolve STM32 programmer CLI via environment override (`STM32_PROGRAMMER_CLI`) or `scripts/Get-WorkflowToolchain.ps1` (JSON SSOT) with a safe fallback. Affected scripts: `validate_hse_hardware.ps1`, `fix_hse_clock_config.ps1`, `enhanced_hse_fix.ps1`, `debug_system_fault.ps1`, `apply_hse_fix.ps1`, `analyze_pll.ps1`.
 - Replaced absolute CLI paths in STATUS examples with generic `STM32_Programmer_CLI.exe` and guidance to use `STM32_PROGRAMMER_CLI` env var or `Get-WorkflowToolchain.ps1`.
 - Added local override pattern and helper usage to improve cross-developer reproducibility.
+
+### Automated instruction-derived updates
+
+- Synchronized STATUS.md structure with `.github/instructions/status-maintenance.instructions.md` required sections and formatting guidelines (preserved manual Context & Technical sections).
+- Ensured the auto-update process adheres to the Development Workflow rules: post-commit auto-update, feature-tracker integration points, and SSOT-aware script execution (`scripts/run_python_configurable.ps1`).
+- Documented auto-update triggers and preservation rules: timestamps and build metrics auto-generated, while technical context, phase status, and next-steps remain manual-edit preserved.
 
 
 ## Context Transfer & Continuity (for Copilot/Automation)
@@ -44,7 +50,7 @@
 
 ### **🎉 PHASE 2.1 COMPLETE: STM32H753ZI HAL Integration & RTOS Compatibility (ACHIEVED)**
 
-**� MAJOR BREAKTHROUGH**: Successfully achieved complete firmware build with zero errors!
+**MAJOR BREAKTHROUGH**: Successfully achieved complete firmware build with zero errors!
 
 **✅ Build Success Metrics**:
 
@@ -263,5 +269,4 @@ Notes: All runtime instrumentation was added temporarily for debugging and will 
 - **Real-time Monitoring**: Live build/git status, optimized process
 - **VS Code Integration**: Enhanced tasks for build+update, preview
 - **Smart Detection**: Merge commit handling, build context analysis
-- **Performance**: <1s git response, filesystem-first checking
 - **Performance**: <1s git response, filesystem-first checking
