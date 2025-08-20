@@ -15,6 +15,29 @@ Write-Host "STM32H753ZI CMake Quick Fix (Windows)" -ForegroundColor Cyan
 Write-Host "=======================================" -ForegroundColor Cyan
 Write-Host "Build Type: $BuildType (ARM=Firmware, Host=Unit Tests, Both=Dual Build, WSL2=Host Tests in WSL2)" -ForegroundColor Yellow
 
+# Determine script location and workspace root so relative paths work regardless of CWD
+# Prefer the script's parent directory as the workspace root (scripts/ sits under the repo root)
+try {
+    $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+    $WorkspaceRoot = (Resolve-Path (Join-Path $ScriptDir '..')).Path
+}
+catch {
+    # Fallback to current location if resolution fails
+    $WorkspaceRoot = (Get-Location).Path
+}
+
+# Ensure we operate from the workspace root so Test-Path and relative paths are deterministic
+try {
+    Set-Location -Path $WorkspaceRoot
+    Write-Host "Workspace root: $WorkspaceRoot" -ForegroundColor Cyan
+}
+catch {
+    Write-Host "Warning: Failed to set location to workspace root: $WorkspaceRoot" -ForegroundColor Yellow
+}
+
+# Initialize resolved python helper variable early
+$ResolvedPython = $null
+
 # 0. OS Detection - Auto-redirect to bash version if on WSL/Linux
 if ($env:WSL_DISTRO_NAME -or $env:SHELL -or (Test-Path "/usr/bin/bash")) {
     Write-Host "WSL/Linux environment detected - redirecting to bash version..." -ForegroundColor Yellow
