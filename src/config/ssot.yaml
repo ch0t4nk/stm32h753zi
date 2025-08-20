@@ -1,0 +1,16 @@
+# SSOT manifest for documentation and tooling
+last_updated: 2025-08-20
+ssot_sources:
+  firmware_headers:
+    - build_config.h
+    - hardware_config.h
+    - motor_config.h
+    - safety_config.h
+    - telemetry_config.h
+    - comm_config.h
+    - workspace_config.h
+  docs_dir: docs
+  reference_dir: 00_reference
+notes: |
+  This manifest points tooling at the canonical SSOT header files under src/config/.
+  It is used by doc-generation and validation scripts when a YAML SSOT manifest is required.

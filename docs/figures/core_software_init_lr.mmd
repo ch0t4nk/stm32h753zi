@@ -1,0 +1,8 @@
+flowchart LR
+  Init[system_init]
+  RTOS[FreeRTOS]
+  Safety[safety_system]
+  Motor[motor_controller]
+  Init --> RTOS
+  RTOS --> Safety
+  RTOS --> Motor
