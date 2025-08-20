@@ -208,12 +208,12 @@ SystemError_t optimization_telemetry_init(uint8_t motor_id) {
     if (result != SYSTEM_OK)
         return result;
     uint32_t kval_hold_value;
-    result = HAL_Abstraction_L6470_GetParameter(motor_id, CHIP_KVAL_HOLD_ADDR,
+    result = HAL_Abstraction_L6470_GetParameter(motor_id, L6470_KVAL_HOLD_ADDR,
                                                 &kval_hold_value);
     context->cached_kval_hold =
         (result == SYSTEM_OK) ? (uint8_t)kval_hold_value : SSOT_KVAL_DEFAULT;
     uint32_t kval_run_value;
-    result = HAL_Abstraction_L6470_GetParameter(motor_id, CHIP_KVAL_RUN_ADDR,
+    result = HAL_Abstraction_L6470_GetParameter(motor_id, L6470_KVAL_RUN_ADDR,
                                                 &kval_run_value);
     context->cached_kval_run =
         (result == SYSTEM_OK) ? (uint8_t)kval_run_value : SSOT_KVAL_DEFAULT;

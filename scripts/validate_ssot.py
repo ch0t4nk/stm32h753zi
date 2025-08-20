@@ -16,6 +16,17 @@ import re
 import sys
 from pathlib import Path
 from typing import Dict, List, Optional
+import sys
+
+# Ensure stdout/stderr use UTF-8 where possible (Windows default cp1252 can't encode some emoji)
+try:
+    if getattr(sys.stdout, "reconfigure", None):
+        sys.stdout.reconfigure(encoding="utf-8")
+    if getattr(sys.stderr, "reconfigure", None):
+        sys.stderr.reconfigure(encoding="utf-8")
+except Exception:
+    # Best-effort: continue if reconfigure is not supported
+    pass
 
 # SSOT Documentation Configuration - matches documentation_config.h
 WORKSPACE_ROOT = Path.cwd()  # Use current working directory instead of hardcoded path

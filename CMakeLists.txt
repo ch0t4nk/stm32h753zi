@@ -30,6 +30,14 @@ add_compile_definitions(
     FIRMWARE_BUILD=1
 )
 
+# Option to enable legacy (unprefixed) generated register names globally.
+# Default OFF. Use -DUSE_LEGACY_REG_NAMES=ON to enable for a transitional build.
+option(USE_LEGACY_REG_NAMES "Enable legacy unprefixed generated register names" OFF)
+if(USE_LEGACY_REG_NAMES)
+    message(STATUS "Legacy generated register names enabled via CMake option")
+    add_compile_definitions(ENABLE_LEGACY_REG_NAMES=1)
+endif()
+
 # Compiler flags for STM32H753ZI (Cortex-M7)
 
 # Only add GCC/Clang-specific flags for those compilers

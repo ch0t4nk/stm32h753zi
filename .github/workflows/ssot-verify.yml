@@ -1,0 +1,60 @@
+name: SSOT Verification (clang AST)
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify-ssot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install clang
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang
+
+      - name: Generate clang JSON ASTs
+        run: |
+          mkdir -p build/ast-json
+          find src -type f \( -name '*.h' -o -name '*.c' -o -name '*.hpp' -o -name '*.cpp' \) -print0 |
+            xargs -0 -n1 -I{} bash -c 'rel=$(echo "{}" | sed "s|/|_|g"); clang -Xclang -ast-dump=json -fsyntax-only -I src "{}" > "build/ast-json/${rel}.json" 2>&1'
+
+      - name: Aggregate declarations
+        run: |
+          python3 scripts/aggregate_decls.py --ast-dir build/ast-json --out-csv build/all_decls.csv --overlap build/overlaps.csv
+
+      - name: Show overlaps (if any)
+        run: |
+          if [ -f build/overlaps.csv ]; then
+            echo "Overlaps file present:"
+            head -n 50 build/overlaps.csv || true
+          else
+            echo "No overlaps file generated"
+          fi
+
+      - name: Fail on overlaps with non-config files
+        run: |
+          if [ -f build/overlaps.csv ]; then
+            # Skip header and check 'other_files' column (3rd column). Fail only if a non-config path appears.
+            tail -n +2 build/overlaps.csv | awk -F',' '{ if ($3 == "") next; if ($3 !~ /src[\\/]+config/) { print "Overlap with non-config file:"; print $0; exit 1 } }' \
+              || (echo "Found overlap referencing non-config files - failing job" && exit 1)
+          else
+            echo "No overlaps file to check"
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ssot-verification-artifacts
+          path: |
+            build/all_decls.csv
+            build/overlaps.csv
+            build/ast-json/**

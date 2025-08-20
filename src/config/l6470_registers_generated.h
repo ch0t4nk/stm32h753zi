@@ -2,7 +2,7 @@
  * @file l6470_registers_generated.h
  * @brief L6470 Register Definitions - Auto-Generated from Schema
  * @version 1.0
- * @date 2025-08-18 16:22:14
+ * @date 2025-08-20 17:00:50
  *
  * ⚠️  WARNING: AUTO-GENERATED FILE - DO NOT EDIT MANUALLY
  * This file is generated from YAML schema definitions.
@@ -18,208 +18,197 @@
 #ifndef L6470_REGISTERS_GENERATED_H
 #define L6470_REGISTERS_GENERATED_H
 
+
 /* Required includes for SSOT integration */
+#include <stdint.h>
+#include <stdbool.h>
 #include "common/error_codes.h"
 #include "hal_abstraction/hal_abstraction.h"
-#include <stdbool.h>
-#include <stdint.h>
 
-/* ==========================================================================
- */
+/* ========================================================================== */
 /* Register Address Definitions                                              */
-/* ==========================================================================
- */
-#define CHIP_ABS_POS_ADDR 0x01   /* Current motor absolute position */
-#define CHIP_EL_POS_ADDR 0x02    /* Current motor electrical position */
-#define CHIP_MARK_ADDR 0x03      /* Mark position register */
-#define CHIP_SPEED_ADDR 0x04     /* Current motor speed */
-#define CHIP_ACC_ADDR 0x05       /* Acceleration rate */
-#define CHIP_DEC_ADDR 0x06       /* Deceleration rate */
-#define CHIP_MAX_SPEED_ADDR 0x07 /* Maximum speed */
-#define CHIP_MIN_SPEED_ADDR 0x08 /* Minimum speed */
-#define CHIP_KVAL_HOLD_ADDR 0x09 /* Holding KVAL */
-#define CHIP_KVAL_RUN_ADDR 0x0A  /* Running KVAL */
-#define CHIP_KVAL_ACC_ADDR 0x0B  /* Acceleration KVAL */
-#define CHIP_KVAL_DEC_ADDR 0x0C  /* Deceleration KVAL */
-#define CHIP_INT_SPD_ADDR 0x0D   /* Intersect speed */
-#define CHIP_FS_SPD_ADDR 0x15    /* Full step speed */
-#define CHIP_OCD_TH_ADDR 0x13    /* Overcurrent detection threshold */
-#define CHIP_STALL_TH_ADDR 0x14  /* Stall detection threshold */
-#define CHIP_STEP_MODE_ADDR 0x16 /* Step mode and sync configuration */
-#define CHIP_ALARM_EN_ADDR 0x17  /* Alarm enable register */
-#define CHIP_CONFIG_ADDR 0x18    /* Device configuration register */
-#define CHIP_STATUS_ADDR 0x19    /* Device status register */
+/* ========================================================================== */
+#define L6470_ABS_POS_ADDR    0x01    /* Current motor absolute position */
+#define L6470_EL_POS_ADDR    0x02    /* Current motor electrical position */
+#define L6470_MARK_ADDR    0x03    /* Mark position register */
+#define L6470_SPEED_ADDR    0x04    /* Current motor speed */
+#define L6470_ACC_ADDR    0x05    /* Acceleration rate */
+#define L6470_DEC_ADDR    0x06    /* Deceleration rate */
+#define L6470_MAX_SPEED_ADDR    0x07    /* Maximum speed */
+#define L6470_MIN_SPEED_ADDR    0x08    /* Minimum speed */
+#define L6470_KVAL_HOLD_ADDR    0x09    /* Holding KVAL */
+#define L6470_KVAL_RUN_ADDR    0x0A    /* Running KVAL */
+#define L6470_KVAL_ACC_ADDR    0x0B    /* Acceleration KVAL */
+#define L6470_KVAL_DEC_ADDR    0x0C    /* Deceleration KVAL */
+#define L6470_INT_SPD_ADDR    0x0D    /* Intersect speed */
+#define L6470_FS_SPD_ADDR    0x15    /* Full step speed */
+#define L6470_OCD_TH_ADDR    0x13    /* Overcurrent detection threshold */
+#define L6470_STALL_TH_ADDR    0x14    /* Stall detection threshold */
+#define L6470_STEP_MODE_ADDR    0x16    /* Step mode and sync configuration */
+#define L6470_ALARM_EN_ADDR    0x17    /* Alarm enable register */
+#define L6470_CONFIG_ADDR    0x18    /* Device configuration register */
+#define L6470_STATUS_ADDR    0x19    /* Device status register */
 
-/* ==========================================================================
- */
+/* ========================================================================== */
 /* Register Mask Definitions                                                 */
-/* ==========================================================================
- */
-#define ABS_POS_MASK 0x3FFFFF
-#define EL_POS_MASK 0x01FF
-#define MARK_MASK 0x3FFFFF
-#define SPEED_MASK 0x0FFFFF
-#define ACC_MASK 0x0FFF
-#define DEC_MASK 0x0FFF
-#define MAX_SPEED_MASK 0x03FF
-#define MIN_SPEED_MASK 0x0FFF
-#define KVAL_HOLD_MASK 0xFF
-#define KVAL_RUN_MASK 0xFF
-#define KVAL_ACC_MASK 0xFF
-#define KVAL_DEC_MASK 0xFF
-#define INT_SPD_MASK 0x3FFF
-#define FS_SPD_MASK 0x03FF
-#define OCD_TH_MASK 0x1F
-#define STALL_TH_MASK 0x7F
-#define STEP_MODE_MASK 0xFF
-#define ALARM_EN_MASK 0xFF
-#define CONFIG_MASK 0xFFFF
-#define STATUS_MASK 0xFFFF
+/* ========================================================================== */
+#define L6470_ABS_POS_MASK        0x3FFFFF
+#define L6470_EL_POS_MASK        0x01FF
+#define L6470_MARK_MASK        0x3FFFFF
+#define L6470_SPEED_MASK        0x0FFFFF
+#define L6470_ACC_MASK        0x0FFF
+#define L6470_DEC_MASK        0x0FFF
+#define L6470_MAX_SPEED_MASK        0x03FF
+#define L6470_MIN_SPEED_MASK        0x0FFF
+#define L6470_KVAL_HOLD_MASK        0xFF
+#define L6470_KVAL_RUN_MASK        0xFF
+#define L6470_KVAL_ACC_MASK        0xFF
+#define L6470_KVAL_DEC_MASK        0xFF
+#define L6470_INT_SPD_MASK        0x3FFF
+#define L6470_FS_SPD_MASK        0x03FF
+#define L6470_OCD_TH_MASK        0x1F
+#define L6470_STALL_TH_MASK        0x7F
+#define L6470_STEP_MODE_MASK        0xFF
+#define L6470_ALARM_EN_MASK        0xFF
+#define L6470_CONFIG_MASK        0xFFFF
+#define L6470_STATUS_MASK        0xFFFF
 
-/* ==========================================================================
- */
+/* ========================================================================== */
 /* Register Field Definitions                                                */
-/* ==========================================================================
- */
+/* ========================================================================== */
 /* STEP_MODE register fields */
-#define STEP_MODE_STEP_SEL_POS 0
-#define STEP_MODE_STEP_SEL_MSK 0x0007
-#define STEP_MODE_STEP_SEL_FULL_STEP 0x0000
-#define STEP_MODE_STEP_SEL_HALF_STEP 0x0001
-#define STEP_MODE_STEP_SEL_1_4_STEP 0x0002
-#define STEP_MODE_STEP_SEL_1_8_STEP 0x0003
-#define STEP_MODE_STEP_SEL_1_16_STEP 0x0004
-#define STEP_MODE_STEP_SEL_1_32_STEP 0x0005
-#define STEP_MODE_STEP_SEL_1_64_STEP 0x0006
-#define STEP_MODE_STEP_SEL_1_128_STEP 0x0007
-#define STEP_MODE_SYNC_SEL_POS 4
-#define STEP_MODE_SYNC_SEL_MSK 0x0070
-#define STEP_MODE_SYNC_SEL_1_2_FS_SPD 0x0000
-#define STEP_MODE_SYNC_SEL_FS_SPD 0x0010
-#define STEP_MODE_SYNC_SEL_2_FS_SPD 0x0020
-#define STEP_MODE_SYNC_SEL_4_FS_SPD 0x0030
-#define STEP_MODE_SYNC_SEL_8_FS_SPD 0x0040
-#define STEP_MODE_SYNC_SEL_16_FS_SPD 0x0050
-#define STEP_MODE_SYNC_SEL_32_FS_SPD 0x0060
-#define STEP_MODE_SYNC_SEL_64_FS_SPD 0x0070
-#define STEP_MODE_SYNC_EN_POS 7
-#define STEP_MODE_SYNC_EN_MSK 0x0080
-#define STEP_MODE_SYNC_EN_SYNC_DISABLED 0x0000
-#define STEP_MODE_SYNC_EN_SYNC_ENABLED 0x0080
+#define L6470_STEP_MODE_STEP_SEL_POS    0
+#define L6470_STEP_MODE_STEP_SEL_MSK    0x0007
+#define L6470_STEP_MODE_STEP_SEL_FULL_STEP    0x0000
+#define L6470_STEP_MODE_STEP_SEL_HALF_STEP    0x0001
+#define L6470_STEP_MODE_STEP_SEL__1_4_STEP    0x0002
+#define L6470_STEP_MODE_STEP_SEL__1_8_STEP    0x0003
+#define L6470_STEP_MODE_STEP_SEL__1_16_STEP    0x0004
+#define L6470_STEP_MODE_STEP_SEL__1_32_STEP    0x0005
+#define L6470_STEP_MODE_STEP_SEL__1_64_STEP    0x0006
+#define L6470_STEP_MODE_STEP_SEL__1_128_STEP    0x0007
+#define L6470_STEP_MODE_SYNC_SEL_POS    4
+#define L6470_STEP_MODE_SYNC_SEL_MSK    0x0070
+#define L6470_STEP_MODE_SYNC_SEL__1_2_FS_SPD    0x0000
+#define L6470_STEP_MODE_SYNC_SEL_FS_SPD    0x0010
+#define L6470_STEP_MODE_SYNC_SEL__2_FS_SPD    0x0020
+#define L6470_STEP_MODE_SYNC_SEL__4_FS_SPD    0x0030
+#define L6470_STEP_MODE_SYNC_SEL__8_FS_SPD    0x0040
+#define L6470_STEP_MODE_SYNC_SEL__16_FS_SPD    0x0050
+#define L6470_STEP_MODE_SYNC_SEL__32_FS_SPD    0x0060
+#define L6470_STEP_MODE_SYNC_SEL__64_FS_SPD    0x0070
+#define L6470_STEP_MODE_SYNC_EN_POS    7
+#define L6470_STEP_MODE_SYNC_EN_MSK    0x0080
+#define L6470_STEP_MODE_SYNC_EN_SYNC_DISABLED    0x0000
+#define L6470_STEP_MODE_SYNC_EN_SYNC_ENABLED    0x0080
 
 /* ALARM_EN register fields */
-#define ALARM_EN_OVERCURRENT_POS 0
-#define ALARM_EN_OVERCURRENT_MSK 0x0001
-#define ALARM_EN_THERMAL_SHUTDOWN_POS 1
-#define ALARM_EN_THERMAL_SHUTDOWN_MSK 0x0002
-#define ALARM_EN_THERMAL_WARNING_POS 2
-#define ALARM_EN_THERMAL_WARNING_MSK 0x0004
-#define ALARM_EN_UVLO_POS 3
-#define ALARM_EN_UVLO_MSK 0x0008
-#define ALARM_EN_STALL_A_POS 4
-#define ALARM_EN_STALL_A_MSK 0x0010
-#define ALARM_EN_STALL_B_POS 5
-#define ALARM_EN_STALL_B_MSK 0x0020
-#define ALARM_EN_SWITCH_POS 6
-#define ALARM_EN_SWITCH_MSK 0x0040
-#define ALARM_EN_WRONG_CMD_POS 7
-#define ALARM_EN_WRONG_CMD_MSK 0x0080
+#define L6470_ALARM_EN_OVERCURRENT_POS    0
+#define L6470_ALARM_EN_OVERCURRENT_MSK    0x0001
+#define L6470_ALARM_EN_THERMAL_SHUTDOWN_POS    1
+#define L6470_ALARM_EN_THERMAL_SHUTDOWN_MSK    0x0002
+#define L6470_ALARM_EN_THERMAL_WARNING_POS    2
+#define L6470_ALARM_EN_THERMAL_WARNING_MSK    0x0004
+#define L6470_ALARM_EN_UVLO_POS    3
+#define L6470_ALARM_EN_UVLO_MSK    0x0008
+#define L6470_ALARM_EN_STALL_A_POS    4
+#define L6470_ALARM_EN_STALL_A_MSK    0x0010
+#define L6470_ALARM_EN_STALL_B_POS    5
+#define L6470_ALARM_EN_STALL_B_MSK    0x0020
+#define L6470_ALARM_EN_SWITCH_POS    6
+#define L6470_ALARM_EN_SWITCH_MSK    0x0040
+#define L6470_ALARM_EN_WRONG_CMD_POS    7
+#define L6470_ALARM_EN_WRONG_CMD_MSK    0x0080
 
 /* CONFIG register fields */
-#define CONFIG_OSC_SEL_POS 0
-#define CONFIG_OSC_SEL_MSK 0x0007
-#define CONFIG_EXT_CLK_POS 3
-#define CONFIG_EXT_CLK_MSK 0x0008
-#define CONFIG_SW_MODE_POS 4
-#define CONFIG_SW_MODE_MSK 0x0010
-#define CONFIG_EN_VSCOMP_POS 5
-#define CONFIG_EN_VSCOMP_MSK 0x0020
-#define CONFIG_OC_SD_POS 7
-#define CONFIG_OC_SD_MSK 0x0080
-#define CONFIG_POW_SR_POS 8
-#define CONFIG_POW_SR_MSK 0x0300
-#define CONFIG_F_PWM_DEC_POS 10
-#define CONFIG_F_PWM_DEC_MSK 0x1C00
-#define CONFIG_F_PWM_INT_POS 13
-#define CONFIG_F_PWM_INT_MSK 0xE000
+#define L6470_CONFIG_OSC_SEL_POS    0
+#define L6470_CONFIG_OSC_SEL_MSK    0x0007
+#define L6470_CONFIG_EXT_CLK_POS    3
+#define L6470_CONFIG_EXT_CLK_MSK    0x0008
+#define L6470_CONFIG_SW_MODE_POS    4
+#define L6470_CONFIG_SW_MODE_MSK    0x0010
+#define L6470_CONFIG_EN_VSCOMP_POS    5
+#define L6470_CONFIG_EN_VSCOMP_MSK    0x0020
+#define L6470_CONFIG_OC_SD_POS    7
+#define L6470_CONFIG_OC_SD_MSK    0x0080
+#define L6470_CONFIG_POW_SR_POS    8
+#define L6470_CONFIG_POW_SR_MSK    0x0300
+#define L6470_CONFIG_F_PWM_DEC_POS    10
+#define L6470_CONFIG_F_PWM_DEC_MSK    0x1C00
+#define L6470_CONFIG_F_PWM_INT_POS    13
+#define L6470_CONFIG_F_PWM_INT_MSK    0xE000
 
 /* STATUS register fields */
-#define STATUS_HIZ_POS 0
-#define STATUS_HIZ_MSK 0x0001
-#define STATUS_BUSY_POS 1
-#define STATUS_BUSY_MSK 0x0002
-#define STATUS_SW_F_POS 2
-#define STATUS_SW_F_MSK 0x0004
-#define STATUS_SW_EVN_POS 3
-#define STATUS_SW_EVN_MSK 0x0008
-#define STATUS_DIR_POS 4
-#define STATUS_DIR_MSK 0x0010
-#define STATUS_MOT_STATUS_POS 5
-#define STATUS_MOT_STATUS_MSK 0x0060
-#define STATUS_MOT_STATUS_STOPPED 0x0000
-#define STATUS_MOT_STATUS_ACCELERATION 0x0020
-#define STATUS_MOT_STATUS_DECELERATION 0x0040
-#define STATUS_MOT_STATUS_CONSTANT_SPEED 0x0060
-#define STATUS_NOTPERF_CMD_POS 7
-#define STATUS_NOTPERF_CMD_MSK 0x0080
-#define STATUS_WRONG_CMD_POS 8
-#define STATUS_WRONG_CMD_MSK 0x0100
-#define STATUS_UVLO_POS 9
-#define STATUS_UVLO_MSK 0x0200
-#define STATUS_TH_WRN_POS 10
-#define STATUS_TH_WRN_MSK 0x0400
-#define STATUS_TH_SD_POS 11
-#define STATUS_TH_SD_MSK 0x0800
-#define STATUS_OCD_POS 12
-#define STATUS_OCD_MSK 0x1000
-#define STATUS_STEP_LOSS_A_POS 13
-#define STATUS_STEP_LOSS_A_MSK 0x2000
-#define STATUS_STEP_LOSS_B_POS 14
-#define STATUS_STEP_LOSS_B_MSK 0x4000
-#define STATUS_SCK_MOD_POS 15
-#define STATUS_SCK_MOD_MSK 0x8000
+#define L6470_STATUS_HIZ_POS    0
+#define L6470_STATUS_HIZ_MSK    0x0001
+#define L6470_STATUS_BUSY_POS    1
+#define L6470_STATUS_BUSY_MSK    0x0002
+#define L6470_STATUS_SW_F_POS    2
+#define L6470_STATUS_SW_F_MSK    0x0004
+#define L6470_STATUS_SW_EVN_POS    3
+#define L6470_STATUS_SW_EVN_MSK    0x0008
+#define L6470_STATUS_DIR_POS    4
+#define L6470_STATUS_DIR_MSK    0x0010
+#define L6470_STATUS_MOT_STATUS_POS    5
+#define L6470_STATUS_MOT_STATUS_MSK    0x0060
+#define L6470_STATUS_MOT_STATUS_STOPPED    0x0000
+#define L6470_STATUS_MOT_STATUS_ACCELERATION    0x0020
+#define L6470_STATUS_MOT_STATUS_DECELERATION    0x0040
+#define L6470_STATUS_MOT_STATUS_CONSTANT_SPEED    0x0060
+#define L6470_STATUS_NOTPERF_CMD_POS    7
+#define L6470_STATUS_NOTPERF_CMD_MSK    0x0080
+#define L6470_STATUS_WRONG_CMD_POS    8
+#define L6470_STATUS_WRONG_CMD_MSK    0x0100
+#define L6470_STATUS_UVLO_POS    9
+#define L6470_STATUS_UVLO_MSK    0x0200
+#define L6470_STATUS_TH_WRN_POS    10
+#define L6470_STATUS_TH_WRN_MSK    0x0400
+#define L6470_STATUS_TH_SD_POS    11
+#define L6470_STATUS_TH_SD_MSK    0x0800
+#define L6470_STATUS_OCD_POS    12
+#define L6470_STATUS_OCD_MSK    0x1000
+#define L6470_STATUS_STEP_LOSS_A_POS    13
+#define L6470_STATUS_STEP_LOSS_A_MSK    0x2000
+#define L6470_STATUS_STEP_LOSS_B_POS    14
+#define L6470_STATUS_STEP_LOSS_B_MSK    0x4000
+#define L6470_STATUS_SCK_MOD_POS    15
+#define L6470_STATUS_SCK_MOD_MSK    0x8000
 
-/* ==========================================================================
- */
+/* ========================================================================== */
 /* Command Definitions                                                       */
-/* ==========================================================================
- */
-#define CMD_NOP 0x00          /* No operation */
-#define CMD_SET_PARAM 0x00    /* Set parameter */
-#define CMD_GET_PARAM 0x20    /* Get parameter */
-#define CMD_RUN 0x50          /* Run at given speed */
-#define CMD_STEP_CLOCK 0x58   /* Step clock mode */
-#define CMD_MOVE 0x40         /* Move N steps */
-#define CMD_GOTO 0x60         /* Go to absolute position */
-#define CMD_GOTO_DIR 0x68     /* Go to position via direction */
-#define CMD_GO_UNTIL 0x82     /* Go until switch */
-#define CMD_RELEASE_SW 0x92   /* Release switch */
-#define CMD_GO_HOME 0x70      /* Go to home position */
-#define CMD_GO_MARK 0x78      /* Go to mark position */
-#define CMD_RESET_POS 0xD8    /* Reset position to zero */
-#define CMD_RESET_DEVICE 0xC0 /* Reset device */
-#define CMD_SOFT_STOP 0xB0    /* Soft stop */
-#define CMD_HARD_STOP 0xB8    /* Hard stop */
-#define CMD_SOFT_HIZ 0xA0     /* Soft HiZ */
-#define CMD_HARD_HIZ 0xA8     /* Hard HiZ */
-#define CMD_GET_STATUS 0xD0   /* Get status and clear flags */
+/* ========================================================================== */
+#define L6470_CMD_NOP    0x00    /* No operation */
+#define L6470_CMD_SET_PARAM    0x00    /* Set parameter */
+#define L6470_CMD_GET_PARAM    0x20    /* Get parameter */
+#define L6470_CMD_RUN    0x50    /* Run at given speed */
+#define L6470_CMD_STEP_CLOCK    0x58    /* Step clock mode */
+#define L6470_CMD_MOVE    0x40    /* Move N steps */
+#define L6470_CMD_GOTO    0x60    /* Go to absolute position */
+#define L6470_CMD_GOTO_DIR    0x68    /* Go to position via direction */
+#define L6470_CMD_GO_UNTIL    0x82    /* Go until switch */
+#define L6470_CMD_RELEASE_SW    0x92    /* Release switch */
+#define L6470_CMD_GO_HOME    0x70    /* Go to home position */
+#define L6470_CMD_GO_MARK    0x78    /* Go to mark position */
+#define L6470_CMD_RESET_POS    0xD8    /* Reset position to zero */
+#define L6470_CMD_RESET_DEVICE    0xC0    /* Reset device */
+#define L6470_CMD_SOFT_STOP    0xB0    /* Soft stop */
+#define L6470_CMD_HARD_STOP    0xB8    /* Hard stop */
+#define L6470_CMD_SOFT_HIZ    0xA0    /* Soft HiZ */
+#define L6470_CMD_HARD_HIZ    0xA8    /* Hard HiZ */
+#define L6470_CMD_GET_STATUS    0xD0    /* Get status and clear flags */
 
-/* ==========================================================================
- */
+/* ========================================================================== */
 /* Validation Constants                                                      */
-/* ==========================================================================
- */
+/* ========================================================================== */
 /* Safe default values */
-#define OCD_TH_SAFE_DEFAULT 0x0008
-#define STALL_TH_SAFE_DEFAULT 0x0040
-#define MAX_SPEED_SAFE_DEFAULT 0x0041
-#define KVAL_RUN_SAFE_DEFAULT 0x0029
+#define L6470_OCD_TH_SAFE_DEFAULT    0x0008
+#define L6470_STALL_TH_SAFE_DEFAULT    0x0040
+#define L6470_MAX_SPEED_SAFE_DEFAULT    0x0041
+#define L6470_KVAL_RUN_SAFE_DEFAULT    0x0029
 
-/* ==========================================================================
- */
+/* ========================================================================== */
 /* Register Access Function Declarations                                    */
-/* ==========================================================================
- */
+/* ========================================================================== */
 
 #ifdef __cplusplus
 extern "C" {
@@ -250,5 +239,202 @@ bool l6470_is_critical_register(uint8_t reg_addr);
 #ifdef __cplusplus
 }
 #endif
+
+#ifdef ENABLE_LEGACY_REG_NAMES
+/* Legacy register names enabled */
+#define ABS_POS_ADDR L6470_ABS_POS_ADDR
+#define CHIP_ABS_POS_ADDR L6470_ABS_POS_ADDR
+#define EL_POS_ADDR L6470_EL_POS_ADDR
+#define CHIP_EL_POS_ADDR L6470_EL_POS_ADDR
+#define MARK_ADDR L6470_MARK_ADDR
+#define CHIP_MARK_ADDR L6470_MARK_ADDR
+#define SPEED_ADDR L6470_SPEED_ADDR
+#define CHIP_SPEED_ADDR L6470_SPEED_ADDR
+#define ACC_ADDR L6470_ACC_ADDR
+#define CHIP_ACC_ADDR L6470_ACC_ADDR
+#define DEC_ADDR L6470_DEC_ADDR
+#define CHIP_DEC_ADDR L6470_DEC_ADDR
+#define MAX_SPEED_ADDR L6470_MAX_SPEED_ADDR
+#define CHIP_MAX_SPEED_ADDR L6470_MAX_SPEED_ADDR
+#define MIN_SPEED_ADDR L6470_MIN_SPEED_ADDR
+#define CHIP_MIN_SPEED_ADDR L6470_MIN_SPEED_ADDR
+#define KVAL_HOLD_ADDR L6470_KVAL_HOLD_ADDR
+#define CHIP_KVAL_HOLD_ADDR L6470_KVAL_HOLD_ADDR
+#define KVAL_RUN_ADDR L6470_KVAL_RUN_ADDR
+#define CHIP_KVAL_RUN_ADDR L6470_KVAL_RUN_ADDR
+#define KVAL_ACC_ADDR L6470_KVAL_ACC_ADDR
+#define CHIP_KVAL_ACC_ADDR L6470_KVAL_ACC_ADDR
+#define KVAL_DEC_ADDR L6470_KVAL_DEC_ADDR
+#define CHIP_KVAL_DEC_ADDR L6470_KVAL_DEC_ADDR
+#define INT_SPD_ADDR L6470_INT_SPD_ADDR
+#define CHIP_INT_SPD_ADDR L6470_INT_SPD_ADDR
+#define FS_SPD_ADDR L6470_FS_SPD_ADDR
+#define CHIP_FS_SPD_ADDR L6470_FS_SPD_ADDR
+#define OCD_TH_ADDR L6470_OCD_TH_ADDR
+#define CHIP_OCD_TH_ADDR L6470_OCD_TH_ADDR
+#define STALL_TH_ADDR L6470_STALL_TH_ADDR
+#define CHIP_STALL_TH_ADDR L6470_STALL_TH_ADDR
+#define STEP_MODE_ADDR L6470_STEP_MODE_ADDR
+#define CHIP_STEP_MODE_ADDR L6470_STEP_MODE_ADDR
+#define ALARM_EN_ADDR L6470_ALARM_EN_ADDR
+#define CHIP_ALARM_EN_ADDR L6470_ALARM_EN_ADDR
+#define CONFIG_ADDR L6470_CONFIG_ADDR
+#define CHIP_CONFIG_ADDR L6470_CONFIG_ADDR
+#define STATUS_ADDR L6470_STATUS_ADDR
+#define CHIP_STATUS_ADDR L6470_STATUS_ADDR
+#define ABS_POS_MASK L6470_ABS_POS_MASK
+#define CHIP_ABS_POS_MASK L6470_ABS_POS_MASK
+#define EL_POS_MASK L6470_EL_POS_MASK
+#define CHIP_EL_POS_MASK L6470_EL_POS_MASK
+#define MARK_MASK L6470_MARK_MASK
+#define CHIP_MARK_MASK L6470_MARK_MASK
+#define SPEED_MASK L6470_SPEED_MASK
+#define CHIP_SPEED_MASK L6470_SPEED_MASK
+#define ACC_MASK L6470_ACC_MASK
+#define CHIP_ACC_MASK L6470_ACC_MASK
+#define DEC_MASK L6470_DEC_MASK
+#define CHIP_DEC_MASK L6470_DEC_MASK
+#define MAX_SPEED_MASK L6470_MAX_SPEED_MASK
+#define CHIP_MAX_SPEED_MASK L6470_MAX_SPEED_MASK
+#define MIN_SPEED_MASK L6470_MIN_SPEED_MASK
+#define CHIP_MIN_SPEED_MASK L6470_MIN_SPEED_MASK
+#define KVAL_HOLD_MASK L6470_KVAL_HOLD_MASK
+#define CHIP_KVAL_HOLD_MASK L6470_KVAL_HOLD_MASK
+#define KVAL_RUN_MASK L6470_KVAL_RUN_MASK
+#define CHIP_KVAL_RUN_MASK L6470_KVAL_RUN_MASK
+#define KVAL_ACC_MASK L6470_KVAL_ACC_MASK
+#define CHIP_KVAL_ACC_MASK L6470_KVAL_ACC_MASK
+#define KVAL_DEC_MASK L6470_KVAL_DEC_MASK
+#define CHIP_KVAL_DEC_MASK L6470_KVAL_DEC_MASK
+#define INT_SPD_MASK L6470_INT_SPD_MASK
+#define CHIP_INT_SPD_MASK L6470_INT_SPD_MASK
+#define FS_SPD_MASK L6470_FS_SPD_MASK
+#define CHIP_FS_SPD_MASK L6470_FS_SPD_MASK
+#define OCD_TH_MASK L6470_OCD_TH_MASK
+#define CHIP_OCD_TH_MASK L6470_OCD_TH_MASK
+#define STALL_TH_MASK L6470_STALL_TH_MASK
+#define CHIP_STALL_TH_MASK L6470_STALL_TH_MASK
+#define STEP_MODE_MASK L6470_STEP_MODE_MASK
+#define CHIP_STEP_MODE_MASK L6470_STEP_MODE_MASK
+#define ALARM_EN_MASK L6470_ALARM_EN_MASK
+#define CHIP_ALARM_EN_MASK L6470_ALARM_EN_MASK
+#define CONFIG_MASK L6470_CONFIG_MASK
+#define CHIP_CONFIG_MASK L6470_CONFIG_MASK
+#define STATUS_MASK L6470_STATUS_MASK
+#define CHIP_STATUS_MASK L6470_STATUS_MASK
+#define STEP_MODE_STEP_SEL_POS L6470_STEP_MODE_STEP_SEL_POS
+#define STEP_MODE_STEP_SEL_MSK L6470_STEP_MODE_STEP_SEL_MSK
+#define STEP_MODE_STEP_SEL_FULL_STEP L6470_STEP_MODE_STEP_SEL_FULL_STEP
+#define STEP_MODE_STEP_SEL_HALF_STEP L6470_STEP_MODE_STEP_SEL_HALF_STEP
+#define STEP_MODE_STEP_SEL_1_4_STEP L6470_STEP_MODE_STEP_SEL__1_4_STEP
+#define STEP_MODE_STEP_SEL_1_8_STEP L6470_STEP_MODE_STEP_SEL__1_8_STEP
+#define STEP_MODE_STEP_SEL_1_16_STEP L6470_STEP_MODE_STEP_SEL__1_16_STEP
+#define STEP_MODE_STEP_SEL_1_32_STEP L6470_STEP_MODE_STEP_SEL__1_32_STEP
+#define STEP_MODE_STEP_SEL_1_64_STEP L6470_STEP_MODE_STEP_SEL__1_64_STEP
+#define STEP_MODE_STEP_SEL_1_128_STEP L6470_STEP_MODE_STEP_SEL__1_128_STEP
+#define STEP_MODE_SYNC_SEL_POS L6470_STEP_MODE_SYNC_SEL_POS
+#define STEP_MODE_SYNC_SEL_MSK L6470_STEP_MODE_SYNC_SEL_MSK
+#define STEP_MODE_SYNC_SEL_1_2_FS_SPD L6470_STEP_MODE_SYNC_SEL__1_2_FS_SPD
+#define STEP_MODE_SYNC_SEL_FS_SPD L6470_STEP_MODE_SYNC_SEL_FS_SPD
+#define STEP_MODE_SYNC_SEL_2_FS_SPD L6470_STEP_MODE_SYNC_SEL__2_FS_SPD
+#define STEP_MODE_SYNC_SEL_4_FS_SPD L6470_STEP_MODE_SYNC_SEL__4_FS_SPD
+#define STEP_MODE_SYNC_SEL_8_FS_SPD L6470_STEP_MODE_SYNC_SEL__8_FS_SPD
+#define STEP_MODE_SYNC_SEL_16_FS_SPD L6470_STEP_MODE_SYNC_SEL__16_FS_SPD
+#define STEP_MODE_SYNC_SEL_32_FS_SPD L6470_STEP_MODE_SYNC_SEL__32_FS_SPD
+#define STEP_MODE_SYNC_SEL_64_FS_SPD L6470_STEP_MODE_SYNC_SEL__64_FS_SPD
+#define STEP_MODE_SYNC_EN_POS L6470_STEP_MODE_SYNC_EN_POS
+#define STEP_MODE_SYNC_EN_MSK L6470_STEP_MODE_SYNC_EN_MSK
+#define STEP_MODE_SYNC_EN_SYNC_DISABLED L6470_STEP_MODE_SYNC_EN_SYNC_DISABLED
+#define STEP_MODE_SYNC_EN_SYNC_ENABLED L6470_STEP_MODE_SYNC_EN_SYNC_ENABLED
+#define ALARM_EN_OVERCURRENT_POS L6470_ALARM_EN_OVERCURRENT_POS
+#define ALARM_EN_OVERCURRENT_MSK L6470_ALARM_EN_OVERCURRENT_MSK
+#define ALARM_EN_THERMAL_SHUTDOWN_POS L6470_ALARM_EN_THERMAL_SHUTDOWN_POS
+#define ALARM_EN_THERMAL_SHUTDOWN_MSK L6470_ALARM_EN_THERMAL_SHUTDOWN_MSK
+#define ALARM_EN_THERMAL_WARNING_POS L6470_ALARM_EN_THERMAL_WARNING_POS
+#define ALARM_EN_THERMAL_WARNING_MSK L6470_ALARM_EN_THERMAL_WARNING_MSK
+#define ALARM_EN_UVLO_POS L6470_ALARM_EN_UVLO_POS
+#define ALARM_EN_UVLO_MSK L6470_ALARM_EN_UVLO_MSK
+#define ALARM_EN_STALL_A_POS L6470_ALARM_EN_STALL_A_POS
+#define ALARM_EN_STALL_A_MSK L6470_ALARM_EN_STALL_A_MSK
+#define ALARM_EN_STALL_B_POS L6470_ALARM_EN_STALL_B_POS
+#define ALARM_EN_STALL_B_MSK L6470_ALARM_EN_STALL_B_MSK
+#define ALARM_EN_SWITCH_POS L6470_ALARM_EN_SWITCH_POS
+#define ALARM_EN_SWITCH_MSK L6470_ALARM_EN_SWITCH_MSK
+#define ALARM_EN_WRONG_CMD_POS L6470_ALARM_EN_WRONG_CMD_POS
+#define ALARM_EN_WRONG_CMD_MSK L6470_ALARM_EN_WRONG_CMD_MSK
+#define CONFIG_OSC_SEL_POS L6470_CONFIG_OSC_SEL_POS
+#define CONFIG_OSC_SEL_MSK L6470_CONFIG_OSC_SEL_MSK
+#define CONFIG_EXT_CLK_POS L6470_CONFIG_EXT_CLK_POS
+#define CONFIG_EXT_CLK_MSK L6470_CONFIG_EXT_CLK_MSK
+#define CONFIG_SW_MODE_POS L6470_CONFIG_SW_MODE_POS
+#define CONFIG_SW_MODE_MSK L6470_CONFIG_SW_MODE_MSK
+#define CONFIG_EN_VSCOMP_POS L6470_CONFIG_EN_VSCOMP_POS
+#define CONFIG_EN_VSCOMP_MSK L6470_CONFIG_EN_VSCOMP_MSK
+#define CONFIG_OC_SD_POS L6470_CONFIG_OC_SD_POS
+#define CONFIG_OC_SD_MSK L6470_CONFIG_OC_SD_MSK
+#define CONFIG_POW_SR_POS L6470_CONFIG_POW_SR_POS
+#define CONFIG_POW_SR_MSK L6470_CONFIG_POW_SR_MSK
+#define CONFIG_F_PWM_DEC_POS L6470_CONFIG_F_PWM_DEC_POS
+#define CONFIG_F_PWM_DEC_MSK L6470_CONFIG_F_PWM_DEC_MSK
+#define CONFIG_F_PWM_INT_POS L6470_CONFIG_F_PWM_INT_POS
+#define CONFIG_F_PWM_INT_MSK L6470_CONFIG_F_PWM_INT_MSK
+#define STATUS_HIZ_POS L6470_STATUS_HIZ_POS
+#define STATUS_HIZ_MSK L6470_STATUS_HIZ_MSK
+#define STATUS_BUSY_POS L6470_STATUS_BUSY_POS
+#define STATUS_BUSY_MSK L6470_STATUS_BUSY_MSK
+#define STATUS_SW_F_POS L6470_STATUS_SW_F_POS
+#define STATUS_SW_F_MSK L6470_STATUS_SW_F_MSK
+#define STATUS_SW_EVN_POS L6470_STATUS_SW_EVN_POS
+#define STATUS_SW_EVN_MSK L6470_STATUS_SW_EVN_MSK
+#define STATUS_DIR_POS L6470_STATUS_DIR_POS
+#define STATUS_DIR_MSK L6470_STATUS_DIR_MSK
+#define STATUS_MOT_STATUS_POS L6470_STATUS_MOT_STATUS_POS
+#define STATUS_MOT_STATUS_MSK L6470_STATUS_MOT_STATUS_MSK
+#define STATUS_MOT_STATUS_STOPPED L6470_STATUS_MOT_STATUS_STOPPED
+#define STATUS_MOT_STATUS_ACCELERATION L6470_STATUS_MOT_STATUS_ACCELERATION
+#define STATUS_MOT_STATUS_DECELERATION L6470_STATUS_MOT_STATUS_DECELERATION
+#define STATUS_MOT_STATUS_CONSTANT_SPEED L6470_STATUS_MOT_STATUS_CONSTANT_SPEED
+#define STATUS_NOTPERF_CMD_POS L6470_STATUS_NOTPERF_CMD_POS
+#define STATUS_NOTPERF_CMD_MSK L6470_STATUS_NOTPERF_CMD_MSK
+#define STATUS_WRONG_CMD_POS L6470_STATUS_WRONG_CMD_POS
+#define STATUS_WRONG_CMD_MSK L6470_STATUS_WRONG_CMD_MSK
+#define STATUS_UVLO_POS L6470_STATUS_UVLO_POS
+#define STATUS_UVLO_MSK L6470_STATUS_UVLO_MSK
+#define STATUS_TH_WRN_POS L6470_STATUS_TH_WRN_POS
+#define STATUS_TH_WRN_MSK L6470_STATUS_TH_WRN_MSK
+#define STATUS_TH_SD_POS L6470_STATUS_TH_SD_POS
+#define STATUS_TH_SD_MSK L6470_STATUS_TH_SD_MSK
+#define STATUS_OCD_POS L6470_STATUS_OCD_POS
+#define STATUS_OCD_MSK L6470_STATUS_OCD_MSK
+#define STATUS_STEP_LOSS_A_POS L6470_STATUS_STEP_LOSS_A_POS
+#define STATUS_STEP_LOSS_A_MSK L6470_STATUS_STEP_LOSS_A_MSK
+#define STATUS_STEP_LOSS_B_POS L6470_STATUS_STEP_LOSS_B_POS
+#define STATUS_STEP_LOSS_B_MSK L6470_STATUS_STEP_LOSS_B_MSK
+#define STATUS_SCK_MOD_POS L6470_STATUS_SCK_MOD_POS
+#define STATUS_SCK_MOD_MSK L6470_STATUS_SCK_MOD_MSK
+#define CMD_NOP L6470_CMD_NOP
+#define CMD_SET_PARAM L6470_CMD_SET_PARAM
+#define CMD_GET_PARAM L6470_CMD_GET_PARAM
+#define CMD_RUN L6470_CMD_RUN
+#define CMD_STEP_CLOCK L6470_CMD_STEP_CLOCK
+#define CMD_MOVE L6470_CMD_MOVE
+#define CMD_GOTO L6470_CMD_GOTO
+#define CMD_GOTO_DIR L6470_CMD_GOTO_DIR
+#define CMD_GO_UNTIL L6470_CMD_GO_UNTIL
+#define CMD_RELEASE_SW L6470_CMD_RELEASE_SW
+#define CMD_GO_HOME L6470_CMD_GO_HOME
+#define CMD_GO_MARK L6470_CMD_GO_MARK
+#define CMD_RESET_POS L6470_CMD_RESET_POS
+#define CMD_RESET_DEVICE L6470_CMD_RESET_DEVICE
+#define CMD_SOFT_STOP L6470_CMD_SOFT_STOP
+#define CMD_HARD_STOP L6470_CMD_HARD_STOP
+#define CMD_SOFT_HIZ L6470_CMD_SOFT_HIZ
+#define CMD_HARD_HIZ L6470_CMD_HARD_HIZ
+#define CMD_GET_STATUS L6470_CMD_GET_STATUS
+#define OCD_TH_SAFE_DEFAULT L6470_OCD_TH_SAFE_DEFAULT
+#define STALL_TH_SAFE_DEFAULT L6470_STALL_TH_SAFE_DEFAULT
+#define MAX_SPEED_SAFE_DEFAULT L6470_MAX_SPEED_SAFE_DEFAULT
+#define KVAL_RUN_SAFE_DEFAULT L6470_KVAL_RUN_SAFE_DEFAULT
+#endif /* ENABLE_LEGACY_REG_NAMES */
 
 #endif /* L6470_REGISTERS_GENERATED_H */

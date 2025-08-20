@@ -7,13 +7,17 @@ Estimate completion time based on current processing rate
 import subprocess
 import time
 from datetime import datetime, timedelta
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
 
 def get_current_stats():
     """Get current document count and database size"""
     try:
-        # Run the monitor script and capture output
-        result = subprocess.run(['python3', 'scripts/monitor_rebuild_progress.py'], 
-                              capture_output=True, text=True, cwd='/workspaces/code')
+        # Run the monitor script and capture output (use workspace-root-relative path)
+        monitor_script = ROOT / 'scripts' / 'monitor_rebuild_progress.py'
+        result = subprocess.run(['python3', str(monitor_script)], 
+                                capture_output=True, text=True, cwd=str(ROOT))
         
         output = result.stdout
         
@@ -44,7 +48,7 @@ def estimate_completion():
         "stm32_hal": 32000,      # STM32H7 + Nucleo BSP (largest collection)
         "motor_control": 3500,    # L6470 X-CUBE-SPN2 documentation
         "project_source": 800,   # Production C/H source code
-        "instruction_guides": 50, # Development guidelines (.github/instructions/)
+        "instruction_guides": 50, # Development instruction guides (workspace instruction files)
         "project_documentation": 300, # Analysis reports, design docs
         "build_system": 40,      # CMake configs, build scripts
         "automation_scripts": 120, # Python/shell scripts

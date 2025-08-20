@@ -394,6 +394,32 @@ HAL_StatusTypeDef HAL_SPI_Transmit_Mock(SPI_HandleTypeDef *hspi,
    SCB_EnableDCache();
    ```
 
+### 📄 Automated Doc Regeneration (Self-hosted runner)
+
+We provide a safe automated workflow to regenerate full domain documentation using a local LLM (recommended: Ollama) on a self-hosted runner.
+
+- Purpose: run `.copilot-tasks/generate_docs.md` logic and produce updated `docs/*.md` and `docs/figures/*.svg` artifacts.
+- Trigger: manual (`workflow_dispatch`) on a trusted self-hosted runner only. Do NOT run on public shared runners.
+- Requirements on the runner:
+  - Ollama installed and the model available locally (example: `gpt-OSS:20b`).
+  - Node.js (for mermaid-cli) and npm available.
+  - Python 3.11 and project `.venv` (or system Python) with `requirements.txt` installed.
+  - Sufficient memory (we recommend 64GB RAM and GPU/VRAM as appropriate for the model).
+
+How it works (high level):
+
+1. Checkout repository
+2. Install Node/Python deps
+3. Prepare local context and prompts (scripts/generate_docs_runner.py --prompt .copilot-tasks/generate_docs.md --dry-run)
+4. Run generation on Ollama (scripts/generate_docs_runner.py --execute)
+5. Validate outputs (scripts/validate_ssot.py) and render mermaid diagrams
+6. Create a local branch with generated docs and open a PR for review
+
+Security notes:
+
+- The workflow will NOT push to `main` automatically; it creates a branch and opens a PR for review.
+- Do not place cloud API keys in this workflow; it is designed for local Ollama usage on trusted hardware.
+
 2. **DMA Usage**
 
    - Use DMA for SPI/I2C transfers to reduce CPU load

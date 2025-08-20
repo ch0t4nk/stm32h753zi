@@ -1,3 +1,45 @@
+[//]: # "Copilot workspace instructions — concise, current-relative"
+
+# Copilot instructions — stm32h753zi (concise)
+
+Purpose: provide minimal, accurate workspace guidance for automated/code-assist actions.
+
+Key pointers (read first):
+
+- SSOT (primary): `src/config/` — all hardware, motor, safety, comm, and workflow settings live here. Do not hardcode hardware constants; update SSOT headers and run `scripts/validate_ssot.py`.
+- Status (source of truth): `STATUS.md` — used for session context and next steps. Preserve its "Technical Context for Copilot Continuation" section when updating.
+- Main code areas: `src/` (firmware), `src/drivers/` (L6470, AS5600), `src/spn2/` (X-CUBE-SPN2 integration), `src/drivers/adaptation/` (bridges to MCSDK).
+  -- Dev tooling: `scripts/` — `validate_ssot.py`, `auto_update_status.py`, `fix_cmake.ps1`.
+
+Recommended quick workflows:
+
+- Build firmware (recommended): use VS Code task "Build (CMake)" or run (PowerShell):
+
+```powershell
+.\scripts\fix_cmake.ps1
+cmake --build build
+```
+
+- Run SSOT validation:
+
+```powershell
+& '.\.venv\Scripts\python.exe' scripts\validate_ssot.py
+```
+
+- Update `STATUS.md` (auto-update helper):
+
+```powershell
+& '.\.venv\Scripts\python.exe' scripts\auto_update_status.py --verbose
+```
+
+Guidelines for automated edits and code generation:
+
+- Always consult `src/config/*` and prefer adding new keys there. Add `_Static_assert` checks for compile-time validation when applicable.
+- For host-tests, keep host-only adapters behind `HOST_TESTING` guards and avoid editing canonical SSOT headers; use adapters in `src/drivers/adaptation/` or `archive/` when necessary.
+- Copy reference content from `00_reference/` into `src/` with attribution — do not include `00_reference/` directly in builds.
+
+If you need a longer instruction set, refer to `.github/instructions/` (domain-specific guidance). This file is intentionally concise — follow SSOT and `STATUS.md` for authoritative decisions.
+
 <!-- Workspace-specific Copilot instructions for the STM32H753ZI stepper motor project -->
 
 # Copilot instructions — stm32h753zi repository
@@ -9,7 +51,7 @@ Purpose: give AI coding agents the minimal, immediately useful context to be pro
 
   - `src/` — main firmware and drivers (look for `src/spn2/`, `src/drivers/`, `src/hal_abstraction/`).
   - `src/config/` — Single Source of Truth (SSOT) headers: `hardware_config.h`, `motor_config.h`, `comm_config.h`, `safety_config.h`, `workflow_config.h`.
-  - `scripts/` — developer tooling: `auto_update_status.py`, `validate_ssot.py`, `stm32_semantic_search.py`, and `run_python.ps1`.
+  - `scripts/` — developer tooling: `auto_update_status.py`, `validate_ssot.py`, and `run_python.ps1`.
   - `00_reference/` — large read-only vendor docs and examples (do not modify; copy snippets if needed and reference source).
   - `CMakeLists.txt` and `cmake/` — build configuration and host test integration.
 
@@ -38,8 +80,7 @@ Purpose: give AI coding agents the minimal, immediately useful context to be pro
 - Integration points and external dependencies to be aware of:
 
   - ARM GCC toolchain (arm-none-eabi-\*), OpenOCD, STM32CubeProgrammer CLI — expected in PATH for build/flash tasks.
-  - Python dev tooling (.venv) used for scripts in `scripts/` (semantic search, SSOT validation, status updates). Use repository venv at `.venv`.
-  - Semantic search DB under `vector_db/` and `docs/semantic_vector_db/` — scripts `stm32_semantic_search.py` provide programmatic access.
+  - Python dev tooling (.venv) used for scripts in `scripts/` (SSOT validation, status updates). Use repository venv at `.venv`.
 
 - Useful code examples to cite when making edits:
 
@@ -174,31 +215,17 @@ The `00_reference/` directory contains comprehensive ST official documentation:
 
 **IMPORTANT**: Never modify `00_reference/` files. Copy needed code to appropriate `src/` locations.
 
-## Semantic Documentation Search System
+## Reference Assets and Documentation System
 
-**NEW**: Use intelligent semantic search with real AI embeddings for development with **unified STM32H7 + L6470 + Nucleo BSP coverage**:
+The `00_reference/` directory contains comprehensive ST official documentation:
 
-```bash
-# PRODUCTION SEMANTIC SEARCH (NEW - Preferred)
-
-# Recommended: Use wrapper script (auto-handles virtual environment)
-./scripts/stm32_search.sh concept "GPIO configuration" --scope STM32H7
-./scripts/stm32_search.sh function "HAL_GPIO_Init" --scope STM32H7
-./scripts/stm32_search.sh function "L6470" --scope L6470
-./scripts/stm32_search.sh peripheral "SPI" --scope all
-./scripts/stm32_search.sh concept "stepper motor control" --scope all
-
-# Validate workspace markdown links
-python3 scripts/link_validator.py
-
-## Reference Assets
-
-The `00_reference/` directory contains ST official assets (READ-ONLY):
-
-- STM32H7 HAL drivers and examples
-- X-NUCLEO-IHM02A1 board support package
-- L6470 driver libraries and documentation
-- Application examples and datasheets
+- **STM32H7 HAL Documentation**: 86MB, 3,988 markdown files with complete peripheral coverage
+- **X-CUBE-SPN2 L6470 Documentation**: 2.1MB stepper driver specific reference with 197 files
+- **STM32H7xx Nucleo BSP Documentation**: 824KB, 42 markdown files with board support package functions
+- **CMSIS Documentation**: 49MB, 2,268 HTML files (reference only, not converted)
+- **STM32H7 HAL drivers and examples**: Complete implementation examples
+- **X-NUCLEO-IHM02A1 board support package**: Shield-specific guidance
+- **Application examples and datasheets**: Real-world implementation patterns
 
 **IMPORTANT**: Never modify `00_reference/` files. Copy needed code to appropriate `src/` locations.
 
@@ -222,4 +249,7 @@ When referencing `00_reference/` assets:
 - **Never** directly include from `00_reference/` in build system
 
 Remember: **Safety first, SSOT always, modular design throughout.**
+
+```
+
 ```

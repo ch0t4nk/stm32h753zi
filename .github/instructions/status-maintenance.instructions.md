@@ -243,24 +243,6 @@ This instruction file provides comprehensive guidance for maintaining STATUS.md 
 5. **Before Development Session End**: Ensure handoff context is current
 6. **After Architecture Changes**: Dual-build, SSOT, safety system updates
 
-### Manual vs Automatic Updates
-
-**Manual Updates Required**:
-
-- Technical Context for Copilot Continuation section
-- Phase completion status changes
-- Architecture decisions and status
-- Next development priorities
-- Conversation continuity markers
-
-**Automatic Updates Allowed**:
-
-- Timestamps and dates
-- Build metrics and file sizes
-- Git commit summaries
-- Performance measurements
-- File counts and statistics
-
 ### Update Validation Requirements
 
 After any STATUS.md update, verify:

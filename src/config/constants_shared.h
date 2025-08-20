@@ -13,8 +13,12 @@
 /* Universal message magic used for message header validation */
 #define MESSAGE_MAGIC 0xDEADBEEF
 
-/* Base values for error code ranges (mirrors existing values) */
+/* Base values for error code ranges (mirrors existing values)
+    NOTE: The canonical definition of ERROR_CODE_BASE lives in
+    src/config/error_codes.h (SSOT). Include that header where the base is
+    required. This file no longer provides a fallback value to avoid
+    accidental redefinition and ambiguity during builds.
+*/
 #define ERROR_CODE_SUCCESS 0x0000
-#define ERROR_CODE_BASE 0x1000
 
 #endif /* CONSTANTS_SHARED_H */

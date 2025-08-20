@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
 Simple STATUS.md regeneration helper (dry-run safe)
-- Scans for *.instructions and .github/instructions/*.md
-- Concatenates them with minimal normalization into build/STATUS.draft.md
+- Scans for instruction guide files under the workspace and concatenates them into build/STATUS.draft.md
 - Preserves headings and timestamps if present
 
 Usage:
@@ -18,11 +17,8 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 OUT_DEFAULT = ROOT / 'build' / 'STATUS.draft.md'
 
-INSTRUCTIONS_GLOBS = [
-    ROOT / '.instructions',
-    ROOT / '.github' / 'instructions' / '**' / '*.md',
-    ROOT / '.github' / 'instructions' / '*.md'
-]
+# Central instruction directory constant (used instead of hardcoded globs)
+INSTRUCTION_DIR = ROOT / '.github' / 'instructions'
 
 
 def gather_files():
@@ -32,7 +28,7 @@ def gather_files():
     if top.exists():
         files.append(top)
     # gather .github/instructions md files
-    gh = ROOT / '.github' / 'instructions'
+    gh = INSTRUCTION_DIR
     if gh.exists():
         files.extend(sorted(gh.rglob('*.md')))
     return files
@@ -71,7 +67,7 @@ def main():
 
     files = gather_files()
     if not files:
-        print('No .instructions or .github/instructions files found. Nothing to do.')
+        print('No instruction files found. Nothing to do.')
         return 1
 
     print(f'Found {len(files)} instruction files:')

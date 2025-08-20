@@ -180,6 +180,10 @@ HAL_Abstraction_I2C_MemWrite(HAL_I2C_Instance_t instance,
 
 /* HAL GPIO / Timer / SPI wrappers and implementations follow */
 
+/* If CMSIS device headers are included (firmware build) these types and
+ * symbols are already defined. Guard to avoid conflicting redeclarations
+ * when compiling the firmware. The mocks are only used for host tests. */
+#if !defined(GPIOA) && !defined(GPIO_TypeDef)
 typedef struct {
     uint32_t dummy;
 } GPIO_TypeDef;
@@ -190,6 +194,7 @@ extern GPIO_TypeDef *GPIOC;
 void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin,
                        GPIO_PinState PinState);
 GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
+#endif
 
 SystemError_t HAL_Abstraction_GPIO_Write(HAL_GPIO_Port_t port, uint32_t pin,
                                          HAL_GPIO_State_t state) {
