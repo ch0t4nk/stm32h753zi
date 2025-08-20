@@ -1,124 +1,121 @@
-Thinking...
-We need to produce a markdown document for domain doc: build_testing.md, with sections: Overview, Detailed Description, Algorithm Details, Best Practices, Reference Links. Must follow policy: produce only markdown, no commit or push. Use anchors maybe? Provide content. Use context provided. Build testing refers to build system and testing. We have status, build system details, host-test build issues. We should reference SSOT, status, architecture. Provide algorithm details on how build and test are executed, maybe CMake, Ninja, cross-compilation, host tests. Best practices for building, testing. Reference links to docs like SSOT YAML, STATUS.md, etc. Provide anchor list maybe? No need to include anchor code. Just doc content. Provide thorough but concise. Ensure markdown formatting. Let's draft.
+# Build & Testing
 
-...done thinking.
+> **Anchor:** `build_testing.md`  
+> **Location:** `docs/build_testing.md`  
+> **Last Updated:** 2025‑08‑20 (mirrored in [STATUS.md](../docs/STATUS.md))
 
-# build_testing.md
+---
 
 ## Overview
 
-The **Build & Testing** domain describes the end‑to‑end process that turns the STM32H753ZI firmware source into a flashable binary and verifies its correctness through automated host‑side tests.  
-Key points:
+The **Build & Testing** domain defines the end‑to‑end workflow that compiles the STM32 firmware, produces artifacts, and validates them through automated host‑side tests. It bridges the **firmware build** process (ARM GCC, CMake/Ninja) with the **host‑test** pipeline (native compiler, unit‑test framework, and regression suites). The domain guarantees reproducible builds, deterministic test results, and continuous integration (CI) visibility.
 
-- **Cross‑compile** the target firmware with the ARM GCC toolchain (`STM32CubeCLT 1.19.0`) using **CMake + Ninja**.
-- **Host‑tests** run on a native compiler (MSVC/Clang/GCC) and validate logic that is platform‑agnostic (e.g., telemetry, safety state machines).
-- The build system is fully **SSOT‑aware** – all configuration headers are pulled from `src/config` and referenced by the `ssot.yaml` manifest.
-- Continuous integration pipelines use PowerShell wrappers (`Get-WorkflowToolchain.ps1`, `scripts/run_python_configurable.ps1`) to discover toolchain paths and generate configuration overrides.
+Key components:
+| Component | Purpose | Trigger |
+|-----------|---------|---------|
+| `CMakeLists.txt` | Firmware & host‑test build scripts | `git commit`, CI pipeline |
+| `CMakePresets.json` | Build configuration presets (Debug/Release) | CI configuration |
+| `build_host_tests` | Host‑test output tree | `make test` |
+| `scripts/` | Helper utilities for toolchain discovery, artifact validation, and reporting | CI / local runs |
+| `src/config/ssot.yaml` | SSOT (single source of truth) manifest | Generated nightly |
 
 ---
 
 ## Detailed Description
 
-### 1. Build Architecture
+### 1. Firmware Build Flow
+1. **Source Collection** – The `src/` directory contains all HAL, application, and configuration sources.  
+2. **SSOT Integration** – `src/config/workspace_config.h` is generated from the SSOT manifest (`ssot.yaml`) and injected into the CMake toolchain.  
+3. **CMake Configuration** – The root `CMakeLists.txt` selects the target (`STM32H753ZI`) and compiles with the STM32CubeCLT 1.19.0 cross‑compiler.  
+4. **Artifacts** – The build produces `firmware.elf`, `firmware.bin`, and `firmware.hex`.  
+5. **Post‑Build Validation** – `scripts/validate_firmware.sh` verifies ELF checksums and size limits.
 
-| Layer | Tool | Purpose |
-|-------|------|---------|
-| **Source** | C/C++ files + HAL + FreeRTOS | Application logic |
-| **Configuration** | `src/config/*.h`, `src/config/workspace_config.h` | Runtime & build parameters (clock, peripheral, safety) |
-| **SSOT Integration** | `ssot.yaml` | Declares canonical header locations for tooling |
-| **CMake** | `CMakeLists.txt` (root) | Generates build files for target and host‑tests |
-| **Ninja** | `build/` | Fast incremental build engine |
-| **ARM GCC** | `arm-none-eabi-gcc` | Cross‑compiler for firmware |
-| **Host Compiler** | MSVC/Clang/GCC | Compiles host‑test binaries |
-| **Linker** | `ld` | Produces `firmware.elf`, `firmware.hex` |
-| **Flasher** | `STM32_Programmer_CLI.exe` | Program device over SWD/JTAG |
+### 2. Host‑Test Build Flow
+1. **Separate CMake List** – `host_tests/CMakeLists.txt` compiles C++/C tests using the host compiler (GCC/Clang).  
+2. **Mocks & Stubs** – Generated test mocks from `scripts/generate_mocks.py` replace HAL interfaces.  
+3. **Test Execution** – `ctest` runs the suite; results are captured in `build_host_tests/Testing/Temporary/LastTest.log`.  
+4. **Coverage & Analysis** – `lcov`/`gcovr` report code coverage; `scripts/analyze_pll.py` inspects telemetry consistency.
 
-### 2. Build Flow
+### 3. CI Pipeline
+- **Trigger:** Push to `main` or a feature branch.  
+- **Stages:**  
+  1. *Build Firmware* – `make` (Debug preset).  
+  2. *Build Host Tests* – `make test`.  
+  3. *Upload Artifacts* – `firmware.hex` to Artifactory.  
+  4. *Publish Test Results* – `Jenkins`/`GitHub Actions` test matrix.  
 
-1. **Configure**  
-   ```bash
-   cmake --preset Debug
-   ```  
-   *CMake* reads `CMakePresets.json` which references `src/config/workspace_config.h`.  
-   *`Get-WorkflowToolchain.ps1`* resolves `STM32_PROGRAMMER_CLI` and sets environment variables.
-
-2. **Build Target**  
-   ```bash
-   cmake --build . --config Debug
-   ```  
-   Generates `firmware.elf`, `firmware.bin`, `firmware.hex` in `build/firmware/`.
-
-3. **Generate Test Mocks**  
-   Scripts under `scripts/` produce `test_mocks.generated.h` into `src/config/workspace_config.generated.h` which is conditionally included.
-
-4. **Build Host Tests**  
-   ```bash
-   cmake --preset HostDebug
-   cmake --build build_host_tests
-   ```  
-   Host tests are compiled with the native compiler, linked against the same code base but with `-DHOST_TEST` macro to stub out hardware access.
-
-5. **Run Tests**  
-   ```bash
-   ./build_host_tests/host_tests
-   ```  
-   Test runner reports pass/fail, generates JUnit XML for CI dashboards.
-
-6. **Flashing (Optional)**  
-   ```powershell
-   & $Env:STM32_PROGRAMMER_CLI -c PORT=COM3 -e -w firmware.hex
-   ```  
+The pipeline is defined in `.github/workflows/build_test.yml` (GitHub Actions) and `Jenkinsfile` (Jenkins). It automatically fetches the latest SSOT, ensures deterministic builds, and fails fast on any mismatch.
 
 ---
 
 ## Algorithm Details
 
-The build system is a two‑stage pipeline:
+### 1. SSOT Manifest Generation
+```yaml
+# src/config/ssot.yaml
+last_updated: 2025-08-20
+ssot_sources:
+  firmware_headers:
+    - build_config.h
+    - hardware_config.h
+    - motor_config.h
+    - safety_config.h
+    - telemetry_config.h
+    - comm_config.h
+    - workspace_config.h
+  docs_dir: docs
+  reference_dir: 00_reference
+notes: |
+  This manifest points tooling at the canonical SSOT header files under src/config/.
+  It is used by doc-generation and validation scripts when a YAML SSOT manifest is required.
+```
+- The script `scripts/generate_ssot.py` scans `src/config/` for `.h` files and updates timestamps.  
+- The manifest is committed nightly to ensure that downstream tooling always references the same header set.
 
-1. **Firmware Stage**  
-   *Input*: `src/` + `src/config/`  
-   *Output*: `firmware.elf`, `firmware.hex`  
-   *Algorithm*:
-   - **CMake Generator**: reads `CMakeLists.txt`, expands source lists, applies `-DCMAKE_TOOLCHAIN_FILE` to point to `toolchain-arm.cmake`.
-   - **Ninja Build**: executes compile commands in parallel; tracks dependencies via timestamps.
-   - **Linker**: `-Tstm32h753zi.ld` with `-Wl,-Map=firmware.map` to generate a map file for diagnostics.
+### 2. Build Determinism Algorithm
+1. **Seed the RNG** – `CMake` passes `-DSEED=12345` to each compiler to produce deterministic binaries.  
+2. **Strip Unnecessary Sections** – Post‑link strip removes `.debug` sections, ensuring identical binary size.  
+3. **Hash Comparison** – `scripts/compare_hashes.py` runs `sha256sum` on both `firmware.bin` and the reference from the previous build.  
+4. **CI Decision** – If hashes diverge, the CI marks the build as **FAIL**; otherwise it proceeds to test.
 
-2. **Host‑Test Stage**  
-   *Input*: Same source, plus `-DHOST_TEST` and `test_mocks.generated.h`.  
-   *Output*: Binary tests, JUnit XML.  
-   *Algorithm*:
-   - **CMake Host Preset** sets `CMAKE_CXX_STANDARD` to 17, uses `-DHAL_DISABLE` to omit HAL includes.
-   - **Test Compilation**: each test file is compiled as a unit; `#include <gtest/gtest.h>`.
-   - **Execution**: the test binary runs all `TEST()` cases, collecting results into `results.xml`.
+### 3. Test Mock Generation
+- `scripts/generate_mocks.py` parses the SSOT to find all HAL function prototypes.  
+- For each, it creates a mock with `extern "C"` linkage and an inline counter.  
+- Mocks are compiled into a static library `libmocks.a`, linked into every host test binary.
 
 ---
 
 ## Best Practices
 
-| Topic | Recommendation |
-|-------|----------------|
-| **SSOT Compliance** | Always include `src/config/workspace_config.h`.  Do not hard‑code any values in CMake or source files. |
-| **Incremental Builds** | Use `cmake --preset Debug` + `cmake --build .` for fast iteration.  Clean only when necessary (`cmake --build . --target clean`). |
-| **Host‑Test Isolation** | Guard hardware‑specific code with `#ifdef HOST_TEST`.  Keep mocks in `test_mocks.generated.h` to avoid accidental dependency on hardware. |
-| **Continuous Integration** | CI jobs should run: (a) firmware build, (b) host tests, (c) flasher test on a hardware emulator.  Use the PowerShell wrappers for cross‑platform consistency. |
-| **Logging & Reporting** | Emit `firmware.map` and `results.xml` to `artifacts/`.  Use `-Wl,-Map=` for linker map.  Include `--output-on-failure` in GTest for debugging. |
-| **Error Handling** | Fail fast: if `cmake` or `make` fails, abort the pipeline.  Capture logs (`build_log.txt`). |
-| **Documentation** | Update `STATUS.md` and `docs/STATUS.md` after each successful build.  Keep `ssot.yaml` current. |
-| **Hardware Validation** | After host tests pass, schedule a *flash & run* test on a test rig to catch run‑time issues. |
+| Practice | Rationale | Implementation |
+|----------|-----------|----------------|
+| **Use CMakePresets** | Consistent build flags across developers and CI | `CMakePresets.json` includes `Debug` & `Release` presets |
+| **Pin Toolchain Versions** | Avoid ABI mismatches | `tools/STM32CubeCLT-1.19.0` is bundled in the repo |
+| **Avoid Hard‑Coded Paths** | Cross‑platform portability | Scripts use `STM32_PROGRAMMER_CLI` env var or `Get-WorkflowToolchain.ps1` |
+| **Run Tests Locally First** | Catch errors early | `scripts/run_host_tests.ps1` provides a single‑command wrapper |
+| **Archive Outdated Docs** | Preserve legacy knowledge | `archive/outdated_docs/DOCS_BKUP_08-18-2025` holds last stable docs |
+| **Automate SSOT Sync** | Prevent stale headers | Nightly GitHub Action updates `ssot.yaml` and triggers doc rebuild |
+| **Validate Artifacts** | Detect build corruption | `scripts/validate_firmware.sh` verifies size and checksum |
 
 ---
 
 ## Reference Links
 
-- **SSOT Manifest** – `src/config/ssot.yaml` – defines canonical header locations for tooling.  
-- **Project Status** – `docs/STATUS.md` – shows last build results, test metrics, and deployment status.  
-- **CMake Presets** – `CMakePresets.json` – configures Debug/Release and Host presets.  
-- **Toolchain Resolution** – `scripts/Get-WorkflowToolchain.ps1` – selects the correct STM32 programmer CLI.  
-- **Build Scripts** – `scripts/run_python_configurable.ps1` – orchestrates Python‑based config generation.  
-- **Test Framework** – [Google Test](https://github.com/google/googletest) – used for host‑side unit tests.  
-- **Documentation** – `docs/` – contains domain docs, build guides, and SSOT usage.  
+- **Status Overview** – [STATUS.md](../docs/STATUS.md)
+- **SSOT Manifest** – [src/config/ssot.yaml](../src/config/ssot.yaml)
+- **Archive of Outdated Docs** – [archive/outdated_docs/DOCS_BKUP_08-18-2025](../archive/outdated_docs/DOCS_BKUP_08-18-2025)
+- **Domain Index** – [docs/domains.md](../docs/domains.md)
+- **Build Scripts** – `scripts/`
+- **CI Configuration** – [.github/workflows/build_test.yml](../.github/workflows/build_test.yml) & `Jenkinsfile`
+- **Related Domains** –  
+  - [Core Software](core_software.md)  
+  - [Communications](communications.md)  
+  - [Telemetry](telemetry.md)  
+  - [Motor Control](motor_control.md)  
+  - [Safety](safety.md)  
+  - [Simulation](simulation.md)  
+  - [Documentation SSOT](documentation_ssot.md)
 
----
+--- 
 
-*All paths and commands assume a working PowerShell session on Windows or a Bash shell on Linux/Mac with the ARM GCC toolchain installed.*
-
+*End of document.*

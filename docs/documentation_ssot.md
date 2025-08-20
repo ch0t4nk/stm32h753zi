@@ -1,113 +1,138 @@
-Thinking...
-We need to produce a markdown document called documentation_ssot.md. Should have sections: Overview, Detailed Description, Algorithm Details, Best Practices, Reference Links. Use anchors: list of anchors includes SSOT (src/config/ssot.yaml), STATUS (docs/STATUS.md), ARCHIVE, DOMAINS list includes documentation_ssot.md. Use anchors appropriately.
+# Documentation SSOT Domain
+*(docs/documentation_ssot.md)*
 
-We should produce a markdown with proper headings. Provide content about SSOT manifest for documentation and tooling. Probably referencing the SSOT YAML. Provide overview of SSOT concept, usage, etc. Provide algorithm details: maybe how to generate docs from SSOT, how scripts parse SSOT manifest. Provide best practices: how to maintain, update, validation. Reference links: maybe to docs/STATUS.md, to ssot.yaml, to relevant sections.
-
-We need to adhere to policy: produce markdown, do not push commit. Provide only markdown.
-
-We need to incorporate the anchors: Use markdown link syntax with anchors like [SSOT](src/config/ssot.yaml). Provide references.
-
-Also mention archive location: archive/outdated_docs/DOCS_BKUP_08-18-2025.
-
-Also mention that docs/STATUS.md contains status. The document belongs to docs/ directory? Domain doc likely in docs/. The anchors list may refer to other docs. We'll provide links accordingly.
-
-Also we should not commit; just output markdown.
-
-Ok produce.
-
-...done thinking.
-
-# documentation_ssot.md
-
-## Overview
-
-The **Single Source Of Truth (SSOT)** is the central place where all key configuration, documentation, and reference artifacts live for the STM32H753ZI project.  
-It is defined by the YAML manifest located at:
-
-[SSOT](src/config/ssot.yaml)
-
-The SSOT guarantees that tooling, documentation, and firmware build systems reference the same canonical files, avoiding duplication and ensuring consistency across the entire code base.
-
-## Detailed Description
-
-- **Location**  
-  The SSOT manifest resides in `src/config/ssot.yaml`.  It lists all header files that form the project's authoritative configuration set.
-
-- **Contents**  
-  ```yaml
-  last_updated: 2025-08-20
-  ssot_sources:
-    firmware_headers:
-      - build_config.h
-      - hardware_config.h
-      - motor_config.h
-      - safety_config.h
-      - telemetry_config.h
-      - comm_config.h
-      - workspace_config.h
-    docs_dir: docs
-    reference_dir: 00_reference
-  notes: |
-    This manifest points tooling at the canonical SSOT header files under src/config/.
-    It is used by doc-generation and validation scripts when a YAML SSOT manifest is required.
-  ```
-
-- **Purpose**  
-  - **Documentation** – Tools like Sphinx or Doxygen read the SSOT to generate API docs that reflect the true firmware configuration.  
-  - **Validation** – CI jobs compare the actual header contents against the manifest to detect drift.  
-  - **Build System** – CMake picks up the SSOT to include the correct headers and set compile‑time constants.
-
-- **Integration**  
-  - The SSOT is referenced in multiple automation scripts: `scripts/run_python_configurable.ps1`, `scripts/generate_workspace_config.py`, and the CI pipeline (`.github/workflows`).  
-  - All new headers added to the firmware must be listed here before the next documentation build.
-
-## Algorithm Details
-
-1. **Read Manifest**  
-   ```python
-   with open('src/config/ssot.yaml') as f:
-       ssot = yaml.safe_load(f)
-   ```
-2. **Validate Header Paths**  
-   For each path in `ssot['ssot_sources']['firmware_headers']`:
-   - Check that the file exists (`os.path.exists(path)`).
-   - Optionally parse the header to ensure it contains expected defines.
-
-3. **Generate Documentation**  
-   - Pass the list of header paths to the documentation generator as a `-I` include flag.  
-   - Example for Doxygen:
-     ```bash
-     doxygen -I src/config -H src/config/build_config.h -H src/config/hardware_config.h ...
-     ```
-4. **CI Enforcement**  
-   - After each commit, run the validation script.  
-   - If the manifest is out of sync, the job fails with a diff output, preventing stale documentation from being deployed.
-
-5. **Archiving**  
-   - On release, copy the current `src/config/ssot.yaml` and the generated docs to the archive:
-     ```
-     cp src/config/ssot.yaml archive/outdated_docs/DOCS_BKUP_08-18-2025/
-     ```
-
-## Best Practices
-
-| Area | Recommendation | Rationale |
-|------|----------------|-----------|
-| **Updating SSOT** | Add new headers *before* committing code that depends on them. | Keeps the SSOT in sync with the codebase. |
-| **Documentation Generation** | Run `scripts/generate_docs.ps1` after every SSOT change. | Guarantees that docs reflect the latest canonical sources. |
-| **CI Checks** | Fail the pipeline if the SSOT manifest is missing or has stale entries. | Prevents accidental drift between docs and firmware. |
-| **Versioning** | Tag the SSOT in git with every major firmware release. | Enables reproducible builds and documentation snapshots. |
-| **Archiving** | Store the SSOT along with the documentation archive. | Provides a reference point for future rollbacks or audits. |
-
-## Reference Links
-
-- [SSOT Manifest](src/config/ssot.yaml)
-- [Project Status](docs/STATUS.md) – Current build and deployment state.
-- [Archived Docs Backup](archive/outdated_docs/DOCS_BKUP_08-18-2025) – Historical documentation snapshots.
-- [Documentation Generation Script](scripts/generate_docs.ps1)
-- [CI Pipeline](.github/workflows) – How SSOT is validated on every push.
+> **Anchors used**  
+> - `[SSOT]`: `src/config/ssot.yaml`  
+> - `[STATUS]`: `docs/STATUS.md`  
+> - `[ARCHIVE]`: `archive/outdated_docs/DOCS_BKUP_08-18-2025`  
+> - `[DOMAINS]`: `[core_software.md, communications.md, telemetry.md, motor_control.md, safety.md, build_testing.md, simulation.md, documentation_ssot.md]`
 
 ---
 
-*End of `documentation_ssot.md`*
+## Overview
 
+The **Single Source Of Truth (SSOT)** is the canonical reference for all firmware‑level configuration data, header definitions, and documentation metadata.  
+It is expressed as a YAML manifest (`src/config/ssot.yaml`) and is consumed by the build system, documentation generators, and CI pipelines to enforce consistency across the project.  
+The SSOT drives:
+
+| Layer | Responsibility |
+|-------|----------------|
+| Firmware | Header definitions (`build_config.h`, `hardware_config.h`, etc.) |
+| Build | CMake toolchain, workspace overrides, and cross‑compile flags |
+| Docs | Auto‑generation of Markdown/HTML docs from annotated headers |
+| CI | Validation of consistency, version checks, and artifact publishing |
+
+---
+
+## Detailed Description
+
+### SSOT Manifest (`src/config/ssot.yaml`)
+
+```yaml
+# SSOT manifest for documentation and tooling
+last_updated: 2025-08-20
+ssot_sources:
+  firmware_headers:
+    - build_config.h
+    - hardware_config.h
+    - motor_config.h
+    - safety_config.h
+    - telemetry_config.h
+    - comm_config.h
+    - workspace_config.h
+  docs_dir: docs
+  reference_dir: 00_reference
+notes: |
+  This manifest points tooling at the canonical SSOT header files under src/config/.
+  It is used by doc-generation and validation scripts when a YAML SSOT manifest is required.
+```
+
+* **`last_updated`** – Auto‑updated by CI when the manifest changes.  
+* **`ssot_sources.firmware_headers`** – List of header files that are considered canonical.  
+* **`docs_dir` / `reference_dir`** – Locations where documentation generators will output content.  
+
+The SSOT is the single source for:
+
+* **Macro definitions** that influence firmware compilation (e.g., `#define BOARD_TYPE STM32H753ZI`).
+* **Hardware register mapping** and peripheral configuration.
+* **Build constants** (toolchain paths, target MCU, optimization flags).
+
+### Integration Points
+
+| Component | How it uses SSOT | Key script / file |
+|-----------|-----------------|-------------------|
+| **CMake** | `CMakeLists.txt` reads `src/config/workspace_config.h` to set `CMAKE_CXX_FLAGS` and toolchain paths. | `scripts/Get-WorkflowToolchain.ps1`, `src/config/workspace_config.h` |
+| **Documentation** | `scripts/generate_docs.py` parses header comments, generating Markdown in `docs/` and `00_reference/`. | `scripts/generate_docs.py` |
+| **CI Validation** | `scripts/run_python_configurable.ps1` loads the YAML, verifies that each listed header exists, and that no extraneous files are present. | `scripts/run_python_configurable.ps1` |
+| **Host‑Test Build** | Host‑tests mirror the SSOT for cross‑compatibility. | `build_host_tests/CMakeLists.txt` |
+
+---
+
+## Algorithm Details
+
+### SSOT Validation Workflow
+
+```mermaid
+flowchart TD
+    A[Git Commit] --> B{Trigger CI}
+    B --> C[Parse ssot.yaml]
+    C --> D{Headers Exist?}
+    D -->|Yes| E[Check for Missing/Extra Files]
+    D -->|No| F[Fail: Missing Header]
+    E --> G{All Consistent?}
+    G -->|Yes| H[Generate Docs & Artifacts]
+    G -->|No| I[Fail: SSOT Inconsistency]
+    H --> J[Upload to Artifacts]
+    F --> K[Notify Dev]
+    I --> K
+```
+
+1. **Trigger** – Any commit to `main` triggers the CI pipeline.  
+2. **Parse** – The pipeline reads `src/config/ssot.yaml`.  
+3. **Header Verification** – Ensures each file listed exists under `src/config/`.  
+4. **Consistency Check** – No additional headers should be present unless added to the manifest.  
+5. **Doc Generation** – `scripts/generate_docs.py` runs, consuming header comments and emitting docs.  
+6. **Artifact Publishing** – Build outputs and generated docs are uploaded.  
+7. **Notification** – Failures are reported via Slack/Email; success logs the `last_updated` timestamp.
+
+### Documentation Generation
+
+* Parses `@brief`, `@detail`, and `@param` tags from header comments.  
+* Generates Markdown files mirroring the header structure.  
+* Links to cross‑referenced SSOT entries using anchors (e.g., `[core_software.md]`).  
+* Creates a `summary.md` that aggregates all generated docs.
+
+---
+
+## Best Practices
+
+| Practice | Rationale | Implementation |
+|----------|-----------|----------------|
+| **Single Entry Point** | Avoid duplicated definitions. | All config constants live in SSOT headers; never re‑define in source files. |
+| **Immutable Headers** | Prevent drift. | Mark headers as read‑only in version control; any change requires a merge request. |
+| **Automated Updates** | Reduce manual errors. | Use CI to bump `last_updated` and run `scripts/generate_docs.py` automatically. |
+| **Version Pinning** | Ensure reproducible builds. | `workspace_config.h` contains toolchain version numbers; CI verifies against `ssot.yaml`. |
+| **Minimal Footprint** | Reduce bloat. | Remove legacy headers into `[ARCHIVE]`; reference them only if required by legacy code. |
+| **Clear Documentation** | Aid onboarding. | Each SSOT header contains a brief, usage example, and link to relevant docs. |
+| **Cross‑Project Consistency** | Maintain uniformity across modules. | The `ssot.yaml` references all headers; any new module must add its headers to the manifest. |
+| **CI Guardrails** | Catch regressions early. | `scripts/run_python_configurable.ps1` fails if a header is missing or extraneous. |
+
+---
+
+## Reference Links
+
+* **SSOT Manifest** – [`src/config/ssot.yaml`][SSOT]
+* **Project Status** – [`docs/STATUS.md`][STATUS]
+* **Archived Documentation** – [`archive/outdated_docs/DOCS_BKUP_08-18-2025`][ARCHIVE]
+* **Domain Documents** – [`core_software.md`], [`communications.md`], [`telemetry.md`], [`motor_control.md`], [`safety.md`], [`build_testing.md`], [`simulation.md`], [`documentation_ssot.md`]
+* **Build System** – `CMakeLists.txt` and `CMakePresets.json`
+* **Documentation Generation Script** – `scripts/generate_docs.py`
+* **CI Configuration** – `.github/workflows/ci.yml`
+
+> **Tip:** Use the anchors above for quick navigation in your editor or GitHub search.  
+> Example: `[@STATUS]` will jump to the Status page.
+
+---
+
+> **Note**: This document is part of the official domain docs and should be updated in tandem with changes to `src/config/ssot.yaml`.  
+> For any questions on SSOT maintenance, reach out to the firmware documentation lead.
