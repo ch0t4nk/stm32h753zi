@@ -15,6 +15,8 @@ jobs:
   zero-touch:
     name: "Generate workspace config and validate SSOT (zero-touch)"
     runs-on: ubuntu-latest
+    env:
+      PYTHONUTF8: '1'
     strategy:
       matrix:
         python-version: ["3.10", "3.11"]
