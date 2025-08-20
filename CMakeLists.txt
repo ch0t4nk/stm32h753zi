@@ -166,6 +166,54 @@ add_custom_command(
     VERBATIM
 )
 
+# -------------------------------------------------------------------------
+# Workspace config generator (configure-time)
+# Run scripts/generate_workspace_config.py during CMake configure to produce
+# a generated header that reflects the current workspace/toolchain settings.
+# Output is placed into the binary dir to avoid committing generated files.
+# This follows the project's SSOT practice: generated overlay -> src/config
+# but stored in the build tree to make builds reproducible and avoid source
+# contamination.
+# -------------------------------------------------------------------------
+set(WORKSPACE_CONFIG_OUTPUT "${CMAKE_BINARY_DIR}/generated/include/workspace_config.generated.h")
+add_custom_command(
+    OUTPUT ${WORKSPACE_CONFIG_OUTPUT}
+    COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/generate_workspace_config.py --input ${CMAKE_SOURCE_DIR}/config/workflow_toolchain.json --output ${WORKSPACE_CONFIG_OUTPUT}
+    DEPENDS ${CMAKE_SOURCE_DIR}/scripts/generate_workspace_config.py ${CMAKE_SOURCE_DIR}/config/workflow_toolchain.json
+    COMMENT "Generating workspace_config.generated.h into build/generated/include"
+    VERBATIM
+)
+
+add_custom_target(generate-workspace-config
+    DEPENDS ${WORKSPACE_CONFIG_OUTPUT}
+    COMMENT "Generate workspace config header"
+)
+
+# Validate generated overlay presence and expected macros
+add_custom_command(
+    OUTPUT ${CMAKE_BINARY_DIR}/generated/include/workspace_config.validated
+    COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/validate_generated_overlay.py --file ${WORKSPACE_CONFIG_OUTPUT}
+    COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_BINARY_DIR}/generated/include/workspace_config.validated
+    DEPENDS ${WORKSPACE_CONFIG_OUTPUT} ${CMAKE_SOURCE_DIR}/scripts/validate_generated_overlay.py
+    COMMENT "Validating generated workspace overlay"
+    VERBATIM
+)
+add_custom_target(validate-generated-overlay
+    DEPENDS ${CMAKE_BINARY_DIR}/generated/include/workspace_config.validated
+    COMMENT "Validate generated overlay header"
+)
+
+# Define a variable for the generated include directory so we can add it
+# to specific targets rather than globally. Target-scoped includes are safer
+# and follow industrial best-practice.
+set(GENERATED_INCLUDE_DIR "${CMAKE_BINARY_DIR}/generated/include")
+
+# Export the top-level binary dir so child CMakeLists (host_tests) can
+# reliably locate the generated include directory. Using a CACHE variable
+# makes this explicit and robust when the subdirectory is configured.
+set(PARENT_CMAKE_BINARY_DIR ${CMAKE_BINARY_DIR} CACHE PATH "Top-level binary dir")
+
+
 add_custom_command(
     OUTPUT ${CMAKE_SOURCE_DIR}/src/config/as5600_registers_generated.h
     COMMAND python ${CMAKE_SOURCE_DIR}/scripts/schema_generator.py 
@@ -258,6 +306,15 @@ set(STARTUP_FILE "${CMAKE_SOURCE_DIR}/startup_stm32h753xx.s")
 
 # Create main executable
 add_executable(${PROJECT_NAME} ${SOURCES} ${STARTUP_FILE})
+
+# Add generated include dir to the main target only (target-scoped include)
+if(EXISTS ${GENERATED_INCLUDE_DIR})
+    target_include_directories(${PROJECT_NAME} BEFORE PRIVATE ${GENERATED_INCLUDE_DIR})
+else()
+    # Ensure the directory is created at configure/build time when needed
+    file(MAKE_DIRECTORY ${GENERATED_INCLUDE_DIR})
+    target_include_directories(${PROJECT_NAME} BEFORE PRIVATE ${GENERATED_INCLUDE_DIR})
+endif()
 
 # Set target properties
 if(NOT CMAKE_HOST_WIN32)
@@ -453,9 +510,12 @@ endif()
 
 # SSOT validation target - Use pre-found Python
 if(PYTHON3_EXE AND EXISTS "${CMAKE_SOURCE_DIR}/scripts/validate_ssot.py")
+    # Ensure the generated overlay is validated before running the SSOT
+    # validator so we fail early on missing/invalid generated headers.
     add_custom_target(validate-ssot
+        DEPENDS validate-generated-overlay
         COMMAND ${PYTHON3_EXE} scripts/validate_ssot.py
-        COMMENT "Validating SSOT configuration"
+        COMMENT "Validating SSOT configuration (uses generated workspace_config)"
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     )
 endif()

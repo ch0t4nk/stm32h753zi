@@ -25,6 +25,9 @@ import os
 import re
 import subprocess
 import sys
+import json
+import urllib.request
+import urllib.error
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Tuple
@@ -595,6 +598,33 @@ Examples:
         help="Workspace root directory (auto-detected if not specified)",
     )
 
+    # New behavior controls: commit locally or trigger CI workflow
+    parser.add_argument(
+        "--auto-commit",
+        action="store_true",
+        help="When changes are made, automatically git add/commit and exit",
+    )
+    parser.add_argument(
+        "--trigger-ci",
+        action="store_true",
+        help="When changes are made, trigger the configured GitHub Actions workflow (uses CI_TRIGGER_TOKEN env)",
+    )
+    parser.add_argument(
+        "--ci-workflow",
+        default="zero-touch-ci.yml",
+        help="Workflow file name to dispatch when --trigger-ci is used (default: zero-touch-ci.yml)",
+    )
+    parser.add_argument(
+        "--ci-ref",
+        default="main",
+        help="Git ref to use when dispatching the workflow (default: main)",
+    )
+    parser.add_argument(
+        "--ci-token-env",
+        default="CI_TRIGGER_TOKEN",
+        help="Environment variable name that contains the PAT used to dispatch workflows",
+    )
+
     # Git hook specific arguments
     parser.add_argument(
         "--commit-hash", help="Git commit hash (for git-commit source)"
@@ -613,6 +643,101 @@ Examples:
         result = updater.run_update(
             source=args.source, dry_run=args.dry_run, force=args.force
         )
+
+        # Post-update actions: commit locally or trigger CI workflow based on flags
+        def git_commit_status_file(message: str) -> int:
+            try:
+                subprocess.run(["git", "add", "STATUS.md"], check=True, cwd=updater.workspace)
+                # Ensure pre-commit hooks that run Python can print UTF-8 on Windows
+                env = os.environ.copy()
+                env.setdefault("PYTHONIOENCODING", "utf-8")
+                # Run git commit with environment that enables UTF-8 output for hooks
+                subprocess.run(["git", "commit", "-m", message], check=True, cwd=updater.workspace, env=env)
+                return 0
+            except subprocess.CalledProcessError as e:
+                print(f"❌ Git commit failed: {e}")
+                # If available, show stderr for diagnostics
+                try:
+                    print(e.stderr)
+                except Exception:
+                    pass
+                return 1
+
+        def get_repo_owner_and_name() -> Tuple[str, str] | None:
+            try:
+                r = subprocess.run(["git", "config", "--get", "remote.origin.url"], capture_output=True, text=True, cwd=updater.workspace)
+                url = r.stdout.strip()
+                if not url:
+                    return None
+                # support git@github.com:owner/repo.git and https URLs
+                if url.startswith("git@"):
+                    # git@github.com:owner/repo.git
+                    _, path = url.split(":", 1)
+                    owner_repo = path.rstrip(".git")
+                else:
+                    # https://github.com/owner/repo.git
+                    parts = url.rstrip(".git").split("/")
+                    owner_repo = "/".join(parts[-2:])
+                if "/" in owner_repo:
+                    owner, repo = owner_repo.split("/", 1)
+                    return owner, repo
+            except Exception:
+                return None
+            return None
+
+        def dispatch_github_workflow(owner: str, repo: str, workflow_file: str, ref: str, token: str) -> bool:
+            url = f"https://api.github.com/repos/{owner}/{repo}/actions/workflows/{workflow_file}/dispatches"
+            data = json.dumps({"ref": ref}).encode("utf-8")
+            headers = {
+                "Accept": "application/vnd.github+json",
+                "Authorization": f"token {token}",
+                "User-Agent": "auto-update-status-script",
+                "Content-Type": "application/json",
+            }
+            req = urllib.request.Request(url, data=data, headers=headers, method="POST")
+            try:
+                with urllib.request.urlopen(req, timeout=15) as resp:
+                    if 200 <= resp.status < 300:
+                        return True
+            except urllib.error.HTTPError as e:
+                print(f"❌ Workflow dispatch failed: {e.code} {e.reason}")
+                try:
+                    print(e.read().decode())
+                except Exception:
+                    pass
+            except Exception as e:
+                print(f"❌ Workflow dispatch exception: {e}")
+            return False
+
+        # If changes made and user requested post-actions, perform them
+        if result.get("changes_made"):
+            # prefer commit if requested
+            if args.auto_commit:
+                commit_msg = args.commit_message or "chore(ssot): update STATUS.md — auto-update"
+                rc = git_commit_status_file(commit_msg)
+                if rc == 0:
+                    print("✅ STATUS.md committed locally")
+                else:
+                    print("❌ STATUS.md commit failed")
+
+            elif args.trigger_ci:
+                token = os.environ.get(args.ci_token_env)
+                repo_info = get_repo_owner_and_name()
+                if not token:
+                    print(f"❌ No CI token found in env '{args.ci_token_env}' - cannot dispatch workflow")
+                elif not repo_info:
+                    print("❌ Could not determine repo owner/name from git remote - cannot dispatch workflow")
+                else:
+                    owner, repo = repo_info
+                    success = dispatch_github_workflow(owner, repo, args.ci_workflow, args.ci_ref, token)
+                    if success:
+                        print(f"✅ Dispatched workflow {args.ci_workflow} on {args.ci_ref}")
+                    else:
+                        print("❌ Workflow dispatch failed")
+
+        else:
+            # No changes made - inform user and do nothing unless trigger-ci explicitly requested with --ci-on-no-change
+            print("ℹ️  No changes made; nothing to commit or dispatch.")
 
         # Report results
         if args.verbose or not result["changes_made"]:

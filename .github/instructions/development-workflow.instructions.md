@@ -505,6 +505,27 @@ the guard locally:
 python scripts/validate_generated_overlay.py --file build/generated/include/workspace_config.generated.h
 ```
 
+### Automated PR approval policy (auto-approve)
+
+We provide an automated approval workflow for trusted, low-risk changes. The workflow
+is intentionally strict: it requires BOTH a trusted author and an explicit label, and
+verifies named CI checks succeed before performing an auto-merge. This reduces risk
+while enabling fast merges for routine maintenance.
+
+- Workflow path: `.github/workflows/auto-approve-pr.yml`
+- Requirements to trigger auto-approval:
+
+  - PR author must be in `ALLOWED_AUTHORS` (configured in the workflow)
+  - PR must have the label defined in `APPROVE_LABEL` (default `auto-approve`)
+  - All named checks in `REQUIRED_CHECKS` must report `success` before merge
+
+- Secrets & token scope:
+  - The workflow uses a repository secret `AUTO_APPROVE_TOKEN` (a Personal Access Token).
+  - Minimum recommended scopes: `repo` (to create reviews, comments and merge) and `checks:read`.
+  - Restrict who can update repository secrets and who can push to `main` to limit risk.
+
+Usage note: The workflow posts a short approval comment when it approves a PR and an audit comment when it auto-merges.
+
 ### Assumptions and compatibility
 
 - The generator script accepts `--input` and `--output` CLI flags (see

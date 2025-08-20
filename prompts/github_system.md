@@ -1,130 +1,85 @@
-# 🔄 Offload Regeneration of Technical Docs via GitHub Action
+---
 
-## 🧠 Task Summary
+mode: agent
+task: regenerate_full_domain_docs
+priority: high
+reasoning: deep # Demand multi‑pass reasoning before writing
+anchors:
 
-Offload the regeneration of domain-driven technical documentation to GitHub Actions. Use Copilot++ to package the task, push it to the repo, and trigger the workflow remotely.
+- SSOT: src/config/ssot.yaml
+- STATUS: docs/STATUS.md
+- ARCHIVE: archive/outdated_docs/DOCS_BKUP_08-18-2025
+- DOMAINS:
+  - core_software.md
+  - communications.md
+  - telemetry.md
+  - motor_control.md
+  - safety.md
+  - build_testing.md
+  - simulation.md
+  - documentation_ssot.md
 
-## 📂 Context Anchors
+preconditions:
 
-- SSOT config: `src/config/ssot.yaml`
-- Workspace summary: `docs/STATUS.md`
-- Archived docs: `# 🔄 Offload Regeneration of Technical Docs via GitHub Action
+- "exists('docs/STATUS.md')"
+- "exists('src/config/ssot.yaml')"
+- "codebase_indexed()"
+- "reference_materials_available('00_reference/\*_/_.txt')"
 
-## 🧠 Task Summary
+steps:
 
-Offload the regeneration of domain-driven technical documentation to GitHub Actions. Use Copilot++ to package the task, push it to the repo, and trigger the workflow remotely.
+- id: ingest_context
+  run:
 
-## 📂 Context Anchors
+  - "read_file('docs/STATUS.md')"
+  - "load_yaml('src/config/ssot.yaml')"
+  - "read_all('.github/instructions')"
+  - "review_archive('archive/outdated_docs/DOCS_BKUP_08-18-2025')"
+  - "review_reference_specs('00_reference/\*_/_.txt')"
+    ensure:
+  - "anchors_present(['SSOT','HAL','RTOS','BUILD'])"
 
-- SSOT config: `src/config/ssot.yaml`
-- Workspace summary: `STATUS.md`
-- Archived docs: `archive/outdated_docs/DOCS_BKUP_08-18-2025`
-- Output target: `docs/`
+- id: analyse_codebase
+  run:
 
-## 🧾 Regeneration Instructions
+  - "follow_code_chains(start_points=all_public_APIs)"
+  - "map_algorithms_in_codebase()"
+  - "link_symbols_to_sources_and_headers()"
+  - "detect_design_patterns_and_anti_patterns()"
+  - "cross_validate_with_reference_specs()"
 
-1. Ingest `STATUS.md` as primary context anchor.
-2. Reference archived docs in `archive/outdated_docs/DOCS_BKUP_08-18-2025` for historical continuity.
-3. read all instructions .github/instructions/ ensure SSOT.
-4. Regenerate each domain doc in `docs/`:
-   - `core_software.md`
-   - `communications.md`
-   - `telemetry.md`
-   - `motor_control.md`
-   - `safety.md`
-   - `build_testing.md`
-   - `simulation.md`
-   - `documentation_ssot.md`
-5. Optimize for human + AI consumption:
-   - Semantic anchors (`## Domain`, `### Subsystem`)
-   - Inline summaries for AI handoff
-   - `last_updated:` timestamp at top
+- id: regenerate_documentation
+  for_each: "{DOMAINS}"
+  run:
 
-## 🧪 Validation
+  - "write_full_domain_doc(file=current_item, include_full_API_reference=true, include_algorithm_explanations=true, include_code_examples=true, crosslink_to_related_docs=true, add_mermaid_diagrams=true, add_last_updated_timestamp=true)"
+    ensure:
+  - "doc_length_above_threshold(min_words=800)"
+  - "contains(['Overview','Detailed Description','Algorithm Details','Best Practices','Reference Links'])"
 
-- Confirm SSOT alignment via scripts\validate_ssot.py
-- Validate modularity via cross-links in `documentation_ssot.md`
+- id: validate_docs
+  run:
 
-## ⚙️ GitHub Action Offload
+  - "python scripts/validate_ssot.py"
+  - "check_crosslinks('docs/documentation_ssot.md')"
+    on_fail:
+  - "halt('Validation failed; manual fix required')"
 
-- Push this prompt to `.copilot-tasks/regenerate_docs.md`
-- Trigger `regenerate-docs.yml` workflow in `.github/workflows/`
-- Monitor output in `docs/` and commit results with squash strategy
+- id: commit_changes
+  run:
+  - "git add docs/\*.md"
+  - "git commit -m 'docs: regenerate full domain docs with deep code+spec analysis'"
+  - "git push"
 
-## ✅ Output Format
+acceptance:
 
-- Markdown files only
-- Regenerated files overwrite existing ones in `docs/`
-- Include commit message: `docs: regenerate domain docs via Copilot++ offload`
+- "all_domain_docs_present_and_non_stub()"
+- "passes_ssot_validation()"
+- "mermaid_diagrams_render_in_markdown()"
 
-## 🧠 Notes
+notes:
 
-- Use GPT-5 Mini for regeneration
-- Respect SSOT overrides and workspace references
-- Preserve traceability and modularity`
-- Output target: `docs/`
-
-## 🧾 Regeneration Instructions
-
-1. Ingest `docs/STATUS.md` as primary context anchor.
-2. Reference archived docs in `docs_archive/2025-08-18/` for historical continuity.
-3. Apply SSOT-driven overrides from `src/config/ssot.yaml`.
-4. Regenerate each domain doc in `docs/`:
-   - `core_software.md`
-   - `communications.md`
-   - `telemetry.md`
-   - `motor_control.md`
-   - `safety.md`
-   - `build_testing.md`
-   - `documentation_ssot.md`
-5. Optimize for human + AI consumption:
-   - Semantic anchors (`## Domain`, `### Subsystem`)
-   - Inline summaries for AI handoff
-   - `last_updated:` timestamp at top
-
-## 🖼️ Mermaid Diagram Generation
-
-- Generate Mermaid diagrams, or vertical flow-charts, etc. for each domain where architecture, flow, or relationships are relevant:
-- FreeRTOS task layout
-- Hardware topology (MCU, drivers, sensors)
-- Communication protocols (CAN, UART, SPI/I2C)
-- Safety system layers
-- Build/test pipelines
-- Use GitHub-compatible syntax:
-- Avoid htmlLabels: true
-- Prefer flowchart TD or graph LR
-- Use simple node labels and avoid unsupported styling
-- Embed diagrams using fenced code blocks:
-
-```mermaid
-graph LR
-  MCU --> SPI --> L6470
-  L6470 --> MOTOR
-```
-
-- Place diagrams directly under relevant headings with a short caption
-- Validate rendering in GitHub Markdown preview (e.g. VS Code)
-
-## 🧪 Validation
-
-- Confirm SSOT alignment via checksum in `ssot.yaml`
-- Validate modularity via cross-links in `documentation_ssot.md`
-
-## ⚙️ GitHub Action Offload
-
-- Push this prompt to `.copilot-tasks/regenerate_docs.md`
-- Trigger `regenerate-docs.yml` workflow in `.github/workflows/`
-- Monitor output in `docs/` and commit results with squash strategy
-
-## ✅ Output Format
-
-- Markdown files only
-- Regenerated files overwrite existing ones in `docs/`
-- Include commit message: `docs: regenerate domain docs via Copilot++ offload`
-
-## 🧠 Notes
-
-- Use GPT-5 Mini for regeneration
-- Respect SSOT overrides and workspace references
-- Preserve traceability and modularity
-- Ensure Mermaid diagrams are GitHub-renderable and contextually placed
+- "Follow code-paths until leaf functions are documented."
+- "Extract and explain algorithms, not just list them."
+- "Validate HAL and RTOS integration against manufacturer specs."
+- "Stub-level output fails acceptance; regenerate until complete."

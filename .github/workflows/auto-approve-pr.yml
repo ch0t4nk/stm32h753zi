@@ -13,6 +13,8 @@ on:
 permissions:
   contents: read
   pull-requests: write
+  checks: read
+  statuses: read
 
 jobs:
   auto-approve:
@@ -22,6 +24,8 @@ jobs:
       # Comma-separated list of trusted authors that can auto-approve their own PRs
       ALLOWED_AUTHORS: "ch0t4nk,dependabot[bot]"
       APPROVE_LABEL: "auto-approve"
+      # Comma-separated list of required status check names that must be 'success'
+      REQUIRED_CHECKS: "build/test,validate-ssot"
 
     steps:
       - name: Check PR and decide
@@ -41,18 +45,74 @@ jobs:
 
             core.info(`PR #${pr.number} by ${pr.user.login}, labels=${(pr.labels||[]).map(l=>l.name).join(',')}`);
 
-            if (!hasLabel && !isTrustedAuthor) {
-              core.info('PR not eligible for auto-approve: neither trusted author nor labelled');
+            // Require BOTH label and trusted author for approval
+            if (!hasLabel) {
+              core.info('PR missing approve label => not eligible');
+              return;
+            }
+            if (!isTrustedAuthor) {
+              core.info('PR author not in trusted authors => not eligible');
               return;
             }
 
-            // Create an approval review
+            // Create an approval review and add an approval comment for audit
             await github.rest.pulls.createReview({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: pr.number,
               event: 'APPROVE',
-              body: 'Auto-approved by workflow (trusted author or label)'
+              body: 'Auto-approved by workflow (trusted author + label)'
             });
+            const now = (new Date()).toISOString();
+            await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: pr.number, body: `Auto-approval audit: PR #${pr.number} auto-approved by workflow on ${now}.` });
+            core.info('PR approved and audit comment posted');
 
-            core.info('PR approved by workflow');
+      - name: Attempt auto-merge when ready
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.AUTO_APPROVE_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            if (!pr) { core.info('No PR in payload'); return; }
+
+            // Poll until mergeable or timeout (30 attempts * 10s = 5 minutes)
+            let mergeable = null;
+            for (let i=0;i<30;i++) {
+              const r = await github.rest.pulls.get({ owner: context.repo.owner, repo: context.repo.repo, pull_number: pr.number });
+              mergeable = r.data.mergeable;
+              core.info(`Poll ${i}: mergeable=${mergeable}`);
+              if (mergeable === true) break;
+              if (mergeable === false) { core.info('PR not mergeable'); break; }
+              await new Promise(res => setTimeout(res, 10000));
+            }
+
+            if (mergeable !== true) {
+              core.info('Skipping auto-merge: PR not mergeable within timeout');
+              return;
+            }
+
+            // Verify required checks by name are successful
+            const required = process.env.REQUIRED_CHECKS.split(',').map(s=>s.trim()).filter(s=>s.length>0);
+            if (required.length > 0) {
+              // List combined status for the HEAD sha
+              const headSha = (await github.rest.pulls.get({ owner: context.repo.owner, repo: context.repo.repo, pull_number: pr.number })).data.head.sha;
+              const checks = await github.rest.checks.listForRef({ owner: context.repo.owner, repo: context.repo.repo, ref: headSha });
+              const checkNames = checks.data.check_runs.map(c=>({name:c.name, conclusion:c.conclusion}));
+              core.info(`Found ${checkNames.length} check runs`);
+              for (const req of required) {
+                const found = checkNames.find(c=>c.name === req);
+                if (!found) { core.info(`Required check not found: ${req}`); return; }
+                if (found.conclusion !== 'success') { core.info(`Required check not successful: ${req} => ${found.conclusion}`); return; }
+              }
+            }
+
+            // Merge using the supplied token
+            const mergeRes = await github.rest.pulls.merge({ owner: context.repo.owner, repo: context.repo.repo, pull_number: pr.number, merge_method: 'merge' });
+            core.info('PR merged by workflow');
+
+            // Audit log: post a comment to the PR with merge details
+            const mergeSha = mergeRes.data && (mergeRes.data.sha || mergeRes.data.merge_commit_sha) ? (mergeRes.data.sha || mergeRes.data.merge_commit_sha) : 'unknown';
+            const now = (new Date()).toISOString();
+            const body = `Auto-merge audit: PR #${pr.number} was auto-merged by workflow on ${now}. Merge commit: ${mergeSha}. Approved by workflow (trusted author + label).`;
+            await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: pr.number, body });
+            core.info('Audit comment posted to PR');

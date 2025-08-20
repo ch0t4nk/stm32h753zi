@@ -518,6 +518,18 @@ Run it locally after generation if you need a quick pre-check:
 python scripts/validate_generated_overlay.py --file build/generated/include/workspace_config.generated.h
 ```
 
+## Auto-approve PR policy (brief)
+
+This repository includes a conservative auto-approve workflow to speed up validated, low-risk changes.
+
+- Workflow file: `.github/workflows/auto-approve-pr.yml`
+- Policy summary:
+  - Requires BOTH: PR author in `ALLOWED_AUTHORS` and label `APPROVE_LABEL` (default `auto-approve`).
+  - Requires named CI checks listed in `REQUIRED_CHECKS` to report `success` before merge.
+  - A repository secret `AUTO_APPROVE_TOKEN` supplies a minimal-scope PAT used by the workflow. Ensure the token has `repo` and `checks:read` as needed.
+
+If you change CI job names or move the workflow, update `REQUIRED_CHECKS` in the workflow file and the docs accordingly.
+
 Never hardcode compiler paths or flags outside these SSOT files.
 
 ## Success Indicators

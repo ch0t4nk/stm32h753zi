@@ -55,7 +55,18 @@ target_include_directories(unity_host PUBLIC ${UNITY_SOURCE_DIR})
 function(add_host_test test_name test_source)
     if(EXISTS "${test_source}")
         message(STATUS "Adding host test: ${test_name} (source: ${test_source})")
-        add_executable(${test_name} ${test_source} ${ARGN})
+    # If the archived emergency_stop implementation is included, it already
+    # provides a weak Test_ResetApplication. Avoid adding test_hooks.c in
+    # that case to prevent duplicate weak symbol definitions. Otherwise add
+    # test_hooks.c to provide a default weak implementation.
+    set(_emergency_src "${CMAKE_SOURCE_DIR}/../archive/old_hal_rtos/src/safety/emergency_stop_abstracted.c")
+    list(FIND ARGN ${_emergency_src} _found_emergency)
+    if(_found_emergency EQUAL -1)
+        set(_all_sources ${test_source} ${ARGN} ${TEST_MOCKS_DIR}/test_hooks.c)
+    else()
+        set(_all_sources ${test_source} ${ARGN})
+    endif()
+    add_executable(${test_name} ${_all_sources})
         target_link_libraries(${test_name} unity_host)
         
         # Host compilation flags (no ARM cross-compilation)
@@ -84,6 +95,17 @@ function(add_host_test test_name test_source)
         # Link math library for mathematical functions
         if(NOT CMAKE_HOST_WIN32)
             target_link_libraries(${test_name} m)
+        endif()
+        # Add generated include dir (from top-level CMake build directory)
+        # Use CMAKE_BINARY_DIR from the top-level project (parent) to find
+        # the generated header output.
+        if(DEFINED PARENT_CMAKE_BINARY_DIR)
+            set(_gen_inc_dir "${PARENT_CMAKE_BINARY_DIR}/generated/include")
+        else()
+            set(_gen_inc_dir "${CMAKE_SOURCE_DIR}/../build/generated/include")
+        endif()
+        if(EXISTS ${_gen_inc_dir})
+            target_include_directories(${test_name} PRIVATE ${_gen_inc_dir})
         endif()
         
         add_test(NAME ${test_name} COMMAND ${test_name})

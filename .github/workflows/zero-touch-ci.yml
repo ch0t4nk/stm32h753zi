@@ -1,0 +1,60 @@
+name: "zero-touch-ci"
+
+# This workflow mirrors `validate-ssot.yml` but uses the preferred
+# zero-touch-ci name so automation (scripts/auto_update_status.py)
+# can dispatch it by filename. Behavior is identical: generate the
+# workspace overlay header and run the SSOT validator.
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*", "release/*"]
+  workflow_dispatch: {}
+
+jobs:
+  zero-touch:
+    name: "Generate workspace config and validate SSOT (zero-touch)"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11"]
+
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "Set up Python ${{ matrix.python-version }}"
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: "Install project requirements (with pip cache)"
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: "Install project requirements"
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: "Run workspace config generator"
+        run: |
+          python scripts/generate_workspace_config.py --input config/workflow_toolchain.json --output build/generated/include/workspace_config.generated.h
+
+      - name: "Validate generated overlay"
+        run: |
+          python scripts/validate_generated_overlay.py --file build/generated/include/workspace_config.generated.h
+
+      - name: "Run SSOT validator"
+        run: |
+          python scripts/validate_ssot.py
+
+      - name: "Upload generated header (artifact)"
+        uses: actions/upload-artifact@v4
+        with:
+          name: workspace_config_generated
+          path: build/generated/include/workspace_config.generated.h

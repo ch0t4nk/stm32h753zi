@@ -1,0 +1,110 @@
+---
+
+mode: agent
+task: status_regeneration
+priority: high
+
+anchors:
+
+- SSOT: STATUS.md
+- DOMAIN: HAL
+- DOMAIN: RTOS
+- DOMAIN: BUILD
+
+context:
+repo_root: "."
+status_file: "STATUS.md"
+instructions_glob: "\*\*/.instructions"
+venv: ".venv"
+python: ".venv/Scripts/python.exe" # Windows path; on POSIX use .venv/bin/python
+auto_script: "scripts/auto_update_status.py"
+fallback_parser: "scripts/parse_instructions.py"
+
+preconditions:
+
+- check: "exists('{status_file}')"
+- check: "any_exists('{instructions_glob}')"
+- check: "exists('{venv}')"
+- check: "git_available()"
+- check: "precommit_available_or_skip()"
+
+side_effects:
+
+- modifies: ["{status_file}", ".pre-commit-cache", ".git/index"]
+- creates: ["logs/status_update.log"]
+
+steps:
+
+- id: auto_update
+  when: "exists('{auto_script}')"
+  run:
+
+  - "('{python}' '{auto_script}' --in .instructions --out {status_file} --strict) 2>&1 | tee logs/status_update.log"
+    else:
+    run: - "('{python}' '{fallback_parser}' --apply .instructions --out {status_file}) 2>&1 | tee -a logs/status_update.log"
+
+- id: manual_curation
+  edit: "{status_file}"
+  ensure:
+
+  - "remove_stale_entries()"
+  - "normalize_headings_bullets_timestamps(format='ISO8601')"
+  - "sections_present(['Tasks','Milestones','Blockers','Owners','Dates'])"
+  - "insert_note(section='Context Bootstrapping', text='STATUS.md is the primary context anchor for Copilot++ sessions; downstream orchestration depends on its integrity.')"
+  - "anchors_present(['SSOT','HAL','RTOS','BUILD'])"
+
+- id: validate
+  run:
+
+  - "pre-commit run --all-files || exit 2"
+    on_fail:
+  - "collect_validator_output('logs/precommit.log')"
+  - "halt('SSOT validator failed; manual action required')"
+
+- id: stage_commit
+  run:
+
+  - "git add -A"
+  - >
+        git commit -m "chore(ssot): update STATUS.md — <one-liner>"
+        -m "* SSOT: <key migrations/decisions>"
+        -m "* Build: <validator state/notes>"
+        -m "* Open items: <triage or blockers>"
+    retry_on_hook_fix: true
+    on_fail:
+  - "emit_git_errors()"
+  - "suggest_fixups()"
+  - "halt('Commit failed')"
+
+- id: push
+  run:
+  - "git rev-parse --abbrev-ref HEAD > logs/branch.txt"
+  - "git push --no-verify"
+
+acceptance:
+
+- "file_changed('{status_file}')"
+- "hooks_passed()"
+- "commit_created_and_pushed()"
+- "optional(build_fast() && run('cmake --build build -j') == 0)"
+
+outputs:
+
+- file: "{status_file}"
+- file: "logs/status_update.log"
+- text: "commit_sha()"
+- text: "branch(read('logs/branch.txt'))"
+
+errors:
+
+- parse_fail:
+  action: ["dry_run_checklist('{instructions_glob}','logs/dryrun.md')", "halt('Parsing failed')"]
+- auto_update_fail:
+  action: ["log('Auto-update error; proceeding to manual curation')"]
+- commit_fail:
+  action: ["emit_git_errors()", "suggest_fixups()", "halt('Commit failed')"]
+
+notes:
+
+- "Keep {status_file} authoritative for SSOT; all orchestration derives from it."
+- "Prefer session-scoped env injection over global PATH changes."
