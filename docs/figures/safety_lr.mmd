@@ -1,0 +1,8 @@
+flowchart LR
+  Sensors[Sensors]
+  CPU[CPU]
+  Watchdog[Watchdog]
+  EStop[E-Stop]
+  Sensors --> CPU
+  CPU --> Watchdog
+  CPU --> EStop

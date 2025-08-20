@@ -1,0 +1,14 @@
+flowchart LR
+  subgraph SSOT_Firmware[Firmware SSOT]
+    H[hardware_config.h]
+    M[motor_config.h]
+    S[safety_config.h]
+  end
+  subgraph SSOT_Workflow[Workflow SSOT]
+    W[workspace_config.h]
+    F[workflow_config.h]
+  end
+  H --> M
+  M --> S
+  W --> H
+  W --> F

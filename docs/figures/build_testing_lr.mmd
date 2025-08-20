@@ -1,0 +1,4 @@
+flowchart LR
+  Dev["Developer"] --> Build["Build (CMake)"]
+  Build --> Tests["Host & ARM Tests"]
+  Tests --> Status["Update STATUS.md"]

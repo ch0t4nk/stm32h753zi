@@ -1,0 +1,6 @@
+graph TB
+  Controller[Motor Controller]
+  L6470[L6470 Driver]
+  AS5600[AS5600 Encoder]
+  Controller --> L6470
+  AS5600 --> Controller

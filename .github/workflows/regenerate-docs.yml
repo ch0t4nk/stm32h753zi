@@ -1,0 +1,51 @@
+name: Regenerate docs (self-hosted Ollama)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  regenerate:
+    name: Regenerate domain docs
+    runs-on: [self-hosted, linux]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Python deps
+        run: |
+          python -m pip install -r requirements.txt || true
+
+      - name: Install Node (for mermaid)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install mermaid-cli
+        run: npm install -g @mermaid-js/mermaid-cli
+
+      - name: Prepare prompts (dry-run)
+        run: python scripts/generate_docs_runner.py --prompt .copilot-tasks/generate_docs.md --dry-run
+
+      - name: Generate docs (execute on local Ollama)
+        run: |
+          # This step assumes Ollama and model are available on the self-hosted runner
+          python scripts/generate_docs_runner.py --prompt .copilot-tasks/generate_docs.md --execute
+
+      - name: Validate SSOT
+        run: python scripts/validate_ssot.py
+
+      - name: Render Mermaid diagrams
+        run: npx @mermaid-js/mermaid-cli -i "docs/figures/*.mmd" -o docs/figures/ --outputFormat svg || true
+
+      - name: Create PR branch
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: docs/regeneration
+          commit-message: "docs: regenerate domain docs (self-hosted)"
+          title: "Automated: regenerate domain docs (self-hosted)"
+          body: "Please review regenerated domain documentation produced by self-hosted Ollama runner."

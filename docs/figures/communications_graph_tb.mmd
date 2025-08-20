@@ -1,0 +1,9 @@
+graph TB
+  UART["UART"]
+  SPI["SPI (L6470)"]
+  I2C["I2C (AS5600)"]
+  CAN["CAN/FDCAN"]
+  UART --> Telemetry
+  SPI --> MotorDrivers
+  I2C --> Encoders
+  CAN --> System
