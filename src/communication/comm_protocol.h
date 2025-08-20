@@ -379,18 +379,17 @@ void comm_can_rx_callback(FDCAN_HandleTypeDef *hfdcan);
         }                                                                     \
     } while (0)
 
-#/ *
-#* Prefer SSOT usage instead of hardcoded numbers.If a consumer requires a
-#* hard - coded literal(for example for static buffer allocation), use a
-#* local conversion macro to make the decision explicit.Example below shows
-#* a conversion from SSOT to local buffer sizes.
-#*
-#* Notes:
-#* - `SSOT_MAX_MOTORS` is a build -                                           \
-    time SSOT that requires a rebuild / reflash
-#* to change.Consumer code must document whether a runtime reconfiguration
-#* is supported.See top - level SSOT header comment.
-#* /
+/*
+ * Prefer SSOT usage instead of hardcoded numbers. If a consumer requires a
+ * hard-coded literal (for example for static buffer allocation), use a
+ * local conversion macro to make the decision explicit. Example below shows
+ * a conversion from SSOT to local buffer sizes.
+ *
+ * Notes:
+ * - `SSOT_MAX_MOTORS` is a build-time SSOT that requires a rebuild/reflash
+ *   to change. Consumer code must document whether a runtime reconfiguration
+ *   is supported. See top-level SSOT header comment.
+ */
 
 /* Local buffer sizing derived from SSOT values. These are safe compile-time
  * calculations and document whether they are runtime-changeable.
