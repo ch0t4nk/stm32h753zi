@@ -1,6 +1,6 @@
 # STM32H753ZI Project Status
 
-**Last Updated**: August 19, 2025
+**Last Updated**: August 20, 2025
 **Status**: ✔️ In-progress — firmware builds complete; host-test migration and host-test debugging underway
 **Deployment**: ✅ ARM GCC toolchain configured for firmware builds (see Build section)
 **AI Infrastructure**: ✅ **Semantic Search Production Ready**
@@ -35,6 +35,8 @@
 **Architecture**: STM32Cube HAL + FreeRTOS + X-CUBE-SPN2/MCSDK hybrid, comprehensive SSOT architecture
 **Recent Build**: Firmware build (ARM) completed and produced ELF/BIN/HEX; host-test build attempted in `build_host_tests` but failed during test mock compilation and tests were not executed
 
+**Context Bootstrapping**: STATUS.md is the primary context anchor for Copilot++ sessions; downstream orchestration depends on its integrity.
+
 ---
 
 ## Session Summary (Aug 19, 2025)
@@ -58,6 +60,11 @@
 - **Validate SSOT**: `python scripts/validate_ssot.py`
 - **Status Update**: `python scripts/auto_update_status.py --verbose`
 - **Feature Tracking**: `python scripts/feature_tracker.py list --status IN_PROGRESS`
+
+-- PowerShell (recommended, explicit venv):
+& 'C:\repos\Nucleo-H753ZI Project\code\.venv\Scripts\python.exe' scripts\validate_ssot.py
+& 'C:\repos\Nucleo-H753ZI Project\code\.venv\Scripts\python.exe' scripts\auto_update_status.py --verbose
+& 'C:\repos\Nucleo-H753ZI Project\code\.venv\Scripts\python.exe' scripts\feature_tracker.py list --status IN_PROGRESS
 
 ## ✅ Progress So Far
 
@@ -190,6 +197,13 @@ Notes: All runtime instrumentation was added temporarily for debugging and will 
 - Cleaned inline hex annotations from `src/config/error_codes.h` and added a documented HARDCODED exceptions registry for vendor-local values.
 - Validation: Ran `scripts/validate_ssot.py` (repo venv) — result: no SSOT violations.
 
+### Conversation Continuity Markers
+
+- **Source files**: 36 C files, 54 H files (src/)
+- **Open TODOs**: ~84 (scanned across src/)
+- **Driver files present**: `src/drivers/l6470/l6470_driver.c` (present), `src/drivers/as5600/as5600_driver.c` (present)
+- **Key manual sections to preserve**: "Current Technical Context for Copilot Continuation", "Next Steps", "Architecture Status"
+
 ### **File Status & Dependencies**
 
 - **Build System**: ✅ `cmake/gcc-arm-none-eabi.cmake` (SSOT-integrated ARM GCC toolchain)
@@ -222,7 +236,7 @@ Notes: All runtime instrumentation was added temporarily for debugging and will 
 10. **Motion Profiling**: Test coordinated dual-motor movements and trajectories
 11. **System Integration**: Complete end-to-end stepper motor control with feedback
 
-## 📝 Notes & Observations
+## 🧠 Notes & Observations
 
 ### **Build System Integration Lessons Learned**
 
