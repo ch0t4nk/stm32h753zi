@@ -3,6 +3,7 @@
 mode: agent
 task: status_regeneration
 priority: high
+reasoning: deep
 
 anchors:
 

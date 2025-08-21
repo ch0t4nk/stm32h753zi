@@ -463,6 +463,213 @@
       "effort_actual_hours": 0,
       "commits": []
     },
+    "FTR-021": {
+      "id": "FTR-021",
+      "name": "DMA Cache Coherency Helpers",
+      "status": "PLANNED",
+      "phase": "1.2",
+      "priority": "CRITICAL",
+      "category": "optimization",
+      "description": "Provide SCB cache clean/invalidate helper wrappers and integrate them into drivers and critical DMA paths to ensure data coherency on STM32H7 devices.",
+      "acceptance_criteria": [
+        "Cache helper API added: dma_cache_clean(), dma_cache_invalidate()",
+        "Helpers used in at least UART DMA and L6470 driver receive paths",
+        "Unit/build tests compile and host smoke test (uart_dma_host_test) passes deterministically",
+        "No regressions in validate_ssot and feature tracker validation"
+      ],
+      "implementation_files": [
+        "src/drivers/cache_dma.h",
+        "src/drivers/cache_dma.c",
+        "src/tests/uart_dma_device_test.c"
+      ],
+      "test_files": [
+        "scripts/uart_dma_host_test.py",
+        "tests/unit/test_cache_dma.c"
+      ],
+      "documentation": [
+        "docs/ADR/0002-dma-cache-coherency.md",
+        "docs/CACHE_DMA_README.md"
+      ],
+      "dependencies": [],
+      "dependents": [],
+      "blockers": [],
+      "completion_date": null,
+      "effort_estimate_hours": 4,
+      "effort_actual_hours": 0,
+      "commits": [],
+      "notes": [
+        "High priority due to known H7 cache/DMA issues documented in peer-level report"
+      ]
+    },
+    "FTR-022": {
+      "id": "FTR-022",
+      "name": "Runtime Validation Hooks",
+      "status": "PLANNED",
+      "phase": "1.2",
+      "priority": "HIGH",
+      "category": "testing",
+      "description": "Add vApplication hooks, watchdog setup, reset-source logging and a minimal diagnostic API exposed over serial for runtime health checks.",
+      "acceptance_criteria": [
+        "vApplicationStackOverflowHook and vApplicationMallocFailedHook implemented",
+        "Watchdog initialized during early boot by default (configurable)",
+        "Reset source logs persisted to reserved RAM and accessible via diagnostic serial command",
+        "Tests cover hooks and diagnostic readback"
+      ],
+      "implementation_files": [
+        "src/safety/runtime_checks.c",
+        "src/safety/runtime_checks.h",
+        "Core/Src/main.c"
+      ],
+      "test_files": [
+        "tests/integration/test_runtime_hooks.c"
+      ],
+      "documentation": [
+        "docs/ADR/0003-runtime-validation.md"
+      ],
+      "dependencies": [],
+      "dependents": [],
+      "blockers": [],
+      "completion_date": null,
+      "effort_estimate_hours": 6,
+      "effort_actual_hours": 0,
+      "commits": [],
+      "notes": [
+        "Low-intrusion approach to increase field observability and recoverability"
+      ]
+    },
+    "FTR-023": {
+      "id": "FTR-023",
+      "name": "Startup & VTOR Relocation Helper",
+      "status": "PLANNED",
+      "phase": "1.2",
+      "priority": "HIGH",
+      "category": "integration",
+      "description": "Provide an optional helper to relocate the vector table to RAM at boot and document linker expectations for ITCM/DTCM/AXI placement.",
+      "acceptance_criteria": [
+        "Optional helper implemented and guarded by SSOT macro",
+        "Linker notes added and example usage in README",
+        "No regression in boot behavior on supported hardware"
+      ],
+      "implementation_files": [
+        "src/system/early_vtor.c",
+        "src/system/early_vtor.h",
+        "docs/ADR/0001-startup-and-vector-table.md"
+      ],
+      "test_files": [],
+      "documentation": [
+        "docs/ADR/0001-startup-and-vector-table.md"
+      ],
+      "dependencies": [],
+      "dependents": [],
+      "blockers": [],
+      "completion_date": null,
+      "effort_estimate_hours": 4,
+      "effort_actual_hours": 0,
+      "commits": [],
+      "notes": [
+        "Useful for bootloader patterns and runtime ISR hotpatching"
+      ]
+    },
+    "FTR-024": {
+      "id": "FTR-024",
+      "name": "ISR Priority Table and Documentation",
+      "status": "PLANNED",
+      "phase": "1.2",
+      "priority": "MEDIUM",
+      "category": "documentation",
+      "description": "Document NVIC priorities, ISR ownership, and DMA handle ownership in `docs/README-peripherals.md` with anchors to code locations.",
+      "acceptance_criteria": [
+        "README updated with a table of IRQ -> priority -> owner",
+        "Anchors resolve to actual file locations",
+        "Automated check ensures no missing anchors"
+      ],
+      "implementation_files": [
+        "docs/README-peripherals.md",
+        "Core/Src/stm32h7xx_it.c"
+      ],
+      "test_files": [],
+      "documentation": [
+        "docs/README-peripherals.md"
+      ],
+      "dependencies": [],
+      "dependents": [],
+      "blockers": [],
+      "completion_date": null,
+      "effort_estimate_hours": 2,
+      "effort_actual_hours": 0,
+      "commits": [],
+      "notes": [
+        "Low-effort visibility improvement"
+      ]
+    },
+    "FTR-025": {
+      "id": "FTR-025",
+      "name": "Host-Test Parameterization",
+      "status": "PLANNED",
+      "phase": "1.2",
+      "priority": "MEDIUM",
+      "category": "testing",
+      "description": "Parameterize the UART host-test and CTest entry so serial port and test parameters are configurable at runtime or via CTest variables.",
+      "acceptance_criteria": [
+        "scripts/uart_dma_host_test.py accepts --port or reads UART_TEST_PORT env var",
+        "CMake/CTest test uses a CTest env variable or cache entry to set the port",
+        "Documentation updated in scripts/README-uart-dma-test.md"
+      ],
+      "implementation_files": [
+        "scripts/uart_dma_host_test.py",
+        "CMakeLists.txt"
+      ],
+      "test_files": [
+        "tests/integration/test_uart_dma_ctest_integration.sh"
+      ],
+      "documentation": [
+        "scripts/README-uart-dma-test.md"
+      ],
+      "dependencies": [],
+      "dependents": [],
+      "blockers": [],
+      "completion_date": null,
+      "effort_estimate_hours": 1,
+      "effort_actual_hours": 0,
+      "commits": [],
+      "notes": [
+        "Small UX improvement enabling CI-driven host tests"
+      ]
+    },
+    "FTR-026": {
+      "id": "FTR-026",
+      "name": "Doxygen + ADRs",
+      "status": "PLANNED",
+      "phase": "1.3",
+      "priority": "LOW",
+      "category": "documentation",
+      "description": "Add Doxygen config and ADR files for major design decisions (startup, DMA, runtime checks).",
+      "acceptance_criteria": [
+        "Doxyfile added and documentation build target runs",
+        "ADR files created for at least startup and DMA cache coherency",
+        "Docs generation documented in README"
+      ],
+      "implementation_files": [
+        "Doxyfile",
+        "docs/ADR/0001-startup-and-vector-table.md",
+        "docs/ADR/0002-dma-cache-coherency.md"
+      ],
+      "test_files": [],
+      "documentation": [
+        "docs/ADR/0001-startup-and-vector-table.md",
+        "docs/ADR/0002-dma-cache-coherency.md"
+      ],
+      "dependencies": [],
+      "dependents": [],
+      "blockers": [],
+      "completion_date": null,
+      "effort_estimate_hours": 3,
+      "effort_actual_hours": 0,
+      "commits": [],
+      "notes": [
+        "Improves maintainability and traceability"
+      ]
+    },
     "FTR-011": {
       "id": "FTR-011",
       "name": "Industrial Communication Protocols",

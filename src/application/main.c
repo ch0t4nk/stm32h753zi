@@ -21,6 +21,7 @@
 #include "main.h"
 #include "main_application.h"
 #include "stm32h7xx_hal.h"
+#include <stdio.h>
 
 /* Function prototypes */
 void Error_Handler(void);
@@ -59,6 +60,55 @@ int main(void) {
         Error_Handler();
     }
 
+    /* Minimal boot console init: ensure USART3 is up early so we can print
+     * boot diagnostics regardless of higher-level init order. Uses PD8/PD9
+     * (USART3) and AF7 which is the Nucleo default mapping. */
+    {
+        UART_HandleTypeDef boot_huart;
+        GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+        /* Enable GPIO and USART clocks */
+        __HAL_RCC_GPIOD_CLK_ENABLE();
+        __HAL_RCC_USART3_CLK_ENABLE();
+
+        /* Configure PD8 = TX, PD9 = RX */
+        GPIO_InitStruct.Pin = GPIO_PIN_8 | GPIO_PIN_9;
+        GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+        GPIO_InitStruct.Pull = GPIO_NOPULL;
+        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+        GPIO_InitStruct.Alternate = GPIO_AF7_USART3;
+        HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+        /* Configure UART */
+        boot_huart.Instance = USART3;
+        boot_huart.Init.BaudRate = UART_BAUDRATE;
+        boot_huart.Init.WordLength = UART_WORDLENGTH_8B;
+        boot_huart.Init.StopBits = UART_STOPBITS_1;
+        boot_huart.Init.Parity = UART_PARITY_NONE;
+        boot_huart.Init.Mode = UART_MODE_TX_RX;
+        boot_huart.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+        boot_huart.Init.OverSampling = UART_OVERSAMPLING_16;
+
+        if (HAL_UART_Init(&boot_huart) == HAL_OK) {
+            char boot_msg[128];
+            int n = snprintf(boot_msg, sizeof(boot_msg),
+                             "BOOT: UART_BAUD=%d SAFE_NO_MOTOR_POWER=%d\r\n",
+                             (int)UART_BAUDRATE,
+#ifdef SAFE_NO_MOTOR_POWER
+                             1
+#else
+                             0
+#endif
+            );
+            if (n > 0) {
+                HAL_UART_Transmit(&boot_huart, (uint8_t *)boot_msg,
+                                  (uint16_t)n, 100);
+            }
+            /* Do not deinit - allow higher-level code to reuse USART3 if
+             * desired. */
+        }
+    }
+
     /* TODO: Initialize peripherals following instruction files:
      * - MOTOR_SPI_INSTANCE for L6470 (stm32h7-spi-l6470.instructions.md)
      * - ENCODER_I2C_INSTANCE for AS5600 (stm32h7-i2c-as5600.instructions.md)
@@ -79,6 +129,38 @@ int main(void) {
         /* Self-test failure - enter error state */
         Error_Handler();
     }
+
+    /* Boot-time diagnostic message: report UART baud and SAFE_NO_MOTOR_POWER
+     */
+#if defined(UART_BAUDRATE)
+    {
+        char boot_msg[128];
+        int n = snprintf(boot_msg, sizeof(boot_msg),
+                         "BOOT: UART_BAUD=%d SAFE_NO_MOTOR_POWER=%d\r\n",
+                         (int)UART_BAUDRATE,
+#ifdef SAFE_NO_MOTOR_POWER
+                         1
+#else
+                         0
+#endif
+        );
+        if (n > 0) {
+            /* Use printf if retargeting exists */
+            printf("%s", boot_msg);
+
+            /* Fallback: try HAL UART if huart3 symbol is present */
+            extern UART_HandleTypeDef
+                huart3; /* weak extern - may be present */
+            /* Attempt HAL transmit; if huart3 uninitialized this may hang in
+             * HAL_MAX_DELAY so we guard by checking huart3.Instance != NULL if
+             * the structure is usable. */
+            if ((void *)&huart3 != NULL && huart3.Instance != NULL) {
+                HAL_UART_Transmit(&huart3, (uint8_t *)boot_msg, (uint16_t)n,
+                                  100);
+            }
+        }
+    }
+#endif
 
     /* Main control loop with integrated safety and watchdog management */
     while (1) {

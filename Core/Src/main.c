@@ -30,6 +30,8 @@
 #include "stm32h7xx_hal_flash_ex.h"
 // SSOT hardware config
 #include "config/hardware_config.h"
+// SSOT communication config (used by device test and comm helpers)
+#include "config/comm_config.h"
 /* USER CODE END Includes */
 
 /* Private typedef
@@ -101,6 +103,12 @@ int main(void) {
 
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
+    /* If building the UART DMA device test, start the device test helper after
+     * peripheral init */
+#ifdef TEST_UART_DMA
+    extern void uart_dma_device_test_start(void);
+    uart_dma_device_test_start();
+#endif
     /* USER CODE BEGIN 2 */
 
     /* USER CODE END 2 */

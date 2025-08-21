@@ -15,6 +15,7 @@
 #include "common/error_codes.h"
 #include "common/system_state.h"
 #include "config/comm_config.h"
+#include "config/comm_config.h" // for INVALID_DEVICE_ID (ensure available)
 #include "config/hardware_config.h"
 #include "config/motor_config.h"
 #include "config/safety_config.h"
@@ -38,15 +39,15 @@ static I2C_HandleTypeDef *encoder_i2c2_handle = NULL;
 
 // Motor control state for each motor
 typedef struct {
-  bool enabled;
-  MotorState_t state;
-  float target_position_deg;
-  float current_position_deg;
-  float position_error_deg;
-  float target_velocity_dps;
-  float current_velocity_dps;
-  uint32_t last_update_time;
-  uint32_t fault_count;
+    bool enabled;
+    MotorState_t state;
+    float target_position_deg;
+    float current_position_deg;
+    float position_error_deg;
+    float target_velocity_dps;
+    float current_velocity_dps;
+    uint32_t last_update_time;
+    uint32_t fault_count;
 } MotorControlState_t;
 
 static MotorControlState_t motor_control_state[MAX_MOTORS] = {0};
@@ -81,68 +82,80 @@ static float motor_controller_calculate_position_error(float target,
 SystemError_t motor_controller_init(SPI_HandleTypeDef *hspi,
                                     I2C_HandleTypeDef *hi2c1,
                                     I2C_HandleTypeDef *hi2c2) {
-  if (hspi == NULL || hi2c1 == NULL || hi2c2 == NULL) {
-    return ERROR_MOTOR_CONFIG_INVALID;
-  }
-
-  // SAFETY-CRITICAL: Check safety system is operational before motor init
-  if (!safety_system_is_operational()) {
+#if defined(SAFE_NO_MOTOR_POWER) && SAFE_NO_MOTOR_POWER == 1
+    // Safe-mode build: skip motor and driver initialization to prevent
+    // accidental motor power enabling during bring-up.
+    (void)hspi;
+    (void)hi2c1;
+    (void)hi2c2;
     safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, INVALID_DEVICE_ID, 0);
+    motor_controller_initialized = false;
     return ERROR_SAFETY_SYSTEM_NOT_READY;
-  }
-
-  // Check for emergency stop condition
-  if (safety_get_emergency_stop_state()) {
-    safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, INVALID_DEVICE_ID, 1);
-    return ERROR_SAFETY_EMERGENCY_STOP;
-  }
-
-  // Store handle references
-  motor_spi_handle = hspi;
-  encoder_i2c1_handle = hi2c1;
-  encoder_i2c2_handle = hi2c2;
-
-  // Initialize L6470 stepper drivers (HAL abstracted)
-  SystemError_t result = l6470_init();
-  if (result != SYSTEM_OK) {
-    fault_monitor_record_system_fault(SYSTEM_FAULT_INIT_ERROR,
-                                      FAULT_SEVERITY_CRITICAL, result);
-    return result;
-  }
-
-  // Initialize AS5600 encoders (HAL abstracted)
-  result = as5600_init();
-  if (result != SYSTEM_OK) {
-    fault_monitor_record_system_fault(SYSTEM_FAULT_INIT_ERROR,
-                                      FAULT_SEVERITY_CRITICAL, result);
-    return result;
-  }
-
-  // Initialize motor control states
-  for (uint8_t motor_id = 0; motor_id < MAX_MOTORS; motor_id++) {
-    MotorControlState_t *state = &motor_control_state[motor_id];
-
-    state->enabled = false;
-    state->state = MOTOR_STATE_IDLE;
-    state->target_position_deg = 0.0f;
-    state->current_position_deg = 0.0f;
-    state->position_error_deg = 0.0f;
-    state->target_velocity_dps = 0.0f;
-    state->current_velocity_dps = 0.0f;
-    state->last_update_time = HAL_Abstraction_GetTick();
-    state->fault_count = 0;
-
-    // Read initial encoder position
-    float initial_position;
-    result = as5600_read_angle_degrees(motor_id, &initial_position);
-    if (result == SYSTEM_OK) {
-      state->current_position_deg = initial_position;
+#endif
+    if (hspi == NULL || hi2c1 == NULL || hi2c2 == NULL) {
+        return ERROR_MOTOR_CONFIG_INVALID;
     }
-  }
 
-  motor_controller_initialized = true;
+    // SAFETY-CRITICAL: Check safety system is operational before motor init
+    if (!safety_system_is_operational()) {
+        safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, INVALID_DEVICE_ID,
+                         0);
+        return ERROR_SAFETY_SYSTEM_NOT_READY;
+    }
 
-  return SYSTEM_OK;
+    // Check for emergency stop condition
+    if (safety_get_emergency_stop_state()) {
+        safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, INVALID_DEVICE_ID,
+                         1);
+        return ERROR_SAFETY_EMERGENCY_STOP;
+    }
+
+    // Store handle references
+    motor_spi_handle = hspi;
+    encoder_i2c1_handle = hi2c1;
+    encoder_i2c2_handle = hi2c2;
+
+    // Initialize L6470 stepper drivers (HAL abstracted)
+    SystemError_t result = l6470_init();
+    if (result != SYSTEM_OK) {
+        fault_monitor_record_system_fault(SYSTEM_FAULT_INIT_ERROR,
+                                          FAULT_SEVERITY_CRITICAL, result);
+        return result;
+    }
+
+    // Initialize AS5600 encoders (HAL abstracted)
+    result = as5600_init();
+    if (result != SYSTEM_OK) {
+        fault_monitor_record_system_fault(SYSTEM_FAULT_INIT_ERROR,
+                                          FAULT_SEVERITY_CRITICAL, result);
+        return result;
+    }
+
+    // Initialize motor control states
+    for (uint8_t motor_id = 0; motor_id < MAX_MOTORS; motor_id++) {
+        MotorControlState_t *state = &motor_control_state[motor_id];
+
+        state->enabled = false;
+        state->state = MOTOR_STATE_IDLE;
+        state->target_position_deg = 0.0f;
+        state->current_position_deg = 0.0f;
+        state->position_error_deg = 0.0f;
+        state->target_velocity_dps = 0.0f;
+        state->current_velocity_dps = 0.0f;
+        state->last_update_time = HAL_Abstraction_GetTick();
+        state->fault_count = 0;
+
+        // Read initial encoder position
+        float initial_position;
+        result = as5600_read_angle_degrees(motor_id, &initial_position);
+        if (result == SYSTEM_OK) {
+            state->current_position_deg = initial_position;
+        }
+    }
+
+    motor_controller_initialized = true;
+
+    return SYSTEM_OK;
 }
 
 /**
@@ -151,37 +164,47 @@ SystemError_t motor_controller_init(SPI_HandleTypeDef *hspi,
  * @return System error code
  */
 SystemError_t motor_controller_enable_motor(uint8_t motor_id) {
-  SystemError_t result = motor_controller_validate_motor_id(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    SystemError_t result = motor_controller_validate_motor_id(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  // Perform safety checks before enabling
-  result = motor_controller_safety_check(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    // Perform safety checks before enabling
+    result = motor_controller_safety_check(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  // Check magnet detection for encoder
-  bool magnet_ok;
-  result = as5600_check_magnet(motor_id, &magnet_ok);
-  if (result != SYSTEM_OK || !magnet_ok) {
-    return ERROR_ENCODER_MAGNET_NOT_DETECTED;
-  }
+    // Check magnet detection for encoder
+    bool magnet_ok;
+    result = as5600_check_magnet(motor_id, &magnet_ok);
+    if (result != SYSTEM_OK || !magnet_ok) {
+        return ERROR_ENCODER_MAGNET_NOT_DETECTED;
+    }
 
-  // Update current position from encoder
-  result = motor_controller_update_position(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    // Update current position from encoder
+    result = motor_controller_update_position(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  MotorControlState_t *state = &motor_control_state[motor_id];
-  state->enabled = true;
-  state->state = MOTOR_STATE_IDLE;
-  state->target_position_deg =
-      state->current_position_deg; // Set target to current position
+#if defined(SAFE_NO_MOTOR_POWER) && SAFE_NO_MOTOR_POWER == 1
+    // In safe-mode we do not enable motors; log and return a blocked error so
+    // callers can detect motor enable was intentionally suppressed.
+    safety_log_event(SAFETY_EVENT_MOTOR_INIT_BLOCKED, motor_id, 0);
+    return ERROR_SAFETY_SYSTEM_NOT_READY;
+#else
+    {
+        MotorControlState_t *state = &motor_control_state[motor_id];
+        state->enabled = true;
+        state->state = MOTOR_STATE_IDLE;
 
-  return SYSTEM_OK;
+        state->target_position_deg =
+            state->current_position_deg; // Set target to current position
+    }
+#endif
+
+    return SYSTEM_OK;
 }
 
 /**
@@ -190,22 +213,22 @@ SystemError_t motor_controller_enable_motor(uint8_t motor_id) {
  * @return System error code
  */
 SystemError_t motor_controller_disable_motor(uint8_t motor_id) {
-  SystemError_t result = motor_controller_validate_motor_id(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    SystemError_t result = motor_controller_validate_motor_id(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  // Stop motor and set to high impedance
-  result = l6470_hard_hiz(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    // Stop motor and set to high impedance
+    result = l6470_hard_hiz(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  MotorControlState_t *state = &motor_control_state[motor_id];
-  state->enabled = false;
-  state->state = MOTOR_STATE_IDLE;
+    MotorControlState_t *state = &motor_control_state[motor_id];
+    state->enabled = false;
+    state->state = MOTOR_STATE_IDLE;
 
-  return SYSTEM_OK;
+    return SYSTEM_OK;
 }
 
 /**
@@ -216,48 +239,48 @@ SystemError_t motor_controller_disable_motor(uint8_t motor_id) {
  */
 SystemError_t motor_controller_move_to_position(uint8_t motor_id,
                                                 float target_position_deg) {
-  SystemError_t result = motor_controller_validate_motor_id(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    SystemError_t result = motor_controller_validate_motor_id(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  MotorControlState_t *state = &motor_control_state[motor_id];
+    MotorControlState_t *state = &motor_control_state[motor_id];
 
-  if (!state->enabled) {
-    return ERROR_MOTOR_NOT_ENABLED;
-  }
+    if (!state->enabled) {
+        return ERROR_MOTOR_NOT_ENABLED;
+    }
 
-  // Check position limits
-  result = motor_controller_check_limits(motor_id, target_position_deg);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    // Check position limits
+    result = motor_controller_check_limits(motor_id, target_position_deg);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  // Update current position from encoder
-  result = motor_controller_update_position(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    // Update current position from encoder
+    result = motor_controller_update_position(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  // Convert degrees to motor steps
-  // Using SSOT motor configuration: MOTOR_TOTAL_STEPS for full revolution
-  float steps_per_degree = MOTOR_TOTAL_STEPS / 360.0f;
-  int32_t target_steps =
-      (int32_t)(target_position_deg * steps_per_degree + 0.5f);
+    // Convert degrees to motor steps
+    // Using SSOT motor configuration: MOTOR_TOTAL_STEPS for full revolution
+    float steps_per_degree = MOTOR_TOTAL_STEPS / 360.0f;
+    int32_t target_steps =
+        (int32_t)(target_position_deg * steps_per_degree + 0.5f);
 
-  // Send move command to L6470
-  result = l6470_move_to_position(motor_id, target_steps);
-  if (result != SYSTEM_OK) {
-    state->fault_count++;
-    return result;
-  }
+    // Send move command to L6470
+    result = l6470_move_to_position(motor_id, target_steps);
+    if (result != SYSTEM_OK) {
+        state->fault_count++;
+        return result;
+    }
 
-  // Update control state
-  state->target_position_deg = target_position_deg;
-  state->state = MOTOR_STATE_RUNNING;
-  state->last_update_time = HAL_Abstraction_GetTick();
+    // Update control state
+    state->target_position_deg = target_position_deg;
+    state->state = MOTOR_STATE_RUNNING;
+    state->last_update_time = HAL_Abstraction_GetTick();
 
-  return SYSTEM_OK;
+    return SYSTEM_OK;
 }
 
 /**
@@ -266,21 +289,21 @@ SystemError_t motor_controller_move_to_position(uint8_t motor_id,
  * @return System error code
  */
 SystemError_t motor_controller_stop_motor(uint8_t motor_id) {
-  SystemError_t result = motor_controller_validate_motor_id(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    SystemError_t result = motor_controller_validate_motor_id(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  result = l6470_soft_stop(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    result = l6470_soft_stop(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  MotorControlState_t *state = &motor_control_state[motor_id];
-  state->state = MOTOR_STATE_DECELERATING;
-  state->last_update_time = HAL_Abstraction_GetTick();
+    MotorControlState_t *state = &motor_control_state[motor_id];
+    state->state = MOTOR_STATE_DECELERATING;
+    state->last_update_time = HAL_Abstraction_GetTick();
 
-  return SYSTEM_OK;
+    return SYSTEM_OK;
 }
 
 /**
@@ -289,21 +312,21 @@ SystemError_t motor_controller_stop_motor(uint8_t motor_id) {
  * @return System error code
  */
 SystemError_t motor_controller_emergency_stop(uint8_t motor_id) {
-  SystemError_t result = motor_controller_validate_motor_id(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    SystemError_t result = motor_controller_validate_motor_id(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  result = l6470_hard_stop(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    result = l6470_hard_stop(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  MotorControlState_t *state = &motor_control_state[motor_id];
-  state->state = MOTOR_STATE_EMERGENCY_STOP;
-  state->last_update_time = HAL_Abstraction_GetTick();
+    MotorControlState_t *state = &motor_control_state[motor_id];
+    state->state = MOTOR_STATE_EMERGENCY_STOP;
+    state->last_update_time = HAL_Abstraction_GetTick();
 
-  return SYSTEM_OK;
+    return SYSTEM_OK;
 }
 
 /**
@@ -311,51 +334,51 @@ SystemError_t motor_controller_emergency_stop(uint8_t motor_id) {
  * @return System error code
  */
 SystemError_t motor_controller_update(void) {
-  if (!motor_controller_initialized) {
-    return ERROR_MOTOR_INIT_FAILED;
-  }
-
-  SystemError_t overall_result = SYSTEM_OK;
-
-  // Update all motors
-  for (uint8_t motor_id = 0; motor_id < MAX_MOTORS; motor_id++) {
-    MotorControlState_t *state = &motor_control_state[motor_id];
-
-    if (!state->enabled) {
-      continue;
+    if (!motor_controller_initialized) {
+        return ERROR_MOTOR_INIT_FAILED;
     }
 
-    // Update position from encoder
-    SystemError_t result = motor_controller_update_position(motor_id);
-    if (result != SYSTEM_OK) {
-      state->fault_count++;
-      overall_result = result;
-      continue;
+    SystemError_t overall_result = SYSTEM_OK;
+
+    // Update all motors
+    for (uint8_t motor_id = 0; motor_id < MAX_MOTORS; motor_id++) {
+        MotorControlState_t *state = &motor_control_state[motor_id];
+
+        if (!state->enabled) {
+            continue;
+        }
+
+        // Update position from encoder
+        SystemError_t result = motor_controller_update_position(motor_id);
+        if (result != SYSTEM_OK) {
+            state->fault_count++;
+            overall_result = result;
+            continue;
+        }
+
+        // Calculate position error
+        state->position_error_deg = motor_controller_calculate_position_error(
+            state->target_position_deg, state->current_position_deg);
+
+        // Check if movement is complete (within tolerance)
+        if (state->state == MOTOR_STATE_RUNNING &&
+            fabsf(state->position_error_deg) < POSITION_TOLERANCE_DEG) {
+            state->state = MOTOR_STATE_IDLE;
+        }
+
+        // Perform safety checks
+        result = motor_controller_safety_check(motor_id);
+        if (result != SYSTEM_OK) {
+            state->fault_count++;
+            overall_result = result;
+            // Emergency stop on safety fault
+            motor_controller_emergency_stop(motor_id);
+        }
+
+        state->last_update_time = HAL_Abstraction_GetTick();
     }
 
-    // Calculate position error
-    state->position_error_deg = motor_controller_calculate_position_error(
-        state->target_position_deg, state->current_position_deg);
-
-    // Check if movement is complete (within tolerance)
-    if (state->state == MOTOR_STATE_RUNNING &&
-        fabsf(state->position_error_deg) < POSITION_TOLERANCE_DEG) {
-      state->state = MOTOR_STATE_IDLE;
-    }
-
-    // Perform safety checks
-    result = motor_controller_safety_check(motor_id);
-    if (result != SYSTEM_OK) {
-      state->fault_count++;
-      overall_result = result;
-      // Emergency stop on safety fault
-      motor_controller_emergency_stop(motor_id);
-    }
-
-    state->last_update_time = HAL_Abstraction_GetTick();
-  }
-
-  return overall_result;
+    return overall_result;
 }
 
 /**
@@ -366,22 +389,22 @@ SystemError_t motor_controller_update(void) {
  */
 SystemError_t motor_controller_get_position(uint8_t motor_id,
                                             float *position_deg) {
-  if (position_deg == NULL) {
-    return ERROR_MOTOR_CONFIG_INVALID;
-  }
+    if (position_deg == NULL) {
+        return ERROR_MOTOR_CONFIG_INVALID;
+    }
 
-  SystemError_t result = motor_controller_validate_motor_id(motor_id);
-  if (result != SYSTEM_OK) {
+    SystemError_t result = motor_controller_validate_motor_id(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
+
+    // Get current position from encoder
+    result = as5600_read_angle_degrees(motor_id, position_deg);
+    if (result == SYSTEM_OK) {
+        motor_control_state[motor_id].current_position_deg = *position_deg;
+    }
+
     return result;
-  }
-
-  // Get current position from encoder
-  result = as5600_read_angle_degrees(motor_id, position_deg);
-  if (result == SYSTEM_OK) {
-    motor_control_state[motor_id].current_position_deg = *position_deg;
-  }
-
-  return result;
 }
 
 /**
@@ -392,21 +415,21 @@ SystemError_t motor_controller_get_position(uint8_t motor_id,
  */
 SystemError_t motor_controller_get_velocity(uint8_t motor_id,
                                             float *velocity_dps) {
-  if (velocity_dps == NULL) {
-    return ERROR_MOTOR_CONFIG_INVALID;
-  }
+    if (velocity_dps == NULL) {
+        return ERROR_MOTOR_CONFIG_INVALID;
+    }
 
-  SystemError_t result = motor_controller_validate_motor_id(motor_id);
-  if (result != SYSTEM_OK) {
+    SystemError_t result = motor_controller_validate_motor_id(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
+
+    result = as5600_get_velocity(motor_id, velocity_dps);
+    if (result == SYSTEM_OK) {
+        motor_control_state[motor_id].current_velocity_dps = *velocity_dps;
+    }
+
     return result;
-  }
-
-  result = as5600_get_velocity(motor_id, velocity_dps);
-  if (result == SYSTEM_OK) {
-    motor_control_state[motor_id].current_velocity_dps = *velocity_dps;
-  }
-
-  return result;
 }
 
 /**
@@ -417,17 +440,17 @@ SystemError_t motor_controller_get_velocity(uint8_t motor_id,
  */
 SystemError_t motor_controller_get_state(uint8_t motor_id,
                                          MotorState_t *state) {
-  if (state == NULL) {
-    return ERROR_MOTOR_CONFIG_INVALID;
-  }
+    if (state == NULL) {
+        return ERROR_MOTOR_CONFIG_INVALID;
+    }
 
-  SystemError_t result = motor_controller_validate_motor_id(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    SystemError_t result = motor_controller_validate_motor_id(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  *state = motor_control_state[motor_id].state;
-  return SYSTEM_OK;
+    *state = motor_control_state[motor_id].state;
+    return SYSTEM_OK;
 }
 
 /**
@@ -438,34 +461,34 @@ SystemError_t motor_controller_get_state(uint8_t motor_id,
  */
 SystemError_t motor_controller_get_status(uint8_t motor_id,
                                           MotorStatus_t *status) {
-  if (status == NULL) {
-    return ERROR_MOTOR_CONFIG_INVALID;
-  }
+    if (status == NULL) {
+        return ERROR_MOTOR_CONFIG_INVALID;
+    }
 
-  SystemError_t result = motor_controller_validate_motor_id(motor_id);
-  if (result != SYSTEM_OK) {
+    SystemError_t result = motor_controller_validate_motor_id(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
+
+    MotorControlState_t *control_state = &motor_control_state[motor_id];
+
+    // Update current position and velocity
+    result = motor_controller_update_position(motor_id);
+    if (result != SYSTEM_OK) {
+        // Still provide status even if update failed
+    }
+
+    // Fill status structure
+    status->enabled = control_state->enabled;
+    status->state = control_state->state;
+    status->current_position_deg = control_state->current_position_deg;
+    status->target_position_deg = control_state->target_position_deg;
+    status->position_error_deg = control_state->position_error_deg;
+    status->current_velocity_dps = control_state->current_velocity_dps;
+    status->fault_count = control_state->fault_count;
+    status->last_update_time_ms = control_state->last_update_time;
+
     return result;
-  }
-
-  MotorControlState_t *control_state = &motor_control_state[motor_id];
-
-  // Update current position and velocity
-  result = motor_controller_update_position(motor_id);
-  if (result != SYSTEM_OK) {
-    // Still provide status even if update failed
-  }
-
-  // Fill status structure
-  status->enabled = control_state->enabled;
-  status->state = control_state->state;
-  status->current_position_deg = control_state->current_position_deg;
-  status->target_position_deg = control_state->target_position_deg;
-  status->position_error_deg = control_state->position_error_deg;
-  status->current_velocity_dps = control_state->current_velocity_dps;
-  status->fault_count = control_state->fault_count;
-  status->last_update_time_ms = control_state->last_update_time;
-
-  return result;
 }
 
 /* ==========================================================================
@@ -480,15 +503,15 @@ SystemError_t motor_controller_get_status(uint8_t motor_id,
  * @return System error code
  */
 static SystemError_t motor_controller_validate_motor_id(uint8_t motor_id) {
-  if (motor_id >= MAX_MOTORS) {
-    return ERROR_MOTOR_INVALID_ID;
-  }
+    if (motor_id >= MAX_MOTORS) {
+        return ERROR_MOTOR_INVALID_ID;
+    }
 
-  if (!motor_controller_initialized) {
-    return ERROR_MOTOR_INIT_FAILED;
-  }
+    if (!motor_controller_initialized) {
+        return ERROR_MOTOR_INIT_FAILED;
+    }
 
-  return SYSTEM_OK;
+    return SYSTEM_OK;
 }
 
 /**
@@ -497,20 +520,21 @@ static SystemError_t motor_controller_validate_motor_id(uint8_t motor_id) {
  * @return System error code
  */
 static SystemError_t motor_controller_update_position(uint8_t motor_id) {
-  float current_position;
-  SystemError_t result = as5600_read_angle_degrees(motor_id, &current_position);
-  if (result == SYSTEM_OK) {
-    motor_control_state[motor_id].current_position_deg = current_position;
-
-    // Also update velocity
-    float velocity;
-    result = as5600_get_velocity(motor_id, &velocity);
+    float current_position;
+    SystemError_t result =
+        as5600_read_angle_degrees(motor_id, &current_position);
     if (result == SYSTEM_OK) {
-      motor_control_state[motor_id].current_velocity_dps = velocity;
-    }
-  }
+        motor_control_state[motor_id].current_position_deg = current_position;
 
-  return result;
+        // Also update velocity
+        float velocity;
+        result = as5600_get_velocity(motor_id, &velocity);
+        if (result == SYSTEM_OK) {
+            motor_control_state[motor_id].current_velocity_dps = velocity;
+        }
+    }
+
+    return result;
 }
 
 /**
@@ -521,15 +545,15 @@ static SystemError_t motor_controller_update_position(uint8_t motor_id) {
  */
 static SystemError_t motor_controller_check_limits(uint8_t motor_id,
                                                    float target_position_deg) {
-  (void)motor_id; // Not used in this simple implementation
+    (void)motor_id; // Not used in this simple implementation
 
-  // Check against SSOT motor configuration limits
-  if (target_position_deg < MOTOR_MIN_ANGLE_DEG ||
-      target_position_deg > MOTOR_MAX_ANGLE_DEG) {
-    return ERROR_MOTOR_POSITION_OUT_OF_RANGE;
-  }
+    // Check against SSOT motor configuration limits
+    if (target_position_deg < MOTOR_MIN_ANGLE_DEG ||
+        target_position_deg > MOTOR_MAX_ANGLE_DEG) {
+        return ERROR_MOTOR_POSITION_OUT_OF_RANGE;
+    }
 
-  return SYSTEM_OK;
+    return SYSTEM_OK;
 }
 
 /**
@@ -538,26 +562,26 @@ static SystemError_t motor_controller_check_limits(uint8_t motor_id,
  * @return System error code
  */
 static SystemError_t motor_controller_safety_check(uint8_t motor_id) {
-  // Check L6470 status for faults
-  uint16_t l6470_status;
-  SystemError_t result = l6470_get_status(motor_id, &l6470_status);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    // Check L6470 status for faults
+    uint16_t l6470_status;
+    SystemError_t result = l6470_get_status(motor_id, &l6470_status);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  // Check encoder status
-  bool magnet_ok;
-  result = as5600_check_magnet(motor_id, &magnet_ok);
-  if (result != SYSTEM_OK || !magnet_ok) {
-    return ERROR_ENCODER_MAGNET_NOT_DETECTED;
-  }
+    // Check encoder status
+    bool magnet_ok;
+    result = as5600_check_magnet(motor_id, &magnet_ok);
+    if (result != SYSTEM_OK || !magnet_ok) {
+        return ERROR_ENCODER_MAGNET_NOT_DETECTED;
+    }
 
-  // Additional safety checks can be added here
-  // - Temperature monitoring
-  // - Supply voltage monitoring
-  // - Emergency stop status
+    // Additional safety checks can be added here
+    // - Temperature monitoring
+    // - Supply voltage monitoring
+    // - Emergency stop status
 
-  return SYSTEM_OK;
+    return SYSTEM_OK;
 }
 
 /**
@@ -569,17 +593,17 @@ static SystemError_t motor_controller_safety_check(uint8_t motor_id) {
  */
 static float motor_controller_calculate_position_error(float target,
                                                        float current) {
-  float error = target - current;
+    float error = target - current;
 
-  // Handle wraparound (shortest path)
-  while (error > 180.0f) {
-    error -= 360.0f;
-  }
-  while (error < -180.0f) {
-    error += 360.0f;
-  }
+    // Handle wraparound (shortest path)
+    while (error > 180.0f) {
+        error -= 360.0f;
+    }
+    while (error < -180.0f) {
+        error += 360.0f;
+    }
 
-  return error;
+    return error;
 }
 
 /**
@@ -587,7 +611,7 @@ static float motor_controller_calculate_position_error(float target,
  * @return true if initialized, false otherwise
  */
 bool motor_controller_is_initialized(void) {
-  return motor_controller_initialized;
+    return motor_controller_initialized;
 }
 
 /**
@@ -596,43 +620,43 @@ bool motor_controller_is_initialized(void) {
  * @return System error code
  */
 SystemError_t motor_controller_home_motor(uint8_t motor_id) {
-  SystemError_t result = motor_controller_validate_motor_id(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    SystemError_t result = motor_controller_validate_motor_id(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  MotorControlState_t *state = &motor_control_state[motor_id];
+    MotorControlState_t *state = &motor_control_state[motor_id];
 
-  if (!state->enabled) {
-    return ERROR_MOTOR_NOT_ENABLED;
-  }
+    if (!state->enabled) {
+        return ERROR_MOTOR_NOT_ENABLED;
+    }
 
-  // Read current encoder position and set as zero reference
-  float current_position;
-  result = as5600_read_angle_degrees(motor_id, &current_position);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    // Read current encoder position and set as zero reference
+    float current_position;
+    result = as5600_read_angle_degrees(motor_id, &current_position);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  // Set encoder zero position
-  result = as5600_set_zero_position(motor_id, current_position);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    // Set encoder zero position
+    result = as5600_set_zero_position(motor_id, current_position);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  // Set L6470 position to zero
-  result = l6470_reset_position(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    // Set L6470 position to zero
+    result = l6470_reset_position(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  // Update control state
-  state->current_position_deg = 0.0f;
-  state->target_position_deg = 0.0f;
-  state->position_error_deg = 0.0f;
-  state->last_update_time = HAL_Abstraction_GetTick();
+    // Update control state
+    state->current_position_deg = 0.0f;
+    state->target_position_deg = 0.0f;
+    state->position_error_deg = 0.0f;
+    state->last_update_time = HAL_Abstraction_GetTick();
 
-  return SYSTEM_OK;
+    return SYSTEM_OK;
 }
 
 /**
@@ -643,37 +667,37 @@ SystemError_t motor_controller_home_motor(uint8_t motor_id) {
  */
 SystemError_t motor_controller_set_velocity(uint8_t motor_id,
                                             float velocity_dps) {
-  SystemError_t result = motor_controller_validate_motor_id(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    SystemError_t result = motor_controller_validate_motor_id(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  MotorControlState_t *state = &motor_control_state[motor_id];
+    MotorControlState_t *state = &motor_control_state[motor_id];
 
-  if (!state->enabled) {
-    return ERROR_MOTOR_NOT_ENABLED;
-  }
+    if (!state->enabled) {
+        return ERROR_MOTOR_NOT_ENABLED;
+    }
 
-  // Check velocity limits
-  if (fabsf(velocity_dps) > MOTOR_MAX_SPEED_DPS) {
-    return ERROR_MOTOR_INVALID_SPEED;
-  }
+    // Check velocity limits
+    if (fabsf(velocity_dps) > MOTOR_MAX_SPEED_DPS) {
+        return ERROR_MOTOR_INVALID_SPEED;
+    }
 
-  // Convert degrees per second to L6470 speed units
-  // L6470 speed is in steps/second, need conversion from motor_config.h
-  float steps_per_second = velocity_dps * MOTOR_TOTAL_STEPS / 360.0f;
+    // Convert degrees per second to L6470 speed units
+    // L6470 speed is in steps/second, need conversion from motor_config.h
+    float steps_per_second = velocity_dps * MOTOR_TOTAL_STEPS / 360.0f;
 
-  result = l6470_run(motor_id, velocity_dps > 0.0f, fabsf(steps_per_second));
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    result = l6470_run(motor_id, velocity_dps > 0.0f, fabsf(steps_per_second));
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  // Update control state
-  state->target_velocity_dps = velocity_dps;
-  state->state = MOTOR_STATE_RUNNING;
-  state->last_update_time = HAL_Abstraction_GetTick();
+    // Update control state
+    state->target_velocity_dps = velocity_dps;
+    state->state = MOTOR_STATE_RUNNING;
+    state->last_update_time = HAL_Abstraction_GetTick();
 
-  return SYSTEM_OK;
+    return SYSTEM_OK;
 }
 
 /**
@@ -684,26 +708,27 @@ SystemError_t motor_controller_set_velocity(uint8_t motor_id,
  */
 SystemError_t motor_controller_calibrate_encoder(uint8_t motor_id,
                                                  float zero_position_deg) {
-  SystemError_t result = motor_controller_validate_motor_id(motor_id);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    SystemError_t result = motor_controller_validate_motor_id(motor_id);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  // Validate zero position range
-  if (zero_position_deg < 0.0f || zero_position_deg >= 360.0f) {
-    return ERROR_MOTOR_INVALID_POSITION;
-  }
+    // Validate zero position range
+    if (zero_position_deg < 0.0f || zero_position_deg >= 360.0f) {
+        return ERROR_MOTOR_INVALID_POSITION;
+    }
 
-  // Set encoder zero position
-  result = as5600_set_zero_position(motor_id, zero_position_deg);
-  if (result != SYSTEM_OK) {
-    return result;
-  }
+    // Set encoder zero position
+    result = as5600_set_zero_position(motor_id, zero_position_deg);
+    if (result != SYSTEM_OK) {
+        return result;
+    }
 
-  // Update control state if motor is enabled
-  if (motor_control_state[motor_id].enabled) {
-    motor_control_state[motor_id].last_update_time = HAL_Abstraction_GetTick();
-  }
+    // Update control state if motor is enabled
+    if (motor_control_state[motor_id].enabled) {
+        motor_control_state[motor_id].last_update_time =
+            HAL_Abstraction_GetTick();
+    }
 
-  return SYSTEM_OK;
+    return SYSTEM_OK;
 }

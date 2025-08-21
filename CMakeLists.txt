@@ -76,6 +76,14 @@ option(ENABLE_TESTING "Enable unit testing" ON)
 option(ENABLE_COVERAGE "Enable code coverage analysis" OFF)
 option(ENABLE_STATIC_ANALYSIS "Enable static analysis tools" OFF)
 option(BUILD_DOCUMENTATION "Build documentation with Doxygen" OFF)
+option(BUILD_UART_DMA_TEST "Build a firmware variant that enables the UART DMA device test (TEST_UART_DMA)" OFF)
+
+# Safe-mode: disable motor power outputs for bring-up
+option(SAFE_NO_MOTOR_POWER "Build firmware with motor outputs disabled for safe hardware bring-up" ON)
+if(SAFE_NO_MOTOR_POWER)
+    add_compile_definitions(SAFE_NO_MOTOR_POWER=1)
+    message(STATUS "SAFE_NO_MOTOR_POWER is ON - motor outputs will be disabled in this build")
+endif()
 
 # Find Python3 early for STATUS.md automation and other tools
 # Use explicit Windows path for virtual environment
@@ -314,6 +322,38 @@ set(STARTUP_FILE "${CMAKE_SOURCE_DIR}/startup_stm32h753xx.s")
 
 # Create main executable
 add_executable(${PROJECT_NAME} ${SOURCES} ${STARTUP_FILE})
+
+if(BUILD_UART_DMA_TEST)
+    message(STATUS "Building UART DMA device test variant")
+    # Create a test variant target that adds TEST_UART_DMA and the test source
+    set(TEST_TARGET ${PROJECT_NAME}_uart_dma_test)
+    add_executable(${TEST_TARGET} ${SOURCES} ${CMAKE_SOURCE_DIR}/src/tests/uart_dma_device_test.c ${STARTUP_FILE})
+    target_compile_definitions(${TEST_TARGET} PRIVATE TEST_UART_DMA=1)
+    target_include_directories(${TEST_TARGET} PRIVATE ${CMAKE_SOURCE_DIR}/src/tests)
+
+    if(EXISTS ${GENERATED_INCLUDE_DIR})
+        target_include_directories(${TEST_TARGET} BEFORE PRIVATE ${GENERATED_INCLUDE_DIR})
+    else()
+        file(MAKE_DIRECTORY ${GENERATED_INCLUDE_DIR})
+        target_include_directories(${TEST_TARGET} BEFORE PRIVATE ${GENERATED_INCLUDE_DIR})
+    endif()
+
+    # Post-build: generate binary/hex for test target
+    add_custom_command(TARGET ${TEST_TARGET} POST_BUILD
+        COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:${TEST_TARGET}> ${CMAKE_BINARY_DIR}/${TEST_TARGET}.bin
+        COMMAND ${CMAKE_OBJCOPY} -O ihex $<TARGET_FILE:${TEST_TARGET}> ${CMAKE_BINARY_DIR}/${TEST_TARGET}.hex
+        COMMENT "Building binary and hex files for UART DMA test target"
+    )
+
+    # Add a CTest test that runs the host-side Python script if Python is available.
+    if(PYTHON3_EXE)
+        enable_testing()
+        add_test(NAME uart_dma_host_run
+            COMMAND ${PYTHON3_EXE} ${CMAKE_SOURCE_DIR}/scripts/uart_dma_host_test.py --port COM5 --baud 115200 --size 512 --iters 4
+        )
+        set_tests_properties(uart_dma_host_run PROPERTIES TIMEOUT 30)
+    endif()
+endif()
 
 # Add generated include dir to the main target only (target-scoped include)
 if(EXISTS ${GENERATED_INCLUDE_DIR})
