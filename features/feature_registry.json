@@ -501,6 +501,55 @@
         "High priority due to known H7 cache/DMA issues documented in peer-level report"
       ]
     },
+    "FTR-042": {
+      "id": "FTR-042",
+      "name": "HW-safe CMSIS UART Handoff — Manufacturer-verified",
+      "status": "PLANNED",
+      "phase": "1.4",
+      "priority": "CRITICAL",
+      "category": "safety",
+      "description": "Verify and implement a safe boot-time UART initialization strategy that uses a known-good HAL configuration for early boot logging and then hands off to a CMSIS RTOS COM driver (or CMSIS shim). All steps must be validated against manufacturer documentation in 00_reference to avoid hardware damage.",
+      "acceptance_criteria": [
+        "All relevant datasheets and RM/UM/HAL notes referenced in the verification checklist have been inspected and signed off in the feature record.",
+        "SSOT updated where UART instance, pins, and baud are defined (src/config/comm_config.h and src/config/hardware_config.h) with _Static_assert checks added where applicable.",
+        "A documented safe handoff pattern implemented (either HAL-DeInit + CMSIS init OR CMSIS shim delegating to HAL) with code in src/application/boot_uart_handoff.c and adapter use validated.",
+        "Build produced a probe image that links Driver_USART3 (or shim) and passes static analysis and validate_ssot.py.",
+        "Probe flashed under supervised conditions; early-boot banner verified on host serial and GPIO toggles confirmed code-path execution.",
+        "A rollback plan & scripts exist to recover device to known-good state if peripheral reconfiguration fails (flash restore image, verify md5).",
+        "All tests in host_tests/ and device smoke tests covering UART banner, GPIO toggles, and safe-power constraints pass."
+      ],
+      "implementation_files": [
+        "src/application/boot_uart_handoff.c",
+        "src/drivers/adaptation/driver_usart3_shim.c",
+        "src/drivers/adaptation/driver_usart3_shim.h",
+        "src/drivers/adaptation/cmsis_uart_adapter.c",
+        "src/tests/uart_probe_device.c",
+        "src/config/comm_config.h",
+        "src/config/hardware_config.h",
+        "scripts/validate_ssot.py (update rules for new SSOT keys)",
+        "scripts/flash_safety_check.ps1 (new helper to safely flash and verify)"
+      ],
+      "test_files": [
+        "host_tests/test_uart_probe_capture.py",
+        "build_host_tests/uart_probe_smoke_test"
+      ],
+      "documentation": [
+        "docs/FTR-042-HW-CMSIS-UART-HANDOFF.md",
+        "STATUS.md (update context bootstrapping and flash run results)",
+        ".github/instructions/hardware.instructions.md (note added cross-ref)"
+      ],
+      "dependencies": [],
+      "dependents": [],
+      "blockers": [
+        "Access to physical target board for supervised flash/test",
+        "Clear photos/confirmation of SB straps for VCP routing",
+        "Availability of referenced vendor CMSIS driver (if using real CMSIS driver) or acceptance of shim approach"
+      ],
+      "completion_date": null,
+      "effort_estimate_hours": 12,
+      "effort_actual_hours": 0,
+      "commits": []
+    },
     "FTR-022": {
       "id": "FTR-022",
       "name": "Runtime Validation Hooks",

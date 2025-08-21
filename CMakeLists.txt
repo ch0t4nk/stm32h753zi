@@ -78,6 +78,9 @@ option(ENABLE_STATIC_ANALYSIS "Enable static analysis tools" OFF)
 option(BUILD_DOCUMENTATION "Build documentation with Doxygen" OFF)
 option(BUILD_UART_DMA_TEST "Build a firmware variant that enables the UART DMA device test (TEST_UART_DMA)" OFF)
 
+# Option to build a minimal UART probe firmware for safe bring-up
+option(BUILD_UART_PROBE "Build a minimal firmware that probes UARTs and emits identification banners (TEST_UART_PROBE)" OFF)
+
 # Safe-mode: disable motor power outputs for bring-up
 option(SAFE_NO_MOTOR_POWER "Build firmware with motor outputs disabled for safe hardware bring-up" ON)
 if(SAFE_NO_MOTOR_POWER)
@@ -353,6 +356,27 @@ if(BUILD_UART_DMA_TEST)
         )
         set_tests_properties(uart_dma_host_run PROPERTIES TIMEOUT 30)
     endif()
+endif()
+
+if(BUILD_UART_PROBE)
+    message(STATUS "Building UART probe device variant")
+    set(PROBE_TARGET ${PROJECT_NAME}_uart_probe)
+    add_executable(${PROBE_TARGET} ${SOURCES} ${CMAKE_SOURCE_DIR}/src/tests/uart_probe_device.c ${STARTUP_FILE})
+    target_compile_definitions(${PROBE_TARGET} PRIVATE TEST_UART_PROBE=1)
+    target_include_directories(${PROBE_TARGET} PRIVATE ${CMAKE_SOURCE_DIR}/src/tests)
+
+    if(EXISTS ${GENERATED_INCLUDE_DIR})
+        target_include_directories(${PROBE_TARGET} BEFORE PRIVATE ${GENERATED_INCLUDE_DIR})
+    else()
+        file(MAKE_DIRECTORY ${GENERATED_INCLUDE_DIR})
+        target_include_directories(${PROBE_TARGET} BEFORE PRIVATE ${GENERATED_INCLUDE_DIR})
+    endif()
+
+    add_custom_command(TARGET ${PROBE_TARGET} POST_BUILD
+        COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:${PROBE_TARGET}> ${CMAKE_BINARY_DIR}/${PROBE_TARGET}.bin
+        COMMAND ${CMAKE_OBJCOPY} -O ihex $<TARGET_FILE:${PROBE_TARGET}> ${CMAKE_BINARY_DIR}/${PROBE_TARGET}.hex
+        COMMENT "Building binary and hex files for UART probe target"
+    )
 endif()
 
 # Add generated include dir to the main target only (target-scoped include)

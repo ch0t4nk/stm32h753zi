@@ -1,0 +1,64 @@
+STM32H753ZI CMake Quick Fix (Windows)
+=======================================
+Build Type: ARM (ARM=Firmware, Host=Unit Tests, Both=Dual Build, WSL2=Host Tests in WSL2)
+Workspace root: C:\repos\Nucleo-H753ZI Project\code
+Windows environment confirmed
+Checking Python virtual environment...
+Virtual environment already active: C:\repos\Nucleo-H753ZI Project\code\.venv
+Checking Python dependencies...
+Python dependencies available
+Checking Ollama service and model setup...
+Ollama service already running
+Checking for mxbai-embed-large model...
+mxbai-embed-large model already available
+Testing Ollama connection...
+Ollama API accessible
+Checking tools for build type: ARM...
+ARM Firmware Build Requirements:
+cmake: C:\ST\STM32CubeCLT_1.19.0\CMake\bin\cmake.exe
+arm-none-eabi-gcc: C:\ST\STM32CubeCLT_1.19.0\GNU-tools-for-STM32\bin\arm-none-eabi-gcc.exe
+ninja: C:\ST\STM32CubeCLT_1.19.0\Ninja\bin\ninja.exe
+STM32_Programmer_CLI: C:\ST\STM32CubeCLT_1.19.0\STM32CubeProgrammer\bin\STM32_Programmer_CLI.exe
+All required tools available
+Checking workspace configuration...
+cmake\gcc-arm-none-eabi.cmake
+CMakePresets.json
+CMakeLists.txt
+All required workspace files present
+Cleaning build directories for: ARM...
+ARM build directory cleaned (build/)
+Configuring and building: ARM...
+=== ARM FIRMWARE BUILD ===
+Trying Ninja generator first...
+CMake Warning at CMakeLists.txt:642 (message):
+  This is a safety-critical motor control system.
+
+
+CMake Warning at CMakeLists.txt:643 (message):
+  Always run comprehensive tests before deployment.
+
+
+CMake Warning at CMakeLists.txt:644 (message):
+  Validate all safety systems before connecting hardware.
+
+
+ARM CMake configuration (Ninja) successful
+Building ARM firmware...
+ARM firmware build successful!
+Generated ARM firmware: build\Debug\stm32h753_ihm02a1.elf
+   text	   data	    bss	    dec	    hex	filename
+  14528	     20	  21060	  35608	   8b18	build\Debug\stm32h753_ihm02a1.elf
+
+Dual build system successfully configured and working!
+Virtual environment: C:\repos\Nucleo-H753ZI Project\code\.venv
+ARM build directory: build\Debug
+
+Dual Build System Usage:
+   ARM Firmware:  .\scripts\fix_cmake.ps1 -BuildType ARM
+   Host Testing:  .\scripts\fix_cmake.ps1 -BuildType Host
+   WSL2 Testing:  .\scripts\fix_cmake.ps1 -BuildType WSL2  (RECOMMENDED)
+   Both:          .\scripts\fix_cmake.ps1 -BuildType Both
+
+ARM Firmware Commands:
+   cmake --build build\Debug           # Quick ARM build
+   STM32_Programmer_CLI.exe -c port=SWD -w build\Debug\stm32h753_ihm02a1.elf -v -rst

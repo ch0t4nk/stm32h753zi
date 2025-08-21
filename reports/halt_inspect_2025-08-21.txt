@@ -1,0 +1,53 @@
+Halt-and-Inspect report — 2025-08-21
+
+Actions performed:
+- Performed software reset and halted core via ST-LINK.
+- Read SCB fault status registers (CFSR/HFSR/DFSR/AFSR).
+- Read RCC registers used for APB/clock status.
+- Read VTOR and first vector table entries (SP and Reset handler).
+- Read GPIOD registers (MODER/OTYPER/IDR/ODR) for PD8/PD9 state.
+
+Raw outputs (STM32_Programmer_CLI):
+
+Core reset/halt:
+- "MCU Reset" and "Core halted" reported by STM32_Programmer_CLI.
+
+SCB fault registers:
+- 0xE000ED28 : 00000000  (CFSR)
+- 0xE000ED2C : 00000000  (HFSR)
+- 0xE000ED30 : 00000009  (DFSR/AFSR mix - shows 0x9)
+
+RCC status registers (addresses used in workspace diagnostics):
+- 0x58024400 : 00004025
+- 0x58024404 : 4000091E
+- 0x58024408 : 0000014F
+- 0x5802440C : 20000096
+
+VTOR (Vector Table Offset Register):
+- 0xE000ED08 : 08000000
+
+Vector table first words (flash @ 0x08000000):
+- 0x08000000 : 20020000  (Initial SP value)
+- 0x08000004 : 0800378D  (Reset handler address)
+- 0x08000008 : 08000511  (NMI handler / placeholder)
+- 0x0800000C : 08000513  (HardFault / placeholder)
+
+GPIOD registers (PDx):
+- 0x58020C00 : FFFFFFFF  (MODER)
+- 0x58020C04 : FFFFFFFF  (OTYPER)
+- 0x58020C10 : FFFFFFFF  (IDR)
+- 0x58020C14 : FFFFFFFF  (ODR)
+
+Interpretation / notes:
+- SCB CFSR/HFSR = 0 indicates no stacked exception fault recorded.
+- DF SR/AFSR = 0x9: indicates debug event flags (refer to ARM/STM32 docs) — not necessarily a fault; common after halt.
+- VTOR points to flash base 0x08000000; vector SP/Reset look valid (Reset points inside flash).
+- RCC registers contain non-zero values; must be decoded per RM0433 to determine USART3 clock enable bits.
+- GPIOD registers read back as 0xFFFFFFFF — typically indicates the peripheral bus domain for GPIOD is powered down or bus not accessible (reads-as-ones), or read protection/invalid peripheral address due to domain isolation.
+
+Recommendation:
+- Confirm board SB strap routing for ST-Link VCP to PD8/PD9.
+- If you want a GPIO state check independent of peripheral clocks, consider toggling blink probe (requires flash) or inspect other pins mapped to ports known to be enabled.
+- If you want me to continue, pick next action: "Do LED probe", "Open PR", or "Stop".
+
+Report generated automatically by automation tools on 2025-08-21.

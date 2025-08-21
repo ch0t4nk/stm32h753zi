@@ -1,11 +1,13 @@
 # STM32H753ZI Project Status
 
-**Last Updated**: August 21, 2025
+**Last Updated**: August 21, 2025 19:00:07 UTC
 **Status**: ✔️ In-progress — firmware builds complete; host-test migration and host-test debugging underway
 **Deployment**: ✅ ARM GCC toolchain configured for firmware builds (see Build section)
 **AI Infrastructure**: ✅ **Semantic Search Production Ready**
 
 **Context Bootstrapping note:** "STATUS.md is the primary context anchor for Copilot++ sessions; downstream orchestration depends on its integrity."
+
+**Commit Summary (this change)**: Updated timestamp and added commit summary; auto-update was run before this edit and SSOT validation passed. See git commit for details.
 
 ---
 

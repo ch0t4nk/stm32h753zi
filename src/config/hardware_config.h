@@ -145,4 +145,20 @@
 #define AS5600_I2C_ADDRESS_8BIT 0x6C // AS5600 I2C address (8-bit format)
 #define ENCODER_VALUE_MASK 0x0FFF // 12-bit encoder value mask (4096 positions)
 
+/* Probe instrumentation GPIO - used by test/probe code to indicate UART
+ * transmit activity. Choose a non-critical, header-accessible pin (PE2) for
+ * low-risk observation.
+ */
+#ifndef PROBE_INSTR_GPIO_PORT
+#define PROBE_INSTR_GPIO_PORT GPIOE
+#endif
+#ifndef PROBE_INSTR_GPIO_PIN
+#define PROBE_INSTR_GPIO_PIN GPIO_PIN_2
+#endif
+
+#if defined(FIRMWARE_BUILD)
+_Static_assert(PROBE_INSTR_GPIO_PIN != 0,
+               "PROBE_INSTR_GPIO_PIN must be defined");
+#endif
+
 #endif /* HARDWARE_CONFIG_H */
