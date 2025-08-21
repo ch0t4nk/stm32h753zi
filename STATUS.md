@@ -1,9 +1,11 @@
 # STM32H753ZI Project Status
 
-**Last Updated**: August 20, 2025
+**Last Updated**: August 21, 2025
 **Status**: ✔️ In-progress — firmware builds complete; host-test migration and host-test debugging underway
 **Deployment**: ✅ ARM GCC toolchain configured for firmware builds (see Build section)
 **AI Infrastructure**: ✅ **Semantic Search Production Ready**
+
+**Context Bootstrapping note:** "STATUS.md is the primary context anchor for Copilot++ sessions; downstream orchestration depends on its integrity."
 
 ---
 
@@ -21,6 +23,14 @@
 - Synchronized STATUS.md structure with `.github/instructions/status-maintenance.instructions.md` required sections and formatting guidelines (preserved manual Context & Technical sections).
 - Ensured the auto-update process adheres to the Development Workflow rules: post-commit auto-update, feature-tracker integration points, and SSOT-aware script execution (`scripts/run_python_configurable.ps1`).
 - Documented auto-update triggers and preservation rules: timestamps and build metrics auto-generated, while technical context, phase status, and next-steps remain manual-edit preserved.
+
+### Auto-update run (Aug 21, 2025)
+
+- Last automated update run: Aug 21, 2025 16:07:20 (local workspace venv)
+- Command: `.venv\Scripts\python.exe scripts/auto_update_status.py --verbose`
+- Result: No changes made; auto-update reported: "No changes detected" and produced an Update Summary (source: manual, Changes Made: No, Commits Analyzed: 5, TODOs Found: 84).
+
+Notes: The auto-update was run as part of the STATUS maintenance action. Any SSOT/validator messages from the script would be captured below; the run returned no SSOT violations.
 
 ## Context Transfer & Continuity (for Copilot/Automation)
 
@@ -89,6 +99,44 @@ STATUS.md is the Single Source of Truth (SSOT) for Copilot/automation sessions. 
 & 'C:\repos\Nucleo-H753ZI Project\code\.venv\Scripts\python.exe' scripts\validate_ssot.py
 & 'C:\repos\Nucleo-H753ZI Project\code\.venv\Scripts\python.exe' scripts\auto_update_status.py --verbose
 & 'C:\repos\Nucleo-H753ZI Project\code\.venv\Scripts\python.exe' scripts\feature_tracker.py list --status IN_PROGRESS
+
+## UART Probe Host Capture (Aug 21, 2025)
+
+- Attempted to capture the UART probe banner using `scripts/uart_probe_capture.py` on host port `COM5`.
+  - First run (10s) failed to open COM5 (FileNotFoundError) when executed from the workspace environment.
+  - Subsequent runs opened COM5 and created timestamped log files in `scripts/logs/` (examples: `uart_probe_COM5_20250821T192230Z.log`, `uart_probe_COM5_20250821T192314Z.log`, `uart_probe_COM5_20250821T192230Z.log`).
+  - Observation: the created log files are empty — no PROBE banner lines were captured.
+- Safety: the probe firmware previously flashed to the board keeps `SAFE_NO_MOTOR_POWER` enabled; the probe does not drive motor power. No motor rails were driven during capture attempts.
+- Possible causes for empty logs:
+  - The ST‑Link VCP is mapped to a different COM number than `COM5` (but the script was still able to open COM5 on later attempts, so this is less likely).
+  - The probe firmware did not output the banner (firmware reset state, clock or peripheral init issue, or probe variant not running).
+  - The baud rate differs from the probe output (try 9600, 57600, 115200).
+  - The onboard SB straps or board wiring prevent VCP routing to the expected UART pins in this configuration.
+  - Another program or driver is interfering with data capture (port held open/read-only by another process).
+- Recommended next steps:
+  1. Verify the ST‑Link VCP COM port in Windows Device Manager and use that exact COM# with the capture script.
+  2. Open a simple serial monitor (PuTTY, RealTerm, or `python -m serial.tools.miniterm COMx 115200`) to observe any raw bytes or line activity in real time.
+  3. Try alternative baud rates (9600, 57600) in the capture script in case the probe uses a different rate.
+  4. Re-run the probe firmware flash (if you want me to re-flash) to ensure the probe image is active and the MCU reset occurred correctly; keep `SAFE_NO_MOTOR_POWER` enabled.
+  5. If logs remain empty, consider expanding the probe to toggled GPIO (LED blink) so we can confirm the firmware runs even if UART remains silent.
+
+Captured logs (present but empty): examples in `scripts/logs/` with timestamps matching the attempts above.
+
+If you prefer, tell me the COM# shown in Device Manager and whether you'd like me to re-flash the probe firmware; I will re-run the capture and update this STATUS.md with a verified mapping if a PROBE line appears.
+
+## Pre-commit SSOT Validation (Aug 21, 2025)
+
+- Action: Attempted to commit `STATUS.md` update; repository pre-commit hooks ran SSOT validation.
+- Result: SSOT validator returned a blocking issue (commit aborted).
+- Validator summary:
+  - SSOT structure: ✅ complete
+  - SSOT violations: ✅ none
+  - Include dependency issues: ⚠️ 1
+    - File: `src/tests/uart_probe_device.c`
+      - Issue: Uses motor constants but does not include `config/motor_config.h`
+      - Suggested fix: Add `#include "config/motor_config.h"` to `src/tests/uart_probe_device.c`
+
+Notes: Per repository policy, pre-commit hook failures must be fixed before committing. I will not modify runtime code without explicit instruction; please approve if you'd like me to apply the recommended include fix and re-run validations.
 
 ## ✅ Progress So Far
 
