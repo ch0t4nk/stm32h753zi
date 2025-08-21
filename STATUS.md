@@ -39,6 +39,30 @@
 
 ---
 
+## Context Bootstrapping
+
+STATUS.md is the Single Source of Truth (SSOT) for Copilot/automation sessions. Keep this file concise, up-to-date, and authoritative. Automation and downstream orchestration rely on these sections and anchors. Do not remove the "<!-- ANCHORS: SSOT, HAL, RTOS, BUILD -->" marker; use it as a stable token for automated tooling.
+
+## Tasks
+
+- (placeholder) Add short actionable items here. Use task status tags (TODO / IN_PROGRESS / DONE).
+
+## Milestones
+
+- (placeholder) Track milestone name, owner, and target date.
+
+## Blockers
+
+- (placeholder) Document any blocker with owner and mitigation plan.
+
+## Owners
+
+- (placeholder) List owners and responsibilities (e.g., Build: Alice, HAL: Bob, RTOS: Carol).
+
+## Dates
+
+- (placeholder) Key dates and deadlines (ISO8601).
+
 ## Session Summary (Aug 19, 2025)
 
 - SSOT migration completed this session: inline hex annotations removed, small literals migrated to `src/config/*`, validator green.
